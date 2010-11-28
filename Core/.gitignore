@@ -1,1 +1,4 @@
 /*.csproj.user
+/*.cachefile
+/obj/
+/bin/

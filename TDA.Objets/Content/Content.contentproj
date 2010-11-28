@@ -289,41 +289,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asteroides\asteroide1.png">
-      <Name>asteroide1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="asteroides\asteroide2.png">
-      <Name>asteroide2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="asteroides\asteroide3.png">
-      <Name>asteroide3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="asteroides\asteroide4.png">
-      <Name>asteroide4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="asteroides\asteroide5.png">
-      <Name>asteroide5</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="asteroides\centaur.png">
       <Name>centaur</Name>
       <Importer>TextureImporter</Importer>
