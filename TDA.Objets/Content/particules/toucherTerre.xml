@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+  <Asset Type="ProjectMercury.ParticleEffect">
+    <Item Type="Emitters:CircleEmitter">
+      <Name>Emitter02</Name>
+      <Budget>100</Budget>
+      <Term>1</Term>
+      <ReleaseQuantity>100</ReleaseQuantity>
+      <Enabled>true</Enabled>
+      <ReleaseSpeed>
+        <Value>300</Value>
+        <Variation>0</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>1 1 1</Value>
+        <Variation>0 0 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>1</Value>
+        <Variation>0</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>100</Value>
+        <Variation>25</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>0</Value>
+        <Variation>0</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>0 0</ReleaseImpulse>
+      <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
+      <Modifiers>
+        <Item Type="Modifiers:ColourModifier">
+          <InitialColour>1 0 0</InitialColour>
+          <UltimateColour>1 1 0.7529412</UltimateColour>
+        </Item>
+        <Item Type="Modifiers:OpacityModifier">
+          <Initial>1</Initial>
+          <Ultimate>0</Ultimate>
+        </Item>
+      </Modifiers>
+      <BlendMode>Add</BlendMode>
+      <TriggerOffset>0 0</TriggerOffset>
+      <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
+      <Radius>1</Radius>
+      <Ring>true</Ring>
+      <Radiate>true</Radiate>
+    </Item>
+    <Name>Particle Effect</Name>
+  </Asset>
+</XnaContent>

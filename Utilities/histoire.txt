@@ -1,0 +1,347 @@
+================================================================================
+                                 TODO GÉNÉRAL
+================================================================================
+=> Catcher toutes les exceptions ?
+=> Image/Scene 1280x720 lorsqu'on quitte le jeu en mode trial pour inciter a l'acheter
+=> Ajouter une priorité aux messages
+=> Ajuster la priorité des messages trous roses et pause de partie
+=> Démo de la version Windows en disant d'aller l'acheter sur Xbox Live Indie Games		    Canceled.
+=> Préparer une version complète Windows pour journalistes
+=> Smoother transition entre Chargement <=> Menu
+
+
+================================================================================
+                                 TODO BUGS
+================================================================================
+
+=> Vider le simulateur du GestionnairePhysique à chaque fin de partie ?                             Done.
+=> Memoire qui grandit de plus en plus quand on relance le jeu                                      Done.
+=> Méga explosion d'ennemis + explosions sur le début du trajet quand on meurt/ rétrécit chemin     Done.
+=> Le sablier devrait être plein à la dernière vague                                                Done.
+=> Chopin11 fucked ?                                                                                Done.
+=> Ajuster le volume de certaines musiques                                                          Done.
+=> Preview du chemin is fucked                                                                      Done.
+=> Peut faire des achats pendant qu'on manipule le Do-It-Yourself?                                  Done.
+=> Vagues qui partent en grosses batchs                                                             Done.
+=> Musique fuck random (2 instances de la même musique)                                             Done.
+=> Possibilité de détruire la planète à protéger ne met pas fin à la partie                         Done.
+=> Connexion du joueur pour la Xbox (+ gerer connexion de la manette 2 par exemple)                 Done.
+=> Problème de storage container non-libéré. Récurrant ?                                            Done.
+=> Curseur à la position de la sortie d'un vaisseau                                                 Done.
+=> Tourelle qui se tire dessus ?                                                                    Done.
+=> Version Release crash dès le début (grrr)                                                        Done.
+=> Barre d'inactivité de la tourelle slow-motion ne s'affiche pas                                   Done.
+=> Tourelles attaquent les derniers ennemis au lieu des premiers                                    Done.
+=> Certains bunding box ne sont pas tweakes
+
+
+================================================================================
+                               TODO GRAPHISME
+================================================================================
+
+=> Mettre les boutons Xbox/Windows dans les menus et autre
+=> Lunes pour les planetes                                                                          Done.
+=> Étoiles filantes                                                                                 Done.
+=> Annonciation composition vague maintenant/apres + ennemis restants a generer pour les v. actv.   Canceled.
+=> Annoncation des ennemis / tourelles dans le choix du scénario                                    Canceled.
+=> Pas d'explosion sur la ceinture d'asteroides lorsque la partie est perdue                        Done.
+=> Wander des tourelles qui ne tirent pas                                                           Done.
+=> Déplacement smooth vers l'ennemi a attaquer                                                      Canceled.
+=> Refaire le chemin ? Couleurs ?                                                                   Canceled.
+=> Menu d'aide: Simulation non-jouable avec des bulles qui apparaissent sur demande                 Canceled.
+=> Minéraux blink avant de disparaitre                                                              Canceled.
+=> Petites étoiles dans la vue avancée pour ceux qui transportent des minéraux                      Canceled.
+=> Faker les zones d'activation au besoin                                                           Done.
+=> Meilleure visibilité du curseur (léger blink?)                                                   Canceled.
+=> Refaire la tourelle Alien                                                                        Done.
+=> Refaire l'annonciation des points de vie                                                         Done.
+=> Projection to sell fucked again                                                                  Done.
+=> Power-ups sur un vaisseau à part ?                                                               Canceled.
+=> Tourelles invisibles empêchent la sélection d'options sur les corps célestes                     Done.
+
+
+================================================================================
+                           TODO OPTIMISATION
+================================================================================
+
+=> Tout passage de struct par référence                                                             Done.
+=> Prévilégier la détection Cercle-Cercle ou Rectangle-Rectangle                                    Done.
+=> Diminuer le nombre de détection de collision                                                     Done.
+=> Diminuer la qte allouée à chaque effet de particules (voir # max avec l'éditeur)                 Done.
+=> Retravailler IVisible                                                                            Done.
+=> Getters / Setters => Attributs publics lorsque possible (surtout pour les structs)               Done.
+=> Utilisation des autres cores sur la Xbox ?                                                       Done.
+=> Enlever les calls aux fonctions avancées de la caméra pour une Scène                             Done.
+=> Enlever les calls inutiles à base                                                                Done.
+=> Fixer la recalcul de rectangle a chaque tick                                                     Done.
+=> L'interface de sélection d'un corps céleste créer beaucoup trop d'OptionEmplacement
+=> Pool d'ennemis, de projectiles, de tourelles, etc.                                               Done.
+=> List<T>.Remove(Object), List<T>.Contains(Object), etc. O(n).                                     Done.
+=> Remplacer les foreach par des for                                                                Done.
+=> Effectuer les suppressions en ordre inversé (éviter l'effet du shift)                            Done.
+=> Utiliser des Vector2.op, Vector3.op, etc. lorsque possible                                       Done.
+=> Éviter la création de nouveaux objets                                                            Done.
+=> Chemin créé trop de Ligne ?                                                                      Canceled.
+=> Ajouter de ManualRemove sur une Scene + fonctions de retrait d'assets                            Canceled.
+=> is /as                                                                                           Canceled.
+=> Consolider les mutateurs des systèmes de particule                                               Canceled.
+=> Mettre à jour le système de particules                                                           Done.
+=> Math.Cos et Math.Sin pour le mouvement des corps célestes peuvent êtres stockés                  Canceled.
+=> Optimiser ce qui se passe quand un objet est détruit
+
+
+================================================================================
+                           TODO GAMEPLAY
+================================================================================
+
+Nom du jeu
+=========================================
+Beta Commander                                                                                      Canceled.
+NEO (Near Earth Objects) Commander                                                                  Canceled.
+PHO (Potentially hazardous objects) Commander                                                       Canceled.
+Spaceguard Commander                                                                                Canceled.
+Commander, tout court ?? :)                                                                         Done.
+Commander + Gamertag ?                                                                              Done.
+
+Général
+=========================================
+=> Se conformer: http://creators.xna.com/en-US/education/bestpractices
+=> Une habiletée spéciale par tourelle rendu à un certain niveau ?                                  Canceled.
+=> Revoir les controles avant de faire le menu d'aide                                               Done.
+=> Tweaker les bounding box des objets (+ ennemis cachés pas tant que ca)
+=> (Marketing) Site web
+=> (Marketing) Trailers
+=> (Marketing) Trial mode (http://creators.xna.com/en-US/education/bestpractices)
+=> B: Stop collecteur, Start: Retour menu. Start dans menu: retour au jeu                           Done.
+=> Baisser le # de niveaux des tourelles ? => 6-7 ?                                                 Canceled.
+=> Mode de jeu: Time Limit pour clearer les vagues
+=> Argent donné entièrement en minéraux ?                                                           Done.
+=> Minéral points de vie                                                                            Done.
+=> Gestionnaire de quotes pour une meilleure gestion                                                Done.                            
+
+
+Générateur de scénarios
+=========================================
+=> Pouvoir créer/charger des scénarios dans l'éditeur                                               Done.
+=> Possibilité de [translation/rotation] de la trajectoire d'une planète                            Done.
+=> Définir une façon rapide de créer une nouvelle planète dans l'éditeur                            Done.
+=> Plusieurs types de représentations gazeuses
+=> Générer en background avec possibilité d'annuler                                                 Canceled.
+=> Générer les données de storytelling (titre, lieu, annee, histoire)                               Canceled.
+=> Implémenter les autres types de vagues                                                           Done.
+=> (Bug) Les planètes fixes se rentrent dedans                                                      Canceled.
+
+Habiletés spéciales
+=========================================
+=> Possibilité de détruire un corps céleste ("Do not press this button")                            Done.
+=> The resistance ("Call the resistance")                                                           Done.
+    - Peuvent lancer des quotes (Hail to the king, baby!)
+=> Controler un vaisseau qui va attaquer l'ennemi ("Do it yourself")                                Done.
+=> Controler un vaisseau collecteur qui va chercher des ressources en extra ("Collect the rent")    Done.
+=> Tourelle qu'il faut manoeuvrer manuellement ("take control")                                     Canceled.
+
+Tourelles
+=========================================
+=> Tourelle qui ralenti les ennemis ?                                                               Done.
+=> Tourelle qui rend plus fortes celles avoisinantes ?                                              Canceled.
+=> Tourelle gravitationnelle niveau 2                                                               Done.
+
+
+================================================================================
+                           TODO AUDIO
+================================================================================
+
+- # maximum d'effets sonores joués en même temps
+   - en tout
+   - pour un certain type
+
+- Destruction d'un corps celeste                                                                    Done.
+- Ennemi meurt                                                                                      Canceled.
+- Projectile lancé                                                                                  Done.
+- Nouvelle vague                                                                                    Done.
+- Tourelle lance un projectile (4) modifé selon le niveau (x4 = 16) ?                               Canceled.
+- Une tourelle gravitationnelle est achetée/vendue (modification du chemin)                         Done.
+- Le lieutenant parle                                                                               Done.
+- Décodage                                                                                          Canceled.
+- Transition d'une scène à l'autre                                                                  Canceled.
+- Une tourelle est achetée                                                                          Canceled.
+- Une tourelle est vendue                                                                           Done.
+- Une tourelle est mise à jour                                                                      Done.
+- Prendre le controle du vaisseau Do-It-Yourself                                                    Done.
+- Prendre le controle du vaisseau collecteur                                                        Done.
+- Faire appel à la résistance                                                                       Done.
+- Ne plus avoir le controle du vaisseau Do-It-Yourself                                              Done.
+- Ne plus avoir le controle du vaisseau collecteur                                                  Done.
+- Faire exploser une planète                                                                        Done.
+- Tourelle slow motion                                                                              Done.
+- Minéral pris                                                                                      Done.
+- Vaisseaux de la résistance tirent                                                                 Done.
+- Vaisseau Do-It-Yourself tire                                                                      Done.
+- Planète explose                                                                                   Done.
+- Sélection Menu / Press Back
+- Mauvaise sélection
+
+================================================================================
+                               TODO OLD SHIT
+================================================================================
+
+=> Lorsque le chemin grandi ou diminue, les ennemis ne devraient pas reculer/avancer                 Canceled.
+=> Généraliser quand une planète est touchée par un ennemi (fin du trajet)                           Done.
+=> Effets de particules des ennemis touchés par le laser multiple                                    Done.
+=> Barre de construction/indisponibilite pour les tourelles                                          Done.
+=> Signe "M" pour milliards                                                                          Done.
+=> Noms des tourelles en anglais                                                                     Done.
+=> Sélection des emplacements plus conviviale                                                        Done.
+=> Meilleure visibilité des options d'un emplacement                                                 Done.
+=> Mode "vue avancée"                                                                                Done.
+=> Mort des ennemis == particules ?                                                                  Done.
+=> Montrer les options indisponibles des tourelles                                                   Done.
+=> Boutons de navigation dans la sélection du scénario                                               Done.
+=> Vérifier: Lorsqu'une tourelle est vendue, bon comportement                                        Done.
+=> Ennemis qui apparaissent en fade in                                                               Done.
+=> Menu d'aide                                                                                       Done.
+=> Menu d'options                                                                                    Done.
+=> Menu de crédits et autres                                                                         Done.
+=> Quand on meurt et retourne au menu, le choix devrait etre sur nouvelle partie                     Done.
+=> Des fois, dans le menu, deux options sont selectionnees (en rouge)                                Done.
+=> Projectiles qui attaquent les ennemis pas dans leur zone d'activation (a la source)               Done.
+=> Bouton a peser dans NouvellePartie et Credits pour retourner au menu principal                    Done.
+=> Palier le changement radical du chemin, faire une projection lorsque le choix est selectionne     Done.
+=> Offset des ennemis sur le chemin ? Effet de vascillement ?                                        Done.
+=> Partir une vague plus tôt que prévue                                                              Done.
+=> Prob de sélection de l'éditeur quand on revient au menu                                           Done.
+=> Transition d'un menu à un autre                                                                   Done.
+=> Bulles de messages (ex: infos, tourelles qui parlent?)                                            Done.
+=> Optimiser la détection de collision (Creer les listes une fois et les vider)                      Done.
+=> Simulation fuckée pendant un cours laps de temps lorsqu'on demarre une nouvelle partie            Done.
+=> Pouvoir changer de musique avec LB/RB                                                             Done.
+=> Effets sonores == notes au piano                                                                  Canceled.
+=> Refaire les tounes pour qu'elles loop et plus longues (pas trop si on peut les changer)           Done.
+=> Musique de victoire / défaite (Op.15 No. 3. in Gmin)                                              Done.
+=> (Graphisme) Refaire les effets de particules                                                      Done.
+=> (Graphisme) Refaire l'explosion du missile                                                        Done.
+=> (Graphisme) Vue avancée, on garde la rotation des planètes ? Zones activations effets particules? Done.
+=> (Graphisme) Vies des ennemis                                                                      Done.
+=> (Graphisme) Temps d'inactivité des tourelles                                                      Done.
+=> Mettre le sablier en loop pour le chargement                                                      Done.
+=> (Graphisme) Représentation différentes des projectiles selon le niveau de la tourelle ?           Done.
+=> Arrêter de vibrer quand on meurt                                                                  Done.
+=> (Graphisme) Niveau trop proche du prix                                                            Done.
+=> Pas de vibration dans le menu                                                                     Done.
+=> Une zone d'activation diff par type de tourelle (avec couleur)                                    Done.
+=> Collecteur / Vaisseau meurt si entre en collision ?                                               Canceled.
+=> (Graphisme) Représentation des minéraux                                                           Done.
+=> (Bug) EffetSonore absent du dictionnaire des types d'asset (rare)                                 Done.
+=> Tourelle laser simple : pas de canon. Donner le canon a la tourelle multiple.                     Canceled.
+=> Modifier l'aspect de la tourelle missile                                                          Done.
+=> Contrôles avec joystick / souris                                                                  En cours.
+=> Main.Random                                                                                       Done.
+
+
+=====================================================
+
+Quotes de help:
+
+1-1 :
+Planète à protéger : "You must protect me."
+Planète à protéger : "You see my moons ? A maximum of 5 asteroids can reach me."
+Planète à protéger : "The help in the main menu have all the answers."
+Planète à protégér : "Those yellow and blue things are asteroids. They follow the white path."
+Sablier : "The upper-right number is the number of waves remaining"
+Sablier : "The bottom-right number is your cash flow. Kill asteroids to get more cash!"
+Sablier : "Put your cursor over me to see the next wave."
+Sablier : "Click on me to call the next wave earlier."
+Emplacement : "This is where you buy mercenaries"
+Emplacement : "Only the green mercenary is available."
+Emplacement : "You can upgrade or sell a mercenary"
+Tourelle grav.: "Hello I'm the white mercenary."
+Tourelle grav.: "The path cross the planet where I'm installed."
+Tourelle grav.: "The path is the white dotted line."
+Cursor : "I'm your best friend."
+Cursor : "Maintain the X button pressed to see the enemies' lifes and the mercenaries' sight"
+
+
+1-2
+Emplacement : "A new mercenary is available. The pink one. It's a she. Threat her right."
+Cursor : "Every level is possible. This game is hard. It's normal to redo 5-10 times a level."
+
+1-3
+Emplacement : "The white mercenary will modify the path."
+Emplacement : "You must lengthen the path to survive."
+Emplacement : "Upgrade the white mercenary to see what will occur!"
+
+1-4
+Planète : "Select me (without touching a square) to grab the collector."
+Planète : "In some levels, check the planets for useful powerups"
+Planète : "When an asteroid explode, it will drop extra cash. Use the collector to collect them."
+
+
+=====================================================
+
+Quotes d'histoire :
+
+"The aliens started attacking our colonies in 2050."
+"Some say they're green. I'm sure they stink."
+"It's year 2100. This war must end." 
+"The humans created us to protect them. Who will protect us?"
+"My serial number is RP-65535. Hmmm."
+"We try to protect the colonies but this alien mothership is so powerful."
+"When we see the mothership, we know it's the end."
+"Fifty years later, we still don't know what they want."
+"We should give them Earth in exchange of peace."
+"The Commodore is your boss. He's weird."
+"You are the only hope of humanity, Commander."
+"When the war is over, what about me ?"
+"The aliens are throwing asteroids at us. They are mean."
+"I think green was the first. Then came yellow."
+"World 1 has 9 colonies. They must not discover World 2."
+"There is a warp gate from World 1 to World 2. The legend says it will be activated one day."
+"What if the aliens win? I don't want to speak alien."
+"Pink is so cute. I'm sad that I can't love her."
+"Power to the mercenaries! We do all the job!"
+"The Mercenaries Alliance will one day rule this universe."
+"I wish I had wings like The Resistance."
+"The aliens are cowards. They throw rocks at us like kids."
+"Humans say the war could last 20 years. I give them 5."
+"When they can't kill us with asteroids, they call the mothership."
+"Every colony is falling, one after another."
+"The human civilization is living it's last decade."
+"They have what ? 30 ? 50 colonies ? Something like that."
+"Another 2384292734043 kills and they will send me home."
+"Humans should treat us better. We're not machines."
+"I have seen one. It was scary. I don't want to think about it."
+"They say World 2 is gearing up with new technology."
+"The mothership is a legend. I'll believe it when I'll see it."
+"Do the aliens have an homeworld or they live on their ship?"
+"The aliens are scattered on the asteroids' belt."
+"How do they find every human colony by the way ?"
+"Intel says aliens have spies among humans. It's insane."
+"Intel says one colony is giving them others colonies' coordinates."
+"We'll be on the cover of Time Magazine this year. I'm so proud."
+"Intel says there is a ship bigger than the mothership."
+"Intel says they have a plan. Yeah right."
+
+Description:
+
+Commander is an epic and lovely tower defense where the path is dynamic: it evolves in time and you can modify it by installing special turrets. You can also control spaceships to help you in your mission to save the humanity and blow up planets when you have no other choice. What do you want more? Lasers, missiles, particle effects, nice classical music, retro sound effects, cute colorful pixels and a lot of fun.
+
+Commander is an epic, classic and lovely tower defense where the path is dynamic: it evolves in time and you can modify it! You can also control spaceships to help you in your mission to save humanity and blow up planets when you have no other choice. What do you want more? Lasers, missiles, particle effects, nice classical music, retro sound effects, cute colorful pixels and a lot of fun.
+Commander est un tower defense épique dont le chemin que parcours les ennemis est dynamique: il évolue dans le temps et vous pouvez le modifier! Contrôler des vaisseaux spatiaux afin de sauver l'humanité et détruisez des planètes lorsque nécessaire. Que voulez-vous de plus? Des lasers, des missiles, des effets de particules, de la bonne musique, des sfx rétros, plein de pixels et beaucoup de fun!
+
+
+Instructions:
+
+Detailed instructions are in the help menu but here are some keys you should know:
+
+- It plays with the mouse
+- Mouse middle button : roll it to select an ingame menu's choice, hold it to see an advanced view of the battlefield 
+- ESC / Enter : Start button, to go back to the menu for example
+- Right Shift : change the music
+
+Important: in some levels, you can choose options directly on the planets
+(without selecting a place to put a turret)
+
+Developed with:
+XNA 3.1, Visual C# 2008 Express Edition
+
+http://www.youtube.com/watch?v=QQau1GvSROw&fmt=22

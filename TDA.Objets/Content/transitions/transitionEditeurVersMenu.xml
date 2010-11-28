@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="Core.Visuel.Transition">
+    <NomTransition>EditeurVersMenu</NomTransition>
+    <Duree>1</Duree>
+    <Descriptions>
+      <Item>
+        <NomScene>Menu</NomScene>
+        <FocusApres>true</FocusApres>
+        <EnPausePendant>false</EnPausePendant>
+        <EnPauseApres>false</EnPauseApres>
+        <VisibleApres>true</VisibleApres>
+        <PrioriteAffichagePendant>1</PrioriteAffichagePendant>
+        <PrioriteAffichageApres>1</PrioriteAffichageApres>
+        <Effets />
+      </Item>
+      <Item>
+        <NomScene>Editeur</NomScene>
+        <FocusApres>false</FocusApres>
+        <EnPausePendant>true</EnPausePendant>
+        <EnPauseApres>true</EnPauseApres>
+        <VisibleApres>false</VisibleApres>
+        <PrioriteAffichagePendant>0.5</PrioriteAffichagePendant>
+        <PrioriteAffichageApres>0.5</PrioriteAffichageApres>
+        <Effets />
+      </Item>
+    </Descriptions>
+  </Asset>
+</XnaContent>

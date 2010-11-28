@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="Core.Visuel.Transition">
+    <NomTransition>PartieVersChargement</NomTransition>
+    <Duree>0</Duree>
+    <Descriptions>
+      <Item>
+        <NomScene>Partie</NomScene>
+        <FocusApres>false</FocusApres>
+        <EnPausePendant>true</EnPausePendant>
+        <EnPauseApres>true</EnPauseApres>
+        <VisibleApres>false</VisibleApres>
+        <PrioriteAffichagePendant>1</PrioriteAffichagePendant>
+        <PrioriteAffichageApres>1</PrioriteAffichageApres>
+        <Effets />
+      </Item>
+      <Item>
+        <NomScene>Chargement</NomScene>
+        <FocusApres>true</FocusApres>
+        <EnPausePendant>true</EnPausePendant>
+        <EnPauseApres>false</EnPauseApres>
+        <VisibleApres>true</VisibleApres>
+        <PrioriteAffichagePendant>0.5</PrioriteAffichagePendant>
+        <PrioriteAffichageApres>0.5</PrioriteAffichageApres>
+        <Effets />
+      </Item>
+    </Descriptions>
+  </Asset>
+</XnaContent>

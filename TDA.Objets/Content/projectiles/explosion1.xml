@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="Core.Visuel.Sprite">
+    <NomSpriteSheet>projectiles/Explosions</NomSpriteSheet>
+    <Cyclique>false</Cyclique>
+    <VitesseDefilement>30</VitesseDefilement>
+    <Rectangles>74 17 28 26 105 16 30 27 138 15 31 28 172 14 30 29 205 12 30 31 238 11 30 32 271 10 30 33 304 9 30 34 337 9 30 34 370 9 30 34 403 8 29 34 435 7 30 36 468 7 29 35 500 6 28 34 531 7 26 32 560 5 25 34 4 50 26 34 33 50 25 33 61 50 23 32 87 50 22 33 112 49 22 31 137 50 22 25 162 51 21 23 186 51 18 22 207 57 16 15 226 58 13 13</Rectangles>
+  </Asset>
+</XnaContent>
