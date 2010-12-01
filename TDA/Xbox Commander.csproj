@@ -14,7 +14,7 @@
     <XnaCrossPlatformGroupID>55a79d11-a65d-458c-a9ca-fc9011e650ac</XnaCrossPlatformGroupID>
     <ApplicationIcon>
     </ApplicationIcon>
-    <Thumbnail>Principal\GameThumbnail.png</Thumbnail>
+    <Thumbnail>GameThumbnail.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -101,103 +101,37 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Animations\AnimationEtoileFilante.cs" />
     <Compile Include="Animations\AnimationLieutenant.cs" />
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
-    <Compile Include="Controleurs\ControleurCollisions.cs" />
-    <Compile Include="Controleurs\ControleurEnnemis.cs" />
-    <Compile Include="Controleurs\ControleurJoueur.cs" />
-    <Compile Include="Controleurs\ControleurJoueursConnectes.cs" />
-    <Compile Include="Controleurs\ControleurMessages.cs" />
-    <Compile Include="Controleurs\ControleurProjectiles.cs" />
-    <Compile Include="Controleurs\ControleurScenario.cs" />
-    <Compile Include="Controleurs\ControleurSystemePlanetaire.cs" />
-    <Compile Include="Controleurs\ControleurTourelles.cs" />
-    <Compile Include="Controleurs\ControleurVaisseaux.cs" />
     <Compile Include="Editeur\Editeur.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Editeur\GenerateurGUI.cs" />
     <Compile Include="Editeur\GenerateurScenario.cs" />
     <Compile Include="Editeur\GenerateurVagues.cs" />
     <Compile Include="Editeur\SimulationLite.cs" />
-    <Compile Include="GUI\AideNiveau.cs" />
-    <Compile Include="GUI\Controles\CheckBox.cs" />
-    <Compile Include="GUI\Controles\HorizontalSlider.cs" />
-    <Compile Include="GUI\Controles\PushButton.cs" />
-    <Compile Include="GUI\ControleurNavigationCorpsCelestes.cs">
+    <Compile Include="GUI\Controles\CheckBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI\GenerateurGUI.cs" />
-    <Compile Include="GUI\MenuCorpsCeleste.cs" />
-    <Compile Include="GUI\MenuEmplacement.cs" />
-    <Compile Include="GUI\MenuProchaineVague.cs" />
-    <Compile Include="Objets\ModeTrial.cs" />
-    <Compile Include="Objets\TrouRose.cs" />
-    <Compile Include="Objets\Joueur.cs" />
-    <Compile Include="Objets\JoueurCommun.cs" />
-    <Compile Include="Objets\Lune.cs" />
-    <Compile Include="Editeur\Descripteurs.cs" />
-    <Compile Include="GUI\AnnonciationHistoire.cs" />
-    <Compile Include="GUI\AnnonciationVictoireDefaite.cs" />
-    <Compile Include="GUI\Bulle.cs" />
-    <Compile Include="GUI\BulleTexte.cs" />
-    <Compile Include="GUI\ControleurNavigationTourellesAchat.cs" />
+    <Compile Include="GUI\Controles\HorizontalSlider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\Controles\PushButton.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GUI\Curseur.cs" />
-    <Compile Include="GUI\PanneauCorpsCeleste.cs" />
-    <Compile Include="GUI\PanneauDebug.cs" />
-    <Compile Include="GUI\PanneauGeneral.cs" />
-    <Compile Include="GUI\PointsDeVieEnnemis.cs" />
-    <Compile Include="GUI\PointsDeVieJoueur.cs" />
     <Compile Include="GUI\Sablier.cs" />
-    <Compile Include="GUI\SelectionCorpsCeleste.cs" />
-    <Compile Include="GUI\VueAvancee.cs" />
-    <Compile Include="Objets\CeintureAsteroide.cs" />
-    <Compile Include="Objets\Chemin.cs" />
-    <Compile Include="Objets\ColourOpacityModifier.cs" />
-    <Compile Include="Objets\CorpsCeleste.cs" />
-    <Compile Include="Objets\Emplacement.cs" />
-    <Compile Include="Objets\Ennemi.cs" />
-    <Compile Include="Objets\FactoryEnnemis.cs" />
-    <Compile Include="Objets\FactoryScenarios.cs" />
-    <Compile Include="Objets\FactoryTourelles.cs" />
-    <Compile Include="Objets\GridWorld.cs" />
-    <Compile Include="Objets\IObjetVivant.cs" />
-    <Compile Include="Objets\IRepresentable.cs" />
-    <Compile Include="Objets\LuneMatrice.cs" />
-    <Compile Include="Objets\LuneTrajet.cs" />
-    <Compile Include="Objets\Mineral.cs" />
-    <Compile Include="Objets\NiveauTourelle.cs" />
-    <Compile Include="Objets\Projectile.cs" />
-    <Compile Include="Objets\ProjectileBase.cs" />
-    <Compile Include="Objets\ProjectileLaserMultiple.cs" />
-    <Compile Include="Objets\ProjectileLaserSimple.cs" />
-    <Compile Include="Objets\ProjectileMissile.cs" />
-    <Compile Include="Objets\ProjectileSlowMotion.cs" />
-    <Compile Include="Objets\Sauvegarde.cs" />
-    <Compile Include="Objets\Scenario.cs" />
-    <Compile Include="Objets\Simulation.cs" />
-    <Compile Include="Objets\TextTypeWriter.cs" />
-    <Compile Include="Objets\TheResistance.cs" />
-    <Compile Include="Objets\Tourelle.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Objets\TourelleBase.cs" />
-    <Compile Include="Objets\TourelleGravitationnelle.cs" />
-    <Compile Include="Objets\TourelleLasersMultiples.cs" />
-    <Compile Include="Objets\TourelleLasersSimples.cs" />
-    <Compile Include="Objets\TourelleMissiles.cs" />
-    <Compile Include="Objets\TourelleSlowMotion.cs" />
-    <Compile Include="Objets\Traducteur.cs" />
-    <Compile Include="Objets\Vague.cs" />
-    <Compile Include="Objets\VaguesInfinies.cs" />
-    <Compile Include="Objets\Vaisseau.cs" />
-    <Compile Include="Objets\VaisseauAlien.cs" />
-    <Compile Include="Objets\VaisseauCollecteur.cs" />
-    <Compile Include="Objets\VaisseauDoItYourself.cs" />
-    <Compile Include="Objets\ValidationServeur.cs" />
-    <Compile Include="Principal\Main.cs" />
-    <Compile Include="Principal\Preferences.cs" />
+    <Compile Include="GUI\TextTypeWriter.cs" />
+    <Compile Include="GUI\Traducteur.cs" />
+    <Compile Include="Joueur\Joueur.cs" />
+    <Compile Include="Joueur\JoueurCommun.cs" />
+    <Compile Include="Joueur\ModeTrial.cs" />
+    <Compile Include="Joueur\Sauvegarde.cs" />
+    <Compile Include="Joueur\ValidationServeur.cs" />
+    <Compile Include="Editeur\Descripteurs.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\Aide.cs" />
     <Compile Include="Scenes\Chargement.cs" />
@@ -208,10 +142,75 @@
     <Compile Include="Scenes\Options.cs" />
     <Compile Include="Scenes\Partie.cs" />
     <Compile Include="Scenes\Validation.cs" />
+    <Compile Include="Simulation\Animations\AnimationEtoileFilante.cs" />
+    <Compile Include="Simulation\Chemin.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurCollisions.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurEnnemis.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurJoueur.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurJoueursConnectes.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurMessages.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurProjectiles.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurScenario.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurSystemePlanetaire.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurTourelles.cs" />
+    <Compile Include="Simulation\Controleurs\ControleurVaisseaux.cs" />
+    <Compile Include="Simulation\Ennemis\Ennemi.cs" />
+    <Compile Include="Simulation\Ennemis\Vague.cs" />
+    <Compile Include="Simulation\Ennemis\VaguesInfinies.cs" />
+    <Compile Include="Simulation\Factories\FactoryEnnemis.cs" />
+    <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
+    <Compile Include="Simulation\GridWorld.cs" />
+    <Compile Include="Simulation\GUI\Animations\SelectionCorpsCeleste.cs" />
+    <Compile Include="Simulation\GUI\Annonciations\AnnonciationHistoire.cs" />
+    <Compile Include="Simulation\GUI\Annonciations\AnnonciationVictoireDefaite.cs" />
+    <Compile Include="Simulation\GUI\Bulles\AideNiveau.cs" />
+    <Compile Include="Simulation\GUI\Bulles\Bulle.cs" />
+    <Compile Include="Simulation\GUI\Bulles\BulleTexte.cs" />
+    <Compile Include="Simulation\GUI\Controleurs\ControleurNavigationCorpsCelestes.cs" />
+    <Compile Include="Simulation\GUI\Controleurs\ControleurNavigationTourellesAchat.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuCorpsCeleste.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuEmplacement.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuGeneral.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuPowerUps.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuProchaineVague.cs" />
+    <Compile Include="Simulation\GUI\VueAvancee\PointsDeVieEnnemis.cs" />
+    <Compile Include="Simulation\GUI\VueAvancee\PointsDeVieJoueur.cs" />
+    <Compile Include="Simulation\GUI\VueAvancee\VueAvancee.cs" />
+    <Compile Include="Simulation\IObjetVivant.cs" />
+    <Compile Include="Simulation\Mineral.cs" />
+    <Compile Include="Simulation\Projectiles\Projectile.cs" />
+    <Compile Include="Simulation\Projectiles\ProjectileBase.cs" />
+    <Compile Include="Simulation\Projectiles\ProjectileLaserMultiple.cs" />
+    <Compile Include="Simulation\Projectiles\ProjectileLaserSimple.cs" />
+    <Compile Include="Simulation\Projectiles\ProjectileMissile.cs" />
+    <Compile Include="Simulation\Projectiles\ProjectileSlowMotion.cs" />
+    <Compile Include="Simulation\Scenario.cs" />
+    <Compile Include="Simulation\Simulation.cs" />
+    <Compile Include="Simulation\SystemePlanetaire\CeintureAsteroide.cs" />
+    <Compile Include="Simulation\SystemePlanetaire\CorpsCeleste.cs" />
+    <Compile Include="Simulation\SystemePlanetaire\Emplacement.cs" />
+    <Compile Include="Simulation\SystemePlanetaire\Lune.cs" />
+    <Compile Include="Simulation\SystemePlanetaire\LuneMatrice.cs" />
+    <Compile Include="Simulation\SystemePlanetaire\LuneTrajet.cs" />
+    <Compile Include="Simulation\SystemePlanetaire\TrouRose.cs" />
+    <Compile Include="Simulation\Factories\FactoryTourelles.cs" />
+    <Compile Include="Simulation\Tourelles\NiveauTourelle.cs" />
+    <Compile Include="Simulation\Tourelles\Tourelle.cs" />
+    <Compile Include="Simulation\Tourelles\TourelleBase.cs" />
+    <Compile Include="Simulation\Tourelles\TourelleGravitationnelle.cs" />
+    <Compile Include="Simulation\Tourelles\TourelleLasersMultiples.cs" />
+    <Compile Include="Simulation\Tourelles\TourelleLasersSimples.cs" />
+    <Compile Include="Simulation\Tourelles\TourelleMissiles.cs" />
+    <Compile Include="Simulation\Tourelles\TourelleSlowMotion.cs" />
+    <Compile Include="Simulation\Vaisseaux\TheResistance.cs" />
+    <Compile Include="Simulation\Vaisseaux\Vaisseau.cs" />
+    <Compile Include="Simulation\Vaisseaux\VaisseauAlien.cs" />
+    <Compile Include="Simulation\Vaisseaux\VaisseauCollecteur.cs" />
+    <Compile Include="Simulation\Vaisseaux\VaisseauDoItYourself.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Principal\Game.ico" />
-    <Content Include="Principal\GameThumbnail.png" />
+    <Content Include="Game.ico" />
+    <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
@@ -268,7 +267,7 @@
     </Reference>
     <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\RainingSundays.Core.Utilities\lib\PowerCollections.dll</HintPath>
+      <HintPath>..\..\commander\lib\PowerCollections.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>

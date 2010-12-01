@@ -14,8 +14,6 @@
         private Main Main;
         private List<Monde> Mondes;
         private int IndiceMondeSelectionne;
-        private IVisible Titre;
-        private IVisible Infos;
 
         private Objets.AnimationTransition AnimationTransition;
         private bool effectuerTransition;

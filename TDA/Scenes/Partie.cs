@@ -14,7 +14,6 @@
         public Main Main;
         public Simulation Simulation;
         protected DescripteurScenario Scenario;
-        private PanneauDebug PanneauDebug;
         protected GameTime GameTime = new GameTime();
 
         private Objets.AnimationTransition AnimationTransition;
@@ -41,8 +40,6 @@
             Simulation = new Simulation(Main, this, scenario);
             Simulation.Initialize();
             Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
-
-            PanneauDebug = new PanneauDebug(this, new Vector3(300, 200, 0), new Vector2(250, 160));
 
             AnimationTransition = new TDA.Objets.AnimationTransition();
             AnimationTransition.Duree = 500;
@@ -104,16 +101,6 @@
             {
                 Simulation.Update(gameTime);
 
-#if DEBUG
-                PanneauDebug.Visible = Core.Input.Facade.estPesee(Preferences.toucheDebug, Main.JoueursConnectes[0].Manette, this.Nom);
-
-                PanneauDebug.NbEnnemis = Simulation.NbEnnemis;
-                PanneauDebug.NbProjectiles = Simulation.NbProjectiles;
-                PanneauDebug.NbDetectionsCollisionsCeTick = Simulation.NbDetectionsCollisionsCeTick;
-#else
-                PanneauDebug.Visible = false;
-#endif
-
                 this.GameTime = gameTime;
 
                 if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheChangerMusique, Main.JoueursConnectes[0].Manette, this.Nom) && TempsEntreDeuxChangementMusique <= 0)
@@ -130,8 +117,6 @@
         protected override void UpdateVisuel()
         {
             Simulation.Draw(GameTime);
-
-            PanneauDebug.Draw(GameTime);
 
             if (effectuerTransition)
                 AnimationTransition.Draw(null);

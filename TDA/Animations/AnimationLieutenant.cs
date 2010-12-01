@@ -12,7 +12,6 @@ namespace TDA
 
     class AnimationLieutenant : Animation
     {
-        private Scene Scene;
         private Main Main;
         private IVisible Bulle;
         private IVisible Lieutenant;

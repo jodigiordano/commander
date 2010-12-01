@@ -56,16 +56,6 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Mercury Particle Engine\ProjectMercury.Windows\Win ProjectMercury.csproj">
-      <Project>{1E3FDDBD-A15F-42CF-A83E-754476079B30}</Project>
-      <Name>Win ProjectMercury</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\TDA.Objets\Win Objets.csproj">
-      <Project>{1618F876-CA24-461F-866D-73C36FA3B7F4}</Project>
-      <Name>Win Objets</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
