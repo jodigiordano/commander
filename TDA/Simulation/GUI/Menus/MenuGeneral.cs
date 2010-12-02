@@ -7,82 +7,81 @@
     using Microsoft.Xna.Framework.Graphics;
     using Core.Utilities;
 
-    class MenuGeneral : DrawableGameComponent
+    class MenuGeneral
     {
-        public int Pointage;
-        public int ReserveUnites;
-        public int VaguesRestantes;
-        public double TempsProchaineVague;
+        public int Score;
+        public int Cash;
+        public int RemainingWaves;
+        public double TimeNextWave;
 
         private Simulation Simulation;
-        private Scene Scene;
-        private IVisible WidgetReserveUnites;
-        private IVisible WidgetVaguesRestantes;
+        private IVisible WidgetCash;
+        private IVisible WidgetRemainingWaves;
         private Vector3 Position;
-        private MenuProchaineVague MenuProchaineVague;
-        public Sablier Sablier;
-        public Curseur Curseur;
+        public MenuProchaineVague MenuNextWave;
+        public Sablier SandGlass;
+        public Curseur Cursor;
 
-        public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionProchaineVague
+        public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionNextWave
         {
             set
             {
-                MenuProchaineVague = new MenuProchaineVague(Simulation, value, this.Position - new Vector3(150, 30, 0), Preferences.PrioriteGUIPanneauGeneral + 0.049f);
+                MenuNextWave = new MenuProchaineVague(Simulation, value, this.Position - new Vector3(150, 30, 0), Preferences.PrioriteGUIPanneauGeneral + 0.049f);
             }
         }
 
         public MenuGeneral(Simulation simulation, Vector3 position)
-            : base(simulation.Main)
         {
             this.Simulation = simulation;
-            this.Scene = simulation.Scene;
             this.Position = position;
 
-            this.Sablier = new Sablier(simulation.Main, simulation.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
-            this.ReserveUnites = 0;
+            this.SandGlass = new Sablier(simulation.Main, simulation.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
+            this.Cash = 0;
 
 
-            WidgetReserveUnites = new IVisible
+            WidgetCash = new IVisible
             (
-                ReserveUnites + "M$",
+                Cash + "M$",
                 Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                 Color.White,
                 Position + new Vector3(30, 0, 0),
-                Scene
+                Simulation.Scene
             );
-            WidgetReserveUnites.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
-            WidgetReserveUnites.Taille = 3;
+            WidgetCash.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
+            WidgetCash.Taille = 3;
 
-            WidgetVaguesRestantes = new IVisible
+            WidgetRemainingWaves = new IVisible
             (
-                VaguesRestantes.ToString(),
+                RemainingWaves.ToString(),
                 Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                 Color.White,
                 Position + new Vector3(30, -40, 0),
-                Scene
+                Simulation.Scene
             );
-            WidgetVaguesRestantes.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
-            WidgetVaguesRestantes.Taille = 3;
+            WidgetRemainingWaves.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
+            WidgetRemainingWaves.Taille = 3;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            this.Sablier.TempsRestant = this.TempsProchaineVague;
-            this.Sablier.Update(gameTime);
 
-            MenuProchaineVague.Visible = Curseur.Actif && Core.Physique.Facade.collisionCercleRectangle(Curseur.Cercle, Sablier.Rectangle);
+        public void Update(GameTime gameTime)
+        {
+            this.SandGlass.TempsRestant = this.TimeNextWave;
+            this.SandGlass.Update(gameTime);
+
+            //MenuNextWave.Visible = Cursor.Actif && Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
         }
 
-        public override void Draw(GameTime gameTime)
+
+        public void Draw()
         {
-            WidgetReserveUnites.Texte = ReserveUnites + "M$";
-            WidgetVaguesRestantes.Texte = (VaguesRestantes == -1) ? "Inf." : VaguesRestantes.ToString();
+            WidgetCash.Texte = Cash + "M$";
+            WidgetRemainingWaves.Texte = (RemainingWaves == -1) ? "Inf." : RemainingWaves.ToString();
 
-            Scene.ajouterScenable(WidgetReserveUnites);
-            Scene.ajouterScenable(WidgetVaguesRestantes);
+            Simulation.Scene.ajouterScenable(WidgetCash);
+            Simulation.Scene.ajouterScenable(WidgetRemainingWaves);
 
-            this.Sablier.Draw(gameTime);
-            this.MenuProchaineVague.Draw(null);
+            this.SandGlass.Draw(null);
+            this.MenuNextWave.Draw(null);
         }
     }
 }

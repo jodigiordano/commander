@@ -19,7 +19,7 @@ namespace TDA
         public DescripteurScenario DescriptionScenario;
         public bool Debug;
 
-        private List<DrawableGameComponent> Controleurs;
+        //private List<DrawableGameComponent> Controleurs;
         private ControleurScenario ControleurScenario;
         private ControleurEnnemis ControleurEnnemis;
         private ControleurProjectiles ControleurProjectiles;
@@ -29,6 +29,7 @@ namespace TDA
         public ControleurSystemePlanetaire ControleurSystemePlanetaire;
         private ControleurVaisseaux ControleurVaisseaux;
         public ControleurMessages ControleurMessages;
+        private GUIController GUIController;
         
         public RectanglePhysique Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
 
@@ -141,17 +142,18 @@ namespace TDA
             ControleurScenario = new ControleurScenario(this, new Scenario(this, DescriptionScenario));
             ControleurVaisseaux = new ControleurVaisseaux(this);
             ControleurMessages = new ControleurMessages(this);
+            GUIController = new GUIController(this);
 
-            Controleurs = new List<DrawableGameComponent>();
-            Controleurs.Add(ControleurScenario);
-            Controleurs.Add(ControleurJoueur);
-            Controleurs.Add(ControleurEnnemis);
-            Controleurs.Add(ControleurProjectiles);
-            Controleurs.Add(ControleurTourelles);
-            Controleurs.Add(ControleurSystemePlanetaire);
-            Controleurs.Add(ControleurCollisions);
-            Controleurs.Add(ControleurVaisseaux);
-            Controleurs.Add(ControleurMessages);
+            //Controleurs = new List<DrawableGameComponent>();
+            //Controleurs.Add(ControleurScenario);
+            //Controleurs.Add(ControleurJoueur);
+            //Controleurs.Add(ControleurEnnemis);
+            //Controleurs.Add(ControleurProjectiles);
+            //Controleurs.Add(ControleurTourelles);
+            //Controleurs.Add(ControleurSystemePlanetaire);
+            //Controleurs.Add(ControleurCollisions);
+            //Controleurs.Add(ControleurVaisseaux);
+            //Controleurs.Add(ControleurMessages);
 
             ControleurCollisions.Projectiles = ControleurProjectiles.Projectiles;
             ControleurCollisions.Ennemis = ControleurEnnemis.Ennemis;
@@ -182,12 +184,15 @@ namespace TDA
             ControleurJoueur.PositionCurseur = PositionCurseur;
             ControleurMessages.Tourelles = ControleurTourelles.Tourelles;
             ControleurMessages.BulleGUI = ControleurJoueur.BulleGUI;
-            ControleurJoueur.CompositionProchaineVague = ControleurEnnemis.CompositionProchaineVague;
+            //ControleurJoueur.CompositionProchaineVague = ControleurEnnemis.CompositionProchaineVague;
             ControleurMessages.CorpsCelesteAProteger = ControleurScenario.CorpsCelesteAProteger;
             ControleurMessages.Curseur = ControleurJoueur.Curseur;
             ControleurMessages.CorpsCelestes = ControleurScenario.CorpsCelestes;
             ControleurMessages.Chemin = ControleurSystemePlanetaire.Chemin;
-            ControleurMessages.Sablier = ControleurJoueur.Sablier;
+            //ControleurMessages.Sablier = ControleurJoueur.Sablier;
+            ControleurMessages.Sablier = GUIController.SandGlass;
+            GUIController.CompositionNextWave = ControleurEnnemis.CompositionProchaineVague;
+            ControleurJoueur.SandGlass = GUIController.SandGlass;
 
 
             ControleurCollisions.ObjetTouche += new ControleurCollisions.ObjetToucheHandler(ControleurEnnemis.doObjetTouche);
@@ -223,9 +228,23 @@ namespace TDA
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(this.doEnnemiAtteintFinTrajet);
             ControleurScenario.NouvelEtatPartie += new ControleurScenario.NouvelEtatPartieHandler(this.doNouvelEtat);
             ControleurSystemePlanetaire.ObjetDetruit += new ObjetDetruitHandler(this.doCorpsCelesteDetruit);
+            ControleurJoueur.SelectedCelestialBodyChanged += new ControleurJoueur.SelectedCelestialBodyChangedHandler(GUIController.doSelectedCelestialBodyChanged);
+            ControleurEnnemis.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doNextWave);
+            ControleurJoueur.CashChanged += new ControleurJoueur.CashChangedHandler(GUIController.doCashChanged);
+            ControleurJoueur.ScoreChanged += new ControleurJoueur.ScoreChangedHandler(GUIController.doScoreChanged);
+            ControleurJoueur.RemainingWavesChanged += new ControleurJoueur.RemainingWavesChangedHandler(GUIController.doRemainingWavesChanged);
+            ControleurJoueur.TimeNextWaveChanged += new ControleurJoueur.TimeNextWaveHandler(GUIController.doTimeNextWaveChanged);
 
-            for (int i = 0; i < Controleurs.Count; i++)
-                Controleurs[i].Initialize();
+            ControleurScenario.Initialize();
+            ControleurJoueur.Initialize();
+            ControleurEnnemis.Initialize();
+            ControleurProjectiles.Initialize();
+            ControleurTourelles.Initialize();
+            ControleurSystemePlanetaire.Initialize();
+            ControleurCollisions.Initialize();
+            ControleurVaisseaux.Initialize();
+            ControleurMessages.Initialize();
+            GUIController.Initialize();
 
             ModeDemo = modeDemo;
             ModeEditeur = modeEditeur;
@@ -246,6 +265,7 @@ namespace TDA
             ControleurScenario.Update(gameTime);
             ControleurVaisseaux.Update(gameTime);
             ControleurMessages.Update(gameTime);
+            GUIController.Update(gameTime);
 
             HandleInput();
         }
@@ -261,6 +281,7 @@ namespace TDA
             ControleurScenario.Draw(null);
             ControleurVaisseaux.Draw(null);
             ControleurMessages.Draw(null);
+            GUIController.Draw();
         }
 
         public void EtreNotifierNouvelEtatPartie(ControleurScenario.NouvelEtatPartieHandler handler)

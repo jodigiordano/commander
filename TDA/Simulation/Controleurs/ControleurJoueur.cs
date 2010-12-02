@@ -22,7 +22,8 @@
         public JoueurCommun Joueur;
         public Dictionary<PowerUp, bool> OptionsCVDisponibles;
         public Vector3 PositionCurseur;
-        public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionProchaineVague;
+        public Sablier SandGlass;
+        //public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionProchaineVague;
 
         private bool modeDemo;
         public bool ModeDemo
@@ -32,7 +33,7 @@
             {
                 modeDemo = value;
 
-                SelectionCorpsCeleste.ModeDemo = value;
+                //SelectionCorpsCeleste.ModeDemo = value;
             }
         }
 
@@ -60,14 +61,15 @@
         private AnnonciationHistoire AnnonciationHistoire;
         private AnnonciationVictoireDefaite AnnonciationVictoireDefaite;
         private VueAvancee VueAvancee;
-        private ControleurNavigationCorpsCelestes NavigationCorpsCelestesV2;
+        //private ControleurNavigationCorpsCelestes NavigationCorpsCelestesV2;
+        private SelectedCelestialBodyController SelectedCelestialBodyController;
         private ControleurNavigationTourellesAchat NavigationTourellesAchat;
-        private MenuGeneral PanneauGeneral;
-        private SelectionCorpsCeleste SelectionCorpsCeleste;
+        //private MenuGeneral PanneauGeneral;
+        //private SelectionCorpsCeleste SelectionCorpsCeleste;
         private PanneauCorpsCeleste PanneauCorpsCeleste;
         public Curseur Curseur;
         public Bulle BulleGUI { get { return PanneauCorpsCeleste.Bulle; } }
-        public Sablier Sablier { get { return PanneauGeneral.Sablier; } }
+        //public Sablier Sablier { get { return PanneauGeneral.Sablier; } }
 
         // Evenements
 
@@ -94,7 +96,22 @@
 
         public delegate void ProchaineVagueDemandeeHandler();
         public event ProchaineVagueDemandeeHandler ProchaineVagueDemandee;
-        
+
+        public delegate void SelectedCelestialBodyChangedHandler(CorpsCeleste celestialBody);
+        public event SelectedCelestialBodyChangedHandler SelectedCelestialBodyChanged;
+
+        public delegate void ScoreChangedHandler(int score);
+        public event ScoreChangedHandler ScoreChanged;
+
+        public delegate void CashChangedHandler(int cash);
+        public event CashChangedHandler CashChanged;
+
+        public delegate void RemainingWavesChangedHandler(int waves);
+        public event RemainingWavesChangedHandler RemainingWavesChanged;
+
+        public delegate void TimeNextWaveHandler(double time);
+        public event TimeNextWaveHandler TimeNextWaveChanged;
+
 
         // Autre
         private Simulation Simulation;
@@ -109,13 +126,13 @@
 
             PanneauCorpsCeleste = new PanneauCorpsCeleste(Simulation);
             Curseur = new Curseur(Simulation.Main, Simulation.Scene, Vector3.Zero, 10, Preferences.PrioriteGUIPanneauGeneral);
-            PanneauGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
+            //PanneauGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
         }
 
 
         public override void Initialize()
         {
-            PanneauGeneral.CompositionProchaineVague = CompositionProchaineVague;
+            //PanneauGeneral.CompositionProchaineVague = CompositionProchaineVague;
 
             OptionsPourTourellesAchetees = new Dictionary<int, bool>();
             OptionsPourCorpsCeleste = new Dictionary<PowerUp, bool>();
@@ -126,17 +143,19 @@
             AnnonciationHistoire = new AnnonciationHistoire(Simulation, Histoire);
             AnnonciationVictoireDefaite = new AnnonciationVictoireDefaite(Simulation, CorpsCelestes);
             NavigationTourellesAchat = new ControleurNavigationTourellesAchat(Joueur, CheminProjection);
-            SelectionCorpsCeleste = new SelectionCorpsCeleste(Simulation);
+            //SelectionCorpsCeleste = new SelectionCorpsCeleste(Simulation);
             //Curseur = new Curseur(Simulation.Main, Simulation.Scene, PositionCurseur, 10, Preferences.PrioriteGUIPanneauGeneral);
             Curseur.Position = PositionCurseur;
-            NavigationCorpsCelestesV2 = new ControleurNavigationCorpsCelestes(Simulation, CorpsCelestes, Curseur);
+            //NavigationCorpsCelestesV2 = new ControleurNavigationCorpsCelestes(Simulation, CorpsCelestes, Curseur);
+            SelectedCelestialBodyController = new SelectedCelestialBodyController(Simulation, CorpsCelestes, Curseur);
             PanneauCorpsCeleste.Initialize();
             PanneauCorpsCeleste.TourellesAchat = NavigationTourellesAchat.Tourelles;
             PanneauCorpsCeleste.OptionsPourTourelleAchetee = OptionsPourTourellesAchetees;
             PanneauCorpsCeleste.OptionsPourCorpsCelesteSelectionne = OptionsPourCorpsCeleste;
-            PanneauGeneral.Curseur = Curseur;
+            //PanneauGeneral.Curseur = Curseur;
 
-            CorpsSelectionne = NavigationCorpsCelestesV2.CorpsCelesteSelectionne;
+            //CorpsSelectionne = NavigationCorpsCelestesV2.CorpsCelesteSelectionne;
+            CorpsSelectionne = null;
             EmplacementSelectionne = null; //-1;
 
             VaguesRestantes = (VaguesInfinies == null) ? Vagues.Count : -1;
@@ -147,62 +166,113 @@
             ZoneDestruction.Origine = ZoneDestruction.Centre;
             ZoneDestruction.PrioriteAffichage = Preferences.PrioriteGUIEtoiles - 0.002f;
 
-            
+            SelectedCelestialBodyController.SelectedCelestialBodyChanged += new SelectedCelestialBodyController.SelectedCelestialBodyChangedHandler(doSelectedCelestialBodyChanged);
+            SelectedCelestialBodyController.SelectedTurretSpotChanged += new SelectedCelestialBodyController.SelectedTurretSpotChangedHandler(doSelectedTurretSpotChanged);
 
             setWidgets();
         }
 
 
-        protected virtual void notifyDestructionCorpsCelesteDemande(CorpsCeleste corpsCeleste)
+        private void doSelectedTurretSpotChanged(Emplacement turretSpot)
+        {
+            this.EmplacementSelectionne = turretSpot;
+            this.OptionPourTourelleAcheteeSelectionne = 1;
+        }
+
+
+        private void doSelectedCelestialBodyChanged(CorpsCeleste celestialBody)
+        {
+            this.CorpsSelectionne = celestialBody;
+
+            notifySelectedCelestialBodyChanged(celestialBody);
+        }
+
+
+        private void notifySelectedCelestialBodyChanged(CorpsCeleste celestialBody)
+        {
+            if (SelectedCelestialBodyChanged != null)
+                SelectedCelestialBodyChanged(celestialBody);
+        }
+
+
+        private void notifyDestructionCorpsCelesteDemande(CorpsCeleste corpsCeleste)
         {
             if (DestructionCorpsCelesteDemande != null)
                 DestructionCorpsCelesteDemande(corpsCeleste);
         }
 
 
-        protected virtual void notifyDoItYourselfDemande(CorpsCeleste corpsCeleste)
+        private void notifyCashChanged(int cash)
+        {
+            if (CashChanged != null)
+                CashChanged(cash);
+        }
+
+
+        private void notifyScoreChanged(int score)
+        {
+            if (ScoreChanged != null)
+                ScoreChanged(score);
+        }
+
+
+        private void notifyRemainingWavesChanged(int waves)
+        {
+            if (RemainingWavesChanged != null)
+                RemainingWavesChanged(waves);
+        }
+
+
+        private void notifyTimeNextWaveChanged(double time)
+        {
+            if (TimeNextWaveChanged != null)
+                TimeNextWaveChanged(time);
+        }
+
+
+        private void notifyDoItYourselfDemande(CorpsCeleste corpsCeleste)
         {
             if (AchatDoItYourselfDemande != null)
                 AchatDoItYourselfDemande(corpsCeleste);
         }
 
 
-        protected virtual void notifyAchatTourelleDemande(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement)
+        private void notifyAchatTourelleDemande(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement)
         {
             if (AchatTourelleDemande != null)
                 AchatTourelleDemande(typeTourelle, corpsCeleste, emplacement);
         }
 
 
-        protected virtual void notifyVenteTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
+        private void notifyVenteTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
         {
             if (VenteTourelleDemande != null)
                 VenteTourelleDemande(corpsCeleste, emplacement);
         }
 
 
-        protected virtual void notifyAchatCollecteurDemande(CorpsCeleste corpsCeleste)
+        private void notifyAchatCollecteurDemande(CorpsCeleste corpsCeleste)
         {
             if (AchatCollecteurDemande != null)
                 AchatCollecteurDemande(corpsCeleste);
         }
 
 
-        protected virtual void notifyAchatTheResistanceDemande(CorpsCeleste corpsCeleste)
+        private void notifyAchatTheResistanceDemande(CorpsCeleste corpsCeleste)
         {
             if (AchatTheResistanceDemande != null)
                 AchatTheResistanceDemande(corpsCeleste);
         }
 
 
-        protected virtual void notifyMiseAJourTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
+        private void notifyMiseAJourTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
         {
             if (MiseAJourTourelleDemande != null)
                 MiseAJourTourelleDemande(corpsCeleste, emplacement);
         }
 
 
-        protected virtual void notifyProchaineVagueDemandee()
+        private void notifyProchaineVagueDemandee()
         {
             if (ProchaineVagueDemandee != null)
                 ProchaineVagueDemandee();
@@ -218,6 +288,9 @@
                 Joueur.ReserveUnites += ennemi.ValeurUnites;
                 Joueur.Pointage += ennemi.ValeurPoints;
 
+                notifyCashChanged(Joueur.ReserveUnites);
+                notifyScoreChanged(Joueur.Pointage);
+
                 return;
             }
 
@@ -228,8 +301,9 @@
             {
                 if (CorpsSelectionne == corpsCeleste)
                 {
-                    NavigationCorpsCelestesV2.doCorpsCelesteDetruit();
-                    CorpsSelectionne = NavigationCorpsCelestesV2.CorpsCelesteSelectionne;
+                    //NavigationCorpsCelestesV2.doCorpsCelesteDetruit();
+                    SelectedCelestialBodyController.doCelestialBodyDestroyed();
+                    //CorpsSelectionne = NavigationCorpsCelestesV2.CorpsCelesteSelectionne;
                     EmplacementSelectionne = null; //-1;
                     NavigationTourellesAchat.CorpsCelesteSelectionne = CorpsSelectionne;
                     NavigationTourellesAchat.EmplacementSelectionne = EmplacementSelectionne;
@@ -263,7 +337,10 @@
                     CorpsCelesteAProteger.PointsVie += mineral.Valeur;
                 }
                 else
+                {
                     Joueur.ReserveUnites += mineral.Valeur;
+                    notifyCashChanged(Joueur.ReserveUnites);
+                }
 
                 return;
             }
@@ -273,12 +350,15 @@
         public override void Update(GameTime gameTime)
         {
             if (VaguesRestantes > 0)
+            {
                 TempsProchaineVague = Math.Max(0, TempsProchaineVague - gameTime.ElapsedGameTime.TotalMilliseconds);
+                notifyTimeNextWaveChanged(TempsProchaineVague);
+            }
 
-            NavigationCorpsCelestesV2.Update(gameTime);
-            CorpsSelectionne = NavigationCorpsCelestesV2.CorpsCelesteSelectionne;
-
-            EmplacementSelectionne = NavigationCorpsCelestesV2.EmplacementSelectionne; //(NavigationCorpsCelestesV2.CorpsCelesteSelectionneChange) ? -1 : EmplacementSelectionne;
+            //NavigationCorpsCelestesV2.Update(gameTime);
+            SelectedCelestialBodyController.Update(gameTime);
+            //CorpsSelectionne = NavigationCorpsCelestesV2.CorpsCelesteSelectionne;
+            //EmplacementSelectionne = NavigationCorpsCelestesV2.EmplacementSelectionne; //(NavigationCorpsCelestesV2.CorpsCelesteSelectionneChange) ? -1 : EmplacementSelectionne;
             NavigationTourellesAchat.CorpsCelesteSelectionne = CorpsSelectionne;
             NavigationTourellesAchat.EmplacementSelectionne = EmplacementSelectionne;
             NavigationTourellesAchat.Update(gameTime);
@@ -357,6 +437,7 @@
             {
                 notifyDoItYourselfDemande(CorpsSelectionne);
                 this.Joueur.ReserveUnites -= CorpsSelectionne.PrixDoItYourself;
+                notifyCashChanged(Joueur.ReserveUnites);
                 Curseur.doHide();
             }
 
@@ -370,6 +451,7 @@
             {
                 notifyAchatCollecteurDemande(CorpsSelectionne);
                 this.Joueur.ReserveUnites -= CorpsSelectionne.PrixCollecteur;
+                notifyCashChanged(Joueur.ReserveUnites);
                 Curseur.doHide();
 
                 Core.Input.Facade.ignorerToucheCeTick(Simulation.Main.JoueursConnectes[0].Manette, Preferences.toucheSelection);
@@ -383,6 +465,7 @@
                 Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Simulation.Main.JoueursConnectes[0].Manette, Simulation.Scene.Nom))
             {
                 this.Joueur.ReserveUnites -= CorpsSelectionne.PrixDestruction;
+                notifyCashChanged(Joueur.ReserveUnites);
                 OptionPourCorpsCelesteSelectionne = PowerUp.Aucune;
                 notifyDestructionCorpsCelesteDemande(CorpsSelectionne);
             }
@@ -396,6 +479,7 @@
             {
                 notifyAchatTheResistanceDemande(CorpsSelectionne);
                 this.Joueur.ReserveUnites -= CorpsSelectionne.PrixTheResistance;
+                notifyCashChanged(Joueur.ReserveUnites);
 
                 Core.Input.Facade.ignorerToucheCeTick(Simulation.Main.JoueursConnectes[0].Manette, Preferences.toucheSelection);
             }
@@ -423,19 +507,19 @@
 
             if (!ModeDemo && (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheProchaineVague, Simulation.Main.JoueursConnectes[0].Manette, Simulation.Scene.Nom) ||
                (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Simulation.Main.JoueursConnectes[0].Manette, Simulation.Scene.Nom) &&
-                Core.Physique.Facade.collisionCercleRectangle(Curseur.Cercle, PanneauGeneral.Sablier.Rectangle))))
+                Core.Physique.Facade.collisionCercleRectangle(Curseur.Cercle, SandGlass.Rectangle))))
                 notifyProchaineVagueDemandee();
 
             determinerProjectionDestruction();
 
             setWidgets();
 
-            SelectionCorpsCeleste.Update(gameTime);
+            //SelectionCorpsCeleste.Update(gameTime);
             Curseur.Update(gameTime);
 
             if (!ModeDemo)
             {
-                PanneauGeneral.Update(gameTime);
+                //PanneauGeneral.Update(gameTime);
                 PointsDeVie.Update(gameTime);
                 PointsDeVieProjection.Update(gameTime);
                 PanneauCorpsCeleste.Update(gameTime);
@@ -449,13 +533,13 @@
 
         private void setWidgets()
         {
-            PanneauGeneral.VaguesRestantes = VaguesRestantes;
-            PanneauGeneral.TempsProchaineVague = TempsProchaineVague;
-            PanneauGeneral.Pointage = Joueur.Pointage;
-            PanneauGeneral.ReserveUnites = Joueur.ReserveUnites;
+            //PanneauGeneral.VaguesRestantes = VaguesRestantes;
+            //PanneauGeneral.TempsProchaineVague = TempsProchaineVague;
+            //PanneauGeneral.Pointage = Joueur.Pointage;
+            //PanneauGeneral.ReserveUnites = Joueur.ReserveUnites;
 
-            if (SelectionCorpsCeleste.CorpsSelectionne != CorpsSelectionne)
-                SelectionCorpsCeleste.CorpsSelectionne = CorpsSelectionne;
+            //if (SelectionCorpsCeleste.CorpsSelectionne != CorpsSelectionne)
+            //    SelectionCorpsCeleste.CorpsSelectionne = CorpsSelectionne;
 
             PanneauCorpsCeleste.TourellePourAchatSelectionne = NavigationTourellesAchat.Selectionne;
             PanneauCorpsCeleste.CorpsSelectionne = CorpsSelectionne;
@@ -471,13 +555,13 @@
 
         public override void Draw(GameTime gameTime)
         {
-            SelectionCorpsCeleste.Draw(null);
+            //SelectionCorpsCeleste.Draw(null);
             Curseur.Draw();
             Chemin.Draw(null);
 
             if (!ModeDemo)
             {
-                PanneauGeneral.Draw(gameTime);
+                //PanneauGeneral.Draw(gameTime);
                 PointsDeVie.Draw(gameTime);
                 PanneauCorpsCeleste.Draw(null);
                 VueAvancee.Draw(null);
@@ -516,7 +600,7 @@
 
         public void doVagueDebutee()
         {
-            PanneauGeneral.Sablier.tourner();
+            //PanneauGeneral.Sablier.tourner();
             TempsProchaineVague = double.MaxValue;
 
             Core.Audio.Facade.jouerEffetSonore("Partie", "sfxNouvelleVague");
@@ -524,19 +608,23 @@
             if (VaguesInfinies != null || --VaguesRestantes == 0)
                 return;
 
-            //Degeux
+            //todo
             LinkedListNode<Vague> vagueSuivante = Vagues.First;
 
             for (int i = 0; i < Vagues.Count - VaguesRestantes; i++)
                 vagueSuivante = vagueSuivante.Next;
 
             TempsProchaineVague = vagueSuivante.Value.TempsApparition;
+
+            notifyRemainingWavesChanged(VaguesRestantes);
+            notifyTimeNextWaveChanged(TempsProchaineVague);
         }
 
 
         public void doTourelleAchetee(Tourelle tourelle)
         {
             this.Joueur.ReserveUnites -= tourelle.PrixAchat;
+            notifyCashChanged(Joueur.ReserveUnites);
 
             NavigationTourellesAchat.doTourelleAchetee(tourelle);
             NavigationTourellesAchat.Update(null);
@@ -553,6 +641,7 @@
         {
             ProjectionEnCours = null;
             this.Joueur.ReserveUnites += tourelle.PrixVente;
+            notifyCashChanged(Joueur.ReserveUnites);
 
             if (tourelle.Type == TypeTourelle.Gravitationnelle)
                 Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
@@ -570,6 +659,7 @@
         public void doTourelleMiseAJour(Tourelle tourelle)
         {
             this.Joueur.ReserveUnites -= tourelle.PrixAchat; //parce qu'effectue une fois la tourelle mise a jour
+            notifyCashChanged(Joueur.ReserveUnites);
             this.OptionPourTourelleAcheteeSelectionne = 1; //parce que c'etait l'option selectionnee avant la mise a jour
             PanneauCorpsCeleste.OptionPourTourelleAcheteeSelectionne = OptionPourTourelleAcheteeSelectionne;
         }
@@ -585,7 +675,8 @@
             OptionsPourTourellesAchetees.Add(1, EmplacementSelectionne.Tourelle.PeutMettreAJour && EmplacementSelectionne.Tourelle.PrixMiseAJour <= Joueur.ReserveUnites);
 
             //par defaut, l'option selectionnee est la mise a jour (quand on choisi un emplacement ou une mise a jour est terminee)
-            if (NavigationCorpsCelestesV2.EmplacementSelectionneChange || EmplacementSelectionne.Tourelle.RetourDeInactiveCeTick)
+            //if (NavigationCorpsCelestesV2.EmplacementSelectionneChange || EmplacementSelectionne.Tourelle.RetourDeInactiveCeTick)
+            if (EmplacementSelectionne.Tourelle.RetourDeInactiveCeTick)
                 OptionPourTourelleAcheteeSelectionne = 1;
 
             //des que l'option de maj redevient disponible, elle est selectionnee
