@@ -106,7 +106,7 @@ namespace TDA
         /// <summary>
         /// Événement lancé lorsqu'un projectile est détruit
         /// </summary>
-        public event ObjetDetruitHandler ObjetDetruit;
+        public event PhysicalObjectHandler ObjetDetruit;
 
 
         /// <summary>

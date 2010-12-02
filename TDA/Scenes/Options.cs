@@ -17,7 +17,7 @@
         private HorizontalSlider Musique;
         private IVisible TitreEffetsSonores;
         private HorizontalSlider EffetsSonores;
-        private Curseur Curseur;
+        private Cursor Curseur;
 
         private IVisible Titre;
         private IVisible FondEcran;
@@ -68,7 +68,7 @@
             TitreEffetsSonores.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
             TitreEffetsSonores.Taille = 2f;
 
-            Curseur = new Curseur(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
+            Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
 
             Musique = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 140, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
             EffetsSonores = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 210, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
@@ -182,7 +182,7 @@
 
                 TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
                 TypeWriter.Update(gameTime);
-                Curseur.Update(gameTime);
+                //Curseur.Update(gameTime); //todo
                 Musique.Update(gameTime);
                 EffetsSonores.Update(gameTime);
             }

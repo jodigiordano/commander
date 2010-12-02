@@ -13,7 +13,7 @@
         public List<Tourelle> Tourelles;
         public CorpsCeleste CorpsCelesteAProteger;
         public Sablier Sablier;
-        public Curseur Curseur;
+        public Cursor Curseur;
         public List<CorpsCeleste> CorpsCelestes;
         public Chemin Chemin;
         public Bulle BulleGUI;

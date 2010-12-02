@@ -1,11 +1,8 @@
 ﻿namespace TDA
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Core.Visuel;
-    using Core.Utilities;
     using Core.Physique;
 
     class ControleurEnnemis : DrawableGameComponent
@@ -21,8 +18,8 @@
         public event VagueTermineeHandler VagueTerminee;
         public delegate void VagueDebuteeHandler();
         public event VagueDebuteeHandler VagueDebutee;
-        public event ObjetDetruitHandler ObjetDetruit;
-        public event ObjetCreeHandler ObjetCree;
+        public event PhysicalObjectHandler ObjetDetruit;
+        public event PhysicalObjectHandler ObjetCree;
         public delegate void EnnemiAtteintFinTrajetHandler(Ennemi ennemi, CorpsCeleste corpsCeleste);
         public event EnnemiAtteintFinTrajetHandler EnnemiAtteintFinTrajet;
         private Scene Scene;

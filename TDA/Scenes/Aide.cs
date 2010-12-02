@@ -18,7 +18,7 @@
         private TextTypeWriter TypeWriter;
         private List<KeyValuePair<IVisible,IVisible>> TitresSlides;
         private HorizontalSlider SlidesSlider;
-        private Curseur Curseur;
+        private Cursor Curseur;
 
         private Objets.AnimationTransition AnimationTransition;
         private bool effectuerTransition;
@@ -76,7 +76,7 @@
             );
             TypeWriter.Texte.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
 
-            Curseur = new Curseur(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
+            Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
 
             TitresSlides = new List<KeyValuePair<IVisible, IVisible>>();
 
@@ -194,7 +194,7 @@
                 //TypeWriter.Update(gameTime);
 
                 SlidesSlider.Update(gameTime);
-                Curseur.Update(gameTime);
+                //Curseur.Update(gameTime); //todo
             }
         }
 

@@ -11,7 +11,7 @@
     class ControleurSystemePlanetaire : DrawableGameComponent
     {
         public List<CorpsCeleste> CorpsCelestes;
-        public event ObjetDetruitHandler ObjetDetruit;
+        public event PhysicalObjectHandler ObjetDetruit;
         public Chemin Chemin;
         public Chemin CheminProjection;
 

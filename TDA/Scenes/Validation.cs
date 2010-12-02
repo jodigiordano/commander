@@ -21,7 +21,7 @@ namespace TDA
         private KeyValuePair<IVisible, PushButton> Exit;
         private KeyValuePair<IVisible, PushButton> Continue;
         private IVisible MessageErreur;
-        private Curseur Curseur;
+        private Cursor Curseur;
         private IVisible Saisie;
         private bool effectuerValidation;
         private bool effectuerTransition;
@@ -63,7 +63,7 @@ namespace TDA
 
             this.Effets.ajouter(ThankYou, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
 
-            Curseur = new Curseur(Main, this, new Vector3(0, 100, 0), 10, 0.2f);
+            Curseur = new Cursor(Main, this, new Vector3(0, 100, 0), 10, 0.2f);
 
             Clavier = new Dictionary<IVisible, PushButton>();
             Clavier.Add
@@ -228,7 +228,7 @@ namespace TDA
 
             else
             {
-                Curseur.Update(gameTime);
+                //Curseur.Update(gameTime); //todo
 
                 foreach (var kvp in Clavier)
                 {

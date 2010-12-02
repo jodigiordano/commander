@@ -11,7 +11,7 @@
     class CheckBox : DrawableGameComponent
     {
         private Simulation Simulation;
-        private Curseur Curseur;
+        private Cursor Curseur;
         private IVisible Box;
         private IVisible CheckedRep;
         private Cercle BoxCercle;
@@ -19,7 +19,7 @@
 
         public bool Checked;
 
-        public CheckBox(Simulation simulation, Curseur curseur, Vector3 position, float priorite)
+        public CheckBox(Simulation simulation, Cursor curseur, Vector3 position, float priorite)
             : base(simulation.Main)
         {
             Simulation = simulation;

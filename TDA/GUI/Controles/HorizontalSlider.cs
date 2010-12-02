@@ -12,7 +12,7 @@
     {
         private Scene Scene;
         private Main Main;
-        private Curseur Curseur;
+        private Cursor Curseur;
         private IVisible Gauche;
         private IVisible Droite;
         private IVisible ValeurRep;
@@ -22,7 +22,7 @@
 
         public int Valeur, Min, Max, Increment;
 
-        public HorizontalSlider(Main main, Scene scene, Curseur curseur, Vector3 position, int min, int max, int valeur, int increment, float priorite)
+        public HorizontalSlider(Main main, Scene scene, Cursor curseur, Vector3 position, int min, int max, int valeur, int increment, float priorite)
             : base(main)
         {
             Main = main;

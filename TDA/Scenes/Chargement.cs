@@ -24,8 +24,8 @@
 
         private IVisible FondEcran;
         private IVisible Logo;
-        private Traducteur TraductionChargement;
-        private Traducteur PressStart;
+        private Translator TraductionChargement;
+        private Translator PressStart;
         private Objets.AnimationTransition AnimationTransition;
 
         private Sablier Sablier;
@@ -105,7 +105,7 @@
 
         private void initTraductionChargement()
         {
-            TraductionChargement = new Traducteur
+            TraductionChargement = new Translator
             (
                 Main,
                 this,
@@ -127,7 +127,7 @@
 
         private void initPressStart()
         {
-            PressStart = new Traducteur
+            PressStart = new Translator
             (
                 Main,
                 this,

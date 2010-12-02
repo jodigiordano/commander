@@ -1,17 +1,13 @@
 ﻿namespace TDA
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Core.Physique;
-    using Core.Visuel;
-    using Core.Utilities;
 
     class ControleurVaisseaux : DrawableGameComponent
     {
-        public event ObjetCreeHandler ObjetCree;
-        public event ObjetDetruitHandler ObjetDetruit;
+        public event PhysicalObjectHandler ObjetCree;
+        public event PhysicalObjectHandler ObjetDetruit;
 
         public Dictionary<PowerUp, bool> OptionsDisponibles;
         public List<Ennemi> Ennemis;

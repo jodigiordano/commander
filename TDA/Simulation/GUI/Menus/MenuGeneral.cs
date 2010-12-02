@@ -1,11 +1,9 @@
 ﻿namespace TDA
 {
-    using System;
     using System.Collections.Generic;
     using Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
 
     class MenuGeneral
     {
@@ -20,7 +18,7 @@
         private Vector3 Position;
         public MenuProchaineVague MenuNextWave;
         public Sablier SandGlass;
-        public Curseur Cursor;
+        public Cursor Cursor;
 
         public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionNextWave
         {
@@ -67,8 +65,6 @@
         {
             this.SandGlass.TempsRestant = this.TimeNextWave;
             this.SandGlass.Update(gameTime);
-
-            //MenuNextWave.Visible = Cursor.Actif && Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
         }
 
 

@@ -152,7 +152,7 @@
 
         #endregion
 
-        public GenerateurGUI(Simulation simulation, Curseur curseur, Vector3 position)
+        public GenerateurGUI(Simulation simulation, Cursor curseur, Vector3 position)
             : base(simulation.Main)
         {
             Simulation = simulation;

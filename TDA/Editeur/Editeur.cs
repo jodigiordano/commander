@@ -17,7 +17,7 @@
         private String ChoixTransition;
         private Simulation Simulation;
         private GenerateurGUI GenerateurGUI;
-        private Curseur Curseur;
+        private Cursor Curseur;
 
         public Editeur(Main main)
             : base(Vector2.Zero, 720, 1280)
@@ -34,7 +34,7 @@
             Simulation.ModeEditeur = true;
             Simulation.EnPause = true;
 
-            Curseur = new Curseur(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIConsoleEditeur);
+            Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIConsoleEditeur);
             GenerateurGUI = new GenerateurGUI(Simulation, Curseur, new Vector3(-300, 80, 0));
             GenerateurGUI.Visible = true;
 
@@ -96,7 +96,7 @@
                         Curseur.doHide();
                 }
 
-                Curseur.Update(gameTime);
+                //Curseur.Update(gameTime); //todo
                 Simulation.EnPause = GenerateurGUI.Visible;
                 GenerateurGUI.Update(gameTime);
                 Simulation.Update(gameTime);

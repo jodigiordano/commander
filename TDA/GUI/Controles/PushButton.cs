@@ -12,14 +12,14 @@
     {
         private Main Main;
         private Scene Scene; 
-        private Curseur Curseur;
+        private Cursor Curseur;
         public IVisible Bouton;
         private Cercle BoutonCercle;
         private Vector3 Position;
 
         public bool Pressed;
 
-        public PushButton(Main main, Scene scene, Curseur curseur, Vector3 position, float priorite)
+        public PushButton(Main main, Scene scene, Cursor curseur, Vector3 position, float priorite)
             : base(main)
         {
             Main = main;

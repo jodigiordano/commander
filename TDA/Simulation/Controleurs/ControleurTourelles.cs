@@ -1,12 +1,8 @@
 ﻿namespace TDA
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Core.Physique;
-    using Core.Visuel;
-    using Core.Utilities;
 
     class ControleurTourelles : DrawableGameComponent
     {
@@ -18,7 +14,7 @@
         public event TourelleVendueHandler TourelleVendue;
         public delegate void TourelleMiseAJourHandler(Tourelle tourelle);
         public event TourelleMiseAJourHandler TourelleMiseAJour;
-        public event ObjetCreeHandler ObjetCree;
+        public event PhysicalObjectHandler ObjetCree;
 
         public List<Tourelle> Tourelles { get; private set; }
 
