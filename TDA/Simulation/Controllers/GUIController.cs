@@ -15,6 +15,8 @@
         public Cursor Cursor;
         public VaguesInfinies InfiniteWaves;
         public LinkedList<Vague> Waves;
+        public Chemin Path;
+        public Chemin PathPreview;
 
         private Simulation Simulation;
         private SelectedCelestialBodyAnimation SelectedCelestialBodyAnimation;
@@ -23,6 +25,11 @@
         private ScenarioEndedAnnunciation ScenarioEndedAnnunciation;
         private AdvancedView AdvancedView;
         private PlayerLives PlayerLives;
+        private MenuTurretSpotEmpty MenuTurretSpotEmpty;
+        private MenuTurretSpotOccupied MenuTurretSpotOccupied;
+        private MenuPowerUps MenuPowerUps;
+        private FinalSolutionPreview FinalSolutionPreview;
+        private PathPreview PathPreviewing;
 
 
         public GUIController(Simulation simulation)
@@ -31,6 +38,10 @@
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
             MenuGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
             Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 10, Preferences.PrioriteGUIPanneauGeneral);
+            MenuTurretSpotEmpty = new MenuTurretSpotEmpty(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
+            MenuTurretSpotOccupied = new MenuTurretSpotOccupied(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
+            MenuPowerUps = new MenuPowerUps(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
+            FinalSolutionPreview = new FinalSolutionPreview(Simulation);
         }
 
 
@@ -41,6 +52,7 @@
             ScenarioEndedAnnunciation = new ScenarioEndedAnnunciation(Simulation, CelestialBodies);
             AdvancedView = new AdvancedView(Simulation, Enemies, CelestialBodies);
             PlayerLives = new PlayerLives(Simulation, Scenario.CorpsCelesteAProteger, new Color(255, 0, 220));
+            PathPreviewing = new PathPreview(PathPreview);
 
             MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             MenuGeneral.TimeNextWave = Waves.First.Value.TempsApparition;
@@ -53,10 +65,16 @@
         }
 
 
-        public void doSelectedCelestialBodyChanged(CorpsCeleste celestialBody)
-        {
-            SelectedCelestialBodyAnimation.CelestialBody = celestialBody;
-        }
+        //public List<Bulle> VisibleBubbles
+        //{
+        //    get { return MenuAbstract.Bulle; }
+        //}
+
+
+        //public void doSelectedCelestialBodyChanged(CorpsCeleste celestialBody)
+        //{
+        //    SelectedCelestialBodyAnimation.CelestialBody = celestialBody;
+        //}
 
 
         public void doShowCompositionNextWave()
@@ -147,6 +165,44 @@
         }
 
 
+        public void doPlayerSelectionChanged(PlayerSelection selection)
+        {
+            MenuTurretSpotEmpty.TurretSpot = selection.TurretSpot;
+            MenuTurretSpotEmpty.AvailableTurretsToBuy = selection.AvailableTurretsToBuy;
+            MenuTurretSpotEmpty.TurretToBuy = selection.TurretToBuy;
+
+            MenuTurretSpotOccupied.TurretSpot = selection.TurretSpot;
+            MenuTurretSpotOccupied.AvailableTurretOptions = selection.AvailableTurretOptions;
+            MenuTurretSpotOccupied.SelectedOption = selection.TurretOption;
+
+            MenuPowerUps.CelestialBody = selection.CelestialBody;
+            MenuPowerUps.Options = selection.AvailableCelestialBodyOptions;
+            MenuPowerUps.SelectedOption = selection.CelestialBodyOption;
+
+            SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
+
+            FinalSolutionPreview.CelestialBody =
+                (selection.CelestialBodyOption == PowerUp.FinalSolution) ? selection.CelestialBody : null;
+
+            if (PathPreviewing != null && selection.CelestialBody != null)
+            {
+                if (selection.CelestialBodyOption == PowerUp.FinalSolution && selection.CelestialBody.ContientTourelleGravitationnelle)
+                    PathPreviewing.RemoveCelestialObject(selection.CelestialBody);
+                else if (selection.TurretToBuy != null && selection.TurretToBuy.Type == TypeTourelle.Gravitationnelle)
+                    PathPreviewing.AddCelestialObject(selection.CelestialBody);
+                else if (selection.Turret != null && selection.Turret.Type == TypeTourelle.Gravitationnelle && selection.Turret.PeutVendre && selection.TurretOption == TurretAction.Sell)
+                    PathPreviewing.RemoveCelestialObject(selection.CelestialBody);
+                else
+                    PathPreviewing.RollBack();
+            }
+
+            else if (PathPreviewing != null)
+            {
+                PathPreviewing.RollBack();
+            }
+        }
+
+
         public void Update(GameTime gameTime)
         {
             if (MenuGeneral.TimeNextWave > 0)
@@ -171,6 +227,7 @@
         {
             SelectedCelestialBodyAnimation.Draw();
             Cursor.Draw();
+            Path.Draw();
 
             if (!Simulation.ModeDemo)
             {
@@ -179,6 +236,11 @@
                 ScenarioEndedAnnunciation.Draw();
                 AdvancedView.Draw();
                 PlayerLives.Draw();
+                MenuPowerUps.Draw();
+                MenuTurretSpotEmpty.Draw();
+                MenuTurretSpotOccupied.Draw();
+                PathPreviewing.Draw();
+                FinalSolutionPreview.Draw();
             }
         }
     }

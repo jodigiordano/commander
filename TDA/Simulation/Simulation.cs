@@ -19,7 +19,7 @@ namespace TDA
         private ControleurEnnemis ControleurEnnemis;
         private ControleurProjectiles ControleurProjectiles;
         private ControleurCollisions ControleurCollisions;
-        private PlayerController PlayerController;
+        private PlayersController PlayersController;
         private ControleurTourelles ControleurTourelles;
         public ControleurSystemePlanetaire ControleurSystemePlanetaire;
         private ControleurVaisseaux ControleurVaisseaux;
@@ -39,7 +39,7 @@ namespace TDA
             {
                 modeDemo = value;
 
-                PlayerController.ModeDemo = value;
+                PlayersController.ModeDemo = value;
                 ControleurScenario.ModeDemo = value;
             }
         }
@@ -64,7 +64,7 @@ namespace TDA
         {
             get
             {
-                return PlayerController.CorpsSelectionne;
+                return PlayersController.CelestialBodySelected;
             }
         }
 
@@ -131,7 +131,7 @@ namespace TDA
             ControleurCollisions = new ControleurCollisions(this);
             ControleurProjectiles = new ControleurProjectiles(this);
             ControleurEnnemis = new ControleurEnnemis(this);
-            PlayerController = new PlayerController(this);
+            PlayersController = new PlayersController(this);
             ControleurTourelles = new ControleurTourelles(this);
             ControleurSystemePlanetaire = new ControleurSystemePlanetaire(this);
             ControleurScenario = new ControleurScenario(this, new Scenario(this, DescriptionScenario));
@@ -141,87 +141,87 @@ namespace TDA
 
             ControleurCollisions.Projectiles = ControleurProjectiles.Projectiles;
             ControleurCollisions.Ennemis = ControleurEnnemis.Ennemis;
-            PlayerController.CorpsCelestes = ControleurScenario.CorpsCelestes;
+            PlayersController.CelestialBodies = ControleurScenario.CorpsCelestes;
             ControleurSystemePlanetaire.CorpsCelestes = ControleurScenario.CorpsCelestes;
             ControleurTourelles.ControleurSystemePlanetaire = ControleurSystemePlanetaire;
             ControleurEnnemis.VaguesInfinies = ControleurScenario.VaguesInfinies;
             ControleurEnnemis.Vagues = ControleurScenario.Vagues;
             ControleurCollisions.Tourelles = ControleurTourelles.Tourelles;
-            PlayerController.Joueur = ControleurScenario.Joueur;
-            PlayerController.CorpsCelesteAProteger = ControleurScenario.CorpsCelesteAProteger;
-            PlayerController.Chemin = ControleurSystemePlanetaire.Chemin;
-            PlayerController.CheminProjection = ControleurSystemePlanetaire.CheminProjection;
+            PlayersController.Player = ControleurScenario.Player;
+            PlayersController.CelestialBodyToProtect = ControleurScenario.CorpsCelesteAProteger;
+            GUIController.Path = ControleurSystemePlanetaire.Chemin;
+            GUIController.PathPreview = ControleurSystemePlanetaire.CheminProjection;
             ControleurEnnemis.CheminProjection = ControleurSystemePlanetaire.CheminProjection;
             ControleurTourelles.TourellesDepart = ControleurScenario.TourellesDepart;
-            PlayerController.Ennemis = ControleurEnnemis.Ennemis;
             ControleurEnnemis.Chemin = ControleurSystemePlanetaire.Chemin;
             ControleurCollisions.CorpsCelestes = ControleurScenario.CorpsCelestes;
-            PlayerController.OptionsCVDisponibles = ControleurVaisseaux.OptionsDisponibles;
+            PlayersController.AvailableSpaceships = ControleurVaisseaux.OptionsDisponibles;
             ControleurCollisions.Mineraux = ControleurEnnemis.Mineraux;
             ControleurEnnemis.ValeurTotalMineraux = ControleurScenario.Scenario.ValeurMinerauxDonnes;
             ControleurEnnemis.PourcentageMinerauxDonnes = ControleurScenario.Scenario.PourcentageMinerauxDonnes;
             ControleurEnnemis.NbPackViesDonnes = ControleurScenario.Scenario.NbPackViesDonnes;
             ControleurVaisseaux.Ennemis = ControleurEnnemis.Ennemis;
             ControleurMessages.Tourelles = ControleurTourelles.Tourelles;
-            ControleurMessages.BulleGUI = PlayerController.BulleGUI;
+            //ControleurMessages.BulleGUI = PlayerController.BulleGUI;
             ControleurMessages.CorpsCelesteAProteger = ControleurScenario.CorpsCelesteAProteger;
             ControleurMessages.CorpsCelestes = ControleurScenario.CorpsCelestes;
             ControleurMessages.Chemin = ControleurSystemePlanetaire.Chemin;
             ControleurMessages.Sablier = GUIController.SandGlass;
             GUIController.CompositionNextWave = ControleurEnnemis.CompositionProchaineVague;
-            PlayerController.SandGlass = GUIController.SandGlass;
+            PlayersController.SandGlass = GUIController.SandGlass;
             GUIController.CelestialBodies = ControleurSystemePlanetaire.CorpsCelestes;
             GUIController.Scenario = ControleurScenario.Scenario;
             GUIController.Enemies = ControleurEnnemis.Ennemis;
             ControleurMessages.Curseur = GUIController.Cursor;
-            PlayerController.Joueur.Position = PositionCurseur;
-            PlayerController.Cursor = GUIController.Cursor;
+            PlayersController.InitialPlayerPosition = PositionCurseur;
+            PlayersController.Cursor = GUIController.Cursor;
             GUIController.InfiniteWaves = ControleurScenario.VaguesInfinies;
             GUIController.Waves = ControleurScenario.Vagues;
 
             ControleurCollisions.ObjetTouche += new ControleurCollisions.ObjetToucheHandler(ControleurEnnemis.doObjetTouche);
-            PlayerController.AchatTourelleDemande += new PlayerController.TurretTypeCelestialObjectTurretSpotHandler(ControleurTourelles.doAcheterTourelle);
+            PlayersController.AchatTourelleDemande += new PlayersController.TurretTypeCelestialObjectTurretSpotHandler(ControleurTourelles.doAcheterTourelle);
             ControleurEnnemis.VagueTerminee += new ControleurEnnemis.VagueTermineeHandler(ControleurScenario.doVagueTerminee);
-            ControleurEnnemis.ObjetDetruit += new PhysicalObjectHandler(PlayerController.doObjetDetruit);
+            ControleurEnnemis.ObjetDetruit += new PhysicalObjectHandler(PlayersController.doObjetDetruit);
             ControleurCollisions.DansZoneActivation += new ControleurCollisions.DansZoneActivationHandler(ControleurTourelles.doDansZoneActivationTourelle);
-            ControleurTourelles.ObjetCree += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
+            ControleurTourelles.ObjectCreated += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
             ControleurEnnemis.ObjetCree += new PhysicalObjectHandler(ControleurSystemePlanetaire.doObjetCree);
             ControleurProjectiles.ObjetDetruit += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
             ControleurEnnemis.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doWaveStarted);
-            PlayerController.VenteTourelleDemande += new PlayerController.CelestialObjectTurretSpotHandler(ControleurTourelles.doVendreTourelle);
-            ControleurTourelles.TourelleVendue += new ControleurTourelles.TourelleVendueHandler(PlayerController.doTourelleVendue);
-            ControleurTourelles.TourelleAchetee += new ControleurTourelles.TourelleAcheteeHandler(PlayerController.doTourelleAchetee);
+            PlayersController.VenteTourelleDemande += new PlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doVendreTourelle);
+            ControleurTourelles.TurretSold += new ControleurTourelles.TurretHandler(PlayersController.doTourelleVendue);
+            ControleurTourelles.TurretBought += new ControleurTourelles.TurretHandler(PlayersController.doTourelleAchetee);
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(ControleurScenario.doEnnemiAtteintFinTrajet);
-            PlayerController.AchatCollecteurDemande += new PlayerController.CelestialObjectHandler(ControleurVaisseaux.doAcheterCollecteur);
-            ControleurTourelles.TourelleMiseAJour += new ControleurTourelles.TourelleMiseAJourHandler(PlayerController.doTourelleMiseAJour);
-            PlayerController.MiseAJourTourelleDemande += new PlayerController.CelestialObjectTurretSpotHandler(ControleurTourelles.doMettreAJourTourelle);
+            PlayersController.AchatCollecteurDemande += new PlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterCollecteur);
+            ControleurTourelles.TurretUpdated += new ControleurTourelles.TurretHandler(PlayersController.doTourelleMiseAJour);
+            PlayersController.MiseAJourTourelleDemande += new PlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doMettreAJourTourelle);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurTourelles.doObjetDetruit);
-            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(PlayerController.doObjetDetruit);
-            PlayerController.ProchaineVagueDemandee += new PlayerController.NoneHandler(ControleurEnnemis.doProchaineVagueDemandee);
+            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(PlayersController.doObjetDetruit);
+            PlayersController.ProchaineVagueDemandee += new PlayersController.NoneHandler(ControleurEnnemis.doProchaineVagueDemandee);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
-            PlayerController.AchatDoItYourselfDemande += new PlayerController.CelestialObjectHandler(ControleurVaisseaux.doAcheterDoItYourself);
-            ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(PlayerController.doObjetDetruit);
-            PlayerController.DestructionCorpsCelesteDemande += new PlayerController.CelestialObjectHandler(ControleurSystemePlanetaire.doDetruireCorpsCeleste);
+            PlayersController.AchatDoItYourselfDemande += new PlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterDoItYourself);
+            ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(PlayersController.doObjetDetruit);
+            PlayersController.DestructionCorpsCelesteDemande += new PlayersController.CelestialObjectHandler(ControleurSystemePlanetaire.doDetruireCorpsCeleste);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
             ControleurEnnemis.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
-            PlayerController.AchatTheResistanceDemande += new PlayerController.CelestialObjectHandler(ControleurVaisseaux.doAcheterTheResistance);
+            PlayersController.AchatTheResistanceDemande += new PlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterTheResistance);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurScenario.doObjetDetruit);
 
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(this.doEnnemiAtteintFinTrajet);
             ControleurScenario.NouvelEtatPartie += new ControleurScenario.NouvelEtatPartieHandler(this.doGameStateChanged);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(this.doCorpsCelesteDetruit);
-            PlayerController.SelectedCelestialBodyChanged += new PlayerController.CelestialObjectHandler(GUIController.doSelectedCelestialBodyChanged);
             ControleurEnnemis.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doNextWave);
-            PlayerController.CashChanged += new PlayerController.IntegerHandler(GUIController.doCashChanged);
-            PlayerController.ScoreChanged += new PlayerController.IntegerHandler(GUIController.doScoreChanged);
+            PlayersController.CashChanged += new PlayersController.IntegerHandler(GUIController.doCashChanged);
+            PlayersController.ScoreChanged += new PlayersController.IntegerHandler(GUIController.doScoreChanged);
             ControleurScenario.NouvelEtatPartie += new ControleurScenario.NouvelEtatPartieHandler(GUIController.doGameStateChanged);
-            PlayerController.AchatCollecteurDemande += new PlayerController.CelestialObjectHandler(GUIController.doSpaceshipBuyed);
-            PlayerController.AchatDoItYourselfDemande += new PlayerController.CelestialObjectHandler(GUIController.doSpaceshipBuyed);
+            PlayersController.AchatCollecteurDemande += new PlayersController.CelestialObjectHandler(GUIController.doSpaceshipBuyed);
+            PlayersController.AchatDoItYourselfDemande += new PlayersController.CelestialObjectHandler(GUIController.doSpaceshipBuyed);
             ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(GUIController.doObjectDestroyed);
+            PlayersController.PlayerSelectionChanged += new PlayersController.PlayerSelectionHandler(GUIController.doPlayerSelectionChanged);
+            ControleurTourelles.TurretReactivated += new ControleurTourelles.TurretHandler(PlayersController.doTurretReactivated);
 
             ControleurScenario.Initialize();
-            PlayerController.Initialize();
+            PlayersController.Initialize();
             ControleurEnnemis.Initialize();
             ControleurProjectiles.Initialize();
             ControleurTourelles.Initialize();
@@ -245,7 +245,7 @@ namespace TDA
             ControleurProjectiles.Update(gameTime);
             ControleurTourelles.Update(gameTime); //doit etre fait avant le controleurEnnemi pour les associations ennemis <--> tourelles
             ControleurEnnemis.Update(gameTime);
-            PlayerController.Update(gameTime);
+            PlayersController.Update(gameTime);
             ControleurSystemePlanetaire.Update(gameTime);
             ControleurScenario.Update(gameTime);
             ControleurVaisseaux.Update(gameTime);
@@ -260,7 +260,6 @@ namespace TDA
             ControleurCollisions.Draw(null);
             ControleurProjectiles.Draw(null);
             ControleurEnnemis.Draw(null);
-            PlayerController.Draw();
             ControleurTourelles.Draw(null);
             ControleurSystemePlanetaire.Draw(null);
             ControleurScenario.Draw(null);
@@ -307,11 +306,25 @@ namespace TDA
 #if XBOX || MANETTE_WINDOWS
             Vector2 positionThumb = Core.Input.Facade.positionThumbstick(Main.JoueursConnectes[0].Manette, true, Scene.Nom);
 
-            ControleurJoueur.doGamePadJoystickMoved(PlayerIndex.One, Buttons.LeftStick, new Vector3(positionThumb.X * GUIController.Cursor.Vitesse, -positionThumb.Y * GUIController.Cursor.Vitesse, 0));
+            ControleurJoueur.doGamePadJoystickMoved(this.Main.JoueursConnectes[0].Manette, Buttons.LeftStick, new Vector3(positionThumb.X * GUIController.Cursor.Vitesse, -positionThumb.Y * GUIController.Cursor.Vitesse, 0));
 #else
             Vector2 positionSouris = Core.Input.Facade.positionDeltaSouris(Main.JoueursConnectes[0].Manette, Scene.Nom);
-            PlayerController.doMouseMoved(PlayerIndex.One, new Vector3(positionSouris, 0));
+            PlayersController.doMouseMoved(this.Main.JoueursConnectes[0].Manette, new Vector3(positionSouris, 0));
 #endif
+
+            //todo
+            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionSuivant, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
+                PlayersController.doMouseScrolled(this.Main.JoueursConnectes[0].Manette, 1);
+
+            //todo
+            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionPrecedent, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
+                PlayersController.doMouseScrolled(this.Main.JoueursConnectes[0].Manette, -1);
+
+            //todo
+            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
+            {
+                PlayersController.doMouseButtonPressedOnce(this.Main.JoueursConnectes[0].Manette, MouseButton.Left);
+            }
         }
 
         private void doEnnemiAtteintFinTrajet(Ennemi ennemi, CorpsCeleste corpsCeleste)

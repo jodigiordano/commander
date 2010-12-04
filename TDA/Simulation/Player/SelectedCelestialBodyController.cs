@@ -8,25 +8,17 @@
     class SelectedCelestialBodyController
     {
         public Vector3 LastPositionSelectedCelestialBody;
+        public bool SelectedCelestialBodyChanged;
+        public bool SelectedTurretSpotChanged;
 
-        private Simulation Simulation;
         private int SelectedCelestialBodyIndex;
         private int SelectedTurretSpotIndex;
-        private bool SelectedCelestialBodyIndexChanged;
-        private bool SelectedTurretSpotIndexChanged;
         private List<CorpsCeleste> CelestialBodies;
-        private Curseur Cursor;
-
-        public delegate void SelectedCelestialBodyChangedHandler(CorpsCeleste celestialBody);
-        public event SelectedCelestialBodyChangedHandler SelectedCelestialBodyChanged;
-
-        public delegate void SelectedTurretSpotChangedHandler(Emplacement turretSpot);
-        public event SelectedTurretSpotChangedHandler SelectedTurretSpotChanged;
+        private Cursor Cursor;
 
 
-        public SelectedCelestialBodyController(Simulation simulation, List<CorpsCeleste> celestialBodies, Curseur cursor)
+        public SelectedCelestialBodyController(List<CorpsCeleste> celestialBodies, Cursor cursor)
         {
-            Simulation = simulation;
             CelestialBodies = celestialBodies;
             Cursor = cursor;
 
@@ -37,31 +29,22 @@
         }
 
 
-        private void notifyCelestialBodyChanged()
+        public CorpsCeleste CelestialBody
         {
-            if (SelectedCelestialBodyChanged != null)
-                SelectedCelestialBodyChanged((SelectedCelestialBodyIndex == -1) ? null : CelestialBodies[SelectedCelestialBodyIndex]);
+            get { return (SelectedCelestialBodyIndex != -1) ? CelestialBodies[SelectedCelestialBodyIndex] : null; }
         }
 
 
-        private void notifyTurretSpotChanged()
+        public Emplacement TurretSpot
         {
-            if (SelectedTurretSpotChanged != null)
-                SelectedTurretSpotChanged((SelectedTurretSpotIndex == -1) ? null : CelestialBodies[SelectedCelestialBodyIndex].Emplacements[SelectedTurretSpotIndex]);
+            get { return (SelectedCelestialBodyIndex != -1 && SelectedTurretSpotIndex != -1) ? CelestialBodies[SelectedCelestialBodyIndex].Emplacements[SelectedTurretSpotIndex] : null; }
         }
 
 
-        public void Update(GameTime gameTime)
+        public void UpdateSelection()
         {
             doTurretSpotSelection();
-            doCelestialBodySelection();
-            doGlueMode();
-
-            if (SelectedCelestialBodyIndexChanged)
-                notifyCelestialBodyChanged();
-
-            if (SelectedTurretSpotIndexChanged)
-                notifyTurretSpotChanged();        
+            doCelestialBodySelection(); 
         }
 
 
@@ -82,7 +65,7 @@
                 for (int j = 0; j < CelestialBodies[i].Emplacements.Count; j++)
                     if (Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, CelestialBodies[i].Emplacements[j].Rectangle))
                     {
-                        SelectedCelestialBodyIndexChanged = SelectedCelestialBodyIndex != i;
+                        SelectedCelestialBodyChanged = SelectedCelestialBodyIndex != i;
 
                         SelectedCelestialBodyIndex = i;
                         SelectedTurretSpotIndex = j;
@@ -90,8 +73,9 @@
                     }
             }
 
-            SelectedTurretSpotIndexChanged = SelectedTurretSpotIndex != previousIndex;
+            SelectedTurretSpotChanged = SelectedTurretSpotIndex != previousIndex;
         }
+
 
         private void doCelestialBodySelection()
         {
@@ -117,32 +101,25 @@
                 }
             }
 
-            SelectedCelestialBodyIndexChanged = SelectedCelestialBodyIndex != previousIndex;
+            SelectedCelestialBodyChanged = SelectedCelestialBodyIndex != previousIndex;
         }
 
 
-        private void doGlueMode()
+        public Vector3 doGlueMode()
         {
-            if (SelectedCelestialBodyIndex != -1 && SelectedCelestialBodyIndexChanged)
+            if (SelectedCelestialBodyIndex != -1 && SelectedCelestialBodyChanged)
                 LastPositionSelectedCelestialBody = CelestialBodies[SelectedCelestialBodyIndex].Position;
 
             if (SelectedCelestialBodyIndex != -1)
             {
-                Cursor.Position += (CelestialBodies[SelectedCelestialBodyIndex].Position - LastPositionSelectedCelestialBody);
+                Vector3 diff = CelestialBodies[SelectedCelestialBodyIndex].Position - LastPositionSelectedCelestialBody;
 
                 LastPositionSelectedCelestialBody = CelestialBodies[SelectedCelestialBodyIndex].Position;
+
+                return diff;
             }
-        }
 
-
-        public void doCelestialBodyDestroyed()
-        {
-            int previousIndex = SelectedCelestialBodyIndex;
-
-            SelectedCelestialBodyIndex = -1;
-
-            if (SelectedCelestialBodyIndex != previousIndex)
-                notifyCelestialBodyChanged();
+            return Vector3.Zero;
         }
     }
 }

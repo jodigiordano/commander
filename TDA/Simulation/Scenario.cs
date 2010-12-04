@@ -20,7 +20,7 @@
         public List<CorpsCeleste> SystemePlanetaire;
         public VaguesInfinies VaguesInfinies;
         public LinkedList<Vague> Vagues;
-        public JoueurCommun Joueur;
+        public Player Player;
         public List<Tourelle> Tourelles;
         public CorpsCeleste CorpsCelesteAProteger;
         public IVisible FondEcran;
@@ -52,9 +52,9 @@
             Tourelles = new List<Tourelle>();
             Vagues = new LinkedList<Vague>();
 
-            Joueur = new JoueurCommun();
-            Joueur.PointsDeVie = descripteur.Joueur.PointsDeVie;
-            Joueur.ReserveUnites = descripteur.Joueur.ReserveUnites;
+            Player = new Player();
+            Player.Lives = descripteur.Joueur.PointsDeVie;
+            Player.Cash = descripteur.Joueur.ReserveUnites;
 
             FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(descripteur.FondEcran), Vector3.Zero, Simulation.Scene);
             FondEcran.Origine = FondEcran.Centre;

@@ -8,13 +8,12 @@
     {
         public List<Tourelle> TourellesDepart;
         public ControleurSystemePlanetaire ControleurSystemePlanetaire;
-        public delegate void TourelleAcheteeHandler(Tourelle tourelle);
-        public event TourelleAcheteeHandler TourelleAchetee;
-        public delegate void TourelleVendueHandler(Tourelle tourelle);
-        public event TourelleVendueHandler TourelleVendue;
-        public delegate void TourelleMiseAJourHandler(Tourelle tourelle);
-        public event TourelleMiseAJourHandler TourelleMiseAJour;
-        public event PhysicalObjectHandler ObjetCree;
+        public delegate void TurretHandler(Tourelle tourelle);
+        public event TurretHandler TurretBought;
+        public event TurretHandler TurretSold;
+        public event TurretHandler TurretUpdated;
+        public event TurretHandler TurretReactivated;
+        public event PhysicalObjectHandler ObjectCreated;
 
         public List<Tourelle> Tourelles { get; private set; }
 
@@ -46,6 +45,9 @@
 
                 t.Update(gameTime);
 
+                if (t.RetourDeInactiveCeTick)
+                    notifyTurretReactivated(t);
+
                 Ennemi ennemiAttaque;
 
                 if (t.TempsDernierProjectileLance <= 0 && AssociationsAFaireCeTick.TryGetValue(t, out ennemiAttaque))
@@ -68,7 +70,7 @@
                 List<Projectile> projectiles = Tourelles[i].ProjectilesCeTick(gameTime);
 
                 for (int j = 0; j < projectiles.Count; j++)
-                    notifyObjetCree(projectiles[j]);
+                    notifyObjectCreated(projectiles[j]);
             }
 
             // Pour l'instant, à chaque tick, les tourelles sont dissociées de leurs ennemis
@@ -158,31 +160,38 @@
         }
 
 
-        protected virtual void notifyTourelleAchetee(Tourelle tourelle)
+        private void notifyTourelleAchetee(Tourelle turret)
         {
-            if (TourelleAchetee != null)
-                TourelleAchetee(tourelle);
+            if (TurretBought != null)
+                TurretBought(turret);
         }
 
 
-        protected virtual void notifyTourelleVendue(Tourelle tourelle)
+        private void notifyTourelleVendue(Tourelle turret)
         {
-            if (TourelleVendue != null)
-                TourelleVendue(tourelle);
+            if (TurretSold != null)
+                TurretSold(turret);
         }
 
 
-        protected virtual void notifyTourelleMiseAJour(Tourelle tourelle)
+        private void notifyTourelleMiseAJour(Tourelle turret)
         {
-            if (TourelleMiseAJour != null)
-                TourelleMiseAJour(tourelle);
+            if (TurretUpdated != null)
+                TurretUpdated(turret);
         }
 
 
-        protected virtual void notifyObjetCree(IObjetPhysique objet)
+        private void notifyObjectCreated(IObjetPhysique obj)
         {
-            if (ObjetCree != null)
-                ObjetCree(objet);
+            if (ObjectCreated != null)
+                ObjectCreated(obj);
+        }
+
+
+        private void notifyTurretReactivated(Tourelle turret)
+        {
+            if (TurretReactivated != null)
+                TurretReactivated(turret);
         }
     }
 }

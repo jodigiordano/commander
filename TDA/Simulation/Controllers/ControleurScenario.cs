@@ -26,7 +26,7 @@
         public List<CorpsCeleste> CorpsCelestes     { get { return Scenario.SystemePlanetaire; } }
         public VaguesInfinies VaguesInfinies        { get { return Scenario.VaguesInfinies; } }
         public LinkedList<Vague> Vagues             { get { return Scenario.Vagues; } }
-        public JoueurCommun Joueur                        { get { return Scenario.Joueur; } }
+        public Player Player                        { get { return Scenario.Player; } }
         public List<Tourelle> TourellesDepart       { get { return Scenario.Tourelles; } }
         public CorpsCeleste CorpsCelesteAProteger   { get { return Scenario.CorpsCelesteAProteger; } }
 
@@ -124,9 +124,9 @@
             }
 
             if (corpsCeleste == CorpsCelesteAProteger)
-                Joueur.PointsDeVie = (int) CorpsCelesteAProteger.PointsVie; //correct de caster?
+                Player.Lives = (int) CorpsCelesteAProteger.PointsVie; //correct de caster?
 
-            if (Joueur.PointsDeVie <= 0 && Etat == EtatPartie.EnCours && !ModeDemo && !ModeEditeur)
+            if (Player.Lives <= 0 && Etat == EtatPartie.EnCours && !ModeDemo && !ModeEditeur)
             {
                 CorpsCelesteAProteger.doMeurt();
                 Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");

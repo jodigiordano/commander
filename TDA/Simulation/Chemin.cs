@@ -1,6 +1,5 @@
 ﻿namespace TDA
 {
-    using System;
     using System.Collections.Generic;
     using Core.Visuel;
     using Microsoft.Xna.Framework;
@@ -8,7 +7,7 @@
     using Core.Utilities;
     using Core.Physique;
 
-    class Chemin : DrawableGameComponent
+    class Chemin
     {
         private const int NB_TRAITS = 300;
         private const int NB_POINTS_MAX = 300;
@@ -16,8 +15,6 @@
         public List<CorpsCeleste> CorpsCelestes;
 
         private Trajet3D Trajet;
-        //private List<Vector3> Positions;
-        //private List<double> Temps;
         private Vector3[] Positions;
         private double[] Temps;
         private SortedList<int, CorpsCeleste> CorpsCelestesChemin;
@@ -27,7 +24,6 @@
         public double Longueur;
 
         public Chemin(Simulation simulation, Color couleur, TypeMelange melange)
-            : base(simulation.Main)
         {
             Scene = simulation.Scene;
 
@@ -52,7 +48,7 @@
         }
 
 
-        public override void Initialize()
+        public void Initialize()
         {
             CorpsCelestesChemin = new SortedList<int, CorpsCeleste>();
 
@@ -155,7 +151,7 @@
         }
 
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             recalculerTrajet();
         }
@@ -211,7 +207,7 @@
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public void Draw()
         {
             int indiceLignes = 0;
 
