@@ -61,7 +61,7 @@
             this.Scene = simulation.Scene;
             this.Position = corpsCeleste.Position + positionRelative;
 
-            this.Filtre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), this.representation.Position, simulation.Scene);
+            this.Filtre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), this.representation.Position);
             this.Filtre.TailleVecteur = new Vector2(this.representation.Rectangle.Width, this.representation.rectangle.Height);
             this.Filtre.Origine = this.Filtre.Centre;
             this.Filtre.Couleur = new Color(CouleursDisponibles[Main.Random.Next(0, CouleursDisponibles.Length)], 200);

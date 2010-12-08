@@ -42,7 +42,7 @@
             EstVisible = false;
             EnFocus = false;
 
-            Titre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("options"), new Vector3(-550, -150, 0), this);
+            Titre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("options"), new Vector3(-550, -150, 0));
             Titre.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitreMusique = new IVisible
@@ -50,8 +50,7 @@
                         "Music",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(-420, 130, 0),
-                        this
+                        new Vector3(-420, 130, 0)
                     );
             TitreMusique.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
             TitreMusique.Taille = 2f;
@@ -61,8 +60,7 @@
                         "Sound Effects",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(-420, 200, 0),
-                        this
+                        new Vector3(-420, 200, 0)
                     );
             TitreEffetsSonores.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
             TitreEffetsSonores.Taille = 2f;
@@ -72,17 +70,17 @@
             Musique = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 140, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
             EffetsSonores = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 210, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
-            Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(120, -420, 0), this);
+            Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(120, -420, 0));
             Lieutenant.Taille = 8;
             Lieutenant.Origine = new Vector2(0, Lieutenant.Texture.Height);
             Lieutenant.Rotation = MathHelper.Pi;
             Lieutenant.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
             
-            Bulle = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleRenversee"), new Vector3(80, -150, 0), this);
+            Bulle = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleRenversee"), new Vector3(80, -150, 0));
             Bulle.Taille = 8;
             Bulle.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("fondecran12"), Vector3.Zero, this);
+            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("fondecran12"), Vector3.Zero);
             FondEcran.Origine = FondEcran.Centre;
             FondEcran.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 

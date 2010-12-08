@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
-
+    using System.Security.Principal;
 
     class PlayersController
     {
@@ -32,8 +32,8 @@
 
             MasterAssociated = false;
 
-            Core.Input.Facade.PlayerConnection.PlayerConnected += new Core.Input.ConnectHandler(playerConnected);
-            Core.Input.Facade.PlayerConnection.PlayerDisconnected += new Core.Input.ConnectHandler(playerDisconnected);
+            Core.Input.Facade.PlayerConnection.PlayerConnected += new Core.Input.ConnectHandler(doPlayerConnected);
+            Core.Input.Facade.PlayerConnection.PlayerDisconnected += new Core.Input.ConnectHandler(doPlayerDisconnected);
         }
 
 
@@ -49,7 +49,7 @@
         }
 
 
-        private void playerConnected(PlayerIndex index, SignedInGamer gamer)
+        private void doPlayerConnected(PlayerIndex index, SignedInGamer gamer)
         {
             Player p = Players[index];
 
@@ -60,13 +60,24 @@
             }
 
             if (gamer != null)
+            {
                 p.Profile = gamer;
+                p.Name = gamer.Gamertag;
+            }
+
+            else
+            {
+                string[] names = WindowsIdentity.GetCurrent().Name.Split('\\');
+
+                if (names.Length >= 2)
+                    p.Name = names[1];
+            }
 
             p.Connected = true;
         }
 
 
-        private void playerDisconnected(PlayerIndex index, SignedInGamer gamer)
+        private void doPlayerDisconnected(PlayerIndex index, SignedInGamer gamer)
         {
             Player p = Players[index];
 

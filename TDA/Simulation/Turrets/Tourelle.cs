@@ -126,11 +126,11 @@
             this.PeutMettreAJourOverride = true;
             this.InactiveOverride = true;
 
-            this.ProgressionBarreInactivite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, Scene);
+            this.ProgressionBarreInactivite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
             this.ProgressionBarreInactivite.TailleVecteur = new Vector2(40, 8);
             this.ProgressionBarreInactivite.Couleur = new Color(255, 0, 220, 255);
 
-            this.BarreInactivite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("BarreInactivite"), Vector3.Zero, Scene);
+            this.BarreInactivite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("BarreInactivite"), Vector3.Zero);
             this.BarreInactivite.Origine = this.BarreInactivite.Centre;
 
             this.Spectateur = true;
@@ -362,13 +362,13 @@
 
             if (NiveauActuel.Value.RepresentationBase != NiveauActuel.Next.Value.RepresentationBase)
             {
-                representationBase = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(NiveauActuel.Next.Value.RepresentationBase), Vector3.Zero, Scene);
+                representationBase = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(NiveauActuel.Next.Value.RepresentationBase), Vector3.Zero);
                 representationBase.Origine = representationBase.Centre;
             }
 
             if (NiveauActuel.Value.Representation != NiveauActuel.Next.Value.Representation)
             {
-                representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(NiveauActuel.Next.Value.Representation), Vector3.Zero, Scene);
+                representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(NiveauActuel.Next.Value.Representation), Vector3.Zero);
                 representation.Origine = representation.Centre;
             }
 

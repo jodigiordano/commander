@@ -26,11 +26,11 @@
             Curseur = curseur;
             Position = position;
 
-            Box = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("emplacement"), Position, Simulation.Scene);
+            Box = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("emplacement"), Position);
             Box.PrioriteAffichage = priorite;
             Box.Origine = Box.Centre;
 
-            CheckedRep = new IVisible("X", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position, Simulation.Scene);
+            CheckedRep = new IVisible("X", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position);
             CheckedRep.Taille = 2;
             CheckedRep.PrioriteAffichage = priorite;
             CheckedRep.Origine = CheckedRep.Centre;

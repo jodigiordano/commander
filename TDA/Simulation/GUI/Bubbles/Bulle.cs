@@ -25,10 +25,10 @@
             this.Simulation = simulation;
             this.Dimension = dimension;
 
-            Bla = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleBlabla"), Vector3.Zero, Simulation.Scene);
+            Bla = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleBlabla"), Vector3.Zero);
             Bla.PrioriteAffichage = prioriteAffichage;
 
-            Filtre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, Simulation.Scene);
+            Filtre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
             Filtre.Couleur = new Color(Color.Black, 128);
             Filtre.PrioriteAffichage = prioriteAffichage + 0.02f;
 
@@ -38,12 +38,12 @@
 
             for (int i = 0; i < 4; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleCoin"), Vector3.Zero, Simulation.Scene);
+                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleCoin"), Vector3.Zero);
                 iv.PrioriteAffichage = prioriteAffichage + 0.01f;
 
                 Coins.Add(iv);
 
-                iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, Simulation.Scene);
+                iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
                 iv.PrioriteAffichage = prioriteAffichage + 0.01f;
 
                 Contours.Add(iv);

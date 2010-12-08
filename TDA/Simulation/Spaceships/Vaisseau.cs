@@ -41,7 +41,7 @@
             : base(simulation.Main)
         {
             this.Simulation = simulation;
-            this.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), this.Position, Simulation.Scene);
+            this.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), this.Position);
             this.Representation.Taille = 4;
             this.Representation.Origine = this.Representation.Centre;
             

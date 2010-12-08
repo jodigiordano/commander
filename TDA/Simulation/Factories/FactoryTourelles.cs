@@ -277,10 +277,10 @@
 
         private static void setRepresentations(Tourelle tourelle)
         {
-            tourelle.representationBase = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(tourelle.Niveaux.First.Value.RepresentationBase), Vector3.Zero, Simulation.Scene);
+            tourelle.representationBase = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(tourelle.Niveaux.First.Value.RepresentationBase), Vector3.Zero);
             tourelle.representationBase.Origine = tourelle.representationBase.Centre;
 
-            tourelle.representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(tourelle.Niveaux.First.Value.Representation), Vector3.Zero, Simulation.Scene);
+            tourelle.representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(tourelle.Niveaux.First.Value.Representation), Vector3.Zero);
             tourelle.representation.Origine = tourelle.representation.Centre;
 
             tourelle.PrioriteAffichage = Preferences.PrioriteSimulationTourelle;

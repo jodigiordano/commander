@@ -251,7 +251,7 @@
 
             else
             {
-                MondeSelectionne.arreterMessageBloque();
+                //MondeSelectionne.arreterMessageBloque();
             }
 
 

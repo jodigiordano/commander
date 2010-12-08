@@ -31,7 +31,7 @@
             
             Vitesse = speed;
 
-            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Curseur"), initialPosition, Scene);
+            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Curseur"), initialPosition);
             Representation.Origine = Representation.Centre;
             Representation.PrioriteAffichage = visualPriority;
             Representation.Couleur = new Color(Color.White, 0);

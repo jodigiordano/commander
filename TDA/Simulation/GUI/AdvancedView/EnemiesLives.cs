@@ -25,7 +25,7 @@
 
                 for (int j = 1; j < 7; j++)
                 {
-                    IVisible life = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("ViesEnnemis" + j), Vector3.Zero, Simulation.Scene);
+                    IVisible life = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("ViesEnnemis" + j), Vector3.Zero);
                     life.PrioriteAffichage = Preferences.PrioriteGUIVUeAvanceePointsVieEnnemis;
                     life.Origine = life.Centre;
 

@@ -209,8 +209,8 @@ namespace Core.Visuel
                 kvp.Key.EstVisible = kvp.Value.VisibleApres;
                 //kvp.Key.Focus = kvp.Value.FocusApres;
 
-                if (kvp.Key.Scene != null)
-                    kvp.Key.Scene.PrioriteAffichage = kvp.Value.PrioriteAffichageApres;
+                //if (kvp.Key.Scene != null)
+                //    kvp.Key.Scene.PrioriteAffichage = kvp.Value.PrioriteAffichageApres;
 
                 if (kvp.Key.EnFocus)
                     kvp.Key.onFocus();

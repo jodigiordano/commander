@@ -61,7 +61,7 @@ namespace Core.Visuel
             this.Scene = scene;
             this.PrioriteAffichage = 0;
 
-            ValeurVisible = new IVisible("<  " + valeur.ToString() + "  >", police, couleur, position, scene);
+            ValeurVisible = new IVisible("<  " + valeur.ToString() + "  >", police, couleur, position);
         }
 
 

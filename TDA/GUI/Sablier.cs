@@ -90,14 +90,14 @@
 
             Pixels = new List<IVisible>(NB_PIXELS);
 
-            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("sablier"), position, Scene);
+            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("sablier"), position);
             Representation.Taille = 4;
             Representation.Origine = Representation.Centre;
             Representation.PrioriteAffichage = prioriteAffichage;
 
             for (int i = 0; i < NB_PIXELS; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, Scene);
+                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
                 iv.Couleur = new Color(255, 0, 220, 255);
                 iv.Taille = TAILLE_PIXEL;
                 iv.Position = this.Position + (PositionsRelatives[i] - new Vector3(Representation.Origine.X, Representation.Origine.Y, 0)) * TAILLE_PIXEL;

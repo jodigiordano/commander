@@ -23,14 +23,12 @@
                 RepresentationVivant = new IVisible
                 (
                     Core.Persistance.Facade.recuperer<Texture2D>("ProjectileBase"),
-                    Position,
-                    Scene
+                    Position
                 );
 
                 Rectangle = new RectanglePhysique(RepresentationVivant.Rectangle);
             }
 
-            RepresentationVivant.Scene = Scene;
             RepresentationVivant.Position = Position;
             RepresentationVivant.Origine = RepresentationVivant.Centre;
             RepresentationVivant.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);

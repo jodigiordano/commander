@@ -78,7 +78,7 @@
             AnimationTransition.Initialize();
             AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
 
-            Logo = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Logo"), new Vector3(0, -100, 0), this);
+            Logo = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Logo"), new Vector3(0, -100, 0));
             Logo.Taille = 16;
             Logo.Origine = Logo.Centre;
             Logo.PrioriteAffichage = 0.3f;
@@ -87,7 +87,7 @@
 
             EtatScene = Etat.CHARGEMENT_ASSETS;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, this);
+            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
             FondEcran.Couleur = Color.Black;
             FondEcran.TailleVecteur = new Vector2(1280, 720);
             FondEcran.Origine = FondEcran.Centre;

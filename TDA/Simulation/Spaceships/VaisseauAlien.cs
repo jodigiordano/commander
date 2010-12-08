@@ -24,8 +24,7 @@
             Representation = new IVisible
             (
                 Core.Persistance.Facade.recuperer<Texture2D>("VaisseauAlien"),
-                Vector3.Zero,
-                Scene
+                Vector3.Zero
             );
             Representation.Taille = 8;
             Representation.Origine = Representation.Centre;

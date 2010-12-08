@@ -48,7 +48,7 @@
             this.JouerSons = jouerSons;
             this.Sons = sons;
 
-            IVisible iv = new IVisible("a", police, Color.White, Vector3.Zero, scene);
+            IVisible iv = new IVisible("a", police, Color.White, Vector3.Zero);
             iv.Taille = this.Taille;
             LongueurCaracterePixel = iv.Rectangle.Width;
 
@@ -74,7 +74,7 @@
 
             Compteur = 0;
 
-            Texte = new IVisible("", police, couleur, PositionDepart, scene);
+            Texte = new IVisible("", police, couleur, PositionDepart);
             Texte.Taille = this.Taille;
         }
 

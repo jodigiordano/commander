@@ -64,13 +64,13 @@
 
             Scenarios = scenarios;
 
-            Titre = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, scene);
+            Titre = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             Titre.Taille = 4;
             Titre.Origine = Titre.Centre;
             Titre.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
             Titre.Couleur.A = 200;
 
-            Infos = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, scene);
+            Infos = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             Infos.Taille = 3;
             Infos.Origine = Infos.Centre;
             Infos.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
@@ -107,7 +107,7 @@
         public void afficherMessageBloque(String message)
         {
             dernierCorpsCelesteSelectionne = Simulation.CorpsCelesteSelectionne;
-            Simulation.ControleurMessages.afficherMessage(dernierCorpsCelesteSelectionne, message, 1000000000, -1);
+            Simulation.ControleurMessages.afficherMessage(dernierCorpsCelesteSelectionne, message, 5000, -1);
         }
 
 

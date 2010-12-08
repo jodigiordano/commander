@@ -61,7 +61,7 @@
 
             AlienShip = new Objets.VaisseauAlien(simulation.Scene, Preferences.PrioriteGUIVictoireDefaite + 0.08f);
 
-            Filter = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, Simulation.Scene);
+            Filter = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
             Filter.PrioriteAffichage = 0.02f;
             Filter.TailleVecteur = new Vector2(1800, 200);
             Filter.Couleur = new Color(Color.Black, 200);

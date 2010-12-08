@@ -41,8 +41,6 @@ namespace Core.Visuel
         protected override void LogiqueLineaire()
         {
             Scene scene = (Scene)Objet;
-
-            scene.Camera.Update(tempsRelatif);
         }
 
         protected override void LogiqueApresDuree() {}

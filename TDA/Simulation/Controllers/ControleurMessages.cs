@@ -319,7 +319,7 @@
             if (objet == null || ObjetsParlants.ContainsKey(objet))
                 return;
 
-            IVisible texteInfos = new IVisible(message, Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            IVisible texteInfos = new IVisible(message, Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             texteInfos.Taille = 2;
 
             prioriteAffichage = (prioriteAffichage == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : prioriteAffichage;
@@ -377,7 +377,7 @@
                     if (!tourelle.Visible || !tourelle.Spectateur || tourelle.Type == TypeTourelle.GravitationnelleAlien || ObjetsParlants.ContainsKey(tourelle))
                         return;
 
-                    IVisible texte = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+                    IVisible texte = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                     texte.Taille = 2;
                     texte.Couleur = tourelle.Couleur;
 

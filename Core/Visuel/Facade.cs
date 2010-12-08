@@ -27,7 +27,6 @@ namespace Core.Visuel
             float luminosite,
             float contraste,
             String[] nomsScenes,
-            Vector2[] tampons,
             ManagedThread thread1,
             ManagedThread thread2)
         {
@@ -62,14 +61,12 @@ namespace Core.Visuel
                 GestionnaireScenes.Instance.ajouter(nomsScenes[i], null);
 
             Primitives.init(Preferences.Content.Load<Texture2D>("pixelBlanc"));
-            PostProcessing.init();
 
             Core.Persistance.Facade.ajouterTypeAsset(new ParticuleEffectWrapper());
             Core.Persistance.Facade.ajouterTypeAsset(new Sprite());
             Core.Persistance.Facade.ajouterTypeAsset(new Transition());
 
-            foreach (var tampon in tampons)
-                GestionnaireTampons.Instance.ajouter((int) tampon.X, (int) tampon.Y);
+            GestionnaireScenes.Instance.Tampon = new Tampon(fenetreHauteur, fenetreLargeur);
         }
 
         public static void ajouterTransition(String nomTransition, Transition transition)
@@ -120,11 +117,6 @@ namespace Core.Visuel
         {
             GestionnaireScenes.Instance.mettreAJour(nomScene, scene);
         }
-
-        //public static void mettreAJourSousScene(string nomSousScene, string nomSceneParent)
-        //{
-        //    GestionnaireScenes.Instance.mettreAJourSousScene(nomSousScene, nomSceneParent);
-        //}
 
         public static void Draw()
         {

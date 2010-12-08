@@ -32,11 +32,11 @@
             EstVisible = false;
             EnFocus = false;
 
-            FondEcranAchat = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("buy"), Vector3.Zero, this);
+            FondEcranAchat = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("buy"), Vector3.Zero);
             FondEcranAchat.Origine = FondEcranAchat.Centre;
             FondEcranAchat.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
-            FondEcranAchatEffectue = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("buy2"), Vector3.Zero, this);
+            FondEcranAchatEffectue = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("buy2"), Vector3.Zero);
             FondEcranAchatEffectue.Origine = FondEcranAchatEffectue.Centre;
             FondEcranAchatEffectue.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 

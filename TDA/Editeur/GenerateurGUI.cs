@@ -160,57 +160,57 @@
 
             #region Systeme Planetaire
 
-            FiltreSystemePlanetaire = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position - new Vector3(0, 90, 0), Simulation.Scene);
+            FiltreSystemePlanetaire = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position - new Vector3(0, 90, 0));
             FiltreSystemePlanetaire.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreSystemePlanetaire.TailleVecteur = new Vector2(540, 320);
             FiltreSystemePlanetaire.Couleur = new Color(255, 0, 220, 128);
             FiltreSystemePlanetaire.Origine = FiltreSystemePlanetaire.Centre;
 
-            SystemePlanetaire = new IVisible("Planetary System", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(0, 250, 0), Simulation.Scene);
+            SystemePlanetaire = new IVisible("Planetary System", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(0, 250, 0));
             SystemePlanetaire.Taille = 4;
             SystemePlanetaire.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             SystemePlanetaire.Origine = SystemePlanetaire.Centre;
 
 
-            NbPlanetesRep = new IVisible("Planets", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 220, 0), Simulation.Scene);
+            NbPlanetesRep = new IVisible("Planets", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 220, 0));
             NbPlanetesRep.Taille = 2;
             NbPlanetesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbPlanetesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 210, 0), 1, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbPlanetesFixesRep = new IVisible("Fixed planets", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 180, 0), Simulation.Scene);
+            NbPlanetesFixesRep = new IVisible("Fixed planets", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 180, 0));
             NbPlanetesFixesRep.Taille = 2;
             NbPlanetesFixesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbPlanetesFixesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 170, 0), 0, 15, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbEmplacementsRep = new IVisible("Slots", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 140, 0), Simulation.Scene);
+            NbEmplacementsRep = new IVisible("Slots", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 140, 0));
             NbEmplacementsRep.Taille = 2;
             NbEmplacementsRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbEmplacementsSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 130, 0), 1, 50, 10, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            NbPlanetesCheminDepartRep = new IVisible("Path length", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 100, 0), Simulation.Scene);
+            NbPlanetesCheminDepartRep = new IVisible("Path length", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 100, 0));
             NbPlanetesCheminDepartRep.Taille = 2;
             NbPlanetesCheminDepartRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbPlanetesCheminDepartSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 90, 0), 0, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            EtoileRep = new IVisible("Star in the middle?", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 60, 0), Simulation.Scene);
+            EtoileRep = new IVisible("Star in the middle?", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 60, 0));
             EtoileRep.Taille = 2;
             EtoileRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             EtoileCheckBox = new CheckBox(Simulation, curseur, Position - new Vector3(-200, 50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            SystemeCentreRep = new IVisible("Centre?", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 20, 0), Simulation.Scene);
+            SystemeCentreRep = new IVisible("Centre?", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 20, 0));
             SystemeCentreRep.Taille = 2;
             SystemeCentreRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             SystemeCentreCheckBox = new CheckBox(Simulation, curseur, Position - new Vector3(-200, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            GenererSystemePlanetaireRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(-90, -40, 0), Simulation.Scene);
+            GenererSystemePlanetaireRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(-90, -40, 0));
             GenererSystemePlanetaireRep.Taille = 2;
             GenererSystemePlanetaireRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
@@ -220,39 +220,39 @@
 
             #region Gameplay Elements
 
-            FiltreGameplay = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(600, -90, 0), Simulation.Scene);
+            FiltreGameplay = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(600, -90, 0));
             FiltreGameplay.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreGameplay.TailleVecteur = new Vector2(540, 320);
             FiltreGameplay.Couleur = new Color(76, 255, 0, 128);
             FiltreGameplay.Origine = FiltreSystemePlanetaire.Centre;
 
-            Gameplay = new IVisible("Gameplay", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(0, 160, 0), Simulation.Scene);
+            Gameplay = new IVisible("Gameplay", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(0, 160, 0));
             Gameplay.Taille = 4;
             Gameplay.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             Gameplay.Origine = Gameplay.Centre;
 
-            ReserveDepartRep = new IVisible("Minerals", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 120, 0), Simulation.Scene);
+            ReserveDepartRep = new IVisible("Minerals", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 120, 0));
             ReserveDepartRep.Taille = 2;
             ReserveDepartRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             ReserveDepartSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 110, 0), 0, 10000, 0, 100, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbViesRep = new IVisible("Lives", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 80, 0), Simulation.Scene);
+            NbViesRep = new IVisible("Lives", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 80, 0));
             NbViesRep.Taille = 2;
             NbViesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbViesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 70, 0), 1, 50, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            ValeurMinerauxRep = new IVisible("Enemies minerals", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 40, 0), Simulation.Scene);
+            ValeurMinerauxRep = new IVisible("Enemies minerals", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 40, 0));
             ValeurMinerauxRep.Taille = 2;
             ValeurMinerauxRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             ValeurMinerauxSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 30, 0), 0, 5000, 250, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbPacksVieRep = new IVisible("Life packs", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 0, 0), Simulation.Scene);
+            NbPacksVieRep = new IVisible("Life packs", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 0, 0));
             NbPacksVieRep.Taille = 2;
             NbPacksVieRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
@@ -283,7 +283,7 @@
             PowerUpsRep = new Dictionary<PowerUp, IVisible>();
             PowerUpsCheckBoxes = new Dictionary<PowerUp, CheckBox>();
 
-            PowerUpsRep.Add(PowerUp.DoItYourself, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), positionPowerUp, Simulation.Scene));
+            PowerUpsRep.Add(PowerUp.DoItYourself, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), positionPowerUp));
             PowerUpsRep[PowerUp.DoItYourself].Taille = 4;
             PowerUpsRep[PowerUp.DoItYourself].Origine = PowerUpsRep[PowerUp.DoItYourself].Centre;
             PowerUpsRep[PowerUp.DoItYourself].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
@@ -291,7 +291,7 @@
             PowerUpsCheckBoxes[PowerUp.DoItYourself].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.CollectTheRent, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), positionPowerUp, Simulation.Scene));
+            PowerUpsRep.Add(PowerUp.CollectTheRent, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), positionPowerUp));
             PowerUpsRep[PowerUp.CollectTheRent].Taille = 4;
             PowerUpsRep[PowerUp.CollectTheRent].Origine = PowerUpsRep[PowerUp.CollectTheRent].Centre;
             PowerUpsRep[PowerUp.CollectTheRent].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
@@ -299,7 +299,7 @@
             PowerUpsCheckBoxes[PowerUp.CollectTheRent].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.FinalSolution, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Destruction"), positionPowerUp, Simulation.Scene));
+            PowerUpsRep.Add(PowerUp.FinalSolution, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Destruction"), positionPowerUp));
             PowerUpsRep[PowerUp.FinalSolution].Taille = 4;
             PowerUpsRep[PowerUp.FinalSolution].Origine = PowerUpsRep[PowerUp.FinalSolution].Centre;
             PowerUpsRep[PowerUp.FinalSolution].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
@@ -307,7 +307,7 @@
             PowerUpsCheckBoxes[PowerUp.FinalSolution].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.TheResistance, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("TheResistance"), positionPowerUp, Simulation.Scene));
+            PowerUpsRep.Add(PowerUp.TheResistance, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("TheResistance"), positionPowerUp));
             PowerUpsRep[PowerUp.TheResistance].Taille = 4;
             PowerUpsRep[PowerUp.TheResistance].Origine = PowerUpsRep[PowerUp.TheResistance].Centre;
             PowerUpsRep[PowerUp.TheResistance].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
@@ -315,7 +315,7 @@
             PowerUpsCheckBoxes[PowerUp.TheResistance].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            GenererGameplayRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(-90, -130, 0), Simulation.Scene);
+            GenererGameplayRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(-90, -130, 0));
             GenererGameplayRep.Taille = 2;
             GenererGameplayRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
@@ -326,48 +326,48 @@
 
             #region Waves
 
-            FiltreWaves = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(300, 175, 0), Simulation.Scene);
+            FiltreWaves = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(300, 175, 0));
             FiltreWaves.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreWaves.TailleVecteur = new Vector2(1137, 140);
             FiltreWaves.Couleur = new Color(255, 0, 0, 128);
             FiltreWaves.Origine = FiltreWaves.Centre;
 
 
-            Waves = new IVisible("Waves", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(0, 70, 0), Simulation.Scene);
+            Waves = new IVisible("Waves", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(0, 70, 0));
             Waves.Taille = 4;
             Waves.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             Waves.Origine = Waves.Centre;
 
 
-            NbVaguesRep = new IVisible("Waves", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 50, 0), Simulation.Scene);
+            NbVaguesRep = new IVisible("Waves", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 50, 0));
             NbVaguesRep.Taille = 2;
             NbVaguesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbVaguesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 40, 0), 1, 30, 1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            QteEnnemisRep = new IVisible("Quantity", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 10, 0), Simulation.Scene);
+            QteEnnemisRep = new IVisible("Quantity", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 10, 0));
             QteEnnemisRep.Taille = 2;
             QteEnnemisRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             QteEnnemisSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 0, 0), 20, 1000, 20, 20, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            ReserveEnnemisRep = new IVisible("Money", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, -30, 0), Simulation.Scene);
+            ReserveEnnemisRep = new IVisible("Money", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, -30, 0));
             ReserveEnnemisRep.Taille = 2;
             ReserveEnnemisRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             ReserveEnnemisSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, -40, 0), 0, 10000, 0, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            DifficulteDebutRep = new IVisible("Diff. start", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(200, 30, 0), Simulation.Scene);
+            DifficulteDebutRep = new IVisible("Diff. start", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(200, 30, 0));
             DifficulteDebutRep.Taille = 2;
             DifficulteDebutRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             DifficulteDebutSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-100, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            DifficulteFinRep = new IVisible("Diff. end", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-200, 30, 0), Simulation.Scene);
+            DifficulteFinRep = new IVisible("Diff. end", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-200, 30, 0));
             DifficulteFinRep.Taille = 2;
             DifficulteFinRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
@@ -395,7 +395,7 @@
             }
 
 
-            GenererVaguesRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-390, -40, 0), Simulation.Scene);
+            GenererVaguesRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-390, -40, 0));
             GenererVaguesRep.Taille = 2;
             GenererVaguesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
@@ -406,47 +406,47 @@
 
             #region Editeur
 
-            FiltreEditeur = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(300, -340, 0), Simulation.Scene);
+            FiltreEditeur = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(300, -340, 0));
             FiltreEditeur.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreEditeur.TailleVecteur = new Vector2(740, 120);
             FiltreEditeur.Couleur = new Color(0, 148, 255, 128);
             FiltreEditeur.Origine = FiltreEditeur.Centre;
 
-            Editeur = new IVisible("Editor", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 60, 0), Simulation.Scene);
+            Editeur = new IVisible("Editor", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 60, 0));
             Editeur.Taille = 4;
             Editeur.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             Editeur.Origine = Editeur.Centre;
 
 
-            LoadRep = new IVisible("Load", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, 20, 0), Simulation.Scene);
+            LoadRep = new IVisible("Load", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, 20, 0));
             LoadRep.Taille = 2;
             LoadRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             LoadSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, 10, 0), -1, 1000, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
             LoadPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            DeleteRep = new IVisible("Delete", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, -20, 0), Simulation.Scene);
+            DeleteRep = new IVisible("Delete", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, -20, 0));
             DeleteRep.Taille = 2;
             DeleteRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             DeleteSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, -30, 0), -1, 1000, -1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
             DeletePushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, -30, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            GenererRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(-175, 20, 0), Simulation.Scene);
+            GenererRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(-175, 20, 0));
             GenererRep.Taille = 2;
             GenererRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             GenererPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-330, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            RestartRep = new IVisible("Restart", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 20, 0), Simulation.Scene);
+            RestartRep = new IVisible("Restart", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 20, 0));
             RestartRep.Taille = 2;
             RestartRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             RestartPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-150, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            SaveRep = new IVisible("Save", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, -20, 0), Simulation.Scene);
+            SaveRep = new IVisible("Save", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, -20, 0));
             SaveRep.Taille = 2;
             SaveRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 

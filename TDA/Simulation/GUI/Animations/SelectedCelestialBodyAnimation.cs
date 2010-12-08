@@ -30,8 +30,7 @@ namespace TDA
                 "",
                 Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                 Color.White,
-                new Vector3(Selection.Position.X, Selection.Position.Y + ((CircleEmitter)Selection.ParticleEffect[0]).Radius + 50, 0),
-                Simulation.Scene
+                new Vector3(Selection.Position.X, Selection.Position.Y + ((CircleEmitter)Selection.ParticleEffect[0]).Radius + 50, 0)
             );
             WidgetName.Taille = 2;
             WidgetName.PrioriteAffichage = Preferences.PrioriteGUISelectionCorpsCeleste;

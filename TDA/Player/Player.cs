@@ -17,6 +17,7 @@
         public KeyboardConfiguration KeyboardConfiguration;
         public MouseConfiguration MouseConfiguration;
         public GamePadConfiguration GamePadConfiguration;
+        public string Name;
 
         private Vector3 position;
         private Cercle Cercle;
@@ -28,6 +29,7 @@
             Connected = false;
             Master = false;
             Cercle = new Cercle(Position, 8);
+            Name = "Unknown";
 
             KeyboardConfiguration = new KeyboardConfiguration();
             MouseConfiguration = new MouseConfiguration();

@@ -14,7 +14,7 @@
         public VaisseauCollecteur(Simulation simulation)
             : base(simulation)
         {
-            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), Vector3.Zero, Simulation.Scene);
+            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), Vector3.Zero);
             Representation.Origine = Representation.Centre;
             Representation.Taille = 4;
 

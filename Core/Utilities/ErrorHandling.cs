@@ -14,12 +14,12 @@
     {
         public static void Run<T>(int width, int height, bool fullscreen, Version version) where T : Game, new()
         {
-            //if (Debugger.IsAttached)
-            //{
-            //    using (var g = new T())
-            //        g.Run();
-            //}
-            //else
+            if (Debugger.IsAttached)
+            {
+                using (var g = new T())
+                    g.Run();
+            }
+            else
             {
                 try
                 {

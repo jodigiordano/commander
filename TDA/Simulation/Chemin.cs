@@ -37,7 +37,7 @@
 
             for (int i = 0; i < NB_TRAITS; i++)
             {
-                IVisible ligne = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("LigneTrajet"), Vector3.Zero, Scene);
+                IVisible ligne = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("LigneTrajet"), Vector3.Zero);
                 ligne.PrioriteAffichage = Preferences.PrioriteSimulationChemin;
                 ligne.Origine = ligne.Centre;
                 ligne.Couleur = couleur;

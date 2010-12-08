@@ -22,7 +22,7 @@ namespace Core.Visuel
             : base(valeur, min, max, position, police, couleur, scene)
         {
             Texte = texte;
-            ValeurVisible = new IVisible("<  " + valeur.ToString() + texte + "  >", police, couleur, position, scene);
+            ValeurVisible = new IVisible("<  " + valeur.ToString() + texte + "  >", police, couleur, position);
         }
 
 

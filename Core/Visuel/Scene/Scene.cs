@@ -75,9 +75,7 @@ namespace Core.Visuel
         /// Créer une sous-scène (sans buffer ni caméra)
         /// </summary>
         public Scene(Vector2 position, string nomSceneParent)
-            : base(
-                   null,
-                   new Vector3(position.X, position.Y, 0), null)
+            : base(null, new Vector3(position.X, position.Y, 0))
         {
             this.parent = GestionnaireScenes.Instance.recuperer(nomSceneParent);
 
@@ -94,12 +92,11 @@ namespace Core.Visuel
         /// Créer une scène parent (avec buffer et caméra)
         /// </summary>
         public Scene(Vector2 position, int hauteur, int largeur)
-            : base(
-                   null,
-                   new Vector3(position.X, position.Y, 0), null)
+            : base(null, new Vector3(position.X, position.Y, 0))
         {
             //tampon = new Tampon(hauteur, largeur);
-            tampon = GestionnaireTampons.Instance.recuperer(largeur, hauteur);
+            //tampon = GestionnaireTampons.Instance.recuperer(largeur, hauteur);
+            tampon = GestionnaireScenes.Instance.Tampon;
 
             type = Type.Noyau;
 
@@ -111,12 +108,11 @@ namespace Core.Visuel
         /// Créer une scène noeud (avec buffer et caméra) mais appartenant tout de même à une scène parent
         /// </summary>
         public Scene(Vector2 position, int hauteur, int largeur, string nomSceneParent)
-            : base(
-                   null,
-                   new Vector3(position.X, position.Y, 0), null)
+            : base(null, new Vector3(position.X, position.Y, 0))
         {
             //tampon = new Tampon(hauteur, largeur);
-            tampon = GestionnaireTampons.Instance.recuperer(largeur, hauteur);
+            //tampon = GestionnaireTampons.Instance.recuperer(largeur, hauteur);
+            tampon = GestionnaireScenes.Instance.Tampon;
 
             this.parent = GestionnaireScenes.Instance.recuperer(nomSceneParent);
 
@@ -140,7 +136,7 @@ namespace Core.Visuel
 
             camera = new Camera();
             camera.Origine = new Vector2(this.Tampon.Largeur / 2.0f, this.Tampon.Hauteur / 2.0f);
-            camera.Dimension = new Vector2(this.Tampon.Largeur, this.Tampon.Hauteur);
+            //camera.Dimension = new Vector2(this.Tampon.Largeur, this.Tampon.Hauteur);
 
             Nom = nom;
 
@@ -287,7 +283,7 @@ namespace Core.Visuel
 
             for (int i = 0; i < ElementsAffiches.Count; i++)
             {
-                if (ElementsAffiches[i].Melange != DernierMelange || (!DernierElementEnFocus && Camera.EnFocus(ElementsAffiches[i].Position)))
+                if (ElementsAffiches[i].Melange != DernierMelange)
                 {
                     this.Batch.End();
                     this.Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None, Camera.Transformee);
@@ -306,11 +302,11 @@ namespace Core.Visuel
             // effacer la liste des éléments à afficher
             this.ElementsAffiches.Clear();
 
-            if (type == Type.Branche)
-            {
-                this.Scene = parent;
-                parent.ajouterScenable(this);
-            }
+            //if (type == Type.Branche)
+            //{
+            //    this.Scene = parent;
+            //    parent.ajouterScenable(this);
+            //}
         }
 
 
@@ -442,9 +438,6 @@ namespace Core.Visuel
 
         public void Dispose()
         {
-            if (EstProprietaireDeSonTampon)
-                GestionnaireTampons.Instance.remettre(Tampon);
-
             Core.Input.Facade.RemoveListener(this);
         }
 

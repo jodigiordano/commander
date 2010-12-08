@@ -42,8 +42,7 @@
                 Cash + "M$",
                 Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                 Color.White,
-                Position + new Vector3(30, 0, 0),
-                Simulation.Scene
+                Position + new Vector3(30, 0, 0)
             );
             WidgetCash.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
             WidgetCash.Taille = 3;
@@ -53,8 +52,7 @@
                 RemainingWaves.ToString(),
                 Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                 Color.White,
-                Position + new Vector3(30, -40, 0),
-                Simulation.Scene
+                Position + new Vector3(30, -40, 0)
             );
             WidgetRemainingWaves.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
             WidgetRemainingWaves.Taille = 3;

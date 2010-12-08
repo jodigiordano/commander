@@ -52,13 +52,13 @@ namespace TDA
             AnimationTransition.Initialize();
             AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, this);
+            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
             FondEcran.Couleur = Color.White;
             FondEcran.TailleVecteur = new Vector2(1280, 720);
             FondEcran.Origine = FondEcran.Centre;
             FondEcran.PrioriteAffichage = 1f;
 
-            ThankYou = new IVisible("Thank you for your support, Commander !\n\nTo continue saving the world, please enter\n\nthe 16 digits product key you received by\n\nmail and click continue. You must be\n\nconnected to Internet to complete this\n\nstep. If you have any problems, send me\n\nan e-mail at jodi@ephemeregames.com or\n\nvisit my website. Good luck Commander !", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -150, 0), this);
+            ThankYou = new IVisible("Thank you for your support, Commander !\n\nTo continue saving the world, please enter\n\nthe 16 digits product key you received by\n\nmail and click continue. You must be\n\nconnected to Internet to complete this\n\nstep. If you have any problems, send me\n\nan e-mail at jodi@ephemeregames.com or\n\nvisit my website. Good luck Commander !", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -150, 0));
             ThankYou.Taille = 3;
             ThankYou.Origine = ThankYou.Centre;
             ThankYou.PrioriteAffichage = 0.3f;
@@ -71,77 +71,77 @@ namespace TDA
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("0", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 100, 0), this),
+                new IVisible("0", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 100, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("1", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 100, 0), this),
+                new IVisible("1", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 100, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("2", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 100, 0), this),
+                new IVisible("2", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 100, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("3", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 150, 0), this),
+                new IVisible("3", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 150, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("4", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 150, 0), this),
+                new IVisible("4", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 150, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("5", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 150, 0), this),
+                new IVisible("5", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 150, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("6", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 200, 0), this),
+                new IVisible("6", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("7", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 200, 0), this),
+                new IVisible("7", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("8", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 200, 0), this),
+                new IVisible("8", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("9", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 250, 0), this),
+                new IVisible("9", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 250, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 250, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("Clear", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 300, 0), this),
+                new IVisible("Clear", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 300, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 300, 0), 0.3f)
                 )
             );
@@ -158,7 +158,7 @@ namespace TDA
                 this.Effets.ajouter(touche.Value.Bouton, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
             }
 
-            Saisie = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 100, 0), this);
+            Saisie = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 100, 0));
             Saisie.Origine = Saisie.Centre;
             Saisie.Taille = 5;
             Saisie.PrioriteAffichage = 0.3f;
@@ -166,7 +166,7 @@ namespace TDA
 
             Exit = new KeyValuePair<IVisible,PushButton>
             (
-                new IVisible("Exit", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 200, 0), this),
+                new IVisible("Exit", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(550, 200, 0), 0.3f)
             );
             Exit.Key.Taille = 3;
@@ -175,7 +175,7 @@ namespace TDA
 
             Continue = new KeyValuePair<IVisible, PushButton>
             (
-                new IVisible("Continue", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 300, 0), this),
+                new IVisible("Continue", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 300, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(550, 300, 0), 0.3f)
             );
             Continue.Key.Taille = 3;
@@ -189,7 +189,7 @@ namespace TDA
 
             effectuerTransition = false;
 
-            MessageErreur = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 250, 0), this);
+            MessageErreur = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 250, 0));
             MessageErreur.Taille = 3;
             MessageErreur.Origine = MessageErreur.Centre;
             MessageErreur.Couleur = Color.Red;

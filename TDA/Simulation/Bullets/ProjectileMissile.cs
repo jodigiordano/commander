@@ -29,8 +29,7 @@
                 RepresentationVivant = new IVisible
                 (
                     Core.Persistance.Facade.recuperer<Texture2D>("ProjectileMissile1"),
-                    position,
-                    Scene
+                    position
                 );
 
                 Rectangle = new RectanglePhysique(RepresentationVivant.Rectangle);
@@ -39,7 +38,6 @@
             Rectangle.X = (int) Position.X;
             Rectangle.Y = (int) Position.Y;
             RepresentationVivant.Position = Position;
-            RepresentationVivant.Scene = Scene;
             RepresentationVivant.Origine = RepresentationVivant.Centre;
             RepresentationVivant.Rotation = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
             RepresentationVivant.PrioriteAffichage = PrioriteAffichage + 0.001f;

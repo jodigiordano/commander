@@ -25,12 +25,12 @@ namespace TDA
             Scene = scene;
             Main = main;
 
-            Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(-300, 500, 0), Scene);
+            Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(-300, 500, 0));
             Lieutenant.Taille = 6;
             Lieutenant.Origine = Lieutenant.Centre;
             Lieutenant.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
 
-            Bulle = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulle"), new Vector3(-100, 300, 0), Scene);
+            Bulle = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulle"), new Vector3(-100, 300, 0));
             Bulle.Taille = 8;
             Bulle.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
 

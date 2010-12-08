@@ -27,7 +27,7 @@
             Simulation = simulation;
             CorpsCeleste = corpsCeleste;
 
-            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lune" + Main.Random.Next(1, 5)), Vector3.Zero, Simulation.Scene);
+            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lune" + Main.Random.Next(1, 5)), Vector3.Zero);
             Representation.Taille = Main.Random.Next(2, 4);
             Representation.Origine = Representation.Centre;
             Representation.PrioriteAffichage = CorpsCeleste.PrioriteAffichage + 0.000001f;

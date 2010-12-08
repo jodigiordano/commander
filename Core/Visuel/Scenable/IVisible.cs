@@ -47,9 +47,6 @@ namespace Core.Visuel
         [ContentSerializer(Optional = true)]
         public virtual List<IScenable> Composants   { get; set; }
 
-        [ContentSerializerIgnore]
-        public Scene Scene                          { get; set; }
-
         [ContentSerializer(Optional = true)]
         public Rectangle partieVisible;
 
@@ -96,7 +93,7 @@ namespace Core.Visuel
         // Constructeurs
         //=============================================================================
 
-        public IVisible(Texture2D texture, Vector3 position, Scene scene)
+        public IVisible(Texture2D texture, Vector3 position)
             : this()
         {
             this.typeInterne = TypeInterne.Texture;
@@ -105,12 +102,10 @@ namespace Core.Visuel
             this.position.X = position.X;
             this.position.Y = position.Y;
             this.position.Z = position.Z;
-
-            this.Scene = scene;
         }
 
 
-        public IVisible(String texte, SpriteFont police, Color couleur, Vector3 position, Scene scene)
+        public IVisible(String texte, SpriteFont police, Color couleur, Vector3 position)
             : this()
         {
             this.typeInterne = TypeInterne.Texte;
@@ -122,8 +117,6 @@ namespace Core.Visuel
             this.position.Z = position.Z;
 
             this.Couleur = couleur;
-
-            this.Scene = scene;
         }
 
 
@@ -146,7 +139,6 @@ namespace Core.Visuel
             this.Composants = null;
             this.Effets = SpriteEffects.None;
             this.DessinerPartie = false;
-            this.Scene = null;
             this.PrioriteAffichage = 0;
         }
 

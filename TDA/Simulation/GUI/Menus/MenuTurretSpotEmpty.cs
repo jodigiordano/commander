@@ -38,7 +38,7 @@
 
                 LogosTourellesAchat.Add(t.Type, iv);
 
-                IVisible prix = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+                IVisible prix = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                 prix.Taille = 2;
                 prix.PrioriteAffichage = this.PrioriteAffichage;
 
@@ -48,8 +48,7 @@
             WidgetSelection = new IVisible
             (
                 Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"),
-                Position,
-                simulation.Scene
+                Position
             );
             WidgetSelection.Couleur = new Color(Color.Green, 230);
             WidgetSelection.PrioriteAffichage = this.PrioriteAffichage + 0.01f;

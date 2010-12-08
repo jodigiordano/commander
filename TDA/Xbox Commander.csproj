@@ -193,7 +193,7 @@
     <Compile Include="Simulation\PlanetarySystem\LuneMatrice.cs" />
     <Compile Include="Simulation\PlanetarySystem\LuneTrajet.cs" />
     <Compile Include="Simulation\PlanetarySystem\TrouRose.cs" />
-    <Compile Include="Simulation\Player\CommonPlayers.cs" />
+    <Compile Include="Simulation\Player\CommonStash.cs" />
     <Compile Include="Simulation\Player\PlayerSelection.cs" />
     <Compile Include="Simulation\Player\SelectedCelestialBodyController.cs" />
     <Compile Include="Simulation\Player\SelectedTurretToBuyController.cs" />

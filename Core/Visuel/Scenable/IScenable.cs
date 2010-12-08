@@ -23,7 +23,6 @@ namespace Core.Visuel
     {
         Vector3 Position                { get; set; }
         float PrioriteAffichage         { get; set; }
-        Scene Scene                     { set; }
         TypeMelange Melange             { get; set; }
         List<IScenable> Composants      { get; set; }
 

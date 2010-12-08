@@ -55,9 +55,9 @@
             this.Centre = false;
             this.TexteATraduire = texteATraduire;
 
-            PartieNonTraduite = new IVisible(texteATraduire, policeLangueEtrangere, couleurLangueEtrangere, position, Scene);
+            PartieNonTraduite = new IVisible(texteATraduire, policeLangueEtrangere, couleurLangueEtrangere, position);
             PartieNonTraduite.Taille = taille;
-            PartieTraduite = new IVisible("", policeLangueConnue, couleurLangueConnue, position, Scene);
+            PartieTraduite = new IVisible("", policeLangueConnue, couleurLangueConnue, position);
             PartieTraduite.Taille = taille;
 
             PartieNonTraduiteTexte = new char[texteATraduire.Length];

@@ -29,35 +29,35 @@
         {
             PrioriteAffichage = prioriteAffichage;
 
-            LogoDoItYourSelf = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), Vector3.Zero, Simulation.Scene);
+            LogoDoItYourSelf = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), Vector3.Zero);
             LogoDoItYourSelf.Taille = 4;
             LogoDoItYourSelf.PrioriteAffichage = this.PrioriteAffichage;
 
-            PrixDoItYourself = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            PrixDoItYourself = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixDoItYourself.Taille = 2;
             PrixDoItYourself.PrioriteAffichage = this.PrioriteAffichage;
 
-            LogoCollecteur = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), Vector3.Zero, Simulation.Scene);
+            LogoCollecteur = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), Vector3.Zero);
             LogoCollecteur.Taille = 4;
             LogoCollecteur.PrioriteAffichage = this.PrioriteAffichage;
 
-            PrixCollecteur = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            PrixCollecteur = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixCollecteur.Taille = 2;
             PrixCollecteur.PrioriteAffichage = this.PrioriteAffichage;
 
-            LogoDestructionCorpsCeleste = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Destruction"), Vector3.Zero, Simulation.Scene);
+            LogoDestructionCorpsCeleste = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Destruction"), Vector3.Zero);
             LogoDestructionCorpsCeleste.Taille = 4;
             LogoDestructionCorpsCeleste.PrioriteAffichage = this.PrioriteAffichage;
 
-            PrixDestructionCorpsCeleste = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            PrixDestructionCorpsCeleste = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixDestructionCorpsCeleste.Taille = 2;
             PrixDestructionCorpsCeleste.PrioriteAffichage = this.PrioriteAffichage;
 
-            LogoTheResistance = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("TheResistance"), Vector3.Zero, Simulation.Scene);
+            LogoTheResistance = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("TheResistance"), Vector3.Zero);
             LogoTheResistance.Taille = 4;
             LogoTheResistance.PrioriteAffichage = this.PrioriteAffichage;
 
-            PrixTheResistance = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            PrixTheResistance = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixTheResistance.Taille = 2;
             PrixTheResistance.PrioriteAffichage = this.PrioriteAffichage;
 
@@ -65,8 +65,7 @@
             WidgetSelection = new IVisible
             (
                 Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"),
-                Position,
-                simulation.Scene
+                Position
             );
             WidgetSelection.Couleur = new Color(Color.Green, 230);
             WidgetSelection.PrioriteAffichage = this.PrioriteAffichage + 0.01f;

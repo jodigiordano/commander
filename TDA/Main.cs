@@ -13,27 +13,12 @@ namespace TDA
     class Main : Game
     {
         public ManagedThread[] Threads;
-        public Sauvegarde SaveGame;
+        public SaveGame SaveGame;
         public PlayersController PlayersController;
         public TrialMode TrialMode;
 
         private GraphicsDeviceManager Graphics;
         private bool Initializing = true;
-
-
-        private Vector2[] Tampons = new Vector2[]
-        {
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720),
-            new Vector2(1280, 720)
-        };
 
 
         public static List<String> MusiquesDisponibles = new List<string>()
@@ -53,7 +38,7 @@ namespace TDA
             TrialMode = new TrialMode(this);
             Graphics.IsFullScreen = Preferences.FullScreen;
             Content.RootDirectory = "Content";
-            SaveGame = new Sauvegarde();
+            SaveGame = new SaveGame();
             Window.AllowUserResizing = false;
             PlayersController = new PlayersController();
 
@@ -95,7 +80,6 @@ namespace TDA
                 0,
                 0,
                 new string[] { "Menu", "Partie", "Chargement", "NouvellePartie", "Aide", "Options", "Editeur", "Acheter", "Validation" },
-                Tampons,
                 Threads[0],
                 Threads[1]);
 

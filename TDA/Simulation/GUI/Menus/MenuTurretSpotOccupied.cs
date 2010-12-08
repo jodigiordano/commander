@@ -26,29 +26,28 @@
         {
             PrioriteAffichage = prioriteAffichage;
 
-            LogoPrixVente = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("sell"), Vector3.Zero, Simulation.Scene);
+            LogoPrixVente = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("sell"), Vector3.Zero);
             LogoPrixVente.PrioriteAffichage = this.PrioriteAffichage;
 
-            PrixVente = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            PrixVente = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixVente.Taille = 2;
             PrixVente.PrioriteAffichage = this.PrioriteAffichage;
 
-            LogoPrixMiseAJour = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("upgrade"), Vector3.Zero, Simulation.Scene);
+            LogoPrixMiseAJour = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("upgrade"), Vector3.Zero);
             LogoPrixMiseAJour.PrioriteAffichage = this.PrioriteAffichage;
 
-            PrixMiseAJour = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            PrixMiseAJour = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixMiseAJour.Taille = 2;
             PrixMiseAJour.PrioriteAffichage = this.PrioriteAffichage;
 
-            NiveauTourelle = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+            NiveauTourelle = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             NiveauTourelle.Taille = 2;
             NiveauTourelle.PrioriteAffichage = this.PrioriteAffichage;
 
             WidgetSelection = new IVisible
             (
                 Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"),
-                Position,
-                simulation.Scene
+                Position
             );
             WidgetSelection.Couleur = new Color(Color.Green, 230);
             WidgetSelection.PrioriteAffichage = this.PrioriteAffichage + 0.01f;

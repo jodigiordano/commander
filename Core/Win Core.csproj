@@ -145,7 +145,6 @@
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\FadeCouleur.cs" />
     <Compile Include="Utilities\GestionnaireEffets.cs" />
-    <Compile Include="Utilities\ICamera.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />
     <Compile Include="Utilities\ManagedThread.cs" />
     <Compile Include="Utilities\Pause.cs" />
@@ -182,9 +181,7 @@
     <Compile Include="Visuel\Scenable\RectangleVisuel.cs" />
     <Compile Include="Visuel\Scenable\Sprite.cs" />
     <Compile Include="Visuel\Scene\GestionnaireScenes.cs" />
-    <Compile Include="Visuel\Scene\GestionnaireTampons.cs" />
     <Compile Include="Visuel\Scene\GestionnaireTransitions.cs" />
-    <Compile Include="Visuel\Scene\PostProcessing.cs" />
     <Compile Include="Visuel\Scene\Scene.cs" />
     <Compile Include="Visuel\Scene\Tampon.cs" />
     <Compile Include="Visuel\Scene\Transition.cs" />

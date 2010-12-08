@@ -46,16 +46,16 @@
 
             for (int i = 0; i < NB_REPRESENTATIONS; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero, Simulation.Scene);
+                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
                 iv.PrioriteAffichage = this.PrioriteAffichage + 0.00001f;
                 RepresentationsEnnemis.Add(iv);
 
-                iv = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+                iv = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                 iv.Taille = 2;
                 iv.PrioriteAffichage = this.PrioriteAffichage;
                 RepresentationsQtes.Add(iv);
 
-                iv = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero, Simulation.Scene);
+                iv = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                 iv.Taille = 1;
                 iv.PrioriteAffichage = this.PrioriteAffichage;
                 RepresentationsNiveaux.Add(iv);

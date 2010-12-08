@@ -38,7 +38,7 @@
             Vaisseaux = new List<Vaisseau>();
 
             Vaisseau v = new Vaisseau(simulation);
-            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance1"), Vector3.Zero, Simulation.Scene);
+            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance1"), Vector3.Zero);
             v.Representation.Taille = 4;
             v.Representation.Origine = v.Representation.Centre;
             v.Representation.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
@@ -49,7 +49,7 @@
             Vaisseaux.Add(v);
 
             v = new Vaisseau(simulation);
-            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance2"), Vector3.Zero, Simulation.Scene);
+            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance2"), Vector3.Zero);
             v.Representation.Taille = 4;
             v.Representation.Origine = v.Representation.Centre;
             v.Representation.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
@@ -60,7 +60,7 @@
             Vaisseaux.Add(v);
 
             v = new Vaisseau(simulation);
-            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance3"), Vector3.Zero, Simulation.Scene);
+            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance3"), Vector3.Zero);
             v.Representation.Taille = 4;
             v.Representation.Origine = v.Representation.Centre;
             v.Representation.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;

@@ -35,15 +35,15 @@
             Max = max;
             Increment = increment;
 
-            Gauche = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Gauche"), Position - new Vector3(50, 0, 0), Scene);
+            Gauche = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Gauche"), Position - new Vector3(50, 0, 0));
             Gauche.PrioriteAffichage = priorite;
             Gauche.Origine = Gauche.Centre;
 
-            Droite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Droite"), Position + new Vector3(50, 0, 0), Scene);
+            Droite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Droite"), Position + new Vector3(50, 0, 0));
             Droite.PrioriteAffichage = priorite;
             Droite.Origine = Droite.Centre;
 
-            ValeurRep = new IVisible(Valeur.ToString(), Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position, Scene);
+            ValeurRep = new IVisible(Valeur.ToString(), Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position);
             ValeurRep.Taille = 2;
             ValeurRep.PrioriteAffichage = priorite;
             ValeurRep.Origine = ValeurRep.Centre;

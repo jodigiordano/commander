@@ -27,7 +27,7 @@
             Curseur = curseur;
             Position = position;
 
-            Bouton = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("emplacement"), Position, Scene);
+            Bouton = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("emplacement"), Position);
             Bouton.PrioriteAffichage = priorite;
             Bouton.Origine = Bouton.Centre;
 

@@ -84,7 +84,7 @@ namespace TDA
         {
             if (RepresentationVivant == null)
             {
-                RepresentationVivant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(Nom), Vector3.Zero, Simulation.Scene);
+                RepresentationVivant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(Nom), Vector3.Zero);
                 RepresentationVivant.Origine = RepresentationVivant.Centre;
 
                 RepresentationMort = RepresentationVivant;
@@ -92,11 +92,6 @@ namespace TDA
                 RepresentationVivantProjection = (IVisible)RepresentationVivant.Clone();
                 RepresentationMortProjection = (IVisible)RepresentationMort.Clone();
             }
-
-            RepresentationVivant.Scene = Simulation.Scene;
-            RepresentationMort.Scene = Simulation.Scene;
-            RepresentationVivantProjection.Scene = Simulation.Scene;
-            RepresentationMortProjection.Scene = Simulation.Scene;
 
             EtincellesLaserMultiple = Simulation.Scene.Particules.recuperer("etincelleLaser");
             EtincellesMissile = Simulation.Scene.Particules.recuperer("etincelleMissile");

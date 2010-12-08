@@ -6,7 +6,7 @@
     using Microsoft.Xna.Framework.Content;
 
     [Serializable]
-    public class Sauvegarde : AbstractDonneeJoueur
+    public class SaveGame : AbstractDonneeJoueur
     {
         [ContentSerializer(Optional = false)]
         public List<int> Progression               { get; set; }
@@ -26,7 +26,7 @@
         [ContentSerializer(Optional = false)]
         public List<DonneesGenerateur> DonneesGenerateur { get; set; }
 
-        public Sauvegarde()
+        public SaveGame()
         {
             Nom = "savePlayer";
             NomDossier = "Commander";
@@ -36,7 +36,7 @@
 
         protected override void doInitialiser(object donnee)
         {
-            Sauvegarde d = donnee as Sauvegarde;
+            SaveGame d = donnee as SaveGame;
 
             this.Progression = d.Progression;
             this.VolumeMusique = d.VolumeMusique;

@@ -107,7 +107,7 @@ namespace TDA.Objets
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(LastTimeChoiceAutre), Vector3.Zero, Scene);
+                    IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(LastTimeChoiceAutre), Vector3.Zero);
                     iv.Taille = 16;
                     iv.Melange = TypeMelange.Soustraire;
                     iv.Origine = iv.Centre;

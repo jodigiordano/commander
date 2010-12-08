@@ -27,7 +27,7 @@
 
             for (int i = 0; i < CirclesCount; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("CercleBlanc"), Vector3.Zero, Simulation.Scene);
+                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("CercleBlanc"), Vector3.Zero);
                 iv.Couleur = new Color(Color.Black, 200);
                 iv.Origine = iv.Centre;
                 iv.PrioriteAffichage = Preferences.PrioriteGUIEtoiles - 0.001f;

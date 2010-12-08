@@ -14,7 +14,7 @@
         {
             Simulation = simulation;
 
-            BlowUpZoneVisual = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("CercleBlanc"), Vector3.Zero, Simulation.Scene);
+            BlowUpZoneVisual = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("CercleBlanc"), Vector3.Zero);
             BlowUpZoneVisual.Couleur = new Color(Color.Red, 100);
             BlowUpZoneVisual.Origine = BlowUpZoneVisual.Centre;
             BlowUpZoneVisual.PrioriteAffichage = Preferences.PrioriteGUIEtoiles - 0.002f;

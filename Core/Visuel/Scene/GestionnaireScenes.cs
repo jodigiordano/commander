@@ -1,86 +1,33 @@
-﻿//=====================================================================
-//
-// Gestionnaire de Scenes
-// Helper class du main qui gère les scènes
-//
-//=====================================================================
-
-namespace Core.Visuel
+﻿namespace Core.Visuel
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
-#if DEBUG
-    using System.Diagnostics;
-#endif
 
     class GestionnaireScenes
     {
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
         private static GestionnaireScenes instance;
-
-        // Liste des scènes
         private Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
-
-        // Liste des sous-scènes
         private Dictionary<string, string> sousScenes = new Dictionary<string, string>();
-
-        // Liste des scènes à afficher par tick
         private List<Scene> scenesAafficher = new List<Scene>();
-
-        // Enumerateur
         private Dictionary<String, Scene>.Enumerator iter;
-
-        // Camera dans une scène bidon.
-        // Pour rester dans un cas général au niveau de IVisible.
-        // Donc pour l'instant, n'utiliser que la Caméra.
-        private class ScenePrincipale : Scene
-        {
-            public ScenePrincipale() : base(Vector2.Zero, 1, 1)
-            {
-                Camera.Origine = new Vector2(Preferences.FenetreLargeur / 2.0f, Preferences.FenetreHauteur / 2.0f);
-            }
-
-            protected override void UpdateLogique(GameTime gameTime) {}
-            protected override void UpdateVisuel() {}
-        }
-
-        ScenePrincipale scenePrincipale;
-
-
-        //=====================================================================
-        // Getters / Setters
-        //=====================================================================
+        private Camera Camera = new Camera();
 
         public SpriteBatch SpriteBatch { get; set; }
+        public Tampon Tampon;
 
 
         private GestionnaireScenes()
         {
-            scenePrincipale = new ScenePrincipale();
+            Camera.Origine = new Vector2(Preferences.FenetreLargeur / 2.0f, Preferences.FenetreHauteur / 2.0f);
             scenes.Clear();
             sousScenes.Clear();
 
             SpriteBatch = new SpriteBatch(Preferences.GraphicsDeviceManager.GraphicsDevice);
         }
 
-        //=====================================================================
-        // Gestion des scènes
-        //=====================================================================
-
-        /// <summary>
-        /// Met à jour une scène.
-        /// </summary>
-        /// <param name="nomScene">Nom de la scène à updater.</param>
-        /// <param name="scene">La nouvelle scène.</param>
-        /// <returns>Une référence sur la scène updatée.</returns>
 
         public Scene mettreAJour(String nomScene, Scene scene)
         {
@@ -95,22 +42,12 @@ namespace Core.Visuel
         }
 
 
-        //
-        // Met a jour le focus d'une scène
-        //
-
         public void majFocus(String nomScene, bool focus)
         {
             if (scenes[nomScene] != null)
                 scenes[nomScene].EnFocus = focus;
         }
 
-
-        //
-        // Ajouter une scène
-        // Lorsque la scène ne se trouve pas dans le gestionnaire.
-        // Cette opération n'est effectuée qu'une seule fois pour chaque type de scène
-        //
 
         public void ajouter(String nomScene, Scene scene)
         {
@@ -124,11 +61,6 @@ namespace Core.Visuel
         }
 
 
-        //
-        // Récupérer une scène
-        // Un getter bien normal :)
-        //
-
         public Scene recuperer(String nomScene)
         {
             if (!scenes.ContainsKey(nomScene))
@@ -137,9 +69,6 @@ namespace Core.Visuel
             return scenes[nomScene];
         }
 
-        //
-        // Détermine si une scène est en focus
-        //
 
         public bool EnFocus(String nomScene)
         {
@@ -149,10 +78,6 @@ namespace Core.Visuel
             return scenes.ContainsKey(nomScene) && scenes[nomScene].EnFocus;
         }
 
-
-        //=====================================================================
-        // Dessiner les scènes (ce qui sera afficher à l'écran)
-        //=====================================================================
 
         public void Draw() {
 
@@ -208,36 +133,19 @@ namespace Core.Visuel
             Preferences.GraphicsDeviceManager.GraphicsDevice.Clear(Color.Black);
 
             // Affichage des scènes dans le back buffer (à l'écran)
-            SpriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None, scenePrincipale.Camera.Transformee);
+            SpriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None, Camera.Transformee);
 
             Preferences.GraphicsDeviceManager.GraphicsDevice.RenderState.SourceBlend = Blend.One;
             Preferences.GraphicsDeviceManager.GraphicsDevice.RenderState.DestinationBlend = Blend.InverseSourceAlpha;
 
             for (int i = 0; i < scenesAafficher.Count; i++)
             {
-                ((IVisible)scenesAafficher[i]).Scene = scenePrincipale;
                 scenesAafficher[i].Draw(SpriteBatch);
             }
 
             SpriteBatch.End();
-
-            // Post-processing
-            if (Preferences.Luminosite != 0 || Preferences.Contraste != 0)
-            {
-                PostProcessing.appliquerLuminositeContraste(
-                    Preferences.Luminosite,
-                    Preferences.Contraste);
-            }
         }
 
-
-        //=====================================================================
-        // Questionner le gestionnaire
-        //=====================================================================
-
-        //
-        // Est-ce que la scène peut mettre à jour sa logique
-        //
 
         public bool peutMettreAJour(Scene scene)
         {
@@ -245,15 +153,8 @@ namespace Core.Visuel
         }
 
 
-        //=====================================================================
-        // Mettre à jour le gestionnaire
-        //=====================================================================
-
         public void Update(GameTime gameTime)
         {
-            // coute pas cher
-            //restructurerSousScenes();
-
             String[] wCles = scenes.Keys.ToArray();
 
             for (int i = 0; i < wCles.Length; i++)
@@ -265,10 +166,6 @@ namespace Core.Visuel
             }
         }
 
-
-        //=====================================================================
-        // Arrêter toutes les scènes 
-        //=====================================================================
 
         public void ToutesArretees()
         {
@@ -294,10 +191,6 @@ namespace Core.Visuel
             }
         }
 
-
-        //=====================================================================
-        // Helpers
-        //=====================================================================
 
         private void mettreAJourScenes()
         {

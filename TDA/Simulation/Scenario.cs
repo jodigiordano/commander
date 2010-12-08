@@ -56,7 +56,7 @@
             CommonStash.Lives = descripteur.Joueur.PointsDeVie;
             CommonStash.Cash = descripteur.Joueur.ReserveUnites;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(descripteur.FondEcran), Vector3.Zero, Simulation.Scene);
+            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(descripteur.FondEcran), Vector3.Zero);
             FondEcran.Origine = FondEcran.Centre;
             FondEcran.PrioriteAffichage = Preferences.PrioriteFondEcran;
 
@@ -124,7 +124,7 @@
                         corpsCeleste.EnBackground,
                        corpsCeleste.Rotation
                     );
-                    c.representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero, Simulation.Scene);
+                    c.representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero);
                     c.representation.Origine = c.representation.Centre;
                     c.representation.PrioriteAffichage = c.representationParticules.PrioriteAffichage + 0.001f;
 
@@ -143,7 +143,7 @@
                        corpsCeleste.Offset,
                        (int)corpsCeleste.Taille,
                        corpsCeleste.Vitesse,
-                       new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero, Simulation.Scene),
+                       new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero),
                        corpsCeleste.PositionDepart,
                        ProchainePrioriteAffichageCorpsCeleste -= 0.001f,
                        corpsCeleste.EnBackground,
@@ -158,7 +158,7 @@
 
                     for (int j = 0; j < corpsCeleste.Representations.Count; j++)
                     {
-                        IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(corpsCeleste.Representations[j]), Vector3.Zero, Simulation.Scene);
+                        IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(corpsCeleste.Representations[j]), Vector3.Zero);
                         iv.Origine = iv.Centre;
                         representations.Add(iv);
                     }
@@ -201,7 +201,7 @@
                     (
                         Simulation,
                         emplacement.Position * 8,
-                        new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(emplacement.Representation), Vector3.Zero, Simulation.Scene),
+                        new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(emplacement.Representation), Vector3.Zero),
                         c
                     );
 

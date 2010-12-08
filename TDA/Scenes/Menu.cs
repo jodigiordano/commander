@@ -47,8 +47,7 @@
                         "save the\nworld",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(-220, -170, 0),
-                        this
+                        new Vector3(-220, -170, 0)
                     );
             NouvellePartie.Taille = 4f;
             NouvellePartie.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
@@ -58,8 +57,7 @@
                         "resume game",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(-460, 75, 0),
-                        this
+                        new Vector3(-460, 75, 0)
                     );
             ReprendrePartie.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
             ReprendrePartie.Taille = 4f;
@@ -69,8 +67,7 @@
                         "options\nn'stuff",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(-50, -200, 0),
-                        this
+                        new Vector3(-50, -200, 0)
                     );
             Options.Taille = 4f;
             Options.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
@@ -80,8 +77,7 @@
                         "help",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(-350, 120, 0),
-                        this
+                        new Vector3(-350, 120, 0)
                     );
             Aide.Taille = 4f;
             Aide.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
@@ -91,8 +87,7 @@
                         "quit",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(140, 160, 0),
-                        this
+                        new Vector3(140, 160, 0)
                     );
             QuitterPartie.Taille = 4f;
             QuitterPartie.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
@@ -102,8 +97,7 @@
                         "editor",
                         Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                         Color.White,
-                        new Vector3(-600, 300, 0),
-                        this
+                        new Vector3(-600, 300, 0)
                     );
             Editeur.Taille = 4f;
             Editeur.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
@@ -113,8 +107,7 @@
                         "Commander",
                         Core.Persistance.Facade.recuperer<SpriteFont>("PixelBig"),
                         Color.White,
-                        new Vector3(0, 0, 0),
-                        this
+                        new Vector3(0, 0, 0)
                     );
             TitreMenu.Taille = 4;
             TitreMenu.Origine = TitreMenu.Centre;
@@ -125,8 +118,7 @@
                         "",
                         Core.Persistance.Facade.recuperer<SpriteFont>("PixelBig"),
                         Color.White,
-                        new Vector3(0, 50, 0),
-                        this
+                        new Vector3(0, 50, 0)
                     );
             NomJoueur.Taille = 3;
             NomJoueur.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
