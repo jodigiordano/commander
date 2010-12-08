@@ -10,6 +10,8 @@ namespace TDA
     using Core.Utilities;
     using Microsoft.Xna.Framework.GamerServices;
     using System.Threading;
+    using Core.Input;
+    using Microsoft.Xna.Framework.Input;
 
     class Validation : Scene
     {
@@ -17,7 +19,7 @@ namespace TDA
 
         private IVisible FondEcran;
         private IVisible ThankYou;
-        private Dictionary<IVisible, PushButton> Clavier;
+        private List<KeyValuePair<IVisible, PushButton>> Clavier;
         private KeyValuePair<IVisible, PushButton> Exit;
         private KeyValuePair<IVisible, PushButton> Continue;
         private IVisible MessageErreur;
@@ -65,61 +67,83 @@ namespace TDA
 
             Curseur = new Cursor(Main, this, new Vector3(0, 100, 0), 10, 0.2f);
 
-            Clavier = new Dictionary<IVisible, PushButton>();
+            Clavier = new List<KeyValuePair<IVisible, PushButton>>();
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("0", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 100, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 100, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("1", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 100, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 100, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("2", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 100, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 100, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("3", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 150, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 150, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("4", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 150, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 150, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("5", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 150, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 150, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("6", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 200, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 200, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("7", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 200, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 200, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("8", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 200, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 200, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("9", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 250, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 250, 0), 0.3f)
+                )
             );
             Clavier.Add
             (
+                new KeyValuePair<IVisible, PushButton>(
                 new IVisible("Clear", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 300, 0), this),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 300, 0), 0.3f)
+                )
             );
 
 
@@ -215,7 +239,7 @@ namespace TDA
                 {
                     MessageErreur.Texte = ValidationServeur.Message;
                     MessageErreur.Couleur = new Color(155, 255, 102);
-                    Main.Sauvegarde.ProductKey = Saisie.Texte;
+                    Main.SaveGame.ProductKey = Saisie.Texte;
                     Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
                     effectuerTransition = true;
                     AnimationTransition.In = false;
@@ -228,24 +252,18 @@ namespace TDA
 
             else
             {
-                //Curseur.Update(gameTime); //todo
-
                 foreach (var kvp in Clavier)
                 {
-                    kvp.Value.Update(gameTime);
-
                     if (kvp.Value.Pressed && kvp.Key.Texte == "Clear")
                         Saisie.Texte = "";
                     else if (kvp.Value.Pressed && Saisie.Texte.Length < 16)
                         Saisie.Texte += kvp.Key.Texte;
-                }
 
-                Exit.Value.Update(gameTime);
+                    kvp.Value.Update(gameTime);
+                }
 
                 if (Exit.Value.Pressed)
                     Main.Exit();
-
-                Continue.Value.Update(gameTime);
 
                 if (Continue.Value.Pressed)
                 {
@@ -253,11 +271,14 @@ namespace TDA
                     Sablier.doShow(500);
                     Curseur.doHide();
 
-                    ValidationServeur = new ValidationServeur("commanderworld1", Saisie.Texte);
+                    ValidationServeur = new ValidationServeur(Preferences.ProductName, Saisie.Texte);
                     ValidationServeur.valider();
 
                     this.Effets.ajouter(MessageErreur, EffetsPredefinis.fadeOutTo0(255, 0, 250));
                 }
+
+                Exit.Value.Update(gameTime);
+                Continue.Value.Update(gameTime);
             }
         }
 
@@ -299,6 +320,87 @@ namespace TDA
             effectuerTransition = true;
             AnimationTransition.In = true;
             AnimationTransition.Initialize();
+        }
+
+
+        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.MouseConfiguration.Select)
+            {
+                foreach (var bouton in Clavier)
+                    bouton.Value.doClick();
+
+                Exit.Value.doClick();
+                Continue.Value.doClick();
+            }
+        }
+
+
+        public override void doMouseMoved(PlayerIndex inputIndex, Vector3 delta)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            p.Move(ref delta, p.MouseConfiguration.Speed);
+            Curseur.Position = p.Position;
+        }
+
+
+        public override void doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.MoveCursor)
+            {
+                p.Move(ref delta, p.GamePadConfiguration.Speed);
+                Curseur.Position = p.Position;
+            }
+        }
+
+
+        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if ((int)key >= (int)Keys.D0 && (int)key <= (int)Keys.D9)
+                Clavier[(int)key - (int)Keys.D0].Value.Pressed = true;
+
+            if ((int)key >= (int)Keys.NumPad0 && (int)key <= (int)Keys.NumPad9)
+                Clavier[(int)key - (int)Keys.NumPad0].Value.Pressed = true;
+
+            if (key == Keys.Back)
+                Clavier[Clavier.Count - 1].Value.Pressed = true;
+        }
+
+
+        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.Select)
+            {
+                foreach (var bouton in Clavier)
+                    bouton.Value.doClick();
+
+                Exit.Value.doClick();
+                Continue.Value.doClick();
+            }
         }
     }
 }

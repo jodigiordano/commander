@@ -1,290 +1,87 @@
-﻿//=============================================================================
-//
-// Point d'entrée dans la librairie
-//
-//=============================================================================
-
-namespace Core.Input
+﻿namespace Core.Input
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
-    using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.GamerServices;
+    using Microsoft.Xna.Framework.Input;
     
     public static class Facade
     {
-#if WINDOWS && !MANETTE_WINDOWS
-            private static GestionnaireTouches<Keys> gestionnaireTouches = GestionnaireTouches<Keys>.Instance;
-            private static GestionnaireTouches<BoutonSouris> gestionnaireSouris = GestionnaireTouches<Keys>.InstanceSouris;
-#else
-        private static GestionnaireTouches<Buttons> gestionnaireTouches = GestionnaireTouches<Buttons>.Instance;
-#endif
+        private static InputController InputController;
+        private static Vibrator Vibrator;
+        public static PlayerConnection PlayerConnection;
 
-        public static void Initialize(String[] nomsScenes, Vector2 positionBaseSouris)
+
+        public static void Initialize(Vector2 mouseBasePosition)
         {
-            foreach (var nomScene in nomsScenes)
-                gestionnaireTouches.ajouterScene(nomScene);
+            PlayerConnection = new PlayerConnection();
 
-#if WINDOWS && !MANETTE_WINDOWS
-            foreach (var nomScene in nomsScenes)
-                gestionnaireSouris.ajouterScene(nomScene);
+            Vibrator = new Vibrator();
+            Vibrator.Initialize();
 
-            gestionnaireTouches.PositionBaseSouris = positionBaseSouris;
-            gestionnaireSouris.PositionBaseSouris = positionBaseSouris;
-
-            Mouse.SetPosition
-            (
-                (int)(positionBaseSouris.X),
-                (int)(positionBaseSouris.Y)
-            );
-#endif
+            InputController = new InputController(mouseBasePosition);
+            InputController.Initialize();
         }
 
-        public static void connecterJoueur(PlayerIndex joueur)
+
+        public static void UpdateInputSource(
+            PlayerIndex inputIndex,
+            List<MouseButton> mouseButtons,
+            List<Buttons> gamepadButtons,
+            List<Keys> keyboardKeys)
         {
-            ConnexionJoueur.Instance.connecter(joueur);
+            InputController.MapMouseButtons(inputIndex, mouseButtons);
+            InputController.MapGamePadButtons(inputIndex, gamepadButtons);
+            InputController.MapKeys(inputIndex, keyboardKeys);
         }
 
-        public static SignedInGamer getJoueurConnecte(PlayerIndex joueur)
+
+        public static void ConnectPlayer(PlayerIndex inputIndex)
         {
-            return ConnexionJoueur.Instance.getJoueurConnecte(joueur);
+            PlayerConnection.Connect(inputIndex);
         }
+
+
+        public static void AddListener(InputListener listener)
+        {
+            InputController.AddListener(listener);
+        }
+
+
+        public static void RemoveListener(InputListener listener)
+        {
+            InputController.RemoveListener(listener);
+        }
+
 
         public static void Update(GameTime gameTime)
         {
-            gestionnaireTouches.Update(gameTime);
-
-#if WINDOWS && !MANETTE_WINDOWS
-            gestionnaireSouris.Update(gameTime);
-
-            Mouse.SetPosition
-            (
-                (int)(gestionnaireSouris.PositionBaseSouris.X),
-                (int)(gestionnaireSouris.PositionBaseSouris.Y)
-            );
-#endif
-
-            Vibrations.Instance.Update(gameTime);
+            InputController.Update(gameTime);
+            Vibrator.Update(gameTime);
         }
 
-        public static void activerScene(string nomScene)
+
+        public static bool IsKeyPressed(PlayerIndex inputIndex, Keys key)
         {
-            gestionnaireTouches.activer(nomScene);
+            return InputController.IsKeyPressed(inputIndex, key);
         }
 
-        public static void desactiverScene(string nomScene)
+
+        public static bool IsMouseButtonPressed(PlayerIndex inputIndex, MouseButton button)
         {
-            gestionnaireTouches.desactiver(nomScene);
+            return InputController.IsMouseButtonPressed(inputIndex, button);
         }
 
 
-#if WINDOWS && !MANETTE_WINDOWS
-        public static bool estPesee(Keys touche, PlayerIndex playerIndex, string nomScene)
+        public static bool IsGamePadButtonPressed(PlayerIndex inputIndex, Buttons button)
         {
-            return gestionnaireTouches.estPesee(touche, playerIndex, nomScene);
+            return InputController.IsGamePadButtonPressed(inputIndex, button);
         }
 
-        public static bool estPesee(BoutonSouris touche, PlayerIndex playerIndex, string nomScene)
+
+        public static void VibrateController(PlayerIndex inputIndex, float length, float left, float right)
         {
-            return gestionnaireSouris.estPesee(touche, playerIndex, nomScene);
+            Vibrator.Vibrate(inputIndex, length, left, right);
         }
-#else
-        public static bool estPesee(Buttons touche, PlayerIndex playerIndex, string nomScene)
-        {
-            return gestionnaireTouches.estPesee(touche, playerIndex, nomScene);
-        }
-#endif
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static bool estPeseeUneSeuleFois(Keys touche, PlayerIndex playerIndex, string nomScene)
-        {
-            return gestionnaireTouches.estPeseeUneSeuleFois(touche, playerIndex, nomScene);
-        }
-
-        public static bool estPeseeUneSeuleFois(BoutonSouris touche, PlayerIndex playerIndex, string nomScene)
-        {
-            return gestionnaireSouris.estPeseeUneSeuleFois(touche, playerIndex, nomScene);
-        }
-#else
-        public static bool estPeseeUneSeuleFois(Buttons touche, PlayerIndex playerIndex, string nomScene)
-        {
-            return gestionnaireTouches.estPeseeUneSeuleFois(touche, playerIndex, nomScene);
-        }
-#endif
-
-
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static void ignorerTouches(PlayerIndex playerIndex, List<Keys> touches, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesIgnorees(playerIndex, touches, nomScene);
-        }
-
-        public static void ignorerTouches(PlayerIndex playerIndex, List<BoutonSouris> touches, string nomScene)
-        {
-            gestionnaireSouris.SetTouchesIgnorees(playerIndex, touches, nomScene);
-        }
-#else
-        public static void ignorerTouches(PlayerIndex playerIndex, List<Buttons> touches, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesIgnorees(playerIndex, touches, nomScene);
-        }
-#endif
-
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static void considerTouches(PlayerIndex playerIndex, List<Keys> touches, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesTraitees(playerIndex, touches, nomScene);
-            //gestionnaireSouris.SetTouchesTraitees(playerIndex, new List<BoutonSouris>(), nomScene);
-        }
-
-        public static void considerTouches(PlayerIndex playerIndex, List<BoutonSouris> touches, string nomScene)
-        {
-            gestionnaireSouris.SetTouchesTraitees(playerIndex, touches, nomScene);
-            //gestionnaireTouches.SetTouchesTraitees(playerIndex, new List<Keys>(), nomScene);
-        }
-
-        public static void considererSouris(PlayerIndex playerIndex, bool considerer, string nomScene)
-        {
-            gestionnaireSouris.SetSourisTraitee(playerIndex, considerer, nomScene);
-            gestionnaireTouches.SetSourisTraitee(playerIndex, considerer, nomScene);
-        }
-#else
-        public static void considerTouches(PlayerIndex playerIndex, List<Buttons> touches, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesTraitees(playerIndex, touches, nomScene);
-        }
-#endif
-
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static void considerToutesTouches(PlayerIndex playerIndex, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesTraitees(playerIndex, null, nomScene);
-            gestionnaireSouris.SetTouchesTraitees(playerIndex, null, nomScene);
-            gestionnaireTouches.SetSourisTraitee(playerIndex, true, nomScene);
-            gestionnaireSouris.SetSourisTraitee(playerIndex, true, nomScene);
-        }
-#else
-        public static void considerToutesTouches(PlayerIndex playerIndex, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesTraitees(playerIndex, null, nomScene);
-        }
-#endif
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static void considerAucuneTouche(PlayerIndex playerIndex, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesTraitees(playerIndex, new List<Keys>(), nomScene);
-            gestionnaireSouris.SetTouchesTraitees(playerIndex, new List<BoutonSouris>(), nomScene);
-        }
-#else
-        public static void considerAucuneTouche(PlayerIndex playerIndex, string nomScene)
-        {
-            gestionnaireTouches.SetTouchesTraitees(playerIndex, new List<Buttons>(), nomScene);
-        }
-#endif
-
-
-#if XBOX || MANETTE_WINDOWS
-        public static void considerThumbsticks(PlayerIndex playerIndex, List<Buttons> touches, string nomScene)
-        {
-            gestionnaireTouches.SetThumbsticksTraites(playerIndex, touches, nomScene);
-        }
-#endif
-
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static void ignorerToucheCeTick(PlayerIndex playerIndex, Keys touche)
-        {
-            gestionnaireTouches.keyCantBePressedAgainThisTick(touche, playerIndex);
-        }
-
-        public static void ignorerToucheCeTick(PlayerIndex playerIndex, BoutonSouris touche)
-        {
-            gestionnaireSouris.keyCantBePressedAgainThisTick(touche, playerIndex);
-        }
-#else
-        public static void ignorerToucheCeTick(PlayerIndex playerIndex, Buttons touche)
-        {
-            gestionnaireTouches.keyCantBePressedAgainThisTick(touche, playerIndex);
-        }
-#endif
-
-
-        public static Vector2 positionThumbstick(PlayerIndex manette, bool gauche, string nomScene)
-        {
-            return gestionnaireTouches.positionThumbstick(manette, gauche, GamePadDeadZone.Circular, nomScene);
-        }
-
-
-        public static void vibrerManette(PlayerIndex playerIndex, double temps, float moteurGauche, float moteurDroit)
-        {
-            Vibrations.Instance.vibrer(playerIndex, temps, moteurGauche, moteurDroit);
-        }
-
-
-        public static void ignorerThumbsticks(PlayerIndex playerIndex, List<Buttons> boutons, string nomScene)
-        {
-            gestionnaireTouches.SetThumbsticksIgnores(playerIndex, boutons, nomScene);
-        }
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static bool estRelachee(int bouton, PlayerIndex playerIndex, string nomScene)
-        {
-            return (bouton >= 10000) ?
-                gestionnaireTouches.estRelachee((Keys)bouton, playerIndex, nomScene) :
-                gestionnaireSouris.estRelachee((BoutonSouris)bouton, playerIndex, nomScene);
-        }
-#else
-        public static bool estRelachee(Buttons bouton, PlayerIndex playerIndex, string nomScene)
-        {
-            return gestionnaireTouches.estRelachee(bouton, playerIndex, nomScene);
-        }
-#endif
-
-
-#if XBOX
-        public static int getPreferenceDifficulte(PlayerIndex playerIndex)
-        {
-            return ConnexionJoueur.Instance.getPreferenceDifficulte(playerIndex);
-        }
-
-        public static ControllerSensitivity getPreferenceSensibiliteGamePad(PlayerIndex playerIndex)
-        {
-            return ConnexionJoueur.Instance.getPreferenceSensibiliteGamePad(playerIndex);
-        }
-#endif
-
-#if WINDOWS && !MANETTE_WINDOWS
-        public static Vector2 positionDeltaSouris(PlayerIndex manette, String nomScene)
-        {
-            return gestionnaireSouris.positionDeltaSouris(manette, nomScene);
-        }
-
-        //public static Vector2 positionSouris(PlayerIndex manette, String nomScene)
-        //{
-        //    return gestionnaireSouris.positionSouris(manette, nomScene);
-        //}
-
-
-        //public static void setDeltaPositionSouris(PlayerIndex manette, String nomScene, Vector2 nouvellePosition)
-        //{
-        //    gestionnaireSouris.setPositionSouris(manette, nomScene, nouvellePosition);
-        //}
-        //public static void setPositionSouris(PlayerIndex manette, String nomScene, ref Vector2 nouvellePosition)
-        //{
-        //    gestionnaireSouris.setPositionSouris(manette, nomScene, ref nouvellePosition);
-        //}
-
-        public static int getDeltaRoueSouris(PlayerIndex manette, String nomScene)
-        {
-            return gestionnaireSouris.getDeltaRoueSouris(manette, nomScene);
-        }
-
-#endif
     }
 }

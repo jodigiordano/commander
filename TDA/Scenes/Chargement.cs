@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
+    using Core.Input;
+    using Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Microsoft.Xna.Framework.GamerServices;
-    using System.Threading;
+    using Microsoft.Xna.Framework.Input;
 
     class Chargement : Scene
     {
@@ -31,16 +31,13 @@
         private Sablier Sablier;
         private Etat EtatScene;
 
-        private bool JoueurSeConnecte = false;
+        private PlayerIndex ConnectingPlayer = PlayerIndex.One;
+        private bool WaitingForPlayerToConnect = true;
 
         private Thread ThreadChargementScenes;
         private bool ThreadChargementScenesTermine;
 
-        PlayerIndex manettePrincipale;
-
-#if WINDOWS
         private ValidationServeur ValidationServeur;
-#endif
 
         private static List<String> QuotesChargement = new List<string>()
         {
@@ -99,8 +96,6 @@
             ThreadChargementScenes = new Thread(doChargerScenes);
             ThreadChargementScenes.IsBackground = true;
             ThreadChargementScenesTermine = false;
-
-            manettePrincipale = PlayerIndex.One;
         }
 
         private void initTraductionChargement()
@@ -136,11 +131,7 @@
                 new Color(234, 196, 28, 255),
                 Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
                 new Color(Color.White, 255),
-#if WINDOWS && !MANETTE_WINDOWS
-                "Click a button, Commander",
-#else
-                "Press a button, Commander.",
-#endif
+                (Preferences.Target == Setting.Xbox360) ? "Press a button, Commander" : "Click a button, Commander",
                 3,
                 true,
                 3000,
@@ -183,62 +174,34 @@
 
                     }
                     break;
+
+
                 case Etat.CONNEXION_JOUEUR:
                     PressStart.Update(gameTime);
 
-                    if (!JoueurSeConnecte)
+                    WaitingForPlayerToConnect = !(WaitingForPlayerToConnect && Main.PlayersController.IsConnected(ConnectingPlayer));
+
+                    if (!WaitingForPlayerToConnect)
                     {
-                        for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
+                        if (!Core.Persistance.Facade.donneeEstCharge("savePlayer"))
                         {
-                            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheChangerMusique, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheDebug, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheProchaineVague, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetour, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetourMenu, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionPrecedent, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionSuivant, i, this.Nom) ||
-                                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheVueAvancee, i, this.Nom))
-                            {
-                                manettePrincipale = i;
-                                JoueurSeConnecte = true;
-                                break;
-                            }
+                            Core.Persistance.Facade.initialiserDonneesJoueur("savePlayer", ConnectingPlayer);
+                            Core.Persistance.Facade.chargerDonnee("savePlayer");
                         }
-                    }
 
-                    else
-                    {
-#if XBOX
-                        if (Core.Input.Facade.getJoueurConnecte(manettePrincipale) == null)
-                        {
-                            Core.Input.Facade.connecterJoueur(manettePrincipale);
-                        }
-                        else
-#endif
-                        {
-                            Main.JoueursConnectes.Add(new Joueur(manettePrincipale));
-
-                            if (!Core.Persistance.Facade.donneeEstCharge("savePlayer"))
-                            {
-                                Core.Persistance.Facade.initialiserDonneesJoueur("savePlayer", manettePrincipale);
-                                Core.Persistance.Facade.chargerDonnee("savePlayer");
-                            }
-
-                            EtatScene = Etat.CHARGEMENT_SAUVEGARDE;
-                        }
+                        EtatScene = Etat.CHARGEMENT_SAUVEGARDE;
                     }
                     break;
+
+
                 case Etat.CHARGEMENT_SAUVEGARDE:
                     if (Core.Persistance.Facade.donneeEstCharge("savePlayer"))
                     {
                         if (!ThreadChargementScenesTermine)
                             ThreadChargementScenes.Start();
 
-#if WINDOWS
-                        ValidationServeur = new ValidationServeur("commanderworld1", Main.Sauvegarde.ProductKey);
+                        ValidationServeur = new ValidationServeur(Preferences.ProductName, Main.SaveGame.ProductKey);
                         ValidationServeur.valider();
-#endif
 
                         Effets.ajouter(PressStart.PartieTraduite, EffetsPredefinis.fadeOutTo0(255, 0, 1000));
                         Effets.ajouter(PressStart.PartieNonTraduite, EffetsPredefinis.fadeOutTo0(255, 0, 1000));
@@ -253,6 +216,8 @@
                         EtatScene = Etat.CHARGEMENT_SCENES;
                     }
                     break;
+
+
                 case Etat.CHARGEMENT_SCENES:
                     if (!Sablier.Tourne)
                         Sablier.TempsRestant -= gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -265,20 +230,13 @@
 
                     TraductionChargement.Update(gameTime);
                     Sablier.Update(gameTime);
-
-#if WINDOWS
                     ValidationServeur.Update(gameTime);
 
                     if (ValidationServeur.DelaiExpire)
                         ValidationServeur.canceler();
-#endif
 
-#if WINDOWS
                     if (ThreadChargementScenesTermine &&
-                       (Main.ModeTrial.Actif || (!Main.ModeTrial.Actif && ValidationServeur.ValidationTerminee)))
-#else
-                    if (ThreadChargementScenesTermine)
-#endif
+                       (Main.TrialMode.Active || ValidationServeur.ValidationTerminee))
                     {
                         Core.Visuel.Facade.mettreAJourScene("Menu", SceneMenu);
                         Core.Visuel.Facade.mettreAJourScene("NouvellePartie", SceneNouvellePartie);
@@ -287,14 +245,14 @@
                         Core.Visuel.Facade.mettreAJourScene("Editeur", SceneEditeur);
                         Core.Visuel.Facade.mettreAJourScene("Acheter", SceneAcheter);
 
-#if WINDOWS
                         if (!ValidationServeur.ErreurSurvenue && !ValidationServeur.Valide)
-                            Main.Sauvegarde.ProductKey = "";
-#endif
+                            Main.SaveGame.ProductKey = "";
 
                         EtatScene = Etat.TRANSITION;
                     }
                     break;
+
+
                 case Etat.TRANSITION:
                     AnimationTransition.suivant(gameTime);
 
@@ -311,19 +269,16 @@
 
                     else if (AnimationTransition.estTerminee(gameTime) && !AnimationTransition.In)
                     {
-#if WINDOWS
-                        if (!Main.ModeTrial.Actif && Main.Sauvegarde.ProductKey.Length != 16)
+                        if (!Main.TrialMode.Active && !ValidationServeur.Valide)
                             Core.Visuel.Facade.effectuerTransition("ChargementVersValidation");
                         else
                             Core.Visuel.Facade.effectuerTransition("ChargementVersMenu");
-#else
-                        Core.Visuel.Facade.effectuerTransition("ChargementVersMenu");
-#endif
                     }
                     break;
 
             }
         }
+
 
         private Scene SceneMenu, SceneNouvellePartie, SceneAide, SceneOptions, SceneEditeur, SceneAcheter;
         public void doChargerScenes()
@@ -338,6 +293,7 @@
             ThreadChargementScenesTermine = true;
         }
 
+
         protected override void UpdateVisuel()
         {
             if (Core.Persistance.Facade.estCharge("principal") && TraductionChargement.Termine)
@@ -350,14 +306,16 @@
             this.ajouterScenable(Logo);
         }
 
+
         public override void onFocus()
         {
             base.onFocus();
 
-            Main.ControleurJoueursConnectes.Initialize();
+            Main.PlayersController.Initialize();
             Effets.stop();
             Effets.vider();
-            JoueurSeConnecte = false;
+            ConnectingPlayer = PlayerIndex.One;
+            WaitingForPlayerToConnect = true;
             initPressStart();
             TraductionChargement.PartieTraduite.Couleur.A = 0;
             TraductionChargement.PartieNonTraduite.Couleur.A = 0;
@@ -366,6 +324,29 @@
 
             AnimationTransition.In = true;
             AnimationTransition.Initialize();
+        }
+
+
+        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+            doConnectPlayer(inputIndex);
+        }
+
+
+        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            doConnectPlayer(inputIndex);
+        }
+
+
+        private void doConnectPlayer(PlayerIndex inputIndex)
+        {
+            if (EtatScene != Etat.CONNEXION_JOUEUR)
+                return;
+
+            ConnectingPlayer = inputIndex;
+            Main.PlayersController.Connect(inputIndex);
+            WaitingForPlayerToConnect = true;
         }
     }
 }

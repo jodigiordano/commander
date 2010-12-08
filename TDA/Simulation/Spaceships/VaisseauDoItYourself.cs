@@ -15,7 +15,7 @@
         public double TempsActif;
         public bool ModeAutomatique;
         public int PrixAchat;
-        public Vector2 NextInput;
+        public Vector3 NextInput;
 
 
         public virtual bool Actif
@@ -53,19 +53,8 @@
         }
 
 
-        private void doModeManuel(Vector2 donneesThumbstick)
+        private void doModeManuel(Vector3 donneesThumbstick)
         {
-#if XBOX || MANETTE_WINDOWS
-            donneesThumbstick.Y = -donneesThumbstick.Y;
-
-            if (donneesThumbstick.X != 0 || donneesThumbstick.Y != 0)
-            {
-                Vector3 direction = (Position + new Vector3(donneesThumbstick, 0)) - Position;
-                direction.Normalize();
-
-                Direction = direction;
-            }
-#else
             donneesThumbstick /= 10;
 
             donneesThumbstick.X = MathHelper.Clamp(donneesThumbstick.X, -1, 1);
@@ -74,7 +63,7 @@
             if (donneesThumbstick.X != 0 || donneesThumbstick.Y != 0)
             {
                 // Trouver la direction visée
-                Vector3 directionVisee = new Vector3(donneesThumbstick, 0);
+                Vector3 directionVisee = donneesThumbstick;
                 Vector3 direction = Direction;
 
                 // Trouver l'angle d'alignement
@@ -95,7 +84,6 @@
 
                 Direction = direction;
             }
-#endif
 
 
 
@@ -163,9 +151,9 @@
                 Bouncing.Y = Math.Min(0, Bouncing.Y + 0.5f);
         }
 
-        private void doAcceleration(ref Vector2 donneesThumbstick)
+        private void doAcceleration(ref Vector3 donneesThumbstick)
         {
-            Acceleration += new Vector3(donneesThumbstick, 0) / 5f;
+            Acceleration += donneesThumbstick / 5f;
 
             Acceleration.X = MathHelper.Clamp(Acceleration.X, -2, 2);
             Acceleration.Y = MathHelper.Clamp(Acceleration.Y, -2, 2);

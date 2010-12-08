@@ -17,8 +17,10 @@ namespace Core.Visuel
     using Microsoft.Xna.Framework.Content;
     using Core.Utilities;
     using Wintellect.PowerCollections;
+    using Core.Input;
+    using Microsoft.Xna.Framework.Input;
 
-    public abstract class Scene : IVisible
+    public abstract class Scene : IVisible, InputListener
     {
         //=====================================================================
         // Getters / Setters statiques
@@ -33,7 +35,6 @@ namespace Core.Visuel
 
         private enum Type { Feuille, Noyau, Branche }
 
-        private Effect EffetDarker;                     // Effet d'images plus sombres (noires)
         private bool DernierElementEnFocus;             // Est-ce que le dernier élément affiché est dans le focus
         private SpriteBatch Batch;                      // Gestion des sprites avant l'écriture dans le buffer
         private TypeMelange DernierMelange;
@@ -143,13 +144,13 @@ namespace Core.Visuel
 
             Nom = nom;
 
-            EffetDarker = Contenu.Load<Effect>("Darker");
-
             DernierElementEnFocus = false;
 
             animations = new GestionnaireAnimations();
             effets = new GestionnaireEffets();
             particules = new GestionnaireParticules(this);
+
+            Core.Input.Facade.AddListener(this);
         }
 
 
@@ -439,15 +440,18 @@ namespace Core.Visuel
         }
 
 
-        /// <summary>
-        /// Mettre à jour la logique associée à la scène
-        /// </summary>
-        /// <param name="gameTime"></param>
+        public void Dispose()
+        {
+            if (EstProprietaireDeSonTampon)
+                GestionnaireTampons.Instance.remettre(Tampon);
+
+            Core.Input.Facade.RemoveListener(this);
+        }
+
+
         protected abstract void UpdateLogique(GameTime gameTime);
 
-        /// <summary>
-        /// Met à jour la partie visuelle associée à la scène
-        /// </summary>
+
         protected abstract void UpdateVisuel();
 
 
@@ -455,21 +459,12 @@ namespace Core.Visuel
         // Événements
         //=====================================================================
 
-        /// <summary>
-        /// Appelée au début d'une transition à la fin de laquelle la scène aura le focus.
-        /// </summary>
         public virtual void onTransitionTowardFocus() { }
 
 
-        /// <summary>
-        /// Appelée à la fin d'une transition si la scène a le focus.
-        /// </summary>
         public virtual void onFocus() { }
 
 
-        /// <summary>
-        /// Appelée au début du transition à la fin de laquelle la scène n'aura pas le focus.
-        /// </summary>
         public virtual void onFocusLost() { }
 
 
@@ -501,37 +496,6 @@ namespace Core.Visuel
             // mais pas d'exceptions levés parce que sa pourrait être deux fois le même objet
             return 0;
         }
-
-        //private void trierElementsAffiches()
-        //{
-        //    ElementsAffiches.Sort(delegate(IScenable e1, IScenable e2)
-        //    {
-        //        // tri sur la position en Z
-        //        if (e1.Position.Z > e2.Position.Z)
-        //            return 1;
-
-        //        if (e1.Position.Z < e2.Position.Z)
-        //            return -1;
-
-        //        // tri sur la priorité d'affichage pour un même Z
-        //        if (e1.PrioriteAffichage < e2.PrioriteAffichage)
-        //            return 1;
-
-        //        if (e1.PrioriteAffichage > e2.PrioriteAffichage)
-        //            return -1;
-
-        //        // tri final sur le hash code
-        //        if (e1.GetHashCode() > e2.GetHashCode())
-        //            return 1;
-
-        //        if (e1.GetHashCode() < e2.GetHashCode())
-        //            return -1;
-
-        //        // impossible de se rendre ici :)
-        //        // mais pas d'exceptions levés parce que sa pourrait être deux fois le même objet
-        //        return 0;
-        //    });
-        //}
 
 
         /// <summary>
@@ -580,34 +544,20 @@ namespace Core.Visuel
         }
 
 
-        /// <summary>
-        /// Appliquer l'effet dark a un element de la scène
-        /// </summary>
-        /// <param name="element">L'élément de la scène</param>
-        /// <param name="teinte">Teinte de l'élément</param>
-        /// <param name="facteurDark">Le facteur dark</param>
-        private void appliquerEffetDark(int element, ref Vector4 teinte, float facteurDark)
+        public bool Active
         {
-            // Paramétrage
-            EffetDarker.CurrentTechnique = EffetDarker.Techniques["Darker"];
-            EffetDarker.Parameters["pourcDarker"].SetValue(facteurDark);
-            EffetDarker.Parameters["teinte"].SetValue(teinte);
-
-            // Début
-            EffetDarker.Begin();
-            EffetDarker.CurrentTechnique.Passes[0].Begin();
-
-            // Application
-            ElementsAffiches[element].Draw(this.Batch);
-
-            // Fin
-            EffetDarker.CurrentTechnique.Passes[0].End();
-            EffetDarker.End();
-
-            // Commencer une nouvelle batch
-            Batch.End();
-            Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.None, Camera.Transformee);
-            changerBlendMode(ElementsAffiches[element].Melange);
+            get { return EstVisible && !EnPause && EnFocus; }
         }
+
+
+        public virtual void doKeyPressedOnce(PlayerIndex inputIndex, Keys key) {}
+        public virtual void doKeyReleased(PlayerIndex inputIndex, Keys key) {}
+        public virtual void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button) { }
+        public virtual void doMouseButtonReleased(PlayerIndex inputIndex, MouseButton button) { }
+        public virtual void doMouseScrolled(PlayerIndex inputIndex, int delta) { }
+        public virtual void doMouseMoved(PlayerIndex inputIndex, Vector3 delta) { }
+        public virtual void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button) { }
+        public virtual void doGamePadButtonReleased(PlayerIndex inputIndex, Buttons button) { }
+        public virtual void doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta) { }
     }
 }

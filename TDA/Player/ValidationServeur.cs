@@ -1,12 +1,11 @@
-﻿#if WINDOWS
-
-namespace TDA
+﻿namespace TDA
 {
     using System;
     using System.Collections.Generic;
     using System.Net;
     using Microsoft.Xna.Framework;
     using System.Text;
+    using System.Threading;
 
     class ValidationServeur
     {
@@ -15,6 +14,8 @@ namespace TDA
         private WebClient ClientWeb;
         private string RequeteUrl;
         private double Timeout;
+        private bool ByPass;
+        private Thread ThreadConnection;
 
         public bool ValidationTerminee  { get; private set; }
         public bool Valide              { get; private set; }
@@ -25,6 +26,17 @@ namespace TDA
 
         public ValidationServeur(string product, string productKey)
         {
+            ByPass = !Preferences.HomeMadeValidation;
+
+            if (ByPass)
+            {
+                ValidationTerminee = true;
+                Valide = true;
+                ErreurSurvenue = false;
+                Message = "";
+                return;
+            }
+
             RequeteUrl = SCRIPT_URL + "?productkey=" + productKey + "&product=" + product;
 
             ValidationTerminee = false;
@@ -36,25 +48,50 @@ namespace TDA
             ClientWeb.DownloadDataCompleted += new DownloadDataCompletedEventHandler(telechargementTermine);
 
             Timeout = 10000;
+
+            ThreadConnection = new Thread(doConnection);
+            ThreadConnection.IsBackground = true;
         }
+
 
         public void Update(GameTime gameTime)
         {
+            if (ByPass)
+                return;
+
             Timeout = Math.Max(0, Timeout - gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
+
         public void valider()
+        {
+            if (ByPass)
+                return;
+
+            ThreadConnection.Start();
+        }
+
+
+        public void canceler()
+        {
+            if (ByPass)
+                return;
+
+            ClientWeb.CancelAsync();
+        }
+
+
+        private void doConnection()
         {
             ClientWeb.DownloadDataAsync(new Uri(RequeteUrl));
         }
 
-        public void canceler()
-        {
-            ClientWeb.CancelAsync();
-        }
 
         private void telechargementTermine(object sender, DownloadDataCompletedEventArgs e)
         {
+            if (ByPass)
+                return;
+
             ValidationTerminee = true;
 
             if (e.Error != null)
@@ -103,5 +140,3 @@ namespace TDA
         }
     }
 }
-
-#endif

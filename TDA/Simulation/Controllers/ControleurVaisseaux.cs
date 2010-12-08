@@ -11,7 +11,7 @@
 
         public Dictionary<PowerUp, bool> OptionsDisponibles;
         public List<Ennemi> Ennemis;
-        public Vector2 NextInputVaisseau;
+        public Vector3 NextInputVaisseau;
 
         private Simulation Simulation;
         private VaisseauDoItYourself VaisseauDoItYourself;
@@ -51,6 +51,8 @@
             traiterVaisseauDoItYourself(gameTime);
             traiterVaisseauCollecteur(gameTime);
             traiterTheResistance(gameTime);
+
+            NextInputVaisseau = Vector3.Zero;
         }
 
 
@@ -175,8 +177,11 @@
             VaisseauDoItYourself.Bouncing = new Vector3(Main.Random.Next(-25, 25), Main.Random.Next(-25, 25), 0);
             VaisseauDoItYourself.TempsActif = 5000;
             VaisseauDoItYourself.CorpsCelesteDepart = corpsCeleste;
+            this.OptionsDisponibles[PowerUp.DoItYourself] = false;
 
             Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpDoItYourselfIn");
+
+            notifyObjetCree(VaisseauDoItYourself);
         }
 
 
@@ -187,6 +192,7 @@
             VaisseauCollecteur.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
             VaisseauCollecteur.Bouncing = new Vector3(Main.Random.Next(-25, 25), Main.Random.Next(-25, 25), 0);
             VaisseauCollecteur.CorpsCelesteDepart = corpsCeleste;
+            this.OptionsDisponibles[PowerUp.CollectTheRent] = false;
 
             Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpCollecteurIn");
 
@@ -198,8 +204,11 @@
         {
             TheResistance = new TheResistance(Simulation, corpsCeleste, Ennemis);
             TheResistance.TempsActif = 20000;
+            this.OptionsDisponibles[PowerUp.TheResistance] = false;
 
             Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceIn");
+
+            notifyObjetCree(TheResistance);
         }
     }
 }

@@ -2,12 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Core.Input;
     using Core.Visuel;
-    using Core.Utilities;
-    using Microsoft.Xna.Framework.GamerServices;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
 
     class NouvellePartie : SceneMenu
     {
@@ -65,7 +64,7 @@
 
             IndiceMondeSelectionne = 0;
 
-            Main.ControleurJoueursConnectes.JoueurPrincipalDeconnecte += new ControleurJoueursConnectes.JoueurPrincipalDeconnecteHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
 
             AidesNiveaux = new List<AideNiveau>();
 
@@ -184,25 +183,33 @@
                             effectuerTransition = true;
                             AnimationTransition.In = true;
                             AnimationTransition.Initialize();
+                            Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
                             IndiceMondeSelectionne = 1;
+                            Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
                             break;
                         case "Go to World 3!":
                             effectuerTransition = true;
                             AnimationTransition.In = true;
                             AnimationTransition.Initialize();
+                            Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
                             IndiceMondeSelectionne = 2;
+                            Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
                             break;
                         case "Go back\nto World 1!":
                             effectuerTransition = true;
                             AnimationTransition.In = true;
                             AnimationTransition.Initialize();
+                            Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
                             IndiceMondeSelectionne = 0;
+                            Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
                             break;
                         case "Go back\nto World\n2!":
                             effectuerTransition = true;
                             AnimationTransition.In = true;
                             AnimationTransition.Initialize();
+                            Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
                             IndiceMondeSelectionne = 1;
+                            Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
                             break;
                         case "menu": Core.Visuel.Facade.effectuerTransition("NouvellePartieVersMenu"); break;
                         case "chargement": Core.Visuel.Facade.effectuerTransition("NouvellePartieVersChargement"); break;
@@ -244,159 +251,13 @@
 
             else
             {
-                // mis ici pour différencié du cas général.
-                if (MondeSelectionne.CorpsSelectionne == "Go to World 2!" || MondeSelectionne.CorpsSelectionne == "Go to World 3!")
-                {
-                    if (((MondeSelectionne.CorpsSelectionne == "Go to World 2!" && Mondes[1].Debloque) ||
-                          MondeSelectionne.CorpsSelectionne == "Go to World 3!" && Mondes[2].Debloque))
-                    {
-
-                        if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
-                        {
-                            ChoixTransition = MondeSelectionne.CorpsSelectionne;
-                            effectuerTransition = true;
-                            AnimationTransition.In = false;
-                            AnimationTransition.Initialize();
-
-                            if (AnimationFinMonde1 != null)
-                                AnimationFinMonde1.doShow();
-                        }
-                    }
-
-                    else
-                    {
-                        MondeSelectionne.afficherMessageBloque(
-                            MondeSelectionne.CorpsSelectionne == "Go to World 2!" ?
-                                "You're not Commander\n\nenough to ascend to\n\na higher level." :
-                                "Only a true Commander\n\nmay enjoy a better world.");
-                    }
-                }
-
-                //TMP: Tous les niveaux du monde 2 == animation de "fin de monde 1"
-                else if (MondeSelectionne.CorpsSelectionne != "" && MondeSelectionne.CorpsSelectionne[0] == '2' && Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
-                {
-                    if (AnimationFinMonde1 == null)
-                        AnimationFinMonde1 = new AnimationLieutenant(
-                            Main,
-                            this,
-                            "This is the end of World 1, Commander, and what you see right now is World 2, which will be available if I sell enough of World 1 ;) You can expect more mercenaries, enemies and power ups in this World! \n\nVisit ephemeregames.com to know when World 2 will be available.", 25000);
-                }
-
-                //TMP: En mode trial, si c'est la fin de la demo == tous les niveaux du monde 1 deviennent inacessibles
-#if WINDOWS
-                else if (Main.ModeTrial.Actif &&
-                         MondeSelectionne.CorpsSelectionne != "" &&
-                         (MondeSelectionne.CorpsSelectionne[2] != '1' && MondeSelectionne.CorpsSelectionne[2] != '2' && MondeSelectionne.CorpsSelectionne[2] != '3') &&
-                         Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
-                {
-                    if (AnimationFinDemo == null)
-                    {
-                        AnimationFinDemo = new AnimationLieutenant(
-                            Main,
-                            this,
-                            "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000);
-                    }
-                }
-#else
-                
-                else if (Main.ModeTrial.Actif &&
-                         Main.ModeTrial.FinDemo &&
-                         MondeSelectionne.CorpsSelectionne != "" &&
-                         MondeSelectionne.CorpsSelectionne[0] == '1' &&
-                         Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
-                {
-                    if (AnimationFinDemo == null)
-                    {
-                        AnimationFinDemo = new AnimationLieutenant(
-                            Main,
-                            this,
-                            "This is the end of the demo, Commander! If you want to finish the fight and save humanity, press A right now. 9 levels of insanity for only 3 bucks are awaiting you and I bet you want to discover World 2 ! \n\nVisit ephemeregames.com for more infos on me, my games and my future projects.", 25000);
-                    }
-                }
-#endif
-                else if (AnimationFinDemo != null && Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
-                {
-                    try
-                    {
-    #if XBOX
-                        Guide.ShowMarketplace(Main.JoueursConnectes[0].Manette);
-    #endif
-                    }
-
-                    catch (GamerPrivilegeException)
-                    {
-    #if XBOX
-                        Guide.BeginShowMessageBox
-                        (
-                            "Oh no!",
-                            "You must be signed in with an Xbox Live enabled profile to buy the game. You can either:\n\n1. Go buy it directly on the marketplace (suggested).\n\n2. Restart the game and sign in with an Xbox Live profile.\n\n\nThank you for your support, commander!",
-                            new List<string> { "Ok" },
-                            0,
-                            MessageBoxIcon.Warning,
-                            null,
-                            null);
-    #endif
-                    }
-
-                }
-
-
-                else if (MondeSelectionne.CorpsSelectionne != "" && Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
-                {
-                    ChoixTransition = MondeSelectionne.CorpsSelectionne;
-                    ChoixScenario = MondeSelectionne.ScenarioSelectionne;
-                    effectuerTransition = true;
-                    AnimationTransition.In = false;
-                    AnimationTransition.Initialize();
-
-                    MondeSelectionne.arreterMessageBloque();
-
-                    if (ChoixTransition == "Go back\nto World 1!" && AnimationFinMonde1 != null)
-                        AnimationFinMonde1.doHide();
-
-                    if (AnimationFinDemo != null)
-                        AnimationFinDemo.doHide();
-                }
-
-                else
-                {
-                    MondeSelectionne.arreterMessageBloque();
-                }
-
-                doRetourMenu();
-                doChangerMusique(gameTime);
+                MondeSelectionne.arreterMessageBloque();
             }
-        }
 
-        private void doChangerMusique(GameTime gameTime)
-        {
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheChangerMusique, Main.JoueursConnectes[0].Manette, this.Nom) && TempsEntreDeuxChangementMusique <= 0)
-            {
-                Menu menu = (Menu)Core.Visuel.Facade.recupererScene("Menu");
-                menu.changerMusique();
-                TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
-            }
 
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
-        private void doRetourMenu()
-        {
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetour, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetourMenu2, Main.JoueursConnectes[0].Manette, this.Nom))
-            {
-                ChoixTransition = "menu";
-                effectuerTransition = true;
-                AnimationTransition.In = false;
-                AnimationTransition.Initialize();
-
-                if (AnimationFinMonde1 != null)
-                    AnimationFinMonde1.doHide();
-
-                if (AnimationFinDemo != null)
-                    AnimationFinDemo.doHide();
-            }
-        }
 
         private void verifierPartieEnPause()
         {
@@ -451,11 +312,6 @@
 
             Menu = (Menu)Core.Visuel.Facade.recupererScene("Menu");
 
-            //Mondes = new List<Monde>();
-            //Mondes.Add(new Monde(Main, this, FactoryScenarios.getDescripteurMonde1(), FactoryScenarios.getDescriptionsScenariosMonde1(), true));
-            //Mondes.Add(new Monde(Main, this, FactoryScenarios.getDescripteurMonde2(), FactoryScenarios.getDescriptionsScenariosMonde2(), false));
-            //Mondes.Add(new Monde(Main, this, FactoryScenarios.getDescripteurMonde3(), FactoryScenarios.getDescriptionsScenariosMonde3(), false));
-
             effectuerTransition = true;
             AnimationTransition.In = true;
             AnimationTransition.Initialize();
@@ -470,6 +326,8 @@
                 Core.Audio.Facade.jouerMusique(Menu.MusiqueSelectionnee, true, 1000, true);
             else
                 Core.Audio.Facade.reprendreMusique(Menu.MusiqueSelectionnee, true, 1000);
+
+            Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
         }
 
         public override void onFocusLost()
@@ -482,40 +340,197 @@
             {
                 Core.Audio.Facade.pauserMusique(Menu.MusiqueSelectionnee, true, 1000);
             }
+
+            Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
         }
 
         private void verifierWarpZones()
         {
             if (IndiceMondeSelectionne == 0)
             {
-                if (!Main.ModeTrial.Actif)
-                    Mondes[1].Debloque = Main.Sauvegarde.Progression[0] > 0 && Main.Sauvegarde.Progression[1] > 0 && Main.Sauvegarde.Progression[2] > 0 && Main.Sauvegarde.Progression[3] > 0 &&
-                                         Main.Sauvegarde.Progression[4] > 0 && Main.Sauvegarde.Progression[5] > 0 && Main.Sauvegarde.Progression[6] > 0 && Main.Sauvegarde.Progression[7] > 0 &&
-                                         Main.Sauvegarde.Progression[8] > 0;
+                if (!Main.TrialMode.Active)
+                    Mondes[1].Debloque = Main.SaveGame.Progression[0] > 0 && Main.SaveGame.Progression[1] > 0 && Main.SaveGame.Progression[2] > 0 && Main.SaveGame.Progression[3] > 0 &&
+                                         Main.SaveGame.Progression[4] > 0 && Main.SaveGame.Progression[5] > 0 && Main.SaveGame.Progression[6] > 0 && Main.SaveGame.Progression[7] > 0 &&
+                                         Main.SaveGame.Progression[8] > 0;
                 else
-                    Mondes[1].Debloque = Main.Sauvegarde.Progression[0] > 0 && Main.Sauvegarde.Progression[1] > 0 && Main.Sauvegarde.Progression[4] > 0 && Main.Sauvegarde.Progression[5] > 0;
+                    Mondes[1].Debloque = Main.SaveGame.Progression[0] > 0 && Main.SaveGame.Progression[1] > 0 && Main.SaveGame.Progression[4] > 0 && Main.SaveGame.Progression[5] > 0;
 
                 MondeSelectionne.TrousRoses[0].Couleur = (Mondes[1].Debloque) ? new Color(255, 0, 255) : new Color(255, 0, 0);
             }
 
             else if (IndiceMondeSelectionne == 1)
             {
-                if (Main.ModeTrial.Actif)
+                if (Main.TrialMode.Active)
                     Mondes[2].Debloque = false;
                 else
-                    Mondes[2].Debloque = Main.Sauvegarde.Progression[0] > 0 && Main.Sauvegarde.Progression[1] > 0 && Main.Sauvegarde.Progression[4] > 0 && Main.Sauvegarde.Progression[5] > 0 &&
-                                         Main.Sauvegarde.Progression[2] > 0 && Main.Sauvegarde.Progression[3] > 0 && Main.Sauvegarde.Progression[8] > 0 && Main.Sauvegarde.Progression[10] > 0 &&
-                                         Main.Sauvegarde.Progression[11] > 0 && Main.Sauvegarde.Progression[12] > 0 && Main.Sauvegarde.Progression[13] > 0 && Main.Sauvegarde.Progression[14] > 0 &&
-                                         Main.Sauvegarde.Progression[17] > 0;
+                    Mondes[2].Debloque = Main.SaveGame.Progression[0] > 0 && Main.SaveGame.Progression[1] > 0 && Main.SaveGame.Progression[4] > 0 && Main.SaveGame.Progression[5] > 0 &&
+                                         Main.SaveGame.Progression[2] > 0 && Main.SaveGame.Progression[3] > 0 && Main.SaveGame.Progression[8] > 0 && Main.SaveGame.Progression[10] > 0 &&
+                                         Main.SaveGame.Progression[11] > 0 && Main.SaveGame.Progression[12] > 0 && Main.SaveGame.Progression[13] > 0 && Main.SaveGame.Progression[14] > 0 &&
+                                         Main.SaveGame.Progression[17] > 0;
 
                 MondeSelectionne.TrousRoses[1].Couleur = (Mondes[2].Debloque) ? new Color(255, 0, 255) : new Color(255, 0, 0);
             }
         }
 
+
         private void doNouvelEtatPartie(EtatPartie etat)
         {
             foreach (var monde in Mondes)
                 monde.initLunes();
+        }
+
+
+        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.MouseConfiguration.Cancel)
+                beginTransition("menu");
+
+            if (button == p.MouseConfiguration.Select)
+                doSelectAction();
+        }
+
+
+        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (key == p.KeyboardConfiguration.Cancel)
+                beginTransition("menu");
+
+            if (key == p.KeyboardConfiguration.ChangeMusic)
+                changeMusic();
+        }
+
+
+        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.Cancel)
+                beginTransition("menu");
+
+            if (button == p.GamePadConfiguration.ChangeMusic)
+                changeMusic();
+
+            if (button == p.GamePadConfiguration.Select)
+                doSelectAction();
+        }
+
+
+        private void beginTransition(string choice)
+        {
+            if (effectuerTransition)
+                return;
+
+            effectuerTransition = true;
+            ChoixTransition = choice;
+            AnimationTransition.In = false;
+            AnimationTransition.Initialize();
+
+            MondeSelectionne.arreterMessageBloque();
+
+            if (AnimationFinMonde1 != null)
+                AnimationFinMonde1.doHide();
+
+            if (AnimationFinDemo != null)
+                AnimationFinDemo.doHide();
+        }
+
+
+        private void changeMusic()
+        {
+            if (TempsEntreDeuxChangementMusique > 0)
+                return;
+
+            Menu menu = (Menu)Core.Visuel.Facade.recupererScene("Menu");
+            menu.ChangeMusic();
+            TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
+        }
+
+
+        private void doSelectAction()
+        {
+            if (MondeSelectionne.CorpsSelectionne == "Go to World 2!" ||
+                MondeSelectionne.CorpsSelectionne == "Go to World 3!")
+            {
+                if (((MondeSelectionne.CorpsSelectionne == "Go to World 2!" && Mondes[1].Debloque) ||
+                      MondeSelectionne.CorpsSelectionne == "Go to World 3!" && Mondes[2].Debloque))
+                {
+                    beginTransition(MondeSelectionne.CorpsSelectionne);
+                }
+
+                else
+                {
+                    MondeSelectionne.afficherMessageBloque(
+                        MondeSelectionne.CorpsSelectionne == "Go to World 2!" ?
+                            "You're not Commander\n\nenough to ascend to\n\na higher level." :
+                            "Only a true Commander\n\nmay enjoy a better world.");
+                }
+            }
+
+            else if (MondeSelectionne.CorpsSelectionne != "" &&
+                     MondeSelectionne.CorpsSelectionne[0] == '2' &&
+                     AnimationFinMonde1 == null)
+            {
+                AnimationFinMonde1 = new AnimationLieutenant(
+                    Main,
+                    this,
+                    "This is the end of World 1, Commander, and what you see right now is World 2, which will be available if I sell enough of World 1 ;) You can expect more mercenaries, enemies and power ups in this World! \n\nVisit ephemeregames.com to know when World 2 will be available.", 25000);
+            }
+
+            else if (Main.TrialMode.Active &&
+                     MondeSelectionne.CorpsSelectionne != "" &&
+                     MondeSelectionne.CorpsSelectionne[2] != '1' &&
+                     MondeSelectionne.CorpsSelectionne[2] != '2' &&
+                     MondeSelectionne.CorpsSelectionne[2] != '3' &&
+                     AnimationFinDemo == null)
+            {
+                AnimationFinDemo = new AnimationLieutenant(
+                    Main,
+                    this,
+                    "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000);
+            }
+
+//#if XBOX
+            //            else if (button == p.MouseConfiguration.Select &&
+            //                     AnimationFinDemo != null)
+            //            {
+            //                try
+            //                {
+            //                    Guide.ShowMarketplace(Main.JoueursConnectes[0].Manette);
+            //                }
+
+//                catch (GamerPrivilegeException)
+            //                {
+            //                    Guide.BeginShowMessageBox
+            //                    (
+            //                        "Oh no!",
+            //                        "You must be signed in with an Xbox Live enabled profile to buy the game. You can either:\n\n1. Go buy it directly on the marketplace (suggested).\n\n2. Restart the game and sign in with an Xbox Live profile.\n\n\nThank you for your support, commander!",
+            //                        new List<string> { "Ok" },
+            //                        0,
+            //                        MessageBoxIcon.Warning,
+            //                        null,
+            //                        null);
+            //            }
+            //#endif
+
+            else if (MondeSelectionne.CorpsSelectionne != "")
+            {
+                ChoixScenario = MondeSelectionne.ScenarioSelectionne;
+
+                beginTransition(MondeSelectionne.CorpsSelectionne);
+            }
         }
     }
 }

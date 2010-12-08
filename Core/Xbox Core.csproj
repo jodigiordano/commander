@@ -61,14 +61,13 @@
     <Compile Include="Audio\Musical.cs" />
     <Compile Include="Audio\Musique.cs" />
     <Compile Include="Audio\Preferences.cs" />
-    <Compile Include="Input\ConnexionJoueur.cs" />
     <Compile Include="Input\Facade.cs" />
-    <Compile Include="Input\GestionnaireTouches.cs" />
     <Compile Include="Input\InputController.cs" />
     <Compile Include="Input\InputListener.cs" />
+    <Compile Include="Input\InputSource.cs" />
     <Compile Include="Input\MouseButton.cs" />
-    <Compile Include="Input\ToucheScene.cs" />
-    <Compile Include="Input\Vibrations.cs" />
+    <Compile Include="Input\PlayerConnection.cs" />
+    <Compile Include="Input\Vibrator.cs" />
     <Compile Include="Persistance\Contenu\DescriptionContenu.cs" />
     <Compile Include="Persistance\Contenu\GestionnaireContenu.cs" />
     <Compile Include="Persistance\Contenu\IContenu.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="Utilities\AbstractEffet.cs" />
     <Compile Include="Utilities\ControleurThreads.cs" />
     <Compile Include="Utilities\Emetteur.cs" />
+    <Compile Include="Utilities\ErrorHandling.cs" />
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\FadeCouleur.cs" />
     <Compile Include="Utilities\GestionnaireEffets.cs" />

@@ -7,34 +7,35 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TDA</RootNamespace>
-    <AssemblyName>Commander - World 1 - Trial</AssemblyName>
+    <AssemblyName>Commander</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaCrossPlatformGroupID>55a79d11-a65d-458c-a9ca-fc9011e650ac</XnaCrossPlatformGroupID>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <ManifestCertificateThumbprint>F904B111315BF05CCD96B4D0E7951DCCC6F9EECF</ManifestCertificateThumbprint>
     <ManifestKeyFile>TDA_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>false</SignManifests>
-    <PublishUrl>http://www.ephemeregames.com/commander/world1/trial/</PublishUrl>
+    <PublishUrl>C:\Users\Jodi\Desktop\Commander - GamersGate\Binary\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://www.ephemeregames.com/commander/</UpdateUrl>
     <TargetCulture>en</TargetCulture>
-    <ProductName>Commander - World 1 - Trial</ProductName>
+    <ProductName>Commander</ProductName>
     <PublisherName>Ephemere Games</PublisherName>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>32</ApplicationRevision>
+    <ApplicationRevision>40</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -131,6 +132,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
@@ -148,18 +150,19 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Simulation\Animations\AnimationEtoileFilante.cs" />
     <Compile Include="Animations\AnimationLieutenant.cs" />
     <Compile Include="Simulation\Controllers\ControleurCollisions.cs" />
     <Compile Include="Simulation\Controllers\ControleurEnnemis.cs" />
     <Compile Include="Simulation\Controllers\GUIController.cs" />
-    <Compile Include="Simulation\Controllers\PlayersController.cs" />
+    <Compile Include="Simulation\Controllers\SimPlayersController.cs" />
     <Compile Include="Simulation\Controllers\ControleurProjectiles.cs" />
     <Compile Include="Simulation\Controllers\ControleurScenario.cs" />
     <Compile Include="Simulation\Controllers\ControleurSystemePlanetaire.cs" />
     <Compile Include="Simulation\Controllers\ControleurTourelles.cs" />
     <Compile Include="Simulation\Controllers\ControleurVaisseaux.cs" />
-    <Compile Include="Joueur\ControleurJoueursConnectes.cs" />
+    <Compile Include="Player\PlayersController.cs" />
     <Compile Include="Simulation\Controllers\ControleurMessages.cs" />
     <Compile Include="Editeur\GenerateurVagues.cs" />
     <Compile Include="Editeur\Editeur.cs" />
@@ -172,7 +175,8 @@
     <Compile Include="Simulation\GUI\Annunciations\ScenarioEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\Bulle.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuTurretSpotEmpty.cs" />
-    <Compile Include="Simulation\Player\Player.cs" />
+    <Compile Include="Simulation\Player\CommonPlayers.cs" />
+    <Compile Include="Player\Player.cs" />
     <Compile Include="Simulation\Player\SelectedTurretToBuyController.cs" />
     <Compile Include="Simulation\GUI\Bubbles\BulleTexte.cs" />
     <Compile Include="GUI\Controles\CheckBox.cs" />
@@ -195,14 +199,14 @@
     <Compile Include="Simulation\Factories\FactoryTourelles.cs" />
     <Compile Include="Simulation\PlanetarySystem\CeintureAsteroide.cs" />
     <Compile Include="Simulation\GUI\Bubbles\AideNiveau.cs" />
-    <Compile Include="Joueur\ModeTrial.cs" />
+    <Compile Include="Player\TrialMode.cs" />
     <Compile Include="Simulation\PlanetarySystem\TrouRose.cs" />
     <Compile Include="Simulation\Enemies\VaguesInfinies.cs" />
-    <Compile Include="Joueur\Joueur.cs" />
     <Compile Include="Simulation\PlanetarySystem\LuneMatrice.cs" />
     <Compile Include="Simulation\PlanetarySystem\LuneTrajet.cs" />
     <Compile Include="Simulation\PlanetarySystem\Lune.cs" />
     <Compile Include="Simulation\Bullets\ProjectileSlowMotion.cs" />
+    <Compile Include="Simulation\Player\SimPlayer.cs" />
     <Compile Include="Simulation\Turrets\TourelleSlowMotion.cs" />
     <Compile Include="Simulation\Spaceships\TheResistance.cs" />
     <Compile Include="Simulation\GridWorld.cs" />
@@ -213,7 +217,7 @@
     <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
     <Compile Include="Simulation\Factories\FactoryEnnemis.cs" />
     <Compile Include="Simulation\Turrets\NiveauTourelle.cs" />
-    <Compile Include="Joueur\Sauvegarde.cs" />
+    <Compile Include="Player\Sauvegarde.cs" />
     <Compile Include="Simulation\Scenario.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />
@@ -223,7 +227,6 @@
     <Compile Include="Simulation\Bullets\ProjectileBase.cs" />
     <Compile Include="Simulation\PlanetarySystem\CorpsCeleste.cs" />
     <Compile Include="Simulation\PlanetarySystem\Emplacement.cs" />
-    <Compile Include="Joueur\JoueurCommun.cs" />
     <Compile Include="Simulation\Bullets\Projectile.cs" />
     <Compile Include="Simulation\Enemies\Ennemi.cs" />
     <Compile Include="Simulation\IObjetVivant.cs" />
@@ -237,7 +240,7 @@
     <Compile Include="GUI\Translator.cs" />
     <Compile Include="Simulation\Enemies\Vague.cs" />
     <Compile Include="Simulation\Spaceships\Vaisseau.cs" />
-    <Compile Include="Joueur\ValidationServeur.cs" />
+    <Compile Include="Player\ValidationServeur.cs" />
     <Compile Include="Scenes\Acheter.cs" />
     <Compile Include="Scenes\Chargement.cs" />
     <Compile Include="Scenes\Aide.cs" />

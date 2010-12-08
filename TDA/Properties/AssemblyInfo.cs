@@ -15,9 +15,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 #else
-[assembly: AssemblyTitle("Commander - World 1")]
-[assembly: AssemblyProduct("Commander - World 1")]
-[assembly: AssemblyDescription("The first world of an epic and lovely tower defense game.")]
+[assembly: AssemblyTitle("Commander")]
+[assembly: AssemblyProduct("Commander")]
+[assembly: AssemblyDescription("An epic and lovely tower defense game.")]
 [assembly: AssemblyCompany("Ephemere Games")]
 
 [assembly: AssemblyCopyright("Copyright © Jodi Giordano")]

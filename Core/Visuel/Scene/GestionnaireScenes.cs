@@ -86,9 +86,8 @@ namespace Core.Visuel
         {
             Scene sceneActuelle = scenes[nomScene];
 
-            // Remettre le tampon de la scène dans le pool de tampons disponibles
-            if (sceneActuelle != null && sceneActuelle.EstProprietaireDeSonTampon)
-                GestionnaireTampons.Instance.remettre(sceneActuelle.Tampon);
+            if (sceneActuelle != null)
+                sceneActuelle.Dispose();
 
             scenes[nomScene] = scene;
 

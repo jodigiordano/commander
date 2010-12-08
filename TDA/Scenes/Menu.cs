@@ -8,6 +8,7 @@
     using Core.Visuel;
     using Core.Utilities;
     using Core.Physique;
+    using Microsoft.Xna.Framework.Input;
     
     class Menu : SceneMenu
     {
@@ -139,6 +140,7 @@
             //Simulation = new Simulation(Main, this, FactoryScenarios.getDescripteurTestsPerformance());
             Simulation = new Simulation(Main, this, descripteurScenario);
             Simulation.PositionCurseur = new Vector3(400, 20, 0);
+            Simulation.Players = Main.Players;
             Simulation.Initialize();
             Simulation.ModeDemo = true;
 
@@ -153,7 +155,7 @@
             Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
             TempsEntreDeuxChangementMusique = 0;
 
-            Main.ControleurJoueursConnectes.JoueurPrincipalDeconnecte += new ControleurJoueursConnectes.JoueurPrincipalDeconnecteHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
         }
 
         
@@ -183,7 +185,7 @@
                             break;
 
                         case "quit":
-                            if (!Main.ModeTrial.Actif)
+                            if (!Main.TrialMode.Active)
                                 Main.Exit();
                             else
 #if WINDOWS
@@ -217,47 +219,22 @@
                 }
             }
 
-            else if (Simulation.CorpsCelesteSelectionne != null && Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
-            {
-                effectuerTransition =
-                    (Simulation.CorpsCelesteSelectionne.Nom == "resume game" && PartieEnCours != null && !PartieEnCours.EstTerminee ||
-                    Simulation.CorpsCelesteSelectionne.Nom == "save the\nworld" ||
-                    Simulation.CorpsCelesteSelectionne.Nom == "quit" ||
-                    Simulation.CorpsCelesteSelectionne.Nom == "help" ||
-                    Simulation.CorpsCelesteSelectionne.Nom == "options" ||
-                    Simulation.CorpsCelesteSelectionne.Nom == "editor");
-                AnimationTransition.In = false;
-                AnimationTransition.Initialize();
-                ChoixTransition = Simulation.CorpsCelesteSelectionne.Nom;
-            }
-
-            else if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheChangerMusique, Main.JoueursConnectes[0].Manette, this.Nom) && TempsEntreDeuxChangementMusique <= 0)
-            {
-                changerMusique();
-                TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
-            }
-
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
             Simulation.Update(gameTime);
-
-            //Vector2 positionSouris = Core.Input.Facade.positionSouris(Main.JoueursConnectes[0].Manette, this.Nom);
-            //positionSouris += this.Camera.Origine;
-
-            //if (!Core.Physique.Facade.collisionPointRectangle(ref positionSouris, Main.Fenetre))
-            //{
-            //    Vector2 nouvellePosition = Main.Fenetre.pointIntersection(new Ligne(this.Camera.Origine, positionSouris));
-            //    Core.Input.Facade.setPositionSouris(Main.JoueursConnectes[0].Manette, this.Nom, ref nouvellePosition);
-            //}
         }
 
-        public void changerMusique()
+        public void ChangeMusic()
         {
+            if (TempsEntreDeuxChangementMusique > 0)
+                return;
+
             Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, Preferences.TempsEntreDeuxChangementMusique - 50);
             String ancienneMusique = MusiqueSelectionnee;
             MusiqueSelectionnee = Main.MusiquesDisponibles[Main.Random.Next(0, Main.MusiquesDisponibles.Count)];
             Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
             Main.MusiquesDisponibles.Add(ancienneMusique);
             Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+            TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
         }
 
 
@@ -283,10 +260,6 @@
 
                 ajouterScenable(TitreMenu);
 
-                //NomJoueur.Texte = Main.JoueursConnectes[0].JoueurPhysique.Gamertag;
-                //NomJoueur.position.X = 525 - NomJoueur.Rectangle.Width;
-                //ajouterScenable(NomJoueur);
-
                 Simulation.Draw(null);
 
                 if (effectuerTransition)
@@ -307,6 +280,8 @@
                 Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
             else
                 Core.Audio.Facade.reprendreMusique(MusiqueSelectionnee, true, 1000);
+
+            Core.Input.Facade.AddListener(Simulation);
         }
 
         public override void onFocusLost()
@@ -315,6 +290,69 @@
 
             if (Simulation.CorpsCelesteSelectionne != null && Simulation.CorpsCelesteSelectionne.Nom == "resume game" && PartieEnCours != null && !PartieEnCours.EstTerminee)
                 Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
+
+            Core.Input.Facade.RemoveListener(Simulation);
         }
+
+
+        #region Input Handling
+
+        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.MouseConfiguration.Select)
+                beginTransition();
+        }
+
+
+        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.Select)
+                beginTransition();
+        }
+
+
+        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (key == p.KeyboardConfiguration.ChangeMusic)
+                ChangeMusic();
+        }
+
+
+        private void beginTransition()
+        {
+            if (effectuerTransition)
+                return;
+
+            if ((Simulation.CorpsCelesteSelectionne != null &&
+                Simulation.CorpsCelesteSelectionne.Nom == "resume game" &&
+                PartieEnCours != null &&
+                !PartieEnCours.EstTerminee) ||
+                
+                (Simulation.CorpsCelesteSelectionne != null &&
+                Simulation.CorpsCelesteSelectionne.Nom != "resume game"))
+            {
+                effectuerTransition = true;
+                ChoixTransition = Simulation.CorpsCelesteSelectionne.Nom;
+                AnimationTransition.In = false;
+                AnimationTransition.Initialize();
+            }
+        }
+
+        #endregion
     }
 }

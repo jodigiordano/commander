@@ -2,48 +2,45 @@
 {
     using Microsoft.Xna.Framework;
     using System.Collections.Generic;
+    using Core.Physique;
 
 
-    class Player
+    class SimPlayer
     {
-        public Cursor Cursor;
         public List<CorpsCeleste> CelestialBodies;
         public Dictionary<PowerUp, bool> AvailableSpaceships;
 
-        public int Score;
-        public int Cash;
-        public int Lives;
         private Vector3 position;
+        private PlayerSelection PreviousSelection;
         public PlayerSelection ActualSelection;
 
         private SelectedCelestialBodyController CelestialBodyController;
         private SelectedTurretToBuyController TurretToBuyController;
 
-        public delegate void PlayerHandler(Player player);
-        public event PlayerHandler SelectionChanged;
+        public event SimPlayerHandler Changed;
+        public event SimPlayerHandler Moved;
+
+        public CommonStash CommonStash;
+
+        public Cercle Cercle;
+        public bool InSpacehip;
 
 
-        public Player()
+        public SimPlayer()
         {
-            Score = 0;
-            Cash = 0;
-            Lives = 0;
+            Cercle = new Cercle(Position, 8);
+            InSpacehip = false;
         }
 
 
         public void Initialize()
         {
             ActualSelection = new PlayerSelection();
-            TurretToBuyController = new SelectedTurretToBuyController(this);
-            CelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Cursor);
+            PreviousSelection = new PlayerSelection();
+            TurretToBuyController = new SelectedTurretToBuyController(CommonStash);
+            CelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Cercle);
             ActualSelection.AvailableTurretsToBuy = TurretToBuyController.AvailableTurretsInScenario;
-        }
-
-
-        private void notifySelectionChanged()
-        {
-            if (SelectionChanged != null)
-                SelectionChanged(this);
+            InSpacehip = false;
         }
 
 
@@ -54,13 +51,31 @@
             {
                 position = value;
                 VerifyFrame();
-                Cursor.Position = position;
+                Cercle.Position = position;
             }
+        }
+
+
+        public void Move(ref Vector3 delta, float speed)
+        {
+            Position += delta * speed;
         }
 
 
         public void UpdateSelection()
         {
+            if (InSpacehip)
+            {
+                ActualSelection.TurretToBuy = null;
+                ActualSelection.CelestialBodyOption = PowerUp.Aucune;
+                ActualSelection.TurretOption = TurretAction.None;
+
+                return;
+            }
+
+
+            //PreviousSelection.SynchronizeFrom(ActualSelection);
+
             CelestialBodyController.UpdateSelection();
 
             ActualSelection.CelestialBody = CelestialBodyController.CelestialBody;
@@ -93,7 +108,8 @@
 
                 checkAvailableCelestialBodyOptions();
 
-                if (ActualSelection.CelestialBodyOption == PowerUp.Aucune)
+                if (ActualSelection.CelestialBodyOption == PowerUp.Aucune ||
+                    !ActualSelection.AvailableCelestialBodyOptions[ActualSelection.CelestialBodyOption])
                     ActualSelection.NextCelestialBodyOption();
             }
 
@@ -104,9 +120,8 @@
                 ActualSelection.TurretOption = TurretAction.None;
             }
 
-            //if (CelestialBodyController.SelectedCelestialBodyChanged ||
-            //    CelestialBodyController.SelectedTurretSpotChanged)
-                notifySelectionChanged();
+            //if (!ActualSelection.Equals(PreviousSelection))
+            //    notifyChanged();
         }
 
 
@@ -114,7 +129,7 @@
         {
             TurretToBuyController.Next();
             ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-            notifySelectionChanged();
+            //notifyChanged();
         }
 
 
@@ -122,55 +137,73 @@
         {
             TurretToBuyController.Previous();
             ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-            notifySelectionChanged();
+            //notifyChanged();
         }
 
 
         public void NextPowerUpToBuy()
         {
             ActualSelection.NextCelestialBodyOption();
-            notifySelectionChanged();
+            //notifyChanged();
         }
 
 
         public void PreviousPowerUpToBuy()
         {
             ActualSelection.PreviousCelestialBodyOption();
-            notifySelectionChanged();
+            //notifyChanged();
         }
 
 
         public void NextTurretOption()
         {
             ActualSelection.NextTurretOption();
-            notifySelectionChanged();
+            //notifyChanged();
         }
 
 
         public void PreviousTurretOption()
         {
             ActualSelection.PreviousTurretOption();
-            notifySelectionChanged();
+            //notifyChanged();
         }
 
 
         public void Update(GameTime gameTime)
         {
+            //Vector3 delta = CelestialBodyController.doGlueMode();
+
+            //if (delta != Vector3.Zero)
+            //{
+            //    Position += delta;
+            //    notifyMoved();
+            //}
+
             Position += CelestialBodyController.doGlueMode();
+
+            notifyChanged();
+            notifyMoved();
         }
 
 
-        public void doTurretReactivated(Tourelle turret)
+        private void notifyChanged()
         {
-            if (ActualSelection.Turret == turret)
-                ActualSelection.TurretOption = TurretAction.Update;
+            if (Changed != null)
+                Changed(this);
+        }
+
+
+        private void notifyMoved()
+        {
+            if (Moved != null)
+                Moved(this);
         }
 
 
         private void VerifyFrame()
         {
-            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.DeadZoneXbox.X + Cursor.Width / 2, 640 - Preferences.DeadZoneXbox.X - Cursor.Width / 2);
-            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.DeadZoneXbox.Y + Cursor.Height / 2, 370 - Preferences.DeadZoneXbox.Y - Cursor.Height / 2);
+            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.DeadZoneXbox.X + Cercle.Rayon, 640 - Preferences.DeadZoneXbox.X - Cercle.Rayon);
+            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.DeadZoneXbox.Y + Cercle.Rayon, 370 - Preferences.DeadZoneXbox.Y - Cercle.Rayon);
         }
 
 
@@ -183,7 +216,7 @@
 
             ActualSelection.AvailableTurretOptions[TurretAction.Update] =
                 ActualSelection.TurretSpot.Tourelle.PeutMettreAJour &&
-                ActualSelection.TurretSpot.Tourelle.PrixMiseAJour <= this.Cash;
+                ActualSelection.TurretSpot.Tourelle.PrixMiseAJour <= CommonStash.Cash;
 
 
             //des que l'option de maj redevient disponible, elle est selectionnee
@@ -201,21 +234,21 @@
             ActualSelection.AvailableCelestialBodyOptions[PowerUp.DoItYourself] =
                 AvailableSpaceships[PowerUp.DoItYourself] &&
                 ActualSelection.CelestialBody.PeutAvoirDoItYourself &&
-                ActualSelection.CelestialBody.PrixDoItYourself <= this.Cash;
+                ActualSelection.CelestialBody.PrixDoItYourself <= CommonStash.Cash;
 
             ActualSelection.AvailableCelestialBodyOptions[PowerUp.FinalSolution] =
                 ActualSelection.CelestialBody.PeutDetruire &&
-                ActualSelection.CelestialBody.PrixDestruction <= this.Cash;
+                ActualSelection.CelestialBody.PrixDestruction <= CommonStash.Cash;
 
             ActualSelection.AvailableCelestialBodyOptions[PowerUp.CollectTheRent] =
                 AvailableSpaceships[PowerUp.CollectTheRent] &&
                 ActualSelection.CelestialBody.PeutAvoirCollecteur &&
-                ActualSelection.CelestialBody.PrixCollecteur <= this.Cash;
+                ActualSelection.CelestialBody.PrixCollecteur <= CommonStash.Cash;
 
             ActualSelection.AvailableCelestialBodyOptions[PowerUp.TheResistance] =
                 AvailableSpaceships[PowerUp.TheResistance] &&
                 ActualSelection.CelestialBody.PeutAvoirTheResistance &&
-                ActualSelection.CelestialBody.PrixTheResistance <= this.Cash;
+                ActualSelection.CelestialBody.PrixTheResistance <= CommonStash.Cash;
         }
     }
 }

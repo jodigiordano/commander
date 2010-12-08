@@ -52,22 +52,15 @@
             DroiteCercle = new Cercle(Droite.Position, 16);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, Scene.Nom) &&
-                Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, GaucheCercle) &&
-                Valeur > Min)
-            {
-                Valeur = Math.Max(Min, Valeur - Increment);
-            }
 
-            else if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, Scene.Nom) &&
-                Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, DroiteCercle) &&
-                Valeur < Max)
-            {
+        public void doClick()
+        {
+            if (Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, GaucheCercle) && Valeur > Min)
+                Valeur = Math.Max(Min, Valeur - Increment);
+            else if (Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, DroiteCercle) && Valeur < Max)
                 Valeur = Math.Min(Max, Valeur + Increment);
-            }
         }
+
 
         public override void Draw(GameTime gameTime)
         {

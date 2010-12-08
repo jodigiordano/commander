@@ -38,14 +38,13 @@
             BoxCercle = new Cercle(Position, 16);
         }
 
-        public override void Update(GameTime gameTime)
+
+        public void doClick()
         {
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Simulation.Main.JoueursConnectes[0].Manette, Simulation.Scene.Nom) &&
-                Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoxCercle))
-            {
+            if (Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoxCercle))
                 Checked = !Checked;
-            }
         }
+
 
         public override void Draw(GameTime gameTime)
         {

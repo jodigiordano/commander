@@ -502,8 +502,8 @@
             NbPlanetesFixesSlider.Valeur = (int)MathHelper.Clamp(NbPlanetesFixesSlider.Valeur, NbPlanetesFixesSlider.Min, NbPlanetesSlider.Valeur);
             NbPlanetesCheminDepartSlider.Valeur = (int)MathHelper.Clamp(NbPlanetesCheminDepartSlider.Valeur, 0, NbPlanetesSlider.Valeur);
             DifficulteFinSlider.Valeur = (int)MathHelper.Clamp(DifficulteFinSlider.Valeur, DifficulteDebutSlider.Valeur, DifficulteFinSlider.Max);
-            LoadSlider.Valeur = (int)MathHelper.Clamp(LoadSlider.Valeur, -1, Simulation.Main.Sauvegarde.DescriptionsScenarios.Count);
-            DeleteSlider.Valeur = (int)MathHelper.Clamp(DeleteSlider.Valeur, -1, Simulation.Main.Sauvegarde.DescriptionsScenarios.Count);
+            LoadSlider.Valeur = (int)MathHelper.Clamp(LoadSlider.Valeur, -1, Simulation.Main.SaveGame.DescriptionsScenarios.Count);
+            DeleteSlider.Valeur = (int)MathHelper.Clamp(DeleteSlider.Valeur, -1, Simulation.Main.SaveGame.DescriptionsScenarios.Count);
 
             if (GenererPushButton.Pressed)
             {
@@ -519,7 +519,6 @@
                 DescriptionScenario.Vagues = GenerateurVagues.Vagues;
 
                 Simulation.DescriptionScenario = DescriptionScenario;
-
                 Simulation.Initialize();
             }
 
@@ -597,10 +596,10 @@
                 Simulation.Initialize();
             }
 
-            if (LoadPushButton.Pressed && LoadSlider.Valeur != -1 && LoadSlider.Valeur < Simulation.Main.Sauvegarde.DescriptionsScenarios.Count)
+            if (LoadPushButton.Pressed && LoadSlider.Valeur != -1 && LoadSlider.Valeur < Simulation.Main.SaveGame.DescriptionsScenarios.Count)
             {
-                DescriptionScenario = Simulation.Main.Sauvegarde.DescriptionsScenarios[LoadSlider.Valeur];
-                DonneesGenerateur = Simulation.Main.Sauvegarde.DonneesGenerateur[LoadSlider.Valeur];
+                DescriptionScenario = Simulation.Main.SaveGame.DescriptionsScenarios[LoadSlider.Valeur];
+                DonneesGenerateur = Simulation.Main.SaveGame.DonneesGenerateur[LoadSlider.Valeur];
 
                 GenerateurScenario.DescripteurScenario = DescriptionScenario;
                 GenerateurVagues.Vagues = DescriptionScenario.Vagues;
@@ -617,25 +616,25 @@
                 updateDonneesGameplay();
                 updateDonneesVagues();
 
-                if (LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Simulation.Main.Sauvegarde.DescriptionsScenarios.Count)
+                if (LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Simulation.Main.SaveGame.DescriptionsScenarios.Count)
                 {
-                    Simulation.Main.Sauvegarde.DescriptionsScenarios.Add(DescriptionScenario);
-                    Simulation.Main.Sauvegarde.DonneesGenerateur.Add(DonneesGenerateur);
+                    Simulation.Main.SaveGame.DescriptionsScenarios.Add(DescriptionScenario);
+                    Simulation.Main.SaveGame.DonneesGenerateur.Add(DonneesGenerateur);
                 }
 
                 else
                 {
-                    Simulation.Main.Sauvegarde.DescriptionsScenarios[LoadSlider.Valeur] = DescriptionScenario;
-                    Simulation.Main.Sauvegarde.DonneesGenerateur[LoadSlider.Valeur] = DonneesGenerateur;
+                    Simulation.Main.SaveGame.DescriptionsScenarios[LoadSlider.Valeur] = DescriptionScenario;
+                    Simulation.Main.SaveGame.DonneesGenerateur[LoadSlider.Valeur] = DonneesGenerateur;
                 }
 
                 Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
             }
 
-            if (DeletePushButton.Pressed && DeleteSlider.Valeur != -1 && DeleteSlider.Valeur < Simulation.Main.Sauvegarde.DescriptionsScenarios.Count)
+            if (DeletePushButton.Pressed && DeleteSlider.Valeur != -1 && DeleteSlider.Valeur < Simulation.Main.SaveGame.DescriptionsScenarios.Count)
             {
-                Simulation.Main.Sauvegarde.DescriptionsScenarios.RemoveAt(DeleteSlider.Valeur);
-                Simulation.Main.Sauvegarde.DonneesGenerateur.RemoveAt(DeleteSlider.Valeur);
+                Simulation.Main.SaveGame.DescriptionsScenarios.RemoveAt(DeleteSlider.Valeur);
+                Simulation.Main.SaveGame.DonneesGenerateur.RemoveAt(DeleteSlider.Valeur);
 
                 DeleteSlider.Valeur = -1;
 

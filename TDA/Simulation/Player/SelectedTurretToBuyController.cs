@@ -16,12 +16,12 @@
 
         private LinkedListNode<Tourelle> SelectedTurret;
         private LinkedList<Tourelle> AvailableTurretsToBuy;
-        private Player Player;
-         
+        private CommonStash CommonStash;
 
-        public SelectedTurretToBuyController(Player player)
+
+        public SelectedTurretToBuyController(CommonStash commonStash)
         {
-            Player = player;
+            CommonStash = commonStash;
 
             SelectedTurret = null;
             AvailableTurretsInScenario = new Dictionary<Tourelle, bool>();
@@ -65,7 +65,7 @@
             {
                 Tourelle turret = celestialBody.TourellesPermises[i];
 
-                if (turret.PrixAchat <= Player.Cash)
+                if (turret.PrixAchat <= CommonStash.Cash)
                 {
                     AvailableTurretsToBuy.AddLast(turret);
                     AvailableTurretsInScenario.Add(turret, true);

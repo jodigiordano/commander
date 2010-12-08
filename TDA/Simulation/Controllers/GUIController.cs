@@ -12,7 +12,6 @@
         public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionNextWave;
         public Scenario Scenario;
         public List<Ennemi> Enemies;
-        public Cursor Cursor;
         public VaguesInfinies InfiniteWaves;
         public LinkedList<Vague> Waves;
         public Chemin Path;
@@ -30,6 +29,8 @@
         private MenuPowerUps MenuPowerUps;
         private FinalSolutionPreview FinalSolutionPreview;
         private PathPreview PathPreviewing;
+        private Cursor Cursor;
+        private bool InSpaceShip;
 
 
         public GUIController(Simulation simulation)
@@ -37,11 +38,12 @@
             Simulation = simulation;
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
             MenuGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
-            Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 10, Preferences.PrioriteGUIPanneauGeneral);
+            Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
             MenuTurretSpotEmpty = new MenuTurretSpotEmpty(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
             MenuTurretSpotOccupied = new MenuTurretSpotOccupied(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
             MenuPowerUps = new MenuPowerUps(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
+            InSpaceShip = false;
         }
 
 
@@ -56,6 +58,7 @@
 
             MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             MenuGeneral.TimeNextWave = Waves.First.Value.TempsApparition;
+            InSpaceShip = false;
         }
 
 
@@ -63,18 +66,6 @@
         {
             get { return MenuGeneral.SandGlass; }
         }
-
-
-        //public List<Bulle> VisibleBubbles
-        //{
-        //    get { return MenuAbstract.Bulle; }
-        //}
-
-
-        //public void doSelectedCelestialBodyChanged(CorpsCeleste celestialBody)
-        //{
-        //    SelectedCelestialBodyAnimation.CelestialBody = celestialBody;
-        //}
 
 
         public void doShowCompositionNextWave()
@@ -125,23 +116,31 @@
         }
 
 
-        public void doObjectDestroyed(IObjetPhysique obj)
+        public void doObjectCreated(IObjetPhysique obj)
         {
-            VaisseauDoItYourself vaisseau = obj as VaisseauDoItYourself;
+            Vaisseau spaceship = obj as Vaisseau;
 
-            if (vaisseau != null)
+            if (spaceship != null)
             {
-                Cursor.Position = vaisseau.Position;
-                Cursor.doShow();
+                Cursor.doHide();
+                InSpaceShip = true;
 
                 return;
             }
         }
 
 
-        public void doSpaceshipBuyed(CorpsCeleste celestialBody)
+        public void doObjectDestroyed(IObjetPhysique obj)
         {
-            Cursor.doHide();
+            Vaisseau spaceship = obj as Vaisseau;
+
+            if (spaceship != null)
+            {
+                Cursor.doShow();
+                InSpaceShip = false;
+
+                return;
+            }
         }
 
 
@@ -165,8 +164,16 @@
         }
 
 
-        public void doPlayerSelectionChanged(PlayerSelection selection)
+        public void doPlayerMoved(SimPlayer player)
         {
+            Cursor.Position = player.Position;
+        }
+
+
+        public void doPlayerSelectionChanged(SimPlayer player)
+        {
+            var selection = player.ActualSelection;
+
             MenuTurretSpotEmpty.TurretSpot = selection.TurretSpot;
             MenuTurretSpotEmpty.AvailableTurretsToBuy = selection.AvailableTurretsToBuy;
             MenuTurretSpotEmpty.TurretToBuy = selection.TurretToBuy;
@@ -208,7 +215,8 @@
             if (MenuGeneral.TimeNextWave > 0)
                 MenuGeneral.TimeNextWave = Math.Max(0, MenuGeneral.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
 
-            SelectedCelestialBodyAnimation.Update(gameTime);
+            if (!InSpaceShip)
+                SelectedCelestialBodyAnimation.Update(gameTime);
 
             //todo event-based
             MenuGeneral.MenuNextWave.Visible = Cursor.Actif && Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
@@ -225,23 +233,29 @@
 
         public void Draw()
         {
-            SelectedCelestialBodyAnimation.Draw();
             Cursor.Draw();
             Path.Draw();
 
-            if (!Simulation.ModeDemo)
-            {
-                MenuGeneral.Draw();
-                ScenarioAnnunciation.Draw();
-                ScenarioEndedAnnunciation.Draw();
-                AdvancedView.Draw();
-                PlayerLives.Draw();
-                MenuPowerUps.Draw();
-                MenuTurretSpotEmpty.Draw();
-                MenuTurretSpotOccupied.Draw();
-                PathPreviewing.Draw();
-                FinalSolutionPreview.Draw();
-            }
+            if (!InSpaceShip)
+                SelectedCelestialBodyAnimation.Draw();
+
+            if (Simulation.ModeDemo)
+                return;
+
+            MenuGeneral.Draw();
+            ScenarioAnnunciation.Draw();
+            ScenarioEndedAnnunciation.Draw();
+            AdvancedView.Draw();
+            PlayerLives.Draw();
+
+            if (InSpaceShip)
+                return;
+
+            MenuPowerUps.Draw();
+            MenuTurretSpotEmpty.Draw();
+            MenuTurretSpotOccupied.Draw();
+            PathPreviewing.Draw();
+            FinalSolutionPreview.Draw();
         }
     }
 }

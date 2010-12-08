@@ -16,7 +16,7 @@
 
         protected Main Main;
         protected Scene Scene;
-        protected Simulation Simulation;
+        public Simulation Simulation;
         protected IVisible Titre;
         protected IVisible Infos;
         protected DescripteurScenario Descripteur;
@@ -58,6 +58,7 @@
             Descripteur = descripteur;
             Simulation = new Simulation(main, scene, Descripteur);
             Simulation.InitParticules = initParticules;
+            Simulation.Players = Main.Players;
             Simulation.Initialize();
             Simulation.ModeDemo = true;
 
@@ -181,8 +182,8 @@
 
                 DescripteurScenario desc = Scenarios[corpsCeleste.Nom];
 
-                bool negatif = Main.Sauvegarde.Progression[desc.Numero] < 0;
-                int nbLunes = Math.Min(Math.Abs(Main.Sauvegarde.Progression[desc.Numero]), 10);
+                bool negatif = Main.SaveGame.Progression[desc.Numero] < 0;
+                int nbLunes = Math.Min(Math.Abs(Main.SaveGame.Progression[desc.Numero]), 10);
 
                 for (int i = 0; i < nbLunes; i++)
                 {

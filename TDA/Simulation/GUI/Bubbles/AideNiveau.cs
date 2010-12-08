@@ -25,7 +25,7 @@
         {
             get
             {
-                return new KeyValuePair<IObjetPhysique, string>(QuotesObjets[TypesObjets[Main.Sauvegarde.Progression[Sauvegarde] % Quotes.Count]], Quotes[Main.Sauvegarde.Progression[Sauvegarde] % Quotes.Count]);
+                return new KeyValuePair<IObjetPhysique, string>(QuotesObjets[TypesObjets[Main.SaveGame.Progression[Sauvegarde] % Quotes.Count]], Quotes[Main.SaveGame.Progression[Sauvegarde] % Quotes.Count]);
             }
         }
 
@@ -33,7 +33,7 @@
         {
             get
             {
-                return (Main.Sauvegarde.Progression[Sauvegarde] >= Quotes.Count * 2);
+                return (Main.SaveGame.Progression[Sauvegarde] >= Quotes.Count * 2);
             }
         }
 
@@ -90,7 +90,7 @@
 
         public void incrementerQuoteLancee()
         {
-            Main.Sauvegarde.Progression[Sauvegarde]++;
+            Main.SaveGame.Progression[Sauvegarde]++;
             //Core.Persistance.Facade.sauvegarderDonnee("savePlayer"); //sur la Xbox, ralentissement
         }
     }

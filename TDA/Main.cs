@@ -2,31 +2,24 @@ namespace TDA
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.GamerServices;
-    using Core.Visuel;
-    using Core.Utilities;
     using Core.Persistance;
-    using Core.Physique;
-    
+    using Core.Utilities;
+    using Microsoft.Xna.Framework;
+    using System.Reflection;
+    using Microsoft.Xna.Framework.GamerServices;
 
-    class Main : Microsoft.Xna.Framework.Game
+    delegate void NoneHandler();
+
+    class Main : Game
     {
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
-        GraphicsDeviceManager Graphics;
-        SpriteBatch SpriteBatch;
-        Texture2D Calque360;
-        bool initialiser = true;
-
         public ManagedThread[] Threads;
-        public Sauvegarde Sauvegarde;
-        public ControleurJoueursConnectes ControleurJoueursConnectes;
-        public List<Joueur> JoueursConnectes { get { return ControleurJoueursConnectes.JoueursConnectes; } }
-        public ModeTrial ModeTrial;
+        public Sauvegarde SaveGame;
+        public PlayersController PlayersController;
+        public TrialMode TrialMode;
+
+        private GraphicsDeviceManager Graphics;
+        private bool Initializing = true;
+
 
         private Vector2[] Tampons = new Vector2[]
         {
@@ -43,10 +36,6 @@ namespace TDA
         };
 
 
-        //=====================================================================
-        // Attributs statiques
-        //=====================================================================
-
         public static List<String> MusiquesDisponibles = new List<string>()
         {
             "ingame1", "ingame2", "ingame3", "ingame4", "ingame5", "ingame6", "ingame7", "ingame8"
@@ -55,42 +44,29 @@ namespace TDA
         public static Random Random = new Random();
 
 
-        //=====================================================================
-        // Constructeur
-        //=====================================================================
-
         public Main()
         {
             Graphics = new GraphicsDeviceManager(this);
             Graphics.PreferredBackBufferWidth = 1280;
             Graphics.PreferredBackBufferHeight = 720;
 
-            ModeTrial = new ModeTrial(this);
-
-#if DEBUG
-            Graphics.IsFullScreen = false;
-#else
-            Graphics.IsFullScreen = true;
-#endif
-
-#if XBOX
-            Components.Add(new GamerServicesComponent(this));
-
-#endif
-
+            TrialMode = new TrialMode(this);
+            Graphics.IsFullScreen = Preferences.FullScreen;
             Content.RootDirectory = "Content";
-
-            Sauvegarde = new Sauvegarde();
-
+            SaveGame = new Sauvegarde();
             Window.AllowUserResizing = false;
+            PlayersController = new PlayersController();
 
-            ControleurJoueursConnectes = new ControleurJoueursConnectes(this);
+            if (Preferences.Target == Setting.Xbox360)
+                Components.Add(new GamerServicesComponent(this));
         }
 
 
-        //=====================================================================
-        // Services
-        //=====================================================================
+        public Dictionary<PlayerIndex, Player> Players
+        {
+            get { return PlayersController.Players; }
+        }
+
 
         protected override void Initialize()
         {
@@ -109,6 +85,8 @@ namespace TDA
                 Threads[0],
                 new StorageMessages());
 
+            Core.Input.Facade.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
+
             Core.Visuel.Facade.Initialize(
                 Graphics,
                 1280,
@@ -121,23 +99,14 @@ namespace TDA
                 Threads[0],
                 Threads[1]);
 
-            Core.Input.Facade.Initialize(
-                new string[] { "Menu", "Partie", "Chargement", "NouvellePartie", "Aide", "Options", "Editeur", "Acheter", "Validation" },
-                new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
             Core.Physique.Facade.Initialize();
             Core.Audio.Facade.Initialize(0, 0);
 
-            Core.Persistance.Facade.ajouterDonnee(Sauvegarde);
+            Core.Persistance.Facade.ajouterDonnee(SaveGame);
 
             Core.Persistance.Facade.charger("chargement");
-        }
 
-
-        protected override void LoadContent()
-        {
-            SpriteBatch = new SpriteBatch(this.GraphicsDevice);
-
-            Calque360 = Content.Load<Texture2D>("debug/Calque360");
+            PlayersController.Initialize();
         }
 
 
@@ -146,9 +115,8 @@ namespace TDA
             for (int i = 0; i < Threads.Length; i++)
                 Threads[i].KillImmediately();
 
-#if WINDOWS && TRIAL
-            System.Diagnostics.Process.Start("http://ephemeregames.com/?page_id=35");
-#endif
+            if (Preferences.Target == Setting.WindowsDemo)
+                System.Diagnostics.Process.Start("http://ephemeregames.com/?page_id=35");
 
             base.OnExiting(sender, args);
         }
@@ -158,7 +126,7 @@ namespace TDA
         {
             base.Update(gameTime);
 
-            if (initialiser && Core.Persistance.Facade.estCharge("chargement"))
+            if (Initializing && Core.Persistance.Facade.estCharge("chargement"))
             {
                 Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleBase", 2);
                 Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissile", 1);
@@ -175,11 +143,7 @@ namespace TDA
                 Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
 
                 Core.Visuel.Facade.mettreAJourScene("Chargement", new Chargement(this));
-
-#if WINDOWS
                 Core.Visuel.Facade.mettreAJourScene("Validation", new Validation(this));
-#endif
-
                 Core.Visuel.Facade.mettreAJourScene("Menu", null);
                 Core.Visuel.Facade.mettreAJourScene("Partie", null);
                 Core.Visuel.Facade.mettreAJourScene("NouvellePartie", null);
@@ -187,64 +151,45 @@ namespace TDA
                 Core.Visuel.Facade.mettreAJourScene("Options", null);
                 Core.Visuel.Facade.mettreAJourScene("Editeur", null);
 
-                initialiser = false;
+                Initializing = false;
             }
 
             Core.Persistance.Facade.Update(gameTime);
             Core.Visuel.Facade.Update(gameTime);
             Core.Input.Facade.Update(gameTime);
 
-            if (!initialiser)
+            if (!Initializing)
                 Core.Audio.Facade.Update(gameTime);
 
             if (Core.Persistance.Facade.donneeEstCharge("savePlayer"))
-                ModeTrial.Update(gameTime);
+                TrialMode.Update(gameTime);
         }
 
 
         protected override void Draw(GameTime gameTime)
         {
             Core.Visuel.Facade.Draw();
-
-#if DEBUG
-
-            if (Core.Input.Facade.estPesee(Preferences.toucheDebug, (JoueursConnectes.Count == 0) ? PlayerIndex.One : JoueursConnectes[0].Manette, ""))
-            {
-#if XBOX
-                float PositionY = 100;
-#else
-                float PositionY = 0;
-#endif
-
-                SpriteBatch.Begin();
-                SpriteBatch.Draw(Calque360, Vector2.Zero, Color.White);
-                SpriteBatch.DrawString(Content.Load<SpriteFont>("debug/Debug"), "temps jeu ecoule: " + gameTime.ElapsedGameTime.TotalMilliseconds.ToString("F2"), new Vector2(50, PositionY), Color.White);
-                SpriteBatch.DrawString(Content.Load<SpriteFont>("debug/Debug"), "temps reel ecoule: " + gameTime.ElapsedRealTime.TotalMilliseconds.ToString("F2"), new Vector2(250, PositionY), Color.White);
-                SpriteBatch.DrawString(Content.Load<SpriteFont>("debug/Debug"), "roule lentement?: " + gameTime.IsRunningSlowly, new Vector2(450, PositionY), Color.White);
-                SpriteBatch.End();
-            }
-
-            //SpriteBatch.Begin();
-            //SpriteBatch.DrawString(Content.Load<SpriteFont>("debug/Debug"), "FPS: " + (1 / (float)gameTime.ElapsedGameTime.TotalSeconds).ToString("F2"), new Vector2(650, 0), Color.White);
-            //SpriteBatch.End();
-#endif
-
-            base.Draw(gameTime);
         }
     }
 
-
-    //=====================================================================
-    // Point d'entree
-    //=====================================================================
 
     static class Program
     {
         static void Main(string[] args)
         {
-            using (Main game = new Main())
+            Core.Utilities.ErrorHandling.Run<Main>(1280, 720, Preferences.FullScreen, GetRunningVersion());
+        }
+
+
+        private static Version GetRunningVersion()
+        {
+            try
             {
-                game.Run();
+                return System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion;
+            }
+            catch
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version;
             }
         }
     }

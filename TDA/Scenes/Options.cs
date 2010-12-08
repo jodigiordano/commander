@@ -6,13 +6,12 @@
     using Microsoft.Xna.Framework.Graphics;
     using Core.Input;
     using Core.Visuel;
-    using Core.Utilities;
+    using Microsoft.Xna.Framework.Input;
 
     class Options : Scene
     {
         private Main Main;
 
-        //private IVisible Retour;
         private IVisible TitreMusique;
         private HorizontalSlider Musique;
         private IVisible TitreEffetsSonores;
@@ -73,9 +72,6 @@
             Musique = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 140, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
             EffetsSonores = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 210, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
-            //Retour = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("pressBack"), new Vector3(-585, -335, 0), this);
-            //Retour.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
-
             Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(120, -420, 0), this);
             Lieutenant.Taille = 8;
             Lieutenant.Origine = new Vector2(0, Lieutenant.Texture.Height);
@@ -123,7 +119,7 @@
 
             TempsEntreDeuxChangementMusique = 0;
 
-            Main.ControleurJoueursConnectes.JoueurPrincipalDeconnecte += new ControleurJoueursConnectes.JoueurPrincipalDeconnecteHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
 
             joueurPrincipalDeconnecte = false;
         }
@@ -156,29 +152,13 @@
                 }
             }
 
-            else if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetour, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                     Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetourMenu2, Main.JoueursConnectes[0].Manette, this.Nom))
-            {
-                effectuerTransition = true;
-                ChoixTransition = "menu";
-                AnimationTransition.In = false;
-                AnimationTransition.Initialize();
-            }
-
             else
             {
-                Main.Sauvegarde.VolumeMusique = Musique.Valeur;
-                Main.Sauvegarde.VolumeEffetsSonores = EffetsSonores.Valeur;
+                Main.SaveGame.VolumeMusique = Musique.Valeur;
+                Main.SaveGame.VolumeEffetsSonores = EffetsSonores.Valeur;
 
                 Core.Audio.Facade.VolumeMusique = Musique.Valeur / 10f;
                 Core.Audio.Facade.VolumeEffetsSonores = EffetsSonores.Valeur / 10f;
-
-                if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheChangerMusique, Main.JoueursConnectes[0].Manette, this.Nom) && TempsEntreDeuxChangementMusique <= 0)
-                {
-                    Menu menu = (Menu)Core.Visuel.Facade.recupererScene("Menu");
-                    menu.changerMusique();
-                    TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
-                }
 
                 TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
                 TypeWriter.Update(gameTime);
@@ -196,7 +176,6 @@
             ajouterScenable(Titre);
             ajouterScenable(Lieutenant);
             ajouterScenable(Bulle);
-            //ajouterScenable(Retour);
             ajouterScenable(FondEcran);
             ajouterScenable(TypeWriter.Texte);
 
@@ -213,8 +192,8 @@
         {
             base.onFocus();
 
-            Musique.Valeur = Main.Sauvegarde.VolumeMusique;
-            EffetsSonores.Valeur = Main.Sauvegarde.VolumeEffetsSonores;
+            Musique.Valeur = Main.SaveGame.VolumeMusique;
+            EffetsSonores.Valeur = Main.SaveGame.VolumeEffetsSonores;
 
             effectuerTransition = true;
             AnimationTransition.In = true;
@@ -228,6 +207,110 @@
 
             if (!joueurPrincipalDeconnecte)
                 Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+        }
+
+
+        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.MouseConfiguration.Select)
+            {
+                Musique.doClick();
+                EffetsSonores.doClick();
+            }
+
+            if (button == p.MouseConfiguration.Back)
+                beginTransition();
+        }
+
+
+        public override void doMouseMoved(PlayerIndex inputIndex, Vector3 delta)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            p.Move(ref delta, p.MouseConfiguration.Speed);
+            Curseur.Position = p.Position;
+        }
+
+
+        public override void doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.MoveCursor)
+            {
+                p.Move(ref delta, p.GamePadConfiguration.Speed);
+                Curseur.Position = p.Position;
+            }
+        }
+
+
+        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)
+                beginTransition();
+
+            if (key == p.KeyboardConfiguration.ChangeMusic)
+                beginChangeMusic();
+        }
+
+
+        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.Select)
+            {
+                Musique.doClick();
+                EffetsSonores.doClick();
+            }
+
+            if (button == p.GamePadConfiguration.Cancel)
+                beginTransition();
+
+            if (button == p.GamePadConfiguration.ChangeMusic)
+                beginChangeMusic();
+        }
+
+
+        private void beginTransition()
+        {
+            if (effectuerTransition)
+                return;
+
+            effectuerTransition = true;
+            ChoixTransition = "menu";
+            AnimationTransition.In = false;
+            AnimationTransition.Initialize();
+        }
+
+
+        private void beginChangeMusic()
+        {
+            if (TempsEntreDeuxChangementMusique > 0)
+                return;
+
+            Menu menu = (Menu)Core.Visuel.Facade.recupererScene("Menu");
+            menu.ChangeMusic();
+            TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
         }
     }
 }

@@ -1,0 +1,474 @@
+﻿namespace TDA
+{
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+    using Core.Physique;
+    using Core.Input;
+
+    class SimPlayersController
+    {
+        public CorpsCeleste CelestialBodyToProtect;
+        public List<CorpsCeleste> CelestialBodies;
+        public CommonStash CommonStash;
+        public Dictionary<PowerUp, bool> AvailableSpaceships;
+        public Sablier SandGlass;
+        public bool ModeDemo;
+        public Vector3 InitialPlayerPosition;
+        public Dictionary<PlayerIndex, Player> Players;
+
+        //todo
+        public CorpsCeleste CelestialBodySelected { get { return Player.ActualSelection.CelestialBody; } }
+
+
+        private Simulation Simulation;
+        private SimPlayer Player;
+
+
+        public SimPlayersController(Simulation simulation)
+        {
+            Simulation = simulation;
+        }
+
+
+        public void Initialize()
+        {
+            Player = new SimPlayer();
+            Player.CelestialBodies = CelestialBodies;
+            Player.AvailableSpaceships = AvailableSpaceships;
+            Player.CommonStash = CommonStash;
+            Player.Initialize();
+            Player.Position = InitialPlayerPosition;
+            Player.Changed += new SimPlayerHandler(doPlayerChanged);
+            Player.Moved += new SimPlayerHandler(doPlayerMoved);
+
+            notifyCashChanged(CommonStash.Cash);
+            notifyScoreChanged(CommonStash.Score);
+            notifyPlayerChanged(Player);
+            notifyPlayerMoved(Player);
+        }
+
+
+        #region Events
+
+        public delegate void CelestialObjectHandler(CorpsCeleste celestialObject);
+        public event CelestialObjectHandler AchatDoItYourselfDemande;
+        public event CelestialObjectHandler DestructionCorpsCelesteDemande;
+        public event CelestialObjectHandler AchatCollecteurDemande;
+        public event CelestialObjectHandler AchatTheResistanceDemande;
+
+        public delegate void TurretTypeCelestialObjectTurretSpotHandler(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement);
+        public event TurretTypeCelestialObjectTurretSpotHandler AchatTourelleDemande;
+
+        public delegate void CelestialObjectTurretSpotHandler(CorpsCeleste corpsCeleste, Emplacement emplacement);
+        public event CelestialObjectTurretSpotHandler VenteTourelleDemande;
+        public event CelestialObjectTurretSpotHandler MiseAJourTourelleDemande;
+
+        public delegate void NoneHandler();
+        public event NoneHandler ProchaineVagueDemandee;
+
+        public delegate void IntegerHandler(int score);
+        public event IntegerHandler ScoreChanged;
+        public event IntegerHandler CashChanged;
+
+        public event SimPlayerHandler PlayerSelectionChanged;
+        public event SimPlayerHandler PlayerMoved;
+
+
+        private void notifyDestructionCorpsCelesteDemande(CorpsCeleste corpsCeleste)
+        {
+            if (DestructionCorpsCelesteDemande != null)
+                DestructionCorpsCelesteDemande(corpsCeleste);
+        }
+
+
+        private void notifyCashChanged(int cash)
+        {
+            if (CashChanged != null)
+                CashChanged(cash);
+        }
+
+
+        private void notifyScoreChanged(int score)
+        {
+            if (ScoreChanged != null)
+                ScoreChanged(score);
+        }
+
+
+        private void notifyDoItYourselfDemande(CorpsCeleste corpsCeleste)
+        {
+            if (AchatDoItYourselfDemande != null)
+                AchatDoItYourselfDemande(corpsCeleste);
+        }
+
+
+        private void notifyAchatTourelleDemande(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement)
+        {
+            if (AchatTourelleDemande != null)
+                AchatTourelleDemande(typeTourelle, corpsCeleste, emplacement);
+        }
+
+
+        private void notifyVenteTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
+        {
+            if (VenteTourelleDemande != null)
+                VenteTourelleDemande(corpsCeleste, emplacement);
+        }
+
+
+        private void notifyAchatCollecteurDemande(CorpsCeleste corpsCeleste)
+        {
+            if (AchatCollecteurDemande != null)
+                AchatCollecteurDemande(corpsCeleste);
+        }
+
+
+        private void notifyAchatTheResistanceDemande(CorpsCeleste corpsCeleste)
+        {
+            if (AchatTheResistanceDemande != null)
+                AchatTheResistanceDemande(corpsCeleste);
+        }
+
+
+        private void notifyMiseAJourTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
+        {
+            if (MiseAJourTourelleDemande != null)
+                MiseAJourTourelleDemande(corpsCeleste, emplacement);
+        }
+
+
+        private void notifyProchaineVagueDemandee()
+        {
+            if (ProchaineVagueDemandee != null)
+                ProchaineVagueDemandee();
+        }
+
+
+        private void notifyPlayerChanged(SimPlayer player)
+        {
+            if (PlayerSelectionChanged != null)
+                PlayerSelectionChanged(player);
+        }
+
+
+        private void notifyPlayerMoved(SimPlayer player)
+        {
+            if (PlayerMoved != null)
+                PlayerMoved(player);
+        }
+        
+        #endregion
+
+
+        public void doObjetCree(IObjetPhysique objet)
+        {
+            Vaisseau spaceship = objet as Vaisseau;
+
+            if (spaceship != null)
+            {
+                Player.InSpacehip = true;
+                Player.UpdateSelection();
+                return;
+            }
+
+
+            TheResistance resistance = objet as TheResistance;
+
+            if (resistance != null)
+            {
+                Player.UpdateSelection();
+                return;
+            }
+        }
+
+        public void doObjetDetruit(IObjetPhysique objet)
+        {
+            Ennemi ennemi = objet as Ennemi;
+
+            if (ennemi != null)
+            {
+                CommonStash.Cash += ennemi.ValeurUnites;
+                CommonStash.Score += ennemi.ValeurPoints;
+
+                Player.UpdateSelection();
+
+                notifyCashChanged(CommonStash.Cash);
+                notifyScoreChanged(CommonStash.Score);
+
+                return;
+            }
+
+
+            Mineral mineral = objet as Mineral;
+
+            if (mineral != null)
+            {
+                if (mineral.Type == 3)
+                {
+                    CommonStash.Lives += mineral.Valeur;
+                    CelestialBodyToProtect.PointsVie += mineral.Valeur;
+                }
+                else
+                {
+                    CommonStash.Cash += mineral.Valeur;
+                    notifyCashChanged(CommonStash.Cash);
+                }
+
+                return;
+            }
+
+
+            Vaisseau spaceship = objet as Vaisseau;
+
+            if (spaceship != null)
+            {
+                Player.InSpacehip = false;
+                Player.Position = spaceship.Position;
+                notifyPlayerMoved(Player);
+                Player.UpdateSelection();
+                return;
+            }
+
+
+            TheResistance resistance = objet as TheResistance;
+
+            if (resistance != null)
+            {
+                Player.UpdateSelection();
+                return;
+            }
+
+
+            CorpsCeleste celestialBody = objet as CorpsCeleste;
+
+            if (celestialBody != null)
+            {
+                Player.UpdateSelection();
+                return;
+            }
+        }
+
+
+        public void doMouseMoved(Player player, ref Vector3 delta)
+        {
+            Player.Move(ref delta, player.MouseConfiguration.Speed);
+            Player.UpdateSelection();
+            notifyPlayerMoved(Player);
+        }
+
+
+        public void doGamePadJoystickMoved(Player player, Buttons button, ref Vector3 delta)
+        {
+            if (button != player.GamePadConfiguration.MoveCursor)
+                return;
+
+            Player.Move(ref delta, player.GamePadConfiguration.Speed);
+            Player.UpdateSelection();
+            notifyPlayerMoved(Player);
+        }
+
+
+        public void doMouseScrolled(Player player, int delta)
+        {
+            doNextorPreviousAction(delta);
+        }
+
+
+        public void doGamePadButtonPressedOnce(Player player, Buttons button)
+        {
+            if (button == player.GamePadConfiguration.Select)
+            {
+                doSelectAction();
+                return;
+            }
+
+            if (button == player.GamePadConfiguration.SelectionNext)
+                doNextorPreviousAction(1);
+            else if (button == player.GamePadConfiguration.SelectionPrevious)
+                doNextorPreviousAction(-1);
+        }
+
+
+        public void doMouseButtonPressedOnce(Player player, MouseButton button)
+        {
+            if (button != player.MouseConfiguration.Select)
+                return;
+
+            doSelectAction();
+        }
+
+
+        public void doTourelleAchetee(Tourelle tourelle)
+        {
+            CommonStash.Cash -= tourelle.PrixAchat;
+            notifyCashChanged(CommonStash.Cash);
+
+            Player.UpdateSelection();
+
+            if (tourelle.Type == TypeTourelle.Gravitationnelle && !Simulation.ModeDemo)
+                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
+        }
+
+
+        public void doTourelleVendue(Tourelle tourelle)
+        {
+            CommonStash.Cash += tourelle.PrixVente;
+            notifyCashChanged(CommonStash.Cash);
+
+            Player.UpdateSelection();
+
+            if (tourelle.Type == TypeTourelle.Gravitationnelle)
+                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
+            else
+                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleVendue");
+        }
+
+
+        public void doTourelleMiseAJour(Tourelle tourelle)
+        {
+            CommonStash.Cash -= tourelle.PrixAchat; //parce qu'effectue une fois la tourelle mise a jour
+            notifyCashChanged(CommonStash.Cash);
+
+            Player.UpdateSelection();
+        }
+
+
+        public void doTurretReactivated(Tourelle turret)
+        {
+            //Player.doTurretReactivated(turret);
+            Player.UpdateSelection();
+        }
+
+
+        public void Update(GameTime gameTime)
+        {
+            Player.Update(gameTime);
+        }
+
+
+        private void doPlayerChanged(SimPlayer player)
+        {
+            notifyPlayerChanged(player);
+        }
+
+
+        private void doPlayerMoved(SimPlayer player)
+        {
+            notifyPlayerMoved(player);
+        }
+
+
+        private void doNextorPreviousAction(int delta)
+        {
+            // turret's options
+            if (Player.ActualSelection.TurretSpot != null &&
+                Player.ActualSelection.TurretSpot.EstOccupe)
+            {
+                if (delta > 0)
+                    Player.NextTurretOption();
+                else
+                    Player.PreviousTurretOption();
+
+                return;
+            }
+
+
+            // Celestial object' options
+            if (Player.ActualSelection.CelestialBody != null &&
+                Player.ActualSelection.TurretSpot == null)
+            {
+                if (delta > 0)
+                    Player.NextPowerUpToBuy();
+                else
+                    Player.PreviousPowerUpToBuy();
+
+                return;
+            }
+
+
+            // shop turrets
+            if (Player.ActualSelection.TurretSpot != null &&
+                !Player.ActualSelection.TurretSpot.EstOccupe)
+            {
+                if (delta > 0)
+                    Player.NextTurretToBuy();
+                else
+                    Player.PreviousTurretToBuy();
+            }
+        }
+
+
+        private void doSelectAction()
+        {
+            // buy a powerup
+            if (!ModeDemo &&
+                Player.ActualSelection.CelestialBody != null &&
+                Player.ActualSelection.TurretSpot == null)
+            {
+                switch (Player.ActualSelection.CelestialBodyOption)
+                {
+                    case PowerUp.DoItYourself:
+                        notifyDoItYourselfDemande(Player.ActualSelection.CelestialBody);
+                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixDoItYourself;
+                        notifyCashChanged(CommonStash.Cash);
+                        break;
+                    case PowerUp.CollectTheRent:
+                        notifyAchatCollecteurDemande(Player.ActualSelection.CelestialBody);
+                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixCollecteur;
+                        notifyCashChanged(CommonStash.Cash);
+                        break;
+                    case PowerUp.FinalSolution:
+                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixDestruction;
+                        notifyCashChanged(CommonStash.Cash);
+                        Player.ActualSelection.CelestialBodyOption = PowerUp.Aucune;
+                        notifyDestructionCorpsCelesteDemande(Player.ActualSelection.CelestialBody);
+                        break;
+                    case PowerUp.TheResistance:
+                        notifyAchatTheResistanceDemande(Player.ActualSelection.CelestialBody);
+                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixTheResistance;
+                        notifyCashChanged(CommonStash.Cash);
+                        break;
+                }
+
+                return;
+            }
+
+
+            // buy a turret
+            if (Player.ActualSelection.TurretToBuy != null)
+            {
+                notifyAchatTourelleDemande(Player.ActualSelection.TurretToBuy.Type, Player.ActualSelection.CelestialBody, Player.ActualSelection.TurretSpot);
+
+                return;
+            }
+
+
+            // upgrade or sell a turret
+            if (Player.ActualSelection.TurretSpot != null &&
+                Player.ActualSelection.TurretSpot.EstOccupe)
+            {
+                switch (Player.ActualSelection.TurretOption)
+                {
+                    case TurretAction.Sell:
+                        notifyVenteTourelleDemande(Player.ActualSelection.CelestialBody, Player.ActualSelection.TurretSpot);
+                        break;
+                    case TurretAction.Update:
+                        notifyMiseAJourTourelleDemande(Player.ActualSelection.CelestialBody, Player.ActualSelection.TurretSpot);
+                        break;
+                }
+
+                return;
+            }
+
+
+            // call next wave
+            if (!ModeDemo &&
+                Core.Physique.Facade.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
+            {
+                notifyProchaineVagueDemandee();
+                return;
+            }
+        }
+    }
+}

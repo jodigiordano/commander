@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Core.Visuel;
+    using Core.Physique;
 
     class SelectedCelestialBodyController
     {
@@ -14,18 +15,18 @@
         private int SelectedCelestialBodyIndex;
         private int SelectedTurretSpotIndex;
         private List<CorpsCeleste> CelestialBodies;
-        private Cursor Cursor;
+        private Cercle Cercle;
 
 
-        public SelectedCelestialBodyController(List<CorpsCeleste> celestialBodies, Cursor cursor)
+        public SelectedCelestialBodyController(List<CorpsCeleste> celestialBodies, Cercle cercle)
         {
             CelestialBodies = celestialBodies;
-            Cursor = cursor;
+            Cercle = cercle;
 
             SelectedCelestialBodyIndex = -1;
             SelectedTurretSpotIndex = -1;
 
-            LastPositionSelectedCelestialBody = new Vector3(float.NaN);
+            LastPositionSelectedCelestialBody = Vector3.Zero;
         }
 
 
@@ -54,16 +55,13 @@
 
             SelectedTurretSpotIndex = -1;
 
-            if (!Cursor.Actif)
-                return;
-
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
                 if (!CelestialBodies[i].Selectionnable)
                     continue;
 
                 for (int j = 0; j < CelestialBodies[i].Emplacements.Count; j++)
-                    if (Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, CelestialBodies[i].Emplacements[j].Rectangle))
+                    if (Core.Physique.Facade.collisionCercleRectangle(Cercle, CelestialBodies[i].Emplacements[j].Rectangle))
                     {
                         SelectedCelestialBodyChanged = SelectedCelestialBodyIndex != i;
 
@@ -74,6 +72,9 @@
             }
 
             SelectedTurretSpotChanged = SelectedTurretSpotIndex != previousIndex;
+
+            if (SelectedCelestialBodyChanged && SelectedCelestialBodyIndex != -1)
+                LastPositionSelectedCelestialBody = CelestialBodies[SelectedCelestialBodyIndex].Position;
         }
 
 
@@ -86,15 +87,12 @@
 
             SelectedCelestialBodyIndex = -1;
 
-            if (!Cursor.Actif)
-                return;
-
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
                 if (!CelestialBodies[i].Selectionnable)
                     continue;
 
-                if (Core.Physique.Facade.collisionCercleCercle(Cursor.Cercle, CelestialBodies[i].Cercle))
+                if (Core.Physique.Facade.collisionCercleCercle(Cercle, CelestialBodies[i].Cercle))
                 {
                     SelectedCelestialBodyIndex = i;
                     break;
@@ -102,14 +100,14 @@
             }
 
             SelectedCelestialBodyChanged = SelectedCelestialBodyIndex != previousIndex;
+
+            if (SelectedCelestialBodyChanged && SelectedCelestialBodyIndex != -1)
+                LastPositionSelectedCelestialBody = CelestialBodies[SelectedCelestialBodyIndex].Position;
         }
 
 
         public Vector3 doGlueMode()
         {
-            if (SelectedCelestialBodyIndex != -1 && SelectedCelestialBodyChanged)
-                LastPositionSelectedCelestialBody = CelestialBodies[SelectedCelestialBodyIndex].Position;
-
             if (SelectedCelestialBodyIndex != -1)
             {
                 Vector3 diff = CelestialBodies[SelectedCelestialBodyIndex].Position - LastPositionSelectedCelestialBody;

@@ -162,5 +162,68 @@
 
             CelestialBodyOption = (PowerUp) previous;
         }
+
+
+        public void SynchronizeFrom(PlayerSelection other)
+        {
+            this.AvailableCelestialBodyOptions.Clear();
+            this.AvailableTurretOptions.Clear();
+            this.AvailableTurretsToBuy.Clear();
+
+            foreach (var kvp in other.AvailableCelestialBodyOptions)
+                this.AvailableCelestialBodyOptions.Add(kvp.Key, kvp.Value);
+
+            foreach (var kvp in other.AvailableTurretOptions)
+                this.AvailableTurretOptions.Add(kvp.Key, kvp.Value);
+
+            foreach (var kvp in other.AvailableTurretsToBuy)
+                this.AvailableTurretsToBuy.Add(kvp.Key, kvp.Value);
+
+            this.CelestialBody = other.CelestialBody;
+            this.CelestialBodyOption = other.CelestialBodyOption;
+            this.TurretOption = other.TurretOption;
+            this.TurretSpot = other.TurretSpot;
+            this.TurretToBuy = other.TurretToBuy;
+        }
+
+
+        public override bool Equals(object obj)
+        {
+            PlayerSelection other = obj as PlayerSelection;
+
+            if (other == null)
+                return false;
+
+            return
+                this.CelestialBody == other.CelestialBody &&
+                this.CelestialBodyOption == other.CelestialBodyOption &&
+                this.TurretOption == other.TurretOption &&
+                this.TurretSpot == other.TurretSpot &&
+                this.TurretToBuy == other.TurretToBuy &&
+                DictEquals<PowerUp, bool>(this.AvailableCelestialBodyOptions, other.AvailableCelestialBodyOptions) &&
+                DictEquals<TurretAction, bool>(this.AvailableTurretOptions, other.AvailableTurretOptions) &&
+                DictEquals<Tourelle, bool>(this.AvailableTurretsToBuy, other.AvailableTurretsToBuy);
+        }
+
+
+        private bool DictEquals<K, V>(IDictionary<K, V> d1, IDictionary<K, V> d2)
+        {
+            if (d1.Count != d2.Count)
+                return false;
+
+            foreach (var kvp in d1)
+            {
+                V value;
+                bool contains = d2.TryGetValue(kvp.Key, out value);
+
+                if (!contains)
+                    return false;
+
+                if (!kvp.Value.Equals(value))
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -7,6 +7,8 @@
     using Core.Visuel;
     using Core.Utilities;
     using Core.Physique;
+    using Core.Input;
+    using Microsoft.Xna.Framework.Input;
 
     class Editeur : Scene
     {
@@ -30,6 +32,7 @@
             EnFocus = false;
 
             Simulation = new Simulation(main, this, FactoryScenarios.getDescripteurBidon());
+            Simulation.Players = Main.Players;
             Simulation.Initialize();
             Simulation.ModeEditeur = true;
             Simulation.EnPause = true;
@@ -45,7 +48,7 @@
 
             effectuerTransition = false;
 
-            Main.ControleurJoueursConnectes.JoueurPrincipalDeconnecte += new ControleurJoueursConnectes.JoueurPrincipalDeconnecteHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
         }
 
 
@@ -76,26 +79,9 @@
                 }
             }
 
-            else if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetourMenu, Main.JoueursConnectes[0].Manette, this.Nom))
-            {
-                effectuerTransition = true;
-                ChoixTransition = "menu";
-                AnimationTransition.In = false;
-                AnimationTransition.Initialize();
-            }
 
             else
             {
-                if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheMasquerEditeur, Main.JoueursConnectes[0].Manette, this.Nom))
-                {
-                    GenerateurGUI.Visible = !GenerateurGUI.Visible;
-
-                    if (GenerateurGUI.Visible)
-                        Curseur.doShow();
-                    else
-                        Curseur.doHide();
-                }
-
                 //Curseur.Update(gameTime); //todo
                 Simulation.EnPause = GenerateurGUI.Visible;
                 GenerateurGUI.Update(gameTime);
@@ -103,6 +89,7 @@
             }
 
         }
+
 
         protected override void UpdateVisuel()
         {
@@ -130,6 +117,53 @@
             base.onFocusLost();
 
             Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+        }
+
+
+        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+            if (button == MouseButton.Right)
+                beginTransition();
+        }
+
+
+        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        {
+            if (key == Keys.F2)
+                doHideEditor();
+        }
+
+
+        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            if (button == Buttons.B)
+                beginTransition();
+
+            if (button == Buttons.LeftShoulder)
+                doHideEditor();
+        }
+
+
+        private void beginTransition()
+        {
+            if (effectuerTransition)
+                return;
+
+            effectuerTransition = true;
+            ChoixTransition = "menu";
+            AnimationTransition.In = false;
+            AnimationTransition.Initialize();
+        }
+
+
+        private void doHideEditor()
+        {
+            GenerateurGUI.Visible = !GenerateurGUI.Visible;
+
+            if (GenerateurGUI.Visible)
+                Curseur.doShow();
+            else
+                Curseur.doHide();
         }
     }
 }

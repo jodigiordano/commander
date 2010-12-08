@@ -7,7 +7,7 @@
     using Core.Visuel;
     using Core.Physique;
 
-    class TheResistance : DrawableGameComponent
+    class TheResistance : IObjetPhysique
     {
         public double TempsActif;
         public bool EntreAuBercail;
@@ -28,7 +28,6 @@
         }
 
         public TheResistance(Simulation simulation, CorpsCeleste corpsCelesteDepart, List<Ennemi> ennemis)
-            : base(simulation.Main)
         {
             Simulation = simulation;
             CorpsCelesteDepart = corpsCelesteDepart;
@@ -72,7 +71,7 @@
             Vaisseaux.Add(v);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             TempsActif -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -118,10 +117,23 @@
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             foreach (var vaisseau in Vaisseaux)
                 vaisseau.Draw(gameTime);
         }
+
+        #region IObjetPhysique Membres
+
+        public Vector3 Position { get; set; }
+        public float Vitesse { get; set; }
+        public Vector3 Direction { get; set; }
+        public float Rotation { get; set; }
+        public Forme Forme { get; set; }
+        public Cercle Cercle { get; set; }
+        public RectanglePhysique Rectangle { get; set; }
+        public Ligne Ligne { get; set; }
+
+        #endregion
     }
 }

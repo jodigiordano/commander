@@ -8,6 +8,7 @@
     using Core.Visuel;
     using Core.Utilities;
     using Microsoft.Xna.Framework.GamerServices;
+    using Microsoft.Xna.Framework.Input;
 
     class Acheter : Scene
     {
@@ -66,23 +67,58 @@
                     Core.Visuel.Facade.effectuerTransition("AcheterVersMenu");
             }
 
-            else if (!Main.ModeTrial.Actif &&
-                    (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheChangerMusique, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheDebug, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheProchaineVague, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetour, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetourMenu, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionPrecedent, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionSuivant, Main.JoueursConnectes[0].Manette, this.Nom) ||
-                    Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheVueAvancee, Main.JoueursConnectes[0].Manette, this.Nom)))
+            else
             {
-                effectuerTransition = true;
-                AnimationTransition.In = false;
-                AnimationTransition.Initialize();
-            }
+                if (!Guide.IsVisible && Main.TrialMode.Active)
+                    TempsAvantQuitter -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            else if (Main.ModeTrial.Actif && Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, this.Nom))
+                Sablier.TempsRestant = TempsAvantQuitter;
+                Sablier.Update(gameTime);
+
+                if (TempsAvantQuitter <= 0)
+                    Main.Exit();
+            }
+        }
+
+
+        protected override void UpdateVisuel()
+        {
+            ajouterScenable((Main.TrialMode.Active) ? FondEcranAchat : FondEcranAchatEffectue);
+
+            if (Main.TrialMode.Active)
+                Sablier.Draw(null);
+
+            if (effectuerTransition)
+                AnimationTransition.Draw(null);
+        }
+
+
+        public override void onFocus()
+        {
+            base.onFocus();
+
+            effectuerTransition = true;
+            AnimationTransition.In = true;
+            AnimationTransition.Initialize();
+        }
+
+        private void AsyncExit(IAsyncResult result)
+        {
+            Main.Exit();
+        }
+
+
+        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+        }
+
+
+        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            if (effectuerTransition == true)
+                return;
+
+            if (Main.TrialMode.Active && button == Buttons.A)
             {
                 try
                 {
@@ -108,44 +144,13 @@
                 }
             }
 
+
             else
             {
-                if (!Guide.IsVisible && Main.ModeTrial.Actif)
-                    TempsAvantQuitter -= gameTime.ElapsedGameTime.TotalMilliseconds;
-
-                Sablier.TempsRestant = TempsAvantQuitter;
-                Sablier.Update(gameTime);
-
-                if (TempsAvantQuitter <= 0)
-                    Main.Exit();
+                effectuerTransition = true;
+                AnimationTransition.In = false;
+                AnimationTransition.Initialize();
             }
-        }
-
-
-        protected override void UpdateVisuel()
-        {
-            ajouterScenable((Main.ModeTrial.Actif) ? FondEcranAchat : FondEcranAchatEffectue);
-
-            if (Main.ModeTrial.Actif)
-                Sablier.Draw(null);
-
-            if (effectuerTransition)
-                AnimationTransition.Draw(null);
-        }
-
-
-        public override void onFocus()
-        {
-            base.onFocus();
-
-            effectuerTransition = true;
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
-        }
-
-        private void AsyncExit(IAsyncResult result)
-        {
-            Main.Exit();
         }
     }
 }

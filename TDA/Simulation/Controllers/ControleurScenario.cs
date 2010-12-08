@@ -26,11 +26,11 @@
         public List<CorpsCeleste> CorpsCelestes     { get { return Scenario.SystemePlanetaire; } }
         public VaguesInfinies VaguesInfinies        { get { return Scenario.VaguesInfinies; } }
         public LinkedList<Vague> Vagues             { get { return Scenario.Vagues; } }
-        public Player Player                        { get { return Scenario.Player; } }
+        public CommonStash CommonStash              { get { return Scenario.CommonStash; } }
         public List<Tourelle> TourellesDepart       { get { return Scenario.Tourelles; } }
         public CorpsCeleste CorpsCelesteAProteger   { get { return Scenario.CorpsCelesteAProteger; } }
 
-        public EtatPartie Etat                                          { get; private set; }
+        public EtatPartie Etat                      { get; private set; }
         private Simulation Simulation;
         private int CompteurVagues;
         private ParticuleEffectWrapper Etoiles;
@@ -63,15 +63,6 @@
         {
             EmetteurEtoiles += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            //tmp
-            //compteurTmp -= gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            //if (compteurTmp < 0 && !ModeDemo)
-            //{
-            //    notifyNouvelEtatPartie(EtatPartie.Perdue);
-            //    compteurTmp = double.NaN;
-            //}
-
             if (EmetteurEtoiles >= 100)
             {
                 Vector2 v2 = Vector2.Zero;
@@ -98,10 +89,10 @@
             {
                 Etat = EtatPartie.Gagnee;
 
-                if (Simulation.Main.Sauvegarde.Progression[Scenario.Numero] < 0)
-                    Simulation.Main.Sauvegarde.Progression[Scenario.Numero] = Math.Abs(Simulation.Main.Sauvegarde.Progression[Scenario.Numero]);
-                else if (Simulation.Main.Sauvegarde.Progression[Scenario.Numero] == 0)
-                    Simulation.Main.Sauvegarde.Progression[Scenario.Numero] = 1;
+                if (Simulation.Main.SaveGame.Progression[Scenario.Numero] < 0)
+                    Simulation.Main.SaveGame.Progression[Scenario.Numero] = Math.Abs(Simulation.Main.SaveGame.Progression[Scenario.Numero]);
+                else if (Simulation.Main.SaveGame.Progression[Scenario.Numero] == 0)
+                    Simulation.Main.SaveGame.Progression[Scenario.Numero] = 1;
 
                 Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
 
@@ -124,16 +115,16 @@
             }
 
             if (corpsCeleste == CorpsCelesteAProteger)
-                Player.Lives = (int) CorpsCelesteAProteger.PointsVie; //correct de caster?
+                CommonStash.Lives = (int) CorpsCelesteAProteger.PointsVie; //correct de caster?
 
-            if (Player.Lives <= 0 && Etat == EtatPartie.EnCours && !ModeDemo && !ModeEditeur)
+            if (CommonStash.Lives <= 0 && Etat == EtatPartie.EnCours && !ModeDemo && !ModeEditeur)
             {
                 CorpsCelesteAProteger.doMeurt();
                 Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
                 Etat = EtatPartie.Perdue;
 
-                if ((Simulation.Main.Sauvegarde.Progression[Scenario.Numero] <= 0))
-                    Simulation.Main.Sauvegarde.Progression[Scenario.Numero] -= 1;
+                if ((Simulation.Main.SaveGame.Progression[Scenario.Numero] <= 0))
+                    Simulation.Main.SaveGame.Progression[Scenario.Numero] -= 1;
                 
                 Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
 

@@ -5,21 +5,24 @@ namespace TDA
     using Core.Physique;
     using Core.Visuel;
     using Core.Input;
+    using Microsoft.Xna.Framework.Input;
 
     delegate void PhysicalObjectHandler(IObjetPhysique obj);
+    delegate void SimPlayerHandler(SimPlayer player);
 
-    class Simulation : DrawableGameComponent
+    class Simulation : InputListener
     {
         public Scene Scene;
         public Main Main;
         public DescripteurScenario DescriptionScenario;
         public bool Debug;
+        public Dictionary<PlayerIndex, Player> Players;
 
         private ControleurScenario ControleurScenario;
         private ControleurEnnemis ControleurEnnemis;
         private ControleurProjectiles ControleurProjectiles;
         private ControleurCollisions ControleurCollisions;
-        private PlayersController PlayersController;
+        private SimPlayersController SimPlayersController;
         private ControleurTourelles ControleurTourelles;
         public ControleurSystemePlanetaire ControleurSystemePlanetaire;
         private ControleurVaisseaux ControleurVaisseaux;
@@ -39,7 +42,7 @@ namespace TDA
             {
                 modeDemo = value;
 
-                PlayersController.ModeDemo = value;
+                SimPlayersController.ModeDemo = value;
                 ControleurScenario.ModeDemo = value;
             }
         }
@@ -64,7 +67,7 @@ namespace TDA
         {
             get
             {
-                return PlayersController.CelestialBodySelected;
+                return SimPlayersController.CelestialBodySelected;
             }
         }
 
@@ -72,17 +75,10 @@ namespace TDA
 
 
         public Simulation(Main main, Scene scene, DescripteurScenario scenario)
-            : base(main)
         {
             Scene = scene;
             Main = main;
             DescriptionScenario = scenario;
-
-            Core.Input.Facade.considerToutesTouches(Main.JoueursConnectes[0].Manette, Scene.Nom);
-
-#if XBOX || MANETTE_WINDOWS
-            Core.Input.Facade.considerThumbsticks(Main.JoueursConnectes[0].Manette, null, Scene.Nom);
-#endif
 
 #if DEBUG
             this.Debug = true;
@@ -92,7 +88,7 @@ namespace TDA
         }
 
 
-        public override void Initialize()
+        public void Initialize()
         {
             if (InitParticules)
             {
@@ -131,7 +127,7 @@ namespace TDA
             ControleurCollisions = new ControleurCollisions(this);
             ControleurProjectiles = new ControleurProjectiles(this);
             ControleurEnnemis = new ControleurEnnemis(this);
-            PlayersController = new PlayersController(this);
+            SimPlayersController = new SimPlayersController(this);
             ControleurTourelles = new ControleurTourelles(this);
             ControleurSystemePlanetaire = new ControleurSystemePlanetaire(this);
             ControleurScenario = new ControleurScenario(this, new Scenario(this, DescriptionScenario));
@@ -139,23 +135,24 @@ namespace TDA
             ControleurMessages = new ControleurMessages(this);
             GUIController = new GUIController(this);
 
+            SimPlayersController.Players = this.Players;
             ControleurCollisions.Projectiles = ControleurProjectiles.Projectiles;
             ControleurCollisions.Ennemis = ControleurEnnemis.Ennemis;
-            PlayersController.CelestialBodies = ControleurScenario.CorpsCelestes;
+            SimPlayersController.CelestialBodies = ControleurScenario.CorpsCelestes;
             ControleurSystemePlanetaire.CorpsCelestes = ControleurScenario.CorpsCelestes;
             ControleurTourelles.ControleurSystemePlanetaire = ControleurSystemePlanetaire;
             ControleurEnnemis.VaguesInfinies = ControleurScenario.VaguesInfinies;
             ControleurEnnemis.Vagues = ControleurScenario.Vagues;
             ControleurCollisions.Tourelles = ControleurTourelles.Tourelles;
-            PlayersController.Player = ControleurScenario.Player;
-            PlayersController.CelestialBodyToProtect = ControleurScenario.CorpsCelesteAProteger;
+            SimPlayersController.CommonStash = ControleurScenario.CommonStash;
+            SimPlayersController.CelestialBodyToProtect = ControleurScenario.CorpsCelesteAProteger;
             GUIController.Path = ControleurSystemePlanetaire.Chemin;
             GUIController.PathPreview = ControleurSystemePlanetaire.CheminProjection;
             ControleurEnnemis.CheminProjection = ControleurSystemePlanetaire.CheminProjection;
             ControleurTourelles.TourellesDepart = ControleurScenario.TourellesDepart;
             ControleurEnnemis.Chemin = ControleurSystemePlanetaire.Chemin;
             ControleurCollisions.CorpsCelestes = ControleurScenario.CorpsCelestes;
-            PlayersController.AvailableSpaceships = ControleurVaisseaux.OptionsDisponibles;
+            SimPlayersController.AvailableSpaceships = ControleurVaisseaux.OptionsDisponibles;
             ControleurCollisions.Mineraux = ControleurEnnemis.Mineraux;
             ControleurEnnemis.ValeurTotalMineraux = ControleurScenario.Scenario.ValeurMinerauxDonnes;
             ControleurEnnemis.PourcentageMinerauxDonnes = ControleurScenario.Scenario.PourcentageMinerauxDonnes;
@@ -168,60 +165,62 @@ namespace TDA
             ControleurMessages.Chemin = ControleurSystemePlanetaire.Chemin;
             ControleurMessages.Sablier = GUIController.SandGlass;
             GUIController.CompositionNextWave = ControleurEnnemis.CompositionProchaineVague;
-            PlayersController.SandGlass = GUIController.SandGlass;
+            SimPlayersController.SandGlass = GUIController.SandGlass;
             GUIController.CelestialBodies = ControleurSystemePlanetaire.CorpsCelestes;
             GUIController.Scenario = ControleurScenario.Scenario;
             GUIController.Enemies = ControleurEnnemis.Ennemis;
-            ControleurMessages.Curseur = GUIController.Cursor;
-            PlayersController.InitialPlayerPosition = PositionCurseur;
-            PlayersController.Cursor = GUIController.Cursor;
+            //ControleurMessages.Curseur = GUIController.Cursor;
+            SimPlayersController.InitialPlayerPosition = PositionCurseur;
             GUIController.InfiniteWaves = ControleurScenario.VaguesInfinies;
             GUIController.Waves = ControleurScenario.Vagues;
 
+
             ControleurCollisions.ObjetTouche += new ControleurCollisions.ObjetToucheHandler(ControleurEnnemis.doObjetTouche);
-            PlayersController.AchatTourelleDemande += new PlayersController.TurretTypeCelestialObjectTurretSpotHandler(ControleurTourelles.doAcheterTourelle);
+            SimPlayersController.AchatTourelleDemande += new SimPlayersController.TurretTypeCelestialObjectTurretSpotHandler(ControleurTourelles.doAcheterTourelle);
             ControleurEnnemis.VagueTerminee += new ControleurEnnemis.VagueTermineeHandler(ControleurScenario.doVagueTerminee);
-            ControleurEnnemis.ObjetDetruit += new PhysicalObjectHandler(PlayersController.doObjetDetruit);
+            ControleurEnnemis.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
             ControleurCollisions.DansZoneActivation += new ControleurCollisions.DansZoneActivationHandler(ControleurTourelles.doDansZoneActivationTourelle);
             ControleurTourelles.ObjectCreated += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
             ControleurEnnemis.ObjetCree += new PhysicalObjectHandler(ControleurSystemePlanetaire.doObjetCree);
             ControleurProjectiles.ObjetDetruit += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
             ControleurEnnemis.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doWaveStarted);
-            PlayersController.VenteTourelleDemande += new PlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doVendreTourelle);
-            ControleurTourelles.TurretSold += new ControleurTourelles.TurretHandler(PlayersController.doTourelleVendue);
-            ControleurTourelles.TurretBought += new ControleurTourelles.TurretHandler(PlayersController.doTourelleAchetee);
+            SimPlayersController.VenteTourelleDemande += new SimPlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doVendreTourelle);
+            ControleurTourelles.TurretSold += new ControleurTourelles.TurretHandler(SimPlayersController.doTourelleVendue);
+            ControleurTourelles.TurretBought += new ControleurTourelles.TurretHandler(SimPlayersController.doTourelleAchetee);
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(ControleurScenario.doEnnemiAtteintFinTrajet);
-            PlayersController.AchatCollecteurDemande += new PlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterCollecteur);
-            ControleurTourelles.TurretUpdated += new ControleurTourelles.TurretHandler(PlayersController.doTourelleMiseAJour);
-            PlayersController.MiseAJourTourelleDemande += new PlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doMettreAJourTourelle);
+            SimPlayersController.AchatCollecteurDemande += new SimPlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterCollecteur);
+            ControleurTourelles.TurretUpdated += new ControleurTourelles.TurretHandler(SimPlayersController.doTourelleMiseAJour);
+            SimPlayersController.MiseAJourTourelleDemande += new SimPlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doMettreAJourTourelle);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurTourelles.doObjetDetruit);
-            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(PlayersController.doObjetDetruit);
-            PlayersController.ProchaineVagueDemandee += new PlayersController.NoneHandler(ControleurEnnemis.doProchaineVagueDemandee);
+            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
+            SimPlayersController.ProchaineVagueDemandee += new SimPlayersController.NoneHandler(ControleurEnnemis.doProchaineVagueDemandee);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
-            PlayersController.AchatDoItYourselfDemande += new PlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterDoItYourself);
-            ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(PlayersController.doObjetDetruit);
-            PlayersController.DestructionCorpsCelesteDemande += new PlayersController.CelestialObjectHandler(ControleurSystemePlanetaire.doDetruireCorpsCeleste);
+            SimPlayersController.AchatDoItYourselfDemande += new SimPlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterDoItYourself);
+            ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
+            SimPlayersController.DestructionCorpsCelesteDemande += new SimPlayersController.CelestialObjectHandler(ControleurSystemePlanetaire.doDetruireCorpsCeleste);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
             ControleurEnnemis.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
-            PlayersController.AchatTheResistanceDemande += new PlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterTheResistance);
+            SimPlayersController.AchatTheResistanceDemande += new SimPlayersController.CelestialObjectHandler(ControleurVaisseaux.doAcheterTheResistance);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurScenario.doObjetDetruit);
 
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(this.doEnnemiAtteintFinTrajet);
-            ControleurScenario.NouvelEtatPartie += new ControleurScenario.NouvelEtatPartieHandler(this.doGameStateChanged);
             ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(this.doCorpsCelesteDetruit);
             ControleurEnnemis.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doNextWave);
-            PlayersController.CashChanged += new PlayersController.IntegerHandler(GUIController.doCashChanged);
-            PlayersController.ScoreChanged += new PlayersController.IntegerHandler(GUIController.doScoreChanged);
+            SimPlayersController.CashChanged += new SimPlayersController.IntegerHandler(GUIController.doCashChanged);
+            SimPlayersController.ScoreChanged += new SimPlayersController.IntegerHandler(GUIController.doScoreChanged);
             ControleurScenario.NouvelEtatPartie += new ControleurScenario.NouvelEtatPartieHandler(GUIController.doGameStateChanged);
-            PlayersController.AchatCollecteurDemande += new PlayersController.CelestialObjectHandler(GUIController.doSpaceshipBuyed);
-            PlayersController.AchatDoItYourselfDemande += new PlayersController.CelestialObjectHandler(GUIController.doSpaceshipBuyed);
             ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(GUIController.doObjectDestroyed);
-            PlayersController.PlayerSelectionChanged += new PlayersController.PlayerSelectionHandler(GUIController.doPlayerSelectionChanged);
-            ControleurTourelles.TurretReactivated += new ControleurTourelles.TurretHandler(PlayersController.doTurretReactivated);
+            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.doPlayerSelectionChanged);
+            ControleurTourelles.TurretReactivated += new ControleurTourelles.TurretHandler(SimPlayersController.doTurretReactivated);
+            SimPlayersController.PlayerMoved += new SimPlayerHandler(GUIController.doPlayerMoved);
+            ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(SimPlayersController.doObjetCree);
+            ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(GUIController.doObjectCreated);
+            ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(GUIController.doObjectDestroyed);
+
 
             ControleurScenario.Initialize();
-            PlayersController.Initialize();
+            SimPlayersController.Initialize();
             ControleurEnnemis.Initialize();
             ControleurProjectiles.Initialize();
             ControleurTourelles.Initialize();
@@ -236,7 +235,7 @@ namespace TDA
         }
 
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (EnPause)
                 return;
@@ -245,17 +244,16 @@ namespace TDA
             ControleurProjectiles.Update(gameTime);
             ControleurTourelles.Update(gameTime); //doit etre fait avant le controleurEnnemi pour les associations ennemis <--> tourelles
             ControleurEnnemis.Update(gameTime);
-            PlayersController.Update(gameTime);
+            SimPlayersController.Update(gameTime);
             ControleurSystemePlanetaire.Update(gameTime);
             ControleurScenario.Update(gameTime);
             ControleurVaisseaux.Update(gameTime);
             ControleurMessages.Update(gameTime);
             GUIController.Update(gameTime);
-
-            HandleInput();
         }
 
-        public override void Draw(GameTime gameTime)
+
+        public void Draw(GameTime gameTime)
         {
             ControleurCollisions.Draw(null);
             ControleurProjectiles.Draw(null);
@@ -268,64 +266,12 @@ namespace TDA
             GUIController.Draw();
         }
 
+
         public void EtreNotifierNouvelEtatPartie(ControleurScenario.NouvelEtatPartieHandler handler)
         {
             ControleurScenario.NouvelEtatPartie += handler;
         }
 
-        public void HandleInput()
-        {
-            ControleurCollisions.Debug = this.Debug && (Core.Input.Facade.estPesee(Preferences.toucheDebug, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom));
-
-            if (ControleurVaisseaux.VaisseauControllablePresent)
-            {
-#if XBOX || MANETTE_WINDOWS
-                Vector2 donneesThumbstick = Core.Input.Facade.positionThumbstick(this.Main.JoueursConnectes[0].Manette, true, this.Scene.Nom);
-#else
-                Vector2 donneesThumbstick = Core.Input.Facade.positionDeltaSouris(this.Main.JoueursConnectes[0].Manette, this.Scene.Nom);
-#endif
-
-                ControleurVaisseaux.NextInputVaisseau = donneesThumbstick;
-            }
-
-            if (ControleurVaisseaux.VaisseauCollecteurActif && Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheRetour, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
-                ControleurVaisseaux.VaisseauCollecteurActif = false;
-
-            //todo
-            if (Core.Input.Facade.estPesee(Preferences.toucheVueAvancee, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
-            {
-                GUIController.doShowAdvancedView();
-            }
-
-            else
-            {
-                GUIController.doHideAdvancedView();
-            }
-
-            //todo
-#if XBOX || MANETTE_WINDOWS
-            Vector2 positionThumb = Core.Input.Facade.positionThumbstick(Main.JoueursConnectes[0].Manette, true, Scene.Nom);
-
-            ControleurJoueur.doGamePadJoystickMoved(this.Main.JoueursConnectes[0].Manette, Buttons.LeftStick, new Vector3(positionThumb.X * GUIController.Cursor.Vitesse, -positionThumb.Y * GUIController.Cursor.Vitesse, 0));
-#else
-            Vector2 positionSouris = Core.Input.Facade.positionDeltaSouris(Main.JoueursConnectes[0].Manette, Scene.Nom);
-            PlayersController.doMouseMoved(this.Main.JoueursConnectes[0].Manette, new Vector3(positionSouris, 0));
-#endif
-
-            //todo
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionSuivant, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
-                PlayersController.doMouseScrolled(this.Main.JoueursConnectes[0].Manette, 1);
-
-            //todo
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelectionPrecedent, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
-                PlayersController.doMouseScrolled(this.Main.JoueursConnectes[0].Manette, -1);
-
-            //todo
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, this.Main.JoueursConnectes[0].Manette, this.Scene.Nom))
-            {
-                PlayersController.doMouseButtonPressedOnce(this.Main.JoueursConnectes[0].Manette, MouseButton.Left);
-            }
-        }
 
         private void doEnnemiAtteintFinTrajet(Ennemi ennemi, CorpsCeleste corpsCeleste)
         {
@@ -334,42 +280,153 @@ namespace TDA
 
             if (!this.ModeDemo && this.Etat != EtatPartie.Perdue)
             {
-                foreach (var joueur in this.Main.JoueursConnectes)
-                    Core.Input.Facade.vibrerManette(joueur.Manette, 300, 0.5f, 0.5f);
+                foreach (var joueur in this.Main.Players.Values)
+                    Core.Input.Facade.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
             }
         }
 
-        private void doGameStateChanged(EtatPartie etat)
-        {
-            if (etat != EtatPartie.Gagnee && etat != EtatPartie.Perdue)
-                return;
-
-#if WINDOWS && !MANETTE_WINDOWS
-            Core.Input.Facade.considerTouches(
-                this.Main.JoueursConnectes[0].Manette,
-                new List<Microsoft.Xna.Framework.Input.Keys>() { Preferences.toucheRetourMenu, Preferences.toucheRetourMenu2 },
-                this.Scene.Nom);
-
-            Core.Input.Facade.considerTouches(
-                this.Main.JoueursConnectes[0].Manette,
-                new List<BoutonSouris>() { Preferences.toucheSelection, Preferences.toucheRetour },
-                this.Scene.Nom);
-#else
-            Core.Input.Facade.considerTouches(
-                    this.Main.JoueursConnectes[0].Manette,
-                    new List<Microsoft.Xna.Framework.Input.Buttons>() { Preferences.toucheRetourMenu, Preferences.toucheRetourMenu2 },
-                    this.Scene.Nom);
-
-            Core.Input.Facade.considerThumbsticks(
-                    this.Main.JoueursConnectes[0].Manette,
-                    new List<Microsoft.Xna.Framework.Input.Buttons>() { },
-                    this.Scene.Nom);
-#endif
-        }
 
         private void doCorpsCelesteDetruit(IObjetPhysique objet)
         {
-            Core.Input.Facade.vibrerManette(this.Main.JoueursConnectes[0].Manette, 300, 0.5f, 0.5f);
+            foreach (var joueur in this.Main.Players.Values)
+                Core.Input.Facade.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
         }
+
+
+        #region InputListener Membres
+
+        bool InputListener.Active
+        {
+            get { return Etat == EtatPartie.EnCours; }
+        }
+
+
+        void InputListener.doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (this.Debug && key == p.KeyboardConfiguration.Debug)
+                ControleurCollisions.Debug = true;
+        }
+
+
+        void InputListener.doKeyReleased(PlayerIndex inputIndex, Keys key)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (this.Debug && key == p.KeyboardConfiguration.Debug)
+                ControleurCollisions.Debug = false;
+        }
+
+
+        void InputListener.doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (ControleurVaisseaux.VaisseauCollecteurActif && button == p.MouseConfiguration.Cancel)
+                ControleurVaisseaux.VaisseauCollecteurActif = false;
+
+            SimPlayersController.doMouseButtonPressedOnce(p, button);
+
+            if (button == p.MouseConfiguration.AdvancedView)
+                GUIController.doShowAdvancedView();
+        }
+
+
+        void InputListener.doMouseButtonReleased(PlayerIndex inputIndex, MouseButton button)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.MouseConfiguration.AdvancedView)
+                GUIController.doHideAdvancedView();
+        }
+
+
+        void InputListener.doMouseScrolled(PlayerIndex inputIndex, int delta)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            SimPlayersController.doMouseScrolled(p, delta);
+        }
+
+
+        void InputListener.doMouseMoved(PlayerIndex inputIndex, Vector3 delta)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (ControleurVaisseaux.VaisseauControllablePresent)
+                ControleurVaisseaux.NextInputVaisseau = delta;
+
+            SimPlayersController.doMouseMoved(p, ref delta);
+        }
+
+
+        void InputListener.doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (ControleurVaisseaux.VaisseauCollecteurActif && button == p.GamePadConfiguration.Cancel)
+                ControleurVaisseaux.VaisseauCollecteurActif = false;
+
+            SimPlayersController.doGamePadButtonPressedOnce(p, button);
+
+            if (this.Debug && button == p.GamePadConfiguration.Debug)
+                ControleurCollisions.Debug = true;
+
+            if (button == p.GamePadConfiguration.AdvancedView)
+                GUIController.doShowAdvancedView();
+        }
+
+
+        void InputListener.doGamePadButtonReleased(PlayerIndex inputIndex, Buttons button)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.AdvancedView)
+                GUIController.doHideAdvancedView();
+
+            if (this.Debug && button == p.GamePadConfiguration.Debug)
+                ControleurCollisions.Debug = false;
+        }
+
+
+        void InputListener.doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta)
+        {
+            Player p = Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (ControleurVaisseaux.VaisseauControllablePresent && button == p.GamePadConfiguration.PilotSpaceShip)
+                ControleurVaisseaux.NextInputVaisseau = delta * p.GamePadConfiguration.Speed;
+
+            SimPlayersController.doGamePadJoystickMoved(p, button, ref delta);
+        }
+
+        #endregion
     }
 }

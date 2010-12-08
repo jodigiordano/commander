@@ -34,16 +34,18 @@
             BoutonCercle = new Cercle(Position, 16);
         }
 
+
+        public void doClick()
+        {
+            Pressed = Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoutonCercle);
+        }
+
+
         public override void Update(GameTime gameTime)
         {
             Pressed = false;
-
-            if (Core.Input.Facade.estPeseeUneSeuleFois(Preferences.toucheSelection, Main.JoueursConnectes[0].Manette, Scene.Nom) &&
-                Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoutonCercle))
-            {
-                Pressed = true;
-            }
         }
+
 
         public override void Draw(GameTime gameTime)
         {
