@@ -15,7 +15,7 @@
         public Sablier SandGlass;
         public bool ModeDemo;
         public Vector3 InitialPlayerPosition;
-        public Dictionary<PlayerIndex, Player> Players;
+
 
         //todo
         public CorpsCeleste CelestialBodySelected { get { return Player.ActualSelection.CelestialBody; } }
@@ -42,8 +42,7 @@
             Player.Changed += new SimPlayerHandler(doPlayerChanged);
             Player.Moved += new SimPlayerHandler(doPlayerMoved);
 
-            notifyCashChanged(CommonStash.Cash);
-            notifyScoreChanged(CommonStash.Score);
+            notifyCommonStashChanged(CommonStash);
             notifyPlayerChanged(Player);
             notifyPlayerMoved(Player);
         }
@@ -51,28 +50,20 @@
 
         #region Events
 
-        public delegate void CelestialObjectHandler(CorpsCeleste celestialObject);
+        public delegate void TurretTypeCelestialObjectTurretSpotHandler(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement);
+        public delegate void CelestialObjectTurretSpotHandler(CorpsCeleste corpsCeleste, Emplacement emplacement);
+
+        public event TurretTypeCelestialObjectTurretSpotHandler AchatTourelleDemande;        
+        public event CelestialObjectTurretSpotHandler VenteTourelleDemande;
+        public event CelestialObjectTurretSpotHandler MiseAJourTourelleDemande;
+        public event NoneHandler ProchaineVagueDemandee;
+        public event CommonStashHandler CommonStashChanged;
+        public event SimPlayerHandler PlayerSelectionChanged;
+        public event SimPlayerHandler PlayerMoved;
         public event CelestialObjectHandler AchatDoItYourselfDemande;
         public event CelestialObjectHandler DestructionCorpsCelesteDemande;
         public event CelestialObjectHandler AchatCollecteurDemande;
         public event CelestialObjectHandler AchatTheResistanceDemande;
-
-        public delegate void TurretTypeCelestialObjectTurretSpotHandler(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement);
-        public event TurretTypeCelestialObjectTurretSpotHandler AchatTourelleDemande;
-
-        public delegate void CelestialObjectTurretSpotHandler(CorpsCeleste corpsCeleste, Emplacement emplacement);
-        public event CelestialObjectTurretSpotHandler VenteTourelleDemande;
-        public event CelestialObjectTurretSpotHandler MiseAJourTourelleDemande;
-
-        public delegate void NoneHandler();
-        public event NoneHandler ProchaineVagueDemandee;
-
-        public delegate void IntegerHandler(int score);
-        public event IntegerHandler ScoreChanged;
-        public event IntegerHandler CashChanged;
-
-        public event SimPlayerHandler PlayerSelectionChanged;
-        public event SimPlayerHandler PlayerMoved;
 
 
         private void notifyDestructionCorpsCelesteDemande(CorpsCeleste corpsCeleste)
@@ -82,17 +73,10 @@
         }
 
 
-        private void notifyCashChanged(int cash)
+        private void notifyCommonStashChanged(CommonStash stash)
         {
-            if (CashChanged != null)
-                CashChanged(cash);
-        }
-
-
-        private void notifyScoreChanged(int score)
-        {
-            if (ScoreChanged != null)
-                ScoreChanged(score);
+            if (CommonStashChanged != null)
+                CommonStashChanged(stash);
         }
 
 
@@ -193,8 +177,7 @@
 
                 Player.UpdateSelection();
 
-                notifyCashChanged(CommonStash.Cash);
-                notifyScoreChanged(CommonStash.Score);
+                notifyCommonStashChanged(CommonStash);
 
                 return;
             }
@@ -212,7 +195,7 @@
                 else
                 {
                     CommonStash.Cash += mineral.Valeur;
-                    notifyCashChanged(CommonStash.Cash);
+                    notifyCommonStashChanged(CommonStash);
                 }
 
                 return;
@@ -244,6 +227,7 @@
 
             if (celestialBody != null)
             {
+                Player.DoCelestialBodyDestroyed();
                 Player.UpdateSelection();
                 return;
             }
@@ -302,7 +286,7 @@
         public void doTourelleAchetee(Tourelle tourelle)
         {
             CommonStash.Cash -= tourelle.PrixAchat;
-            notifyCashChanged(CommonStash.Cash);
+            notifyCommonStashChanged(CommonStash);
 
             Player.UpdateSelection();
 
@@ -314,7 +298,7 @@
         public void doTourelleVendue(Tourelle tourelle)
         {
             CommonStash.Cash += tourelle.PrixVente;
-            notifyCashChanged(CommonStash.Cash);
+            notifyCommonStashChanged(CommonStash);
 
             Player.UpdateSelection();
 
@@ -328,7 +312,7 @@
         public void doTourelleMiseAJour(Tourelle tourelle)
         {
             CommonStash.Cash -= tourelle.PrixAchat; //parce qu'effectue une fois la tourelle mise a jour
-            notifyCashChanged(CommonStash.Cash);
+            notifyCommonStashChanged(CommonStash);
 
             Player.UpdateSelection();
         }
@@ -411,23 +395,23 @@
                     case PowerUp.DoItYourself:
                         notifyDoItYourselfDemande(Player.ActualSelection.CelestialBody);
                         CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixDoItYourself;
-                        notifyCashChanged(CommonStash.Cash);
+                        notifyCommonStashChanged(CommonStash);
                         break;
                     case PowerUp.CollectTheRent:
                         notifyAchatCollecteurDemande(Player.ActualSelection.CelestialBody);
                         CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixCollecteur;
-                        notifyCashChanged(CommonStash.Cash);
+                        notifyCommonStashChanged(CommonStash);
                         break;
                     case PowerUp.FinalSolution:
                         CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixDestruction;
-                        notifyCashChanged(CommonStash.Cash);
+                        notifyCommonStashChanged(CommonStash);
                         Player.ActualSelection.CelestialBodyOption = PowerUp.Aucune;
                         notifyDestructionCorpsCelesteDemande(Player.ActualSelection.CelestialBody);
                         break;
                     case PowerUp.TheResistance:
                         notifyAchatTheResistanceDemande(Player.ActualSelection.CelestialBody);
                         CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixTheResistance;
-                        notifyCashChanged(CommonStash.Cash);
+                        notifyCommonStashChanged(CommonStash);
                         break;
                 }
 

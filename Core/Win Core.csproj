@@ -146,9 +146,11 @@
     <Compile Include="Utilities\FadeCouleur.cs" />
     <Compile Include="Utilities\GestionnaireEffets.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />
+    <Compile Include="Utilities\KeyAndValue.cs" />
     <Compile Include="Utilities\ManagedThread.cs" />
     <Compile Include="Utilities\Pause.cs" />
     <Compile Include="Utilities\Pool.cs" />
+    <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
     <Compile Include="Utilities\Trajet2D.cs" />
     <Compile Include="Utilities\Trajet3D.cs" />
     <Compile Include="Visuel\Animations\Animation.cs" />

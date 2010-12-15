@@ -119,5 +119,11 @@
 
             return Vector3.Zero;
         }
+
+
+        public void doCelestialBodyDestroyed()
+        {
+            SelectedCelestialBodyIndex = -1;
+        }
     }
 }

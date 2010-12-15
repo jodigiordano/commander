@@ -276,7 +276,7 @@
 
             doQuoteTourelle(gameTime);
 
-            if (AideNiveau != null && Simulation.Etat == EtatPartie.EnCours)
+            if (AideNiveau != null && Simulation.Etat == GameState.Running)
             {
                 AideNiveau.Update(gameTime);
 

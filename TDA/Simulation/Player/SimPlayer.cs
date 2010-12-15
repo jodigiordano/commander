@@ -186,6 +186,12 @@
         }
 
 
+        public void DoCelestialBodyDestroyed()
+        {
+            CelestialBodyController.doCelestialBodyDestroyed();
+        }
+
+
         private void notifyChanged()
         {
             if (Changed != null)

@@ -138,6 +138,8 @@ namespace TDA
                 Initializing = false;
             }
 
+            Core.Input.Facade.Active = this.IsActive;
+
             Core.Persistance.Facade.Update(gameTime);
             Core.Visuel.Facade.Update(gameTime);
             Core.Input.Facade.Update(gameTime);

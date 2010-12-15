@@ -13,6 +13,7 @@
         public List<TrouRose> TrousRoses;
         public bool Debloque;
         public int Numero;
+        public DescripteurScenario ScenarioSelectionne { get; private set; }
 
         protected Main Main;
         protected Scene Scene;
@@ -24,10 +25,10 @@
 
         private Dictionary<String, List<Lune>> ScenarioLunes;
         private CorpsCeleste dernierCorpsCelesteSelectionne;
-
         private TheResistance ResistancePartieEnCours;
-
         private CorpsCeleste corpsCelestePartieEnPause;
+
+
         public String CorpsCelestePartieEnPause
         {
             set
@@ -56,9 +57,13 @@
             Numero = numero;
 
             Descripteur = descripteur;
+
+            ScenarioSelectionne = new DescripteurScenario();
+
             Simulation = new Simulation(main, scene, Descripteur);
             Simulation.InitParticules = initParticules;
             Simulation.Players = Main.Players;
+            Simulation.DemoModeSelectedScenario = ScenarioSelectionne;
             Simulation.Initialize();
             Simulation.ModeDemo = true;
 
@@ -99,10 +104,6 @@
             get { return (Simulation.CorpsCelesteSelectionne != null) ? Simulation.CorpsCelesteSelectionne.Nom : ""; }
         }
 
-        public DescripteurScenario ScenarioSelectionne
-        {
-            get { return (CorpsSelectionne != "") ? Scenarios[CorpsSelectionne] : null; }
-        }
 
         public void afficherMessageBloque(String message)
         {
@@ -131,6 +132,9 @@
 
         public override void Update(GameTime gameTime)
         {
+            ScenarioSelectionne = (CorpsSelectionne != "") ? Scenarios[CorpsSelectionne] : null;
+            Simulation.DemoModeSelectedScenario.Numero = (ScenarioSelectionne != null) ? ScenarioSelectionne.Numero : -1;
+
             Simulation.Update(gameTime);
 
             foreach (var listeLunes in ScenarioLunes.Values)
@@ -182,8 +186,9 @@
 
                 DescripteurScenario desc = Scenarios[corpsCeleste.Nom];
 
-                bool negatif = Main.SaveGame.Progression[desc.Numero] < 0;
-                int nbLunes = Math.Min(Math.Abs(Main.SaveGame.Progression[desc.Numero]), 10);
+                int level = 0;
+                bool negatif = Main.SaveGame.Progress.TryGetValue(desc.Numero, out level) && level < 0;
+                int nbLunes = Math.Min(Math.Abs(level), 10);
 
                 for (int i = 0; i < nbLunes; i++)
                 {

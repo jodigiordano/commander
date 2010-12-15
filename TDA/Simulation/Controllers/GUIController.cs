@@ -11,6 +11,7 @@
         public List<CorpsCeleste> CelestialBodies;
         public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionNextWave;
         public Scenario Scenario;
+        public DescripteurScenario DemoModeSelectedScenario;
         public List<Ennemi> Enemies;
         public VaguesInfinies InfiniteWaves;
         public LinkedList<Vague> Waves;
@@ -27,6 +28,7 @@
         private MenuTurretSpotEmpty MenuTurretSpotEmpty;
         private MenuTurretSpotOccupied MenuTurretSpotOccupied;
         private MenuPowerUps MenuPowerUps;
+        private MenuDemo MenuDemo;
         private FinalSolutionPreview FinalSolutionPreview;
         private PathPreview PathPreviewing;
         private Cursor Cursor;
@@ -42,6 +44,7 @@
             MenuTurretSpotEmpty = new MenuTurretSpotEmpty(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
             MenuTurretSpotOccupied = new MenuTurretSpotOccupied(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
             MenuPowerUps = new MenuPowerUps(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
+            MenuDemo = new MenuDemo(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste);
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
             InSpaceShip = false;
         }
@@ -86,19 +89,14 @@
         }
 
 
-        public void doScoreChanged(int score)
+        public void doCommonStashChanged(CommonStash stash)
         {
-            MenuGeneral.Score = score;
+            MenuGeneral.Score = stash.Score;
+            MenuGeneral.Cash = stash.Cash;
         }
 
 
-        public void doCashChanged(int cash)
-        {
-            MenuGeneral.Cash = cash;
-        }
-
-
-        public void doGameStateChanged(EtatPartie newGameState)
+        public void doGameStateChanged(GameState newGameState)
         {
             ScenarioEndedAnnunciation.doGameStateChanged(newGameState);
         }
@@ -186,6 +184,11 @@
             MenuPowerUps.Options = selection.AvailableCelestialBodyOptions;
             MenuPowerUps.SelectedOption = selection.CelestialBodyOption;
 
+            MenuDemo.CelestialBody = selection.CelestialBody;
+            MenuDemo.Scenario =
+                (selection.CelestialBody != null &&
+                DemoModeSelectedScenario != null) ? DemoModeSelectedScenario.Numero : -1;
+
             SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
 
             FinalSolutionPreview.CelestialBody =
@@ -240,7 +243,10 @@
                 SelectedCelestialBodyAnimation.Draw();
 
             if (Simulation.ModeDemo)
+            {
+                //MenuDemo.Draw();
                 return;
+            }
 
             MenuGeneral.Draw();
             ScenarioAnnunciation.Draw();

@@ -383,6 +383,9 @@ namespace TDA
 
             if (key == Keys.Back)
                 Clavier[Clavier.Count - 1].Value.Pressed = true;
+
+            if (key == Keys.Enter)
+                Continue.Value.doClick();
         }
 
 

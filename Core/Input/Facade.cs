@@ -36,6 +36,15 @@
         }
 
 
+        public static bool Active
+        {
+            set
+            {
+                InputController.Active = value;
+            }
+        }
+
+
         public static void ConnectPlayer(PlayerIndex inputIndex)
         {
             PlayerConnection.Connect(inputIndex);

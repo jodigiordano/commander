@@ -66,7 +66,7 @@
         {
             get
             {
-                return Simulation.Etat != EtatPartie.EnCours;
+                return Simulation.Etat != GameState.Running;
             }
         }
 
@@ -134,13 +134,13 @@
             Core.Input.Facade.RemoveListener(Simulation);
         }
 
-        public void doNouvelEtatPartie(EtatPartie nouvelEtat)
+        public void doNouvelEtatPartie(GameState nouvelEtat)
         {
-            if (nouvelEtat == EtatPartie.Gagnee || nouvelEtat == EtatPartie.Perdue)
+            if (nouvelEtat == GameState.Won || nouvelEtat == GameState.Lost)
             {
                 Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, 500);
                 Main.MusiquesDisponibles.Add(MusiqueSelectionnee);
-                MusiqueSelectionnee = ((nouvelEtat == EtatPartie.Gagnee) ? "win" : "gameover") + Main.Random.Next(1, 3);
+                MusiqueSelectionnee = ((nouvelEtat == GameState.Won) ? "win" : "gameover") + Main.Random.Next(1, 3);
                 Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
             }
         }
@@ -148,7 +148,7 @@
 
         public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
         {
-            if (Simulation.Etat != EtatPartie.EnCours && (button == MouseButton.Right || button == MouseButton.Left))
+            if (Simulation.Etat != GameState.Running && (button == MouseButton.Right || button == MouseButton.Left))
                 beginTransition();
         }
 
@@ -168,7 +168,7 @@
             if (button == Buttons.Start)
                 beginTransition();
 
-            if (Simulation.Etat != EtatPartie.EnCours && (button == Buttons.A || button == Buttons.B))
+            if (Simulation.Etat != GameState.Running && (button == Buttons.A || button == Buttons.B))
                 beginTransition();
 
             if (button == Buttons.DPadUp)

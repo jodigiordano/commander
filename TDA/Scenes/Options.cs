@@ -152,8 +152,8 @@
 
             else
             {
-                Main.SaveGame.VolumeMusique = Musique.Valeur;
-                Main.SaveGame.VolumeEffetsSonores = EffetsSonores.Valeur;
+                Main.SaveGame.VolumeMusic = Musique.Valeur;
+                Main.SaveGame.VolumeSfx = EffetsSonores.Valeur;
 
                 Core.Audio.Facade.VolumeMusique = Musique.Valeur / 10f;
                 Core.Audio.Facade.VolumeEffetsSonores = EffetsSonores.Valeur / 10f;
@@ -190,8 +190,8 @@
         {
             base.onFocus();
 
-            Musique.Valeur = Main.SaveGame.VolumeMusique;
-            EffetsSonores.Valeur = Main.SaveGame.VolumeEffetsSonores;
+            Musique.Valeur = Main.SaveGame.VolumeMusic;
+            EffetsSonores.Valeur = Main.SaveGame.VolumeSfx;
 
             effectuerTransition = true;
             AnimationTransition.In = true;

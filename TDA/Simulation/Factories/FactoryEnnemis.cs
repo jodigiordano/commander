@@ -79,6 +79,7 @@
             e.Vitesse = getVitesse(type, niveauVitesse);
             e.PointsVie = e.PointsVieDepart = getPointsVie(type, niveauPointsVie); ;
             e.ValeurUnites = valeurUnites;
+            e.ValeurPoints = niveauPointsVie;
             e.Id = Ennemi.NextID;
 
             if (e.Type == TypeEnnemi.Inconnu)

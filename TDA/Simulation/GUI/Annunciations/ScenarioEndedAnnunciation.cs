@@ -17,7 +17,7 @@
         private List<ParticuleEffectWrapper> Implosions;
         private List<CorpsCeleste> CelestialBodies;
 
-        private EtatPartie GameState;
+        private GameState GameState;
         private Double TimeLostState = 0;
         private int ImplosionsIndex = 0;
 
@@ -67,14 +67,14 @@
             Filter.Couleur = new Color(Color.Black, 200);
         }
 
-        public void doGameStateChanged(EtatPartie etat)
+        public void doGameStateChanged(GameState etat)
         {
             GameState = etat;
 
-            if (GameState != EtatPartie.Gagnee && GameState != EtatPartie.Perdue)
+            if (GameState != GameState.Won && GameState != GameState.Lost)
                 return;
 
-            if (GameState == EtatPartie.Gagnee)
+            if (GameState == GameState.Won)
             {
                 TranslatorScenarioEnded = new Translator
                 (
@@ -114,7 +114,7 @@
                 this.Simulation.Scene.Effets.ajouter(AlienShip.Representation, e);
             }
 
-            else if (GameState == EtatPartie.Perdue)
+            else if (GameState == GameState.Lost)
             {
                 TranslatorScenarioEnded = new Translator
                 (
@@ -162,7 +162,7 @@
 
         public void Update(GameTime gameTime)
         {
-            if (GameState == EtatPartie.Gagnee)
+            if (GameState == GameState.Won)
             {
                 TimeLostState += gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -208,17 +208,17 @@
                 AlienShip.Update(gameTime);
             }
 
-            if (GameState == EtatPartie.Gagnee || GameState == EtatPartie.Perdue)
+            if (GameState == GameState.Won || GameState == GameState.Lost)
                 TranslatorScenarioEnded.Update(gameTime);
         }
 
 
         public void Draw()
         {
-            if (GameState == EtatPartie.Gagnee)
+            if (GameState == GameState.Won)
                 AlienShip.Draw(null);
 
-            if (GameState == EtatPartie.Gagnee || GameState == EtatPartie.Perdue)
+            if (GameState == GameState.Won || GameState == GameState.Lost)
             {
                 TranslatorScenarioEnded.Draw(null);
                 Simulation.Scene.ajouterScenable(Filter);

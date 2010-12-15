@@ -151,6 +151,7 @@
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
+    <Compile Include="Player\Scores.cs" />
     <Compile Include="Simulation\Animations\AnimationEtoileFilante.cs" />
     <Compile Include="Animations\AnimationLieutenant.cs" />
     <Compile Include="Simulation\Controllers\ControleurCollisions.cs" />
@@ -158,7 +159,7 @@
     <Compile Include="Simulation\Controllers\GUIController.cs" />
     <Compile Include="Simulation\Controllers\SimPlayersController.cs" />
     <Compile Include="Simulation\Controllers\ControleurProjectiles.cs" />
-    <Compile Include="Simulation\Controllers\ControleurScenario.cs" />
+    <Compile Include="Simulation\Controllers\ScenarioController.cs" />
     <Compile Include="Simulation\Controllers\ControleurSystemePlanetaire.cs" />
     <Compile Include="Simulation\Controllers\ControleurTourelles.cs" />
     <Compile Include="Simulation\Controllers\ControleurVaisseaux.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
     <Compile Include="Simulation\GUI\Annunciations\ScenarioEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\Bulle.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuDemo.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuTurretSpotEmpty.cs" />
     <Compile Include="Simulation\Player\CommonStash.cs" />
     <Compile Include="Player\Player.cs" />
@@ -217,7 +219,7 @@
     <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
     <Compile Include="Simulation\Factories\FactoryEnnemis.cs" />
     <Compile Include="Simulation\Turrets\NiveauTourelle.cs" />
-    <Compile Include="Player\Sauvegarde.cs" />
+    <Compile Include="Player\SaveGame.cs" />
     <Compile Include="Simulation\Scenario.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />

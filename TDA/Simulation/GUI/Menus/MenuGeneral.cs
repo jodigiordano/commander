@@ -13,6 +13,7 @@
         public double TimeNextWave;
 
         private Simulation Simulation;
+        private IVisible WidgetScore;
         private IVisible WidgetCash;
         private IVisible WidgetRemainingWaves;
         private Vector3 Position;
@@ -56,6 +57,16 @@
             );
             WidgetRemainingWaves.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
             WidgetRemainingWaves.Taille = 3;
+
+            WidgetScore = new IVisible
+            (
+                Score.ToString(),
+                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                Color.White,
+                Position + new Vector3(30, 30, 0)
+            );
+            WidgetScore.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
+            WidgetScore.Taille = 2;
         }
 
 
@@ -68,11 +79,15 @@
 
         public void Draw()
         {
+            WidgetScore.Taille = 3;
+            WidgetScore.Position = Position + new Vector3(30, 40, 0);
             WidgetCash.Texte = Cash + "M$";
             WidgetRemainingWaves.Texte = (RemainingWaves == -1) ? "Inf." : RemainingWaves.ToString();
+            WidgetScore.Texte = Score.ToString();
 
             Simulation.Scene.ajouterScenable(WidgetCash);
             Simulation.Scene.ajouterScenable(WidgetRemainingWaves);
+            Simulation.Scene.ajouterScenable(WidgetScore);
 
             this.SandGlass.Draw(null);
             this.MenuNextWave.Draw(null);

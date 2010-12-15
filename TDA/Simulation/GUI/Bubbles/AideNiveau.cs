@@ -8,7 +8,6 @@
     class AideNiveau : GameComponent
     {
         private int Niveau;
-        private int Sauvegarde;
         public List<string> TypesObjets;
         public List<string> Quotes;
         public Dictionary<string, IObjetPhysique> QuotesObjets;
@@ -25,7 +24,7 @@
         {
             get
             {
-                return new KeyValuePair<IObjetPhysique, string>(QuotesObjets[TypesObjets[Main.SaveGame.Progression[Sauvegarde] % Quotes.Count]], Quotes[Main.SaveGame.Progression[Sauvegarde] % Quotes.Count]);
+                return new KeyValuePair<IObjetPhysique, string>(QuotesObjets[TypesObjets[Main.SaveGame.Tutorials[Niveau] % Quotes.Count]], Quotes[Main.SaveGame.Tutorials[Niveau] % Quotes.Count]);
             }
         }
 
@@ -33,7 +32,7 @@
         {
             get
             {
-                return (Main.SaveGame.Progression[Sauvegarde] >= Quotes.Count * 2);
+                return (Main.SaveGame.Tutorials[Niveau] >= Quotes.Count * 2);
             }
         }
 
@@ -46,7 +45,6 @@
         {
             Main = main;
             Niveau = -1;
-            Sauvegarde = -1;
 
             TypesObjets = new List<string>();
             Quotes = new List<string>();
@@ -58,13 +56,17 @@
         public AideNiveau(
             Main main,
             int niveau,
-            int sauvegarde,
             List<KeyValuePair<string, string>> quotesDefs)
             : base(main)
         {
             Main = main;
             Niveau = niveau;
-            Sauvegarde = sauvegarde;
+
+            if (!Main.SaveGame.Tutorials.ContainsKey(Niveau))
+            {
+                Main.SaveGame.Tutorials.Add(Niveau, 0);
+                Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+            }
 
             TypesObjets = new List<string>();
             Quotes = new List<string>();
@@ -90,7 +92,7 @@
 
         public void incrementerQuoteLancee()
         {
-            Main.SaveGame.Progression[Sauvegarde]++;
+            Main.SaveGame.Tutorials[Niveau]++;
             //Core.Persistance.Facade.sauvegarderDonnee("savePlayer"); //sur la Xbox, ralentissement
         }
     }

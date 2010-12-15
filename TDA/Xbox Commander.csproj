@@ -129,7 +129,8 @@
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Player\PlayersController.cs" />
-    <Compile Include="Player\Sauvegarde.cs" />
+    <Compile Include="Player\SaveGame.cs" />
+    <Compile Include="Player\Scores.cs" />
     <Compile Include="Player\TrialMode.cs" />
     <Compile Include="Player\ValidationServeur.cs" />
     <Compile Include="Preferences.cs" />
@@ -155,11 +156,11 @@
     <Compile Include="Simulation\Controllers\ControleurEnnemis.cs" />
     <Compile Include="Simulation\Controllers\ControleurMessages.cs" />
     <Compile Include="Simulation\Controllers\ControleurProjectiles.cs" />
-    <Compile Include="Simulation\Controllers\ControleurScenario.cs" />
     <Compile Include="Simulation\Controllers\ControleurSystemePlanetaire.cs" />
     <Compile Include="Simulation\Controllers\ControleurTourelles.cs" />
     <Compile Include="Simulation\Controllers\ControleurVaisseaux.cs" />
     <Compile Include="Simulation\Controllers\GUIController.cs" />
+    <Compile Include="Simulation\Controllers\ScenarioController.cs" />
     <Compile Include="Simulation\Controllers\SimPlayersController.cs" />
     <Compile Include="Simulation\Enemies\Ennemi.cs" />
     <Compile Include="Simulation\Enemies\Vague.cs" />
@@ -178,6 +179,9 @@
     <Compile Include="Simulation\GUI\Bubbles\Bulle.cs" />
     <Compile Include="Simulation\GUI\Bubbles\BulleTexte.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuAbstract.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuDemo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Simulation\GUI\Menus\MenuGeneral.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuPowerUps.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuProchaineVague.cs" />

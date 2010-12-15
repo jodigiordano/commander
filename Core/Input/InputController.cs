@@ -7,7 +7,7 @@
 
     class InputController
     {
-        private bool Active;
+        public bool Active;
         private Vector2 MouseBasePosition;
         private Dictionary<PlayerIndex, InputSource> Sources;
         private List<InputListener> Listeners;

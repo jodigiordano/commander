@@ -37,12 +37,14 @@
 
         private void verifyEndOfDemo()
         {
+            int level = 0;
+
             switch (Preferences.Target)
             {
                 case Setting.WindowsDemo:
-                    EndOfDemo = (Main.SaveGame.Progression[0] > 0 &&
-                       Main.SaveGame.Progression[1] > 0 &&
-                       Main.SaveGame.Progression[2] > 0);
+                    EndOfDemo = Main.SaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
+                                Main.SaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
+                                Main.SaveGame.Progress.TryGetValue(2, out level) && level > 0;
                     break;
 
                 case Setting.WindowsFull:
@@ -53,13 +55,19 @@
                     int nbTableauxTermines = 0;
 
                     for (int i = 0; i < 9; i++)
-                        if (Main.SaveGame.Progression[i] > 0)
+                    {
+                        if (Main.SaveGame.Progress.TryGetValue(i, out level) && level > 0)
                             nbTableauxTermines++;
+                    }
 
                     int nbPartiesJouees = 0;
 
                     for (int i = 0; i < 9; i++)
-                        nbPartiesJouees += Math.Abs(Main.SaveGame.Progression[i]);
+                    {
+                        Main.SaveGame.Progress.TryGetValue(i, out level);
+
+                        nbPartiesJouees += Math.Abs(level);
+                    }
 
                     EndOfDemo = (nbTableauxTermines >= 3) || (nbPartiesJouees > 15);
 

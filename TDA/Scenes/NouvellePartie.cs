@@ -72,7 +72,6 @@
             (
                 Main,
                 0,
-                190,
                 new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("PAP", "The goal of this game is to\n\nprotect me against asteroids."),
@@ -100,7 +99,6 @@
             (
                 Main,
                 1,
-                191,
                 new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("Emplacement", "A new mercenary is available.\n\nThe pink one. It's a she.\n\nThreat her right."),
@@ -117,7 +115,6 @@
             (
                 Main,
                 2,
-                192,
                 new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("Grav", "Hello I'm the\n\nwhite mercenary."),
@@ -132,7 +129,6 @@
             (
                 Main,
                 3,
-                193,
                 new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("Planete", "Select me (without touching\n\na square) to grab the collector."),
@@ -348,12 +344,28 @@
         {
             if (IndiceMondeSelectionne == 0)
             {
+                int level = 0;
+
                 if (!Main.TrialMode.Active)
-                    Mondes[1].Debloque = Main.SaveGame.Progression[0] > 0 && Main.SaveGame.Progression[1] > 0 && Main.SaveGame.Progression[2] > 0 && Main.SaveGame.Progression[3] > 0 &&
-                                         Main.SaveGame.Progression[4] > 0 && Main.SaveGame.Progression[5] > 0 && Main.SaveGame.Progression[6] > 0 && Main.SaveGame.Progression[7] > 0 &&
-                                         Main.SaveGame.Progression[8] > 0;
+                {
+                    Mondes[1].Debloque = Main.SaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(2, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(3, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(4, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(5, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(6, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(7, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(8, out level) && level > 0;
+                }
                 else
-                    Mondes[1].Debloque = Main.SaveGame.Progression[0] > 0 && Main.SaveGame.Progression[1] > 0 && Main.SaveGame.Progression[4] > 0 && Main.SaveGame.Progression[5] > 0;
+                {
+                    Mondes[1].Debloque = Main.SaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(4, out level) && level > 0 &&
+                                         Main.SaveGame.Progress.TryGetValue(5, out level) && level > 0;
+                }
+
 
                 MondeSelectionne.TrousRoses[0].Couleur = (Mondes[1].Debloque) ? new Color(255, 0, 255) : new Color(255, 0, 0);
             }
@@ -363,17 +375,14 @@
                 if (Main.TrialMode.Active)
                     Mondes[2].Debloque = false;
                 else
-                    Mondes[2].Debloque = Main.SaveGame.Progression[0] > 0 && Main.SaveGame.Progression[1] > 0 && Main.SaveGame.Progression[4] > 0 && Main.SaveGame.Progression[5] > 0 &&
-                                         Main.SaveGame.Progression[2] > 0 && Main.SaveGame.Progression[3] > 0 && Main.SaveGame.Progression[8] > 0 && Main.SaveGame.Progression[10] > 0 &&
-                                         Main.SaveGame.Progression[11] > 0 && Main.SaveGame.Progression[12] > 0 && Main.SaveGame.Progression[13] > 0 && Main.SaveGame.Progression[14] > 0 &&
-                                         Main.SaveGame.Progression[17] > 0;
+                    Mondes[2].Debloque = false;
 
                 MondeSelectionne.TrousRoses[1].Couleur = (Mondes[2].Debloque) ? new Color(255, 0, 255) : new Color(255, 0, 0);
             }
         }
 
 
-        private void doNouvelEtatPartie(EtatPartie etat)
+        private void doNouvelEtatPartie(GameState etat)
         {
             foreach (var monde in Mondes)
                 monde.initLunes();

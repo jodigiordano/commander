@@ -48,7 +48,7 @@
                 {
                     DescripteurEnnemi desc = new DescripteurEnnemi();
                     desc.Type = e.Type;
-                    desc.Valeur = 1;
+                    desc.Valeur = e.Valeur;
                     desc.NiveauVitesse = e.NiveauVitesse;
                     desc.NiveauPointsVie = e.NiveauPointsVie;
 

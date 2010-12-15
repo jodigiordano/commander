@@ -3,12 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
     using System.Xml.Serialization;
     using System.IO;
-    using System.Reflection;
     using Microsoft.Xna.Framework.Storage;
 
     static class FactoryScenarios
@@ -37,6 +33,7 @@
 
             return resultats;
         }
+
 
         public static Dictionary<String, DescripteurScenario> getDescriptionsScenariosMonde2()
         {
@@ -113,6 +110,7 @@
 
             return resultats;
         }
+
 
         public static Dictionary<String, DescripteurScenario> getDescriptionsScenariosMonde3()
         {
@@ -519,6 +517,7 @@
             return d;
         }
 
+
         public static DescripteurScenario getDescripteurMonde1()
         {
             DescripteurScenario d = new DescripteurScenario();
@@ -613,6 +612,7 @@
             return d;
         }
 
+
         public static DescripteurScenario getDescripteurMonde2()
         {
             DescripteurScenario d = new DescripteurScenario();
@@ -706,6 +706,7 @@
 
             return d;
         }
+
 
         public static DescripteurScenario getDescripteurMonde3()
         {

@@ -95,7 +95,7 @@
 
                 Bulle.Dimension.Height += RepresentationsEnnemis[indiceRepresentations].Rectangle.Height + 10;
 
-                RepresentationsNiveaux[indiceRepresentations].Texte = (ennemiQte.Value.NiveauPointsVie + ennemiQte.Value.NiveauVitesse).ToString();
+                RepresentationsNiveaux[indiceRepresentations].Texte = (ennemiQte.Value.NiveauPointsVie).ToString();
                 RepresentationsNiveaux[indiceRepresentations].Origine = RepresentationsNiveaux[indiceRepresentations].Centre;
                 RepresentationsNiveaux[indiceRepresentations].Position = new Vector3(this.Position.X + 40, RepresentationsEnnemis[indiceRepresentations].Position.Y, 0);
 

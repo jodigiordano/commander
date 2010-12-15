@@ -11,7 +11,7 @@
         public Dictionary<PlayerIndex, Player> Players;
         public event NoneHandler PlayerDisconnected;
 
-        private bool MasterAssociated;
+        public Player MasterPlayer { get; private set; }
 
 
         public PlayersController()
@@ -21,7 +21,7 @@
             for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
                 Players.Add(index, new Player(index));
 
-            MasterAssociated = false;
+            MasterPlayer = null;
         }
 
 
@@ -30,7 +30,7 @@
             foreach (var player in Players.Values)
                 player.Initialize();
 
-            MasterAssociated = false;
+            MasterPlayer = null;
 
             Core.Input.Facade.PlayerConnection.PlayerConnected += new Core.Input.ConnectHandler(doPlayerConnected);
             Core.Input.Facade.PlayerConnection.PlayerDisconnected += new Core.Input.ConnectHandler(doPlayerDisconnected);
@@ -53,10 +53,10 @@
         {
             Player p = Players[index];
 
-            if (!MasterAssociated)
+            if (MasterPlayer == null)
             {
                 p.Master = true;
-                MasterAssociated = true;
+                MasterPlayer = p;
             }
 
             if (gamer != null)
@@ -73,6 +73,12 @@
                     p.Name = names[1];
             }
 
+
+            p.Name = p.Name.Trim();
+            
+            if (p.Name.Length > 5)
+                p.Name = p.Name.Substring(0, 5);
+
             p.Connected = true;
         }
 
@@ -80,6 +86,12 @@
         private void doPlayerDisconnected(PlayerIndex index, SignedInGamer gamer)
         {
             Player p = Players[index];
+
+            if (p.Master)
+            {
+                p.Master = false;
+                MasterPlayer = null;
+            }
 
             if (gamer != null)
                 p.Profile = null;
