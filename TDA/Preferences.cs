@@ -21,7 +21,13 @@
 #endif
 
         public static bool HomeMadeValidation = true;
+
+#if TRIAL
+        public static Setting Target = Setting.WindowsDemo;
+#else
         public static Setting Target = Setting.WindowsFull;
+#endif
+
         public static string ProductName = "commander";
 
         public const float PrioriteGUIVictoireDefaite = 0f; //(Sous-composants, + [0.0 .. 0.09]) donc [0.0 .. 0.09]
