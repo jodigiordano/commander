@@ -1,9 +1,9 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Physique;
-    using Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
 
     class NiveauTourelle

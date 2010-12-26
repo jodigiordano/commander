@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     using ProjectMercury.Emitters;
 
 
@@ -126,11 +126,11 @@
             this.PeutMettreAJourOverride = true;
             this.InactiveOverride = true;
 
-            this.ProgressionBarreInactivite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
+            this.ProgressionBarreInactivite = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
             this.ProgressionBarreInactivite.TailleVecteur = new Vector2(40, 8);
             this.ProgressionBarreInactivite.Couleur = new Color(255, 0, 220, 255);
 
-            this.BarreInactivite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("BarreInactivite"), Vector3.Zero);
+            this.BarreInactivite = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("BarreInactivite"), Vector3.Zero);
             this.BarreInactivite.Origine = this.BarreInactivite.Centre;
 
             this.Spectateur = true;
@@ -148,11 +148,11 @@
             {
                 this.PrioriteAffichageBackup = value;
 
-                representationBase.PrioriteAffichage = value - 0.002f;
-                representation.PrioriteAffichage = value - 0.001f;
+                representationBase.VisualPriority = value - 0.002f;
+                representation.VisualPriority = value - 0.001f;
 
-                BarreInactivite.PrioriteAffichage = value - 0.003f;
-                ProgressionBarreInactivite.PrioriteAffichage = value - 0.004f;
+                BarreInactivite.VisualPriority = value - 0.003f;
+                ProgressionBarreInactivite.VisualPriority = value - 0.004f;
             }
         }
 
@@ -176,7 +176,7 @@
             if (CompteurAnnonciationActiveDeNouveau < 0 && !Simulation.ModeDemo)
             {
                 if (!this.AnnonciationActiveDeNouveauOverride)
-                    Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMiseAJour");
+                    EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMiseAJour");
 
                 CompteurAnnonciationActiveDeNouveau = float.NaN;
                 RetourDeInactiveCeTick = true;
@@ -225,7 +225,7 @@
                             p.Position = this.Position + translation;
                             p.Direction = direction;
                             p.PointsAttaque = NiveauActuel.Value.ProjectilePointsAttaque;
-                            p.PrioriteAffichage = this.representation.PrioriteAffichage;
+                            p.PrioriteAffichage = this.representation.VisualPriority;
                             p.Initialize();
 
                             projectiles.Add(p);
@@ -239,11 +239,11 @@
                         pm.Direction = EnnemiAttaque.Position - this.Position;
                         pm.Cible = EnnemiAttaque;
                         pm.PointsAttaque = NiveauActuel.Value.ProjectilePointsAttaque;
-                        pm.PrioriteAffichage = this.representation.PrioriteAffichage;
+                        pm.PrioriteAffichage = this.representation.VisualPriority;
                         pm.Vitesse = NiveauActuel.Value.ProjectileVitesse;
                         pm.ZoneImpact = NiveauActuel.Value.ProjectileZoneImpact;
                         pm.Initialize();
-                        pm.RepresentationVivant.Texture = Core.Persistance.Facade.recuperer<Texture2D>("ProjectileMissile1");
+                        pm.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile1");
                         pm.RepresentationVivant.Taille = 1;
                         pm.Rectangle.Width = pm.RepresentationVivant.Rectangle.Width;
                         pm.Rectangle.Height = pm.RepresentationVivant.Rectangle.Height;
@@ -257,11 +257,11 @@
                         p2.Direction = EnnemiAttaque.Position - this.Position;
                         p2.Cible = EnnemiAttaque;
                         p2.PointsAttaque = NiveauActuel.Value.ProjectilePointsAttaque;
-                        p2.PrioriteAffichage = this.representation.PrioriteAffichage;
+                        p2.PrioriteAffichage = this.representation.VisualPriority;
                         p2.Vitesse = NiveauActuel.Value.ProjectileVitesse;
                         p2.ZoneImpact = NiveauActuel.Value.ProjectileZoneImpact;
                         p2.Initialize();
-                        p2.RepresentationVivant.Texture = Core.Persistance.Facade.recuperer<Texture2D>("ProjectileMissile2");
+                        p2.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile2");
                         p2.RepresentationVivant.Taille = 2;
                         p2.Rectangle.Width = p2.RepresentationVivant.Rectangle.Width;
                         p2.Rectangle.Height = p2.RepresentationVivant.Rectangle.Height;
@@ -278,7 +278,7 @@
                             pLM.Cible = EnnemiAttaque;
                             pLM.Direction = EnnemiAttaque.Position - this.Position;
                             pLM.PointsAttaque = NiveauActuel.Value.ProjectilePointsAttaque;
-                            pLM.PrioriteAffichage = this.representation.PrioriteAffichage;
+                            pLM.PrioriteAffichage = this.representation.VisualPriority;
                             pLM.Initialize();
 
                             projectiles.Add(pLM);
@@ -292,7 +292,7 @@
                         pLS.Cible = EnnemiAttaque;
                         pLS.Direction = EnnemiAttaque.Position - this.Position;
                         pLS.PointsAttaque = NiveauActuel.Value.ProjectilePointsAttaque;
-                        pLS.PrioriteAffichage = this.representation.PrioriteAffichage;
+                        pLS.PrioriteAffichage = this.representation.VisualPriority;
                         pLS.Initialize();
 
                         ((TourelleLasersSimples)this).ProjectileEnCours = pLS;
@@ -306,7 +306,7 @@
                         pSM.Position = this.Position;
                         pSM.Rayon = NiveauActuel.Value.ZoneActivation.Rayon;
                         pSM.PointsAttaque = NiveauActuel.Value.ProjectilePointsAttaque;
-                        pSM.PrioriteAffichage = this.representation.PrioriteAffichage;
+                        pSM.PrioriteAffichage = this.representation.VisualPriority;
                         pSM.Initialize();
 
                         projectiles.Add(pSM);
@@ -317,7 +317,7 @@
             }
 
             if (projectiles.Count != 0)
-                Core.Audio.Facade.jouerEffetSonore("Partie", SfxTir);
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", SfxTir);
 
             return projectiles;
         }
@@ -362,13 +362,13 @@
 
             if (NiveauActuel.Value.RepresentationBase != NiveauActuel.Next.Value.RepresentationBase)
             {
-                representationBase = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(NiveauActuel.Next.Value.RepresentationBase), Vector3.Zero);
+                representationBase = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(NiveauActuel.Next.Value.RepresentationBase), Vector3.Zero);
                 representationBase.Origine = representationBase.Centre;
             }
 
             if (NiveauActuel.Value.Representation != NiveauActuel.Next.Value.Representation)
             {
-                representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(NiveauActuel.Next.Value.Representation), Vector3.Zero);
+                representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(NiveauActuel.Next.Value.Representation), Vector3.Zero);
                 representation.Origine = representation.Centre;
             }
 

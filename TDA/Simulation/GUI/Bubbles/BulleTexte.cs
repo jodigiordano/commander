@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     class BulleTexte : Bulle
     {
@@ -26,7 +26,7 @@
             : base(simulation, new Rectangle(), prioriteAffichage)
         {
             this.Texte = texte;
-            this.Texte.PrioriteAffichage = prioriteAffichage - 0.01f;
+            this.Texte.VisualPriority = prioriteAffichage - 0.01f;
             this.Position = position;
             this.TempsAffichage = tempsAffichage;
             this.TempsFadeOut = double.MaxValue;
@@ -121,7 +121,7 @@
             base.doShow(temps);
 
             Texte.Couleur.A = 0;
-            Simulation.Scene.Effets.ajouter(Texte, EffetsPredefinis.fadeInFrom0(255, 0, temps));
+            Simulation.Scene.Effets.Add(Texte, PredefinedEffects.FadeInFrom0(255, 0, temps));
         }
 
 
@@ -129,7 +129,7 @@
         {
             base.doHide(temps);
 
-            Simulation.Scene.Effets.ajouter(Texte, EffetsPredefinis.fadeOutTo0(255, 0, temps));
+            Simulation.Scene.Effets.Add(Texte, PredefinedEffects.FadeOutTo0(255, 0, temps));
         }
     }
 }

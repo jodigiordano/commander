@@ -1,11 +1,11 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
 
     class TourelleBase : Tourelle

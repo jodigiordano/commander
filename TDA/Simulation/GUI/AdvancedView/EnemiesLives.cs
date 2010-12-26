@@ -1,8 +1,8 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -25,8 +25,8 @@
 
                 for (int j = 1; j < 7; j++)
                 {
-                    IVisible life = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("ViesEnnemis" + j), Vector3.Zero);
-                    life.PrioriteAffichage = Preferences.PrioriteGUIVUeAvanceePointsVieEnnemis;
+                    IVisible life = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ViesEnnemis" + j), Vector3.Zero);
+                    life.VisualPriority = Preferences.PrioriteGUIVUeAvanceePointsVieEnnemis;
                     life.Origine = life.Centre;
 
                     visuals.Add(life);

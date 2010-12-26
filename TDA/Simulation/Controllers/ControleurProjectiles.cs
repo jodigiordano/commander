@@ -1,4 +1,4 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     //=========================================================================
     #region Importations
@@ -8,9 +8,9 @@ namespace TDA
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Physique;
 
     #endregion
 

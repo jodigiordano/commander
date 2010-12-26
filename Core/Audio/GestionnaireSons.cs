@@ -1,11 +1,4 @@
-//=============================================================================
-//
-// << Singleton >>
-// Gestionnaire de la musique et des sons effets
-//
-//=============================================================================
-
-namespace Core.Audio
+namespace EphemereGames.Core.Audio
 {
     using System;
     using System.Collections.Generic;

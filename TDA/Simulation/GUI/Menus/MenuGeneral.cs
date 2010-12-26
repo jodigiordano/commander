@@ -1,7 +1,7 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -21,7 +21,7 @@
         public Sablier SandGlass;
         public Cursor Cursor;
 
-        public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionNextWave
+        public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave
         {
             set
             {
@@ -41,31 +41,31 @@
             WidgetCash = new IVisible
             (
                 Cash + "M$",
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                 Color.White,
                 Position + new Vector3(30, 0, 0)
             );
-            WidgetCash.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
+            WidgetCash.VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
             WidgetCash.Taille = 3;
 
             WidgetRemainingWaves = new IVisible
             (
                 RemainingWaves.ToString(),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                 Color.White,
                 Position + new Vector3(30, -40, 0)
             );
-            WidgetRemainingWaves.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
+            WidgetRemainingWaves.VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
             WidgetRemainingWaves.Taille = 3;
 
             WidgetScore = new IVisible
             (
                 Score.ToString(),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                 Color.White,
                 Position + new Vector3(30, 40, 0)
             );
-            WidgetScore.PrioriteAffichage = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
+            WidgetScore.VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
             WidgetScore.Taille = 3;
         }
 
@@ -82,11 +82,11 @@
 
             WidgetCash.Texte = Cash + "M$";
             WidgetRemainingWaves.Texte = (RemainingWaves == -1) ? "Inf." : RemainingWaves.ToString();
-            //WidgetScore.Texte = Score.ToString();
+            WidgetScore.Texte = Score.ToString();
 
             Simulation.Scene.ajouterScenable(WidgetCash);
             Simulation.Scene.ajouterScenable(WidgetRemainingWaves);
-            //Simulation.Scene.ajouterScenable(WidgetScore);
+            Simulation.Scene.ajouterScenable(WidgetScore);
 
             this.SandGlass.Draw(null);
             this.MenuNextWave.Draw(null);

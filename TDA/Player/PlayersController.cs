@@ -1,4 +1,4 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
@@ -32,14 +32,14 @@
 
             MasterPlayer = null;
 
-            Core.Input.Facade.PlayerConnection.PlayerConnected += new Core.Input.ConnectHandler(doPlayerConnected);
-            Core.Input.Facade.PlayerConnection.PlayerDisconnected += new Core.Input.ConnectHandler(doPlayerDisconnected);
+            EphemereGames.Core.Input.Facade.PlayerConnection.PlayerConnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerConnected);
+            EphemereGames.Core.Input.Facade.PlayerConnection.PlayerDisconnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerDisconnected);
         }
 
 
         public void Connect(PlayerIndex index)
         {
-            Core.Input.Facade.ConnectPlayer(index);
+            EphemereGames.Core.Input.Facade.ConnectPlayer(index);
         }
 
 
@@ -97,10 +97,12 @@
                 p.Profile = null;
 
             p.Connected = false;
+
+            notifyPlayerDisconnected();
         }
 
 
-        protected virtual void notifyPlayerDisconnected()
+        private void notifyPlayerDisconnected()
         {
             if (PlayerDisconnected != null)
                 PlayerDisconnected();

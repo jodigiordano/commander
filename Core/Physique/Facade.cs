@@ -4,7 +4,7 @@
 //
 //=============================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;

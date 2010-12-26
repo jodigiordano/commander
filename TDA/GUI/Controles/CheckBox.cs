@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     
     class CheckBox : DrawableGameComponent
     {
@@ -26,13 +26,13 @@
             Curseur = curseur;
             Position = position;
 
-            Box = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("emplacement"), Position);
-            Box.PrioriteAffichage = priorite;
+            Box = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("emplacement"), Position);
+            Box.VisualPriority = priorite;
             Box.Origine = Box.Centre;
 
-            CheckedRep = new IVisible("X", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position);
+            CheckedRep = new IVisible("X", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position);
             CheckedRep.Taille = 2;
-            CheckedRep.PrioriteAffichage = priorite;
+            CheckedRep.VisualPriority = priorite;
             CheckedRep.Origine = CheckedRep.Centre;
 
             BoxCercle = new Cercle(Position, 16);
@@ -41,7 +41,7 @@
 
         public void doClick()
         {
-            if (Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoxCercle))
+            if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoxCercle))
                 Checked = !Checked;
         }
 

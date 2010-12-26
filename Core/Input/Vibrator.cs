@@ -1,4 +1,4 @@
-﻿namespace Core.Input
+﻿namespace EphemereGames.Core.Input
 {
     using System;
     using System.Collections.Generic;

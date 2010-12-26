@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Physique;
 
     class ControleurSystemePlanetaire : DrawableGameComponent
     {
@@ -33,8 +33,8 @@
         {
             this.Scene = simulation.Scene;
             CorpsCelestes = new List<CorpsCeleste>();
-            Chemin = new Chemin(simulation, new Color(Color.White, 100), TypeMelange.Alpha);
-            CheminProjection = new Chemin(simulation, new Color(Color.White, 255), TypeMelange.Alpha);
+            Chemin = new Chemin(simulation, new Color(255, 255, 255, 100), TypeBlend.Alpha);
+            CheminProjection = new Chemin(simulation, new Color(255, 255, 255, 255), TypeBlend.Alpha);
         }
 
 

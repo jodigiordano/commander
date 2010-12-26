@@ -1,7 +1,7 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -29,46 +29,47 @@
         {
             PrioriteAffichage = prioriteAffichage;
 
-            LogoDoItYourSelf = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), Vector3.Zero);
+            LogoDoItYourSelf = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Vaisseau"), Vector3.Zero);
             LogoDoItYourSelf.Taille = 4;
-            LogoDoItYourSelf.PrioriteAffichage = this.PrioriteAffichage;
+            LogoDoItYourSelf.VisualPriority = this.PrioriteAffichage;
 
-            PrixDoItYourself = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            PrixDoItYourself = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixDoItYourself.Taille = 2;
-            PrixDoItYourself.PrioriteAffichage = this.PrioriteAffichage;
+            PrixDoItYourself.VisualPriority = this.PrioriteAffichage;
 
-            LogoCollecteur = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), Vector3.Zero);
+            LogoCollecteur = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Collecteur"), Vector3.Zero);
             LogoCollecteur.Taille = 4;
-            LogoCollecteur.PrioriteAffichage = this.PrioriteAffichage;
+            LogoCollecteur.VisualPriority = this.PrioriteAffichage;
 
-            PrixCollecteur = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            PrixCollecteur = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixCollecteur.Taille = 2;
-            PrixCollecteur.PrioriteAffichage = this.PrioriteAffichage;
+            PrixCollecteur.VisualPriority = this.PrioriteAffichage;
 
-            LogoDestructionCorpsCeleste = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Destruction"), Vector3.Zero);
+            LogoDestructionCorpsCeleste = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Destruction"), Vector3.Zero);
             LogoDestructionCorpsCeleste.Taille = 4;
-            LogoDestructionCorpsCeleste.PrioriteAffichage = this.PrioriteAffichage;
+            LogoDestructionCorpsCeleste.VisualPriority = this.PrioriteAffichage;
 
-            PrixDestructionCorpsCeleste = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            PrixDestructionCorpsCeleste = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixDestructionCorpsCeleste.Taille = 2;
-            PrixDestructionCorpsCeleste.PrioriteAffichage = this.PrioriteAffichage;
+            PrixDestructionCorpsCeleste.VisualPriority = this.PrioriteAffichage;
 
-            LogoTheResistance = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("TheResistance"), Vector3.Zero);
+            LogoTheResistance = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("TheResistance"), Vector3.Zero);
             LogoTheResistance.Taille = 4;
-            LogoTheResistance.PrioriteAffichage = this.PrioriteAffichage;
+            LogoTheResistance.VisualPriority = this.PrioriteAffichage;
 
-            PrixTheResistance = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            PrixTheResistance = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixTheResistance.Taille = 2;
-            PrixTheResistance.PrioriteAffichage = this.PrioriteAffichage;
+            PrixTheResistance.VisualPriority = this.PrioriteAffichage;
 
 
             WidgetSelection = new IVisible
             (
-                Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"),
                 Position
             );
-            WidgetSelection.Couleur = new Color(Color.Green, 230);
-            WidgetSelection.PrioriteAffichage = this.PrioriteAffichage + 0.01f;
+            WidgetSelection.Couleur = Color.Green;
+            WidgetSelection.Couleur.A = 230;
+            WidgetSelection.VisualPriority = this.PrioriteAffichage + 0.01f;
         }
 
 

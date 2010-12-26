@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     using ProjectMercury.Modifiers;
 
     abstract class Lune : DrawableGameComponent
@@ -27,10 +27,10 @@
             Simulation = simulation;
             CorpsCeleste = corpsCeleste;
 
-            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lune" + Main.Random.Next(1, 5)), Vector3.Zero);
+            Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("lune" + Main.Random.Next(1, 5)), Vector3.Zero);
             Representation.Taille = Main.Random.Next(2, 4);
             Representation.Origine = Representation.Centre;
-            Representation.PrioriteAffichage = CorpsCeleste.PrioriteAffichage + 0.000001f;
+            Representation.VisualPriority = CorpsCeleste.PrioriteAffichage + 0.000001f;
             Representation.Couleur.A = 100;
 
             SensInverse = Main.Random.Next(0, 2) == 0;

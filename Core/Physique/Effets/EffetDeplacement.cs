@@ -5,12 +5,12 @@
 //
 //=====================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     public class EffetDeplacement : EffetPhysique
     {
@@ -29,28 +29,28 @@ namespace Core.Physique
         // Logique
         //=====================================================================
 
-        protected override void InitLogique()
+        protected override void InitializeLogic()
         {
             PositionDebut = Objet.Position;
 
             deplacement = PositionFin - PositionDebut;
         }
 
-        protected override void LogiqueLineaire()
+        protected override void LogicLinear()
         {
             Objet.Position =
                 new Vector3(
-                    (float)(PositionDebut.X + (deplacement.X * (tempsRelatif / Duree))),
-                    (float)(PositionDebut.Y + (deplacement.Y * (tempsRelatif / Duree))),
-                    (float)(PositionDebut.Z + (deplacement.Z * (tempsRelatif / Duree))));
+                    (float)(PositionDebut.X + (deplacement.X * (ElaspedTime / Length))),
+                    (float)(PositionDebut.Y + (deplacement.Y * (ElaspedTime / Length))),
+                    (float)(PositionDebut.Z + (deplacement.Z * (ElaspedTime / Length))));
         }
 
-        protected override void LogiqueApresDuree()
+        protected override void LogicAfter()
         {
             Objet.Position = PositionFin;
         }
 
-        protected override void LogiqueMaintenant()
+        protected override void LogicNow()
         {
             Objet.Position = PositionFin;
         }

@@ -1,4 +1,4 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
@@ -26,7 +26,7 @@
             Generateur.QteEnnemis = Main.Random.Next((int) Descripteur.MinMaxEnnemisParVague.X, (int) Descripteur.MinMaxEnnemisParVague.Y);
         }
 
-        public Vague getProchaineVague()
+        public Wave getProchaineVague()
         {
             DifficulteActuelle += Descripteur.IncrementDifficulte;
 
@@ -36,11 +36,11 @@
             Generateur.generer();
 
             if (NbVaguesGenerees == 0 && Descripteur.FirstOneStartNow)
-                Generateur.Vagues[0].TempsDepart = 0;
+                Generateur.Vagues[0].StartingTime = 0;
 
             NbVaguesGenerees++;
 
-            return new Vague(Simulation, Generateur.Vagues[0]);
+            return new Wave(Simulation, Generateur.Vagues[0]);
         }
     }
 }

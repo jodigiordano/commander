@@ -1,14 +1,13 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
     using ProjectMercury.Emitters;
     using ProjectMercury.Modifiers;
+
 
     class AnimationEtoileFilante : Animation
     {
@@ -70,21 +69,21 @@ namespace TDA
             );
 
             EffetEtoileFilante = Simulation.Scene.Particules.recuperer("etoileFilante");
-            EffetEtoileFilante.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            EffetEtoileFilante.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
-            base.Duree = temps * 2;
+            base.Length = temps * 2;
 
             ((ColourInterpolatorModifier) EffetEtoileFilante.ParticleEffect[0].Modifiers[1]).InitialColour = Couleurs[Main.Random.Next(0, Couleurs.Length)];
         }
 
-        public override void suivant(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            base.suivant(gameTime);
+            base.Update(gameTime);
 
-            Trajet.Direction(base.TempsRelatif, out DirectionTrainee);
+            Trajet.Direction(base.RelativeTime, out DirectionTrainee);
             ((ConeEmitter)EffetEtoileFilante.ParticleEffect[0]).Direction = (float)Math.Atan2(DirectionTrainee.Y, DirectionTrainee.X) - MathHelper.Pi;
 
-            Trajet.Position(base.TempsRelatif, ref PositionEmission);
+            Trajet.Position(base.RelativeTime, ref PositionEmission);
             EffetEtoileFilante.Emettre(ref PositionEmission);
         }
 

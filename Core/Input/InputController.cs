@@ -1,4 +1,4 @@
-﻿namespace Core.Input
+﻿namespace EphemereGames.Core.Input
 {
     using System;
     using System.Collections.Generic;
@@ -23,8 +23,6 @@
 
             for (PlayerIndex player = PlayerIndex.One; player <= PlayerIndex.Four; player++)
                 Sources.Add(player, new InputSource(player, MouseBasePosition));
-
-            Visuel.Facade.etreNotifierTransition(doTransitionStarted, doTransitionStopped);
         }
 
 
@@ -40,6 +38,8 @@
             }
 
             Mouse.SetPosition((int) MouseBasePosition.X, (int) MouseBasePosition.Y);
+
+            Visuel.Facade.GetNotifiedTransition(DoTransitionStarted, DoTransitionStopped);
         }
 
 
@@ -91,13 +91,13 @@
         }
 
 
-        private void doTransitionStarted(object sender, EventArgs e)
+        private void DoTransitionStarted()
         {
             this.Active = false;
         }
 
 
-        private void doTransitionStopped(object sender, EventArgs e)
+        private void DoTransitionStopped()
         {
             this.Active = true;
         }

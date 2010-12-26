@@ -1,10 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     class SelectedCelestialBodyController
     {
@@ -61,7 +61,7 @@
                     continue;
 
                 for (int j = 0; j < CelestialBodies[i].Emplacements.Count; j++)
-                    if (Core.Physique.Facade.collisionCercleRectangle(Cercle, CelestialBodies[i].Emplacements[j].Rectangle))
+                    if (EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Cercle, CelestialBodies[i].Emplacements[j].Rectangle))
                     {
                         SelectedCelestialBodyChanged = SelectedCelestialBodyIndex != i;
 
@@ -92,7 +92,7 @@
                 if (!CelestialBodies[i].Selectionnable)
                     continue;
 
-                if (Core.Physique.Facade.collisionCercleCercle(Cercle, CelestialBodies[i].Cercle))
+                if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Cercle, CelestialBodies[i].Cercle))
                 {
                     SelectedCelestialBodyIndex = i;
                     break;

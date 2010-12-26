@@ -1,14 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Input;
     using Microsoft.Xna.Framework.Input;
-
 
 
     class Partie : Scene
@@ -18,8 +14,7 @@
         protected DescripteurScenario Scenario;
         protected GameTime GameTime = new GameTime();
 
-        private Objets.AnimationTransition AnimationTransition;
-        private bool effectuerTransition;
+        private AnimationTransition AnimationTransition;
         public String MusiqueSelectionnee;
         private double TempsEntreDeuxChangementMusique;
         private String ChoixTransition;
@@ -32,10 +27,6 @@
 
             Nom = "Partie";
 
-            EnPause = false;
-            EstVisible = true;
-            EnFocus = false;
-
             MusiqueSelectionnee = Main.MusiquesDisponibles[Main.Random.Next(0, Main.MusiquesDisponibles.Count)];
             Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
 
@@ -44,10 +35,7 @@
             Simulation.Initialize();
             Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
 
-            AnimationTransition = new TDA.Objets.AnimationTransition();
-            AnimationTransition.Duree = 500;
-            AnimationTransition.Scene = this;
-            AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
+            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
         }
@@ -55,10 +43,8 @@
 
         private void doJoueurPrincipalDeconnecte()
         {
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.Out;
             ChoixTransition = "chargement";
-            effectuerTransition = true;
         }
 
 
@@ -73,30 +59,37 @@
 
         protected override void UpdateLogique(GameTime gameTime)
         {
-            if (effectuerTransition)
-            {
-                AnimationTransition.suivant(gameTime);
+            if (Transition != TransitionType.None)
+                return;
 
-                effectuerTransition = !AnimationTransition.estTerminee(gameTime);
+            Simulation.Update(gameTime);
+            this.GameTime = gameTime;
+            TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
+        }
 
-                if (!effectuerTransition && !AnimationTransition.In)
+
+        protected override void InitializeTransition(TransitionType type)
+        {
+            AnimationTransition.In = (type == TransitionType.In) ? true : false;
+            AnimationTransition.Initialize();
+        }
+
+
+        protected override void UpdateTransition(GameTime gameTime)
+        {
+            AnimationTransition.Update(gameTime);
+
+            if (!AnimationTransition.Finished(gameTime))
+                return;
+
+            if (Transition == TransitionType.Out)
+                switch (ChoixTransition)
                 {
-                    switch (ChoixTransition)
-                    {
-                        case "menu": Core.Visuel.Facade.effectuerTransition("PartieVersNouvellePartie"); break;
-                        case "chargement": Core.Visuel.Facade.effectuerTransition("PartieVersChargement"); break;
-                    }
+                    case "menu": EphemereGames.Core.Visuel.Facade.Transite("PartieToNouvellePartie"); break;
+                    case "chargement": EphemereGames.Core.Visuel.Facade.Transite("PartieToChargement"); break;
                 }
-            }
 
-            else
-            {
-                Simulation.Update(gameTime);
-
-                this.GameTime = gameTime;
-
-                TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            }
+            Transition = TransitionType.None;
         }
 
 
@@ -104,7 +97,7 @@
         {
             Simulation.Draw(GameTime);
 
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
         }
 
@@ -113,35 +106,33 @@
         {
             base.onFocus();
 
-            effectuerTransition = true;
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.In;
 
-            if (!Core.Audio.Facade.musiqueJoue(MusiqueSelectionnee))
-                Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+            if (!EphemereGames.Core.Audio.Facade.musiqueJoue(MusiqueSelectionnee))
+                EphemereGames.Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
             else
-                Core.Audio.Facade.reprendreMusique(MusiqueSelectionnee, true, 1000);
+                EphemereGames.Core.Audio.Facade.reprendreMusique(MusiqueSelectionnee, true, 1000);
 
-            Core.Input.Facade.AddListener(Simulation);
+            EphemereGames.Core.Input.Facade.AddListener(Simulation);
         }
 
         public override void onFocusLost()
         {
             base.onFocusLost();
 
-            Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
+            EphemereGames.Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
 
-            Core.Input.Facade.RemoveListener(Simulation);
+            EphemereGames.Core.Input.Facade.RemoveListener(Simulation);
         }
 
         public void doNouvelEtatPartie(GameState nouvelEtat)
         {
             if (nouvelEtat == GameState.Won || nouvelEtat == GameState.Lost)
             {
-                Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, 500);
+                EphemereGames.Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, 500);
                 Main.MusiquesDisponibles.Add(MusiqueSelectionnee);
                 MusiqueSelectionnee = ((nouvelEtat == GameState.Won) ? "win" : "gameover") + Main.Random.Next(1, 3);
-                Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+                EphemereGames.Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
             }
         }
 
@@ -178,13 +169,11 @@
 
         private void beginTransition()
         {
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 return;
 
-            effectuerTransition = true;
+            Transition = TransitionType.Out;
             ChoixTransition = "menu";
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
         }
 
 
@@ -193,12 +182,12 @@
             if (TempsEntreDeuxChangementMusique > 0)
                 return;
 
-            Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, Preferences.TempsEntreDeuxChangementMusique - 50);
+            EphemereGames.Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, Preferences.TempsEntreDeuxChangementMusique - 50);
             String ancienneMusique = MusiqueSelectionnee;
             MusiqueSelectionnee = Main.MusiquesDisponibles[Main.Random.Next(0, Main.MusiquesDisponibles.Count)];
             Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
             Main.MusiquesDisponibles.Add(ancienneMusique);
-            Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+            EphemereGames.Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
 
             TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
         }

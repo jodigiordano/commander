@@ -1,4 +1,4 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@
             XmlSerializer serializer = new XmlSerializer(typeof(DescripteurScenario));
 
             for (int i = 1; i < 10; i++)
-                using (StreamReader reader = new StreamReader(StorageContainer.TitleLocation + "\\Content\\scenarios\\scenario" + i + ".xml"))
+                using (StreamReader reader = new StreamReader(".\\Content\\scenarios\\scenario" + i + ".xml"))
                 {
                     d = (DescripteurScenario)serializer.Deserialize(reader.BaseStream);
                     resultats.Add(d.Mission, d);
@@ -189,26 +189,6 @@
         }
 
 
-        public static LinkedList<DescripteurScenario> getDescriptionsScenarios()
-        {
-            LinkedList<DescripteurScenario> resultats = new LinkedList<DescripteurScenario>();
-
-            XmlSerializer serializer = new XmlSerializer(typeof(DescripteurScenario));
-
-            String repertoire =
-                Path.Combine(StorageContainer.TitleLocation + "\\",
-                Path.Combine("Content", "scenarios"));
-
-            String[] fichiers = Directory.GetFiles(repertoire, "*.xml");
-
-            foreach(var fichier in fichiers)
-                using (StreamReader reader = new StreamReader(fichier))
-                    resultats.AddLast((DescripteurScenario)serializer.Deserialize(reader.BaseStream));
-
-            return resultats;
-        }
-
-
         public static DescripteurScenario getDescripteurMenu()
         {
             DescripteurScenario d = new DescripteurScenario();
@@ -275,10 +255,10 @@
             v.IncrementDifficulte = 0;
             v.MinerauxParVague = 0;
             v.MinMaxEnnemisParVague = new Vector2(10, 30);
-            v.EnnemisPresents = new List<TypeEnnemi>();
-            v.EnnemisPresents.Add(TypeEnnemi.Asteroid);
-            v.EnnemisPresents.Add(TypeEnnemi.Comet);
-            v.EnnemisPresents.Add(TypeEnnemi.Plutoid);
+            v.EnnemisPresents = new List<EnemyType>();
+            v.EnnemisPresents.Add(EnemyType.Asteroid);
+            v.EnnemisPresents.Add(EnemyType.Comet);
+            v.EnnemisPresents.Add(EnemyType.Plutoid);
             v.FirstOneStartNow = true;
             d.VaguesInfinies = v;
 
@@ -292,8 +272,7 @@
 
             DescripteurCorpsCeleste c;
             DescripteurEmplacement e;
-            DescripteurVague v;
-            DescripteurEnnemi en;
+            WaveDescriptor v;
 
             d.Joueur.PointsDeVie = 1;
             d.Joueur.ReserveUnites = 100;
@@ -419,26 +398,22 @@
             c.Emplacements.Add(e);
             d.SystemePlanetaire.Add(c);
 
-            v = new DescripteurVague();
-            en = new DescripteurEnnemi();
-            en.Type = TypeEnnemi.Plutoid;
-            en.NiveauPointsVie = 150;
-            v.ajouter(0, en, Distance.Proche, 100);
-            d.Vagues.Add(v);
+            v = new WaveDescriptor();
+            v.Enemies = new List<EnemyType>() { EnemyType.Plutoid };
+            v.LivesLevel = 150;
+            d.Waves.Add(v);
 
-            v = new DescripteurVague();
-            en = new DescripteurEnnemi();
-            en.Type = TypeEnnemi.Comet;
-            en.NiveauPointsVie = 150;
-            v.ajouter(0, en, Distance.Proche, 100);
-            d.Vagues.Add(v);
+            v = new WaveDescriptor();
+            v.Enemies = new List<EnemyType>() { EnemyType.Comet };
+            v.LivesLevel = 150;
+            v.Quantity = 100;
+            d.Waves.Add(v);
 
-            v = new DescripteurVague();
-            en = new DescripteurEnnemi();
-            en.Type = TypeEnnemi.Meteoroid;
-            en.NiveauPointsVie = 150;
-            v.ajouter(0, en, Distance.Proche, 100);
-            d.Vagues.Add(v);
+            v = new WaveDescriptor();
+            v.Enemies = new List<EnemyType>() { EnemyType.Meteoroid };
+            v.LivesLevel = 150;
+            v.Quantity = 100;
+            d.Waves.Add(v);
 
             return d;
         }
@@ -450,42 +425,12 @@
 
             DescripteurCorpsCeleste c;
             DescripteurEmplacement e;
-            DescripteurVague v;
+            WaveDescriptor v;
 
             d.Joueur.PointsDeVie = 1;
             d.Joueur.ReserveUnites = 100;
 
             d.FondEcran = "fondecran19";
-
-            //c = new DescripteurCorpsCeleste();
-            //c.Nom = "Etoile";
-            //c.Position = Vector3.Zero;
-            //c.Taille = Taille.Grande;
-            //c.Representation = "planete2";
-            //c.RepresentationParticules = "etoile";
-            //c.Priorite = -1;
-            //c.TourellesPermises = new List<TypeTourelle>();
-            //d.SystemePlanetaire.Add(c);
-
-            //c = new DescripteurCorpsCeleste();
-            //c.Nom = "Planete";
-            //c.Position = new Vector3(150, 120, 0);
-            //c.PositionDepart = 40;
-            //c.Taille = Taille.Moyenne;
-            //c.Vitesse = 80000;
-            //c.Representation = "planete3";
-            //c.Priorite = 100;
-            //c.Invincible = false;
-            //e = new DescripteurEmplacement();
-            //e.Position = new Vector3(3, -2, 0);
-            //e.Tourelle = new DescripteurTourelle();
-            //e.Tourelle.Type = TypeTourelle.Gravitationnelle;
-            //e.Tourelle.PeutVendre = false;
-            //e.Tourelle.PeutMettreAJour = false;
-            //c.Emplacements.Add(e);
-            //d.SystemePlanetaire.Add(c);
-
-            //d.CorpsCelesteAProteger = c.Nom;
 
             c = new DescripteurCorpsCeleste();
             c.Nom = "CeintureAsteroide";
@@ -509,10 +454,9 @@
 
             d.SystemePlanetaire.Add(c);
 
-            v = new DescripteurVague();
-            v.ajouter(double.MaxValue, new DescripteurEnnemi(), Distance.Normal, 30);
-
-            d.Vagues.Add(v);
+            d.Waves.Add(new WaveDescriptor());
+            d.Waves[0].Enemies.Add(EnemyType.Asteroid);
+            d.Waves[0].Quantity = 50;
 
             return d;
         }
@@ -602,10 +546,10 @@
             v.IncrementDifficulte = 0;
             v.MinerauxParVague = 0;
             v.MinMaxEnnemisParVague = new Vector2(10, 30);
-            v.EnnemisPresents = new List<TypeEnnemi>();
-            v.EnnemisPresents.Add(TypeEnnemi.Asteroid);
-            v.EnnemisPresents.Add(TypeEnnemi.Comet);
-            v.EnnemisPresents.Add(TypeEnnemi.Plutoid);
+            v.EnnemisPresents = new List<EnemyType>();
+            v.EnnemisPresents.Add(EnemyType.Asteroid);
+            v.EnnemisPresents.Add(EnemyType.Comet);
+            v.EnnemisPresents.Add(EnemyType.Plutoid);
             v.FirstOneStartNow = true;
             d.VaguesInfinies = v;
 
@@ -697,10 +641,10 @@
             v.IncrementDifficulte = 0;
             v.MinerauxParVague = 0;
             v.MinMaxEnnemisParVague = new Vector2(10, 30);
-            v.EnnemisPresents = new List<TypeEnnemi>();
-            v.EnnemisPresents.Add(TypeEnnemi.Asteroid);
-            v.EnnemisPresents.Add(TypeEnnemi.Comet);
-            v.EnnemisPresents.Add(TypeEnnemi.Plutoid);
+            v.EnnemisPresents = new List<EnemyType>();
+            v.EnnemisPresents.Add(EnemyType.Asteroid);
+            v.EnnemisPresents.Add(EnemyType.Comet);
+            v.EnnemisPresents.Add(EnemyType.Plutoid);
             v.FirstOneStartNow = true;
             d.VaguesInfinies = v;
 
@@ -787,10 +731,10 @@
             v.IncrementDifficulte = 0;
             v.MinerauxParVague = 0;
             v.MinMaxEnnemisParVague = new Vector2(10, 30);
-            v.EnnemisPresents = new List<TypeEnnemi>();
-            v.EnnemisPresents.Add(TypeEnnemi.Asteroid);
-            v.EnnemisPresents.Add(TypeEnnemi.Comet);
-            v.EnnemisPresents.Add(TypeEnnemi.Plutoid);
+            v.EnnemisPresents = new List<EnemyType>();
+            v.EnnemisPresents.Add(EnemyType.Asteroid);
+            v.EnnemisPresents.Add(EnemyType.Comet);
+            v.EnnemisPresents.Add(EnemyType.Plutoid);
             v.FirstOneStartNow = true;
             d.VaguesInfinies = v;
 

@@ -1,8 +1,8 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using Microsoft.Xna.Framework;
     using System.Collections.Generic;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
 
 
     class SimPlayer

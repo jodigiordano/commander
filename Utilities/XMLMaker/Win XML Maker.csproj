@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,11 @@
     <AssemblyName>XMLMaker</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +29,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -119,10 +123,6 @@
       <Project>{D6F32E4E-250E-4835-97FE-B8EBC7B405FC}</Project>
       <Name>Win Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TDA.Objets\Win Objets.csproj">
-      <Project>{1618F876-CA24-461F-866D-73C36FA3B7F4}</Project>
-      <Name>Win Objets</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\TDA\Win Commander.csproj">
       <Project>{FC697C05-69B7-46AE-A46C-9101D3C81E1C}</Project>
       <Name>Win Commander</Name>
@@ -131,7 +131,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -156,7 +156,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
+      <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>

@@ -1,15 +1,15 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     using ProjectMercury.Emitters;
 
-    public enum TypeEnnemi
+    public enum EnemyType
     {
         Asteroid,
         Comet,
@@ -28,16 +28,16 @@
 
         private Simulation Simulation;
         private static List<Ennemi> EnnemisDisponibles;
-        private Dictionary<TypeEnnemi, Pool<Ennemi>> PoolsEnnemis;
+        private Dictionary<EnemyType, Pool<Ennemi>> PoolsEnnemis;
 
-        private static Dictionary<TypeEnnemi, Color> CouleursEnnemis = new Dictionary<TypeEnnemi, Color>()
+        private static Dictionary<EnemyType, Color> CouleursEnnemis = new Dictionary<EnemyType, Color>()
         {
-            { TypeEnnemi.Asteroid, new Color(255, 178, 12) },
-            { TypeEnnemi.Comet, new Color(255, 142, 161) },
-            { TypeEnnemi.Plutoid, new Color(7, 143, 255) },
-            { TypeEnnemi.Centaur, new Color(92, 198, 11) },
-            { TypeEnnemi.Trojan, new Color(255, 66, 217) },
-            { TypeEnnemi.Meteoroid, new Color(239, 0, 0) }
+            { EnemyType.Asteroid, new Color(255, 178, 12) },
+            { EnemyType.Comet, new Color(255, 142, 161) },
+            { EnemyType.Plutoid, new Color(7, 143, 255) },
+            { EnemyType.Centaur, new Color(92, 198, 11) },
+            { EnemyType.Trojan, new Color(255, 66, 217) },
+            { EnemyType.Meteoroid, new Color(239, 0, 0) }
         };
 
 
@@ -49,13 +49,13 @@
 
         public FactoryEnnemis()
         {
-            PoolsEnnemis = new Dictionary<TypeEnnemi, Pool<Ennemi>>();
-            PoolsEnnemis.Add(TypeEnnemi.Asteroid, new Pool<Ennemi>());
-            PoolsEnnemis.Add(TypeEnnemi.Centaur, new Pool<Ennemi>());
-            PoolsEnnemis.Add(TypeEnnemi.Comet, new Pool<Ennemi>());
-            PoolsEnnemis.Add(TypeEnnemi.Meteoroid, new Pool<Ennemi>());
-            PoolsEnnemis.Add(TypeEnnemi.Plutoid, new Pool<Ennemi>());
-            PoolsEnnemis.Add(TypeEnnemi.Trojan, new Pool<Ennemi>());
+            PoolsEnnemis = new Dictionary<EnemyType, Pool<Ennemi>>();
+            PoolsEnnemis.Add(EnemyType.Asteroid, new Pool<Ennemi>());
+            PoolsEnnemis.Add(EnemyType.Centaur, new Pool<Ennemi>());
+            PoolsEnnemis.Add(EnemyType.Comet, new Pool<Ennemi>());
+            PoolsEnnemis.Add(EnemyType.Meteoroid, new Pool<Ennemi>());
+            PoolsEnnemis.Add(EnemyType.Plutoid, new Pool<Ennemi>());
+            PoolsEnnemis.Add(EnemyType.Trojan, new Pool<Ennemi>());
         }
 
 
@@ -69,7 +69,7 @@
         // Services
         //=====================================================================
 
-        public Ennemi creerEnnemi(Simulation simulation, TypeEnnemi type, int niveauVitesse, int niveauPointsVie, int valeurUnites)
+        public Ennemi creerEnnemi(Simulation simulation, EnemyType type, int niveauVitesse, int niveauPointsVie, int valeurUnites)
         {
             this.Simulation = simulation;
 
@@ -82,7 +82,7 @@
             e.ValeurPoints = niveauPointsVie;
             e.Id = Ennemi.NextID;
 
-            if (e.Type == TypeEnnemi.Inconnu)
+            if (e.Type == EnemyType.Inconnu)
             {
                 e.Type = type;
                 e.Nom = type.ToString("g");
@@ -104,73 +104,73 @@
             if (EnnemisDisponibles == null)
             {
                 EnnemisDisponibles = new List<Ennemi>();
-                EnnemisDisponibles.Add(creerEnnemi(simulation, TypeEnnemi.Asteroid, 1, 1, 1));
-                EnnemisDisponibles.Add(creerEnnemi(simulation, TypeEnnemi.Centaur, 1, 1, 1));
-                EnnemisDisponibles.Add(creerEnnemi(simulation, TypeEnnemi.Comet, 1, 1, 1));
-                EnnemisDisponibles.Add(creerEnnemi(simulation, TypeEnnemi.Meteoroid, 1, 1, 1));
-                EnnemisDisponibles.Add(creerEnnemi(simulation, TypeEnnemi.Plutoid, 1, 1, 1));
-                EnnemisDisponibles.Add(creerEnnemi(simulation, TypeEnnemi.Trojan, 1, 1, 1));
+                EnnemisDisponibles.Add(creerEnnemi(simulation, EnemyType.Asteroid, 1, 1, 1));
+                EnnemisDisponibles.Add(creerEnnemi(simulation, EnemyType.Centaur, 1, 1, 1));
+                EnnemisDisponibles.Add(creerEnnemi(simulation, EnemyType.Comet, 1, 1, 1));
+                EnnemisDisponibles.Add(creerEnnemi(simulation, EnemyType.Meteoroid, 1, 1, 1));
+                EnnemisDisponibles.Add(creerEnnemi(simulation, EnemyType.Plutoid, 1, 1, 1));
+                EnnemisDisponibles.Add(creerEnnemi(simulation, EnemyType.Trojan, 1, 1, 1));
             }
 
             return EnnemisDisponibles;
         }
 
 
-        public float getPointsVie(TypeEnnemi type, int niveauPointsVie)
+        public float getPointsVie(EnemyType type, int niveauPointsVie)
         {
             float pointsDeVie = 0;
 
             switch (type)
             {
-                case TypeEnnemi.Asteroid:   pointsDeVie = 5 + 10 * (niveauPointsVie - 1); break;
-                case TypeEnnemi.Centaur:    pointsDeVie = 50 + 25 * (niveauPointsVie - 1); break;
-                case TypeEnnemi.Comet:      pointsDeVie = 5 + 2 * (niveauPointsVie - 1); break;
-                case TypeEnnemi.Meteoroid:  pointsDeVie = 1 + 5 * (niveauPointsVie - 1); break;
-                case TypeEnnemi.Plutoid:    pointsDeVie = 25 + 15 * (niveauPointsVie - 1); break;
-                case TypeEnnemi.Trojan:     pointsDeVie = 25 + 10 * (niveauPointsVie - 1); break;
+                case EnemyType.Asteroid:   pointsDeVie = 5 + 10 * (niveauPointsVie - 1); break;
+                case EnemyType.Centaur:    pointsDeVie = 50 + 25 * (niveauPointsVie - 1); break;
+                case EnemyType.Comet:      pointsDeVie = 5 + 2 * (niveauPointsVie - 1); break;
+                case EnemyType.Meteoroid:  pointsDeVie = 1 + 5 * (niveauPointsVie - 1); break;
+                case EnemyType.Plutoid:    pointsDeVie = 25 + 15 * (niveauPointsVie - 1); break;
+                case EnemyType.Trojan:     pointsDeVie = 25 + 10 * (niveauPointsVie - 1); break;
             }
 
             return pointsDeVie;
         }
 
 
-        public float getVitesse(TypeEnnemi type, int niveauVitesse)
+        public float getVitesse(EnemyType type, int niveauVitesse)
         {
             float vitesse = 0;
 
             switch (type)
             {
-                case TypeEnnemi.Asteroid: vitesse = 1 + 0 * (niveauVitesse - 1); break;
-                case TypeEnnemi.Centaur: vitesse = 0.8f + 0 * (niveauVitesse - 1); break;
-                case TypeEnnemi.Comet: vitesse = 4 + 0 * (niveauVitesse - 1); break;
-                case TypeEnnemi.Meteoroid: vitesse = 1.5f + 0 * (niveauVitesse - 1); break;
-                case TypeEnnemi.Plutoid: vitesse = 2 + 0 * (niveauVitesse - 1); break;
-                case TypeEnnemi.Trojan: vitesse = 2.5f + 0 * (niveauVitesse - 1); break;
+                case EnemyType.Asteroid: vitesse = 1 + 0 * (niveauVitesse - 1); break;
+                case EnemyType.Centaur: vitesse = 0.8f + 0 * (niveauVitesse - 1); break;
+                case EnemyType.Comet: vitesse = 4 + 0 * (niveauVitesse - 1); break;
+                case EnemyType.Meteoroid: vitesse = 1.5f + 0 * (niveauVitesse - 1); break;
+                case EnemyType.Plutoid: vitesse = 2 + 0 * (niveauVitesse - 1); break;
+                case EnemyType.Trojan: vitesse = 2.5f + 0 * (niveauVitesse - 1); break;
             }
 
             return vitesse;
         }
 
 
-        public int getTaille(TypeEnnemi type)
+        public int getTaille(EnemyType type)
         {
             int taille = 0;
 
             switch (type)
             {
-                case TypeEnnemi.Asteroid: taille = 20; break;
-                case TypeEnnemi.Centaur: taille = 30; break;
-                case TypeEnnemi.Comet: taille = 10; break;
-                case TypeEnnemi.Meteoroid: taille = 35; break;
-                case TypeEnnemi.Plutoid: taille = 25; break;
-                case TypeEnnemi.Trojan: taille = 15; break;
+                case EnemyType.Asteroid: taille = 20; break;
+                case EnemyType.Centaur: taille = 30; break;
+                case EnemyType.Comet: taille = 10; break;
+                case EnemyType.Meteoroid: taille = 35; break;
+                case EnemyType.Plutoid: taille = 25; break;
+                case EnemyType.Trojan: taille = 15; break;
             }
 
             return taille;
         }
 
 
-        public string getTexture(TypeEnnemi type)
+        public string getTexture(EnemyType type)
         {
             return type.ToString("g");
         }

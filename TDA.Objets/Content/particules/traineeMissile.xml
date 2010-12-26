@@ -46,5 +46,7 @@
       <ConeAngle>0.449596941</ConeAngle>
     </Item>
     <Name>Particle Effect</Name>
+    <Author>None</Author>
+    <Description>None</Description>
   </Asset>
 </XnaContent>

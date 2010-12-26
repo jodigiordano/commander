@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    [Serializable]
+
     public enum Distance
     {
         Colles = 0,
@@ -15,7 +15,6 @@
     }
 
 
-    [Serializable]
     public enum Taille
     {
         Petite = 32,
@@ -24,7 +23,6 @@
     }
 
 
-    [Serializable]
     public class DescripteurScenario
     {
         public int Numero { get; set; }
@@ -41,7 +39,7 @@
         [ContentSerializer(Optional = true)]
         public DescripteurVaguesInfinies VaguesInfinies { get; set; }
 
-        public List<DescripteurVague> Vagues { get; set; }
+        public List<WaveDescriptor> Waves { get; set; }
         
         public DescripteurJoueur Joueur { get; set; }
 
@@ -71,7 +69,7 @@
 
 
             SystemePlanetaire = new List<DescripteurCorpsCeleste>();
-            Vagues = new List<DescripteurVague>();
+            Waves = new List<WaveDescriptor>();
             VaguesInfinies = null;
             Joueur = new DescripteurJoueur();
             CorpsCelesteAProteger = null;
@@ -117,38 +115,12 @@
 
             SystemePlanetaire.Add(d);
         }
-
-
-        public override string ToString()
-        {
-            String s =
-                "Scenario. " +
-                "Numero: " + Numero +
-                ", Mission: " + Mission +
-                ", Annee: " + Annee +
-                ", Lieu: " + Lieu +
-                ", Objectif: " + Objectif +
-                ", Image: " + Image +
-                ", Difficulte: " + Difficulte +
-                ", FondEcran: " + FondEcran +
-                ", Joueur: " + Joueur +
-                ", CorpsCelesteAProteger: " + ((CorpsCelesteAProteger == null) ? "Aucune" : CorpsCelesteAProteger);
-
-            foreach (var c in SystemePlanetaire)
-                s += c;
-
-            foreach (var v in Vagues)
-                s += v;
-
-            return s;
-        }
     }
 
 
-    [Serializable]
     public class DescripteurVaguesInfinies
     {
-        public List<TypeEnnemi> EnnemisPresents     { get; set; }
+        public List<EnemyType> EnnemisPresents     { get; set; }
         public int DifficulteDepart                 { get; set; }
         public int IncrementDifficulte              { get; set; }
         public Vector2 MinMaxEnnemisParVague        { get; set; }
@@ -157,7 +129,7 @@
 
         public DescripteurVaguesInfinies()
         {
-            EnnemisPresents = new List<TypeEnnemi>();
+            EnnemisPresents = new List<EnemyType>();
             DifficulteDepart = 1;
             IncrementDifficulte = 0;
             MinMaxEnnemisParVague = new Vector2(1, 1);
@@ -166,7 +138,6 @@
     }
 
 
-    [Serializable]
     public class DescripteurCorpsCeleste
     {
         public String Nom { get; set; }
@@ -238,36 +209,6 @@
             Rotation = 0;
         }
 
-
-        public override string ToString()
-        {
-            String s =
-                "Corps Celeste. " +
-                "Nom: " + Nom +
-                ", Representation: " + ((Representation == null) ? "Aucune" : Representation) +
-                ", RepresentationParticules: " + ((RepresentationParticules == null) ? "Aucune" : RepresentationParticules) +
-                ", Vitesse: " + Vitesse +
-                ", Priorite: " + Priorite +
-                ", Position: " + Position +
-                ", " + ((PeutAvoirCollecteur) ? "PeutAvoirCollecteur" : "NePeutPasAvoirCollecteur") +
-                ", " + ((Selectionnable) ? "Selectionnable" : "NonSelectionnable") +
-                ", " + ((Invincible) ? "Invincible" : "PasInvincible") +
-                ", Taille: " + Taille.ToString("g") +
-                ", PositionDepart: " + PositionDepart +
-                ", Representations: ";
-
-                if (Representations.Count == 0)
-                    s += "Aucune";
-                else
-                    foreach (var rep in Representations)
-                        s += rep + ", ";
-
-                foreach (var emplacement in Emplacements)
-                    s += emplacement;
-
-                return s;
-        }
-
         public void ajouterTourelle(TypeTourelle typeTourelle, int niveau, Vector3 position, bool visible)
         {
             DescripteurEmplacement e = new DescripteurEmplacement();
@@ -284,34 +225,74 @@
     }
 
 
-    [Serializable]
-    public class DescripteurVague
+    public class WaveDescriptor
     {
-        public double TempsDepart                       { get; set; }
-        public List<DescripteurEnnemi> Ennemis          { get; set; }
-        public List<Distance> Distances                 { get; set; }
+        public double StartingTime;
+        public List<EnemyType> Enemies;
+        public int SpeedLevel;
+        public int LivesLevel;
+        public int CashValue;
+        public int Quantity;
+        public Distance Distance;
+        public double Delay;
+        public int ApplyDelayEvery;
+        public int SwitchEvery;
 
-        public DescripteurVague()
+
+        public WaveDescriptor()
         {
-            TempsDepart = 0;
-            Ennemis = new List<DescripteurEnnemi>();
-            Distances = new List<Distance>();
+            StartingTime = 0;
+            Enemies = new List<EnemyType>();
+            SpeedLevel = 1;
+            LivesLevel = 1;
+            CashValue = 1;
+            Quantity = 1;
+            Distance = Distance.Colles;
+            Delay = 0;
+            ApplyDelayEvery = -1;
+            SwitchEvery = -1;
         }
 
-        public void ajouter(double tempsDepart, DescripteurEnnemi ennemi, Distance distance, int quantite)
-        {
-            TempsDepart = tempsDepart;
 
-            for (int i = 0; i < quantite; i++)
+        public List<EnemyDescriptor> GetEnemiesToCreate()
+        {
+            var results = new List<EnemyDescriptor>();
+            int typeIndex = 0;
+            double lastTimeCreated = 0;
+
+            for (int i = 0; i < Quantity; i++)
             {
-                Ennemis.Add(ennemi);
-                Distances.Add(distance);
+                if ((i + 1) % SwitchEvery == 0)
+                    typeIndex = (typeIndex + 1) % Enemies.Count;
+
+                var type = Enemies[typeIndex];
+
+                double delay = ((i + 1) % ApplyDelayEvery == 0) ? Delay : 0;
+
+                double frequency =
+                    FactoryEnnemis.Instance.getTaille(type) + (int)Distance /
+                    FactoryEnnemis.Instance.getVitesse(type, SpeedLevel) * (1000f / 60f);
+
+                var e = new EnemyDescriptor()
+                {
+                    Type = type,
+                    CashValue = this.CashValue,
+                    LivesLevel = this.LivesLevel,
+                    SpeedLevel = this.SpeedLevel,
+                    StartingTime = lastTimeCreated + frequency + delay
+                };
+
+                results.Add(e);
+
+                lastTimeCreated = e.StartingTime;
             }
+
+
+            return results;
         }
     }
 
 
-    [Serializable]
     public class DescripteurJoueur
     {
         public int ReserveUnites { get; set; }
@@ -322,18 +303,9 @@
             ReserveUnites = 0;
             PointsDeVie = 1;
         }
-
-        public override string ToString()
-        {
-            return
-                "Joueur. " +
-                "ReserveUnites: " + ReserveUnites +
-                ", PointsDeVie: " + PointsDeVie + "\n";
-        }
     }
 
 
-    [Serializable]
     public class DescripteurTourelle
     {
         public TypeTourelle Type { get; set; }
@@ -353,19 +325,9 @@
             Niveau = 1;
             Visible = true;
         }
-
-        public override string ToString()
-        {
-            return
-                "Tourelle. " +
-                "Type: " + Type.ToString("g") +
-                ", " + ((PeutVendre) ? "PeutVendre" : "NePeutPasVendre") +
-                ", " + ((PeutMettreAJour) ? "PeutMettreAJour" : "NePeutPasMettreAJour") + "\n";
-        }
     }
 
 
-    [Serializable]
     public class DescripteurEmplacement
     {
         [ContentSerializer(Optional = true)]
@@ -380,41 +342,15 @@
             Position = Vector3.Zero;
             Representation = "emplacement";
         }
-
-        public override string ToString()
-        {
-            return
-                "\nEmplacement. " +
-                "Position: " + Position +
-                ", Representation: " + Representation +
-                ", " + ((Tourelle == null) ? "Aucune" : Tourelle.ToString()) + "\n";
-        }
     }
 
 
-    [Serializable]
-    public class DescripteurEnnemi
+    public class EnemyDescriptor
     {
-        public TypeEnnemi Type { get; set; }
-        public int NiveauVitesse { get; set; }
-        public int NiveauPointsVie { get; set; }
-        public int Valeur { get; set; }
-        public double PauseApres { get; set; }
-
-        public DescripteurEnnemi()
-        {
-            Type = TypeEnnemi.Inconnu;
-            NiveauVitesse = 1;
-            NiveauPointsVie = 1;
-            Valeur = 1;
-        }
-
-        public override string ToString()
-        {
-            return
-                "\nEnnemi. " +
-                "Type: " + Type.ToString("g") +
-                ", Valeur: " + Valeur + "\n";
-        }
+        public EnemyType Type;
+        public int SpeedLevel;
+        public int LivesLevel;
+        public int CashValue;
+        public double StartingTime;
     }
 }

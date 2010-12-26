@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     
     class HorizontalSlider : DrawableGameComponent
     {
@@ -35,17 +35,17 @@
             Max = max;
             Increment = increment;
 
-            Gauche = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Gauche"), Position - new Vector3(50, 0, 0));
-            Gauche.PrioriteAffichage = priorite;
+            Gauche = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Gauche"), Position - new Vector3(50, 0, 0));
+            Gauche.VisualPriority = priorite;
             Gauche.Origine = Gauche.Centre;
 
-            Droite = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Droite"), Position + new Vector3(50, 0, 0));
-            Droite.PrioriteAffichage = priorite;
+            Droite = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Droite"), Position + new Vector3(50, 0, 0));
+            Droite.VisualPriority = priorite;
             Droite.Origine = Droite.Centre;
 
-            ValeurRep = new IVisible(Valeur.ToString(), Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position);
+            ValeurRep = new IVisible(Valeur.ToString(), EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position);
             ValeurRep.Taille = 2;
-            ValeurRep.PrioriteAffichage = priorite;
+            ValeurRep.VisualPriority = priorite;
             ValeurRep.Origine = ValeurRep.Centre;
 
             GaucheCercle = new Cercle(Gauche.Position, 16);
@@ -55,9 +55,9 @@
 
         public void doClick()
         {
-            if (Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, GaucheCercle) && Valeur > Min)
+            if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, GaucheCercle) && Valeur > Min)
                 Valeur = Math.Max(Min, Valeur - Increment);
-            else if (Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, DroiteCercle) && Valeur < Max)
+            else if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, DroiteCercle) && Valeur < Max)
                 Valeur = Math.Min(Max, Valeur + Increment);
         }
 

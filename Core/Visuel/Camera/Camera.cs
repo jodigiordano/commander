@@ -1,96 +1,96 @@
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+
 
     public class Camera
     {
-        public String Nom                   { get; set; }
-        public Matrix Transformee;
-        public Trajet2D VitesseDeplacement    { get; set; }
-        public Trajet2D VitesseZoom           { get; set; }
-        public Trajet2D VitesseRotation       { get; set; }
-        public bool Manuelle                { get; set; }
+        public String Name              { get; set; }
+        public Matrix Transform;
+        public Trajet2D SpeedMovement   { get; set; }
+        public Trajet2D SpeedZoom       { get; set; }
+        public Trajet2D SpeedRotation   { get; set; }
+        public bool Manual              { get; set; }
 
-        private Vector2 origine;
-        public Vector2 Origine
+        private Vector2 origin;
+        public Vector2 Origin
         {
-            get { return origine; }
+            get { return origin; }
             set
             {
-                origine.X = value.X;
-                origine.Y = value.Y;
+                origin.X = value.X;
+                origin.Y = value.Y;
 
-                majTransformee();
+                updateTransform();
             }
         }
 
         private Vector3 position;
-        private Vector3 positionFinale;
+        private Vector3 positionEnd;
         private Vector3 positionDelta;
-        private bool initDeplacement = false;
-        private double tempsDebutDeplacement = 0;
+        private bool initializeMovement = false;
+        private double movementDelay = 0;
         public Vector3 Position
         {
             get { return position; }
             set
             {
-                positionFinale.X = value.X;
-                positionFinale.Y = value.Y;
-                positionFinale.Z = value.Z;
+                positionEnd.X = value.X;
+                positionEnd.Y = value.Y;
+                positionEnd.Z = value.Z;
 
                 bool zoom = position.Z != value.Z;
 
-                if (Manuelle)
+                if (Manual)
                 {    
-                    position.X = positionFinale.X;
-                    position.Y = positionFinale.Y;
-                    position.Z = positionFinale.Z;
+                    position.X = positionEnd.X;
+                    position.Y = positionEnd.Y;
+                    position.Z = positionEnd.Z;
                     positionDelta.X = positionDelta.Y = positionDelta.Z = 0;
-                    majTransformee();
+                    updateTransform();
                 }
                 else
                 {
-                    initDeplacement = true;
-                    initZoom = zoom;
-                    positionDelta.X = positionFinale.X - position.X;
-                    positionDelta.Y = positionFinale.Y - position.Y;
-                    positionDelta.Z = positionFinale.Z - position.Z;
+                    initializeMovement = true;
+                    initializeZoom = zoom;
+                    positionDelta.X = positionEnd.X - position.X;
+                    positionDelta.Y = positionEnd.Y - position.Y;
+                    positionDelta.Z = positionEnd.Z - position.Z;
                 }
             }
         }
 
 
         private float rotation;
-        private float rotationFinale;
+        private float rotationEnd;
         private float rotationDelta;
-        private bool initRotation = false;
-        private double tempsDebutRotation = 0;
+        private bool initializeRotation = false;
+        private double rotationDelay = 0;
         public float Rotation
         {
             get { return rotation; }
             set
             {
-                rotationFinale = value;
+                rotationEnd = value;
 
-                if (Manuelle)
+                if (Manual)
                 {
-                    rotation = rotationFinale;
+                    rotation = rotationEnd;
                     rotationDelta = 0.0f;
-                    majTransformee();
+                    updateTransform();
                 }
                 else
                 {
-                    initRotation = true;
-                    rotationDelta = rotationFinale - rotation;
+                    initializeRotation = true;
+                    rotationDelta = rotationEnd - rotation;
                 }
             }
         }
 
-        private bool initZoom = false;
-        private double tempsDebutZoom = 0;
+        private bool initializeZoom = false;
+        private double zoomDelay = 0;
 
 
         public Camera()
@@ -99,20 +99,20 @@ namespace Core.Visuel
         }
 
 
-        public Camera(Camera ancienneCamera)
+        public Camera(Camera other)
         {
-            if (ancienneCamera != null)
+            if (other != null)
             {
-                Manuelle = true;
-                Position = ancienneCamera.position;
-                Rotation = ancienneCamera.Rotation;
-                VitesseDeplacement = ancienneCamera.VitesseDeplacement;
-                VitesseRotation = ancienneCamera.VitesseRotation;
-                VitesseZoom = ancienneCamera.VitesseZoom;
-                Transformee = ancienneCamera.Transformee;
-                Origine = ancienneCamera.Origine;
-                Nom = "Inconnue";
-                Manuelle = ancienneCamera.Manuelle;
+                Manual = true;
+                Position = other.position;
+                Rotation = other.Rotation;
+                SpeedMovement = other.SpeedMovement;
+                SpeedRotation = other.SpeedRotation;
+                SpeedZoom = other.SpeedZoom;
+                Transform = other.Transform;
+                Origin = other.Origin;
+                Name = "Inconnue";
+                Manual = other.Manual;
             }
 
             else
@@ -124,48 +124,48 @@ namespace Core.Visuel
 
         private void Init()
         {
-            Manuelle = true;
+            Manual = true;
             Position = new Vector3(0, 0, 500);
             Rotation = 0.0f;
-            VitesseDeplacement = Trajet2D.CreerVitesse(Trajet2D.Type.Lineaire, 6000);
-            VitesseRotation = Trajet2D.CreerVitesse(Trajet2D.Type.Lineaire, 9000);
-            VitesseZoom = Trajet2D.CreerVitesse(Trajet2D.Type.Lineaire, 1500);
-            Transformee = Matrix.Identity;
-            Origine = Vector2.Zero;
-            Nom = "Inconnue";
+            SpeedMovement = Trajet2D.CreerVitesse(Trajet2D.Type.Lineaire, 6000);
+            SpeedRotation = Trajet2D.CreerVitesse(Trajet2D.Type.Lineaire, 9000);
+            SpeedZoom = Trajet2D.CreerVitesse(Trajet2D.Type.Lineaire, 1500);
+            Transform = Matrix.Identity;
+            Origin = Vector2.Zero;
+            Name = "Unknown";
         }
 
 
         public virtual void Update(GameTime gameTime)
         {
-            if (Manuelle)
+            if (Manual)
                 return;
 
             float tmpZoomDelta;
             float tmpRotation;
 
             // position
-            float multiplicateur = 1 - VitesseDeplacement.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y;
-            position.X = positionFinale.X - positionDelta.X * multiplicateur;
-            position.Y = positionFinale.Y - positionDelta.Y * multiplicateur;
+            float multiplier = 1 - SpeedMovement.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y;
+            position.X = positionEnd.X - positionDelta.X * multiplier;
+            position.Y = positionEnd.Y - positionDelta.Y * multiplier;
 
             // zoom
-            tmpZoomDelta = positionDelta.Z * (1 - VitesseZoom.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y);
-            position.Z = positionFinale.Z - tmpZoomDelta;
+            tmpZoomDelta = positionDelta.Z * (1 - SpeedZoom.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y);
+            position.Z = positionEnd.Z - tmpZoomDelta;
 
             // rotation
             tmpRotation = rotation;
-            rotation = rotationFinale - (rotationDelta * (1 - VitesseRotation.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y));
+            rotation = rotationEnd - (rotationDelta * (1 - SpeedRotation.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y));
 
-            majTransformee();
+            updateTransform();
         }
 
 
-        private void majTransformee()
+        private void updateTransform()
         {
-            Transformee =   
+            Transform =   
                 Matrix.CreateRotationZ(Rotation) *
-                Matrix.CreateTranslation(new Vector3(origine.X - position.X, origine.Y - position.Y, 0));
+                Matrix.CreateTranslation(new Vector3(origin.X - position.X, origin.Y - position.Y, 0));
         }
     }
 }

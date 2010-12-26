@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework.Input;
-    using Core.Input;
+    using EphemereGames.Core.Input;
 
     class Aide : Scene
     {
@@ -19,8 +19,7 @@
         private HorizontalSlider SlidesSlider;
         private Cursor Curseur;
 
-        private Objets.AnimationTransition AnimationTransition;
-        private bool effectuerTransition;
+        private AnimationTransition AnimationTransition;
         private String ChoixTransition;
         private double TempsEntreDeuxChangementMusique;
 
@@ -30,23 +29,20 @@
             Main = main;
 
             Nom = "Aide";
-            EnPause = true;
-            EstVisible = false;
-            EnFocus = false;
 
-            Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(120, -420, 0));
+            Lieutenant = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("lieutenant"), new Vector3(120, -420, 0));
             Lieutenant.Taille = 8;
             Lieutenant.Origine = new Vector2(0, Lieutenant.Texture.Height);
             Lieutenant.Rotation = MathHelper.Pi;
-            Lieutenant.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
+            Lieutenant.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
-            Bulle = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleRenversee"), new Vector3(80, -150, 0));
+            Bulle = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("bulleRenversee"), new Vector3(80, -150, 0));
             Bulle.Taille = 8;
-            Bulle.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
+            Bulle.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("fondecran7"), Vector3.Zero);
+            FondEcran = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("fondecran7"), Vector3.Zero);
             FondEcran.Origine = FondEcran.Centre;
-            FondEcran.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
+            FondEcran.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
             TypeWriter = new TextTypeWriter
             (
@@ -54,7 +50,7 @@
                 "",
                 Color.Black,
                 new Vector3(170, -130, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                 2.0f,
                 new Vector2(370, 330),
                 50,
@@ -70,7 +66,7 @@
                 },
                 this
             );
-            TypeWriter.Texte.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
+            TypeWriter.Texte.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
             Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
 
@@ -78,63 +74,58 @@
 
             IVisible titre, slide;
             
-            titre = new IVisible("Help:Controls", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
+            titre = new IVisible("Help:Controls", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
             titre.Taille = 4;
             titre.Origine = titre.Centre;
-            titre.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
 #if WINDOWS && !MANETTE_WINDOWS
-            slide = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("HelpControlsWin"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpControlsWin"), new Vector3(0, 50, 0));
 #else
-            slide = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("HelpControls"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.recuperer<Texture2D>("HelpControls"), new Vector3(0, 50, 0));
 #endif
             
             slide.Origine = slide.Centre;
-            slide.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<IVisible,IVisible>(titre, slide));
 
-            titre = new IVisible("Help:Battlefield", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
+            titre = new IVisible("Help:Battlefield", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
             titre.Taille = 4;
             titre.Origine = titre.Centre;
-            titre.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("HelpBattlefield"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpBattlefield"), new Vector3(0, 50, 0));
             slide.Origine = slide.Centre;
-            slide.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<IVisible, IVisible>(titre, slide));
 
-            titre = new IVisible("Help:Mercenaries", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
+            titre = new IVisible("Help:Mercenaries", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
             titre.Taille = 4;
             titre.Origine = titre.Centre;
-            titre.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("HelpMercenaries"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpMercenaries"), new Vector3(0, 50, 0));
             slide.Origine = slide.Centre;
-            slide.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<IVisible, IVisible>(titre, slide));
 
-            titre = new IVisible("Help:The Resistance", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
+            titre = new IVisible("Help:The Resistance", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
             titre.Taille = 4;
             titre.Origine = titre.Centre;
-            titre.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("HelpTheResistance"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpTheResistance"), new Vector3(0, 50, 0));
             slide.Origine = slide.Centre;
-            slide.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<IVisible, IVisible>(titre, slide));
 
             SlidesSlider = new HorizontalSlider(Main, this, Curseur, new Vector3(0, -250, 0), 0, 3, 0, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
-            AnimationTransition = new TDA.Objets.AnimationTransition();
-            AnimationTransition.Duree = 500;
-            AnimationTransition.Scene = this;
-            AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
-
-            effectuerTransition = false;
+            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
             TempsEntreDeuxChangementMusique = 0;
 
@@ -143,36 +134,42 @@
 
         private void doJoueurPrincipalDeconnecte()
         {
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
             ChoixTransition = "chargement";
-            effectuerTransition = true;
+            Transition = TransitionType.Out;
         }
 
 
         protected override void UpdateLogique(GameTime gameTime)
         {
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
+                return;
+
+            TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            SlidesSlider.Update(gameTime);
+        }
+
+
+        protected override void InitializeTransition(TransitionType type)
+        {
+            AnimationTransition.In = (type == TransitionType.In) ? true : false;
+            AnimationTransition.Initialize();
+        }
+
+
+        protected override void UpdateTransition(GameTime gameTime)
+        {
+            AnimationTransition.Update(gameTime);
+
+            if (AnimationTransition.Finished(gameTime))
             {
-                AnimationTransition.suivant(gameTime);
-
-                effectuerTransition = !AnimationTransition.estTerminee(gameTime);
-
-                if (!effectuerTransition && !AnimationTransition.In)
-                {
+                if (Transition == TransitionType.Out)
                     switch (ChoixTransition)
                     {
-                        case "menu": Core.Visuel.Facade.effectuerTransition("AideVersMenu"); break;
-                        case "chargement": Core.Visuel.Facade.effectuerTransition("AideVersChargement"); break;
+                        case "menu": EphemereGames.Core.Visuel.Facade.Transite("AideToMenu"); break;
+                        case "chargement": EphemereGames.Core.Visuel.Facade.Transite("AideToChargement"); break;
                     }
-                }
-            }
 
-            else
-            {
-                TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
-                SlidesSlider.Update(gameTime);
-                //Curseur.Update(gameTime); //todo
+                Transition = TransitionType.None;
             }
         }
 
@@ -185,7 +182,7 @@
             SlidesSlider.Draw(null);
             Curseur.Draw();
 
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
         }
 
@@ -194,9 +191,7 @@
         {
             base.onFocus();
 
-            effectuerTransition = true;
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.In;
         }
 
 
@@ -277,13 +272,11 @@
 
         private void beginTransition()
         {
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 return;
 
-            effectuerTransition = true;
+            Transition = TransitionType.Out;
             ChoixTransition = "menu";
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
         }
 
 
@@ -292,7 +285,7 @@
             if (TempsEntreDeuxChangementMusique > 0)
                 return;
 
-            Menu menu = (Menu)Core.Visuel.Facade.recupererScene("Menu");
+            Menu menu = (Menu)EphemereGames.Core.Visuel.Facade.GetScene("Menu");
             menu.ChangeMusic();
             TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
         }

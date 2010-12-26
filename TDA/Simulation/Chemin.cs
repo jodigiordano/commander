@@ -1,11 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
-    using Core.Physique;
 
     class Chemin
     {
@@ -19,31 +18,28 @@
         private double[] Temps;
         private SortedList<int, CorpsCeleste> CorpsCelestesChemin;
         private int DistanceDeuxPoints = 40;
-        private IVisible[] Lignes;
+        private Image[] Lignes;
         private Scene Scene;
         public double Longueur;
 
-        public Chemin(Simulation simulation, Color couleur, TypeMelange melange)
+        public Chemin(Simulation simulation, Color couleur, TypeBlend melange)
         {
             Scene = simulation.Scene;
-
-            // Representation visuelle
             Positions = new Vector3[NB_POINTS_MAX];
             Temps = new double[NB_POINTS_MAX];
             Trajet = new Trajet3D();
             Longueur = 0;
 
-            Lignes = new IVisible[NB_TRAITS];
+            Lignes = new Image[NB_TRAITS];
 
             for (int i = 0; i < NB_TRAITS; i++)
             {
-                IVisible ligne = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("LigneTrajet"), Vector3.Zero);
-                ligne.PrioriteAffichage = Preferences.PrioriteSimulationChemin;
-                ligne.Origine = ligne.Centre;
-                ligne.Couleur = couleur;
-                ligne.Melange = melange;
+                Image line = new Image("LigneTrajet", Vector3.Zero);
+                line.Color = couleur;
+                line.Blend = melange;
+                line.VisualPriority = Preferences.PrioriteSimulationChemin;
 
-                Lignes[i] = ligne;
+                Lignes[i] = line;
             }
         }
 
@@ -321,6 +317,5 @@
                 }
             }
         }
-
     }
 }

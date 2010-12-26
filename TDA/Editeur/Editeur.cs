@@ -1,21 +1,16 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
-    using Core.Input;
     using Microsoft.Xna.Framework.Input;
 
     class Editeur : Scene
     {
         private Main Main;
 
-        private Objets.AnimationTransition AnimationTransition;
-        private bool effectuerTransition;
+        private AnimationTransition AnimationTransition;
         private String ChoixTransition;
         private Simulation Simulation;
         private GenerateurGUI GenerateurGUI;
@@ -27,9 +22,6 @@
             Main = main;
 
             Nom = "Editeur";
-            EnPause = true;
-            EstVisible = false;
-            EnFocus = false;
 
             Simulation = new Simulation(main, this, FactoryScenarios.getDescripteurBidon());
             Simulation.Players = Main.Players;
@@ -41,12 +33,7 @@
             GenerateurGUI = new GenerateurGUI(Simulation, Curseur, new Vector3(-300, 80, 0));
             GenerateurGUI.Visible = true;
 
-            AnimationTransition = new TDA.Objets.AnimationTransition();
-            AnimationTransition.Duree = 500;
-            AnimationTransition.Scene = this;
-            AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
-
-            effectuerTransition = false;
+            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
         }
@@ -54,40 +41,44 @@
 
         private void doJoueurPrincipalDeconnecte()
         {
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.Out;
             ChoixTransition = "chargement";
-            effectuerTransition = true;
         }
 
 
         protected override void UpdateLogique(GameTime gameTime)
         {
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
+                return;
+
+            Simulation.EnPause = GenerateurGUI.Visible;
+            GenerateurGUI.Update(gameTime);
+            Simulation.Update(gameTime);
+        }
+
+
+        protected override void InitializeTransition(TransitionType type)
+        {
+            AnimationTransition.In = (type == TransitionType.In) ? true : false;
+            AnimationTransition.Initialize();
+        }
+
+
+        protected override void UpdateTransition(GameTime gameTime)
+        {
+            AnimationTransition.Update(gameTime);
+
+            if (AnimationTransition.Finished(gameTime))
             {
-                AnimationTransition.suivant(gameTime);
-
-                effectuerTransition = !AnimationTransition.estTerminee(gameTime);
-
-                if (!effectuerTransition && !AnimationTransition.In)
-                {
+                if (Transition == TransitionType.Out)
                     switch (ChoixTransition)
                     {
-                        case "menu": Core.Visuel.Facade.effectuerTransition("EditeurVersMenu"); break;
-                        case "chargement": Core.Visuel.Facade.effectuerTransition("EditeurVersChargement"); break;
+                        case "menu": EphemereGames.Core.Visuel.Facade.Transite("EditeurToMenu"); break;
+                        case "chargement": EphemereGames.Core.Visuel.Facade.Transite("EditeurToChargement"); break;
                     }
-                }
+
+                Transition = TransitionType.None;
             }
-
-
-            else
-            {
-                //Curseur.Update(gameTime); //todo
-                Simulation.EnPause = GenerateurGUI.Visible;
-                GenerateurGUI.Update(gameTime);
-                Simulation.Update(gameTime);
-            }
-
         }
 
 
@@ -97,7 +88,7 @@
             GenerateurGUI.Draw(null);
             Simulation.Draw(null);
 
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
         }
 
@@ -106,9 +97,7 @@
         {
             base.onFocus();
 
-            effectuerTransition = true;
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.In;
         }
 
 
@@ -116,7 +105,7 @@
         {
             base.onFocusLost();
 
-            Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+            EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
         }
 
 
@@ -146,13 +135,11 @@
 
         private void beginTransition()
         {
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 return;
 
-            effectuerTransition = true;
+            Transition = TransitionType.Out;
             ChoixTransition = "menu";
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
         }
 
 

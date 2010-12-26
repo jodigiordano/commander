@@ -1,30 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace Core.Visuel
+﻿namespace EphemereGames.Core.Visuel
 {
-    /// <summary>
-    /// Mélange (blending) utilisé lors de l'affichage
-    /// </summary>
-    public enum TypeMelange
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
+
+    public enum TypeBlend
     {
         Default,
-        Multiplicatif,
-        Aucun,
-        Additif,
+        Multiply,
+        None,
+        Add,
         Alpha,
-        Soustraire
+        Substract
     }
+
 
     public interface IScenable
     {
-        Vector3 Position                { get; set; }
-        float PrioriteAffichage         { get; set; }
-        TypeMelange Melange             { get; set; }
-        List<IScenable> Composants      { get; set; }
+        Vector3 Position            { get; set; }
+        float VisualPriority        { get; set; }
+        TypeBlend Blend             { get; set; }
+        List<IScenable> Components  { get; set; }
 
         void Draw(SpriteBatch spriteBatch);
     }

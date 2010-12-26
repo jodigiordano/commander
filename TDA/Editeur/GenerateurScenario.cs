@@ -1,9 +1,9 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
     using Wintellect.PowerCollections;
 
     class GenerateurScenario
@@ -50,14 +50,14 @@
             { Taille.Grande,  20 }
         };
 
-        private static Dictionary<TypeEnnemi, string> RepresentationsEnnemis = new Dictionary<TypeEnnemi, string>()
+        private static Dictionary<EnemyType, string> RepresentationsEnnemis = new Dictionary<EnemyType, string>()
         {
-            { TypeEnnemi.Asteroid, "Asteroid" },
-            { TypeEnnemi.Centaur, "Centaur" },
-            { TypeEnnemi.Plutoid, "Plutoid" },
-            { TypeEnnemi.Comet, "Comet" },
-            { TypeEnnemi.Trojan, "Trojan" },
-            { TypeEnnemi.Meteoroid, "Meteoroid" }
+            { EnemyType.Asteroid, "Asteroid" },
+            { EnemyType.Centaur, "Centaur" },
+            { EnemyType.Plutoid, "Plutoid" },
+            { EnemyType.Comet, "Comet" },
+            { EnemyType.Trojan, "Trojan" },
+            { EnemyType.Meteoroid, "Meteoroid" }
         };
 
 
@@ -72,7 +72,7 @@
         public int NbPacksVie;
         public int NbEmplacements;
         public int ArgentDepart;
-        public List<TypeEnnemi> EnnemisPresents;
+        public List<EnemyType> EnnemisPresents;
         public DescripteurScenario DescripteurScenario;
         public bool SystemeCentre;
 

@@ -1,55 +1,55 @@
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
-    using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+
 
     public class PathFollowingCamera : FollowingCamera
     {
-        new private IVisible ObjetSuivi          { get; set; }
-        new private Vector3 Vitesse              { get; set; }
-        public Trajet2D Trajet                     { get; private set; }
-        private double TempsTotal                { get; set; }
+        public Trajet2D Path { get; private set; }
+
+        new private IVisible Followed   { get; set; }
+        new private Vector3 Speed       { get; set; }
+        private double Length           { get; set; }
 
 
         public PathFollowingCamera(
-            Trajet2D trajet,
-            float positionZ,
-            Vector2 origine,
-            Camera ancienneCamera)
-            : base(null, new Vector3(0, 0, positionZ), Vector3.Zero, Vector3.Zero, true, origine, ancienneCamera)
+            Trajet2D path,
+            float zPosition,
+            Vector2 origin,
+            Camera other)
+            : base(null, new Vector3(0, 0, zPosition), Vector3.Zero, Vector3.Zero, true, origin, other)
         {
-            this.Trajet = trajet;
-            this.Position = new Vector3(Trajet.positionDepart(), this.Position.Z);
-            this.Manuelle = true;
-            this.TempsTotal = 0;
+            this.Path = path;
+            this.Position = new Vector3(Path.positionDepart(), this.Position.Z);
+            this.Manual = true;
+            this.Length = 0;
         }
 
 
-        public PathFollowingCamera(PathFollowingCamera ancienneCamera, Trajet2D trajet) :
-            base(ancienneCamera, ancienneCamera.Position, ancienneCamera.DistanceMaximale, ancienneCamera.Vitesse, ancienneCamera.Manuelle, ancienneCamera.Origine)
+        public PathFollowingCamera(PathFollowingCamera other, Trajet2D path) :
+            base(other, other.Position, other.MaxDistance, other.Speed, other.Manual, other.Origin)
         {
-            this.Trajet = trajet;
-            this.TempsTotal = TempsTotal;
+            this.Path = path;
+            this.Length = Length;
         }
 
 
-        public bool DestinationAtteinte
+        public bool DestinationReached
         {
             get
             {
-                return this.Trajet.position(TempsTotal) == this.Trajet.positionFin();
+                return this.Path.position(Length) == this.Path.positionFin();
             }
         }
 
 
-        protected override void deplacementManuel(GameTime gameTime)
+        protected override void moveManually(GameTime gameTime)
         {
-            this.TempsTotal += gameTime.ElapsedGameTime.TotalMilliseconds;
+            this.Length += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            Vector2 posTrajet = Trajet.position(this.TempsTotal);
-            this.Position = new Vector3(posTrajet.X, posTrajet.Y, this.Position.Z);
+            Vector2 posPath = Path.position(this.Length);
+            this.Position = new Vector3(posPath.X, posPath.Y, this.Position.Z);
         }
     }
 }

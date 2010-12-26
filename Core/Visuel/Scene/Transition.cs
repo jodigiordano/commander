@@ -1,83 +1,30 @@
-﻿namespace Core.Visuel
+﻿namespace EphemereGames.Core.Visuel
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework.Content;
-    using Core.Persistance;
-    using Core.Utilities;
-
-    [Serializable()]
-    public class Transition : IContenu
+    public enum TransitionType
     {
-        [ContentSerializer(Optional = false)]
-        public String NomTransition { get; set; }
-
-        [ContentSerializer(Optional = false)]
-        public float Duree { get; set; }
-
-        [ContentSerializer(Optional = false)]
-        public List<DescriptionTransition> Descriptions { get; set; }
-
-        //[ContentSerializer(Optional = true)]
-        //public List<AbstractEffet> Effets { get; set; }
-
-        [ContentSerializerIgnore]
-        public String TypeAsset { get { return "Transition"; } }
-
-        public object charger(String nom, String chemin, Dictionary<String, String> parametres, ContentManager contenu)
-        {
-            Transition transition = contenu.Load<Transition>(chemin);
-            GestionnaireTransitions.Instance.ajouter(nom, transition);
-
-            return transition;
-        }
-
-        public object Clone()
-        {
-            return this;
-        }
+        In,
+        Out,
+        None
     }
 
-    [Serializable()]
-    public class DescriptionTransition
+
+    public class Transition
     {
-        [ContentSerializer(Optional = false)]
-        public String NomScene { get; set; }
+        public float Length;
+        public string NameSceneFrom;
+        public string NameSceneTo;
 
-        [ContentSerializer(Optional = true)]
-        public Boolean FocusApres { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public Boolean EnPausePendant { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public Boolean EnPauseApres { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public Boolean VisibleApres { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public float PrioriteAffichagePendant { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public float PrioriteAffichageApres { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public List<AbstractEffet> Effets { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public List<Animation> Animations { get; set; }
-
-        public DescriptionTransition()
+        public Transition(string nameSceneFrom, string nameSceneTo)
         {
-            FocusApres = true;
-            EnPausePendant = false;
-            EnPauseApres = false;
-            VisibleApres = true;
-            PrioriteAffichagePendant = 0.0f;
-            PrioriteAffichageApres = 0.0f;
-            Effets = new List<AbstractEffet>();
-            Animations = new List<Animation>();
+            NameSceneFrom = nameSceneFrom;
+            NameSceneTo = nameSceneTo;
+            Length = 0;
+        }
+
+
+        public string Name
+        {
+            get { return NameSceneFrom + "To" + NameSceneTo; }
         }
     }
 }

@@ -1,13 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Input;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
     using Microsoft.Xna.Framework.Input;
     
     class Menu : SceneMenu
@@ -26,11 +23,11 @@
         public String MusiqueSelectionnee;
         private double TempsEntreDeuxChangementMusique;
 
-        private Objets.AnimationTransition AnimationTransition;
-        private bool effectuerTransition;
+        private AnimationTransition AnimationTransition;
         private String ChoixTransition;
 
         private Simulation Simulation;
+
 
         public Menu(Main main)
             : base(Vector2.Zero, 720, 1280)
@@ -38,90 +35,87 @@
             Main = main;
 
             Nom = "Menu";
-            EnPause = true;
-            EstVisible = false;
-            EnFocus = false;
 
             NouvellePartie = new IVisible
                     (
                         "save the\nworld",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(-220, -170, 0)
                     );
             NouvellePartie.Taille = 4f;
-            NouvellePartie.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            NouvellePartie.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
             ReprendrePartie = new IVisible
                     (
                         "resume game",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(-460, 75, 0)
                     );
-            ReprendrePartie.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            ReprendrePartie.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
             ReprendrePartie.Taille = 4f;
 
             Options = new IVisible
                     (
                         "options\nn'stuff",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(-50, -200, 0)
                     );
             Options.Taille = 4f;
-            Options.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            Options.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
             Aide = new IVisible
                     (
                         "help",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(-350, 120, 0)
                     );
             Aide.Taille = 4f;
-            Aide.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            Aide.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
             QuitterPartie = new IVisible
                     (
                         "quit",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(140, 160, 0)
                     );
             QuitterPartie.Taille = 4f;
-            QuitterPartie.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            QuitterPartie.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
             Editeur = new IVisible
                     (
                         "editor",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(-600, 300, 0)
                     );
             Editeur.Taille = 4f;
-            Editeur.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            Editeur.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
             TitreMenu = new IVisible
                     (
                         "Commander",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("PixelBig"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("PixelBig"),
                         Color.White,
                         new Vector3(0, 0, 0)
                     );
             TitreMenu.Taille = 4;
             TitreMenu.Origine = TitreMenu.Centre;
-            TitreMenu.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
+            TitreMenu.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
             NomJoueur = new IVisible
                     (
                         "",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("PixelBig"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("PixelBig"),
                         Color.White,
                         new Vector3(0, 50, 0)
                     );
             NomJoueur.Taille = 3;
-            NomJoueur.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
+            NomJoueur.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
             DescripteurScenario descripteurScenario = FactoryScenarios.getDescripteurMenu();
 
@@ -136,12 +130,7 @@
             Simulation.Initialize();
             Simulation.ModeDemo = true;
 
-            AnimationTransition = new TDA.Objets.AnimationTransition();
-            AnimationTransition.Duree = 500;
-            AnimationTransition.Scene = this;
-            AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
-
-            effectuerTransition = false;
+            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
             MusiqueSelectionnee = Main.MusiquesDisponibles[Main.Random.Next(0, Main.MusiquesDisponibles.Count)];
             Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
@@ -153,110 +142,112 @@
         
         private void doJoueurPrincipalDeconnecte()
         {
-            AnimationTransition.In = false;
+            Transition = TransitionType.Out;
             AnimationTransition.Initialize();
-            ChoixTransition = "chargement";
-            effectuerTransition = true;
         }
 
 
         protected override void UpdateLogique(GameTime gameTime)
         {
-            if (effectuerTransition)
-            {
-                AnimationTransition.suivant(gameTime);
-
-                effectuerTransition = !AnimationTransition.estTerminee(gameTime);
-
-                if (!effectuerTransition && !AnimationTransition.In)
-                {
-                    switch (ChoixTransition)
-                    {
-                        case "save the\nworld":
-                            Core.Visuel.Facade.effectuerTransition("MenuVersNouvellePartie");
-                            break;
-
-                        case "quit":
-                            if (!Main.TrialMode.Active)
-                                Main.Exit();
-                            else
-#if WINDOWS
-                                Main.Exit();
-#else
-                                Core.Visuel.Facade.effectuerTransition("MenuVersAcheter");
-#endif
-                            break;
-
-                        case "help":
-                            Core.Visuel.Facade.effectuerTransition("MenuVersAide");
-                            break;
-
-                        case "options": Core.Visuel.Facade.effectuerTransition("MenuVersOptions");
-                            break;
-
-                        case "editor":
-                            //this.Partie = new Editeur(Main);
-                            //Core.Visuel.Facade.mettreAJourScene("Editeur", new EditeurV2(Main));
-                            Core.Visuel.Facade.effectuerTransition("MenuVersEditeur");
-                            break;
-
-                        case "resume game":
-                            if (PartieEnCours != null && !PartieEnCours.EstTerminee)
-                                Core.Visuel.Facade.effectuerTransition("MenuVersPartie");
-                            break;
-
-                        case "chargement": Core.Visuel.Facade.effectuerTransition("MenuVersChargement");
-                            break;
-                    }
-                }
-            }
-
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
             Simulation.Update(gameTime);
         }
+
+
+        protected override void InitializeTransition(TransitionType type)
+        {
+            AnimationTransition.In = (type == TransitionType.In) ? true : false;
+            AnimationTransition.Initialize();
+        }
+
+
+        protected override void UpdateTransition(GameTime gameTime)
+        {
+            AnimationTransition.Update(gameTime);
+
+            if (!AnimationTransition.Finished(gameTime))
+                return;
+
+            if (Transition == TransitionType.Out)
+                switch (ChoixTransition)
+                {
+                    case "save the\nworld":
+                        EphemereGames.Core.Visuel.Facade.Transite("MenuToNouvellePartie");
+                        break;
+
+                    case "quit":
+                        if (!Main.TrialMode.Active)
+                            Main.Exit();
+                        else
+#if WINDOWS
+                            Main.Exit();
+#else
+                            EphemereGames.Core.Visuel.Facade.effectuerTransition("MenuToAcheter");
+#endif
+                        break;
+
+                    case "help":
+                        EphemereGames.Core.Visuel.Facade.Transite("MenuToAide");
+                        break;
+
+                    case "options": EphemereGames.Core.Visuel.Facade.Transite("MenuToOptions");
+                        break;
+
+                    case "editor": EphemereGames.Core.Visuel.Facade.Transite("MenuToEditeur");
+                        break;
+
+                    case "resume game":
+                        if (PartieEnCours != null && !PartieEnCours.EstTerminee)
+                            EphemereGames.Core.Visuel.Facade.Transite("MenuToPartie");
+                        break;
+
+                    case "chargement": EphemereGames.Core.Visuel.Facade.Transite("MenuToChargement");
+                        break;
+                }
+
+            Transition = TransitionType.None;
+        }
+
 
         public void ChangeMusic()
         {
             if (TempsEntreDeuxChangementMusique > 0)
                 return;
 
-            Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, Preferences.TempsEntreDeuxChangementMusique - 50);
+            EphemereGames.Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, Preferences.TempsEntreDeuxChangementMusique - 50);
             String ancienneMusique = MusiqueSelectionnee;
             MusiqueSelectionnee = Main.MusiquesDisponibles[Main.Random.Next(0, Main.MusiquesDisponibles.Count)];
             Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
             Main.MusiquesDisponibles.Add(ancienneMusique);
-            Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+            EphemereGames.Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
             TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
         }
 
 
         protected override void UpdateVisuel()
         {
-            if (this.EnFocus)
+            if (Simulation.CorpsCelesteSelectionne != null)
             {
-                if (Simulation.CorpsCelesteSelectionne != null)
+                switch (Simulation.CorpsCelesteSelectionne.Nom)
                 {
-                    switch (Simulation.CorpsCelesteSelectionne.Nom)
-                    {
-                        case "save the\nworld":    ajouterScenable(NouvellePartie);    break;
-                        case "quit":        ajouterScenable(QuitterPartie);     break;
-                        case "help":        ajouterScenable(Aide);              break;
-                        case "options":     ajouterScenable(Options);           break;
-                        case "editor":      ajouterScenable(Editeur);           break;
-                        case "resume game":
-                            if (PartieEnCours != null && !PartieEnCours.EstTerminee)
-                                ajouterScenable(ReprendrePartie);
-                            break;
-                    }
+                    case "save the\nworld":     ajouterScenable(NouvellePartie);    break;
+                    case "quit":                ajouterScenable(QuitterPartie);     break;
+                    case "help":                ajouterScenable(Aide);              break;
+                    case "options":             ajouterScenable(Options);           break;
+                    case "editor":              ajouterScenable(Editeur);           break;
+                    case "resume game":
+                        if (PartieEnCours != null && !PartieEnCours.EstTerminee)
+                            ajouterScenable(ReprendrePartie);
+                        break;
                 }
-
-                ajouterScenable(TitreMenu);
-
-                Simulation.Draw(null);
-
-                if (effectuerTransition)
-                    AnimationTransition.Draw(null);
             }
+
+            ajouterScenable(TitreMenu);
+
+            Simulation.Draw(null);
+
+            if (Transition != TransitionType.None)
+                AnimationTransition.Draw(null);
         }
 
 
@@ -264,16 +255,14 @@
         {
             base.onFocus();
 
-            effectuerTransition = true;
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.In;
 
-            if (!Core.Audio.Facade.musiqueJoue(MusiqueSelectionnee))
-                Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+            if (!EphemereGames.Core.Audio.Facade.musiqueJoue(MusiqueSelectionnee))
+                EphemereGames.Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
             else
-                Core.Audio.Facade.reprendreMusique(MusiqueSelectionnee, true, 1000);
+                EphemereGames.Core.Audio.Facade.reprendreMusique(MusiqueSelectionnee, true, 1000);
 
-            Core.Input.Facade.AddListener(Simulation);
+            EphemereGames.Core.Input.Facade.AddListener(Simulation);
         }
 
         public override void onFocusLost()
@@ -281,9 +270,9 @@
             base.onFocusLost();
 
             if (Simulation.CorpsCelesteSelectionne != null && Simulation.CorpsCelesteSelectionne.Nom == "resume game" && PartieEnCours != null && !PartieEnCours.EstTerminee)
-                Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
+                EphemereGames.Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
 
-            Core.Input.Facade.RemoveListener(Simulation);
+            EphemereGames.Core.Input.Facade.RemoveListener(Simulation);
         }
 
 
@@ -327,7 +316,7 @@
 
         private void beginTransition()
         {
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 return;
 
             if ((Simulation.CorpsCelesteSelectionne != null &&
@@ -338,10 +327,8 @@
                 (Simulation.CorpsCelesteSelectionne != null &&
                 Simulation.CorpsCelesteSelectionne.Nom != "resume game"))
             {
-                effectuerTransition = true;
+                Transition = TransitionType.Out;
                 ChoixTransition = Simulation.CorpsCelesteSelectionne.Nom;
-                AnimationTransition.In = false;
-                AnimationTransition.Initialize();
             }
         }
 

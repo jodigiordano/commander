@@ -1,4 +1,4 @@
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using Microsoft.Xna.Framework;
 

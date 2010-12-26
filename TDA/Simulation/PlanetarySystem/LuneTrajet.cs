@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     using ProjectMercury.Modifiers;
 
     class LuneTrajet : Lune
@@ -53,7 +53,7 @@
 
             TempsDevantDebut = step * 1;
             TempsDevantFin = step * 4;
-            Representation.PrioriteAffichage = (TempsRotationActuel >= TempsDevantDebut && TempsRotationActuel <= TempsDevantFin) ?
+            Representation.VisualPriority = (TempsRotationActuel >= TempsDevantDebut && TempsRotationActuel <= TempsDevantFin) ?
                 Preferences.PrioriteSimulationTourelle - 0.01f :
                 CorpsCeleste.PrioriteAffichage + 0.01f;
 
@@ -70,7 +70,7 @@
         {
             base.Update(gameTime);
 
-            Representation.PrioriteAffichage = (TempsRotationActuel >= TempsDevantDebut && TempsRotationActuel <= TempsDevantFin) ?
+            Representation.VisualPriority = (TempsRotationActuel >= TempsDevantDebut && TempsRotationActuel <= TempsDevantFin) ?
                 Preferences.PrioriteSimulationTourelle - 0.01f :
                 CorpsCeleste.PrioriteAffichage + 0.01f;
 

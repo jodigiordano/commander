@@ -1,162 +1,114 @@
-﻿namespace Core.Utilities
+﻿namespace EphemereGames.Core.Utilities
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    public abstract class AbstractEffet : ICloneable
+    public abstract class AbstractEffect : ICloneable
     {
-        /// <summary>
-        /// Type de progression de l'effet
-        /// </summary>
-        public enum TypeProgression
+        public enum ProgressType
         {
-            Lineaire,
-            Maintenant,
-            ApresDuree
-        }
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
-        [ContentSerializer(Optional = true)]
-        public double Duree { get; set; }                   // Durée de l'effet
-
-        [ContentSerializer(Optional = true)]
-        public TypeProgression Progression { get; set; }    // Façon dont est appliqué l'effet
-
-        [ContentSerializer(Optional = true)]
-        public double Delai { get; set; }                   // Temps mort avant de partir l'effet
-
-        [ContentSerializerIgnore]
-        public bool Termine { get; set; }                   // Est-ce que l'effet est terminé
-
-        [ContentSerializerIgnore]
-        public object objet { get; set; }                   // Objet sur lequel s'applique l'effet
-
-        private double tempsRestantDebut;                   // Temps à attendre avant que l'effet débute (en tenant compte du temps mort)
-        private double tempsRestantFin;                     // Temps à attendre avant que l'effet s'arrête
-        protected double tempsRelatif;
-        protected double tempsUnTick;
-        private bool initialisation;
-
-
-        //=====================================================================
-        // Constructeur
-        //=====================================================================
-
-        /// <summary>
-        /// Constructeur d'un effet
-        /// </summary>
-        public AbstractEffet()
-        {
-            Progression = TypeProgression.Lineaire;
-            Delai = 0;
-            Termine = false;
-            Duree = 0;
-            initialisation = true;
-
-            init();
+            Linear,
+            Now,
+            After
         }
 
 
-        //=====================================================================
-        // Logique
-        //=====================================================================
+        [ContentSerializer(Optional = true)]
+        public double Length { get; set; }
 
-        /// <summary>
-        /// Prochaine application de l'effet
-        /// </summary>
-        /// <remarks>
-        /// Important: lorsqu'on redéfini suivant(), ne pas oublier de
-        /// faire un appel à base.suivant(gameTime) pour que l'effet soit
-        /// initialisé
-        /// </remarks>
-        /// <param name="gameTime">Temps</param>
+        [ContentSerializer(Optional = true)]
+        public ProgressType Progress { get; set; }
+
+        [ContentSerializer(Optional = true)]
+        public double Delay { get; set; }
+
+        [ContentSerializerIgnore]
+        public bool Finished { get; set; }
+
+        [ContentSerializerIgnore]
+        public object Obj { get; set; }
+
+        private double RemainingBeforeStart;
+        private double RemainingBeforeEnd;
+        protected double ElaspedTime;
+        protected double TimeOneTick;
+        private bool Initialized;
+
+
+        public AbstractEffect()
+        {
+            Progress = ProgressType.Linear;
+            Delay = 0;
+            Length = 0;
+
+            Initialize();
+        }
+
+
         public void Update(GameTime gameTime)
         {
-            if (initialisation)
+            if (!Initialized)
             {
-                init();
-                InitLogique();
+                Initialize();
+                InitializeLogic();
 
-                initialisation = false;
+                Initialized = true;
             }
 
-            // détermine si l'effet est terminé
-            Termine = (tempsRestantFin <= 0 || gameTime == null);
+            Finished = (RemainingBeforeEnd <= 0 || gameTime == null);
 
             if (gameTime != null)
             {
-                if (tempsRestantDebut > 0)
+                if (RemainingBeforeStart > 0)
                 {
-                    tempsRestantDebut -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                    RemainingBeforeStart -= gameTime.ElapsedGameTime.TotalMilliseconds;
                     return;
                 }
                 else
                 {
-                    tempsRelatif = Duree - tempsRestantFin;
-                    tempsRestantFin -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                    ElaspedTime = Length - RemainingBeforeEnd;
+                    RemainingBeforeEnd -= gameTime.ElapsedGameTime.TotalMilliseconds;
                 }
 
-                tempsUnTick = gameTime.ElapsedGameTime.TotalMilliseconds;
+                TimeOneTick = gameTime.ElapsedGameTime.TotalMilliseconds;
             }
 
 
-            if (!Termine && Progression == TypeProgression.Maintenant)
-                LogiqueMaintenant();
+            if (!Finished && Progress == ProgressType.Now)
+                LogicNow();
 
-            else if (!Termine && Progression == TypeProgression.Lineaire)
-                LogiqueLineaire();
+            else if (!Finished && Progress == ProgressType.Linear)
+                LogicLinear();
 
-            else if (Termine && Progression == TypeProgression.ApresDuree)
-                LogiqueApresDuree();
+            else if (Finished && Progress == ProgressType.After)
+                LogicAfter();
 
-            // terminer l'effet
-            if (Termine)
-                LogiqueTermine();
+            if (Finished)
+                LogicEnd();
         }
 
 
-        /// <summary>
-        /// Logiques à sous-classer
-        /// </summary>
-        protected virtual void InitLogique() { }
-        protected virtual void LogiqueLineaire() { }
-        protected virtual void LogiqueApresDuree() { }
-        protected virtual void LogiqueMaintenant() { }
+        protected virtual void InitializeLogic() { }
+        protected virtual void LogicLinear() { }
+        protected virtual void LogicAfter() { }
+        protected virtual void LogicNow() { }
+        protected virtual void LogicEnd() { }
 
 
-        /// <summary>
-        /// Initialisation de l'effet
-        /// </summary>
-        public void init()
+        public void Initialize()
         {
-            tempsRestantFin = Duree;
-            tempsRestantDebut = Delai;
-            Termine = false;
-            initialisation = true;
+            RemainingBeforeEnd = Length;
+            RemainingBeforeStart = Delay;
+            Finished = false;
+            Initialized = false;
         }
 
-        /// <summary>
-        /// Logique effectuée lorsque l'effet est terminé, peut importe le type de progression
-        /// </summary>
-        protected virtual void LogiqueTermine()
-        {
-
-        }
-
-
-        #region ICloneable Members
 
         public object Clone()
         {
             return this.MemberwiseClone();
         }
-
-        #endregion
     }
 }
 

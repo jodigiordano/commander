@@ -1,15 +1,15 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     class ControleurEnnemis : DrawableGameComponent
     {
         public List<Ennemi> Ennemis                                                     { get; private set; }
-        public LinkedList<Vague> Vagues                                                 { get; set; }
-        public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionProchaineVague      { get; set; }
+        public LinkedList<Wave> Vagues                                                  { get; set; }
+        public Dictionary<EnemyType, EnemyDescriptor> CompositionProchaineVague         { get; set; }
         public VaguesInfinies VaguesInfinies                                            { get; set; }
         public Chemin Chemin                                                            { get; set; }
         public Chemin CheminProjection                                                  { get; set; }
@@ -23,8 +23,8 @@
         public delegate void EnnemiAtteintFinTrajetHandler(Ennemi ennemi, CorpsCeleste corpsCeleste);
         public event EnnemiAtteintFinTrajetHandler EnnemiAtteintFinTrajet;
         private Scene Scene;
-        private LinkedListNode<Vague> ProchaineVague                    { get; set; }
-        private List<Vague> VaguesActives                               { get; set; }
+        private LinkedListNode<Wave> ProchaineVague                    { get; set; }
+        private List<Wave> VaguesActives                               { get; set; }
         private double CompteurVague                                    { get; set; }
 
         public Vector3 PourcentageMinerauxDonnes;
@@ -41,11 +41,11 @@
             this.Scene = simulation.Scene;
 
             Ennemis = new List<Ennemi>();
-            Vagues = new LinkedList<Vague>();
-            VaguesActives = new List<Vague>();
+            Vagues = new LinkedList<Wave>();
+            VaguesActives = new List<Wave>();
             Mineraux = new List<Mineral>();
             DistributionMineraux = new List<KeyValuePair<int, int>>();
-            CompositionProchaineVague = new Dictionary<TypeEnnemi, DescripteurEnnemi>();
+            CompositionProchaineVague = new Dictionary<EnemyType, EnemyDescriptor>();
         }
 
         public override void Initialize()
@@ -54,7 +54,9 @@
             NbEnnemisCrees = 0;
 
             ProchaineVague = Vagues.First;
-            peuplerCompositionProchaineVague();
+
+            if (ProchaineVague != null)
+                CompositionProchaineVague = ProchaineVague.Value.Composition;
 
             if (VaguesInfinies != null)
                 return;
@@ -67,7 +69,7 @@
             int nbEnnemis = 0;
 
             foreach (var vague in Vagues)
-                nbEnnemis += vague.NbEnnemis;
+                nbEnnemis += vague.NbEnemies;
 
             Vector3 valeurUnitaire = new Vector3(10, 25, 50);
             Vector3 valeurParType = PourcentageMinerauxDonnes * ValeurTotalMineraux; //atention: float
@@ -157,7 +159,7 @@
 
             CompteurVague += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (ProchaineVague != null && ProchaineVague.Value.TempsApparition <= CompteurVague)
+            if (ProchaineVague != null && ProchaineVague.Value.StartingTime <= CompteurVague)
             {
                 CompteurVague = 0;
 
@@ -168,7 +170,9 @@
                 else
                     ProchaineVague.Value = VaguesInfinies.getProchaineVague();
 
-                peuplerCompositionProchaineVague();
+                if (ProchaineVague != null)
+                    CompositionProchaineVague = ProchaineVague.Value.Composition;
+
                 notifyVagueDebutee();
             }
 
@@ -177,10 +181,10 @@
                 Vector3 positionDepart = Chemin.PremierRelais.Position;
                 Vector3 offset = new Vector3((positionDepart.X >= 0) ? 100 : -100, (positionDepart.Y >= 0) ? 100 : -100, 0);
 
-                VaguesActives[i].PositionDepart = positionDepart + offset;
+                VaguesActives[i].StartingPosition = positionDepart + offset;
                 VaguesActives[i].Update(gameTime);
 
-                List<Ennemi> listeEnnemis = VaguesActives[i].Ennemis;
+                List<Ennemi> listeEnnemis = VaguesActives[i].Enemies;
 
                 Ennemis.AddRange(listeEnnemis);
 
@@ -197,19 +201,19 @@
 
                     while (DistributionMineraux.Count > 0 && DistributionMineraux[DistributionMineraux.Count - 1].Key == NbEnnemisCrees)
                     {
-                        ennemi.Mineraux.Add(new Mineral(base.Game, this.Scene, DistributionMineraux[DistributionMineraux.Count - 1].Value, ennemi.RepresentationVivant.PrioriteAffichage + 0.01f));
+                        ennemi.Mineraux.Add(new Mineral(base.Game, this.Scene, DistributionMineraux[DistributionMineraux.Count - 1].Value, ennemi.RepresentationVivant.VisualPriority + 0.01f));
 
                         DistributionMineraux.RemoveAt(DistributionMineraux.Count - 1);
                     }
 
-                    Scene.Effets.ajouter(ennemi.RepresentationVivant, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
+                    Scene.Effets.Add(ennemi.RepresentationVivant, PredefinedEffects.FadeInFrom0(255, 0, 1000));
 
                     NbEnnemisCrees++;
 
                     notifyObjetCree(ennemi);
                 }
 
-                if (VaguesActives[i].EstTerminee)
+                if (VaguesActives[i].IsFinished)
                 {
                     VaguesActives.RemoveAt(i);
                     notifyVagueTerminee();
@@ -241,7 +245,7 @@
                     ennemi.doMeurt();
 
                     foreach (var vague in VaguesActives)
-                        vague.doEnnemiDetruit(ennemi);
+                        vague.doEnemyDestroyed(ennemi);
 
                     List<Mineral> mineraux = ennemi.Mineraux;
 
@@ -278,7 +282,7 @@
 
                 notifyObjetDetruit(min);
 
-                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleVendue");
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleVendue");
 
                 return;
             }
@@ -292,9 +296,11 @@
                 CompteurVague = 0;
 
                 VaguesActives.Add(ProchaineVague.Value);
-                ProchaineVague = (VaguesInfinies == null) ? ProchaineVague.Next : new LinkedListNode<Vague>(VaguesInfinies.getProchaineVague());
+                ProchaineVague = (VaguesInfinies == null) ? ProchaineVague.Next : new LinkedListNode<Wave>(VaguesInfinies.getProchaineVague());
 
-                peuplerCompositionProchaineVague();
+                if (ProchaineVague != null)
+                    CompositionProchaineVague = ProchaineVague.Value.Composition;
+
                 notifyVagueDebutee();
             }
         }
@@ -305,19 +311,9 @@
             ennemi.doMeurt();
 
             foreach (var vague in VaguesActives)
-                vague.doEnnemiDetruit(ennemi);
+                vague.doEnemyDestroyed(ennemi);
 
             notifyEnnemiAtteintFinTrajet(ennemi, Chemin.DernierRelais);
-        }
-
-
-        private void peuplerCompositionProchaineVague()
-        {
-            CompositionProchaineVague.Clear();
-
-            if (ProchaineVague != null)
-                foreach (var compose in ProchaineVague.Value.Composition)
-                    CompositionProchaineVague.Add(compose.Key, compose.Value);
         }
     }
 }

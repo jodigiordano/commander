@@ -5,12 +5,12 @@
 //
 //=====================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     public class EffetDeplacementOffset : EffetPhysique
     {
@@ -28,34 +28,34 @@ namespace Core.Physique
         // Logique
         //=====================================================================
 
-        protected override void InitLogique()
+        protected override void InitializeLogic()
         {
             dernierDeplacement = Vector3.Zero;
         }
 
-        protected override void LogiqueLineaire()
+        protected override void LogicLinear()
         {
 
-            Vector3 nouveauDeplacement = Offset * (float)(tempsRelatif / Duree);
+            Vector3 nouveauDeplacement = Offset * (float)(ElaspedTime / Length);
 
             Objet.Position -= dernierDeplacement;
             Objet.Position += nouveauDeplacement;
             dernierDeplacement = nouveauDeplacement;
         }
 
-        protected override void LogiqueApresDuree()
+        protected override void LogicAfter()
         {
             Objet.Position += Offset;
         }
 
-        protected override void LogiqueMaintenant()
+        protected override void LogicNow()
         {
             Objet.Position += Offset;
         }
 
-        protected override void LogiqueTermine()
+        protected override void LogicEnd()
         {
-            base.LogiqueTermine();
+            base.LogicEnd();
 
             Objet.Position -= dernierDeplacement;
             Objet.Position += Offset;

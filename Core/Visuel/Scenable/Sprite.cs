@@ -4,7 +4,7 @@
 //
 //=============================================================================
 
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
 
     using System;
@@ -13,7 +13,7 @@ namespace Core.Visuel
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Persistance;
+    using EphemereGames.Core.Persistance;
     
     public class Sprite : IVisible, IContenu
     {

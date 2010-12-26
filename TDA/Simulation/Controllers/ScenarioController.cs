@@ -1,10 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
 
     enum GameState
@@ -25,7 +25,7 @@
 
         public List<CorpsCeleste> CelestialBodies   { get { return Scenario.SystemePlanetaire; } }
         public VaguesInfinies InfiniteWaves         { get { return Scenario.VaguesInfinies; } }
-        public LinkedList<Vague> Waves              { get { return Scenario.Vagues; } }
+        public LinkedList<Wave> Waves              { get { return Scenario.Vagues; } }
         public CommonStash CommonStash              { get { return Scenario.CommonStash; } }
         public List<Tourelle> StartingTurrets       { get { return Scenario.Tourelles; } }
         public CorpsCeleste CelestialBodyToProtect  { get { return Scenario.CorpsCelesteAProteger; } }
@@ -45,12 +45,12 @@
             Scenario = scenario;
 
             Stars = Simulation.Scene.Particules.recuperer("etoilesScintillantes");
-            Stars.PrioriteAffichage = Preferences.PrioriteGUIEtoiles;
+            Stars.VisualPriority = Preferences.PrioriteGUIEtoiles;
             StarsEmitter = 0;
 
             WavesCounter = 0;
 
-            ParTime = (Scenario.VaguesInfinies != null) ? 0 : Scenario.Vagues.Last.Value.TempsApparition + Scenario.Vagues.Last.Value.Ennemis.Count * 2000;
+            ParTime = (Scenario.VaguesInfinies != null) ? 0 : Scenario.Vagues.Last.Value.StartingTime + Scenario.Vagues.Last.Value.Enemies.Count * 2000;
         }
 
 
@@ -66,7 +66,7 @@
             }
 
             if (Main.Random.Next(0, 1000) == 0)
-                Simulation.Scene.Animations.inserer(Simulation.Scene, new AnimationEtoileFilante(Simulation));
+                Simulation.Scene.Animations.Insert(Simulation.Scene, new AnimationEtoileFilante(Simulation));
 
             ParTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
         }
@@ -111,7 +111,7 @@
 
             if (!Simulation.ModeDemo && Simulation.Etat != GameState.Lost)
             {
-                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteTouche");
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteTouche");
             }
 
             if (celestialBody == CelestialBodyToProtect)
@@ -120,7 +120,7 @@
             if (CommonStash.Lives <= 0 && State == GameState.Running && !DemoMode && !EditorMode)
             {
                 CelestialBodyToProtect.doMeurt();
-                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
                 if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Numero))
@@ -146,7 +146,7 @@
             if (celestialBody == null)
                 return;
 
-            Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
 
             if (celestialBody == CelestialBodyToProtect && !DemoMode && !EditorMode)
             {

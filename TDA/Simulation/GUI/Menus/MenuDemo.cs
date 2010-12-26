@@ -1,7 +1,7 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -24,11 +24,11 @@
 
             for (int i = 0; i < 3; i++)
             {
-                var nameScore = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
-                nameScore.Taille = 2;
-                nameScore.PrioriteAffichage = this.PrioriteAffichage;
+                var namesScores = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+                namesScores.Taille = 2;
+                namesScores.VisualPriority = this.PrioriteAffichage;
 
-                NamesScores.Add(nameScore);
+                NamesScores.Add(namesScores);
             }
         }
 
@@ -71,7 +71,7 @@
                     NamesScores[i].Texte = highscores.Scores[i].Key.PadRight(6) + highscores.Scores[i].Value;
                 else
                     NamesScores[i].Texte = "none  0";
- 
+
                 NamesScores[i].Position = this.Position + new Vector3(0, i * 20, 0);
                 Simulation.Scene.ajouterScenable(NamesScores[i]);
             }

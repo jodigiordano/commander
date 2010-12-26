@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectGuid>{140359CB-8436-44BC-9886-3056A2C3A516}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -8,13 +9,23 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TDA</RootNamespace>
     <AssemblyName>TDA</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Xbox 360</XnaPlatform>
     <XnaCrossPlatformGroupID>55a79d11-a65d-458c-a9ca-fc9011e650ac</XnaCrossPlatformGroupID>
     <ApplicationIcon>
     </ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <XnaUpgrade>
+    </XnaUpgrade>
+    <XnaOutputType>Game</XnaOutputType>
+    <XnaProfile>HiDef</XnaProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +38,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -42,7 +52,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <DefineConstants>DEBUG;TRACE;XBOX;XBOX360</DefineConstants>
-    <XnaCompressContent>true</XnaCompressContent>
+    <XnaCompressContent>True</XnaCompressContent>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
@@ -55,7 +65,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
-    <XnaCompressContent>true</XnaCompressContent>
+    <XnaCompressContent>True</XnaCompressContent>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - GamePad|Xbox 360' ">
@@ -67,6 +77,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <XnaCompressContent>True</XnaCompressContent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - Manette|Xbox 360' ">
     <DebugSymbols>true</DebugSymbols>
@@ -77,6 +88,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <XnaCompressContent>True</XnaCompressContent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release - Trial|Xbox 360' ">
     <OutputPath>bin\Xbox 360\Release - Trial\</OutputPath>
@@ -88,6 +100,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <XnaCompressContent>True</XnaCompressContent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - Trial|Xbox 360' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +112,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <XnaCompressContent>True</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animations\AnimationLieutenant.cs" />
@@ -163,8 +177,8 @@
     <Compile Include="Simulation\Controllers\ScenarioController.cs" />
     <Compile Include="Simulation\Controllers\SimPlayersController.cs" />
     <Compile Include="Simulation\Enemies\Ennemi.cs" />
-    <Compile Include="Simulation\Enemies\Vague.cs" />
     <Compile Include="Simulation\Enemies\VaguesInfinies.cs" />
+    <Compile Include="Simulation\Enemies\Wave.cs" />
     <Compile Include="Simulation\Factories\FactoryEnnemis.cs" />
     <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
     <Compile Include="Simulation\GridWorld.cs" />
@@ -232,7 +246,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -270,7 +284,31 @@
     <Reference Include="Microsoft.Xna.Framework">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Avatar">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.GamerServices">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Net">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Storage">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Video">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact">
       <Private>False</Private>
     </Reference>
     <Reference Include="mscorlib">
@@ -285,25 +323,13 @@
     </Reference>
     <Reference Include="System.Core">
       <Private>False</Private>
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <Private>False</Private>
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Mercury Particle Engine\ProjectMercury.Xbox\Xbox ProjectMercury.csproj">
-      <Project>{C3B4F513-2BB0-4F9F-82B7-E5C6B8822D0E}</Project>
-      <Name>Xbox ProjectMercury</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TDA.Objets\Xbox Objets.csproj">
-      <Project>{E4EF3AC4-59F6-47E6-8BCA-BD86DEBFF2F6}</Project>
-      <Name>Xbox Objets</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

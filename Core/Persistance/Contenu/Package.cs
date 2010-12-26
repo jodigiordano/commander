@@ -1,4 +1,4 @@
-﻿namespace Core.Persistance
+﻿namespace EphemereGames.Core.Persistance
 {
     using System;
     using System.Collections.Generic;

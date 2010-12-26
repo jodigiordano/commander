@@ -1,137 +1,106 @@
-﻿//=============================================================================
-//
-// Point d'entrée dans la librairie visuelle
-//
-//=============================================================================
-
-
-
-namespace Core.Visuel
+﻿namespace EphemereGames.Core.Visuel
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Content;
-    using Core.Utilities;
-    using System.Threading;
+    using Microsoft.Xna.Framework.Graphics;
+
+    public delegate void NoneHandler();
+
 
     public static class Facade
     {
-       
+        internal static ScenesController ScenesController;
+        private static TransitionsController TransitionsController;
+
+
         public static void Initialize(
             GraphicsDeviceManager graphicsDeviceManager,
-            int fenetreLargeur,
-            int fenetreHauteur,
+            int windowWidth,
+            int windowHeight,
             ContentManager content,
-            float luminosite,
-            float contraste,
-            String[] nomsScenes,
+            String[] scenesNames,
             ManagedThread thread1,
             ManagedThread thread2)
         {
             Preferences.GraphicsDeviceManager = graphicsDeviceManager;
-            Preferences.FenetreLargeur = fenetreLargeur;
-            Preferences.FenetreHauteur = fenetreHauteur;
+            Preferences.WindowWidth = windowWidth;
+            Preferences.WindowHeight = windowHeight;
             Preferences.Content = content;
-            Preferences.Luminosite = luminosite;
-            Preferences.Contraste = contraste;
             Preferences.ThreadParticules = thread1;
-            Preferences.ThreadLogique = thread2;
+            Preferences.ThreadLogic = thread2;
 
-            graphicsDeviceManager.GraphicsDevice.DepthStencilBuffer = null;
-
-            // Anti-aliasing
-            graphicsDeviceManager.GraphicsDevice.PresentationParameters.MultiSampleQuality = 0;
-            graphicsDeviceManager.GraphicsDevice.PresentationParameters.MultiSampleType = MultiSampleType.None;
-            graphicsDeviceManager.GraphicsDevice.RenderState.MultiSampleAntiAlias = false;
-
-            graphicsDeviceManager.GraphicsDevice.PresentationParameters.SwapEffect = SwapEffect.Discard;
-            graphicsDeviceManager.GraphicsDevice.PresentationParameters.BackBufferFormat = SurfaceFormat.Color;
-            graphicsDeviceManager.GraphicsDevice.RenderState.DepthBufferEnable = false;
-            graphicsDeviceManager.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
-            graphicsDeviceManager.GraphicsDevice.RenderState.StencilEnable = false;
-            graphicsDeviceManager.GraphicsDevice.RenderState.TwoSidedStencilMode = false;
+            ScenesController = new ScenesController();
+            TransitionsController = new TransitionsController();
 
             graphicsDeviceManager.GraphicsDevice.PresentationParameters.PresentationInterval = PresentInterval.Default;
 
-            Scene.Contenu = Preferences.Content;
+            foreach (var sceneName in scenesNames)
+                ScenesController.AddScene(sceneName, null);
 
-            for (int i = 0; i < nomsScenes.Length; i++)
-                GestionnaireScenes.Instance.ajouter(nomsScenes[i], null);
+            for (int i = 0; i < scenesNames.Length; i++)
+                for (int j = 0; j < scenesNames.Length; j++)
+                    if (i != j)
+                        TransitionsController.AddTransition(new Transition(scenesNames[i], scenesNames[j]));
 
-            Primitives.init(Preferences.Content.Load<Texture2D>("pixelBlanc"));
 
-            Core.Persistance.Facade.ajouterTypeAsset(new ParticuleEffectWrapper());
-            Core.Persistance.Facade.ajouterTypeAsset(new Sprite());
-            Core.Persistance.Facade.ajouterTypeAsset(new Transition());
+            Primitives.Initialize(Preferences.Content.Load<Texture2D>("pixelBlanc"));
 
-            GestionnaireScenes.Instance.Tampon = new Tampon(fenetreHauteur, fenetreLargeur);
+            EphemereGames.Core.Persistance.Facade.AddAsset(new ParticuleEffectWrapper());
+            EphemereGames.Core.Persistance.Facade.AddAsset(new Sprite());
         }
 
-        public static void ajouterTransition(String nomTransition, Transition transition)
+
+        public static void AddTransition(Transition transition)
         {
-            GestionnaireTransitions.Instance.ajouter(nomTransition, transition);
+            TransitionsController.AddTransition(transition);
         }
 
-        /// <summary>
-        /// Effectuer une transition entre deux ou plusieurs scènes
-        /// </summary>
-        /// <param name="nomTransition">Nom de la transition</param>
-        public static void effectuerTransition(String nomTransition)
+
+        public static void Transite(string transitionName)
         {
-            GestionnaireTransitions.Instance.transition(nomTransition);
+            TransitionsController.Transite(transitionName);
         }
 
 
-        /// <summary>
-        /// Etre notifier lorsqu'une transition est démarrée et se termine
-        /// </summary>
-        /// <param name="handlerDemarree">Méthode qui recoit la notification que la transition est démarrée</param>
-        /// <param name="handlerTerminee">Méthode qui recoit la notification que la transition est terminée</param>
-        public static void etreNotifierTransition(EventHandler handlerDemarree, EventHandler handlerTerminee)
+        public static void GetNotifiedTransition(NoneHandler handlerStarted, NoneHandler handlerStopped)
         {
-            GestionnaireTransitions.Instance.TransitionDemarree += handlerDemarree;
-            GestionnaireTransitions.Instance.TransitionTerminee += handlerTerminee;
+            TransitionsController.TransitionStarted += handlerStarted;
+            TransitionsController.TransitionTerminated += handlerStopped;
         }
 
-        public static bool TransitionEnCours
+
+        public static bool InTransition
         {
-            get { return GestionnaireTransitions.Instance.EnTransition; }
+            get { return TransitionsController.InTransition; }
         }
 
-        public static Scene recupererScene(String nomScene)
+
+        public static Scene GetScene(String nomScene)
         {
-            return GestionnaireScenes.Instance.recuperer(nomScene);
+            return ScenesController.GetScene(nomScene);
         }
+
 
         public static void Update(GameTime gameTime)
         {
-            GestionnaireScenes.Instance.Update(gameTime);
+            ScenesController.Update(gameTime);
 
-            if (GestionnaireTransitions.Instance.EnTransition)
-                GestionnaireTransitions.Instance.Update(gameTime);
+            if (TransitionsController.InTransition)
+                TransitionsController.Update(gameTime);
         }
 
-        public static void mettreAJourScene(string nomScene, Scene scene)
+
+        public static void UpdateScene(string sceneName, Scene scene)
         {
-            GestionnaireScenes.Instance.mettreAJour(nomScene, scene);
+            ScenesController.UpdateScene(sceneName, scene);
         }
+
 
         public static void Draw()
         {
-            GestionnaireTransitions.Instance.Draw();
-            GestionnaireScenes.Instance.Draw();
-        }
-
-        public static bool sceneEnFocus(string nomScene)
-        {
-            return GestionnaireScenes.Instance.EnFocus(nomScene);
-        }
-
-        public static void arreterScenes()
-        {
-            GestionnaireScenes.Instance.ToutesArretees();
+            ScenesController.Draw();
         }
     }
 }

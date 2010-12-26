@@ -1,7 +1,7 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -26,31 +26,32 @@
         {
             PrioriteAffichage = prioriteAffichage;
 
-            LogoPrixVente = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("sell"), Vector3.Zero);
-            LogoPrixVente.PrioriteAffichage = this.PrioriteAffichage;
+            LogoPrixVente = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("sell"), Vector3.Zero);
+            LogoPrixVente.VisualPriority = this.PrioriteAffichage;
 
-            PrixVente = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            PrixVente = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixVente.Taille = 2;
-            PrixVente.PrioriteAffichage = this.PrioriteAffichage;
+            PrixVente.VisualPriority = this.PrioriteAffichage;
 
-            LogoPrixMiseAJour = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("upgrade"), Vector3.Zero);
-            LogoPrixMiseAJour.PrioriteAffichage = this.PrioriteAffichage;
+            LogoPrixMiseAJour = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("upgrade"), Vector3.Zero);
+            LogoPrixMiseAJour.VisualPriority = this.PrioriteAffichage;
 
-            PrixMiseAJour = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            PrixMiseAJour = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             PrixMiseAJour.Taille = 2;
-            PrixMiseAJour.PrioriteAffichage = this.PrioriteAffichage;
+            PrixMiseAJour.VisualPriority = this.PrioriteAffichage;
 
-            NiveauTourelle = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            NiveauTourelle = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             NiveauTourelle.Taille = 2;
-            NiveauTourelle.PrioriteAffichage = this.PrioriteAffichage;
+            NiveauTourelle.VisualPriority = this.PrioriteAffichage;
 
             WidgetSelection = new IVisible
             (
-                Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"),
                 Position
             );
-            WidgetSelection.Couleur = new Color(Color.Green, 230);
-            WidgetSelection.PrioriteAffichage = this.PrioriteAffichage + 0.01f;
+            WidgetSelection.Couleur = Color.Green;
+            WidgetSelection.Couleur.A = 230;
+            WidgetSelection.VisualPriority = this.PrioriteAffichage + 0.01f;
         }
 
 

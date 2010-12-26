@@ -1,11 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
 
     class Scenario
     {
@@ -19,7 +18,7 @@
 
         public List<CorpsCeleste> SystemePlanetaire;
         public VaguesInfinies VaguesInfinies;
-        public LinkedList<Vague> Vagues;
+        public LinkedList<Wave> Vagues;
         public CommonStash CommonStash;
         public List<Tourelle> Tourelles;
         public CorpsCeleste CorpsCelesteAProteger;
@@ -50,15 +49,15 @@
 
             SystemePlanetaire = new List<CorpsCeleste>();
             Tourelles = new List<Tourelle>();
-            Vagues = new LinkedList<Vague>();
+            Vagues = new LinkedList<Wave>();
 
             CommonStash = new CommonStash();
             CommonStash.Lives = descripteur.Joueur.PointsDeVie;
             CommonStash.Cash = descripteur.Joueur.ReserveUnites;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(descripteur.FondEcran), Vector3.Zero);
+            FondEcran = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(descripteur.FondEcran), Vector3.Zero);
             FondEcran.Origine = FondEcran.Centre;
-            FondEcran.PrioriteAffichage = Preferences.PrioriteFondEcran;
+            FondEcran.VisualPriority = Preferences.PrioriteFondEcran;
 
             for (int i = 0; i < descripteur.SystemePlanetaire.Count; i++)
             {
@@ -124,9 +123,9 @@
                         corpsCeleste.EnBackground,
                        corpsCeleste.Rotation
                     );
-                    c.representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero);
+                    c.representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero);
                     c.representation.Origine = c.representation.Centre;
-                    c.representation.PrioriteAffichage = c.representationParticules.PrioriteAffichage + 0.001f;
+                    c.representation.VisualPriority = c.representationParticules.VisualPriority + 0.001f;
 
                     if (corpsCeleste.EnBackground)
                         c.representation.Couleur.A = 60;
@@ -143,7 +142,7 @@
                        corpsCeleste.Offset,
                        (int)corpsCeleste.Taille,
                        corpsCeleste.Vitesse,
-                       new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero),
+                       new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero),
                        corpsCeleste.PositionDepart,
                        ProchainePrioriteAffichageCorpsCeleste -= 0.001f,
                        corpsCeleste.EnBackground,
@@ -158,7 +157,7 @@
 
                     for (int j = 0; j < corpsCeleste.Representations.Count; j++)
                     {
-                        IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(corpsCeleste.Representations[j]), Vector3.Zero);
+                        IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(corpsCeleste.Representations[j]), Vector3.Zero);
                         iv.Origine = iv.Centre;
                         representations.Add(iv);
                     }
@@ -191,7 +190,8 @@
                         c.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, corpsCeleste.TourellesPermises[j]));
                 }
 
-                Color couleurEmplacement = new Color(Emplacement.CouleursDisponibles[Main.Random.Next(0, Emplacement.CouleursDisponibles.Length)], 200);
+                Color couleurEmplacement = Emplacement.CouleursDisponibles[Main.Random.Next(0, Emplacement.CouleursDisponibles.Length)];
+                couleurEmplacement.A = 200;
 
                 for (int j = 0; j < corpsCeleste.Emplacements.Count; j++)
                 {
@@ -201,7 +201,7 @@
                     (
                         Simulation,
                         emplacement.Position * 8,
-                        new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(emplacement.Representation), Vector3.Zero),
+                        new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(emplacement.Representation), Vector3.Zero),
                         c
                     );
 
@@ -240,8 +240,8 @@
             }
 
             else
-                for (int i = 0; i < descripteur.Vagues.Count; i++)
-                    Vagues.AddLast(new Vague(Simulation, descripteur.Vagues[i]));
+                for (int i = 0; i < descripteur.Waves.Count; i++)
+                    Vagues.AddLast(new Wave(Simulation, descripteur.Waves[i]));
         }
 
         private String nomRepresentation(Taille taille, String nomBase)

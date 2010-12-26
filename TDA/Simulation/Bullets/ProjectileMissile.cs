@@ -1,13 +1,13 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Persistance;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Persistance;
+    using EphemereGames.Core.Physique;
     using ProjectMercury.Emitters;
 
     class ProjectileMissile : Projectile
@@ -28,7 +28,7 @@
             {
                 RepresentationVivant = new IVisible
                 (
-                    Core.Persistance.Facade.recuperer<Texture2D>("ProjectileMissile1"),
+                    EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile1"),
                     position
                 );
 
@@ -40,16 +40,16 @@
             RepresentationVivant.Position = Position;
             RepresentationVivant.Origine = RepresentationVivant.Centre;
             RepresentationVivant.Rotation = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
-            RepresentationVivant.PrioriteAffichage = PrioriteAffichage + 0.001f;
+            RepresentationVivant.VisualPriority = PrioriteAffichage + 0.001f;
 
             RepresentationDeplacement = null;
             RepresentationExplose = Scene.Particules.recuperer("projectileMissileExplosion");
-            RepresentationExplose.PrioriteAffichage = Preferences.PrioriteSimulationTourelle - 0.001f;
+            RepresentationExplose.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
 
             PointsVie = 5;
 
             Trainee = Scene.Particules.recuperer("traineeMissile");
-            Trainee.PrioriteAffichage = this.RepresentationVivant.PrioriteAffichage - 0.0001f;
+            Trainee.VisualPriority = this.RepresentationVivant.VisualPriority - 0.0001f;
 
             ConeEmitter emetteur = (ConeEmitter)Trainee.ParticleEffect[0];
             emetteur.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
@@ -110,7 +110,7 @@
 
             base.doMeurt();
 
-            Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMissileExplosion");
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMissileExplosion");
 
             Scene.Particules.retourner(Trainee);
 

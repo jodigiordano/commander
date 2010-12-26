@@ -1,10 +1,10 @@
-﻿namespace Core.Audio
+﻿namespace EphemereGames.Core.Audio
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
-    using Core.Persistance;
+    using EphemereGames.Core.Persistance;
     
     class Musique : Musical, IContenu
     {

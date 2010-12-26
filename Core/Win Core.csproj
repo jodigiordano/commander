@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectGuid>{D6F32E4E-250E-4835-97FE-B8EBC7B405FC}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -8,10 +9,20 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Core</RootNamespace>
     <AssemblyName>Core</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaCrossPlatformGroupID>28cef88b-196f-4e65-863a-ef2ec915390b</XnaCrossPlatformGroupID>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <XnaUpgrade>
+    </XnaUpgrade>
+    <XnaOutputType>Library</XnaOutputType>
+    <XnaProfile>HiDef</XnaProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +35,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -51,16 +61,38 @@
     <NoStdLib>true</NoStdLib>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
-    <XnaCompressContent>true</XnaCompressContent>
+    <XnaCompressContent>True</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
       <Private>False</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Xna.Framework.Avatar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
       <Private>False</Private>
-      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Storage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Video, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
     </Reference>
     <Reference Include="mscorlib">
       <Private>False</Private>
@@ -68,6 +100,10 @@
     <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\PowerCollections.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectMercury, Version=3.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\X86\ProjectMercury.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
@@ -79,11 +115,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -106,20 +140,24 @@
     <Compile Include="Persistance\Contenu\GestionnaireContenu.cs" />
     <Compile Include="Persistance\Contenu\IContenu.cs" />
     <Compile Include="Persistance\Contenu\Package.cs" />
-    <Compile Include="Persistance\Donnees\AbstractDonnee.cs" />
-    <Compile Include="Persistance\Donnees\AbstractDonneeCommun.cs" />
-    <Compile Include="Persistance\Donnees\AbstractDonneeJoueur.cs" />
-    <Compile Include="Persistance\Donnees\GestionnaireDonnees.cs" />
+    <Compile Include="Persistance\Data\Data.cs" />
+    <Compile Include="Persistance\Data\DataController.cs" />
+    <Compile Include="Persistance\EasyStorage\EasyStorageSettings.cs" />
+    <Compile Include="Persistance\EasyStorage\FileAction.cs" />
+    <Compile Include="Persistance\EasyStorage\IAsyncSaveDevice.cs" />
     <Compile Include="Persistance\EasyStorage\ISaveDevice.cs" />
-    <Compile Include="Persistance\EasyStorage\PCSaveDevice.cs" />
+    <Compile Include="Persistance\EasyStorage\IsolatedStorageSaveDevice.cs" />
     <Compile Include="Persistance\EasyStorage\PlayerSaveDevice.cs" />
     <Compile Include="Persistance\EasyStorage\SaveDevice.cs" />
+    <Compile Include="Persistance\EasyStorage\SaveDeviceAsync.cs" />
     <Compile Include="Persistance\EasyStorage\SaveDeviceEventArgs.cs" />
     <Compile Include="Persistance\EasyStorage\SaveDevicePromptEventArgs.cs" />
     <Compile Include="Persistance\EasyStorage\SaveDevicePromptEventResponse.cs" />
     <Compile Include="Persistance\EasyStorage\SaveDevicePromptState.cs" />
+    <Compile Include="Persistance\EasyStorage\SaveDeviceSynchronous.cs" />
+    <Compile Include="Persistance\EasyStorage\SaveOperationAsyncResult.cs" />
     <Compile Include="Persistance\EasyStorage\SharedSaveDevice.cs" />
-    <Compile Include="Persistance\EasyStorage\StorageMessages.cs" />
+    <Compile Include="Persistance\EasyStorage\Strings.Designer.cs" />
     <Compile Include="Persistance\Facade.cs" />
     <Compile Include="Persistance\Preferences.cs" />
     <Compile Include="Physique\Collisions.cs" />
@@ -141,32 +179,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AbstractEffet.cs" />
     <Compile Include="Utilities\ControleurThreads.cs" />
+    <Compile Include="Utilities\CustomBlends.cs" />
     <Compile Include="Utilities\Emetteur.cs" />
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\FadeCouleur.cs" />
-    <Compile Include="Utilities\GestionnaireEffets.cs" />
+    <Compile Include="Utilities\EffectsController.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />
     <Compile Include="Utilities\KeyAndValue.cs" />
     <Compile Include="Utilities\ManagedThread.cs" />
-    <Compile Include="Utilities\Pause.cs" />
     <Compile Include="Utilities\Pool.cs" />
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
     <Compile Include="Utilities\Trajet2D.cs" />
     <Compile Include="Utilities\Trajet3D.cs" />
     <Compile Include="Visuel\Animations\Animation.cs" />
-    <Compile Include="Visuel\Animations\GestionnaireAnimations.cs" />
+    <Compile Include="Visuel\Animations\AnimationsController.cs" />
     <Compile Include="Visuel\Camera\Camera.cs" />
     <Compile Include="Visuel\Camera\FollowingCamera.cs" />
     <Compile Include="Visuel\Camera\MovingCamera.cs" />
     <Compile Include="Visuel\Camera\PathFollowingCamera.cs" />
-    <Compile Include="Visuel\Effets\EffetCamera.cs" />
-    <Compile Include="Visuel\Effets\EffetDessinerPartie.cs" />
-    <Compile Include="Visuel\Effets\EffetFadeCouleur.cs" />
-    <Compile Include="Visuel\Effets\EffetRecentrer.cs" />
-    <Compile Include="Visuel\Effets\EffetRotationCamera.cs" />
-    <Compile Include="Visuel\Effets\EffetsPredefinis.cs" />
-    <Compile Include="Visuel\Effets\EffetTaille.cs" />
-    <Compile Include="Visuel\Effets\EffetVisuel.cs" />
+    <Compile Include="Visuel\Effects\DrawPartiallyEffect.cs" />
+    <Compile Include="Visuel\Effects\FadeColorEffect.cs" />
+    <Compile Include="Visuel\Effects\RecenterEffect.cs" />
+    <Compile Include="Visuel\Effects\PredefinedEffects.cs" />
+    <Compile Include="Visuel\Effects\SizeEffect.cs" />
+    <Compile Include="Visuel\Effects\VisualEffect.cs" />
     <Compile Include="Visuel\Facade.cs" />
     <Compile Include="Visuel\Menu\BarreDefilement.cs" />
     <Compile Include="Visuel\Menu\BarreSensibilite.cs" />
@@ -177,15 +213,17 @@
     <Compile Include="Visuel\Particules\ParticuleEffectWrapper.cs" />
     <Compile Include="Visuel\Preferences.cs" />
     <Compile Include="Visuel\Primitives.cs" />
+    <Compile Include="Visuel\Scenable\Text.cs" />
+    <Compile Include="Visuel\Scenable\Image.cs" />
     <Compile Include="Visuel\Scenable\IScenable.cs" />
     <Compile Include="Visuel\Scenable\IVisible.cs" />
     <Compile Include="Visuel\Scenable\LigneVisuel.cs" />
     <Compile Include="Visuel\Scenable\RectangleVisuel.cs" />
     <Compile Include="Visuel\Scenable\Sprite.cs" />
-    <Compile Include="Visuel\Scene\GestionnaireScenes.cs" />
-    <Compile Include="Visuel\Scene\GestionnaireTransitions.cs" />
+    <Compile Include="Visuel\Scene\ScenesController.cs" />
+    <Compile Include="Visuel\Scene\TransitionsController.cs" />
     <Compile Include="Visuel\Scene\Scene.cs" />
-    <Compile Include="Visuel\Scene\Tampon.cs" />
+    <Compile Include="Visuel\Scene\VisualBuffer.cs" />
     <Compile Include="Visuel\Scene\Transition.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -197,7 +235,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -222,7 +260,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
+      <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Xna.Framework.3.1">
@@ -230,12 +268,32 @@
       <ProductName>Microsoft XNA Framework Redistributable 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Xna.Framework.4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mercury Particle Engine\ProjectMercury.Windows\Win ProjectMercury.csproj">
-      <Project>{1E3FDDBD-A15F-42CF-A83E-754476079B30}</Project>
-      <Name>Win ProjectMercury</Name>
+    <ProjectReference Include="Content\Z Win Core Content.contentproj">
+      <Project>{E73B4EF4-6F84-4CA8-BBA0-FC519C993F99}</Project>
+      <Name>Z Win Core Content %28Content%29</Name>
+      <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Persistance\EasyStorage\Strings.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistance\EasyStorage\Strings.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistance\EasyStorage\Strings.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistance\EasyStorage\Strings.it.resx" />
+    <EmbeddedResource Include="Persistance\EasyStorage\Strings.ja.resx" />
+    <EmbeddedResource Include="Persistance\EasyStorage\Strings.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

@@ -1,20 +1,20 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
     using System;
 
     class GUIController
     {
         public List<CorpsCeleste> CelestialBodies;
-        public Dictionary<TypeEnnemi, DescripteurEnnemi> CompositionNextWave;
+        public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave;
         public Scenario Scenario;
         public DescripteurScenario DemoModeSelectedScenario;
         public List<Ennemi> Enemies;
         public VaguesInfinies InfiniteWaves;
-        public LinkedList<Vague> Waves;
+        public LinkedList<Wave> Waves;
         public Chemin Path;
         public Chemin PathPreview;
 
@@ -60,7 +60,7 @@
             PathPreviewing = new PathPreview(PathPreview);
 
             MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
-            MenuGeneral.TimeNextWave = Waves.First.Value.TempsApparition;
+            MenuGeneral.TimeNextWave = Waves.First.Value.StartingTime;
             InSpaceShip = false;
         }
 
@@ -147,18 +147,18 @@
             MenuGeneral.TimeNextWave = double.MaxValue;
             MenuGeneral.RemainingWaves--;
 
-            Core.Audio.Facade.jouerEffetSonore("Partie", "sfxNouvelleVague");
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxNouvelleVague");
 
             if (InfiniteWaves != null || MenuGeneral.RemainingWaves <= 0)
                 return;
 
             //todo
-            LinkedListNode<Vague> vagueSuivante = Waves.First;
+            LinkedListNode<Wave> vagueSuivante = Waves.First;
 
             for (int i = 0; i < Waves.Count - MenuGeneral.RemainingWaves; i++)
                 vagueSuivante = vagueSuivante.Next;
 
-            MenuGeneral.TimeNextWave = vagueSuivante.Value.TempsApparition;
+            MenuGeneral.TimeNextWave = vagueSuivante.Value.StartingTime;
         }
 
 
@@ -222,7 +222,7 @@
                 SelectedCelestialBodyAnimation.Update(gameTime);
 
             //todo event-based
-            MenuGeneral.MenuNextWave.Visible = Cursor.Actif && Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
+            MenuGeneral.MenuNextWave.Visible = Cursor.Actif && EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
 
             if (!Simulation.ModeDemo)
             {
@@ -244,7 +244,7 @@
 
             if (Simulation.ModeDemo)
             {
-                //MenuDemo.Draw();
+                MenuDemo.Draw();
                 return;
             }
 

@@ -1,9 +1,9 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     class Cursor : IObjetPhysique
     {
@@ -31,10 +31,10 @@
             
             Vitesse = speed;
 
-            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Curseur"), initialPosition);
+            Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Curseur"), initialPosition);
             Representation.Origine = Representation.Centre;
-            Representation.PrioriteAffichage = visualPriority;
-            Representation.Couleur = new Color(Color.White, 0);
+            Representation.VisualPriority = visualPriority;
+            Representation.Couleur = new Color(255, 255, 255, 0);
 
             Forme = Forme.Cercle;
             Cercle = new Cercle(initialPosition, Representation.Rectangle.Width / 4);
@@ -51,14 +51,14 @@
 
         public void doShow()
         {
-            Scene.Effets.ajouter(Representation, EffetsPredefinis.fadeInFrom0(255, 0, 250));
+            Scene.Effets.Add(Representation, PredefinedEffects.FadeInFrom0(255, 0, 250));
             Actif = true;
         }
 
 
         public void doHide()
         {
-            Scene.Effets.ajouter(Representation, EffetsPredefinis.fadeOutTo0(255, 0, 250));
+            Scene.Effets.Add(Representation, PredefinedEffects.FadeOutTo0(255, 0, 250));
             Actif = false;
         }
 

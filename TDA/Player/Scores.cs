@@ -1,10 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Xml.Serialization;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework.Content;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
 
     [Serializable]
@@ -14,7 +14,7 @@
         public int Scenario { get; set; }
 
         [ContentSerializer(Optional = false)]
-        [XmlArrayItem("Score")]
+        [XmlArrayItem("Scores")]
         public List<KeyAndValue<string, int>> Scores { get; set; }
 
         private IComparer<KeyAndValue<string, int>> Comparer;

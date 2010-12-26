@@ -1,9 +1,9 @@
-namespace Core.Persistance
+namespace EasyStorage
 {
 	/// <summary>
 	/// The various states of the SaveDevice.
 	/// </summary>
-	public enum SaveDevicePromptState
+	internal enum SaveDevicePromptState
 	{
 		/// <summary>
 		/// The SaveDevice is doing nothing.
@@ -21,12 +21,6 @@ namespace Core.Persistance
 		/// </summary>
 		PromptForCanceled,
 
-        /// <summary>
-        /// The SaveDevice needs to prompt the user because a 
-        /// StorageDevice selector was canceled.
-        /// </summary>
-        PromptForCanceled1Choice,
-
 		/// <summary>
 		/// The SaveDevice needs to force the user to choose a
 		/// StorageDevice because a StorageDevice selector was canceled.
@@ -38,12 +32,6 @@ namespace Core.Persistance
 		/// StorageDevice was disconnected.
 		/// </summary>
 		PromptForDisconnected,
-
-        /// <summary>
-        /// The SaveDevice needs to prompt the user because a 
-        /// StorageDevice was disconnected.
-        /// </summary>
-        PromptForDisconnected1Choice,
 
 		/// <summary>
 		/// The SaveDevice needs to force the user to choose a

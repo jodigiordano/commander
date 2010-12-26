@@ -1,16 +1,12 @@
 ﻿#if WINDOWS
 
-namespace TDA
+namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Microsoft.Xna.Framework.GamerServices;
-    using System.Threading;
-    using Core.Input;
     using Microsoft.Xna.Framework.Input;
 
     class Validation : Scene
@@ -26,10 +22,10 @@ namespace TDA
         private Cursor Curseur;
         private IVisible Saisie;
         private bool effectuerValidation;
-        private bool effectuerTransition;
-        private Objets.AnimationTransition AnimationTransition;
+        private AnimationTransition AnimationTransition;
         private Sablier Sablier;
         private ValidationServeur ValidationServeur;
+
 
         public Validation(Main main)
             : base(Vector2.Zero, 720, 1280)
@@ -37,33 +33,25 @@ namespace TDA
             Main = main;
 
             Nom = "Validation";
-            EnPause = true;
-            EstVisible = false;
-            EnFocus = false;
 
             Sablier = new Sablier(Main, this, 5000, new Vector3(0, 250, 0), 0.3f);
             Sablier.TempsRestant = 5000;
             Sablier.doHide(0);
 
-            AnimationTransition = new TDA.Objets.AnimationTransition();
-            AnimationTransition.Duree = 500;
-            AnimationTransition.Scene = this;
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
-            AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
+            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
+            FondEcran = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
             FondEcran.Couleur = Color.White;
             FondEcran.TailleVecteur = new Vector2(1280, 720);
             FondEcran.Origine = FondEcran.Centre;
-            FondEcran.PrioriteAffichage = 1f;
+            FondEcran.VisualPriority = 1f;
 
-            ThankYou = new IVisible("Thank you for your support, Commander !\n\nTo continue saving the world, please enter\n\nthe 16 digits product key you received by\n\nmail and click continue. You must be\n\nconnected to Internet to complete this\n\nstep. If you have any problems, send me\n\nan e-mail at jodi@ephemeregames.com or\n\nvisit my website. Good luck Commander !", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -150, 0));
+            ThankYou = new IVisible("Thank you for your support, Commander !\n\nTo continue saving the world, please enter\n\nthe 16 digits product key you received by\n\nmail and click continue. You must be\n\nconnected to Internet to complete this\n\nstep. If you have any problems, send me\n\nan e-mail at jodi@ephemeregames.com or\n\nvisit my website. Good luck Commander !", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -150, 0));
             ThankYou.Taille = 3;
             ThankYou.Origine = ThankYou.Centre;
-            ThankYou.PrioriteAffichage = 0.3f;
+            ThankYou.VisualPriority = 0.3f;
 
-            this.Effets.ajouter(ThankYou, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
+            this.Effets.Add(ThankYou, PredefinedEffects.FadeInFrom0(255, 0, 1000));
 
             Curseur = new Cursor(Main, this, new Vector3(0, 100, 0), 10, 0.2f);
 
@@ -71,77 +59,77 @@ namespace TDA
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("0", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 100, 0)),
+                new IVisible("0", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 100, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("1", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 100, 0)),
+                new IVisible("1", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 100, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("2", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 100, 0)),
+                new IVisible("2", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 100, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("3", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 150, 0)),
+                new IVisible("3", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 150, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("4", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 150, 0)),
+                new IVisible("4", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 150, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("5", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 150, 0)),
+                new IVisible("5", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 150, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("6", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 200, 0)),
+                new IVisible("6", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("7", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 200, 0)),
+                new IVisible("7", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("8", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 200, 0)),
+                new IVisible("8", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-350, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("9", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 250, 0)),
+                new IVisible("9", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 250, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-450, 250, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
-                new IVisible("Clear", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 300, 0)),
+                new IVisible("Clear", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 300, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(-400, 300, 0), 0.3f)
                 )
             );
@@ -151,65 +139,53 @@ namespace TDA
             {
                 touche.Key.Taille = 3;
                 touche.Key.Origine = touche.Key.Centre;
-                touche.Key.PrioriteAffichage = 0.3f;
+                touche.Key.VisualPriority = 0.3f;
                 touche.Key.Couleur = new Color(234, 196, 28, 255);
 
-                this.Effets.ajouter(touche.Key, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
-                this.Effets.ajouter(touche.Value.Bouton, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
+                this.Effets.Add(touche.Key, PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Effets.Add(touche.Value.Bouton, PredefinedEffects.FadeInFrom0(255, 0, 1000));
             }
 
-            Saisie = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 100, 0));
+            Saisie = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 100, 0));
             Saisie.Origine = Saisie.Centre;
             Saisie.Taille = 5;
-            Saisie.PrioriteAffichage = 0.3f;
+            Saisie.VisualPriority = 0.3f;
             Saisie.Couleur = new Color(234, 196, 28, 255);
 
             Exit = new KeyValuePair<IVisible,PushButton>
             (
-                new IVisible("Exit", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 200, 0)),
+                new IVisible("Exit", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 200, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(550, 200, 0), 0.3f)
             );
             Exit.Key.Taille = 3;
             Exit.Key.Origine = Exit.Key.Centre;
-            Exit.Key.PrioriteAffichage = 0.3f;
+            Exit.Key.VisualPriority = 0.3f;
 
             Continue = new KeyValuePair<IVisible, PushButton>
             (
-                new IVisible("Continue", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 300, 0)),
+                new IVisible("Continue", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 300, 0)),
                 new PushButton(Main, this, Curseur, new Vector3(550, 300, 0), 0.3f)
             );
             Continue.Key.Taille = 3;
             Continue.Key.Origine = Continue.Key.Centre;
-            Continue.Key.PrioriteAffichage = 0.3f;
+            Continue.Key.VisualPriority = 0.3f;
             Continue.Key.Couleur = new Color(155, 255, 102);
             Continue.Value.Bouton.Couleur = new Color(155, 255, 102);
 
-            this.Effets.ajouter(Exit.Key, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
-            this.Effets.ajouter(Continue.Key, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
+            this.Effets.Add(Exit.Key, PredefinedEffects.FadeInFrom0(255, 0, 1000));
+            this.Effets.Add(Continue.Key, PredefinedEffects.FadeInFrom0(255, 0, 1000));
 
-            effectuerTransition = false;
-
-            MessageErreur = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 250, 0));
+            MessageErreur = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, 250, 0));
             MessageErreur.Taille = 3;
             MessageErreur.Origine = MessageErreur.Centre;
             MessageErreur.Couleur = Color.Red;
-            MessageErreur.PrioriteAffichage = 0.3f;
+            MessageErreur.VisualPriority = 0.3f;
         }
 
 
         protected override void UpdateLogique(GameTime gameTime)
         {
-            if (effectuerTransition)
-            {
-                AnimationTransition.suivant(gameTime);
-
-                effectuerTransition = !AnimationTransition.estTerminee(gameTime);
-                
-                if (!effectuerTransition && !AnimationTransition.In)
-                    Core.Visuel.Facade.effectuerTransition("ValidationVersMenu");
-            }
-
-            else if (effectuerValidation)
+            if (effectuerValidation)
             {
                 if (!Sablier.Tourne)
                     Sablier.TempsRestant -= gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -233,20 +209,18 @@ namespace TDA
                     effectuerValidation = false;
                     Sablier.doHide(500);
                     Curseur.doShow();
-                    this.Effets.ajouter(MessageErreur, EffetsPredefinis.fadeInFrom0(255, 0, 500));
+                    this.Effets.Add(MessageErreur, PredefinedEffects.FadeInFrom0(255, 0, 500));
                 }
                 else if (ValidationServeur.ValidationTerminee && ValidationServeur.Valide)
                 {
                     MessageErreur.Texte = ValidationServeur.Message;
                     MessageErreur.Couleur = new Color(155, 255, 102);
                     Main.SaveGame.ProductKey = Saisie.Texte;
-                    Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
-                    effectuerTransition = true;
-                    AnimationTransition.In = false;
-                    AnimationTransition.Initialize();
+                    EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
+                    Transition = TransitionType.Out;
                     effectuerValidation = false;
                     Sablier.doHide(250);
-                    this.Effets.ajouter(MessageErreur, EffetsPredefinis.fadeInFrom0(255, 0, 250));
+                    this.Effets.Add(MessageErreur, PredefinedEffects.FadeInFrom0(255, 0, 250));
                 }
             }
 
@@ -274,11 +248,32 @@ namespace TDA
                     ValidationServeur = new ValidationServeur(Preferences.ProductName, Saisie.Texte);
                     ValidationServeur.valider();
 
-                    this.Effets.ajouter(MessageErreur, EffetsPredefinis.fadeOutTo0(255, 0, 250));
+                    this.Effets.Add(MessageErreur, PredefinedEffects.FadeOutTo0(255, 0, 250));
                 }
 
                 Exit.Value.Update(gameTime);
                 Continue.Value.Update(gameTime);
+            }
+        }
+
+
+        protected override void InitializeTransition(TransitionType type)
+        {
+            AnimationTransition.In = (type == TransitionType.In) ? true : false;
+            AnimationTransition.Initialize();
+        }
+
+
+        protected override void UpdateTransition(GameTime gameTime)
+        {
+            AnimationTransition.Update(gameTime);
+
+            if (AnimationTransition.Finished(gameTime))
+            {
+                if (Transition == TransitionType.Out)
+                    EphemereGames.Core.Visuel.Facade.Transite("ValidationToMenu");
+
+                Transition = TransitionType.None;
             }
         }
 
@@ -309,7 +304,7 @@ namespace TDA
 
             Curseur.Draw();
 
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
         }
 
@@ -317,9 +312,7 @@ namespace TDA
         {
             base.onFocus();
 
-            effectuerTransition = true;
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.In;
         }
 
 

@@ -1,4 +1,4 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -20,73 +20,73 @@
                 Simulation.Main,
                 Simulation.Scene,
                 new Vector3(-600, -330, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Alien"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Alien"),
                 new Color(234, 196, 28, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
-                new Color(Color.White, 0),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
+                new Color(255, 255, 255, 0),
                 scenario.Mission,
                 4,
                 true,
                 4000,
                 250
             );
-            TranslatorMission.PartieTraduite.PrioriteAffichage = Preferences.PrioriteGUIHistoire;
-            TranslatorMission.PartieNonTraduite.PrioriteAffichage = Preferences.PrioriteGUIHistoire;
+            TranslatorMission.PartieTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
+            TranslatorMission.PartieNonTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
 
             TranslatorYearPlace = new Translator
             (
                 Simulation.Main,
                 Simulation.Scene,
                 new Vector3(-600, -295, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Alien"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Alien"),
                 new Color(234, 196, 28, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
-                new Color(Color.White, 0),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
+                new Color(255, 255, 255, 0),
                 scenario.Lieu,
                 4,
                 true,
                 4000,
                 250
             );
-            TranslatorYearPlace.PartieTraduite.PrioriteAffichage = Preferences.PrioriteGUIHistoire;
-            TranslatorYearPlace.PartieNonTraduite.PrioriteAffichage = Preferences.PrioriteGUIHistoire;
+            TranslatorYearPlace.PartieTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
+            TranslatorYearPlace.PartieNonTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
 
             TranslatorObjective = new Translator
             (
                 Simulation.Main,
                 Simulation.Scene,
                 new Vector3(-600, -260, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Alien"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Alien"),
                 new Color(234, 196, 28, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
-                new Color(Color.White, 0),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
+                new Color(255, 255, 255, 0),
                 scenario.Objectif,
                 4,
                 true,
                 5000,
                 100
             );
-            TranslatorObjective.PartieTraduite.PrioriteAffichage = Preferences.PrioriteGUIHistoire;
-            TranslatorObjective.PartieNonTraduite.PrioriteAffichage = Preferences.PrioriteGUIHistoire;
+            TranslatorObjective.PartieTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
+            TranslatorObjective.PartieNonTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
 
-            Simulation.Scene.Effets.ajouter(TranslatorMission.PartieNonTraduite, Core.Visuel.EffetsPredefinis.fadeInFrom0(255, 1000, 500));
-            Simulation.Scene.Effets.ajouter(TranslatorMission.PartieTraduite, Core.Visuel.EffetsPredefinis.fadeInFrom0(255, 1000, 500));
+            Simulation.Scene.Effets.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 1000, 500));
+            Simulation.Scene.Effets.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 1000, 500));
 
-            Simulation.Scene.Effets.ajouter(TranslatorYearPlace.PartieNonTraduite, Core.Visuel.EffetsPredefinis.fadeInFrom0(255, 2000, 250));
-            Simulation.Scene.Effets.ajouter(TranslatorYearPlace.PartieTraduite, Core.Visuel.EffetsPredefinis.fadeInFrom0(255, 2000, 250));
+            Simulation.Scene.Effets.Add(TranslatorYearPlace.PartieNonTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 2000, 250));
+            Simulation.Scene.Effets.Add(TranslatorYearPlace.PartieTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 2000, 250));
 
-            Simulation.Scene.Effets.ajouter(TranslatorObjective.PartieNonTraduite, Core.Visuel.EffetsPredefinis.fadeInFrom0(255, 3000, 100));
-            Simulation.Scene.Effets.ajouter(TranslatorObjective.PartieTraduite, Core.Visuel.EffetsPredefinis.fadeInFrom0(255, 3000, 100));
+            Simulation.Scene.Effets.Add(TranslatorObjective.PartieNonTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 3000, 100));
+            Simulation.Scene.Effets.Add(TranslatorObjective.PartieTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 3000, 100));
 
 
-            Simulation.Scene.Effets.ajouter(TranslatorMission.PartieNonTraduite, Core.Visuel.EffetsPredefinis.fadeOutTo0(255, 10000, 2000));
-            Simulation.Scene.Effets.ajouter(TranslatorMission.PartieTraduite, Core.Visuel.EffetsPredefinis.fadeOutTo0(255, 10000, 2000));
+            Simulation.Scene.Effets.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
+            Simulation.Scene.Effets.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
 
-            Simulation.Scene.Effets.ajouter(TranslatorYearPlace.PartieNonTraduite, Core.Visuel.EffetsPredefinis.fadeOutTo0(255, 10000, 2000));
-            Simulation.Scene.Effets.ajouter(TranslatorYearPlace.PartieTraduite, Core.Visuel.EffetsPredefinis.fadeOutTo0(255, 10000, 2000));
+            Simulation.Scene.Effets.Add(TranslatorYearPlace.PartieNonTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
+            Simulation.Scene.Effets.Add(TranslatorYearPlace.PartieTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
 
-            Simulation.Scene.Effets.ajouter(TranslatorObjective.PartieNonTraduite, Core.Visuel.EffetsPredefinis.fadeOutTo0(255, 10000, 2000));
-            Simulation.Scene.Effets.ajouter(TranslatorObjective.PartieTraduite, Core.Visuel.EffetsPredefinis.fadeOutTo0(255, 10000, 2000));
+            Simulation.Scene.Effets.Add(TranslatorObjective.PartieNonTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
+            Simulation.Scene.Effets.Add(TranslatorObjective.PartieTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
         }
 
         public void Update(GameTime gameTime)

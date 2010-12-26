@@ -1,195 +1,88 @@
-﻿//=====================================================================
-//
-// Définition d'une animation de base
-// Une animation est une (ou plusieurs) textures sur lesquels on
-// affiche effectue des transformations dans le temps
-//
-// important: lorsqu'on redéfini suivant(), ne pas oublier de
-// faire un appel à base.suivant(gameTime) pour que l'animation soit
-// initialisée
-//
-//=====================================================================
-
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-
-namespace Core.Visuel
+﻿namespace EphemereGames.Core.Visuel
 {
-    [Serializable]
-    public class Animation : IScenable
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
+
+
+    public abstract class Animation : IScenable
     {
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
-        [ContentSerializerIgnore]
-        public bool EnPause                 { get; set; }
-
-        [ContentSerializerIgnore]
-        public IVisible Objet               { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public float PrioriteAffichage      { get; set; }
-
-        [ContentSerializerIgnore]
+        public bool Paused                  { get; set; }
+        public float VisualPriority         { get; set; }
         public Scene Scene                  { protected get; set; }
+        public Vector3 Position             { get; set; }
+        public TypeBlend Blend              { get; set; }
+        public List<IScenable> Components   { get; set; }
+        public double RemainingTime         { get; private set; }
 
-
-        private double duree = 0;                               // Durée de vie de l'animation
-        private double tempsRestant;                            // Temps où l'animation s'arrête
-
-
-        //=====================================================================
-        // Getter / Setter
-        //=====================================================================
-
-        protected Vector3 position;
-
-        [ContentSerializer(Optional = true)]
-        public Vector3 Position
-        {
-            get { return (Objet != null) ? Objet.position : position; }
-            set
-            {
-                if (Objet != null)
-                    Objet.Position = value;
-                else
-                    this.position = value;
-            }
-        }
-
-        protected TypeMelange melange;
-
-        [ContentSerializer(Optional = true)]
-        public TypeMelange Melange
-        {
-            get { return (Objet != null) ? Objet.Melange : melange; }
-            set
-            {
-                if (Objet != null)
-                    Objet.Melange = value;
-                else
-                    this.melange = value;
-            }
-        }
-
-        protected List<IScenable> composants;
-
-        [ContentSerializer(Optional = true)]
-        public List<IScenable> Composants
-        {
-            get { return (Objet != null) ? Objet.Composants : composants; }
-            set
-            {
-                if (Objet != null)
-                    Objet.Composants = value;
-                else
-                    this.composants = value;
-            }
-        }
-		
+        private double length = 0;
 					
-        public double Duree
-        {
-            get { return duree; }
-            set
-            {
-                tempsRestant += value - duree;
-                duree = value;
-            }
-        }
-
-        public double TempsRestant
-        {
-            get { return tempsRestant; }
-        }
-
-        protected double TempsRelatif
-        {
-            get { return this.Duree - this.TempsRestant; }
-        }
-
-
-        //=====================================================================
-        // Constructeur
-        //=====================================================================
 
         public Animation()
         {
-            Duree = 0;
-            this.EnPause = false;
-            this.Objet = null;
+            Length = 0;
+            this.Paused = false;
             this.Position = Vector3.Zero;
-            this.Melange = TypeMelange.Alpha;
-            this.Composants = null;
-            this.PrioriteAffichage = 0;
+            this.Blend = TypeBlend.Alpha;
+            this.Components = null;
+            this.VisualPriority = 0;
         }
 
 
-        public Animation(double duree)
+        public Animation(double length)
         {
-            Duree = duree;
-            this.EnPause = false;
-            this.Objet = null;
+            Length = length;
+            this.Paused = false;
             this.Position = Vector3.Zero;
-            this.Melange = TypeMelange.Alpha;
-            this.Composants = null;
-            this.PrioriteAffichage = 0;
+            this.Blend = TypeBlend.Alpha;
+            this.Components = null;
+            this.VisualPriority = 0;
         }
+
+
+        public double Length
+        {
+            get { return length; }
+            set
+            {
+                RemainingTime += value - length;
+                length = value;
+            }
+        }
+
+
+        protected double RelativeTime
+        {
+            get { return this.Length - this.RemainingTime; }
+        }
+
 
         public virtual void Initialize()
         {
-            tempsRestant = Duree;
+            RemainingTime = Length;
         }
 
 
-        //=====================================================================
-        // Logique
-        //=====================================================================
-
-        /// <summary>
-        /// Prochaine "frame" de l'animation.
-        /// Important: lorsqu'on redéfini suivant(), ne pas oublier de
-        /// faire un appel à base.suivant(gameTime) (idéalement à la fin du suivant())
-        /// pour que le temps restant soit updaté
-        /// </summary>
-        public virtual void suivant(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
-            tempsRestant -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            RemainingTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
 
-        //
-        // Détermine si l'animation est terminée
-        //
-
-        public virtual bool estTerminee(GameTime gameTime)
+        public virtual bool Finished(GameTime gameTime)
         {
-            return tempsRestant <= 0;
+            return RemainingTime <= 0;
         }
 
 
-        //
-        // Met fin à l'animation
-        //
-
-        public virtual void stop()
+        public virtual void Stop()
         {
-            tempsRestant = 0;
+            RemainingTime = 0;
         }
 
 
-        //
-        // Afficher l'animation
-        //
-
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-            this.Objet.Draw(spriteBatch);
-        }
+        public virtual void Draw(SpriteBatch spriteBatch) {}
     }
 }

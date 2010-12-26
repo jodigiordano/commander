@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     class Emplacement : DrawableGameComponent, IObjetPhysique
     {
@@ -41,8 +41,8 @@
         {
             set
             {
-                this.representation.PrioriteAffichage = value - 0.001f;
-                this.Filtre.PrioriteAffichage = this.representation.PrioriteAffichage + 0.0001f;
+                this.representation.VisualPriority = value - 0.001f;
+                this.Filtre.VisualPriority = this.representation.VisualPriority + 0.0001f;
 
                 if (EstOccupe)
                     Tourelle.PrioriteAffichage = value;
@@ -61,10 +61,11 @@
             this.Scene = simulation.Scene;
             this.Position = corpsCeleste.Position + positionRelative;
 
-            this.Filtre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), this.representation.Position);
+            this.Filtre = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), this.representation.Position);
             this.Filtre.TailleVecteur = new Vector2(this.representation.Rectangle.Width, this.representation.rectangle.Height);
             this.Filtre.Origine = this.Filtre.Centre;
-            this.Filtre.Couleur = new Color(CouleursDisponibles[Main.Random.Next(0, CouleursDisponibles.Length)], 200);
+            this.Filtre.Couleur = CouleursDisponibles[Main.Random.Next(0, CouleursDisponibles.Length)];
+            this.Filtre.Couleur.A = 200;
 
             this.PrioriteAffichage = corpsCeleste.PrioriteAffichage;
 
@@ -92,7 +93,7 @@
                 if (tourelle != null)
                 {
                     tourelle.Position = this.Position;
-                    tourelle.PrioriteAffichage = this.representation.PrioriteAffichage;
+                    tourelle.PrioriteAffichage = this.representation.VisualPriority;
                 }
             }
         }

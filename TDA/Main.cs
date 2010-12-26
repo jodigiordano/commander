@@ -1,11 +1,10 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Persistance;
-    using Core.Utilities;
-    using Microsoft.Xna.Framework;
     using System.Reflection;
+    using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
 
     delegate void NoneHandler();
@@ -62,33 +61,30 @@ namespace TDA
             Threads[1] = new ManagedThread(4);
             Threads[2] = new ManagedThread(5);
 
-            Core.Persistance.Facade.Initialize(
+            EphemereGames.Core.Persistance.Facade.Initialize(
                 "Content",
                 "packages.xml",
                 Services,
                 Threads[0],
-                Threads[0],
-                new StorageMessages());
+                Threads[0]);
 
-            Core.Input.Facade.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
-
-            Core.Visuel.Facade.Initialize(
+            EphemereGames.Core.Visuel.Facade.Initialize(
                 Graphics,
                 1280,
                 720,
                 Content,
-                0,
-                0,
                 new string[] { "Menu", "Partie", "Chargement", "NouvellePartie", "Aide", "Options", "Editeur", "Acheter", "Validation" },
                 Threads[0],
                 Threads[1]);
 
-            Core.Physique.Facade.Initialize();
-            Core.Audio.Facade.Initialize(0, 0);
+            EphemereGames.Core.Input.Facade.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
 
-            Core.Persistance.Facade.ajouterDonnee(SaveGame);
+            EphemereGames.Core.Physique.Facade.Initialize();
+            EphemereGames.Core.Audio.Facade.Initialize(0, 0);
 
-            Core.Persistance.Facade.charger("chargement");
+            EphemereGames.Core.Persistance.Facade.AddData(SaveGame);
+
+            EphemereGames.Core.Persistance.Facade.LoadPackage("chargement");
 
             PlayersController.Initialize();
         }
@@ -110,51 +106,51 @@ namespace TDA
         {
             base.Update(gameTime);
 
-            if (Initializing && Core.Persistance.Facade.estCharge("chargement"))
+            if (Initializing && EphemereGames.Core.Persistance.Facade.PackageLoaded("chargement"))
             {
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleBase", 2);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissile", 1);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserMultiple", 1);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissileExplosion", 2);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserSimple", 3);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleSlowMotion", 2);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteTouche", 2);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteExplose", 2);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxNouvelleVague", 2);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire1", 1);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire2", 1);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire3", 1);
-                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleBase", 2);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissile", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserMultiple", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissileExplosion", 2);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserSimple", 3);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleSlowMotion", 2);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteTouche", 2);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteExplose", 2);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxNouvelleVague", 2);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire1", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire2", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire3", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
 
-                Core.Visuel.Facade.mettreAJourScene("Chargement", new Chargement(this));
-                Core.Visuel.Facade.mettreAJourScene("Validation", new Validation(this));
-                Core.Visuel.Facade.mettreAJourScene("Menu", null);
-                Core.Visuel.Facade.mettreAJourScene("Partie", null);
-                Core.Visuel.Facade.mettreAJourScene("NouvellePartie", null);
-                Core.Visuel.Facade.mettreAJourScene("Aide", null);
-                Core.Visuel.Facade.mettreAJourScene("Options", null);
-                Core.Visuel.Facade.mettreAJourScene("Editeur", null);
+                EphemereGames.Core.Visuel.Facade.UpdateScene("Chargement", new Chargement(this));
+                EphemereGames.Core.Visuel.Facade.UpdateScene("Validation", new Validation(this));
+                EphemereGames.Core.Visuel.Facade.UpdateScene("Menu", null);
+                EphemereGames.Core.Visuel.Facade.UpdateScene("Partie", null);
+                EphemereGames.Core.Visuel.Facade.UpdateScene("NouvellePartie", null);
+                EphemereGames.Core.Visuel.Facade.UpdateScene("Aide", null);
+                EphemereGames.Core.Visuel.Facade.UpdateScene("Options", null);
+                EphemereGames.Core.Visuel.Facade.UpdateScene("Editeur", null);
 
                 Initializing = false;
             }
 
-            Core.Input.Facade.Active = this.IsActive;
+            EphemereGames.Core.Input.Facade.Active = this.IsActive;
 
-            Core.Persistance.Facade.Update(gameTime);
-            Core.Visuel.Facade.Update(gameTime);
-            Core.Input.Facade.Update(gameTime);
+            EphemereGames.Core.Persistance.Facade.Update(gameTime);
+            EphemereGames.Core.Visuel.Facade.Update(gameTime);
+            EphemereGames.Core.Input.Facade.Update(gameTime);
 
             if (!Initializing)
-                Core.Audio.Facade.Update(gameTime);
+                EphemereGames.Core.Audio.Facade.Update(gameTime);
 
-            if (Core.Persistance.Facade.donneeEstCharge("savePlayer"))
+            if (EphemereGames.Core.Persistance.Facade.DataLoaded("savePlayer"))
                 TrialMode.Update(gameTime);
         }
 
 
         protected override void Draw(GameTime gameTime)
         {
-            Core.Visuel.Facade.Draw();
+            EphemereGames.Core.Visuel.Facade.Draw();
         }
     }
 
@@ -163,7 +159,7 @@ namespace TDA
     {
         static void Main(string[] args)
         {
-            Core.Utilities.ErrorHandling.Run<Main>(1280, 720, Preferences.FullScreen, GetRunningVersion());
+            EphemereGames.Core.Utilities.ErrorHandling.Run<Main>(1280, 720, Preferences.FullScreen, GetRunningVersion());
         }
 
 

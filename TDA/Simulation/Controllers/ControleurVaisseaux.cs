@@ -1,8 +1,8 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
 
     class ControleurVaisseaux : DrawableGameComponent
     {
@@ -67,7 +67,7 @@
                     TheResistance.EntreAuBercail = true;
                     TheResistance.doDisparaitre();
 
-                    Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceOut");
+                    EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceOut");
                 }
 
                 if (!TheResistance.EntreAuBercail)
@@ -96,7 +96,7 @@
                     VaisseauCollecteur.ModeAutomatique = true;
                     VaisseauCollecteur.doDisparaitre();
 
-                    Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpCollecteurOut");
+                    EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpCollecteurOut");
 
                     notifyObjetDetruit(VaisseauCollecteur);
                 }
@@ -119,7 +119,7 @@
                     VaisseauDoItYourself.ModeAutomatique = true;
                     VaisseauDoItYourself.doDisparaitre();
 
-                    Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpDoItYourselfOut");
+                    EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpDoItYourselfOut");
 
                     notifyObjetDetruit(VaisseauDoItYourself);
                 }
@@ -179,7 +179,7 @@
             VaisseauDoItYourself.CorpsCelesteDepart = corpsCeleste;
             this.OptionsDisponibles[PowerUp.DoItYourself] = false;
 
-            Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpDoItYourselfIn");
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpDoItYourselfIn");
 
             notifyObjetCree(VaisseauDoItYourself);
         }
@@ -194,7 +194,7 @@
             VaisseauCollecteur.CorpsCelesteDepart = corpsCeleste;
             this.OptionsDisponibles[PowerUp.CollectTheRent] = false;
 
-            Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpCollecteurIn");
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpCollecteurIn");
 
             notifyObjetCree(VaisseauCollecteur);
         }
@@ -206,7 +206,7 @@
             TheResistance.TempsActif = 20000;
             this.OptionsDisponibles[PowerUp.TheResistance] = false;
 
-            Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceIn");
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceIn");
 
             notifyObjetCree(TheResistance);
         }

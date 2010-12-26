@@ -1,15 +1,7 @@
-﻿//=============================================================================
-//
-// Point d'entrée dans la librairie
-//
-//=============================================================================
-
-namespace Core.Audio
+﻿namespace EphemereGames.Core.Audio
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Audio;
     
     public static class Facade
@@ -24,8 +16,8 @@ namespace Core.Audio
             GestionnaireSons.Instance.VolumeMusique = volumeMusique;
             GestionnaireSons.Instance.VolumeEffetsSonores = volumeEffetsSonores;
 
-            Core.Persistance.Facade.ajouterTypeAsset(new EffetSonore());
-            Core.Persistance.Facade.ajouterTypeAsset(new Musique());
+            EphemereGames.Core.Persistance.Facade.AddAsset(new EffetSonore());
+            EphemereGames.Core.Persistance.Facade.AddAsset(new Musique());
         }
 
         public static void jouerEffetSonore(string nomBanque, string nomEffetSonore)

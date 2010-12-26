@@ -4,14 +4,14 @@
 // et les temps (un autre ensemble...) où l'on passe par ces points.
 // Habituellement, on passe par le premier point au temps 0.
 //
-// Note : ce qui n'est pas (encore) défini : ce qui se passe lorsque
+// Note : ce qui n'est pas (enEphemereGames.Core) défini : ce qui se passe lorsque
 // l'on demande une position à l'extérieur des bornes du trajet
 // (avant ou après). XNA propose une manière de le définir si
 // nécessaire.
 //
 //=====================================================================
 
-namespace Core.Utilities
+namespace EphemereGames.Core.Utilities
 {
     using System;
     using System.Collections.Generic;

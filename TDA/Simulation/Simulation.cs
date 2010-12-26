@@ -1,10 +1,10 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Core.Physique;
-    using Core.Visuel;
-    using Core.Input;
     using Microsoft.Xna.Framework.Input;
 
     delegate void PhysicalObjectHandler(IObjetPhysique obj);
@@ -289,7 +289,7 @@ namespace TDA
 
             Main.SaveGame.HighScores[scenario].Add(Main.PlayersController.MasterPlayer.Name, score);
 
-            Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+            EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
         }
 
 
@@ -301,7 +301,7 @@ namespace TDA
             if (!this.ModeDemo && this.Etat != GameState.Lost)
             {
                 foreach (var joueur in this.Main.Players.Values)
-                    Core.Input.Facade.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+                    EphemereGames.Core.Input.Facade.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
             }
         }
 
@@ -309,7 +309,7 @@ namespace TDA
         private void doCorpsCelesteDetruit(IObjetPhysique objet)
         {
             foreach (var joueur in this.Main.Players.Values)
-                Core.Input.Facade.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+                EphemereGames.Core.Input.Facade.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
         }
 
 

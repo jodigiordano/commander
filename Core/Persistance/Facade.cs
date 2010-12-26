@@ -1,115 +1,101 @@
-﻿//=============================================================================
-//
-// Point d'entrée dans la librairie
-//
-//=============================================================================
-
-namespace Core.Persistance
+﻿namespace EphemereGames.Core.Persistance
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     
     public static class Facade
     {
+        private static DataController DataController;
+
+
         public static void Initialize(
-            String dossierContenu,
-            String cheminRelatifPackages,
+            String contentFolderPath,
+            String packagesFolderPath,
             GameServiceContainer gsc,
-            ManagedThread threadContenu,
-            ManagedThread threadDonnees,
-            StorageMessages storageMessages)
+            ManagedThread threadContent,
+            ManagedThread threadData)
         {
-            Preferences.DossierContenu = dossierContenu;
-            Preferences.CheminRelatifPackages = cheminRelatifPackages;
+            Preferences.ContentFolderPath = contentFolderPath;
+            Preferences.PackagesFolderPath = packagesFolderPath;
             Preferences.GameServiceContainer = gsc;
-            Preferences.ThreadContenu = threadContenu;
-            Preferences.ThreadDonnees = threadDonnees;
-            Preferences.StorageMessages = storageMessages;
+            Preferences.ThreadContent = threadContent;
+            Preferences.ThreadData = threadData;
+
+            DataController = new DataController();
         }
 
-        public static T recuperer<T>(String nom)
+
+        public static T GetAsset<T>(string name)
         {
-            return GestionnaireContenu.Instance.recuperer<T>(nom);
+            return GestionnaireContenu.Instance.recuperer<T>(name);
         }
 
-        public static T recupererParCopie<T>(String nom)
+
+        public static T GetAssetCopy<T>(string name)
         {
-            return GestionnaireContenu.Instance.recupererParCopie<T>(nom);
+            return GestionnaireContenu.Instance.recupererParCopie<T>(name);
         }
 
-        public static void charger(String nomPackage)
+
+        public static void LoadPackage(string package)
         {
-            GestionnaireContenu.Instance.charger(nomPackage);
+            GestionnaireContenu.Instance.charger(package);
         }
 
-        public static void charger(int niveau)
+
+        public static void UnloadPackage(string package)
         {
-            GestionnaireContenu.Instance.charger(niveau);
+            GestionnaireContenu.Instance.decharger(package);
         }
 
-        public static void decharger(String nomPackage)
+
+        public static bool PackageLoaded(string package)
         {
-            GestionnaireContenu.Instance.decharger(nomPackage);
+            return GestionnaireContenu.Instance.estCharge(package);
         }
 
 
-        public static bool estCharge(string nomAsset)
+        public static void AddAsset(IContenu asset)
         {
-            return GestionnaireContenu.Instance.estCharge(nomAsset);
+            GestionnaireContenu.Instance.ajouterTypeAsset(asset);
         }
 
-        public static bool estCharge(int noNiveau)
+
+        public static void AddData(Data data)
         {
-            return GestionnaireContenu.Instance.estCharge(noNiveau);
+            DataController.AddData(data);
         }
 
-        //public static bool estCharge(String nomPackage)
-        //{
-        //    return GestionnaireContenu.Instance.estCharge(nomPackage);
-        //}
 
-        public static void ajouterTypeAsset(IContenu typeAsset)
+        public static void SaveData(string data)
         {
-            GestionnaireContenu.Instance.ajouterTypeAsset(typeAsset);
+            DataController.Save(data);
         }
 
-        public static void ajouterDonnee(AbstractDonnee donnee)
+
+        public static void LoadData(string data)
         {
-            GestionnaireDonnees.Instance.ajouterDonnee(donnee);
+            DataController.Load(data);
         }
 
-        public static void sauvegarderDonnee(String nomDonnee)
+
+        public static bool DataLoaded(string data)
         {
-            GestionnaireDonnees.Instance.sauvegarder(nomDonnee);
+            return DataController.DataLoaded(data);
         }
 
-        public static void chargerDonnee(String nomDonnee)
-        {
-            GestionnaireDonnees.Instance.charger(nomDonnee);
-        }
-
-        public static void initialiserDonneesJoueur(String nomDonnee, PlayerIndex joueur)
-        {
-            GestionnaireDonnees.Instance.initialiserDonneeJoueur(nomDonnee, joueur);
-        }
-
-        public static bool donneeEstCharge(string nomDonnee)
-        {
-            return GestionnaireDonnees.Instance.donneeEstChargee(nomDonnee);
-        }
 
         public static void Update(GameTime gameTime)
         {
-            GestionnaireDonnees.Instance.Update(gameTime);
+            DataController.Update(gameTime);
         }
 
-        public static String getRepertoireContenu()
-        {
-            return GestionnaireContenu.Instance.RepertoireContenu;
-        }
+
+        //public static String getRepertoireContenu()
+        //{
+        //    return GestionnaireContenu.Instance.RepertoireContenu;
+        //}
     }
 }

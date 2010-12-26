@@ -1,9 +1,9 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
 
     class SimulationLite
     {

@@ -1,4 +1,4 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
@@ -66,7 +66,7 @@
             else
                 lune = new LuneTrajet(Simulation, CelestialBody);
 
-            lune.Representation.Texture = Core.Persistance.Facade.recuperer<Texture2D>("luneVies");
+            lune.Representation.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("luneVies");
             lune.Representation.Couleur.A = 255;
             lune.Representation.Taille = 3;
             lune.Representation.Origine = lune.Representation.Centre;

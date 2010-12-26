@@ -1,14 +1,14 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Xml.Serialization;
     using System.Collections.Generic;
-    using Core.Persistance;
-    using Core.Utilities;
+    using EphemereGames.Core.Persistance;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Content;
 
     [Serializable]
-    public class SaveGame : AbstractDonneeJoueur
+    public class SaveGame : Data
     {
         [ContentSerializer(Optional = false)]
         public SerializableDictionaryProxy<int, int> Progress { get; set; }
@@ -31,13 +31,13 @@
 
         public SaveGame()
         {
-            Nom = "savePlayer";
-            NomDossier = "Commander";
-            NomFichier = "Save.xml";
+            Name = "savePlayer";
+            Folder = "Commander";
+            File = "Save.xml";
         }
 
 
-        protected override void doInitialiser(object donnee)
+        protected override void DoInitialize(object donnee)
         {
             SaveGame d = donnee as SaveGame;
 
@@ -53,23 +53,23 @@
         }
 
 
-        public override void doFichierInexistant()
+        public override void DoFileNotFound()
         {
-            base.doFichierInexistant();
+            base.DoFileNotFound();
             premierChargement();
         }
 
 
-        protected override void doChargementErreur()
+        protected override void DoLoadFailed()
         {
-            base.doChargementErreur();
+            base.DoLoadFailed();
             premierChargement();
         }
 
 
-        protected override void doSauvegardeDebute()
+        protected override void DoSaveStarted()
         {
-            base.doSauvegardeDebute();
+            base.DoSaveStarted();
 
             this.HighScores.InitializeToSave();
             this.Progress.InitializeToSave();
@@ -77,12 +77,12 @@
         }
 
 
-        protected override void doChargementTermine()
+        protected override void DoLoadEnded()
         {
-            base.doChargementTermine();
+            base.DoLoadEnded();
 
-            Core.Audio.Facade.VolumeMusique = this.VolumeMusic / 10f;
-            Core.Audio.Facade.VolumeEffetsSonores = this.VolumeSfx / 10f;
+            EphemereGames.Core.Audio.Facade.VolumeMusique = this.VolumeMusic / 10f;
+            EphemereGames.Core.Audio.Facade.VolumeEffetsSonores = this.VolumeSfx / 10f;
         }
 
 
@@ -96,11 +96,11 @@
             this.Progress = new SerializableDictionaryProxy<int, int>();
             this.Tutorials = new SerializableDictionaryProxy<int, int>();
 
-            Core.Audio.Facade.VolumeMusique = this.VolumeMusic / 10f;
-            Core.Audio.Facade.VolumeEffetsSonores = this.VolumeSfx / 10f;
+            EphemereGames.Core.Audio.Facade.VolumeMusique = this.VolumeMusic / 10f;
+            EphemereGames.Core.Audio.Facade.VolumeEffetsSonores = this.VolumeSfx / 10f;
 
-            Core.Persistance.Facade.sauvegarderDonnee(this.Nom);
-            Charge = true;
+            EphemereGames.Core.Persistance.Facade.SaveData(this.Name);
+            Loaded = true;
         }
     }
 }

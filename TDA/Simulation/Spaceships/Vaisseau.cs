@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     class Vaisseau : DrawableGameComponent, IObjetPhysique
     {
@@ -41,7 +41,7 @@
             : base(simulation.Main)
         {
             this.Simulation = simulation;
-            this.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), this.Position);
+            this.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Vaisseau"), this.Position);
             this.Representation.Taille = 4;
             this.Representation.Origine = this.Representation.Centre;
             
@@ -123,7 +123,7 @@
                 p.Position = this.Position + translation;
                 p.Direction = this.Direction;
                 p.PointsAttaque = PuissanceProjectile;
-                p.PrioriteAffichage = this.Representation.PrioriteAffichage + 0.001f;
+                p.PrioriteAffichage = this.Representation.VisualPriority + 0.001f;
                 p.Initialize();
 
                 Simulation.Scene.Particules.retourner(p.RepresentationDeplacement);
@@ -133,7 +133,7 @@
             }
 
             if (Projectiles.Count != 0)
-                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
 
             return Projectiles;
         }
@@ -157,7 +157,7 @@
 
             double tempsRequis = (distance / Vitesse) * 16.33f;
 
-            Simulation.Scene.Effets.ajouter(this.Representation, EffetsPredefinis.fadeOutTo0(255, 0, tempsRequis));
+            Simulation.Scene.Effets.Add(this.Representation, PredefinedEffects.FadeOutTo0(255, 0, tempsRequis));
         }
 
 

@@ -13,12 +13,12 @@
 // Copyright © Jodi Giordano, Julien Théron, 2009
 //=====================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     static class EffetsPredefinis
     {
@@ -29,8 +29,8 @@ namespace Core.Physique
             EffetDeplacement e = new EffetDeplacement();
 
             e.PositionFin = position;
-            e.Progression = AbstractEffet.TypeProgression.Maintenant;
-            e.Duree = 500;
+            e.Progress = AbstractEffect.ProgressType.Now;
+            e.Length = 500;
 
             return e;
         }
@@ -54,9 +54,9 @@ namespace Core.Physique
             Trajet2D t = new Trajet2D(positions, temps);
 
             eDt.Trajet = t;
-            eDt.Progression = AbstractEffet.TypeProgression.Lineaire;
-            eDt.Delai = depart;
-            eDt.Duree = duree;
+            eDt.Progress = AbstractEffect.ProgressType.Linear;
+            eDt.Delay = depart;
+            eDt.Length = duree;
 
             return eDt;
         }

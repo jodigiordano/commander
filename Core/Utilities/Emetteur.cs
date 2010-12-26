@@ -3,7 +3,7 @@
 //
 //=====================================================================
 
-namespace Core.Utilities
+namespace EphemereGames.Core.Utilities
 {
     using System;
     using System.Collections.Generic;

@@ -1,27 +1,25 @@
-namespace TDA.Objets
+namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Content;
-    
+
     public class AnimationTransition : Animation
     {
-        private List<VaisseauAlien> VaisseausAlien;
-        private List<IVisible> Autres;
-        private List<Trajet3D> Trajets;
-        private bool ShowAliens;
-
         public bool In;
+
+        private List<VaisseauAlien> AlienShips;
+        private List<IVisible> Others;
+        private List<Trajet3D> Paths;
+        private bool ShowAliens;
 
         private static int LastTimeChoice = 0;
         private static String LastTimeChoiceAutre = "";
-
         private static Random Random = new Random();
+
 
         private static List<KeyValuePair<Vector3, Vector3>> PositionsIn = new List<KeyValuePair<Vector3,Vector3>>()
         {
@@ -42,7 +40,8 @@ namespace TDA.Objets
             new KeyValuePair<Vector3, Vector3>(new Vector3(-550, -800, 0), new Vector3(-550, -200, 0)),
         };
 
-        private static List<String> NomsAutres = new List<string>()
+        
+        private static List<String> NamesOthers = new List<string>()
         {
             "planete21",
             "Asteroid",
@@ -58,25 +57,29 @@ namespace TDA.Objets
             "tourelleMissileCanon"
         };
 
-        public AnimationTransition()
-            : base()
+
+        public AnimationTransition(Scene scene, double length, float visualPriority)
+            : base(length)
         {
             In = false;
             ShowAliens = true;
+            Scene = scene;
+            VisualPriority = visualPriority;
         }
+
 
         public override void Initialize()
         {
             base.Initialize();
 
-            VaisseausAlien = new List<VaisseauAlien>();
-            Autres = new List<IVisible>();
-            Trajets = new List<Trajet3D>();
+            AlienShips = new List<VaisseauAlien>();
+            Others = new List<IVisible>();
+            Paths = new List<Trajet3D>();
 
             if (!In)
             {
                 LastTimeChoice = Random.Next(0, 2);
-                LastTimeChoiceAutre = NomsAutres[Random.Next(0, NomsAutres.Count)];
+                LastTimeChoiceAutre = NamesOthers[Random.Next(0, NamesOthers.Count)];
             }
 
             //ShowAliens = (LastTimeChoice == 0);
@@ -86,20 +89,20 @@ namespace TDA.Objets
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    VaisseauAlien v = new VaisseauAlien(Scene, this.PrioriteAffichage);
+                    VaisseauAlien v = new VaisseauAlien(Scene, this.VisualPriority);
                     v.Representation.Taille = 16;
                     v.Representation.Rotation = MathHelper.PiOver2;
                     v.Tentacules.Taille = 16;
                     v.Tentacules.Rotation = MathHelper.PiOver2;
-                    v.Representation.Melange = TypeMelange.Soustraire;
-                    v.Tentacules.Melange = TypeMelange.Soustraire;
+                    v.Representation.Blend = TypeBlend.Substract;
+                    v.Tentacules.Blend = TypeBlend.Substract;
 
-                    VaisseausAlien.Add(v);
+                    AlienShips.Add(v);
 
                     if (In)
-                        Trajets.Add(new Trajet3D(new Vector3[] { PositionsIn[i].Key, PositionsIn[i].Value }, new double[] { 0, this.Duree }));
+                        Paths.Add(new Trajet3D(new Vector3[] { PositionsIn[i].Key, PositionsIn[i].Value }, new double[] { 0, this.Length }));
                     else
-                        Trajets.Add(new Trajet3D(new Vector3[] { PositionsOut[i].Key, PositionsOut[i].Value }, new double[] { 0, this.Duree }));
+                        Paths.Add(new Trajet3D(new Vector3[] { PositionsOut[i].Key, PositionsOut[i].Value }, new double[] { 0, this.Length }));
                 }
             }
 
@@ -107,44 +110,46 @@ namespace TDA.Objets
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(LastTimeChoiceAutre), Vector3.Zero);
+                    IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(LastTimeChoiceAutre), Vector3.Zero);
                     iv.Taille = 16;
-                    iv.Melange = TypeMelange.Soustraire;
+                    iv.Blend = TypeBlend.Substract;
                     iv.Origine = iv.Centre;
 
-                    Autres.Add(iv);
+                    Others.Add(iv);
 
                     if (In)
-                        Trajets.Add(new Trajet3D(new Vector3[] { PositionsIn[i].Key, PositionsIn[i].Value }, new double[] { 0, this.Duree }));
+                        Paths.Add(new Trajet3D(new Vector3[] { PositionsIn[i].Key, PositionsIn[i].Value }, new double[] { 0, this.Length }));
                     else
-                        Trajets.Add(new Trajet3D(new Vector3[] { PositionsOut[i].Key, PositionsOut[i].Value }, new double[] { 0, this.Duree }));
+                        Paths.Add(new Trajet3D(new Vector3[] { PositionsOut[i].Key, PositionsOut[i].Value }, new double[] { 0, this.Length }));
                 }
             }
         }
 
-        public override void suivant(GameTime gameTime)
+
+        public override void Update(GameTime gameTime)
         {
-            base.suivant(gameTime);
+            base.Update(gameTime);
         }
+
 
         public override void Draw(SpriteBatch spriteBatch)
         {
 
             if (ShowAliens)
             {
-                for (int i = 0; i < VaisseausAlien.Count; i++)
+                for (int i = 0; i < AlienShips.Count; i++)
                 {
-                    Trajets[i].Position(TempsRelatif, ref VaisseausAlien[i].Representation.position);
-                    VaisseausAlien[i].Draw(null);
+                    Paths[i].Position(RelativeTime, ref AlienShips[i].Representation.position);
+                    AlienShips[i].Draw(null);
                 }
             }
 
             else
             {
-                for (int i = 0; i < Autres.Count; i++)
+                for (int i = 0; i < Others.Count; i++)
                 {
-                    Trajets[i].Position(TempsRelatif, ref Autres[i].position);
-                    Scene.ajouterScenable(Autres[i]);
+                    Paths[i].Position(RelativeTime, ref Others[i].position);
+                    Scene.ajouterScenable(Others[i]);
                 }
             }
         }

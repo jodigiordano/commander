@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-namespace TDA
+namespace EphemereGames.Commander
 {
     class PathPreview
     {

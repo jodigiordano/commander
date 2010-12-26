@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     class Bulle : DrawableGameComponent
     {
@@ -25,12 +25,12 @@
             this.Simulation = simulation;
             this.Dimension = dimension;
 
-            Bla = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleBlabla"), Vector3.Zero);
-            Bla.PrioriteAffichage = prioriteAffichage;
+            Bla = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("bulleBlabla"), Vector3.Zero);
+            Bla.VisualPriority = prioriteAffichage;
 
-            Filtre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
-            Filtre.Couleur = new Color(Color.Black, 128);
-            Filtre.PrioriteAffichage = prioriteAffichage + 0.02f;
+            Filtre = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
+            Filtre.Couleur = new Color(0, 0, 0, 128);
+            Filtre.VisualPriority = prioriteAffichage + 0.02f;
 
 
             Coins = new List<IVisible>();
@@ -38,13 +38,13 @@
 
             for (int i = 0; i < 4; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleCoin"), Vector3.Zero);
-                iv.PrioriteAffichage = prioriteAffichage + 0.01f;
+                IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("bulleCoin"), Vector3.Zero);
+                iv.VisualPriority = prioriteAffichage + 0.01f;
 
                 Coins.Add(iv);
 
-                iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
-                iv.PrioriteAffichage = prioriteAffichage + 0.01f;
+                iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
+                iv.VisualPriority = prioriteAffichage + 0.01f;
 
                 Contours.Add(iv);
 
@@ -132,33 +132,33 @@
             foreach (var coin in Coins)
             {
                 coin.Couleur.A = 0;
-                Simulation.Scene.Effets.ajouter(coin, EffetsPredefinis.fadeInFrom0(255, 0, temps));
+                Simulation.Scene.Effets.Add(coin, PredefinedEffects.FadeInFrom0(255, 0, temps));
             }
 
             foreach (var contour in Contours)
             {
                 contour.Couleur.A = 0;
-                Simulation.Scene.Effets.ajouter(contour, EffetsPredefinis.fadeInFrom0(255, 0, temps));
+                Simulation.Scene.Effets.Add(contour, PredefinedEffects.FadeInFrom0(255, 0, temps));
             }
 
             Filtre.Couleur.A = 0;
             Bla.Couleur.A = 0;
 
-            Simulation.Scene.Effets.ajouter(Filtre, EffetsPredefinis.fadeInFrom0(128, 0, temps));
-            Simulation.Scene.Effets.ajouter(Bla, EffetsPredefinis.fadeInFrom0(255, 0, temps));
+            Simulation.Scene.Effets.Add(Filtre, PredefinedEffects.FadeInFrom0(128, 0, temps));
+            Simulation.Scene.Effets.Add(Bla, PredefinedEffects.FadeInFrom0(255, 0, temps));
         }
 
 
         public virtual void doHide(double temps)
         {
             foreach (var coin in Coins)
-                Simulation.Scene.Effets.ajouter(coin, EffetsPredefinis.fadeOutTo0(255, 0, temps));
+                Simulation.Scene.Effets.Add(coin, PredefinedEffects.FadeOutTo0(255, 0, temps));
 
             foreach (var contour in Contours)
-                Simulation.Scene.Effets.ajouter(contour, EffetsPredefinis.fadeOutTo0(255, 0, temps));
+                Simulation.Scene.Effets.Add(contour, PredefinedEffects.FadeOutTo0(255, 0, temps));
 
-            Simulation.Scene.Effets.ajouter(Filtre, EffetsPredefinis.fadeOutTo0(128, 0, temps));
-            Simulation.Scene.Effets.ajouter(Bla, EffetsPredefinis.fadeOutTo0(255, 0, temps));
+            Simulation.Scene.Effets.Add(Filtre, PredefinedEffects.FadeOutTo0(128, 0, temps));
+            Simulation.Scene.Effets.Add(Bla, PredefinedEffects.FadeOutTo0(255, 0, temps));
         }
     }
 }

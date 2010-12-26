@@ -5,12 +5,12 @@
 //
 //=====================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     public class EffetSuivre : EffetPhysique
     {
@@ -27,12 +27,12 @@ namespace Core.Physique
         // Logique
         //=====================================================================
 
-        protected override void InitLogique()
+        protected override void InitializeLogic()
         {
 
         }
 
-        protected override void LogiqueLineaire()
+        protected override void LogicLinear()
         {
             Vector3 direction = ObjetSuivi.Position - Objet.Position;
             direction.Normalize();
@@ -40,12 +40,12 @@ namespace Core.Physique
             Objet.Position += direction * Vitesse;
         }
 
-        protected override void LogiqueApresDuree()
+        protected override void LogicAfter()
         {
             throw new Exception("TODO");
         }
 
-        protected override void LogiqueMaintenant()
+        protected override void LogicNow()
         {
             throw new Exception("TODO");
         }

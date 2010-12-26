@@ -5,21 +5,20 @@
 //
 //=============================================================================
 
-namespace Core.Persistance
+namespace EphemereGames.Core.Persistance
 {
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Content;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     static class Preferences
     {
-        public static String DossierContenu                     { get; set; }
-        public static String CheminRelatifPackages              { get; set; }
+        public static String ContentFolderPath                     { get; set; }
+        public static String PackagesFolderPath              { get; set; }
         public static GameServiceContainer GameServiceContainer { get; set; }
-        public static ManagedThread ThreadContenu               { get; set; }
-        public static ManagedThread ThreadDonnees               { get; set; }
-        public static StorageMessages StorageMessages           { get; set; }
+        public static ManagedThread ThreadContent               { get; set; }
+        public static ManagedThread ThreadData               { get; set; }
     }
 }

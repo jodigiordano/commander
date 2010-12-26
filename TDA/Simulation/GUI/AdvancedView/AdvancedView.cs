@@ -1,7 +1,7 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -27,10 +27,10 @@
 
             for (int i = 0; i < CirclesCount; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("CercleBlanc"), Vector3.Zero);
-                iv.Couleur = new Color(Color.Black, 200);
+                IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("CercleBlanc"), Vector3.Zero);
+                iv.Couleur = new Color(0, 0, 0, 200);
                 iv.Origine = iv.Centre;
-                iv.PrioriteAffichage = Preferences.PrioriteGUIEtoiles - 0.001f;
+                iv.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.001f;
 
                 Circles.Add(iv);
             }
@@ -56,7 +56,8 @@
                     if (emplacement.EstOccupe)
                     {
                         Circles[circlesCount].Position = emplacement.Tourelle.Position;
-                        Circles[circlesCount].Couleur = new Color(emplacement.Tourelle.Couleur, 100);
+                        Circles[circlesCount].Couleur = emplacement.Tourelle.Couleur;
+                        Circles[circlesCount].Couleur.A = 100;
                         Circles[circlesCount].Taille = (emplacement.Tourelle.ZoneActivation.Rayon / 100) * 2;
                         Simulation.Scene.ajouterScenable(Circles[circlesCount]);
 

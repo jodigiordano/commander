@@ -4,14 +4,14 @@
 //
 //=============================================================================
 
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Content;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
 
     [Serializable]
     public class IVisible : IScenable, IPhysique, ICloneable
@@ -39,13 +39,13 @@ namespace Core.Visuel
         public float Vitesse                        { get; set; }
 
         [ContentSerializer(Optional = true)]
-        public TypeMelange Melange                  { get; set; }
+        public TypeBlend Blend                  { get; set; }
 
         [ContentSerializer(Optional = true)]
-        public float PrioriteAffichage              { get; set; }
+        public float VisualPriority              { get; set; }
 
         [ContentSerializer(Optional = true)]
-        public virtual List<IScenable> Composants   { get; set; }
+        public virtual List<IScenable> Components   { get; set; }
 
         [ContentSerializer(Optional = true)]
         public Rectangle partieVisible;
@@ -134,12 +134,12 @@ namespace Core.Visuel
             this.rotation = 0.0f;
             tailleVecteur.X = tailleVecteur.Y = 1;
 
-            this.Melange = TypeMelange.Alpha;
+            this.Blend = TypeBlend.Alpha;
             this.Couleur = Color.White;
-            this.Composants = null;
+            this.Components = null;
             this.Effets = SpriteEffects.None;
             this.DessinerPartie = false;
-            this.PrioriteAffichage = 0;
+            this.VisualPriority = 0;
         }
 
 
@@ -354,7 +354,7 @@ namespace Core.Visuel
 
 
 
-        public Matrix TransformeeVisuel
+        protected Matrix TransformeeVisuel
         {
             get
             {

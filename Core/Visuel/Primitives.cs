@@ -1,17 +1,17 @@
-﻿namespace Core.Visuel
+﻿namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
 
     static class Primitives
     {
       private static Texture2D pixel;
 
-      public static void init(Texture2D texture)
+      public static void Initialize(Texture2D texture)
       {
           pixel = texture;
       }

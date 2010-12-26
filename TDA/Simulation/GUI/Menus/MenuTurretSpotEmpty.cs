@@ -1,7 +1,7 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -34,24 +34,25 @@
 
                 IVisible iv = (IVisible)t.representationBase.Clone();
                 iv.Origine = Vector2.Zero;
-                iv.PrioriteAffichage = this.PrioriteAffichage;
+                iv.VisualPriority = this.PrioriteAffichage;
 
                 LogosTourellesAchat.Add(t.Type, iv);
 
-                IVisible prix = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+                IVisible prix = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                 prix.Taille = 2;
-                prix.PrioriteAffichage = this.PrioriteAffichage;
+                prix.VisualPriority = this.PrioriteAffichage;
 
                 PrixTourellesAchat.Add(t.Type, prix);
             }
 
             WidgetSelection = new IVisible
             (
-                Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"),
                 Position
             );
-            WidgetSelection.Couleur = new Color(Color.Green, 230);
-            WidgetSelection.PrioriteAffichage = this.PrioriteAffichage + 0.01f;
+            WidgetSelection.Couleur = Color.Green;
+            WidgetSelection.Couleur.A = 230;
+            WidgetSelection.VisualPriority = this.PrioriteAffichage + 0.01f;
         }
 
 

@@ -1,13 +1,13 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Persistance;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Persistance;
+    using EphemereGames.Core.Physique;
 
     class Ennemi : IObjetPhysique, IObjetVivant
     {
@@ -54,7 +54,7 @@ namespace TDA
         public double Deplacement;
         public Simulation Simulation;
         public String Nom;
-        public TypeEnnemi Type;
+        public EnemyType Type;
         public List<Mineral> Mineraux;
         public Vector3 Translation;
         public Vector3 PositionDernierProjectileTouche;
@@ -75,7 +75,7 @@ namespace TDA
             Forme = Forme.Rectangle;
             Rectangle = new RectanglePhysique(0, 0, 1, 1);
             Cercle = new Cercle(Vector3.Zero, 1);
-            Type = TypeEnnemi.Inconnu;
+            Type = EnemyType.Inconnu;
             Id = NextID;
         }
 
@@ -84,7 +84,7 @@ namespace TDA
         {
             if (RepresentationVivant == null)
             {
-                RepresentationVivant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(Nom), Vector3.Zero);
+                RepresentationVivant = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(Nom), Vector3.Zero);
                 RepresentationVivant.Origine = RepresentationVivant.Centre;
 
                 RepresentationMort = RepresentationVivant;
@@ -110,10 +110,10 @@ namespace TDA
             Cercle.Position.X = Position.X - Cercle.Rayon;
             Cercle.Position.Y = Position.Y - Cercle.Rayon;
 
-            EtincellesLaserMultiple.PrioriteAffichage = RepresentationVivant.PrioriteAffichage - 0.001f;
-            EtincellesMissile.PrioriteAffichage = RepresentationVivant.PrioriteAffichage - 0.001f;
-            EtincellesLaserSimple.PrioriteAffichage = RepresentationVivant.PrioriteAffichage - 0.001f;
-            EtincellesSlowMotion.PrioriteAffichage = RepresentationVivant.PrioriteAffichage - 0.001f;
+            EtincellesLaserMultiple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+            EtincellesMissile.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+            EtincellesLaserSimple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+            EtincellesSlowMotion.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
 
             ProjectMercury.VariableFloat3 float3 = new ProjectMercury.VariableFloat3();
             float3.Value = Couleur.ToVector3();
@@ -123,9 +123,9 @@ namespace TDA
 
             VitesseRotation = Main.Random.Next(-5, 6) / 100.0f;
 
-            RepresentationVivant.PrioriteAffichage = Preferences.PrioriteSimulationEnnemi;
-            RepresentationMort.PrioriteAffichage = Preferences.PrioriteSimulationEnnemi;
-            RepresentationExplose.PrioriteAffichage = Preferences.PrioriteSimulationEnnemi - 0.001f;
+            RepresentationVivant.VisualPriority = Preferences.PrioriteSimulationEnnemi;
+            RepresentationMort.VisualPriority = Preferences.PrioriteSimulationEnnemi;
+            RepresentationExplose.VisualPriority = Preferences.PrioriteSimulationEnnemi - 0.001f;
 
             Mineraux.Clear();
         }
@@ -172,14 +172,15 @@ namespace TDA
         {
             if (EstVivant)
             {
-                RepresentationVivantProjection.Couleur = new Color(Color.White, 25);
-                RepresentationVivantProjection.Melange = TypeMelange.Soustraire;
+                RepresentationVivantProjection.Couleur = new Color(255, 255, 255, 25);
+                RepresentationVivantProjection.Blend = TypeBlend.Substract;
                 CheminProjection.Position(Deplacement, ref RepresentationVivantProjection.position);
             }
 
             else
             {
-                RepresentationMortProjection.Couleur = new Color(RepresentationMort.Couleur, 100);
+                RepresentationMortProjection.Couleur = RepresentationMort.Couleur;
+                RepresentationMortProjection.Couleur.A = 100;
                 CheminProjection.Position(Deplacement, ref RepresentationMortProjection.position);
             }
 
@@ -212,7 +213,7 @@ namespace TDA
                 }
                 else if (p is ProjectileSlowMotion)
                 {
-                    float pointsAttaqueEffectif = (this.Type == TypeEnnemi.Comet) ? p.PointsAttaque * 3 : p.PointsAttaque;
+                    float pointsAttaqueEffectif = (this.Type == EnemyType.Comet) ? p.PointsAttaque * 3 : p.PointsAttaque;
 
                     this.Resistance = (float)Math.Min(this.Resistance + pointsAttaqueEffectif, 0.75 * this.Vitesse);
                     EtincellesSlowMotion.Emettre(ref this.position);

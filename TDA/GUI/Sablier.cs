@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
-    using Core.Physique;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Physique;
 
     class Sablier : DrawableGameComponent, IObjetPhysique
     {
@@ -90,14 +90,14 @@
 
             Pixels = new List<IVisible>(NB_PIXELS);
 
-            Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("sablier"), position);
+            Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("sablier"), position);
             Representation.Taille = 4;
             Representation.Origine = Representation.Centre;
-            Representation.PrioriteAffichage = prioriteAffichage;
+            Representation.VisualPriority = prioriteAffichage;
 
             for (int i = 0; i < NB_PIXELS; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
+                IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
                 iv.Couleur = new Color(255, 0, 220, 255);
                 iv.Taille = TAILLE_PIXEL;
                 iv.Position = this.Position + (PositionsRelatives[i] - new Vector3(Representation.Origine.X, Representation.Origine.Y, 0)) * TAILLE_PIXEL;
@@ -106,7 +106,7 @@
 
                 iv.Origine = new Vector2(origine3.X, origine3.Y) / TAILLE_PIXEL;
                 iv.Position += origine3;
-                iv.PrioriteAffichage = Representation.PrioriteAffichage - 0.01f;
+                iv.VisualPriority = Representation.VisualPriority - 0.01f;
 
                 Pixels.Add(iv);
             }
@@ -121,14 +121,14 @@
         {
             get
             {
-                return (EffetRotation != null && !EffetRotation.Termine);
+                return (EffetRotation != null && !EffetRotation.Finished);
             }
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            if (EffetRotation != null && EffetRotation.Termine)
+            if (EffetRotation != null && EffetRotation.Finished)
             {
                 Representation.Rotation = 0;
                 Progression = 0;
@@ -159,31 +159,31 @@
 
         public void tourner()
         {
-            if (EffetRotation != null && !EffetRotation.Termine)
+            if (EffetRotation != null && !EffetRotation.Finished)
                 return;
 
             EffetRotation = new EffetRotation();
-            EffetRotation.Duree = 500;
-            EffetRotation.Progression = AbstractEffet.TypeProgression.Lineaire;
+            EffetRotation.Length = 500;
+            EffetRotation.Progress = AbstractEffect.ProgressType.Linear;
             EffetRotation.Quantite = MathHelper.Pi;
 
-            Scene.Effets.ajouter(Representation, EffetRotation);
+            Scene.Effets.Add(Representation, EffetRotation);
         }
 
         public void doHide(double temps)
         {
-            Scene.Effets.ajouter(Representation, EffetsPredefinis.fadeOutTo0(255, 0, temps));
+            Scene.Effets.Add(Representation, PredefinedEffects.FadeOutTo0(255, 0, temps));
 
             foreach (var pixel in Pixels)
-                Scene.Effets.ajouter(pixel, EffetsPredefinis.fadeOutTo0(255, 0, temps));
+                Scene.Effets.Add(pixel, PredefinedEffects.FadeOutTo0(255, 0, temps));
         }
 
         public void doShow(double temps)
         {
-            Scene.Effets.ajouter(Representation, EffetsPredefinis.fadeInFrom0(255, 0, temps));
+            Scene.Effets.Add(Representation, PredefinedEffects.FadeInFrom0(255, 0, temps));
 
             foreach (var pixel in Pixels)
-                Scene.Effets.ajouter(pixel, EffetsPredefinis.fadeInFrom0(255, 0, temps));
+                Scene.Effets.Add(pixel, PredefinedEffects.FadeInFrom0(255, 0, temps));
         }
 
         #region IObjetPhysique Membres

@@ -4,7 +4,7 @@
 //
 //=====================================================================
 
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;
@@ -21,10 +21,10 @@ namespace Core.Visuel
         public int Min                      { get; private set; }
         public int Max                      { get; private set; }
         public Vector3 Position             { get; set; }
-        public TypeMelange Melange          { get; set; }
-        public List<IScenable> Composants   { get; set; }
+        public TypeBlend Blend          { get; set; }
+        public List<IScenable> Components   { get; set; }
         public Scene Scene                  { get; set; }
-        public float PrioriteAffichage      { get; set; }
+        public float VisualPriority      { get; set; }
 
         protected SpriteFont police;
         protected Color couleur;
@@ -57,9 +57,9 @@ namespace Core.Visuel
             this.couleur.G = couleur.G;
             this.couleur.B = couleur.B;
             this.couleur.A = couleur.A;
-            this.Melange = TypeMelange.Alpha;
+            this.Blend = TypeBlend.Alpha;
             this.Scene = scene;
-            this.PrioriteAffichage = 0;
+            this.VisualPriority = 0;
 
             ValeurVisible = new IVisible("<  " + valeur.ToString() + "  >", police, couleur, position);
         }

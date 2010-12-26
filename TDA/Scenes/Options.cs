@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Input;
-    using Core.Visuel;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework.Input;
 
     class Options : Scene
@@ -26,11 +26,10 @@
         private static String Credits = "Hello, my name is Jodi Giordano. I glued all this stuff together. Special thanks to my supporting friends, la familia, the LATECE laboratory crew, UQAM, Mercury Project, SFXR and of course, my muse. Yeah, you over there. Stay tuned for updates by visiting ephemeregames.com... Now get back to work, commander!";
         private TextTypeWriter TypeWriter;
 
-        private Objets.AnimationTransition AnimationTransition;
-        private bool effectuerTransition;
+        private AnimationTransition AnimationTransition;
         private String ChoixTransition;
         private double TempsEntreDeuxChangementMusique;
-        private bool joueurPrincipalDeconnecte;
+
 
         public Options(Main main)
             : base(Vector2.Zero, 720, 1280)
@@ -38,31 +37,28 @@
             Main = main;
 
             Nom = "Options";
-            EnPause = true;
-            EstVisible = false;
-            EnFocus = false;
 
-            Titre = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("options"), new Vector3(-550, -150, 0));
-            Titre.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            Titre = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("options"), new Vector3(-550, -150, 0));
+            Titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitreMusique = new IVisible
                     (
                         "Music",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(-420, 130, 0)
                     );
-            TitreMusique.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            TitreMusique.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
             TitreMusique.Taille = 2f;
 
             TitreEffetsSonores = new IVisible
                     (
                         "Sound Effects",
-                        Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                        EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                         Color.White,
                         new Vector3(-420, 200, 0)
                     );
-            TitreEffetsSonores.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            TitreEffetsSonores.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
             TitreEffetsSonores.Taille = 2f;
 
             Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
@@ -70,19 +66,19 @@
             Musique = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 140, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
             EffetsSonores = new HorizontalSlider(Main, this, Curseur, new Vector3(-120, 210, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
-            Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(120, -420, 0));
+            Lieutenant = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("lieutenant"), new Vector3(120, -420, 0));
             Lieutenant.Taille = 8;
             Lieutenant.Origine = new Vector2(0, Lieutenant.Texture.Height);
             Lieutenant.Rotation = MathHelper.Pi;
-            Lieutenant.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            Lieutenant.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
             
-            Bulle = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulleRenversee"), new Vector3(80, -150, 0));
+            Bulle = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("bulleRenversee"), new Vector3(80, -150, 0));
             Bulle.Taille = 8;
-            Bulle.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
+            Bulle.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("fondecran12"), Vector3.Zero);
+            FondEcran = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("fondecran12"), Vector3.Zero);
             FondEcran.Origine = FondEcran.Centre;
-            FondEcran.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
+            FondEcran.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
             TypeWriter = new TextTypeWriter
             (
@@ -90,7 +86,7 @@
                 Credits,
                 Color.Black,
                 new Vector3(170, -130, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                 2.0f,
                 new Vector2(370, 330),
                 50,
@@ -106,64 +102,63 @@
                 },
                 this
             );
-            TypeWriter.Texte.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            TypeWriter.Texte.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            AnimationTransition = new TDA.Objets.AnimationTransition();
-            AnimationTransition.Duree = 500;
-            AnimationTransition.Scene = this;
-            AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
-
-            effectuerTransition = false;
+            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
             TempsEntreDeuxChangementMusique = 0;
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
-
-            joueurPrincipalDeconnecte = false;
         }
+
 
         private void doJoueurPrincipalDeconnecte()
         {
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.Out;
             ChoixTransition = "chargement";
-            effectuerTransition = true;
-            joueurPrincipalDeconnecte = true;
         }
 
 
         protected override void UpdateLogique(GameTime gameTime)
         {
-            if (effectuerTransition)
-            {
-                AnimationTransition.suivant(gameTime);
+            if (Transition != TransitionType.None)
+                return;
 
-                effectuerTransition = !AnimationTransition.estTerminee(gameTime);
+            Main.SaveGame.VolumeMusic = Musique.Valeur;
+            Main.SaveGame.VolumeSfx = EffetsSonores.Valeur;
 
-                if (!effectuerTransition && !AnimationTransition.In)
+            EphemereGames.Core.Audio.Facade.VolumeMusique = Musique.Valeur / 10f;
+            EphemereGames.Core.Audio.Facade.VolumeEffetsSonores = EffetsSonores.Valeur / 10f;
+
+            TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            TypeWriter.Update(gameTime);
+            Musique.Update(gameTime);
+            EffetsSonores.Update(gameTime);
+        }
+
+
+        protected override void InitializeTransition(TransitionType type)
+        {
+            AnimationTransition.In = (type == TransitionType.In) ? true : false;
+            AnimationTransition.Initialize();
+        }
+
+
+        protected override void UpdateTransition(GameTime gameTime)
+        {
+            AnimationTransition.Update(gameTime);
+
+            if (!AnimationTransition.Finished(gameTime))
+                return;
+
+            if (Transition == TransitionType.Out)
+                switch (ChoixTransition)
                 {
-                    switch (ChoixTransition)
-                    {
-                        case "menu": Core.Visuel.Facade.effectuerTransition("OptionsVersMenu"); break;
-                        case "chargement": Core.Visuel.Facade.effectuerTransition("OptionsVersChargement"); break;
-                    }
+                    case "menu": EphemereGames.Core.Visuel.Facade.Transite("OptionsToMenu"); break;
+                    case "chargement": EphemereGames.Core.Visuel.Facade.Transite("OptionsToChargement"); break;
                 }
-            }
 
-            else
-            {
-                Main.SaveGame.VolumeMusic = Musique.Valeur;
-                Main.SaveGame.VolumeSfx = EffetsSonores.Valeur;
-
-                Core.Audio.Facade.VolumeMusique = Musique.Valeur / 10f;
-                Core.Audio.Facade.VolumeEffetsSonores = EffetsSonores.Valeur / 10f;
-
-                TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
-                TypeWriter.Update(gameTime);
-                //Curseur.Update(gameTime); //todo
-                Musique.Update(gameTime);
-                EffetsSonores.Update(gameTime);
-            }
+            Transition = TransitionType.None;
         }
 
 
@@ -177,7 +172,7 @@
             ajouterScenable(FondEcran);
             ajouterScenable(TypeWriter.Texte);
 
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
 
             Curseur.Draw();
@@ -193,9 +188,7 @@
             Musique.Valeur = Main.SaveGame.VolumeMusic;
             EffetsSonores.Valeur = Main.SaveGame.VolumeSfx;
 
-            effectuerTransition = true;
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.In;
         }
 
 
@@ -203,8 +196,8 @@
         {
             base.onFocusLost();
 
-            if (!joueurPrincipalDeconnecte)
-                Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+            if (Main.PlayersController.MasterPlayer.Connected)
+                EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
         }
 
 
@@ -291,13 +284,11 @@
 
         private void beginTransition()
         {
-            if (effectuerTransition)
+            if (Transition != TransitionType.None)
                 return;
 
-            effectuerTransition = true;
+            Transition = TransitionType.Out;
             ChoixTransition = "menu";
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
         }
 
 
@@ -306,7 +297,7 @@
             if (TempsEntreDeuxChangementMusique > 0)
                 return;
 
-            Menu menu = (Menu)Core.Visuel.Facade.recupererScene("Menu");
+            Menu menu = (Menu)EphemereGames.Core.Visuel.Facade.GetScene("Menu");
             menu.ChangeMusic();
             TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;
         }

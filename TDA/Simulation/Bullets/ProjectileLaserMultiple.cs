@@ -1,13 +1,13 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Persistance;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Persistance;
+    using EphemereGames.Core.Physique;
     using ProjectMercury.Emitters;
 
     class ProjectileLaserMultiple : Projectile
@@ -36,10 +36,10 @@
             RepresentationVivantAlt = Scene.Particules.recuperer("projectileLaserMultiple");
             LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
             emetteur.Length = LONGUEUR_LIGNE;
-            RepresentationVivantAlt.PrioriteAffichage = PrioriteAffichage + 0.001f;
+            RepresentationVivantAlt.VisualPriority = PrioriteAffichage + 0.001f;
 
             RepresentationVivantAlt2 = new LigneVisuel(this.Position, this.Position + this.Direction * LONGUEUR_LIGNE, new Color(255, 216, 0), 4);
-            RepresentationVivantAlt2.PrioriteAffichage = PrioriteAffichage + 0.002f;
+            RepresentationVivantAlt2.VisualPriority = PrioriteAffichage + 0.002f;
 
             RepresentationDeplacement = null;
             RepresentationExplose = null;

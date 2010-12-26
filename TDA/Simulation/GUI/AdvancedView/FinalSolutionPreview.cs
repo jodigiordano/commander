@@ -1,6 +1,6 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -14,10 +14,11 @@
         {
             Simulation = simulation;
 
-            BlowUpZoneVisual = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("CercleBlanc"), Vector3.Zero);
-            BlowUpZoneVisual.Couleur = new Color(Color.Red, 100);
+            BlowUpZoneVisual = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("CercleBlanc"), Vector3.Zero);
+            BlowUpZoneVisual.Couleur = Color.Red;
+            BlowUpZoneVisual.Couleur.A = 100;
             BlowUpZoneVisual.Origine = BlowUpZoneVisual.Centre;
-            BlowUpZoneVisual.PrioriteAffichage = Preferences.PrioriteGUIEtoiles - 0.002f;
+            BlowUpZoneVisual.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.002f;
         }
 
         public void Draw()

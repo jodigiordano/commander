@@ -5,15 +5,15 @@
 //
 //=============================================================================
 
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using Microsoft.Xna.Framework;
-    using Core.Persistance;
-    using Core.Utilities;
+    using EphemereGames.Core.Persistance;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Graphics;
     using ProjectMercury.Emitters;
 
@@ -32,13 +32,13 @@ namespace Core.Visuel
         /// <summary>
         /// Liste des émetteurs
         /// </summary>
-        public List<IScenable> Composants       { get; set; }
+        public List<IScenable> Components       { get; set; }
 
 
         /// <summary>
         /// Priorité d'affichage pour un même Z
         /// </summary>
-        public float PrioriteAffichage { get; set; }
+        public float VisualPriority { get; set; }
 
 
 
@@ -58,8 +58,8 @@ namespace Core.Visuel
         /// <summary>
         /// Mélange utilisé par le système
         /// </summary>
-        private TypeMelange melange;
-        public TypeMelange Melange
+        private TypeBlend melange;
+        public TypeBlend Blend
         {
             get { return melange; }
             set
@@ -83,7 +83,7 @@ namespace Core.Visuel
         public Scene Scene { get; set; }
 
 
-        public ProjectMercury.Renderers.PointSpriteRenderer Renderer;
+        public ProjectMercury.Renderers.SpriteBatchRenderer Renderer;
 
         /// <summary>
         /// Le ParticleEffect du projet Mercury, qui est composé de 1 ou plusieurs Emitters gérés par EmitterWrapper
@@ -106,10 +106,10 @@ namespace Core.Visuel
         public ParticuleEffectWrapper()
         {
             Nom = "";
-            Composants = null;
+            Components = null;
             Position = Vector3.Zero;
-            Melange = TypeMelange.Additif;
-            PrioriteAffichage = 0;
+            Blend = TypeBlend.Add;
+            VisualPriority = 0;
         }
 
 
@@ -119,7 +119,7 @@ namespace Core.Visuel
 
             //if (ParticleEffect == null)
             //{
-                ProjectMercury.ParticleEffect effetModele = Core.Persistance.Facade.recuperer<ProjectMercury.ParticleEffect>(Nom);
+                ProjectMercury.ParticleEffect effetModele = EphemereGames.Core.Persistance.Facade.GetAsset<ProjectMercury.ParticleEffect>(Nom);
 
                 ParticleEffect = effetModele.DeepCopy();
 
@@ -184,35 +184,31 @@ namespace Core.Visuel
         /// </summary>
         /// <param name="blendMode">Blend mode du projet Mercury</param>
         /// <returns>Blend mode de notre système</returns>
-        private static TypeMelange convertirBlendMode(ProjectMercury.BlendMode blendMode)
+        private static TypeBlend convertirBlendMode(ProjectMercury.Emitters.EmitterBlendMode blendMode)
         {
-            TypeMelange melange;
+            TypeBlend melange;
 
             switch (blendMode)
             {
-                case ProjectMercury.BlendMode.Add:          melange = TypeMelange.Additif;        break;
-                case ProjectMercury.BlendMode.Alpha:        melange = TypeMelange.Alpha;          break;
-                case ProjectMercury.BlendMode.Multiply:     melange = TypeMelange.Multiplicatif;  break;
-                case ProjectMercury.BlendMode.None:         melange = TypeMelange.Aucun;          break;
-                case ProjectMercury.BlendMode.Subtract:     melange = TypeMelange.Soustraire;     break;
-                default:                                    melange = TypeMelange.Additif;        break;
+                case ProjectMercury.Emitters.EmitterBlendMode.Add:          melange = TypeBlend.Add;        break;
+                case ProjectMercury.Emitters.EmitterBlendMode.Alpha:        melange = TypeBlend.Alpha;          break;
+                case ProjectMercury.Emitters.EmitterBlendMode.None:         melange = TypeBlend.None;          break;
+                default:                                                    melange = TypeBlend.Add;        break;
             }
 
             return melange;
         }
 
-        private static ProjectMercury.BlendMode convertirTypeMelange(TypeMelange melange)
+        private static ProjectMercury.Emitters.EmitterBlendMode convertirTypeMelange(TypeBlend melange)
         {
-            ProjectMercury.BlendMode blendMode;
+            ProjectMercury.Emitters.EmitterBlendMode blendMode;
 
             switch (melange)
             {
-                case TypeMelange.Additif:          blendMode = ProjectMercury.BlendMode.Add;        break;
-                case TypeMelange.Alpha:             blendMode = ProjectMercury.BlendMode.Alpha;     break;
-                case TypeMelange.Multiplicatif:     blendMode = ProjectMercury.BlendMode.Multiply;  break;
-                case TypeMelange.Aucun:             blendMode = ProjectMercury.BlendMode.None;      break;
-                case TypeMelange.Soustraire:        blendMode = ProjectMercury.BlendMode.Subtract;  break;
-                default:                            blendMode = ProjectMercury.BlendMode.Add;       break;
+                case TypeBlend.Add:          blendMode = ProjectMercury.Emitters.EmitterBlendMode.Add;        break;
+                case TypeBlend.Alpha:             blendMode = ProjectMercury.Emitters.EmitterBlendMode.Alpha;     break;
+                case TypeBlend.None:             blendMode = ProjectMercury.Emitters.EmitterBlendMode.None;      break;
+                default:                            blendMode = ProjectMercury.Emitters.EmitterBlendMode.Add;       break;
             }
 
             return blendMode;
@@ -220,7 +216,7 @@ namespace Core.Visuel
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            this.Renderer.RenderEffect(this.ParticleEffect, ref Scene.Camera.Transformee);
+            this.Renderer.RenderEffect(this.ParticleEffect, ref Scene.Camera.Transform);
         }
 
         public string TypeAsset

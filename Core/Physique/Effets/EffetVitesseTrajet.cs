@@ -4,13 +4,13 @@
 //
 //=====================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     public class EffetVitesseTrajet : EffetPhysique
     {
@@ -29,29 +29,29 @@ namespace Core.Physique
         // Logique
         //=====================================================================
 
-        protected override void LogiqueLineaire()
+        protected override void LogicLinear()
         {
-            Objet.Vitesse = VitesseDepart + deltaVitesse * Trajet.position(tempsRelatif).Y;
+            Objet.Vitesse = VitesseDepart + deltaVitesse * Trajet.position(ElaspedTime).Y;
         }
 
-        protected override void LogiqueApresDuree()
+        protected override void LogicAfter()
         {
-            LogiqueLineaire();
+            LogicLinear();
         }
 
-        protected override void LogiqueMaintenant()
+        protected override void LogicNow()
         {
             Objet.Vitesse = VitesseArrivee;
         }
 
-        protected override void InitLogique()
+        protected override void InitializeLogic()
         {
             deltaVitesse = VitesseArrivee - VitesseDepart;
 
             Objet.Vitesse = VitesseDepart;
         }
 
-        protected override void LogiqueTermine()
+        protected override void LogicEnd()
         {
             Objet.Vitesse = VitesseArrivee;
         }

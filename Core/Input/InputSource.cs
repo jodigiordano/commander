@@ -1,4 +1,4 @@
-﻿namespace Core.Input
+﻿namespace EphemereGames.Core.Input
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;

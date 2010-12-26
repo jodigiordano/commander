@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
 
     public struct DonneesGenerateur
     {
@@ -30,7 +30,7 @@
         public int DifficulteDebut;
         public int DifficulteFin;
         public int QteEnnemis;
-        public List<TypeEnnemi> EnnemisPresents;
+        public List<EnemyType> EnnemisPresents;
         public int NbVagues;
         public int ArgentEnnemis;
     }
@@ -120,8 +120,8 @@
         private IVisible ReserveEnnemisRep;
         private HorizontalSlider ReserveEnnemisSlider;
 
-        private Dictionary<TypeEnnemi, IVisible> EnnemisDisponiblesRep;
-        private Dictionary<TypeEnnemi, CheckBox> EnnemisDisponiblesCheckBoxes;
+        private Dictionary<EnemyType, IVisible> EnnemisDisponiblesRep;
+        private Dictionary<EnemyType, CheckBox> EnnemisDisponiblesCheckBoxes;
 
         private IVisible GenererVaguesRep;
         private PushButton GenererVaguesPushButton;
@@ -160,59 +160,59 @@
 
             #region Systeme Planetaire
 
-            FiltreSystemePlanetaire = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position - new Vector3(0, 90, 0));
-            FiltreSystemePlanetaire.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
+            FiltreSystemePlanetaire = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Position - new Vector3(0, 90, 0));
+            FiltreSystemePlanetaire.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreSystemePlanetaire.TailleVecteur = new Vector2(540, 320);
             FiltreSystemePlanetaire.Couleur = new Color(255, 0, 220, 128);
             FiltreSystemePlanetaire.Origine = FiltreSystemePlanetaire.Centre;
 
-            SystemePlanetaire = new IVisible("Planetary System", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(0, 250, 0));
+            SystemePlanetaire = new IVisible("Planetary System", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(0, 250, 0));
             SystemePlanetaire.Taille = 4;
-            SystemePlanetaire.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            SystemePlanetaire.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             SystemePlanetaire.Origine = SystemePlanetaire.Centre;
 
 
-            NbPlanetesRep = new IVisible("Planets", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 220, 0));
+            NbPlanetesRep = new IVisible("Planets", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 220, 0));
             NbPlanetesRep.Taille = 2;
-            NbPlanetesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            NbPlanetesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbPlanetesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 210, 0), 1, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbPlanetesFixesRep = new IVisible("Fixed planets", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 180, 0));
+            NbPlanetesFixesRep = new IVisible("Fixed planets", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 180, 0));
             NbPlanetesFixesRep.Taille = 2;
-            NbPlanetesFixesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            NbPlanetesFixesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbPlanetesFixesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 170, 0), 0, 15, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbEmplacementsRep = new IVisible("Slots", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 140, 0));
+            NbEmplacementsRep = new IVisible("Slots", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 140, 0));
             NbEmplacementsRep.Taille = 2;
-            NbEmplacementsRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            NbEmplacementsRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbEmplacementsSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 130, 0), 1, 50, 10, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            NbPlanetesCheminDepartRep = new IVisible("Path length", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 100, 0));
+            NbPlanetesCheminDepartRep = new IVisible("Path length", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 100, 0));
             NbPlanetesCheminDepartRep.Taille = 2;
-            NbPlanetesCheminDepartRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            NbPlanetesCheminDepartRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbPlanetesCheminDepartSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 90, 0), 0, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            EtoileRep = new IVisible("Star in the middle?", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 60, 0));
+            EtoileRep = new IVisible("Star in the middle?", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 60, 0));
             EtoileRep.Taille = 2;
-            EtoileRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            EtoileRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             EtoileCheckBox = new CheckBox(Simulation, curseur, Position - new Vector3(-200, 50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            SystemeCentreRep = new IVisible("Centre?", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 20, 0));
+            SystemeCentreRep = new IVisible("Centre?", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 20, 0));
             SystemeCentreRep.Taille = 2;
-            SystemeCentreRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            SystemeCentreRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             SystemeCentreCheckBox = new CheckBox(Simulation, curseur, Position - new Vector3(-200, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            GenererSystemePlanetaireRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(-90, -40, 0));
+            GenererSystemePlanetaireRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(-90, -40, 0));
             GenererSystemePlanetaireRep.Taille = 2;
-            GenererSystemePlanetaireRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            GenererSystemePlanetaireRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             GenererSystemePlanetairePushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-240, -50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
@@ -220,41 +220,41 @@
 
             #region Gameplay Elements
 
-            FiltreGameplay = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(600, -90, 0));
-            FiltreGameplay.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
+            FiltreGameplay = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Position + new Vector3(600, -90, 0));
+            FiltreGameplay.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreGameplay.TailleVecteur = new Vector2(540, 320);
             FiltreGameplay.Couleur = new Color(76, 255, 0, 128);
             FiltreGameplay.Origine = FiltreSystemePlanetaire.Centre;
 
-            Gameplay = new IVisible("Gameplay", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(0, 160, 0));
+            Gameplay = new IVisible("Gameplay", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(0, 160, 0));
             Gameplay.Taille = 4;
-            Gameplay.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            Gameplay.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             Gameplay.Origine = Gameplay.Centre;
 
-            ReserveDepartRep = new IVisible("Minerals", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 120, 0));
+            ReserveDepartRep = new IVisible("Minerals", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 120, 0));
             ReserveDepartRep.Taille = 2;
-            ReserveDepartRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            ReserveDepartRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             ReserveDepartSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 110, 0), 0, 10000, 0, 100, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbViesRep = new IVisible("Lives", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 80, 0));
+            NbViesRep = new IVisible("Lives", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 80, 0));
             NbViesRep.Taille = 2;
-            NbViesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            NbViesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbViesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 70, 0), 1, 50, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            ValeurMinerauxRep = new IVisible("Enemies minerals", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 40, 0));
+            ValeurMinerauxRep = new IVisible("Enemies minerals", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 40, 0));
             ValeurMinerauxRep.Taille = 2;
-            ValeurMinerauxRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            ValeurMinerauxRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             ValeurMinerauxSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 30, 0), 0, 5000, 250, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            NbPacksVieRep = new IVisible("Life packs", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 0, 0));
+            NbPacksVieRep = new IVisible("Life packs", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 0, 0));
             NbPacksVieRep.Taille = 2;
-            NbPacksVieRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            NbPacksVieRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbPacksVieSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, -10, 0), 0, 20, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
@@ -267,7 +267,7 @@
             {
                 IVisible iv = (IVisible) tourelle.representationBase.Clone();
                 iv.Position = positionTourelle;
-                iv.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+                iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
                 TourellesRep.Add(tourelle.Type, iv);
                 TourellesCheckBoxes.Add(tourelle.Type, new CheckBox(Simulation, curseur, iv.Position + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
@@ -283,41 +283,41 @@
             PowerUpsRep = new Dictionary<PowerUp, IVisible>();
             PowerUpsCheckBoxes = new Dictionary<PowerUp, CheckBox>();
 
-            PowerUpsRep.Add(PowerUp.DoItYourself, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Vaisseau"), positionPowerUp));
+            PowerUpsRep.Add(PowerUp.DoItYourself, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Vaisseau"), positionPowerUp));
             PowerUpsRep[PowerUp.DoItYourself].Taille = 4;
             PowerUpsRep[PowerUp.DoItYourself].Origine = PowerUpsRep[PowerUp.DoItYourself].Centre;
-            PowerUpsRep[PowerUp.DoItYourself].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsRep[PowerUp.DoItYourself].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             PowerUpsCheckBoxes.Add(PowerUp.DoItYourself, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.DoItYourself].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.CollectTheRent, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Collecteur"), positionPowerUp));
+            PowerUpsRep.Add(PowerUp.CollectTheRent, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Collecteur"), positionPowerUp));
             PowerUpsRep[PowerUp.CollectTheRent].Taille = 4;
             PowerUpsRep[PowerUp.CollectTheRent].Origine = PowerUpsRep[PowerUp.CollectTheRent].Centre;
-            PowerUpsRep[PowerUp.CollectTheRent].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsRep[PowerUp.CollectTheRent].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             PowerUpsCheckBoxes.Add(PowerUp.CollectTheRent, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.CollectTheRent].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.FinalSolution, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Destruction"), positionPowerUp));
+            PowerUpsRep.Add(PowerUp.FinalSolution, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Destruction"), positionPowerUp));
             PowerUpsRep[PowerUp.FinalSolution].Taille = 4;
             PowerUpsRep[PowerUp.FinalSolution].Origine = PowerUpsRep[PowerUp.FinalSolution].Centre;
-            PowerUpsRep[PowerUp.FinalSolution].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsRep[PowerUp.FinalSolution].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             PowerUpsCheckBoxes.Add(PowerUp.FinalSolution, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.FinalSolution].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.TheResistance, new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("TheResistance"), positionPowerUp));
+            PowerUpsRep.Add(PowerUp.TheResistance, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("TheResistance"), positionPowerUp));
             PowerUpsRep[PowerUp.TheResistance].Taille = 4;
             PowerUpsRep[PowerUp.TheResistance].Origine = PowerUpsRep[PowerUp.TheResistance].Centre;
-            PowerUpsRep[PowerUp.TheResistance].PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsRep[PowerUp.TheResistance].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             PowerUpsCheckBoxes.Add(PowerUp.TheResistance, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.TheResistance].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            GenererGameplayRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(-90, -130, 0));
+            GenererGameplayRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(-90, -130, 0));
             GenererGameplayRep.Taille = 2;
-            GenererGameplayRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            GenererGameplayRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             GenererGameplayPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-240, -140, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
@@ -326,56 +326,56 @@
 
             #region Waves
 
-            FiltreWaves = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(300, 175, 0));
-            FiltreWaves.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
+            FiltreWaves = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Position + new Vector3(300, 175, 0));
+            FiltreWaves.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreWaves.TailleVecteur = new Vector2(1137, 140);
             FiltreWaves.Couleur = new Color(255, 0, 0, 128);
             FiltreWaves.Origine = FiltreWaves.Centre;
 
 
-            Waves = new IVisible("Waves", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(0, 70, 0));
+            Waves = new IVisible("Waves", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(0, 70, 0));
             Waves.Taille = 4;
-            Waves.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            Waves.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             Waves.Origine = Waves.Centre;
 
 
-            NbVaguesRep = new IVisible("Waves", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 50, 0));
+            NbVaguesRep = new IVisible("Waves", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 50, 0));
             NbVaguesRep.Taille = 2;
-            NbVaguesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            NbVaguesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             NbVaguesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 40, 0), 1, 30, 1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            QteEnnemisRep = new IVisible("Quantity", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 10, 0));
+            QteEnnemisRep = new IVisible("Quantity", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 10, 0));
             QteEnnemisRep.Taille = 2;
-            QteEnnemisRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            QteEnnemisRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             QteEnnemisSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 0, 0), 20, 1000, 20, 20, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            ReserveEnnemisRep = new IVisible("Money", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, -30, 0));
+            ReserveEnnemisRep = new IVisible("Money", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, -30, 0));
             ReserveEnnemisRep.Taille = 2;
-            ReserveEnnemisRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            ReserveEnnemisRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             ReserveEnnemisSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, -40, 0), 0, 10000, 0, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            DifficulteDebutRep = new IVisible("Diff. start", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(200, 30, 0));
+            DifficulteDebutRep = new IVisible("Diff. start", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(200, 30, 0));
             DifficulteDebutRep.Taille = 2;
-            DifficulteDebutRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            DifficulteDebutRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             DifficulteDebutSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-100, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            DifficulteFinRep = new IVisible("Diff. end", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-200, 30, 0));
+            DifficulteFinRep = new IVisible("Diff. end", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-200, 30, 0));
             DifficulteFinRep.Taille = 2;
-            DifficulteFinRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            DifficulteFinRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             DifficulteFinSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-450, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
  
-            EnnemisDisponiblesRep = new Dictionary<TypeEnnemi, IVisible>();
-            EnnemisDisponiblesCheckBoxes = new Dictionary<TypeEnnemi, CheckBox>();
+            EnnemisDisponiblesRep = new Dictionary<EnemyType, IVisible>();
+            EnnemisDisponiblesCheckBoxes = new Dictionary<EnemyType, CheckBox>();
 
             Vector3 positionEnnemis = FiltreWaves.Position - new Vector3(190, -30, 0);
 
@@ -384,7 +384,7 @@
                 ennemi.Initialize();
                 IVisible iv = (IVisible)ennemi.RepresentationVivant.Clone();
                 iv.Position = positionEnnemis;
-                iv.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+                iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
                 EnnemisDisponiblesRep.Add(ennemi.Type, iv);
                 EnnemisDisponiblesCheckBoxes.Add(ennemi.Type, new CheckBox(Simulation, curseur, iv.Position + new Vector3(45, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
@@ -395,9 +395,9 @@
             }
 
 
-            GenererVaguesRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-390, -40, 0));
+            GenererVaguesRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-390, -40, 0));
             GenererVaguesRep.Taille = 2;
-            GenererVaguesRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            GenererVaguesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             GenererVaguesPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-540, -50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
@@ -406,49 +406,49 @@
 
             #region Editeur
 
-            FiltreEditeur = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Position + new Vector3(300, -340, 0));
-            FiltreEditeur.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
+            FiltreEditeur = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Position + new Vector3(300, -340, 0));
+            FiltreEditeur.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.01f;
             FiltreEditeur.TailleVecteur = new Vector2(740, 120);
             FiltreEditeur.Couleur = new Color(0, 148, 255, 128);
             FiltreEditeur.Origine = FiltreEditeur.Centre;
 
-            Editeur = new IVisible("Editor", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 60, 0));
+            Editeur = new IVisible("Editor", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 60, 0));
             Editeur.Taille = 4;
-            Editeur.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            Editeur.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
             Editeur.Origine = Editeur.Centre;
 
 
-            LoadRep = new IVisible("Load", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, 20, 0));
+            LoadRep = new IVisible("Load", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, 20, 0));
             LoadRep.Taille = 2;
-            LoadRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            LoadRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             LoadSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, 10, 0), -1, 1000, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
             LoadPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            DeleteRep = new IVisible("Delete", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, -20, 0));
+            DeleteRep = new IVisible("Delete", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, -20, 0));
             DeleteRep.Taille = 2;
-            DeleteRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            DeleteRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             DeleteSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, -30, 0), -1, 1000, -1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
             DeletePushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, -30, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            GenererRep = new IVisible("Generate", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(-175, 20, 0));
+            GenererRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(-175, 20, 0));
             GenererRep.Taille = 2;
-            GenererRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            GenererRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             GenererPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-330, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            RestartRep = new IVisible("Restart", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 20, 0));
+            RestartRep = new IVisible("Restart", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 20, 0));
             RestartRep.Taille = 2;
-            RestartRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            RestartRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             RestartPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-150, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
-            SaveRep = new IVisible("Save", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, -20, 0));
+            SaveRep = new IVisible("Save", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, -20, 0));
             SaveRep.Taille = 2;
-            SaveRep.PrioriteAffichage = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            SaveRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
             SavePushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-150, -30, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
@@ -516,7 +516,7 @@
                 GenerateurScenario.genererGameplay();
 
                 DescriptionScenario = GenerateurScenario.DescripteurScenario;
-                DescriptionScenario.Vagues = GenerateurVagues.Vagues;
+                DescriptionScenario.Waves = GenerateurVagues.Vagues;
 
                 Simulation.DescriptionScenario = DescriptionScenario;
                 Simulation.Initialize();
@@ -538,7 +538,7 @@
                 GenerateurScenario.genererGameplay();
 
                 DescriptionScenario = GenerateurScenario.DescripteurScenario;
-                DescriptionScenario.Vagues = GenerateurVagues.Vagues;
+                DescriptionScenario.Waves = GenerateurVagues.Vagues;
 
                 Simulation.DescriptionScenario = DescriptionScenario;
                 Simulation.Initialize();
@@ -561,7 +561,7 @@
                 GenerateurScenario.genererCeintureAsteroides();
 
                 DescriptionScenario = GenerateurScenario.DescripteurScenario;
-                DescriptionScenario.Vagues = GenerateurVagues.Vagues;
+                DescriptionScenario.Waves = GenerateurVagues.Vagues;
 
                 Simulation.DescriptionScenario = DescriptionScenario;
                 Simulation.Initialize();
@@ -583,7 +583,7 @@
                 GenerateurScenario.genererGameplay();
 
                 DescriptionScenario = GenerateurScenario.DescripteurScenario;
-                DescriptionScenario.Vagues = GenerateurVagues.Vagues;
+                DescriptionScenario.Waves = GenerateurVagues.Vagues;
 
                 Simulation.DescriptionScenario = DescriptionScenario;
                 Simulation.Initialize();
@@ -628,7 +628,7 @@
             //        Simulation.Main.SaveGame.DonneesGenerateur[LoadSlider.Valeur] = DonneesGenerateur;
             //    }
 
-            //    Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+            //    EphemereGames.Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
             //}
 
             //if (DeletePushButton.Pressed && DeleteSlider.Valeur != -1 && DeleteSlider.Valeur < Simulation.Main.SaveGame.DescriptionsScenarios.Count)
@@ -638,7 +638,7 @@
 
             //    DeleteSlider.Valeur = -1;
 
-            //    Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+            //    EphemereGames.Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
             //}
         }
 
@@ -816,7 +816,7 @@
             DonneesGenerateur.DifficulteFin = DifficulteFinSlider.Valeur;
             DonneesGenerateur.ArgentEnnemis = ReserveEnnemisSlider.Valeur;
 
-            List<TypeEnnemi> ennemisDisponibles = new List<TypeEnnemi>();
+            List<EnemyType> ennemisDisponibles = new List<EnemyType>();
 
             foreach (var ennemi in EnnemisDisponiblesCheckBoxes)
                 if (ennemi.Value.Checked)
@@ -851,7 +851,7 @@
             DifficulteFinSlider.Valeur = DonneesGenerateur.DifficulteFin;
             ReserveEnnemisSlider.Valeur = DonneesGenerateur.ArgentEnnemis;
 
-            List<TypeEnnemi> ennemisDisponibles = new List<TypeEnnemi>();
+            List<EnemyType> ennemisDisponibles = new List<EnemyType>();
 
             foreach (var ennemi in EnnemisDisponiblesCheckBoxes)
                 ennemi.Value.Checked = DonneesGenerateur.EnnemisPresents.Contains(ennemi.Key);

@@ -1,17 +1,17 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
 
     class ScenarioEndedAnnunciation
     {
         private IVisible Filter;
-        private Objets.VaisseauAlien AlienShip;
+        private VaisseauAlien AlienShip;
         private List<KeyValuePair<IVisible, CorpsCeleste>> Missiles;
         private List<ParticuleEffectWrapper> MissilesVisual;
         private List<ParticuleEffectWrapper> Implosions;
@@ -49,22 +49,22 @@
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
                 ParticuleEffectWrapper particule = this.Simulation.Scene.Particules.recuperer("missileAlien");
-                particule.PrioriteAffichage = Preferences.PrioriteGUIVictoireDefaite + 0.10f;
+                particule.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.10f;
 
                 MissilesVisual.Add(particule);
 
                 particule = this.Simulation.Scene.Particules.recuperer("implosionAlien");
-                particule.PrioriteAffichage = Preferences.PrioriteGUIVictoireDefaite + 0.09f;
+                particule.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.09f;
 
                 Implosions.Add(particule);
             }
 
-            AlienShip = new Objets.VaisseauAlien(simulation.Scene, Preferences.PrioriteGUIVictoireDefaite + 0.08f);
+            AlienShip = new VaisseauAlien(simulation.Scene, Preferences.PrioriteGUIVictoireDefaite + 0.08f);
 
-            Filter = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
-            Filter.PrioriteAffichage = 0.02f;
+            Filter = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
+            Filter.VisualPriority = 0.02f;
             Filter.TailleVecteur = new Vector2(1800, 200);
-            Filter.Couleur = new Color(Color.Black, 200);
+            Filter.Couleur = new Color(0, 0, 0, 200);
         }
 
         public void doGameStateChanged(GameState etat)
@@ -81,9 +81,9 @@
                     Simulation.Main,
                     Simulation.Scene,
                     new Vector3(-600, -130, 0),
-                    Core.Persistance.Facade.recuperer<SpriteFont>("Alien"),
+                    EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Alien"),
                     Color.White,
-                    Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                    EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                     new Color(234, 196, 28, 0),
                     "Thank you Commander!\n\nBut our enemy destroyed " + Simulation.DescriptionScenario.Lieu + " anyway!\n\nPress Start.",
                     3,
@@ -94,9 +94,9 @@
 
 
                 EffetDeplacementTrajet e = new EffetDeplacementTrajet();
-                e.Delai = 2000;
-                e.Duree = 15000;
-                e.Progression = AbstractEffet.TypeProgression.Lineaire;
+                e.Delay = 2000;
+                e.Length = 15000;
+                e.Progress = AbstractEffect.ProgressType.Linear;
                 e.Trajet = new Trajet2D(new Vector2[]
                 {
                     new Vector2(-1200, 100),
@@ -111,7 +111,7 @@
                     15000
                 });
 
-                this.Simulation.Scene.Effets.ajouter(AlienShip.Representation, e);
+                this.Simulation.Scene.Effets.Add(AlienShip.Representation, e);
             }
 
             else if (GameState == GameState.Lost)
@@ -121,9 +121,9 @@
                     Simulation.Main,
                     Simulation.Scene,
                     new Vector3(-600, -130, 0),
-                    Core.Persistance.Facade.recuperer<SpriteFont>("Alien"),
+                    EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Alien"),
                     Color.White,
-                    Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                    EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                     new Color(234, 196, 28, 0),
                     QuotesLost[Main.Random.Next(0, QuotesLost.Length)],
                     3,
@@ -133,17 +133,17 @@
                 );
             }
 
-            TranslatorScenarioEnded.PartieTraduite.PrioriteAffichage = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
-            TranslatorScenarioEnded.PartieNonTraduite.PrioriteAffichage = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
+            TranslatorScenarioEnded.PartieTraduite.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
+            TranslatorScenarioEnded.PartieNonTraduite.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
 
-            this.Simulation.Scene.Effets.ajouter(TranslatorScenarioEnded.PartieTraduite, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
-            this.Simulation.Scene.Effets.ajouter(TranslatorScenarioEnded.PartieNonTraduite, EffetsPredefinis.fadeInFrom0(255, 0, 1000));
-            this.Simulation.Scene.Effets.ajouter(Filter, EffetsPredefinis.fadeInFrom0(200, 0, 1000));
+            this.Simulation.Scene.Effets.Add(TranslatorScenarioEnded.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
+            this.Simulation.Scene.Effets.Add(TranslatorScenarioEnded.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
+            this.Simulation.Scene.Effets.Add(Filter, PredefinedEffects.FadeInFrom0(200, 0, 1000));
 
             EffetDeplacementTrajet effet = new EffetDeplacementTrajet();
-            effet.Delai = 0;
-            effet.Duree = 10000;
-            effet.Progression = AbstractEffet.TypeProgression.Lineaire;
+            effet.Delay = 0;
+            effet.Length = 10000;
+            effet.Progress = AbstractEffect.ProgressType.Linear;
             effet.Trajet = new Trajet2D(new Vector2[]
                 {
                     new Vector2(-1920, -155),
@@ -156,7 +156,7 @@
                     1200
                 });
 
-            this.Simulation.Scene.Effets.ajouter(Filter, effet);
+            this.Simulation.Scene.Effets.Add(Filter, effet);
         }
 
 
@@ -175,12 +175,12 @@
                         Missiles[i].Key.Position = AlienShip.Representation.Position;
 
                         EffetSuivre deplacement = new EffetSuivre();
-                        deplacement.Delai = i * 500;
-                        deplacement.Duree = 10000;
+                        deplacement.Delay = i * 500;
+                        deplacement.Length = 10000;
                         deplacement.ObjetSuivi = CelestialBodies[i];
                         deplacement.Vitesse = 20f;
 
-                        this.Simulation.Scene.Effets.ajouter(Missiles[i].Key, deplacement);
+                        this.Simulation.Scene.Effets.Add(Missiles[i].Key, deplacement);
                     }
 
                     TimeLostState = Double.NegativeInfinity;

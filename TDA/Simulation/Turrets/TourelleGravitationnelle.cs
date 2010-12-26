@@ -1,11 +1,11 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
 
     class TourelleGravitationnelle : Tourelle
@@ -38,7 +38,7 @@ namespace TDA
             {
                 base.PrioriteAffichage = value;
 
-                representation.PrioriteAffichage = representationBase.PrioriteAffichage - 0.001f;
+                representation.VisualPriority = representationBase.VisualPriority - 0.001f;
             }
         }
 

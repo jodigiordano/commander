@@ -1,23 +1,23 @@
-﻿namespace Core.Physique
+﻿namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework.Content;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
     
-    public class EffetPhysique : AbstractEffet, ICloneable
+    public class EffetPhysique : AbstractEffect, ICloneable
     {
         [ContentSerializerIgnore]
         public IPhysique Objet
         {
             get
             {
-                return (IPhysique)objet;
+                return (IPhysique)Obj;
             }
 
             set
             {
-                objet = value;
+                Obj = value;
             }
         }
 
@@ -27,7 +27,7 @@
         public virtual object Clone()
         {
             EffetPhysique ev = (EffetPhysique)this.MemberwiseClone();
-            ev.Termine = false;
+            ev.Finished = false;
 
             return ev;
         }

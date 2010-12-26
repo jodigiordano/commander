@@ -1,12 +1,12 @@
 ﻿
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
     using ProjectMercury.Emitters;
 
     class SelectedCelestialBodyAnimation
@@ -23,17 +23,17 @@ namespace TDA
             Simulation = simulation;
 
             Selection = Simulation.Scene.Particules.recuperer("selectionCorpsCeleste");
-            Selection.PrioriteAffichage = Preferences.PrioriteGUISelectionCorpsCeleste;
+            Selection.VisualPriority = Preferences.PrioriteGUISelectionCorpsCeleste;
 
             WidgetName = new IVisible
             (
                 "",
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                 Color.White,
                 new Vector3(Selection.Position.X, Selection.Position.Y + ((CircleEmitter)Selection.ParticleEffect[0]).Radius + 50, 0)
             );
             WidgetName.Taille = 2;
-            WidgetName.PrioriteAffichage = Preferences.PrioriteGUISelectionCorpsCeleste;
+            WidgetName.VisualPriority = Preferences.PrioriteGUISelectionCorpsCeleste;
         }
 
 

@@ -1,10 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using Core.Physique;
-    using Core.Input;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Input;
 
     class SimPlayersController
     {
@@ -291,7 +291,7 @@
             Player.UpdateSelection();
 
             if (tourelle.Type == TypeTourelle.Gravitationnelle && !Simulation.ModeDemo)
-                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
         }
 
 
@@ -303,9 +303,9 @@
             Player.UpdateSelection();
 
             if (tourelle.Type == TypeTourelle.Gravitationnelle)
-                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
             else
-                Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleVendue");
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleVendue");
         }
 
 
@@ -448,7 +448,7 @@
 
             // call next wave
             if (!ModeDemo &&
-                Core.Physique.Facade.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
+                EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
             {
                 notifyProchaineVagueDemandee();
                 return;

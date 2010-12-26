@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
     using ProjectMercury.Modifiers;
 
     class CorpsCeleste : DrawableGameComponent, IObjetVivant, IObjetPhysique
@@ -63,21 +63,21 @@
             get
             {
                 if (this.representation != null)
-                    return this.representation.PrioriteAffichage;
+                    return this.representation.VisualPriority;
 
                 else
-                    return this.representationParticules.PrioriteAffichage;
+                    return this.representationParticules.VisualPriority;
             }
 
             set
             {
-                PrioriteAffichageBackup = (this.representation != null) ? this.representation.PrioriteAffichage : this.representationParticules.PrioriteAffichage;
+                PrioriteAffichageBackup = (this.representation != null) ? this.representation.VisualPriority : this.representationParticules.VisualPriority;
 
                 if (this.representation != null)
-                    this.representation.PrioriteAffichage = value;
+                    this.representation.VisualPriority = value;
 
                 if (this.representationParticules != null)
-                    this.representationParticules.PrioriteAffichage = value;
+                    this.representationParticules.VisualPriority = value;
 
                 for (int i = 0; i < Emplacements.Count; i++)
                     Emplacements[i].PrioriteAffichage = value;
@@ -119,11 +119,11 @@
 
             if (enBackground)
             {
-                this.representation.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.07f;
+                this.representation.VisualPriority = Preferences.PrioriteFondEcran - 0.07f;
                 this.representation.Couleur.A = 60;
             }
             else
-                this.representation.PrioriteAffichage = prioriteAffichage;
+                this.representation.VisualPriority = prioriteAffichage;
 
             PrioriteAffichageBackup = prioriteAffichage;
 
@@ -209,7 +209,7 @@
 
             if (enBackground)
             {
-                this.representationParticules.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.07f;
+                this.representationParticules.VisualPriority = Preferences.PrioriteFondEcran - 0.07f;
 
                 foreach (var emetteur in this.representationParticules.ParticleEffect)
                 {
@@ -227,7 +227,7 @@
                 }
             }
             else
-                this.representationParticules.PrioriteAffichage = prioriteAffichage;
+                this.representationParticules.VisualPriority = prioriteAffichage;
 
             PrioriteAffichageBackup = prioriteAffichage;
 
@@ -371,9 +371,9 @@
             toucherTerre = Simulation.Scene.Particules.recuperer("toucherTerre");
 
             if (this.representation != null)
-                toucherTerre.PrioriteAffichage = this.representation.PrioriteAffichage - 0.001f;
+                toucherTerre.VisualPriority = this.representation.VisualPriority - 0.001f;
             else
-                toucherTerre.PrioriteAffichage = this.representationParticules.PrioriteAffichage - 0.001f;
+                toucherTerre.VisualPriority = this.representationParticules.VisualPriority - 0.001f;
 
             toucherTerre.Emettre(ref this.position);
             Simulation.Scene.Particules.retourner(toucherTerre);
@@ -397,13 +397,13 @@
 
             if (this.representation != null)
             {
-                bouleMeurt.PrioriteAffichage = this.representation.PrioriteAffichage - 0.001f;
-                anneauMeurt.PrioriteAffichage = this.representation.PrioriteAffichage - 0.001f;
+                bouleMeurt.VisualPriority = this.representation.VisualPriority - 0.001f;
+                anneauMeurt.VisualPriority = this.representation.VisualPriority - 0.001f;
             }
             else
             {
-                bouleMeurt.PrioriteAffichage = this.representationParticules.PrioriteAffichage - 0.001f;
-                anneauMeurt.PrioriteAffichage = this.representationParticules.PrioriteAffichage - 0.001f;
+                bouleMeurt.VisualPriority = this.representationParticules.VisualPriority - 0.001f;
+                anneauMeurt.VisualPriority = this.representationParticules.VisualPriority - 0.001f;
             }
 
             bouleMeurt.Emettre(ref this.position);

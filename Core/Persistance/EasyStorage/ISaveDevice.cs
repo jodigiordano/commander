@@ -1,54 +1,61 @@
-﻿namespace Core.Persistance
+﻿using System.IO;
+
+namespace EasyStorage
 {
-    using System.IO;
-    
-    /// <summary>
-	/// A method for saving a file.
-	/// </summary>
-	/// <param name="writer">A StreamWriter to use for saving the data.</param>
-	/// <returns>True if the saving completed successfully, false otherwise.</returns>
-	public delegate void SaveAction(StreamWriter writer);
-
-	/// <summary>
-	/// A method for loading a file.
-	/// </summary>
-	/// <param name="reader">A StreamReader to use for loading the data.</param>
-	/// <returns>True if the loading completed successfully, false otherwise.</returns>
-	public delegate void LoadAction(StreamReader reader);
-
 	/// <summary>
 	/// Defines the interface for an object that can perform file operations.
 	/// </summary>
 	public interface ISaveDevice
 	{
 		/// <summary>
+		/// Gets whether or not the device is in a state to receive file operation method calls.
+		/// </summary>
+		bool IsReady { get; }
+
+		/// <summary>
 		/// Saves a file.
 		/// </summary>
+		/// <param name="containerName">The name of the container in which to save the file.</param>
 		/// <param name="fileName">The file to save.</param>
 		/// <param name="saveAction">The save action to perform.</param>
-		/// <returns>True if the save completed without errors, false otherwise.</returns>
-		bool Save(string fileName, SaveAction saveAction);
+		void Save(string containerName, string fileName, FileAction saveAction);
 
 		/// <summary>
 		/// Loads a file.
 		/// </summary>
+		/// <param name="containerName">The name of the container from which to load the file.</param>
 		/// <param name="fileName">The file to load.</param>
 		/// <param name="loadAction">The load action to perform.</param>
-		/// <returns>True if the load completed without error, false otherwise.</returns>
-		bool Load(string fileName, LoadAction loadAction);
+		void Load(string containerName, string fileName, FileAction loadAction);
 
 		/// <summary>
 		/// Deletes a file.
 		/// </summary>
+		/// <param name="containerName">The name of the container from which to delete the file.</param>
 		/// <param name="fileName">The file to delete.</param>
-		/// <returns>True if the file either doesn't exist or was deleted succesfully, false if the file exists but failed to be deleted.</returns>
-		bool Delete(string fileName);
+		void Delete(string containerName, string fileName);
 
 		/// <summary>
 		/// Determines if a given file exists.
 		/// </summary>
+		/// <param name="containerName">The name of the container in which to check for the file.</param>
 		/// <param name="fileName">The name of the file.</param>
 		/// <returns>True if the file exists, false otherwise.</returns>
-		bool FileExists(string fileName);
+		bool FileExists(string containerName, string fileName);
+
+		/// <summary>
+		/// Gets an array of all files available in a container.
+		/// </summary>
+		/// <param name="containerName">The name of the container in which to search for files.</param>
+		/// <returns>An array of file names of the files in the container.</returns>
+		string[] GetFiles(string containerName);
+               
+		/// <summary>
+		/// Gets an array of all files available in a container that match the given pattern
+		/// </summary>
+		/// <param name="containerName">The name of the container in which to search for files.</param>
+		/// <param name="pattern">A search pattern to use to find files.</param>
+		/// <returns>An array of file names of the files in the container that match the pattern.</returns>
+		string[] GetFiles(string containerName, string pattern);
 	}
 }

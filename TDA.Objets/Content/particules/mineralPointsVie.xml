@@ -83,5 +83,7 @@
       <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
     </Item>
     <Name>Particle Effect</Name>
+    <Author>None</Author>
+    <Description>None</Description>
   </Asset>
 </XnaContent>

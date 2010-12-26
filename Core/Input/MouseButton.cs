@@ -1,4 +1,4 @@
-﻿namespace Core.Input
+﻿namespace EphemereGames.Core.Input
 {
     public enum MouseButton
     {

@@ -5,7 +5,7 @@
 //
 //=============================================================================
 
-namespace Core.Audio
+namespace EphemereGames.Core.Audio
 {
     using System;
 

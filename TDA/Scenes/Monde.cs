@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Input;
-    using Core.Visuel;
-    using Core.Utilities;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
 
     class Monde : DrawableGameComponent
     {
@@ -69,16 +69,16 @@
 
             Scenarios = scenarios;
 
-            Titre = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            Titre = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             Titre.Taille = 4;
             Titre.Origine = Titre.Centre;
-            Titre.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            Titre.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
             Titre.Couleur.A = 200;
 
-            Infos = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            Infos = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             Infos.Taille = 3;
             Infos.Origine = Infos.Centre;
-            Infos.PrioriteAffichage = Preferences.PrioriteFondEcran - 0.01f;
+            Infos.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
             Infos.Couleur.A = 200;
 
             TrousRoses = new List<TrouRose>();
@@ -199,7 +199,7 @@
                     else
                         lune = new LuneTrajet(Simulation, corpsCeleste);
 
-                    lune.Representation.Texture = Core.Persistance.Facade.recuperer<Texture2D>((negatif) ? "luneLoose" : "luneWin");
+                    lune.Representation.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>((negatif) ? "luneLoose" : "luneWin");
                     lune.Representation.Couleur.A = 255;
                     lune.Representation.Taille = 4;
                     lune.Representation.Origine = lune.Representation.Centre;

@@ -7,7 +7,7 @@
 //
 //=====================================================================
 
-namespace Core.Persistance
+namespace EphemereGames.Core.Persistance
 {
     using System;
     using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Core.Persistance
     using Microsoft.Xna.Framework.Content;
     using System.Linq;
     using System.Xml.Linq;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
 
     class GestionnaireContenu
@@ -84,15 +84,15 @@ namespace Core.Persistance
 
         public GestionnaireContenu()
         {
-            contenuBase = new ContentManager(Preferences.GameServiceContainer, Preferences.DossierContenu + "/");
+            contenuBase = new ContentManager(Preferences.GameServiceContainer, Preferences.ContentFolderPath + "/");
 
-            XDocument packagesElements = XDocument.Load(Preferences.DossierContenu + "\\" + Preferences.CheminRelatifPackages);
+            XDocument packagesElements = XDocument.Load(Preferences.ContentFolderPath + "\\" + Preferences.PackagesFolderPath);
 
             var packagesAll =
               (from package in packagesElements.Descendants("Package")
                select new Package
                {
-                   Contenu = new ContentManager(Preferences.GameServiceContainer, Preferences.DossierContenu + "/"),
+                   Contenu = new ContentManager(Preferences.GameServiceContainer, Preferences.ContentFolderPath + "/"),
                    Nom = package.Attribute("nom").Value,
                    Temporaire = Boolean.Parse(package.Attribute("temporaire").Value),
                    Niveau = Int32.Parse(package.Attribute("niveau").Value),
@@ -148,12 +148,12 @@ namespace Core.Persistance
             // décharger tous les packages temporaires déjà chargés
             foreach (var kvp in packagesTemporaires)
                 if (kvp.Value.Niveau > 0 && kvp.Value.Charge)
-                    Preferences.ThreadContenu.AddTask(new ThreadTask(kvp.Value.decharger));
+                    Preferences.ThreadContent.AddTask(new ThreadTask(kvp.Value.decharger));
 
             // charger tous les packages temporaires se rapportant au niveau demandé
             foreach (var kvp in packagesTemporaires)
                 if (kvp.Value.Niveau == noNiveau)
-                    Preferences.ThreadContenu.AddTask(new ThreadTask(kvp.Value.charger));
+                    Preferences.ThreadContent.AddTask(new ThreadTask(kvp.Value.charger));
         }
 
         public bool estCharge(int noNiveau)
@@ -180,15 +180,15 @@ namespace Core.Persistance
             if (package.Charge)
                 return;
 
-            Preferences.ThreadContenu.AddTask(new ThreadTask(package.charger));
+            Preferences.ThreadContent.AddTask(new ThreadTask(package.charger));
         }
 
         public void decharger(String nomPackage)
         {
             if (packagesTemporaires.ContainsKey(nomPackage))
-                Preferences.ThreadContenu.AddTask(new ThreadTask(packagesTemporaires[nomPackage].decharger));
+                Preferences.ThreadContent.AddTask(new ThreadTask(packagesTemporaires[nomPackage].decharger));
             else
-                Preferences.ThreadContenu.AddTask(new ThreadTask(packagesPermanents[nomPackage].decharger));
+                Preferences.ThreadContent.AddTask(new ThreadTask(packagesPermanents[nomPackage].decharger));
         }
 
         public bool estCharge(String nomPackage)

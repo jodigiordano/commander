@@ -1,54 +1,41 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
-    //=========================================================================
-    #region Importations
-    //=========================================================================
-    using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Core.Visuel;
-    #endregion
+    using Microsoft.Xna.Framework.Graphics;
+
     
     class AnimationSprite : Animation
     {
+        private Sprite Sprite;
+        private double TimeSinceLastFrame = 0;
 
-        //=====================================================================
-        #region Attributs
-        //=====================================================================
-
-        //private Sprite sprite;
-        private double tempsPasse = 0;  // temps passé depuis le dernier appel de sprite.suivant()
-        #endregion
-
-        //=====================================================================
-        #region Constructeur
-        //=====================================================================
 
         public AnimationSprite(Sprite sprite)
             : base (sprite.TempsDefilement)
         {
-            this.Objet = sprite;
-            //this.sprite = sprite;
-            this.Melange = sprite.Melange;
+            this.Sprite = sprite;
+            this.Blend = sprite.Blend;
         }
-        #endregion
 
-        //=====================================================================
-        #region Services
-        //=====================================================================
 
-        public override void suivant(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            if (tempsPasse >= ((Sprite)Objet).VitesseDefilement)
+            if (TimeSinceLastFrame >= Sprite.VitesseDefilement)
             {
-                ((Sprite)Objet).suivant();
-                tempsPasse = 0;
+                Sprite.suivant();
+                TimeSinceLastFrame = 0;
             }
             
-            tempsPasse += gameTime.ElapsedGameTime.TotalMilliseconds;
+            TimeSinceLastFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            base.suivant(gameTime);
+            base.Update(gameTime);
         }
-        #endregion
+
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Sprite.Draw(spriteBatch);
+        }
     }
 }

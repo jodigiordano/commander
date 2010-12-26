@@ -1,8 +1,8 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Input;
-    using Core.Physique;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Physique;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
     using Microsoft.Xna.Framework.Input;
@@ -43,7 +43,7 @@
             Master = false;
             Profile = null;
 
-            Core.Input.Facade.UpdateInputSource(
+            EphemereGames.Core.Input.Facade.UpdateInputSource(
                 Index,
                 MouseConfiguration.ToList,
                 GamePadConfiguration.ToList,

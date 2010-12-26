@@ -5,9 +5,9 @@
     using System.IO;
     using System.Xml;
     using System.Xml.Serialization;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Intermediate;
-    using TDA;
+    using EphemereGames.Commander;
 
 
     class Principal

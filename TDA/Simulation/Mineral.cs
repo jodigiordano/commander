@@ -1,12 +1,9 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
     using ProjectMercury.Modifiers;
 
     class Mineral : DrawableGameComponent, IObjetPhysique, IObjetVivant
@@ -78,7 +75,7 @@
                     break;
             }
 
-            RepresentationParticules.PrioriteAffichage = prioriteAffichage - 0.001f;
+            RepresentationParticules.VisualPriority = prioriteAffichage - 0.001f;
 
             Vitesse = Main.Random.Next(10, 20);
             VitesseRotation = Main.Random.Next(1, 5) / 100f;

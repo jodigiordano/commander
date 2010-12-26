@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Physique;
-    using Core.Visuel;
-    using Core.Utilities;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
 
     class ControleurMessages : DrawableGameComponent
     {
@@ -319,7 +319,7 @@
             if (objet == null || ObjetsParlants.ContainsKey(objet))
                 return;
 
-            IVisible texteInfos = new IVisible(message, Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+            IVisible texteInfos = new IVisible(message, EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             texteInfos.Taille = 2;
 
             prioriteAffichage = (prioriteAffichage == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : prioriteAffichage;
@@ -377,7 +377,7 @@
                     if (!tourelle.Visible || !tourelle.Spectateur || tourelle.Type == TypeTourelle.GravitationnelleAlien || ObjetsParlants.ContainsKey(tourelle))
                         return;
 
-                    IVisible texte = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+                    IVisible texte = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                     texte.Taille = 2;
                     texte.Couleur = tourelle.Couleur;
 

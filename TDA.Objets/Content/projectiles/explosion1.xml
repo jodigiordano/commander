@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XnaContent>
-  <Asset Type="Core.Visuel.Sprite">
+  <Asset Type="EphemereGames.Core.Visuel.Sprite">
     <NomSpriteSheet>projectiles/Explosions</NomSpriteSheet>
     <Cyclique>false</Cyclique>
     <VitesseDefilement>30</VitesseDefilement>

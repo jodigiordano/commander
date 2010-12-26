@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     class TheResistance : IObjetPhysique
     {
@@ -38,10 +38,10 @@
             Vaisseaux = new List<Vaisseau>();
 
             Vaisseau v = new Vaisseau(simulation);
-            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance1"), Vector3.Zero);
+            v.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Resistance1"), Vector3.Zero);
             v.Representation.Taille = 4;
             v.Representation.Origine = v.Representation.Centre;
-            v.Representation.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
+            v.Representation.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
             v.CadenceTir = 100;
             v.PuissanceProjectile = 10;
             v.RotationMaximaleRad = 0.15f;
@@ -49,10 +49,10 @@
             Vaisseaux.Add(v);
 
             v = new Vaisseau(simulation);
-            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance2"), Vector3.Zero);
+            v.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Resistance2"), Vector3.Zero);
             v.Representation.Taille = 4;
             v.Representation.Origine = v.Representation.Centre;
-            v.Representation.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
+            v.Representation.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
             v.CadenceTir = 200;
             v.PuissanceProjectile = 30;
             v.RotationMaximaleRad = 0.05f;
@@ -60,10 +60,10 @@
             Vaisseaux.Add(v);
 
             v = new Vaisseau(simulation);
-            v.Representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Resistance3"), Vector3.Zero);
+            v.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Resistance3"), Vector3.Zero);
             v.Representation.Taille = 4;
             v.Representation.Origine = v.Representation.Centre;
-            v.Representation.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
+            v.Representation.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
             v.CadenceTir = 500;
             v.PuissanceProjectile = 100;
             v.RotationMaximaleRad = 0.2f;

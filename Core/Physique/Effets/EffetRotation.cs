@@ -5,12 +5,12 @@
 //
 //=====================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     public class EffetRotation : EffetPhysique
     {
@@ -29,23 +29,23 @@ namespace Core.Physique
         // Logique
         //=====================================================================
 
-        protected override void InitLogique()
+        protected override void InitializeLogic()
         {
-            QuantiteParTick = (float)(Quantite / Duree);
+            QuantiteParTick = (float)(Quantite / Length);
         }
 
-        protected override void LogiqueLineaire()
+        protected override void LogicLinear()
         {
-            Objet.Rotation += (float)(tempsUnTick * QuantiteParTick);
-            QuantiteEmise -= (float)(tempsUnTick * QuantiteParTick);
+            Objet.Rotation += (float)(TimeOneTick * QuantiteParTick);
+            QuantiteEmise -= (float)(TimeOneTick * QuantiteParTick);
         }
 
-        protected override void LogiqueApresDuree()
+        protected override void LogicAfter()
         {
             Objet.Rotation += (Quantite - QuantiteEmise);
         }
 
-        protected override void LogiqueMaintenant()
+        protected override void LogicNow()
         {
             Objet.Rotation += Quantite;
         }

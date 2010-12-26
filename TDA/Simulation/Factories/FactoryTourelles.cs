@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     public enum TypeTourelle
     {
@@ -107,7 +107,7 @@
 
             tourelle.representation.Taille = 4;
             tourelle.representationBase.Taille = 4;
-            tourelle.representation.PrioriteAffichage = tourelle.representationBase.PrioriteAffichage - 0.01f;
+            tourelle.representation.VisualPriority = tourelle.representationBase.VisualPriority - 0.01f;
 
             return tourelle;
         }
@@ -126,7 +126,7 @@
             setRepresentations(tourelle);
 
             tourelle.VitesseRotationBase = (tourelle.VitesseRotationAntenne > 0) ? -0.02f : 0.02f;
-            tourelle.representation.PrioriteAffichage = tourelle.representationBase.PrioriteAffichage - 0.01f;
+            tourelle.representation.VisualPriority = tourelle.representationBase.VisualPriority - 0.01f;
             tourelle.representation.Couleur.A = 60;
             tourelle.representationBase.Couleur.A = 60;
 
@@ -277,10 +277,10 @@
 
         private static void setRepresentations(Tourelle tourelle)
         {
-            tourelle.representationBase = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(tourelle.Niveaux.First.Value.RepresentationBase), Vector3.Zero);
+            tourelle.representationBase = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(tourelle.Niveaux.First.Value.RepresentationBase), Vector3.Zero);
             tourelle.representationBase.Origine = tourelle.representationBase.Centre;
 
-            tourelle.representation = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>(tourelle.Niveaux.First.Value.Representation), Vector3.Zero);
+            tourelle.representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(tourelle.Niveaux.First.Value.Representation), Vector3.Zero);
             tourelle.representation.Origine = tourelle.representation.Centre;
 
             tourelle.PrioriteAffichage = Preferences.PrioriteSimulationTourelle;

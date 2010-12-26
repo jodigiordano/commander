@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectGuid>{FC697C05-69B7-46AE-A46C-9101D3C81E1C}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -6,10 +7,10 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TDA</RootNamespace>
+    <RootNamespace>EphemereGames.Commander</RootNamespace>
     <AssemblyName>Commander</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaCrossPlatformGroupID>55a79d11-a65d-458c-a9ca-fc9011e650ac</XnaCrossPlatformGroupID>
     <ApplicationIcon>Game.ico</ApplicationIcon>
@@ -19,8 +20,15 @@
     <ManifestKeyFile>TDA_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
-    <CreateDesktopShortcut>true</CreateDesktopShortcut>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <XnaUpgrade>
+    </XnaUpgrade>
+    <XnaOutputType>Game</XnaOutputType>
+    <XnaProfile>HiDef</XnaProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
     <PublishUrl>http://www.ephemeregames.com/commander/trial/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -41,6 +49,8 @@
     <ApplicationRevision>44</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -67,7 +77,7 @@
     <NoStdLib>true</NoStdLib>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
-    <XnaCompressContent>true</XnaCompressContent>
+    <XnaCompressContent>True</XnaCompressContent>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - GamePad|x86' ">
@@ -114,20 +124,26 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
-      <Private>False</Private>
-      <SpecificVersion>True</SpecificVersion>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
-      <Private>False</Private>
-      <SpecificVersion>True</SpecificVersion>
-    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Avatar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Storage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Video, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
     <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\commander\lib\PowerCollections.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectMercury, Version=3.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\X86\ProjectMercury.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
@@ -140,11 +156,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -241,7 +255,7 @@
     <Compile Include="Simulation\Turrets\TourelleMissiles.cs" />
     <Compile Include="Simulation\Chemin.cs" />
     <Compile Include="GUI\Translator.cs" />
-    <Compile Include="Simulation\Enemies\Vague.cs" />
+    <Compile Include="Simulation\Enemies\Wave.cs" />
     <Compile Include="Simulation\Spaceships\Vaisseau.cs" />
     <Compile Include="Player\ValidationServeur.cs" />
     <Compile Include="Scenes\Acheter.cs" />
@@ -268,6 +282,11 @@
     </NestedContentProject>
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -298,19 +317,25 @@
       <ProductName>Microsoft XNA Framework Redistributable 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Xna.Framework.4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Win Core.csproj">
       <Project>{D6F32E4E-250E-4835-97FE-B8EBC7B405FC}</Project>
       <Name>Win Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mercury Particle Engine\ProjectMercury.Windows\Win ProjectMercury.csproj">
-      <Project>{1E3FDDBD-A15F-42CF-A83E-754476079B30}</Project>
-      <Name>Win ProjectMercury</Name>
+    <ProjectReference Include="..\Win Objects\Win Objects.csproj">
+      <Project>{5270A0B2-E346-4D80-B2E0-2E7548989E2C}</Project>
+      <Name>Win Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TDA.Objets\Win Objets.csproj">
-      <Project>{1618F876-CA24-461F-866D-73C36FA3B7F4}</Project>
-      <Name>Win Objets</Name>
+    <ProjectReference Include="..\Z Win Commander\Z Win Commander.contentproj">
+      <Project>{3EA293D4-5658-40E4-848C-26F073A0179E}</Project>
+      <Name>Z Win Commander</Name>
+      <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

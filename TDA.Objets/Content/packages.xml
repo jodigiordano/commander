@@ -24,14 +24,6 @@
     <asset nom="PixelBig"             type="Police" chemin="polices/pixelbig" />
     <asset nom="Alien"                type="Police" chemin="polices/alien" />
     
-    
-    <!-- Transitions -->
-    
-    <asset nom="ChargementVersMenu"        type="Transition" chemin="transitions/transitionChargementVersMenu" />
-    <asset nom="ChargementVersValidation"  type="Transition" chemin="transitions/transitionChargementVersValidation" />
-    <asset nom="ValidationVersMenu"        type="Transition" chemin="transitions/transitionValidationVersMenu" />
-
-
 
     <!-- Effets Sonores -->
     
@@ -79,32 +71,6 @@
     <asset nom="DataControl"          type="Police" chemin="polices/DataControl" />
     <asset nom="SpriteFont1"          type="Police" chemin="polices/SpriteFont1" />
     <asset nom="ScenarioTitre"        type="Police" chemin="polices/ScenarioTitre" />
-
-    
-    <!-- Transitions -->
-
-    <asset nom="MenuVersNouvellePartie"         type="Transition" chemin="transitions/transitionMenuVersNouvellePartie" />
-    <asset nom="PartieVersMenu"                 type="Transition" chemin="transitions/transitionPartieVersMenu" />
-    <asset nom="MenuVersPartie"                 type="Transition" chemin="transitions/transitionMenuVersPartie" />
-    <asset nom="NouvellePartieVersMenu"         type="Transition" chemin="transitions/transitionNouvellePartieVersMenu" />
-    <asset nom="MenuVersCredits"                type="Transition" chemin="transitions/transitionMenuVersCredits" />
-    <asset nom="CreditsVersMenu"                type="Transition" chemin="transitions/transitionCreditsVersMenu" />
-    <asset nom="MenuVersAide"                   type="Transition" chemin="transitions/transitionMenuVersAide" />
-    <asset nom="AideVersMenu"                   type="Transition" chemin="transitions/transitionAideVersMenu" />
-    <asset nom="MenuVersOptions"                type="Transition" chemin="transitions/transitionMenuVersOptions" />
-    <asset nom="OptionsVersMenu"                type="Transition" chemin="transitions/transitionOptionsVersMenu" />
-    <asset nom="NouvellePartieVersPartie"       type="Transition" chemin="transitions/transitionNouvellePartieVersPartie" />
-    <asset nom="MenuVersEditeur"                type="Transition" chemin="transitions/transitionMenuVersEditeur" />
-    <asset nom="EditeurVersMenu"                type="Transition" chemin="transitions/transitionEditeurVersMenu" />
-    <asset nom="MenuVersChargement"             type="Transition" chemin="transitions/transitionMenuVersChargement" />
-    <asset nom="OptionsVersChargement"          type="Transition" chemin="transitions/transitionOptionsVersChargement" />
-    <asset nom="PartieVersChargement"           type="Transition" chemin="transitions/transitionPartieVersChargement" />
-    <asset nom="NouvellePartieVersChargement"   type="Transition" chemin="transitions/transitionNouvellePartieVersChar" />
-    <asset nom="EditeurVersChargement"          type="Transition" chemin="transitions/transitionEditeurVersChargement" />
-    <asset nom="AideVersChargement"             type="Transition" chemin="transitions/transitionAideVersChargement" />
-    <asset nom="PartieVersNouvellePartie"       type="Transition" chemin="transitions/transitionPartieVersNouvellePartie" />
-    <asset nom="MenuVersAcheter"                type="Transition" chemin="transitions/transitionMenuVersAcheter" />
-    <asset nom="AcheterVersMenu"                type="Transition" chemin="transitions/transitionAcheterVersMenu" />
 
 
     <!-- Particules -->

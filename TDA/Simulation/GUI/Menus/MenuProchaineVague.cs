@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Core.Visuel;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
     using ProjectMercury.Emitters;
 
 
@@ -15,7 +15,7 @@
         public Vector3 Position;
 
 
-        private Dictionary<TypeEnnemi, DescripteurEnnemi> EnnemisQtes;
+        private Dictionary<EnemyType, EnemyDescriptor> EnnemisQtes;
         private Simulation Simulation;
         private Bulle Bulle;
 
@@ -30,7 +30,7 @@
 
         public MenuProchaineVague(
             Simulation simulation,
-            Dictionary<TypeEnnemi, DescripteurEnnemi> ennemisQtes,
+            Dictionary<EnemyType, EnemyDescriptor> ennemisQtes,
             Vector3 positionInitiale,
             float prioriteAffichage)
             : base(simulation.Main)
@@ -46,18 +46,18 @@
 
             for (int i = 0; i < NB_REPRESENTATIONS; i++)
             {
-                IVisible iv = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
-                iv.PrioriteAffichage = this.PrioriteAffichage + 0.00001f;
+                IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
+                iv.VisualPriority = this.PrioriteAffichage + 0.00001f;
                 RepresentationsEnnemis.Add(iv);
 
-                iv = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+                iv = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                 iv.Taille = 2;
-                iv.PrioriteAffichage = this.PrioriteAffichage;
+                iv.VisualPriority = this.PrioriteAffichage;
                 RepresentationsQtes.Add(iv);
 
-                iv = new IVisible("", Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
+                iv = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
                 iv.Taille = 1;
-                iv.PrioriteAffichage = this.PrioriteAffichage;
+                iv.VisualPriority = this.PrioriteAffichage;
                 RepresentationsNiveaux.Add(iv);
             }
 
@@ -83,7 +83,7 @@
 
             foreach (var ennemiQte in EnnemisQtes)
             {
-                RepresentationsEnnemis[indiceRepresentations].Texture = Core.Persistance.Facade.recuperer<Texture2D>(FactoryEnnemis.Instance.getTexture(ennemiQte.Key));
+                RepresentationsEnnemis[indiceRepresentations].Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(FactoryEnnemis.Instance.getTexture(ennemiQte.Key));
                 RepresentationsEnnemis[indiceRepresentations].Origine = RepresentationsEnnemis[indiceRepresentations].Centre;
                               
                 RepresentationsEnnemis[indiceRepresentations].Position = this.Position + new Vector3
@@ -95,11 +95,11 @@
 
                 Bulle.Dimension.Height += RepresentationsEnnemis[indiceRepresentations].Rectangle.Height + 10;
 
-                RepresentationsNiveaux[indiceRepresentations].Texte = (ennemiQte.Value.NiveauPointsVie).ToString();
+                RepresentationsNiveaux[indiceRepresentations].Texte = (ennemiQte.Value.LivesLevel).ToString();
                 RepresentationsNiveaux[indiceRepresentations].Origine = RepresentationsNiveaux[indiceRepresentations].Centre;
                 RepresentationsNiveaux[indiceRepresentations].Position = new Vector3(this.Position.X + 40, RepresentationsEnnemis[indiceRepresentations].Position.Y, 0);
 
-                RepresentationsQtes[indiceRepresentations].Texte = ((int) ennemiQte.Value.Valeur).ToString();
+                RepresentationsQtes[indiceRepresentations].Texte = ((int) ennemiQte.Value.CashValue).ToString();
                 RepresentationsQtes[indiceRepresentations].Origine = RepresentationsQtes[indiceRepresentations].Centre;
                 RepresentationsQtes[indiceRepresentations].Position = new Vector3(this.Position.X + 80, RepresentationsEnnemis[indiceRepresentations].Position.Y, 0);
 

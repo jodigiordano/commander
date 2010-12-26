@@ -1,4 +1,4 @@
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;
@@ -8,10 +8,10 @@ namespace Core.Visuel
     public class LigneVisuel : IScenable
     {
         public Vector3 Position             { get; set; }
-        public float PrioriteAffichage      { get; set; }
+        public float VisualPriority      { get; set; }
         public Scene Scene                  { get; set; }
-        public TypeMelange Melange          { get; set; }
-        public List<IScenable> Composants   { get; set; }
+        public TypeBlend Blend          { get; set; }
+        public List<IScenable> Components   { get; set; }
 
         public Color Couleur                { get; set; }
         public Vector3 Debut                { get; set; }
@@ -24,8 +24,8 @@ namespace Core.Visuel
 
         public LigneVisuel(Vector2 debut, Vector2 fin, Color couleur)
         {
-            PrioriteAffichage = 0;
-            Melange = TypeMelange.Default;
+            VisualPriority = 0;
+            Blend = TypeBlend.Default;
             Couleur = couleur;
 
             Debut = new Vector3(debut, 0);
@@ -37,8 +37,8 @@ namespace Core.Visuel
 
         public LigneVisuel(Vector3 debut, Vector3 fin, Color couleur)
         {
-            PrioriteAffichage = 0;
-            Melange = TypeMelange.Default;
+            VisualPriority = 0;
+            Blend = TypeBlend.Default;
             Couleur = couleur;
 
             Debut = debut;
@@ -49,8 +49,8 @@ namespace Core.Visuel
 
         public LigneVisuel(Vector3 debut, Vector3 fin, Color couleur, int tickness)
         {
-            PrioriteAffichage = 0;
-            Melange = TypeMelange.Default;
+            VisualPriority = 0;
+            Blend = TypeBlend.Default;
             Couleur = couleur;
 
             Debut = debut;

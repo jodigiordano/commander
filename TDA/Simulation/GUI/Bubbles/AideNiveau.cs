@@ -1,9 +1,9 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Physique;
+    using EphemereGames.Core.Physique;
 
     class AideNiveau : GameComponent
     {
@@ -65,7 +65,7 @@
             if (!Main.SaveGame.Tutorials.ContainsKey(Niveau))
             {
                 Main.SaveGame.Tutorials.Add(Niveau, 0);
-                Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
+                EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
             }
 
             TypesObjets = new List<string>();
@@ -93,7 +93,7 @@
         public void incrementerQuoteLancee()
         {
             Main.SaveGame.Tutorials[Niveau]++;
-            //Core.Persistance.Facade.sauvegarderDonnee("savePlayer"); //sur la Xbox, ralentissement
+            //EphemereGames.Core.Persistance.Facade.sauvegarderDonnee("savePlayer"); //sur la Xbox, ralentissement
         }
     }
 }

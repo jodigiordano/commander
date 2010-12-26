@@ -1,13 +1,13 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Persistance;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Persistance;
+    using EphemereGames.Core.Physique;
     using ProjectMercury.Emitters;
     using ProjectMercury.Modifiers;
 
@@ -27,7 +27,7 @@
             Rectangle = new RectanglePhysique(Cercle.Rectangle);
 
             RepresentationExplose = Scene.Particules.recuperer("etincelleSlowMotion");
-            RepresentationExplose.PrioriteAffichage = Preferences.PrioriteSimulationTourelle - 0.001f;
+            RepresentationExplose.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
 
             PointsVie = Int16.MaxValue;
 

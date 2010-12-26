@@ -6,12 +6,12 @@
 //
 //=====================================================================
 
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     public class GestionnaireParticules
     {
@@ -21,7 +21,7 @@ namespace Core.Visuel
         //=====================================================================
 
         private Dictionary<string, Pool<ParticuleEffectWrapper>> listePoolParticules;            // Liste des pools de particules
-        private ProjectMercury.Renderers.PointSpriteRenderer renderer;                           // S'occupe de dessiner les particules à l'écran
+        private ProjectMercury.Renderers.SpriteBatchRenderer renderer;                           // S'occupe de dessiner les particules à l'écran
         private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesActives;       // Liste des particules actives à mettre à jour
         private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesMourantes;     // Liste des particules orphelines qui ne s'updatent plus
         private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesActivesASupprimer;
@@ -40,10 +40,9 @@ namespace Core.Visuel
             listeParticulesMourantes = new List<KeyValuePair<string, ParticuleEffectWrapper>>();
 
 
-            renderer = new ProjectMercury.Renderers.PointSpriteRenderer
+            renderer = new ProjectMercury.Renderers.SpriteBatchRenderer
             {
-                GraphicsDeviceService = Preferences.GraphicsDeviceManager,
-                ShaderContentPath = "PointSprite"
+                GraphicsDeviceService = Preferences.GraphicsDeviceManager
             };
 
             renderer.LoadContent(Preferences.Content);

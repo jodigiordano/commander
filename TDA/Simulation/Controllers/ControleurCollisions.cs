@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Physique;
 
 
     class ControleurCollisions : DrawableGameComponent
@@ -158,7 +158,7 @@
                 if (projectile.Forme == Forme.Ligne || projectile.Forme == Forme.Cercle)
                     continue;
 
-                if (!Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, this.Terrain))
+                if (!EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, this.Terrain))
                 {
                     Projectiles[i].doMeurtSilencieusement();
                     Projectiles.RemoveAt(i);
@@ -207,22 +207,22 @@
                     //Degeux
                     if (projectile.Forme == Forme.Rectangle && e.Forme == Forme.Rectangle)
                     {
-                        collision = Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, e.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, e.Rectangle);
                     }
 
                     else if (projectile.Forme == Forme.Cercle && e.Forme == Forme.Rectangle)
                     {
-                        collision = Core.Physique.Facade.collisionCercleRectangle(projectile.Cercle, e.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionCercleRectangle(projectile.Cercle, e.Rectangle);
                     }
 
                     else if (projectile.Forme == Forme.Rectangle && e.Forme == Forme.Cercle)
                     {
-                        collision = Core.Physique.Facade.collisionCercleRectangle(e.Cercle, projectile.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionCercleRectangle(e.Cercle, projectile.Rectangle);
                     }
 
                     else if (projectile.Forme == Forme.Ligne && e.Forme == Forme.Rectangle)
                     {
-                        collision = Core.Physique.Facade.collisionLigneRectangle(projectile.Ligne, e.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionLigneRectangle(projectile.Ligne, e.Rectangle);
                     }
 
                     if (collision)
@@ -256,7 +256,7 @@
 
                                         Ennemi ennemi = Ennemis[indice2];
 
-                                        if (Core.Physique.Facade.collisionCercleCercle(projectileMissile.ZoneImpact, ennemi.Cercle))
+                                        if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(projectileMissile.ZoneImpact, ennemi.Cercle))
                                             collisionsCeTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(ennemi, projectile));
                                     }
                                 }
@@ -277,7 +277,7 @@
                 {
                     Mineral mineral = Mineraux[i];
 
-                    if (Core.Physique.Facade.collisionCercleCercle(mineral.Cercle, Collecteur.Cercle))
+                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(mineral.Cercle, Collecteur.Cercle))
                     {
                         collisionsCeTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(mineral, Collecteur));
                         collisionsCeTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(Collecteur, mineral));
@@ -307,7 +307,7 @@
                     Ennemi e = Ennemis[indice];
 
                     if (!ennemisCaches.ContainsKey(e.GetHashCode()) &&
-                        Core.Physique.Facade.collisionCercleCercle(corpsCeleste.Cercle, e.Cercle))
+                        EphemereGames.Core.Physique.Facade.collisionCercleCercle(corpsCeleste.Cercle, e.Cercle))
                     {
                         ennemisCaches.Add(e.GetHashCode(), e);
                     }
@@ -342,7 +342,7 @@
                     if (ennemisCaches.ContainsKey(e.GetHashCode()))
                         continue;
 
-                    if (Core.Physique.Facade.collisionCercleCercle(tourelle.ZoneActivation, e.Cercle))
+                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(tourelle.ZoneActivation, e.Cercle))
                     {
                         collisionsDansZoneActivationCeTick.Add(new KeyValuePair<Tourelle, IObjetPhysique>(tourelle, e));
                         break; // passe à la prochaine tourelle
@@ -374,7 +374,7 @@
 
                     Ennemi ennemi = Ennemis[indice];
 
-                    if (Core.Physique.Facade.collisionCercleCercle(corpsCeleste.ZoneImpactDestruction, ennemi.Cercle))
+                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(corpsCeleste.ZoneImpactDestruction, ennemi.Cercle))
                         notifyObjetTouche(ennemi, corpsCeleste);
                 }
 

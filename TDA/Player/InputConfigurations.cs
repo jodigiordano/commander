@@ -1,7 +1,7 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using Core.Input;
+    using EphemereGames.Core.Input;
     using Microsoft.Xna.Framework.Input;
     
 

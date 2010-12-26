@@ -1,4 +1,4 @@
-﻿namespace Core.Audio
+﻿namespace EphemereGames.Core.Audio
 {
     using System;
     using System.Collections.Generic;

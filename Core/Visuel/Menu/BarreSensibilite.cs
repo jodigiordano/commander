@@ -7,7 +7,7 @@
 //
 //=====================================================================
 
-namespace Core.Visuel
+namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;

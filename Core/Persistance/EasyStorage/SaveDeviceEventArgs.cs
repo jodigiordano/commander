@@ -1,9 +1,9 @@
-namespace Core.Persistance
-{
-    using System;
-    using Microsoft.Xna.Framework;
+using System;
+using Microsoft.Xna.Framework;
 
-    /// <summary>
+namespace EasyStorage
+{
+	/// <summary>
 	/// Event arguments for the SaveDevice class.
 	/// </summary>
 	public sealed class SaveDeviceEventArgs : EventArgs
@@ -16,8 +16,9 @@ namespace Core.Persistance
 		/// <summary>
 		/// Gets or sets the player index of the controller for which the message
 		/// boxes should appear. This does not change the actual selection of the
-		/// device but is merely used for the MessageBox displays.
+		/// device but is merely used for the message box displays. Set to null
+		/// to allow any player to handle the message box.
 		/// </summary>
-		public PlayerIndex PlayerToPrompt { get; set; }
+		public PlayerIndex? PlayerToPrompt { get; set; }
 	}
 }

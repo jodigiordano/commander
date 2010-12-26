@@ -4,12 +4,12 @@
 //
 //=====================================================================
 
-namespace Core.Physique
+namespace EphemereGames.Core.Physique
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Core.Utilities;
+    using EphemereGames.Core.Utilities;
 
     public class EffetDeplacementTrajet : EffetPhysique
     {
@@ -26,24 +26,24 @@ namespace Core.Physique
         // Logique
         //=====================================================================
 
-        protected override void LogiqueLineaire()
+        protected override void LogicLinear()
         {
-            Objet.Position = new Vector3(Trajet.position(tempsRelatif), Objet.Position.Z);
-            Rotation = Trajet.rotation(tempsRelatif);
+            Objet.Position = new Vector3(Trajet.position(ElaspedTime), Objet.Position.Z);
+            Rotation = Trajet.rotation(ElaspedTime);
         }
 
-        protected override void LogiqueApresDuree()
+        protected override void LogicAfter()
         {
-            LogiqueLineaire();
+            LogicLinear();
         }
 
-        protected override void LogiqueMaintenant()
+        protected override void LogicNow()
         {
-            Objet.Position = new Vector3(Trajet.position(Duree), Objet.Position.Z);
-            Rotation = Trajet.rotation(Duree);
+            Objet.Position = new Vector3(Trajet.position(Length), Objet.Position.Z);
+            Rotation = Trajet.rotation(Length);
         }
 
-        protected override void InitLogique()
+        protected override void InitializeLogic()
         {
             Objet.Position = new Vector3(Trajet.positionDepart(), Objet.Position.Z);
             Rotation = Trajet.rotation(0);

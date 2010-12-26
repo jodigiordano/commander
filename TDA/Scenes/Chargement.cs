@@ -1,10 +1,10 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    using Core.Input;
-    using Core.Visuel;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -13,20 +13,20 @@
     {
         private enum Etat
         {
+            FINISHED,
             CHARGEMENT_ASSETS,
             CONNEXION_JOUEUR,
             CHARGEMENT_SAUVEGARDE,
-            CHARGEMENT_SCENES,
-            TRANSITION
+            CHARGEMENT_SCENES
         }
 
         public Main Main;
 
-        private IVisible FondEcran;
-        private IVisible Logo;
+        private Image Logo;
+        private Image Background;
         private Translator TraductionChargement;
         private Translator PressStart;
-        private Objets.AnimationTransition AnimationTransition;
+        private AnimationTransition AnimationTransition;
 
         private Sablier Sablier;
         private Etat EtatScene;
@@ -60,9 +60,7 @@
             Main = main;
 
             Nom = "Chargement";
-            EnPause = false;
-            EstVisible = true;
-            EnFocus = true;
+            Active = true;
 
             initTraductionChargement();
 
@@ -71,32 +69,57 @@
             Sablier = new Sablier(Main, this, 5000, new Vector3(0, 250, 0), 0.3f);
             Sablier.TempsRestant = 5000;
 
-            AnimationTransition = new TDA.Objets.AnimationTransition();
-            AnimationTransition.Duree = 500;
-            AnimationTransition.Scene = this;
-            AnimationTransition.In = false;
-            AnimationTransition.Initialize();
-            AnimationTransition.PrioriteAffichage = Preferences.PrioriteTransitionScene;
+            Logo = new Image("Logo", new Vector3(0, -100, 0));
+            Logo.SizeX = 16;
+            Logo.VisualPriority = 0.3f;
 
-            Logo = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("Logo"), new Vector3(0, -100, 0));
-            Logo.Taille = 16;
-            Logo.Origine = Logo.Centre;
-            Logo.PrioriteAffichage = 0.3f;
-
-            Core.Persistance.Facade.charger("principal");
+            EphemereGames.Core.Persistance.Facade.LoadPackage("principal");
 
             EtatScene = Etat.CHARGEMENT_ASSETS;
 
-            FondEcran = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("PixelBlanc"), Vector3.Zero);
-            FondEcran.Couleur = Color.Black;
-            FondEcran.TailleVecteur = new Vector2(1280, 720);
-            FondEcran.Origine = FondEcran.Centre;
-            FondEcran.PrioriteAffichage = 1f;
+            Background = new Image("PixelBlanc", Vector3.Zero);
+            Background.Color = Color.Black;
+            Background.Size = new Vector2(1280, 720);
+            Background.VisualPriority = 1f;
             
             ThreadChargementScenes = new Thread(doChargerScenes);
             ThreadChargementScenes.IsBackground = true;
             ThreadChargementScenesTermine = false;
+
+            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
         }
+
+
+        protected override void InitializeTransition(TransitionType type)
+        {
+            AnimationTransition.In = (type == TransitionType.In) ? true : false;
+            AnimationTransition.Initialize();
+        }
+
+
+        protected override void UpdateTransition(GameTime gameTime)
+        {
+            AnimationTransition.Update(gameTime);
+
+            if (AnimationTransition.Finished(gameTime))
+            {
+                if (Transition == TransitionType.In)
+                {
+                    EtatScene = Etat.CONNEXION_JOUEUR;
+                }
+
+                else
+                {
+                    if (!Main.TrialMode.Active && !ValidationServeur.Valide)
+                        EphemereGames.Core.Visuel.Facade.Transite("ChargementToValidation");
+                    else
+                        EphemereGames.Core.Visuel.Facade.Transite("ChargementToMenu");
+                }
+
+                Transition = TransitionType.None;
+            }
+        }
+
 
         private void initTraductionChargement()
         {
@@ -105,10 +128,10 @@
                 Main,
                 this,
                 new Vector3(0, 150, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Alien"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Alien"),
                 new Color(234, 196, 28, 255),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
-                new Color(Color.White, 255),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
+                new Color(255, 255, 255, 255),
                 QuotesChargement[Main.Random.Next(0, QuotesChargement.Count)],
                 3,
                 true,
@@ -116,8 +139,8 @@
                 250
             );
             TraductionChargement.Centre = true;
-            TraductionChargement.PartieNonTraduite.PrioriteAffichage = 0.3f;
-            TraductionChargement.PartieTraduite.PrioriteAffichage = 0.3f;
+            TraductionChargement.PartieNonTraduite.VisualPriority = 0.3f;
+            TraductionChargement.PartieTraduite.VisualPriority = 0.3f;
         }
 
         private void initPressStart()
@@ -127,10 +150,10 @@
                 Main,
                 this,
                 new Vector3(0, 150, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Alien"),
-                new Color(234, 196, 28, 255),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
-                new Color(Color.White, 255),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Alien"),
+                new Color(234, 196, 28, 0),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
+                new Color(255, 255, 255, 0),
                 (Preferences.Target == Setting.Xbox360) ? "Press a button, Commander" : "Click a button, Commander",
                 3,
                 true,
@@ -138,15 +161,16 @@
                 250
             );
             PressStart.Centre = true;
-            PressStart.PartieNonTraduite.PrioriteAffichage = 0.3f;
-            PressStart.PartieTraduite.PrioriteAffichage = 0.3f;
-            PressStart.PartieNonTraduite.Couleur.A = 0;
-            PressStart.PartieTraduite.Couleur.A = 0;
+            PressStart.PartieNonTraduite.VisualPriority = 0.3f;
+            PressStart.PartieTraduite.VisualPriority = 0.3f;
         }
 
 
         protected override void UpdateLogique(GameTime gameTime)
         {
+            if (Transition != TransitionType.None)
+                return;
+
             switch (EtatScene)
             {
                 case Etat.CHARGEMENT_ASSETS:
@@ -163,14 +187,14 @@
                     Sablier.Update(gameTime);
                     TraductionChargement.Update(gameTime);
 
-                    if (Core.Persistance.Facade.estCharge("principal") && TraductionChargement.Termine)
+                    if (EphemereGames.Core.Persistance.Facade.PackageLoaded("principal") && TraductionChargement.Termine)
                     {
                         EtatScene = Etat.CONNEXION_JOUEUR;
-                        Effets.ajouter(TraductionChargement.PartieTraduite, EffetsPredefinis.fadeOutTo0(255, 0, 1000));
-                        Effets.ajouter(TraductionChargement.PartieNonTraduite, EffetsPredefinis.fadeOutTo0(255, 0, 1000));
+                        Effets.Add(TraductionChargement.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        Effets.Add(TraductionChargement.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
                         Sablier.doHide(1000);
-                        Effets.ajouter(PressStart.PartieTraduite, EffetsPredefinis.fadeInFrom0(255, 500, 1000));
-                        Effets.ajouter(PressStart.PartieNonTraduite, EffetsPredefinis.fadeInFrom0(255, 500, 1000));
+                        Effets.Add(PressStart.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
+                        Effets.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
 
                     }
                     break;
@@ -183,11 +207,8 @@
 
                     if (!WaitingForPlayerToConnect)
                     {
-                        if (!Core.Persistance.Facade.donneeEstCharge("savePlayer"))
-                        {
-                            Core.Persistance.Facade.initialiserDonneesJoueur("savePlayer", ConnectingPlayer);
-                            Core.Persistance.Facade.chargerDonnee("savePlayer");
-                        }
+                        if (!EphemereGames.Core.Persistance.Facade.DataLoaded("savePlayer"))
+                            EphemereGames.Core.Persistance.Facade.LoadData("savePlayer");
 
                         EtatScene = Etat.CHARGEMENT_SAUVEGARDE;
                     }
@@ -195,7 +216,7 @@
 
 
                 case Etat.CHARGEMENT_SAUVEGARDE:
-                    if (Core.Persistance.Facade.donneeEstCharge("savePlayer"))
+                    if (EphemereGames.Core.Persistance.Facade.DataLoaded("savePlayer"))
                     {
                         if (!ThreadChargementScenesTermine)
                             ThreadChargementScenes.Start();
@@ -203,13 +224,13 @@
                         ValidationServeur = new ValidationServeur(Preferences.ProductName, Main.SaveGame.ProductKey);
                         ValidationServeur.valider();
 
-                        Effets.ajouter(PressStart.PartieTraduite, EffetsPredefinis.fadeOutTo0(255, 0, 1000));
-                        Effets.ajouter(PressStart.PartieNonTraduite, EffetsPredefinis.fadeOutTo0(255, 0, 1000));
+                        Effets.Add(PressStart.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        Effets.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
 
                         initTraductionChargement();
 
-                        Effets.ajouter(TraductionChargement.PartieTraduite, EffetsPredefinis.fadeInFrom0(255, 500, 1000));
-                        Effets.ajouter(TraductionChargement.PartieNonTraduite, EffetsPredefinis.fadeInFrom0(255, 500, 1000));
+                        Effets.Add(TraductionChargement.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
+                        Effets.Add(TraductionChargement.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
 
                         Sablier.doShow(1500);
 
@@ -238,44 +259,20 @@
                     if (ThreadChargementScenesTermine &&
                        (Main.TrialMode.Active || ValidationServeur.ValidationTerminee))
                     {
-                        Core.Visuel.Facade.mettreAJourScene("Menu", SceneMenu);
-                        Core.Visuel.Facade.mettreAJourScene("NouvellePartie", SceneNouvellePartie);
-                        Core.Visuel.Facade.mettreAJourScene("Aide", SceneAide);
-                        Core.Visuel.Facade.mettreAJourScene("Options", SceneOptions);
-                        Core.Visuel.Facade.mettreAJourScene("Editeur", SceneEditeur);
-                        Core.Visuel.Facade.mettreAJourScene("Acheter", SceneAcheter);
+                        EphemereGames.Core.Visuel.Facade.UpdateScene("Menu", SceneMenu);
+                        EphemereGames.Core.Visuel.Facade.UpdateScene("NouvellePartie", SceneNouvellePartie);
+                        EphemereGames.Core.Visuel.Facade.UpdateScene("Aide", SceneAide);
+                        EphemereGames.Core.Visuel.Facade.UpdateScene("Options", SceneOptions);
+                        EphemereGames.Core.Visuel.Facade.UpdateScene("Editeur", SceneEditeur);
+                        EphemereGames.Core.Visuel.Facade.UpdateScene("Acheter", SceneAcheter);
 
                         if (!ValidationServeur.ErreurSurvenue && !ValidationServeur.Valide)
                             Main.SaveGame.ProductKey = "";
 
-                        EtatScene = Etat.TRANSITION;
+                        EtatScene = Etat.FINISHED;
+                        Transition = TransitionType.Out;
                     }
                     break;
-
-
-                case Etat.TRANSITION:
-                    AnimationTransition.suivant(gameTime);
-
-                    if (AnimationTransition.estTerminee(gameTime) && AnimationTransition.In)
-                    {
-                        AnimationTransition.In = false;
-                        AnimationTransition.Initialize();
-
-                        Effets.ajouter(PressStart.PartieTraduite, EffetsPredefinis.fadeInFrom0(255, 1000, 1000));
-                        Effets.ajouter(PressStart.PartieNonTraduite, EffetsPredefinis.fadeInFrom0(255, 1000, 1000));
-
-                        EtatScene = Etat.CONNEXION_JOUEUR;
-                    }
-
-                    else if (AnimationTransition.estTerminee(gameTime) && !AnimationTransition.In)
-                    {
-                        if (!Main.TrialMode.Active && !ValidationServeur.Valide)
-                            Core.Visuel.Facade.effectuerTransition("ChargementVersValidation");
-                        else
-                            Core.Visuel.Facade.effectuerTransition("ChargementVersMenu");
-                    }
-                    break;
-
             }
         }
 
@@ -296,7 +293,7 @@
 
         protected override void UpdateVisuel()
         {
-            if (Core.Persistance.Facade.estCharge("principal") && TraductionChargement.Termine)
+            if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
 
             TraductionChargement.Draw(null);
@@ -312,18 +309,15 @@
             base.onFocus();
 
             Main.PlayersController.Initialize();
-            Effets.stop();
-            Effets.vider();
+            Effets.Stop();
+            Effets.Clear();
             ConnectingPlayer = PlayerIndex.One;
             WaitingForPlayerToConnect = true;
             initPressStart();
             TraductionChargement.PartieTraduite.Couleur.A = 0;
             TraductionChargement.PartieNonTraduite.Couleur.A = 0;
 
-            EtatScene = Etat.TRANSITION;
-
-            AnimationTransition.In = true;
-            AnimationTransition.Initialize();
+            Transition = TransitionType.In;
         }
 
 

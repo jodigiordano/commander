@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
-    using Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     
     class PushButton : DrawableGameComponent
     {
@@ -27,8 +27,8 @@
             Curseur = curseur;
             Position = position;
 
-            Bouton = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("emplacement"), Position);
-            Bouton.PrioriteAffichage = priorite;
+            Bouton = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("emplacement"), Position);
+            Bouton.VisualPriority = priorite;
             Bouton.Origine = Bouton.Centre;
 
             BoutonCercle = new Cercle(Position, 16);
@@ -37,7 +37,7 @@
 
         public void doClick()
         {
-            Pressed = Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoutonCercle);
+            Pressed = EphemereGames.Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoutonCercle);
         }
 
 

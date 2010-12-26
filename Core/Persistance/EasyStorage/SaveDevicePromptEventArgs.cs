@@ -1,8 +1,8 @@
-namespace Core.Persistance
-{
-    using System;
+using System;
 
-    /// <summary>
+namespace EasyStorage
+{
+	/// <summary>
 	/// Event arguments for the SaveDevice after a MessageBox prompt
 	/// has been closed.
 	/// </summary>

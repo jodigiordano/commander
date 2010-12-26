@@ -1,11 +1,11 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Physique;
 
     class CeintureAsteroide :CorpsCeleste
     {
@@ -30,7 +30,7 @@
             {
                 RepAsteroide rep = new RepAsteroide();
                 rep.Representation = (IVisible) representations[Main.Random.Next(0, representations.Count)].Clone();
-                rep.Representation.PrioriteAffichage = Preferences.PrioriteSimulationCeintureAsteroides;
+                rep.Representation.VisualPriority = Preferences.PrioriteSimulationCeintureAsteroides;
                 rep.TempsOffset = Main.Random.Next((int)(-tempsRotation/2), (int)(tempsRotation/2));
                 rep.Offset = new Vector3(Main.Random.Next(-50,50),Main.Random.Next(-50,50 ),0);
                 CorpsCeleste.Deplacer(this.TempsRotation, (this.TempsRotationActuel + rep.TempsOffset) % this.TempsRotation, ref this.PositionBase, ref rep.Offset, ref rep.Representation.position);

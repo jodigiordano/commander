@@ -1,23 +1,21 @@
-namespace TDA
+namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Physique;
-    using ProjectMercury.Emitters;
-    using ProjectMercury.Modifiers;
 
     class AnimationLieutenant : Animation
     {
         private Main Main;
-        private IVisible Bulle;
-        private IVisible Lieutenant;
+        private Image Bubble;
+        private Image TheLieutenant;
         private TextTypeWriter TypeWriter;
+        private EffectsController GE;
 
-        private GestionnaireEffets GE;
 
         public AnimationLieutenant(Main main, Scene scene, String texte, double temps)
             : base(temps)
@@ -25,14 +23,13 @@ namespace TDA
             Scene = scene;
             Main = main;
 
-            Lieutenant = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("lieutenant"), new Vector3(-300, 500, 0));
-            Lieutenant.Taille = 6;
-            Lieutenant.Origine = Lieutenant.Centre;
-            Lieutenant.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
+            TheLieutenant = new Image("lieutenant", new Vector3(-300, 500, 0));
+            TheLieutenant.SizeX = 6;
+            TheLieutenant.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
-            Bulle = new IVisible(Core.Persistance.Facade.recuperer<Texture2D>("bulle"), new Vector3(-100, 300, 0));
-            Bulle.Taille = 8;
-            Bulle.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
+            Bubble = new Image("bulle", new Vector3(-100, 300, 0));
+            Bubble.SizeX = 8;
+            Bubble.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
 
             TypeWriter = new TextTypeWriter
             (
@@ -40,7 +37,7 @@ namespace TDA
                 texte,
                 Color.Black,
                 new Vector3(20, 280, 0),
-                Core.Persistance.Facade.recuperer<SpriteFont>("Pixelite"),
+                EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                 2.0f,
                 new Vector2(600, 500),
                 50,
@@ -56,44 +53,45 @@ namespace TDA
                 },
                 Scene
             );
-            TypeWriter.Texte.PrioriteAffichage = Preferences.PrioriteGUIMenuPrincipal;
+            TypeWriter.Texte.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
-            GE = new GestionnaireEffets();
+            GE = new EffectsController();
 
             EffetDeplacementTrajet edt = new EffetDeplacementTrajet();
-            edt.Delai = 0;
-            edt.Duree = this.Duree;
-            edt.Progression = AbstractEffet.TypeProgression.Lineaire;
+            edt.Delay = 0;
+            edt.Length = this.Length;
+            edt.Progress = AbstractEffect.ProgressType.Linear;
             edt.Trajet = new Trajet2D
             (new Vector2[] { new Vector2(-300, 500), new Vector2(-300, 275), new Vector2(-300, 275), new Vector2(-300, 700) },
-             new double[] { 0, 1000, this.Duree - 1000, this.Duree });
+             new double[] { 0, 1000, this.Length - 1000, this.Length });
 
-            GE.ajouter(Lieutenant, edt);
+            GE.Add(TheLieutenant, edt);
 
             edt = new EffetDeplacementTrajet();
-            edt.Delai = 0;
-            edt.Duree = this.Duree;
-            edt.Progression = AbstractEffet.TypeProgression.Lineaire;
+            edt.Delay = 0;
+            edt.Length = this.Length;
+            edt.Progress = AbstractEffect.ProgressType.Linear;
             edt.Trajet = new Trajet2D
             (new Vector2[] { new Vector2(-100, 300), new Vector2(-100, -100), new Vector2(-100, -100), new Vector2(-100, 500) },
-             new double[] { 0, 1000, this.Duree - 1000, this.Duree });
+             new double[] { 0, 1000, this.Length - 1000, this.Length });
 
-            GE.ajouter(Bulle, edt);
+            GE.Add(Bubble, edt);
 
             edt = new EffetDeplacementTrajet();
-            edt.Delai = 0;
-            edt.Duree = this.Duree;
-            edt.Progression = AbstractEffet.TypeProgression.Lineaire;
+            edt.Delay = 0;
+            edt.Length = this.Length;
+            edt.Progress = AbstractEffect.ProgressType.Linear;
             edt.Trajet = new Trajet2D
             (new Vector2[] { new Vector2(-75, 325), new Vector2(-75, -75), new Vector2(-75, -75), new Vector2(-75, 500) },
-             new double[] { 0, 1000, this.Duree - 1000, this.Duree });
+             new double[] { 0, 1000, this.Length - 1000, this.Length });
 
-            GE.ajouter(TypeWriter.Texte, edt);
+            GE.Add(TypeWriter.Texte, edt);
         }
 
-        public override void suivant(GameTime gameTime)
+
+        public override void Update(GameTime gameTime)
         {
-            base.suivant(gameTime);
+            base.Update(gameTime);
 
             TypeWriter.Update(gameTime);
 
@@ -103,24 +101,24 @@ namespace TDA
 
         public void doShow()
         {
-            GE.ajouter(Bulle, EffetsPredefinis.fadeInFrom0(255, 0, 250));
-            GE.ajouter(Lieutenant, EffetsPredefinis.fadeInFrom0(255, 0, 250));
-            GE.ajouter(TypeWriter.Texte, EffetsPredefinis.fadeInFrom0(255, 0, 250));
+            GE.Add(Bubble, PredefinedEffects.FadeInFrom0(255, 0, 250));
+            GE.Add(TheLieutenant, PredefinedEffects.FadeInFrom0(255, 0, 250));
+            GE.Add(TypeWriter.Texte, PredefinedEffects.FadeInFrom0(255, 0, 250));
         }
 
 
         public void doHide()
         {
-            GE.ajouter(Bulle, EffetsPredefinis.fadeOutTo0(255, 0, 250));
-            GE.ajouter(Lieutenant, EffetsPredefinis.fadeOutTo0(255, 0, 250));
-            GE.ajouter(TypeWriter.Texte, EffetsPredefinis.fadeOutTo0(255, 0, 250));
+            GE.Add(Bubble, PredefinedEffects.FadeOutTo0(255, 0, 250));
+            GE.Add(TheLieutenant, PredefinedEffects.FadeOutTo0(255, 0, 250));
+            GE.Add(TypeWriter.Texte, PredefinedEffects.FadeOutTo0(255, 0, 250));
         }
 
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Lieutenant.Draw(spriteBatch);
-            Bulle.Draw(spriteBatch);
+            TheLieutenant.Draw(spriteBatch);
+            Bubble.Draw(spriteBatch);
             TypeWriter.Texte.Draw(spriteBatch);
         }
     }

@@ -1,14 +1,18 @@
-namespace Core.Persistance
-{
-    using System;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.GamerServices;
+using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Storage;
 
+namespace EasyStorage
+{
 	/// <summary>
 	/// A SaveDevice used for saving player-specific data.
 	/// </summary>
-	sealed class PlayerSaveDevice : SaveDevice
+	public sealed class PlayerSaveDevice : SaveDevice
 	{
+		// the format used for our exception message
+		private const string playerException = "Player {0} must be signed in to get a player specific storage device.";
+
 		/// <summary>
 		/// Gets the PlayerIndex of the player for which the data will be saved.
 		/// </summary>
@@ -17,10 +21,8 @@ namespace Core.Persistance
 		/// <summary>
 		/// Creates a new PlayerSaveDevice for a given player.
 		/// </summary>
-		/// <param name="storageContainerName">The name to use when opening a StorageContainer.</param>
 		/// <param name="player">The player for which the data will be saved.</param>
-		public PlayerSaveDevice(string storageContainerName, PlayerIndex player)
-			: base(storageContainerName)
+		public PlayerSaveDevice(PlayerIndex player)
 		{
 			Player = player;
 		}
@@ -32,7 +34,21 @@ namespace Core.Persistance
 		/// <param name="callback">The callback to pass to Guide.BeginShowStorageDeviceSelector.</param>
 		protected override void GetStorageDevice(AsyncCallback callback)
 		{
-			Guide.BeginShowStorageDeviceSelector(Player, callback, null);
+#if XBOX
+			// gamers are required to be signed in to open a container and 
+			// save files. an exception is raised by OpenContainer if a user 
+			// is not signed in, but we want to be more proactive about this 
+			// and throw an exception before even prompting the user in case
+			// a game doesn't happen to save a file while testing. this 
+			// should help games in peer review hit this exception more 
+			// easily in case the tester does not trigger the game to save 
+			// data on a profile that isn't signed in.
+
+			if (SignedInGamer.SignedInGamers[Player] == null)
+				throw new InvalidOperationException(string.Format(playerException, Player));
+#endif
+
+			StorageDevice.BeginShowSelector(Player, callback, null);
 		}
 
 		/// <summary>

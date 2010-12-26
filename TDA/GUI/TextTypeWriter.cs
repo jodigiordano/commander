@@ -1,12 +1,12 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Input;
-    using Core.Visuel;
-    using Core.Utilities;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
 
     class TextTypeWriter : DrawableGameComponent
     {
@@ -98,7 +98,7 @@
                 NbCaracteresTraites++;
 
                 if (JouerSons)
-                    Core.Audio.Facade.jouerEffetSonore("Partie", Sons[Main.Random.Next(0, Sons.Count)]);
+                    EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", Sons[Main.Random.Next(0, Sons.Count)]);
             }
         }
     }

@@ -1,13 +1,13 @@
-﻿namespace TDA
+﻿namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Core.Visuel;
-    using Core.Utilities;
-    using Core.Persistance;
-    using Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Persistance;
+    using EphemereGames.Core.Physique;
 
     class ProjectileBase : Projectile
     {
@@ -22,7 +22,7 @@
             {
                 RepresentationVivant = new IVisible
                 (
-                    Core.Persistance.Facade.recuperer<Texture2D>("ProjectileBase"),
+                    EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileBase"),
                     Position
                 );
 
@@ -34,9 +34,9 @@
             RepresentationVivant.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
             RepresentationDeplacement = Scene.Particules.recuperer("projectileMissileDeplacement");
             RepresentationExplose = Scene.Particules.recuperer("projectileBaseExplosion");
-            RepresentationVivant.PrioriteAffichage = PrioriteAffichage + 0.001f;
-            RepresentationDeplacement.PrioriteAffichage = PrioriteAffichage + 0.001f;
-            RepresentationExplose.PrioriteAffichage = 0.35f;
+            RepresentationVivant.VisualPriority = PrioriteAffichage + 0.001f;
+            RepresentationDeplacement.VisualPriority = PrioriteAffichage + 0.001f;
+            RepresentationExplose.VisualPriority = 0.35f;
             Rectangle.X = (int)Position.X;
             Rectangle.Y = (int)Position.Y;
             PointsVie = 5;

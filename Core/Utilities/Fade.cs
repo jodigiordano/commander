@@ -1,4 +1,4 @@
-﻿namespace Core.Utilities
+﻿namespace EphemereGames.Core.Utilities
 {
     using System;
     using System.Collections.Generic;
@@ -25,8 +25,6 @@
                 fades.Add(fade.suivant(gameTime));
 
                 gameTime = new GameTime(
-                    gameTime.TotalRealTime + new TimeSpan(0, 0, 0, 0, unSur60),
-                    new TimeSpan(0, 0, 0, 0, unSur60),
                     gameTime.TotalGameTime + new TimeSpan(0, 0, 0, 0, unSur60),
                     new TimeSpan(0, 0, 0, 0, unSur60));
             }
@@ -50,8 +48,6 @@
                 fades.Add(fade.suivant(gameTime));
 
                 gameTime = new GameTime(
-                    gameTime.TotalRealTime + new TimeSpan(0, 0, 0, 0, unSur60),
-                    new TimeSpan(0, 0, 0, 0, unSur60),
                     gameTime.TotalGameTime + new TimeSpan(0, 0, 0, 0, unSur60),
                     new TimeSpan(0, 0, 0, 0, unSur60));
             }
