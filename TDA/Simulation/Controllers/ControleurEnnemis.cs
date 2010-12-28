@@ -56,7 +56,7 @@
             ProchaineVague = Vagues.First;
 
             if (ProchaineVague != null)
-                CompositionProchaineVague = ProchaineVague.Value.Composition;
+                RecalculateCompositionNextWave();
 
             if (VaguesInfinies != null)
                 return;
@@ -171,7 +171,7 @@
                     ProchaineVague.Value = VaguesInfinies.getProchaineVague();
 
                 if (ProchaineVague != null)
-                    CompositionProchaineVague = ProchaineVague.Value.Composition;
+                    RecalculateCompositionNextWave();
 
                 notifyVagueDebutee();
             }
@@ -299,7 +299,7 @@
                 ProchaineVague = (VaguesInfinies == null) ? ProchaineVague.Next : new LinkedListNode<Wave>(VaguesInfinies.getProchaineVague());
 
                 if (ProchaineVague != null)
-                    CompositionProchaineVague = ProchaineVague.Value.Composition;
+                    RecalculateCompositionNextWave();
 
                 notifyVagueDebutee();
             }
@@ -314,6 +314,15 @@
                 vague.doEnemyDestroyed(ennemi);
 
             notifyEnnemiAtteintFinTrajet(ennemi, Chemin.DernierRelais);
+        }
+
+
+        private void RecalculateCompositionNextWave()
+        {
+            CompositionProchaineVague.Clear();
+
+            foreach (var kvp in ProchaineVague.Value.Composition)
+                CompositionProchaineVague.Add(kvp.Key, kvp.Value);
         }
     }
 }

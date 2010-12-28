@@ -28,10 +28,9 @@
                 4,
                 true,
                 4000,
-                250
+                250,
+                Preferences.PrioriteGUIHistoire
             );
-            TranslatorMission.PartieTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
-            TranslatorMission.PartieNonTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
 
             TranslatorYearPlace = new Translator
             (
@@ -46,10 +45,9 @@
                 4,
                 true,
                 4000,
-                250
+                250,
+                Preferences.PrioriteGUIHistoire
             );
-            TranslatorYearPlace.PartieTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
-            TranslatorYearPlace.PartieNonTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
 
             TranslatorObjective = new Translator
             (
@@ -64,10 +62,9 @@
                 4,
                 true,
                 5000,
-                100
+                100,
+                Preferences.PrioriteGUIHistoire
             );
-            TranslatorObjective.PartieTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
-            TranslatorObjective.PartieNonTraduite.VisualPriority = Preferences.PrioriteGUIHistoire;
 
             Simulation.Scene.Effets.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 1000, 500));
             Simulation.Scene.Effets.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visuel.PredefinedEffects.FadeInFrom0(255, 1000, 500));

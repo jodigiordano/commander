@@ -9,12 +9,13 @@
     class Scenario
     {
         public int Numero;
-        public String Mission;
-        public String Annee;
-        public String Lieu;
-        public String Objectif;
-        public String Description;
-        public String Difficulte;
+        public string Mission;
+        public string Annee;
+        public string Lieu;
+        public string Objectif;
+        public string Description;
+        public string Difficulte;
+        public double ParTime;
 
         public List<CorpsCeleste> SystemePlanetaire;
         public VaguesInfinies VaguesInfinies;
@@ -30,10 +31,13 @@
 
         private Simulation Simulation;
         private float ProchainePrioriteAffichageCorpsCeleste = Preferences.PrioriteSimulationCorpsCeleste;
+        private DescripteurScenario Descriptor;
+
 
         public Scenario(Simulation simulation, DescripteurScenario descripteur)
         {
-            this.Simulation = simulation;
+            Simulation = simulation;
+            Descriptor = descripteur;
 
             Mission = descripteur.Mission;
             Annee = descripteur.Annee;
@@ -242,11 +246,20 @@
             else
                 for (int i = 0; i < descripteur.Waves.Count; i++)
                     Vagues.AddLast(new Wave(Simulation, descripteur.Waves[i]));
+
+            ParTime = descripteur.ParTime;
         }
+
 
         private String nomRepresentation(Taille taille, String nomBase)
         {
             return nomBase + ((taille == Taille.Petite) ? 1 : (taille == Taille.Moyenne) ? 2 : 3).ToString();
+        }
+
+
+        public int NbStars(int score)
+        {
+            return Descriptor.NbStars(score);
         }
     }
 }

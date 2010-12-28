@@ -174,6 +174,7 @@
             {
                 CommonStash.Cash += ennemi.ValeurUnites;
                 CommonStash.Score += ennemi.ValeurPoints;
+                CommonStash.TotalScore += ennemi.ValeurPoints;
 
                 Player.UpdateSelection();
 

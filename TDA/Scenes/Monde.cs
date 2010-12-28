@@ -15,13 +15,15 @@
         public int Numero;
         public DescripteurScenario ScenarioSelectionne { get; private set; }
 
-        protected Main Main;
-        protected Scene Scene;
+        private Main Main;
+        private Scene Scene;
         public Simulation Simulation;
-        protected IVisible Titre;
-        protected IVisible Infos;
-        protected DescripteurScenario Descripteur;
-        protected Dictionary<String, DescripteurScenario> Scenarios;
+        private IVisible Titre;
+        private IVisible Infos;
+        private DescripteurScenario Descripteur;
+        private Dictionary<String, DescripteurScenario> Scenarios;
+        private Text HighScore;
+        private IVisible[] Stars;
 
         private Dictionary<String, List<Lune>> ScenarioLunes;
         private CorpsCeleste dernierCorpsCelesteSelectionne;
@@ -97,6 +99,25 @@
             ResistancePartieEnCours = new TheResistance(Simulation, null, new List<Ennemi>());
             
             initLunes();
+
+            HighScore = new Text("", "Pixelite", Color.White, Vector3.Zero);
+            HighScore.SizeX = 2;
+            HighScore.Origin = HighScore.Center;
+            HighScore.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
+            HighScore.Color.A = 200;
+
+
+            Stars = new IVisible[3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                var star = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Star"), Vector3.Zero);
+                star.Taille = 0.25f;
+                star.Origine = star.Centre;
+                star.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
+                star.Couleur.A = 200;
+                Stars[i] = star;
+            }
         }
 
         public String CorpsSelectionne
@@ -165,12 +186,36 @@
             if (Simulation.CorpsCelesteSelectionne == null)
                 return;
 
-            Titre.Texte = Scenarios[Simulation.CorpsCelesteSelectionne.Nom].Mission;
-            Titre.Position = new Vector3(Simulation.CorpsCelesteSelectionne.Position.X, Simulation.CorpsCelesteSelectionne.Position.Y - Simulation.CorpsCelesteSelectionne.Cercle.Rayon - 32, 0);
+            CorpsCeleste celestialBody = Simulation.CorpsCelesteSelectionne;
+            DescripteurScenario descriptor = Scenarios[Simulation.CorpsCelesteSelectionne.Nom];
+
+            Titre.Texte = descriptor.Mission;
+            Titre.Position = new Vector3(celestialBody.Position.X, celestialBody.Position.Y - celestialBody.Cercle.Rayon - 32, 0);
             Titre.Origine = Titre.Centre;
-            Infos.Texte = Scenarios[Simulation.CorpsCelesteSelectionne.Nom].Difficulte;
-            Infos.Position = new Vector3(Simulation.CorpsCelesteSelectionne.Position.X, Simulation.CorpsCelesteSelectionne.Position.Y + Simulation.CorpsCelesteSelectionne.Cercle.Rayon + 16, 0);
+            Infos.Texte = descriptor.Difficulte;
+            Infos.Position = new Vector3(celestialBody.Position.X, celestialBody.Position.Y + celestialBody.Cercle.Rayon + 16, 0);
             Infos.Origine = Infos.Centre;
+
+            HighScores highscores = null;
+
+            Simulation.Main.SaveGame.HighScores.TryGetValue(descriptor.Numero, out highscores);
+
+            HighScore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
+            HighScore.Origin = HighScore.Center;
+            HighScore.Position = new Vector3(Simulation.CorpsCelesteSelectionne.Position.X, Simulation.CorpsCelesteSelectionne.Position.Y + Simulation.CorpsCelesteSelectionne.Cercle.Rayon + 40, 0);
+
+            int nbStars = (highscores == null) ? 0 : descriptor.NbStars(highscores.Scores[0].Value);
+
+            for (int i = 0; i < 3; i++)
+            {
+                Stars[i].Position = new Vector3(Simulation.CorpsCelesteSelectionne.Position.X - 50 + i * 50, Simulation.CorpsCelesteSelectionne.Position.Y + Simulation.CorpsCelesteSelectionne.Cercle.Rayon + 70, 0);
+                Stars[i].Couleur.A = (i < nbStars) ? (byte)200 : (byte)50;
+            }
+
+            Scene.ajouterScenable(HighScore);
+            Scene.ajouterScenable(Stars[0]);
+            Scene.ajouterScenable(Stars[1]);
+            Scene.ajouterScenable(Stars[2]);
             Scene.ajouterScenable(Titre);
             Scene.ajouterScenable(Infos);
         }

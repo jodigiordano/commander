@@ -282,7 +282,7 @@ namespace EphemereGames.Commander
             ControleurEnnemis.ObjetDetruit -= SimPlayersController.doObjetDetruit;
 
             int scenario = ControleurScenario.Scenario.Numero;
-            int score = ControleurScenario.Scenario.CommonStash.Score;
+            int score = ControleurScenario.Scenario.CommonStash.TotalScore;
 
             if (!Main.SaveGame.HighScores.ContainsKey(scenario))
                 Main.SaveGame.HighScores.Add(scenario, new HighScores(scenario));

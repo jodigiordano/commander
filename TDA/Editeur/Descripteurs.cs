@@ -56,6 +56,7 @@
         [ContentSerializer(Optional = true)]
         public int NbPackViesDonnes { get; set; }
 
+
         public DescripteurScenario()
         {
             Numero = -1;
@@ -114,6 +115,42 @@
             d.Emplacements = new List<DescripteurEmplacement>();
 
             SystemePlanetaire.Add(d);
+        }
+
+
+        public double ParTime
+        {
+            get
+            {
+                if (VaguesInfinies != null)
+                    return 0;
+
+                double parTime = 0;
+
+                foreach (var wave in Waves)
+                    parTime += wave.StartingTime;
+
+                return parTime;
+            }
+        }
+
+
+        public int NbStars(int score)
+        {
+            int maxCash = 0;
+
+            foreach (var wave in Waves)
+                maxCash += wave.Quantity * wave.CashValue;
+
+            int maxLives = Joueur.PointsDeVie + NbPackViesDonnes;
+
+            int bestScore = (maxLives * 50) + maxCash + (int)(ParTime / 100);
+
+            bestScore = (int) (bestScore * 0.75);
+
+            return (score >= bestScore) ? 3 :
+                   (score >= bestScore * 0.75) ? 2 :
+                   (score > -bestScore * 0.5) ? 1 : 0;
         }
     }
 

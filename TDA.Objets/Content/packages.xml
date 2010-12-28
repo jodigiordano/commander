@@ -108,6 +108,7 @@
 
     <!-- Textures -->
 
+    <asset nom="Star"                       type="Texture2D" chemin="GUI/star" />
     <asset nom="Cercle"                     type="Texture2D" chemin="particules/cercle" />
     <asset nom="ProjectileBase"             type="Texture2D" chemin="projectiles/projectileBase" />
     <asset nom="ProjectileMissile"          type="Texture2D" chemin="projectiles/missile" />

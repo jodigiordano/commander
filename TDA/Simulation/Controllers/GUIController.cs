@@ -54,7 +54,7 @@
         {
             MenuGeneral.CompositionNextWave = CompositionNextWave;
             ScenarioAnnunciation = new ScenarioAnnunciation(Simulation, Scenario);
-            ScenarioEndedAnnunciation = new ScenarioEndedAnnunciation(Simulation, CelestialBodies);
+            ScenarioEndedAnnunciation = new ScenarioEndedAnnunciation(Simulation, CelestialBodies, Scenario);
             AdvancedView = new AdvancedView(Simulation, Enemies, CelestialBodies);
             PlayerLives = new PlayerLives(Simulation, Scenario.CorpsCelesteAProteger, new Color(255, 0, 220));
             PathPreviewing = new PathPreview(PathPreview);
@@ -91,7 +91,7 @@
 
         public void doCommonStashChanged(CommonStash stash)
         {
-            MenuGeneral.Score = stash.Score;
+            MenuGeneral.Score = stash.TotalScore;
             MenuGeneral.Cash = stash.Cash;
         }
 
@@ -187,7 +187,7 @@
             MenuDemo.CelestialBody = selection.CelestialBody;
             MenuDemo.Scenario =
                 (selection.CelestialBody != null &&
-                DemoModeSelectedScenario != null) ? DemoModeSelectedScenario.Numero : -1;
+                DemoModeSelectedScenario != null) ? DemoModeSelectedScenario : null;
 
             SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
 
@@ -244,7 +244,7 @@
 
             if (Simulation.ModeDemo)
             {
-                MenuDemo.Draw();
+                //MenuDemo.Draw();
                 return;
             }
 

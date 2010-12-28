@@ -43,7 +43,8 @@
             float taille,
             bool showRecherche,
             int tempsTraduction,
-            int tempsChaqueRecherche)
+            int tempsChaqueRecherche,
+            float visualPriority)
             : base(main)
         {
             this.Scene = scene;
@@ -57,8 +58,10 @@
 
             PartieNonTraduite = new IVisible(texteATraduire, policeLangueEtrangere, couleurLangueEtrangere, position);
             PartieNonTraduite.Taille = taille;
+            PartieNonTraduite.VisualPriority = visualPriority;
             PartieTraduite = new IVisible("", policeLangueConnue, couleurLangueConnue, position);
             PartieTraduite.Taille = taille;
+            PartieTraduite.VisualPriority = visualPriority;
 
             PartieNonTraduiteTexte = new char[texteATraduire.Length];
             PartieTraduiteTexte = new char[texteATraduire.Length];

@@ -9,7 +9,7 @@
     {
         public Vector2 Origin;
         public Vector2 Size;
-        public Vector2 Center;
+        public Vector2 Center { get { return TextSize / 2f; } }
         public Vector2 TextureSize;
         public float Rotation;
 
@@ -19,21 +19,26 @@
         public virtual List<IScenable> Components { get; set; }
 
         public string Data;
-        public Vector2 TextSize;
         public Color Color;
 
         private SpriteFont Font;
 
 
-        public Text(string data, SpriteFont font, Color color, Vector3 position)
+        public Text(string data, string fontName, Color color, Vector3 position)
         {
             Data = data;
-            Font = font;
+            Font = Core.Persistance.Facade.GetAsset<SpriteFont>(fontName);
             Color = color;
             Position = position;
-            TextSize = Font.MeasureString(Data);
-            Center = TextSize / 2f;
+            Size = new Vector2(1);
         }
+
+
+        private Vector2 TextSize
+        {
+            get { return Font.MeasureString(Data); }
+        }
+
 
 
         public float SizeX

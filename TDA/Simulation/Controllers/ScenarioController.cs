@@ -33,10 +33,10 @@
         public GameState State                      { get; private set; }
         private Simulation Simulation;
         private int WavesCounter;
-        private double ParTime;
         private ParticuleEffectWrapper Stars;
         private double StarsEmitter;
         public Scenario Scenario;
+        private double ElapsedTime;
 
 
         public ScenarioController(Simulation simulation, Scenario scenario)
@@ -49,8 +49,7 @@
             StarsEmitter = 0;
 
             WavesCounter = 0;
-
-            ParTime = (Scenario.VaguesInfinies != null) ? 0 : Scenario.Vagues.Last.Value.StartingTime + Scenario.Vagues.Last.Value.Enemies.Count * 2000;
+            ElapsedTime = 0;
         }
 
 
@@ -68,7 +67,7 @@
             if (Main.Random.Next(0, 1000) == 0)
                 Simulation.Scene.Animations.Insert(Simulation.Scene, new AnimationEtoileFilante(Simulation));
 
-            ParTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            ElapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
 
@@ -167,13 +166,16 @@
 
         private void computeFinalScore()
         {
-            ParTime = Math.Max(0, ParTime);
+            ElapsedTime = Math.Min(Scenario.ParTime, ElapsedTime);
 
-            Scenario.CommonStash.Score += Scenario.CommonStash.Lives * 50;
-            Scenario.CommonStash.Score += Scenario.CommonStash.Cash;
+            Scenario.CommonStash.TotalScore += Scenario.CommonStash.Lives * 50;
+            Scenario.CommonStash.TotalScore += Scenario.CommonStash.Cash;
 
             if (State == GameState.Won)
-                Scenario.CommonStash.Score += (int) (ParTime / 100);
+            {
+                Scenario.CommonStash.TimeLeft = (int)((Scenario.ParTime - ElapsedTime) / 100);
+                Scenario.CommonStash.TotalScore += Scenario.CommonStash.TimeLeft;
+            }
 
             notifyCommonStashChanged(Scenario.CommonStash);
         }

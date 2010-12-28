@@ -136,11 +136,10 @@
                 3,
                 true,
                 3000,
-                250
+                250,
+                0.3f
             );
             TraductionChargement.Centre = true;
-            TraductionChargement.PartieNonTraduite.VisualPriority = 0.3f;
-            TraductionChargement.PartieTraduite.VisualPriority = 0.3f;
         }
 
         private void initPressStart()
@@ -158,11 +157,10 @@
                 3,
                 true,
                 3000,
-                250
+                250,
+                0.3f
             );
             PressStart.Centre = true;
-            PressStart.PartieNonTraduite.VisualPriority = 0.3f;
-            PressStart.PartieTraduite.VisualPriority = 0.3f;
         }
 
 
