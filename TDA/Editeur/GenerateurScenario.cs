@@ -63,7 +63,7 @@
 
         public int NbCorpsCelestes;
         public int NbCorpsCelestesFixes;
-        public List<TypeTourelle> TourellesDisponibles;
+        public List<TurretType> TourellesDisponibles;
         public List<PowerUp> PowerUpsDisponibles;
         public bool AvecEtoileAuMilieu;
         public int NbPlanetesCheminDeDepart;
@@ -155,7 +155,7 @@
             c.Representation = "planete2";
             c.RepresentationParticules = "etoile";
             c.Priorite = -1;
-            c.TourellesPermises = new List<TypeTourelle>();
+            c.TourellesPermises = new List<TurretType>();
             c.EnBackground = true;
             c.Invincible = false;
             c.Selectionnable = false;
@@ -187,13 +187,13 @@
                 aProteger.Emplacements.Add(dE);
             }
 
-            if (aProteger.Emplacements[0].Tourelle == null || aProteger.Emplacements[0].Tourelle.Type != TypeTourelle.Gravitationnelle)
+            if (aProteger.Emplacements[0].Tourelle == null || aProteger.Emplacements[0].Tourelle.Type != TurretType.Gravitational)
             {
                 DescripteurTourelle dT = new DescripteurTourelle();
                 dT.Niveau = 1;
                 dT.PeutMettreAJour = false;
                 dT.PeutVendre = false;
-                dT.Type = TypeTourelle.Gravitationnelle;
+                dT.Type = TurretType.Gravitational;
                 //dT.Visible = false;
 
                 aProteger.Emplacements[0].Tourelle = dT;
@@ -384,7 +384,7 @@
                     dt.Niveau = 1;
                     dt.PeutMettreAJour = true;
                     dt.PeutVendre = true;
-                    dt.Type = TypeTourelle.Gravitationnelle;
+                    dt.Type = TurretType.Gravitational;
 
                     corpsSelectionne.Emplacements[0].Tourelle = dt;
 

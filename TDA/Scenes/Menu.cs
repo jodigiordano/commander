@@ -18,7 +18,6 @@
         private IVisible Editeur;
         private IVisible TitreMenu;
         private IVisible NomJoueur;
-        public Partie PartieEnCours;
 
         public String MusiqueSelectionnee;
         private double TempsEntreDeuxChangementMusique;
@@ -197,8 +196,11 @@
                         break;
 
                     case "resume game":
-                        if (PartieEnCours != null && !PartieEnCours.EstTerminee)
+                        if (Main.GameInProgress != null && !Main.GameInProgress.EstTerminee)
+                        {
+                            Main.GameInProgress.State = GameState.Running;
                             EphemereGames.Core.Visuel.Facade.Transite("MenuToPartie");
+                        }
                         break;
 
                     case "chargement": EphemereGames.Core.Visuel.Facade.Transite("MenuToChargement");
@@ -236,7 +238,7 @@
                     case "options":             ajouterScenable(Options);           break;
                     case "editor":              ajouterScenable(Editeur);           break;
                     case "resume game":
-                        if (PartieEnCours != null && !PartieEnCours.EstTerminee)
+                        if (Main.GameInProgress != null && !Main.GameInProgress.EstTerminee)
                             ajouterScenable(ReprendrePartie);
                         break;
                 }
@@ -244,7 +246,7 @@
 
             ajouterScenable(TitreMenu);
 
-            Simulation.Draw(null);
+            Simulation.Draw();
 
             if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
@@ -269,7 +271,7 @@
         {
             base.onFocusLost();
 
-            if (Simulation.CorpsCelesteSelectionne != null && Simulation.CorpsCelesteSelectionne.Nom == "resume game" && PartieEnCours != null && !PartieEnCours.EstTerminee)
+            if (Simulation.CorpsCelesteSelectionne != null && Simulation.CorpsCelesteSelectionne.Nom == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.EstTerminee)
                 EphemereGames.Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
 
             EphemereGames.Core.Input.Facade.RemoveListener(Simulation);
@@ -321,8 +323,8 @@
 
             if ((Simulation.CorpsCelesteSelectionne != null &&
                 Simulation.CorpsCelesteSelectionne.Nom == "resume game" &&
-                PartieEnCours != null &&
-                !PartieEnCours.EstTerminee) ||
+                Main.GameInProgress != null &&
+                !Main.GameInProgress.EstTerminee) ||
                 
                 (Simulation.CorpsCelesteSelectionne != null &&
                 Simulation.CorpsCelesteSelectionne.Nom != "resume game"))

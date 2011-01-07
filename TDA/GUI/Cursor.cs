@@ -22,6 +22,7 @@
         private Scene Scene;
         private Main Main;
         private IVisible Representation;
+        private Text Text;
 
 
         public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, float visualPriority)
@@ -42,6 +43,11 @@
             Position = initialPosition;
 
             doShow();
+
+            Text = new Text("Pixelite");
+            Text.SizeX = 1;
+            Text.Color = Color.Black;
+            Text.VisualPriority = visualPriority - 0.0000001f;
         }
 
 
@@ -68,6 +74,12 @@
             Representation.Position = this.Position;
 
             Scene.ajouterScenable(Representation);
+
+//#if DEBUG
+//            Text.Data = Position.ToString();
+//            Text.Position = Position;
+//            Scene.ajouterScenable(Text);
+//#endif
         }
 
 

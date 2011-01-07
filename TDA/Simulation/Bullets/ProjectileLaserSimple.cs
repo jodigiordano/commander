@@ -14,7 +14,7 @@
     {
         private double DureeVie                                     { get; set; }
         public Ennemi Cible                                         { get; set; }
-        public Tourelle TourelleEmettrice                           { get; set; }
+        public Turret TourelleEmettrice                             { get; set; }
         private ParticuleEffectWrapper RepresentationVivantAlt      { get; set; }
         private LigneVisuel RepresentationVivantAlt2                { get; set; }
 

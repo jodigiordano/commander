@@ -19,7 +19,7 @@
         public bool SystemeCentre;
 
         // Gameplay
-        public List<TypeTourelle> TourellesDisponibles;
+        public List<TurretType> TourellesDisponibles;
         public List<PowerUp> PowerUpsDisponibles;        
         public int ViesPlaneteAProteger;
         public int ArgentExtra;
@@ -89,8 +89,8 @@
         private IVisible ReserveDepartRep;
         private HorizontalSlider ReserveDepartSlider;
 
-        private Dictionary<TypeTourelle, IVisible> TourellesRep;
-        private Dictionary<TypeTourelle, CheckBox> TourellesCheckBoxes;
+        private Dictionary<TurretType, IVisible> TourellesRep;
+        private Dictionary<TurretType, CheckBox> TourellesCheckBoxes;
 
         private Dictionary<PowerUp, IVisible> PowerUpsRep;
         private Dictionary<PowerUp, CheckBox> PowerUpsCheckBoxes;
@@ -258,14 +258,14 @@
 
             NbPacksVieSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, -10, 0), 0, 20, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            TourellesRep = new Dictionary<TypeTourelle, IVisible>();
-            TourellesCheckBoxes = new Dictionary<TypeTourelle, CheckBox>();
+            TourellesRep = new Dictionary<TurretType, IVisible>();
+            TourellesCheckBoxes = new Dictionary<TurretType, CheckBox>();
 
             Vector3 positionTourelle = FiltreGameplay.Position - new Vector3(230, -60, 0);
 
-            foreach (var tourelle in FactoryTourelles.GetTourellesDisponibles())
+            foreach (var tourelle in simulation.TurretFactory.AvailableTurrets)
             {
-                IVisible iv = (IVisible) tourelle.representationBase.Clone();
+                IVisible iv = (IVisible) tourelle.BaseImage.Clone();
                 iv.Position = positionTourelle;
                 iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
@@ -791,7 +791,7 @@
             DonneesGenerateur.NbPacksVie = NbPacksVieSlider.Valeur;
             DonneesGenerateur.ViesPlaneteAProteger = NbViesSlider.Valeur;
 
-            List<TypeTourelle> tourellesDisponibles = new List<TypeTourelle>();
+            List<TurretType> tourellesDisponibles = new List<TurretType>();
 
             foreach (var tourelle in TourellesCheckBoxes)
                 if (tourelle.Value.Checked)

@@ -11,33 +11,18 @@
     class NouvellePartie : SceneMenu
     {
         private Main Main;
-        private List<Monde> Mondes;
+        private Dictionary<int, World> Mondes;
         private int IndiceMondeSelectionne;
-
         private AnimationTransition AnimationTransition;
         private String ChoixTransition;
         private DescripteurScenario ChoixScenario;
         private double TempsEntreDeuxChangementMusique;
-
         private Menu Menu;
-
-
-        private static List<String> QuotesPause = new List<string>()
-        {
-            "Get back to work, commander!",
-            "Finish your job, commander!",
-            "This world needs\n\nto be saved, commander!",
-            "Don't leave them\n\nbehind, commander!",
-            "The Resistance needs you, commander!"
-        };
-
         private List<AideNiveau> AidesNiveaux;
-
         private String MessagePause;
-
-        //TMP
         private AnimationLieutenant AnimationFinMonde1 = null;
         private AnimationLieutenant AnimationFinDemo = null;
+
 
         public NouvellePartie(Main main)
             : base(Vector2.Zero, 720, 1280)
@@ -48,12 +33,12 @@
 
             AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
-            Mondes = new List<Monde>();
-            Mondes.Add(new Monde(main, this, 1, FactoryScenarios.getDescripteurMonde1(), FactoryScenarios.getDescriptionsScenariosMonde1(), true));
-            Mondes.Add(new Monde(main, this, 2, FactoryScenarios.getDescripteurMonde2(), FactoryScenarios.getDescriptionsScenariosMonde2(), false));
-            Mondes.Add(new Monde(main, this, 3, FactoryScenarios.getDescripteurMonde3(), FactoryScenarios.getDescriptionsScenariosMonde3(), false));
+            Mondes = new Dictionary<int, World>();
+            Mondes.Add(1, new World(main, this, FactoryScenarios.GetWorldDescriptor(1)));
+            Mondes.Add(2, new World(main, this, FactoryScenarios.GetWorldDescriptor(2)));
+            Mondes.Add(3, new World(main, this, FactoryScenarios.GetWorldDescriptor(3)));
 
-            IndiceMondeSelectionne = 0;
+            IndiceMondeSelectionne = 1;
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
 
@@ -127,8 +112,6 @@
                     new KeyValuePair<string, string>("Planete", "When an asteroid explode,\n\nit will drop extra cash. Use\n\nthe collector to collect them.")
                 }
             ));
-
-            verifierWarpZones();
         }
 
 
@@ -139,7 +122,7 @@
         }
 
 
-        private Monde MondeSelectionne
+        private World MondeSelectionne
         {
             get { return Mondes[IndiceMondeSelectionne]; }
         }
@@ -148,11 +131,12 @@
         protected override void UpdateLogique(GameTime gameTime)
         {
             MondeSelectionne.Update(gameTime);
-            verifierWarpZones();
             jouerAnimationFinMonde1(gameTime);
             jouerAnimationFinDemo(gameTime);
-            verifierPartieEnPause();
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            foreach (var warp in MondeSelectionne.WarpsCelestialBodies)
+                ((TrouRose) warp.Key).Couleur = (Mondes[warp.Value].Unlocked) ? new Color(255, 0, 255) : new Color(255, 0, 0);
         }
 
 
@@ -171,92 +155,67 @@
                 return;
 
             if (Transition == TransitionType.Out)
-                switch (ChoixTransition)
+                if (ChoixTransition.StartsWith("World"))
                 {
-                    case "Go to World 2!":
-                        Transition = TransitionType.In;
-                        EphemereGames.Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
-                        IndiceMondeSelectionne = 1;
-                        EphemereGames.Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
-                        break;
-                    case "Go to World 3!":
-                        Transition = TransitionType.In;
-                        EphemereGames.Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
-                        IndiceMondeSelectionne = 2;
-                        EphemereGames.Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
-                        break;
-                    case "Go back\nto World 1!":
-                        Transition = TransitionType.In;
-                        EphemereGames.Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
-                        IndiceMondeSelectionne = 0;
-                        EphemereGames.Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
-                        break;
-                    case "Go back\nto World\n2!":
-                        Transition = TransitionType.In;
-                        EphemereGames.Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
-                        IndiceMondeSelectionne = 1;
-                        EphemereGames.Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
-                        break;
-                    case "menu": EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToMenu"); break;
-                    case "chargement": EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToChargement"); break;
-                    default:
-                        if (Menu.PartieEnCours != null && !Menu.PartieEnCours.EstTerminee && Menu.PartieEnCours.Simulation.DescriptionScenario.Mission == ChoixTransition)
-                            EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToPartie");
-                        else
-                        {
-                            if (Menu.PartieEnCours != null)
-                            {
-                                EphemereGames.Core.Audio.Facade.arreterMusique(Menu.PartieEnCours.MusiqueSelectionnee, false, 0);
+                    Transition = TransitionType.In;
+                    AnimationTransition.Initialize();
+                    EphemereGames.Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
+                    Int32.TryParse(ChoixTransition.Remove(0, 5), out IndiceMondeSelectionne);
+                    EphemereGames.Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
 
-                                if (!Menu.PartieEnCours.EstTerminee)
-                                    Main.MusiquesDisponibles.Add(Menu.PartieEnCours.MusiqueSelectionnee);
-                            }
-
-                            Menu.PartieEnCours = new Partie(Main, ChoixScenario);
-                            Menu.PartieEnCours.Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
-
-                            if (ChoixScenario.Numero <= 3)
-                            {
-                                AidesNiveaux[ChoixScenario.Numero].QuotesObjets.Clear();
-                                Menu.PartieEnCours.Simulation.ControleurMessages.AideNiveau = AidesNiveaux[ChoixScenario.Numero];
-                                Menu.PartieEnCours.Simulation.ControleurMessages.Initialize();
-                            }
-
-                            MondeSelectionne.arreterMessagePause();
-
-                            MessagePause = QuotesPause[Main.Random.Next(0, QuotesPause.Count)];
-
-                            EphemereGames.Core.Visuel.Facade.UpdateScene("Partie", Menu.PartieEnCours);
-                            EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToPartie");
-                        }
-                        break;
-
+                    if (IndiceMondeSelectionne == 1 && AnimationFinMonde1 != null)
+                        AnimationFinMonde1.doShow();
                 }
 
-            Transition = TransitionType.None;
-        }
+                else if (ChoixTransition == "menu")
+                    EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToMenu");
+                else if (ChoixTransition == "chargement")
+                    EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToChargement");
+                else
+                {
+                    if (Main.GameInProgress != null &&
+                        !Main.GameInProgress.EstTerminee &&
+                        Main.GameInProgress.Simulation.DescriptionScenario.Mission == ChoixTransition &&
+                        MondeSelectionne.Simulation.GameAction == GameAction.Resume)
+                    {
+                        Main.GameInProgress.State = GameState.Running;
+                        EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToPartie");
+                    }
+                    else
+                    {
+                        if (Main.GameInProgress != null)
+                        {
+                            EphemereGames.Core.Audio.Facade.arreterMusique(Main.GameInProgress.MusiqueSelectionnee, false, 0);
 
+                            if (!Main.GameInProgress.EstTerminee)
+                                Main.MusiquesDisponibles.Add(Main.GameInProgress.MusiqueSelectionnee);
+                        }
 
-        private void verifierPartieEnPause()
-        {
-            if (Menu.PartieEnCours != null && !Menu.PartieEnCours.EstTerminee)
-            {
-                MondeSelectionne.CorpsCelestePartieEnPause = Menu.PartieEnCours.Simulation.DescriptionScenario.Mission;
-                MondeSelectionne.afficherMessagePause(MessagePause);
-            }
+                        Main.GameInProgress = new Partie(Main, ChoixScenario);
+                        Main.GameInProgress.Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
+                        MondeSelectionne.Simulation.ControleurMessages.StopPausedMessage();
 
+                        if (ChoixScenario.Numero <= 3)
+                        {
+                            AidesNiveaux[ChoixScenario.Numero].QuotesObjets.Clear();
+                            Main.GameInProgress.Simulation.ControleurMessages.AideNiveau = AidesNiveaux[ChoixScenario.Numero];
+                            Main.GameInProgress.Simulation.ControleurMessages.Initialize();
+                        }
+
+                        EphemereGames.Core.Visuel.Facade.UpdateScene("Partie", Main.GameInProgress);
+                        EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToPartie");
+                    }
+                }
             else
-            {
-                MondeSelectionne.arreterMessagePause();
-                MondeSelectionne.CorpsCelestePartieEnPause = null;
-            }
+                Transition = TransitionType.None;
         }
+
 
         private void jouerAnimationFinMonde1(GameTime gameTime)
         {
             if (AnimationFinMonde1 != null && AnimationFinMonde1.Finished(gameTime))
                 AnimationFinMonde1 = null;
-            else if (AnimationFinMonde1 != null && MondeSelectionne.Numero == 2)
+            else if (AnimationFinMonde1 != null && MondeSelectionne.Id == 2)
                 AnimationFinMonde1.Update(gameTime);
         }
 
@@ -264,22 +223,22 @@
         {
             if (AnimationFinDemo != null && AnimationFinDemo.Finished(gameTime))
                 AnimationFinDemo = null;
-            else if (AnimationFinDemo != null && MondeSelectionne.Numero == 1)
+            else if (AnimationFinDemo != null && MondeSelectionne.Id == 1)
                 AnimationFinDemo.Update(gameTime);
         }
 
 
         protected override void UpdateVisuel()
         {
-            MondeSelectionne.Draw(null);
+            MondeSelectionne.Draw();
 
             if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
 
-            if (AnimationFinMonde1 != null && MondeSelectionne.Numero == 2)
+            if (AnimationFinMonde1 != null && MondeSelectionne.Id == 2)
                 this.ajouterScenable(AnimationFinMonde1);
 
-            if (AnimationFinDemo != null && MondeSelectionne.Numero == 1)
+            if (AnimationFinDemo != null && MondeSelectionne.Id == 1)
                 this.ajouterScenable(AnimationFinDemo);
         }
 
@@ -310,62 +269,28 @@
         {
             base.onFocusLost();
 
-            if (ChoixTransition != "Go to World 2!" && ChoixTransition != "Go to World 3!" &&
-                ChoixTransition != "Go back\nto World 1!" && ChoixTransition != "Go back\nto World\n2!" &&
-                ChoixTransition != "menu")
-            {
+            if (!ChoixTransition.StartsWith("World") && ChoixTransition != "menu")
                 EphemereGames.Core.Audio.Facade.pauserMusique(Menu.MusiqueSelectionnee, true, 1000);
-            }
 
             EphemereGames.Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
-        }
-
-        private void verifierWarpZones()
-        {
-            if (IndiceMondeSelectionne == 0)
-            {
-                int level = 0;
-
-                if (!Main.TrialMode.Active)
-                {
-                    Mondes[1].Debloque = Main.SaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(2, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(3, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(4, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(5, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(6, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(7, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(8, out level) && level > 0;
-                }
-                else
-                {
-                    Mondes[1].Debloque = Main.SaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(4, out level) && level > 0 &&
-                                         Main.SaveGame.Progress.TryGetValue(5, out level) && level > 0;
-                }
-
-
-                MondeSelectionne.TrousRoses[0].Couleur = (Mondes[1].Debloque) ? new Color(255, 0, 255) : new Color(255, 0, 0);
-            }
-
-            else if (IndiceMondeSelectionne == 1)
-            {
-                if (Main.TrialMode.Active)
-                    Mondes[2].Debloque = false;
-                else
-                    Mondes[2].Debloque = false;
-
-                MondeSelectionne.TrousRoses[1].Couleur = (Mondes[2].Debloque) ? new Color(255, 0, 255) : new Color(255, 0, 0);
-            }
         }
 
 
         private void doNouvelEtatPartie(GameState etat)
         {
             foreach (var monde in Mondes)
-                monde.initLunes();
+                monde.Value.InitLevelsStates();
+
+            //if (etat == GameState.Paused)
+            //{
+            //    MondeSelectionne.Simulation.CelestialBodyPausedGame = MondeSelectionne.Simulation.ControleurSystemePlanetaire.CelestialBodies.Find(e => e.Nom == Main.GameInProgress.Simulation.DescriptionScenario.Mission);
+            //    MondeSelectionne.Simulation.ControleurMessages.DisplayPausedMessage();
+            //}
+
+            //else
+            //{
+            //    MondeSelectionne.Simulation.ControleurMessages.StopPausedMessage();
+            //}
         }
 
 
@@ -425,8 +350,6 @@
             Transition = TransitionType.Out;
             ChoixTransition = choice;
 
-            MondeSelectionne.arreterMessageBloque();
-
             if (AnimationFinMonde1 != null)
                 AnimationFinMonde1.doHide();
 
@@ -448,26 +371,22 @@
 
         private void doSelectAction()
         {
-            if (MondeSelectionne.CorpsSelectionne == "Go to World 2!" ||
-                MondeSelectionne.CorpsSelectionne == "Go to World 3!")
+            if (MondeSelectionne.WorldSelected != -1)
             {
-                if (((MondeSelectionne.CorpsSelectionne == "Go to World 2!" && Mondes[1].Debloque) ||
-                      MondeSelectionne.CorpsSelectionne == "Go to World 3!" && Mondes[2].Debloque))
+                if (Mondes[MondeSelectionne.WorldSelected].Unlocked)
                 {
-                    beginTransition(MondeSelectionne.CorpsSelectionne);
+                    Transition = TransitionType.Out;
+                    ChoixTransition = "World" + MondeSelectionne.WorldSelected;
                 }
 
                 else
                 {
-                    MondeSelectionne.afficherMessageBloque(
-                        MondeSelectionne.CorpsSelectionne == "Go to World 2!" ?
-                            "You're not Commander\n\nenough to ascend to\n\na higher level." :
-                            "Only a true Commander\n\nmay enjoy a better world.");
+                    MondeSelectionne.ShowWarpBlockedMessage();
                 }
             }
 
-            else if (MondeSelectionne.CorpsSelectionne != "" &&
-                     MondeSelectionne.CorpsSelectionne[0] == '2' &&
+            else if (MondeSelectionne.Id == 2 &&
+                     MondeSelectionne.LevelSelected != null &&
                      AnimationFinMonde1 == null)
             {
                 AnimationFinMonde1 = new AnimationLieutenant(
@@ -476,18 +395,26 @@
                     "This is the end of World 1, Commander, and what you see right now is World 2, which will be available if I sell enough of World 1 ;) You can expect more mercenaries, enemies and power ups in this World! \n\nVisit ephemeregames.com to know when World 2 will be available.", 25000);
             }
 
-            else if (Main.TrialMode.Active &&
-                     MondeSelectionne.CorpsSelectionne != "" &&
-                     MondeSelectionne.CorpsSelectionne[2] != '1' &&
-                     MondeSelectionne.CorpsSelectionne[2] != '2' &&
-                     MondeSelectionne.CorpsSelectionne[2] != '3' &&
-                     AnimationFinDemo == null)
+            else if (MondeSelectionne.LevelSelected != null)
             {
-                AnimationFinDemo = new AnimationLieutenant(
-                    Main,
-                    this,
-                    "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000);
+                ChoixScenario = MondeSelectionne.LevelSelected;
+
+                beginTransition(MondeSelectionne.LevelSelected.Mission);
             }
+
+
+            //else if (Main.TrialMode.Active &&
+            //         MondeSelectionne.CorpsSelectionne != "" &&
+            //         MondeSelectionne.CorpsSelectionne[2] != '1' &&
+            //         MondeSelectionne.CorpsSelectionne[2] != '2' &&
+            //         MondeSelectionne.CorpsSelectionne[2] != '3' &&
+            //         AnimationFinDemo == null)
+            //{
+            //    AnimationFinDemo = new AnimationLieutenant(
+            //        Main,
+            //        this,
+            //        "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000);
+            //}
 
 //#if XBOX
             //            else if (button == p.MouseConfiguration.Select &&
@@ -511,13 +438,6 @@
             //                        null);
             //            }
             //#endif
-
-            else if (MondeSelectionne.CorpsSelectionne != "")
-            {
-                ChoixScenario = MondeSelectionne.ScenarioSelectionne;
-
-                beginTransition(MondeSelectionne.CorpsSelectionne);
-            }
         }
     }
 }

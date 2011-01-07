@@ -56,6 +56,8 @@
             if (!Visible)
                 return;
 
+            Dimension.Height = Math.Max(Dimension.Height, 30);
+
             Filtre.TailleVecteur = new Vector2(Dimension.Width + 8, Dimension.Height + 8);
             Filtre.Position = new Vector3(Dimension.Left - 4, Dimension.Top - 4, 0);
 

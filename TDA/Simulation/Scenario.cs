@@ -21,13 +21,14 @@
         public VaguesInfinies VaguesInfinies;
         public LinkedList<Wave> Vagues;
         public CommonStash CommonStash;
-        public List<Tourelle> Tourelles;
+        public List<Turret> Tourelles;
         public CorpsCeleste CorpsCelesteAProteger;
         public IVisible FondEcran;
 
         public int ValeurMinerauxDonnes;
         public Vector3 PourcentageMinerauxDonnes;
         public int NbPackViesDonnes;
+        public List<string> HelpTexts;
 
         private Simulation Simulation;
         private float ProchainePrioriteAffichageCorpsCeleste = Preferences.PrioriteSimulationCorpsCeleste;
@@ -52,7 +53,7 @@
             NbPackViesDonnes = descripteur.NbPackViesDonnes;
 
             SystemePlanetaire = new List<CorpsCeleste>();
-            Tourelles = new List<Tourelle>();
+            Tourelles = new List<Turret>();
             Vagues = new LinkedList<Wave>();
 
             CommonStash = new CommonStash();
@@ -127,12 +128,12 @@
                         corpsCeleste.EnBackground,
                        corpsCeleste.Rotation
                     );
-                    c.representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero);
-                    c.representation.Origine = c.representation.Centre;
-                    c.representation.VisualPriority = c.representationParticules.VisualPriority + 0.001f;
+                    c.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero);
+                    c.Representation.Origine = c.Representation.Centre;
+                    c.Representation.VisualPriority = c.ParticulesRepresentation.VisualPriority + 0.001f;
 
                     if (corpsCeleste.EnBackground)
-                        c.representation.Couleur.A = 60;
+                        c.Representation.Couleur.A = 60;
                 }
 
                 // Corps normal
@@ -166,7 +167,7 @@
                         representations.Add(iv);
                     }
 
-                    c = new CeintureAsteroide
+                    c = new AsteroidBelt
                     (
                         Simulation,
                         corpsCeleste.Nom,
@@ -188,41 +189,32 @@
 
                 if (corpsCeleste.TourellesPermises != null)
                 {
-                    c.TourellesPermises = new List<Tourelle>();
+                    c.TourellesPermises = new List<Turret>();
 
                     for (int j = 0; j < corpsCeleste.TourellesPermises.Count; j++)
-                        c.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, corpsCeleste.TourellesPermises[j]));
+                        c.TourellesPermises.Add(Simulation.TurretFactory.CreateTurret(corpsCeleste.TourellesPermises[j]));
                 }
 
-                Color couleurEmplacement = Emplacement.CouleursDisponibles[Main.Random.Next(0, Emplacement.CouleursDisponibles.Length)];
-                couleurEmplacement.A = 200;
 
                 for (int j = 0; j < corpsCeleste.Emplacements.Count; j++)
                 {
                     DescripteurEmplacement emplacement = corpsCeleste.Emplacements[j];
 
-                    Emplacement e = new Emplacement
-                    (
-                        Simulation,
-                        emplacement.Position * 8,
-                        new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(emplacement.Representation), Vector3.Zero),
-                        c
-                    );
-
-                    e.Filtre.Couleur = couleurEmplacement;
-
-                    c.Emplacements.Add(e);
-
                     if (emplacement.Tourelle != null)
                     {
-                        e.Tourelle = FactoryTourelles.creerTourelle(simulation, emplacement.Tourelle.Type);
-                        e.Tourelle.PeutVendre = emplacement.Tourelle.PeutVendre;
-                        e.Tourelle.PeutMettreAJour = emplacement.Tourelle.PeutMettreAJour;
-                        e.Tourelle.Niveau = emplacement.Tourelle.Niveau;
-                        e.Tourelle.AnnonciationActiveDeNouveauOverride = true;
-                        e.Tourelle.Visible = emplacement.Tourelle.Visible;
+                        Turret turret = Simulation.TurretFactory.CreateTurret(emplacement.Tourelle.Type);
+                        turret.CanSell = emplacement.Tourelle.PeutVendre;
+                        turret.CanUpdate = emplacement.Tourelle.PeutMettreAJour;
+                        turret.Level = emplacement.Tourelle.Niveau;
+                        turret.BackActiveThisTickOverride = true;
+                        turret.Visible = emplacement.Tourelle.Visible;
+                        turret.CelestialBody = c;
+                        turret.RelativePosition = emplacement.Position * 8;
+                        turret.Position = c.Position + turret.RelativePosition;
 
-                        Tourelles.Add(e.Tourelle);
+                        c.Turrets.Add(turret);
+
+                        Tourelles.Add(turret);
                     }
                 }
 
@@ -248,6 +240,8 @@
                     Vagues.AddLast(new Wave(Simulation, descripteur.Waves[i]));
 
             ParTime = descripteur.ParTime;
+
+            HelpTexts = descripteur.HelpTexts;
         }
 
 

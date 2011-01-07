@@ -50,12 +50,14 @@
 
         #region Events
 
-        public delegate void TurretTypeCelestialObjectTurretSpotHandler(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement);
-        public delegate void CelestialObjectTurretSpotHandler(CorpsCeleste corpsCeleste, Emplacement emplacement);
+        public delegate void TurretTypeCelestialObjectVector3Handler(TurretType typeTourelle, CorpsCeleste corpsCeleste, Vector3 position);
+        public delegate void CelestialObjectTurretHandler(CorpsCeleste corpsCeleste, Turret turret);
 
-        public event TurretTypeCelestialObjectTurretSpotHandler AchatTourelleDemande;        
-        public event CelestialObjectTurretSpotHandler VenteTourelleDemande;
-        public event CelestialObjectTurretSpotHandler MiseAJourTourelleDemande;
+        public event TurretHandler AchatTourelleDemande;
+        public event TurretHandler VenteTourelleDemande;
+        public event TurretHandler MiseAJourTourelleDemande;
+        public event TurretHandler TurretToPlaceSelected;
+        public event TurretHandler TurretToPlaceDeselected;
         public event NoneHandler ProchaineVagueDemandee;
         public event CommonStashHandler CommonStashChanged;
         public event SimPlayerHandler PlayerSelectionChanged;
@@ -66,6 +68,20 @@
         public event CelestialObjectHandler AchatTheResistanceDemande;
 
 
+        private void notifyTurretToPlaceSelected(Turret turret)
+        {
+            if (TurretToPlaceSelected != null)
+                TurretToPlaceSelected(turret);
+        }
+
+
+        private void notifyTurretToPlaceDeselected(Turret turret)
+        {
+            if (TurretToPlaceDeselected != null)
+                TurretToPlaceDeselected(turret);
+        }
+
+        
         private void notifyDestructionCorpsCelesteDemande(CorpsCeleste corpsCeleste)
         {
             if (DestructionCorpsCelesteDemande != null)
@@ -87,17 +103,17 @@
         }
 
 
-        private void notifyAchatTourelleDemande(TypeTourelle typeTourelle, CorpsCeleste corpsCeleste, Emplacement emplacement)
+        private void notifyAchatTourelleDemande(Turret turret)
         {
             if (AchatTourelleDemande != null)
-                AchatTourelleDemande(typeTourelle, corpsCeleste, emplacement);
+                AchatTourelleDemande(turret);
         }
 
 
-        private void notifyVenteTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
+        private void notifyVenteTourelleDemande(Turret turret)
         {
             if (VenteTourelleDemande != null)
-                VenteTourelleDemande(corpsCeleste, emplacement);
+                VenteTourelleDemande(turret);
         }
 
 
@@ -115,10 +131,10 @@
         }
 
 
-        private void notifyMiseAJourTourelleDemande(CorpsCeleste corpsCeleste, Emplacement emplacement)
+        private void notifyMiseAJourTourelleDemande(Turret turret)
         {
             if (MiseAJourTourelleDemande != null)
-                MiseAJourTourelleDemande(corpsCeleste, emplacement);
+                MiseAJourTourelleDemande(turret);
         }
 
 
@@ -177,7 +193,6 @@
                 CommonStash.TotalScore += ennemi.ValeurPoints;
 
                 Player.UpdateSelection();
-
                 notifyCommonStashChanged(CommonStash);
 
                 return;
@@ -237,9 +252,25 @@
 
         public void doMouseMoved(Player player, ref Vector3 delta)
         {
+            if (ModeDemo)
+            {
+                Player.Move(ref delta, player.MouseConfiguration.Speed);
+                Player.UpdateDemoSelection();
+                notifyPlayerMoved(Player);
+                return;
+            }
+
+
             Player.Move(ref delta, player.MouseConfiguration.Speed);
+
+            if (Player.ActualSelection.TurretToPlace != null &&
+                Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.Outside(Player.Position))
+                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.pointPlusProcheCirconference(Player.Position);
+
+
             Player.UpdateSelection();
             notifyPlayerMoved(Player);
+            notifyPlayerChanged(Player);
         }
 
 
@@ -248,7 +279,23 @@
             if (button != player.GamePadConfiguration.MoveCursor)
                 return;
 
+
+            if (ModeDemo)
+            {
+                Player.Move(ref delta, player.GamePadConfiguration.Speed);
+                Player.UpdateDemoSelection();
+                notifyPlayerMoved(Player);
+                return;
+            }
+
+
             Player.Move(ref delta, player.GamePadConfiguration.Speed);
+
+            if (Player.ActualSelection.TurretToPlace != null &&
+                Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.Outside(Player.Position))
+                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.pointPlusProcheCirconference(Player.Position);
+
+
             Player.UpdateSelection();
             notifyPlayerMoved(Player);
         }
@@ -256,6 +303,20 @@
 
         public void doMouseScrolled(Player player, int delta)
         {
+            if (ModeDemo)
+            {
+                if (Player.ActualSelection.CelestialBody == null)
+                    return;
+
+                if (delta > 0)
+                    Player.NextGameAction();
+                else
+                    Player.PreviousGameAction();
+
+                return;
+            }
+
+
             doNextorPreviousAction(delta);
         }
 
@@ -263,12 +324,10 @@
         public void doGamePadButtonPressedOnce(Player player, Buttons button)
         {
             if (button == player.GamePadConfiguration.Select)
-            {
                 doSelectAction();
-                return;
-            }
-
-            if (button == player.GamePadConfiguration.SelectionNext)
+            else if (button == player.GamePadConfiguration.Cancel)
+                doCancelAction();
+            else if (button == player.GamePadConfiguration.SelectionNext)
                 doNextorPreviousAction(1);
             else if (button == player.GamePadConfiguration.SelectionPrevious)
                 doNextorPreviousAction(-1);
@@ -277,49 +336,52 @@
 
         public void doMouseButtonPressedOnce(Player player, MouseButton button)
         {
-            if (button != player.MouseConfiguration.Select)
+            if (ModeDemo)
                 return;
 
-            doSelectAction();
+            if (button == player.MouseConfiguration.Select)
+                doSelectAction();
+            else if (button == player.MouseConfiguration.Cancel)
+                doCancelAction();
         }
 
 
-        public void doTourelleAchetee(Tourelle tourelle)
+        public void doTourelleAchetee(Turret tourelle)
         {
-            CommonStash.Cash -= tourelle.PrixAchat;
+            CommonStash.Cash -= tourelle.BuyPrice;
             notifyCommonStashChanged(CommonStash);
 
             Player.UpdateSelection();
 
-            if (tourelle.Type == TypeTourelle.Gravitationnelle && !Simulation.ModeDemo)
+            if (tourelle.Type == TurretType.Gravitational && !Simulation.ModeDemo)
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
         }
 
 
-        public void doTourelleVendue(Tourelle tourelle)
+        public void doTourelleVendue(Turret tourelle)
         {
-            CommonStash.Cash += tourelle.PrixVente;
+            CommonStash.Cash += tourelle.SellPrice;
             notifyCommonStashChanged(CommonStash);
 
             Player.UpdateSelection();
 
-            if (tourelle.Type == TypeTourelle.Gravitationnelle)
+            if (tourelle.Type == TurretType.Gravitational)
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
             else
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleVendue");
         }
 
 
-        public void doTourelleMiseAJour(Tourelle tourelle)
+        public void doTourelleMiseAJour(Turret tourelle)
         {
-            CommonStash.Cash -= tourelle.PrixAchat; //parce qu'effectue une fois la tourelle mise a jour
+            CommonStash.Cash -= tourelle.BuyPrice; //parce qu'effectue une fois la tourelle mise a jour
             notifyCommonStashChanged(CommonStash);
 
             Player.UpdateSelection();
         }
 
 
-        public void doTurretReactivated(Tourelle turret)
+        public void doTurretReactivated(Turret turret)
         {
             //Player.doTurretReactivated(turret);
             Player.UpdateSelection();
@@ -329,6 +391,36 @@
         public void Update(GameTime gameTime)
         {
             Player.Update(gameTime);
+
+            Turret turretToPlace = Player.ActualSelection.TurretToPlace;
+
+            if (turretToPlace != null)
+            {
+                CorpsCeleste celestialBody = turretToPlace.CelestialBody;
+                turretToPlace.Position = Player.Position;
+
+                if (celestialBody.TurretsZone.Outside(Player.Position))
+                    Player.Position = celestialBody.TurretsZone.pointPlusProcheCirconference(Player.Position);
+
+                turretToPlace.CanPlace = celestialBody.Cercle.Outside(turretToPlace.Position);
+                
+                if (turretToPlace.CanPlace)
+                    foreach (var turret in celestialBody.Turrets)
+                    {
+                        turretToPlace.CanPlace = !turret.Visible ||
+                            !Core.Physique.Facade.collisionCercleCercle(turret.Cercle, turretToPlace.Cercle);
+
+                        if (!turretToPlace.CanPlace)
+                            break;
+                    }
+            }
+        }
+
+
+        public void Draw()
+        {
+            if (Player.ActualSelection.TurretToPlace != null)
+                Player.ActualSelection.TurretToPlace.Draw();
         }
 
 
@@ -347,8 +439,7 @@
         private void doNextorPreviousAction(int delta)
         {
             // turret's options
-            if (Player.ActualSelection.TurretSpot != null &&
-                Player.ActualSelection.TurretSpot.EstOccupe)
+            if (Player.ActualSelection.Turret != null)
             {
                 if (delta > 0)
                     Player.NextTurretOption();
@@ -359,27 +450,16 @@
             }
 
 
-            // Celestial object' options
+            // shop power-ups or turrets
             if (Player.ActualSelection.CelestialBody != null &&
-                Player.ActualSelection.TurretSpot == null)
+                Player.ActualSelection.Turret == null)
             {
                 if (delta > 0)
-                    Player.NextPowerUpToBuy();
+                    Player.NextShitToBuy();
                 else
-                    Player.PreviousPowerUpToBuy();
+                    Player.PreviousShitToBuy();
 
                 return;
-            }
-
-
-            // shop turrets
-            if (Player.ActualSelection.TurretSpot != null &&
-                !Player.ActualSelection.TurretSpot.EstOccupe)
-            {
-                if (delta > 0)
-                    Player.NextTurretToBuy();
-                else
-                    Player.PreviousTurretToBuy();
             }
         }
 
@@ -387,11 +467,9 @@
         private void doSelectAction()
         {
             // buy a powerup
-            if (!ModeDemo &&
-                Player.ActualSelection.CelestialBody != null &&
-                Player.ActualSelection.TurretSpot == null)
+            if (Player.ActualSelection.PowerUpToBuy != PowerUp.None)
             {
-                switch (Player.ActualSelection.CelestialBodyOption)
+                switch (Player.ActualSelection.PowerUpToBuy)
                 {
                     case PowerUp.DoItYourself:
                         notifyDoItYourselfDemande(Player.ActualSelection.CelestialBody);
@@ -406,7 +484,7 @@
                     case PowerUp.FinalSolution:
                         CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixDestruction;
                         notifyCommonStashChanged(CommonStash);
-                        Player.ActualSelection.CelestialBodyOption = PowerUp.Aucune;
+                        Player.ActualSelection.PowerUpToBuy = PowerUp.None;
                         notifyDestructionCorpsCelesteDemande(Player.ActualSelection.CelestialBody);
                         break;
                     case PowerUp.TheResistance:
@@ -416,6 +494,8 @@
                         break;
                 }
 
+                Player.UpdateSelection();
+
                 return;
             }
 
@@ -423,37 +503,65 @@
             // buy a turret
             if (Player.ActualSelection.TurretToBuy != null)
             {
-                notifyAchatTourelleDemande(Player.ActualSelection.TurretToBuy.Type, Player.ActualSelection.CelestialBody, Player.ActualSelection.TurretSpot);
+                Player.ActualSelection.TurretToPlace = Simulation.TurretFactory.CreateTurret(Player.ActualSelection.TurretToBuy.Type);
+                Player.ActualSelection.TurretToPlace.CelestialBody = Player.ActualSelection.CelestialBody;
+                Player.ActualSelection.TurretToPlace.Position = Player.Position;
+                Player.ActualSelection.TurretToPlace.ToPlaceMode = true;
+                Player.UpdateSelection();
+                notifyTurretToPlaceSelected(Player.ActualSelection.TurretToPlace);
 
+                return;
+            }
+
+            // place a turret
+            if (Player.ActualSelection.TurretToPlace != null &&
+                Player.ActualSelection.TurretToPlace.CanPlace)
+            {
+                Player.ActualSelection.TurretToPlace.ToPlaceMode = false;
+                notifyAchatTourelleDemande(Player.ActualSelection.TurretToPlace);
+                notifyTurretToPlaceDeselected(Player.ActualSelection.TurretToPlace);
+                Player.ActualSelection.TurretToPlace = null;
+                Player.UpdateSelection();
                 return;
             }
 
 
             // upgrade or sell a turret
-            if (Player.ActualSelection.TurretSpot != null &&
-                Player.ActualSelection.TurretSpot.EstOccupe)
+            if (Player.ActualSelection.Turret != null)
             {
                 switch (Player.ActualSelection.TurretOption)
                 {
                     case TurretAction.Sell:
-                        notifyVenteTourelleDemande(Player.ActualSelection.CelestialBody, Player.ActualSelection.TurretSpot);
+                        notifyVenteTourelleDemande(Player.ActualSelection.Turret);
                         break;
                     case TurretAction.Update:
-                        notifyMiseAJourTourelleDemande(Player.ActualSelection.CelestialBody, Player.ActualSelection.TurretSpot);
+                        notifyMiseAJourTourelleDemande(Player.ActualSelection.Turret);
                         break;
                 }
+
+                Player.UpdateSelection();
 
                 return;
             }
 
 
             // call next wave
-            if (!ModeDemo &&
-                EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
+            if (EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
             {
                 notifyProchaineVagueDemandee();
                 return;
             }
+        }
+
+
+        private void doCancelAction()
+        {
+            if (Player.ActualSelection.TurretToPlace == null)
+                return;
+
+            notifyTurretToPlaceDeselected(Player.ActualSelection.TurretToPlace);
+            Player.ActualSelection.TurretToPlace = null;
+            Player.UpdateSelection();
         }
     }
 }

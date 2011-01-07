@@ -20,7 +20,11 @@
         public static bool FullScreen = true;
 #endif
 
+#if DEBUG
+        public static bool HomeMadeValidation = false;
+#else
         public static bool HomeMadeValidation = true;
+#endif
 
 #if TRIAL
         public static Setting Target = Setting.WindowsDemo;

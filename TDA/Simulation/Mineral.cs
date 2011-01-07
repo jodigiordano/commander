@@ -168,7 +168,7 @@
                 Vitesse = 0;
             }
 
-            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Cercle.Rayon)
+            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Cercle.Radius)
             {
                 Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Vitesse);
                 Bouncing.Y = Bouncing.Y + Vitesse;
@@ -176,7 +176,7 @@
                 Vitesse = 0;
             }
 
-            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Cercle.Rayon)
+            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Cercle.Radius)
             {
                 Bouncing.X = Bouncing.X + Vitesse;
                 Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Vitesse);
@@ -184,7 +184,7 @@
                 Vitesse = 0;
             }
 
-            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Cercle.Rayon)
+            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Cercle.Radius)
             {
                 Bouncing.X = Bouncing.X + Vitesse;
                 Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Vitesse);

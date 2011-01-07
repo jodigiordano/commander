@@ -55,7 +55,7 @@
 
         public override void doMeurt()
         {
-            ((CircleEmitter)RepresentationExplose.ParticleEffect[0]).Radius = Cercle.Rayon;
+            ((CircleEmitter)RepresentationExplose.ParticleEffect[0]).Radius = Cercle.Radius;
             ((RadialGravityModifier)RepresentationExplose.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.Position.X, this.Position.Y);
 
             RepresentationExplose.Emettre(ref this.position);

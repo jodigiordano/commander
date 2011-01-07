@@ -34,7 +34,7 @@
             ScenesController = new ScenesController();
             TransitionsController = new TransitionsController();
 
-            graphicsDeviceManager.GraphicsDevice.PresentationParameters.PresentationInterval = PresentInterval.Default;
+            graphicsDeviceManager.PreferMultiSampling = true;
 
             foreach (var sceneName in scenesNames)
                 ScenesController.AddScene(sceneName, null);

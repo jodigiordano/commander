@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:CircleEmitter">
+    <Item Type="ProjectMercury.Emitters.CircleEmitter">
       <Name>Emitter02</Name>
       <Budget>50</Budget>
-      <Term>0.2</Term>
-      <ReleaseQuantity>50</ReleaseQuantity>
+      <Term>0.3</Term>
+      <ReleaseQuantity>20</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
-        <Value>500</Value>
+        <Value>300</Value>
         <Variation>0</Variation>
       </ReleaseSpeed>
       <ReleaseColour>
@@ -20,8 +20,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>100</Value>
-        <Variation>20</Variation>
+        <Value>30</Value>
+        <Variation>10</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -30,11 +30,11 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:OpacityModifier">
+        <Item Type="ProjectMercury.Modifiers.OpacityModifier">
           <Initial>1</Initial>
           <Ultimate>0</Ultimate>
         </Item>
-        <Item Type="Modifiers:ColourModifier">
+        <Item Type="ProjectMercury.Modifiers.ColourModifier">
           <InitialColour>1 1 1</InitialColour>
           <UltimateColour>0.1 0.47 1</UltimateColour>
         </Item>
@@ -46,11 +46,11 @@
       <Ring>true</Ring>
       <Radiate>true</Radiate>
     </Item>
-    <Item Type="Emitters:CircleEmitter">
+    <Item Type="ProjectMercury.Emitters.CircleEmitter">
       <Name>Emitter04</Name>
       <Budget>50</Budget>
       <Term>0.25</Term>
-      <ReleaseQuantity>50</ReleaseQuantity>
+      <ReleaseQuantity>30</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
         <Value>0</Value>
@@ -65,8 +65,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>40</Value>
-        <Variation>0</Variation>
+        <Value>20</Value>
+        <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -75,7 +75,7 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:OpacityModifier">
+        <Item Type="ProjectMercury.Modifiers.OpacityModifier">
           <Initial>1</Initial>
           <Ultimate>0</Ultimate>
         </Item>

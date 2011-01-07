@@ -11,8 +11,8 @@
         public LinkedList<Wave> Vagues                                                  { get; set; }
         public Dictionary<EnemyType, EnemyDescriptor> CompositionProchaineVague         { get; set; }
         public VaguesInfinies VaguesInfinies                                            { get; set; }
-        public Chemin Chemin                                                            { get; set; }
-        public Chemin CheminProjection                                                  { get; set; }
+        public Path Chemin                                                            { get; set; }
+        public Path CheminProjection                                                  { get; set; }
         public int NbEnnemis                                                            { get { return Ennemis.Count; } }
         public delegate void VagueTermineeHandler();
         public event VagueTermineeHandler VagueTerminee;
@@ -55,8 +55,7 @@
 
             ProchaineVague = Vagues.First;
 
-            if (ProchaineVague != null)
-                RecalculateCompositionNextWave();
+            RecalculateCompositionNextWave();
 
             if (VaguesInfinies != null)
                 return;
@@ -170,8 +169,7 @@
                 else
                     ProchaineVague.Value = VaguesInfinies.getProchaineVague();
 
-                if (ProchaineVague != null)
-                    RecalculateCompositionNextWave();
+                RecalculateCompositionNextWave();
 
                 notifyVagueDebutee();
             }
@@ -298,8 +296,7 @@
                 VaguesActives.Add(ProchaineVague.Value);
                 ProchaineVague = (VaguesInfinies == null) ? ProchaineVague.Next : new LinkedListNode<Wave>(VaguesInfinies.getProchaineVague());
 
-                if (ProchaineVague != null)
-                    RecalculateCompositionNextWave();
+                RecalculateCompositionNextWave();
 
                 notifyVagueDebutee();
             }
@@ -321,8 +318,9 @@
         {
             CompositionProchaineVague.Clear();
 
-            foreach (var kvp in ProchaineVague.Value.Composition)
-                CompositionProchaineVague.Add(kvp.Key, kvp.Value);
+            if (ProchaineVague != null)
+                foreach (var kvp in ProchaineVague.Value.Composition)
+                    CompositionProchaineVague.Add(kvp.Key, kvp.Value);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:CircleEmitter">
+    <Item Type="ProjectMercury.Emitters.CircleEmitter">
       <Name>Emitter01</Name>
       <Budget>40</Budget>
       <Term>1</Term>
@@ -20,7 +20,7 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>40</Value>
+        <Value>20</Value>
         <Variation>10</Variation>
       </ReleaseScale>
       <ReleaseRotation>
@@ -30,23 +30,23 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:RadialGravityModifier">
+        <Item Type="ProjectMercury.Modifiers.RadialGravityModifier">
           <Radius>500</Radius>
           <InnerRadius>0</InnerRadius>
           <Position>250 250</Position>
           <Strength>40</Strength>
         </Item>
-        <Item Type="Modifiers:OpacityInterpolatorModifier">
+        <Item Type="ProjectMercury.Modifiers.OpacityInterpolatorModifier">
           <InitialOpacity>1</InitialOpacity>
           <MiddleOpacity>1</MiddleOpacity>
           <MiddlePosition>0.5</MiddlePosition>
           <FinalOpacity>0</FinalOpacity>
         </Item>
-        <Item Type="Modifiers:ColourModifier">
+        <Item Type="ProjectMercury.Modifiers.ColourModifier">
           <InitialColour>1 1 1</InitialColour>
           <UltimateColour>1 0.8 0</UltimateColour>
         </Item>
-        <Item Type="Modifiers:VelocityClampModifier">
+        <Item Type="ProjectMercury.Modifiers.VelocityClampModifier">
           <MaximumVelocity>20</MaximumVelocity>
         </Item>
       </Modifiers>
@@ -59,6 +59,6 @@
     </Item>
     <Name>Particle Effect</Name>
     <Author>None</Author>
-    <Description>None</Description>    
+    <Description>None</Description>
   </Asset>
 </XnaContent>

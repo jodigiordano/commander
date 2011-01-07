@@ -1,0 +1,49 @@
+================================================================================
+                          todo for next release
+================================================================================
+. test Xbox360 controller and normal controller
+D new tutorial system
+. fix world/menu scenarios turrets placements
+. fix highscore visibility
+D Partie scene inputs
+. verify trial mode
+D increase ingame menu choices size
+. redo the help menu and include both mouse/gamepad for Windows version
+. finish tutorial entries and unplug old system
+
+
+================================================================================
+                         todo for Xbox360 release
+================================================================================
+. report error system and update system
+. redo the evil list
+. add dead zone support again and verify nothing is in the deadzone
+
+
+================================================================================
+                                  bugs
+================================================================================
+. in debug mode, when not connected to internet, the validation scene kicks in
+
+
+
+================================================================================
+                                 features
+================================================================================
+. +1/+10+50/+1life when a mineral is taken
+. at the end of level, show beaten highscore
+. ingame, show potential highscore?
+
+
+================================================================================
+                                  website
+================================================================================
+. forum [ideas, bugs, etc.]
+
+
+================================================================================
+                                random ideas
+================================================================================
+. Battle for Ovula: a special theme where the action takes place in an uterus
+. Battle for Heart: a special theme where the action takes place in the heart
+. Commander - The screensaver: a minimal simulation where a random level is generated 

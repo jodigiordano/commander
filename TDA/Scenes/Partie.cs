@@ -52,8 +52,15 @@
         {
             get
             {
-                return Simulation.Etat != GameState.Running;
+                return Simulation.Etat == GameState.Lost || Simulation.Etat == GameState.Won;
             }
+        }
+
+
+        public GameState State
+        {
+            get { return Simulation.Etat; }
+            set { Simulation.Etat = value; }
         }
 
 
@@ -95,7 +102,7 @@
 
         protected override void UpdateVisuel()
         {
-            Simulation.Draw(GameTime);
+            Simulation.Draw();
 
             if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
@@ -116,6 +123,7 @@
             EphemereGames.Core.Input.Facade.AddListener(Simulation);
         }
 
+
         public override void onFocusLost()
         {
             base.onFocusLost();
@@ -124,6 +132,7 @@
 
             EphemereGames.Core.Input.Facade.RemoveListener(Simulation);
         }
+
 
         public void doNouvelEtatPartie(GameState nouvelEtat)
         {
@@ -139,30 +148,50 @@
 
         public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
         {
-            if (Simulation.Etat != GameState.Running && (button == MouseButton.Right || button == MouseButton.Left))
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if ((Simulation.Etat == GameState.Won || Simulation.Etat == GameState.Lost) &&
+                (button == p.MouseConfiguration.Select || button == p.MouseConfiguration.Back))
                 beginTransition();
         }
 
 
         public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
         {
-            if (key == Keys.Enter || key == Keys.Escape)
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (key == p.KeyboardConfiguration.Cancel && Simulation.HelpMode)
+                return;
+
+            if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)
                 beginTransition();
 
-            if (key == Keys.RightShift)
+            if (key == p.KeyboardConfiguration.ChangeMusic)
                 beginChangeMusic();
         }
 
 
         public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
         {
-            if (button == Buttons.Start)
+            Player p = Main.Players[inputIndex];
+
+            if (!p.Master)
+                return;
+
+            if (button == p.GamePadConfiguration.Back)
                 beginTransition();
 
-            if (Simulation.Etat != GameState.Running && (button == Buttons.A || button == Buttons.B))
+            if ((Simulation.Etat == GameState.Won || Simulation.Etat == GameState.Lost) &&
+                (button == p.GamePadConfiguration.Select || button == p.GamePadConfiguration.Cancel))
                 beginTransition();
 
-            if (button == Buttons.DPadUp)
+            if (button == p.GamePadConfiguration.ChangeMusic)
                 beginChangeMusic();
         }
 

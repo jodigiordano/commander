@@ -3,18 +3,19 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using EphemereGames.Core.Physique;
 
 
-    public class Image : IScenable
+    public class Image : IScenable, IPhysique
     {
         public Vector2 Origin;
         public Vector2 Size;
         public Vector2 Center;
         public Vector2 TextureSize;
-        public float Rotation;
 
         public Vector3 position;
         public Vector3 Position { get { return position; } set { position = value; } }
+        public float Rotation { get; set; }
         public TypeBlend Blend { get; set; }
         public float VisualPriority { get; set; }
         public virtual List<IScenable> Components { get; set; }
@@ -64,5 +65,9 @@
                 Effect,
                 0);
         }
+
+
+        //useless shit
+        public float Vitesse { get; set; }
     }
 }

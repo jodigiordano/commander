@@ -17,7 +17,7 @@
         private double DureeVie;
         public Ennemi Cible;
         public Vector3 CibleOffset;
-        public Tourelle TourelleEmettrice;
+        public Turret TourelleEmettrice;
         private ParticuleEffectWrapper RepresentationVivantAlt;
         private LigneVisuel RepresentationVivantAlt2;
         private bool Orphelin;
@@ -38,7 +38,7 @@
             emetteur.Length = LONGUEUR_LIGNE;
             RepresentationVivantAlt.VisualPriority = PrioriteAffichage + 0.001f;
 
-            RepresentationVivantAlt2 = new LigneVisuel(this.Position, this.Position + this.Direction * LONGUEUR_LIGNE, new Color(255, 216, 0), 4);
+            RepresentationVivantAlt2 = new LigneVisuel(this.Position, this.Position + this.Direction * LONGUEUR_LIGNE, new Color(255, 216, 0, 100), 4);
             RepresentationVivantAlt2.VisualPriority = PrioriteAffichage + 0.002f;
 
             RepresentationDeplacement = null;

@@ -1,191 +1,137 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using System.Xml.Serialization;
     using System.IO;
-    using Microsoft.Xna.Framework.Storage;
+    using System.Xml.Serialization;
+    using Microsoft.Xna.Framework;
+
 
     static class FactoryScenarios
     {
-        public static Dictionary<String, DescripteurScenario> getDescriptionsScenariosMonde1()
+        public static WorldDescriptor GetWorldDescriptor(int id)
         {
-            //todo
-            Dictionary<String, DescripteurScenario> resultats = new Dictionary<String, DescripteurScenario>();
+            WorldDescriptor wd;
 
-            DescripteurScenario d;
+            switch (id)
+            {
+                case 1:
+                default:
+                    wd = new WorldDescriptor()
+                    {
+                        Id = 1,
+                        Levels = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
+                        Warps = new List<KeyValuePair<int,int>>() { new KeyValuePair<int, int>(9, 2) },
+                        SimulationDescription = FactoryScenarios.getDescripteurMonde1(),
+                        UnlockedCondition = new List<int>(),
+                        WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level."
+                    };
+                    break;
 
-            XmlSerializer serializer = new XmlSerializer(typeof(DescripteurScenario));
+                case 2:
+                    wd = new WorldDescriptor()
+                    {
+                        Id = 2,
+                        Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
+                        Warps = new List<KeyValuePair<int, int>>() { new KeyValuePair<int, int>(19, 3), new KeyValuePair<int, int>(20, 1) },
+                        SimulationDescription = FactoryScenarios.getDescripteurMonde2(),
+                        UnlockedCondition = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
+                        WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world."
+                    };
+                    break;
 
-            for (int i = 1; i < 10; i++)
-                using (StreamReader reader = new StreamReader(".\\Content\\scenarios\\scenario" + i + ".xml"))
-                {
-                    d = (DescripteurScenario)serializer.Deserialize(reader.BaseStream);
-                    resultats.Add(d.Mission, d);
-                }
+                case 3:
+                    wd = new WorldDescriptor()
+                    {
+                        Id = 3,
+                        Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
+                        Warps = new List<KeyValuePair<int, int>>() { new KeyValuePair<int, int>(31, 2) },
+                        SimulationDescription = FactoryScenarios.getDescripteurMonde3(),
+                        UnlockedCondition = new List<int>() { -1 },
+                        WarpBlockedMessage = ""
+                    };
+                    break;
+            }
 
-            d = new DescripteurScenario();
-            d.Numero = 9;
-            d.Mission = "Go to World 2!";
-            d.Difficulte = "";
-            resultats.Add(d.Mission, d);
 
-            return resultats;
+            return wd;
         }
 
 
-        public static Dictionary<String, DescripteurScenario> getDescriptionsScenariosMonde2()
+        public static DescripteurScenario GetLevelScenario(int id)
         {
-            //todo
-            Dictionary<String, DescripteurScenario> resultats = new Dictionary<String, DescripteurScenario>();
-
             DescripteurScenario d;
 
-            d = new DescripteurScenario();
-            d.Numero = 10;
-            d.Mission = "2-1";
-            d.Difficulte = "Easy";
-            resultats.Add(d.Mission, d);
+            if (id == 9)
+            {
+                d = new DescripteurScenario();
+                d.Numero = 9;
+                d.Mission = "Go to World 2!";
+                d.Difficulte = "";
 
-            d = new DescripteurScenario();
-            d.Numero = 11;
-            d.Mission = "2-2";
-            d.Difficulte = "Normal";
-            resultats.Add(d.Mission, d);
+                return d;
+            }
 
-            d = new DescripteurScenario();
-            d.Numero = 12;
-            d.Mission = "2-3";
-            d.Difficulte = "Normal";
-            resultats.Add(d.Mission, d);
+            else if (id == 19)
+            {
+                d = new DescripteurScenario();
+                d.Numero = 19;
+                d.Mission = "Go to World 3!";
+                d.Difficulte = "";
 
-            d = new DescripteurScenario();
-            d.Numero = 13;
-            d.Mission = "2-4";
-            d.Difficulte = "Normal";
-            resultats.Add(d.Mission, d);
+                return d;
+            }
 
-            d = new DescripteurScenario();
-            d.Numero = 14;
-            d.Mission = "2-5";
-            d.Difficulte = "Normal";
-            resultats.Add(d.Mission, d);
+            else if (id == 20)
+            {
+                d = new DescripteurScenario();
+                d.Numero = 20;
+                d.Mission = "Go back\nto World 1!";
+                d.Difficulte = "";
 
-            d = new DescripteurScenario();
-            d.Numero = 15;
-            d.Mission = "2-6";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
+                return d;
+            }
 
-            d = new DescripteurScenario();
-            d.Numero = 16;
-            d.Mission = "2-7";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
+            else if (id == 31)
+            {
+                d = new DescripteurScenario();
+                d.Numero = id;
+                d.Mission = "Go back\nto World\n2!";
+                d.Difficulte = "";
 
-            d = new DescripteurScenario();
-            d.Numero = 17;
-            d.Mission = "2-8";
-            d.Difficulte = "Easy";
-            resultats.Add(d.Mission, d);
+                return d;
+            }
 
-            d = new DescripteurScenario();
-            d.Numero = 18;
-            d.Mission = "2-9";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
+            else if (id >= 10 && id <= 18)
+            {
+                d = new DescripteurScenario();
+                d.Numero = id;
+                d.Mission = "2-" + (id - 9);
+                d.Difficulte = (id == 10 || id == 17) ? "Easy" : (id == 11 || id == 12 || id == 13 || id == 14) ? "Normal" : "Hard";
 
-            d = new DescripteurScenario();
-            d.Numero = 19;
-            d.Mission = "Go to World 3!";
-            d.Difficulte = "";
-            resultats.Add(d.Mission, d);
+                return d;
+            }
 
-            d = new DescripteurScenario();
-            d.Numero = 20;
-            d.Mission = "Go back\nto World 1!";
-            d.Difficulte = "";
-            resultats.Add(d.Mission, d);
+            else if (id >= 21 && id <= 30)
+            {
+                d = new DescripteurScenario();
+                d.Numero = id;
+                d.Mission = "3-" + (id - 20);
+                d.Difficulte = (id == 10 || id == 17) ? "Easy" : (id == 11 || id == 12 || id == 13 || id == 14) ? "Normal" : "Hard";
 
-            return resultats;
-        }
+                return d;
+            }
 
+            else
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(DescripteurScenario));
 
-        public static Dictionary<String, DescripteurScenario> getDescriptionsScenariosMonde3()
-        {
-            //todo
-            Dictionary<String, DescripteurScenario> resultats = new Dictionary<String, DescripteurScenario>();
+                using (StreamReader reader = new StreamReader(".\\Content\\scenarios\\scenario" + id + ".xml"))
+                    d = (DescripteurScenario) serializer.Deserialize(reader.BaseStream);
 
-            DescripteurScenario d;
+                return d;
+            }
 
-            d = new DescripteurScenario();
-            d.Numero = 21;
-            d.Mission = "3-1";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 22;
-            d.Mission = "3-2";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 23;
-            d.Mission = "3-3";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 24;
-            d.Mission = "3-4";
-            d.Difficulte = "Normal";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 25;
-            d.Mission = "3-5";
-            d.Difficulte = "Normal";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 26;
-            d.Mission = "3-6";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 27;
-            d.Mission = "3-7";
-            d.Difficulte = "Normal";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 28;
-            d.Mission = "3-8";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 29;
-            d.Mission = "3-9";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 30;
-            d.Mission = "3-10";
-            d.Difficulte = "Hard";
-            resultats.Add(d.Mission, d);
-
-            d = new DescripteurScenario();
-            d.Numero = 31;
-            d.Mission = "Go back\nto World\n2!";
-            d.Difficulte = "";
-            resultats.Add(d.Mission, d);
-
-            return resultats;
+            return null;
         }
 
 
@@ -203,28 +149,28 @@
             //d.FondEcran = "fondecran23";
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-300, -150, 0), "save the\nworld", "planete2", 0, 100);
-            d.SystemePlanetaire[0].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), true);
-            d.SystemePlanetaire[0].ajouterTourelle(TypeTourelle.Base, 5, new Vector3(10, -8, 0), true);
+            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Basic, 5, new Vector3(10, -8, 0), true);
 
             d.CorpsCelesteAProteger = d.SystemePlanetaire[0].Nom;
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(300, -220, 0), "options", "planete4", 0, 99);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(3, 2, 0), true);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Base, 8, new Vector3(-9, -5, 0), true);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.LaserMultiple, 4, new Vector3(22, 0, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(3, 2, 0), false);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 8, new Vector3(-9, -5, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.MultipleLasers, 4, new Vector3(22, 0, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-50, 150, 0), "resume game", "planete3", 0, 98);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(4, 2, 0), true);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.LaserSimple, 7, new Vector3(3, -7, 0), true);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.Missile, 3, new Vector3(-6, 14, 0), true);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(4, 2, 0), false);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Laser, 7, new Vector3(3, -7, 0), true);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Missile, 3, new Vector3(-6, 14, 0), true);
 
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-400, 200, 0), "help", "planete6", 0, 97);
-            d.SystemePlanetaire[3].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(2, 1, 0), true);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(2, 1, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(350, 200, 0), "quit", "planete5", 0, 96);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(-5, 3, 0), true);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.SlowMotion, 6, new Vector3(6, 3, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(-5, 3, 0), false);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.SlowMotion, 6, new Vector3(6, 3, 0), true);
 
             c = new DescripteurCorpsCeleste();
             c.Nom = "editor";
@@ -238,12 +184,12 @@
             c.Representations.Add("Trojan");
             c.Representations.Add("Meteoroid");
             c.Priorite = 1;
-            c.TourellesPermises = new List<TypeTourelle>();
+            c.TourellesPermises = new List<TurretType>();
             c.Selectionnable = true;
             e = new DescripteurEmplacement();
             e.Position = Vector3.Zero;
             e.Tourelle = new DescripteurTourelle();
-            e.Tourelle.Type = TypeTourelle.GravitationnelleAlien;
+            e.Tourelle.Type = TurretType.Alien;
             e.Tourelle.PeutVendre = false;
             e.Tourelle.PeutMettreAJour = false;
             c.Emplacements.Add(e);
@@ -293,18 +239,18 @@
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(-6, 0, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.Gravitationnelle;
+                e.Tourelle.Type = TurretType.Gravitational;
                 c.Emplacements.Add(e);
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(0, 6, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.Base;
+                e.Tourelle.Type = TurretType.Basic;
                 e.Tourelle.Niveau = 10;
                 c.Emplacements.Add(e);
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(0, -6, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.Base;
+                e.Tourelle.Type = TurretType.Basic;
                 e.Tourelle.Niveau = 10;
                 c.Emplacements.Add(e);
                 d.SystemePlanetaire.Add(c);
@@ -326,18 +272,18 @@
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(-6, 0, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.Gravitationnelle;
+                e.Tourelle.Type = TurretType.Gravitational;
                 c.Emplacements.Add(e);
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(0, 6, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.LaserMultiple;
+                e.Tourelle.Type = TurretType.MultipleLasers;
                 e.Tourelle.Niveau = 10;
                 c.Emplacements.Add(e);
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(0, -6, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.LaserMultiple;
+                e.Tourelle.Type = TurretType.MultipleLasers;
                 e.Tourelle.Niveau = 10;
                 c.Emplacements.Add(e);
                 d.SystemePlanetaire.Add(c);
@@ -357,18 +303,18 @@
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(-6, 0, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.Gravitationnelle;
+                e.Tourelle.Type = TurretType.Gravitational;
                 c.Emplacements.Add(e);
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(0, 6, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.Base;
+                e.Tourelle.Type = TurretType.Basic;
                 e.Tourelle.Niveau = 10;
                 c.Emplacements.Add(e);
                 e = new DescripteurEmplacement();
                 e.Position = new Vector3(0, -6, 0);
                 e.Tourelle = new DescripteurTourelle();
-                e.Tourelle.Type = TypeTourelle.Base;
+                e.Tourelle.Type = TurretType.Basic;
                 e.Tourelle.Niveau = 10;
                 c.Emplacements.Add(e);
                 d.SystemePlanetaire.Add(c);
@@ -387,12 +333,12 @@
             c.Representations.Add("Trojan");
             c.Representations.Add("Meteoroid");
             c.Priorite = 0;
-            c.TourellesPermises = new List<TypeTourelle>();
+            c.TourellesPermises = new List<TurretType>();
             c.Selectionnable = true;
             e = new DescripteurEmplacement();
             e.Position = Vector3.Zero;
             e.Tourelle = new DescripteurTourelle();
-            e.Tourelle.Type = TypeTourelle.GravitationnelleAlien;
+            e.Tourelle.Type = TurretType.Alien;
             e.Tourelle.PeutVendre = false;
             e.Tourelle.PeutMettreAJour = false;
             c.Emplacements.Add(e);
@@ -440,12 +386,12 @@
             c.Taille = Taille.Petite;
             c.Representations.Add("Asteroid");
             c.Priorite = 1;
-            c.TourellesPermises = new List<TypeTourelle>();
+            c.TourellesPermises = new List<TurretType>();
             c.Selectionnable = false;
             e = new DescripteurEmplacement();
             e.Position = Vector3.Zero;
             e.Tourelle = new DescripteurTourelle();
-            e.Tourelle.Type = TypeTourelle.Gravitationnelle;
+            e.Tourelle.Type = TurretType.Gravitational;
             e.Tourelle.PeutVendre = false;
             e.Tourelle.PeutMettreAJour = false;
             c.Emplacements.Add(e);
@@ -475,45 +421,45 @@
             d.FondEcran = "fondecran17";
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-300, -200, 0), "1-1", "planete6", 0, 1);
-            d.SystemePlanetaire[0].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[0].ajouterTourelle(TypeTourelle.Base, 5, new Vector3(15, -8, 0), true);
+            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Basic, 5, new Vector3(5, -4, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-500, -50, 0), "1-2", "planete7", 0, 2);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Base, 3, new Vector3(-10, 8, 0), true);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Base, 3, new Vector3(-8, 16, 0), true);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Base, 3, new Vector3(-4, 24, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(-14, 8, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(-12, 16, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(-8, 24, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-400, 150, 0), "1-3", "planete1", 0, 3);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-150, 30, 0), "1-4", "planete2", 0, 4);
-            d.SystemePlanetaire[3].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[3].ajouterTourelle(TypeTourelle.LaserSimple, 5, new Vector3(-12, 10, 0), true);
-            d.SystemePlanetaire[3].ajouterTourelle(TypeTourelle.LaserSimple, 5, new Vector3(15, -12, 0), true);
-            d.SystemePlanetaire[3].ajouterTourelle(TypeTourelle.LaserSimple, 5, new Vector3(0, -18, 0), true);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(-10, 10, 0), true);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(16, -12, 0), true);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(0, -20, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(0, 250, 0), "1-5", "planete3", 0, 5);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(100, 125, 0), "1-6", "planete4", 0, 6);
-            d.SystemePlanetaire[5].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[5].ajouterTourelle(TypeTourelle.LaserMultiple, 1, new Vector3(5, 5, 0), true);
+            d.SystemePlanetaire[5].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[5].ajouterTourelle(TurretType.MultipleLasers, 1, new Vector3(5, 5, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(400, 200, 0), "1-7", "planete5", 0, 7);
-            d.SystemePlanetaire[6].ajouterTourelle(TypeTourelle.Gravitationnelle, 2, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[6].ajouterTourelle(TypeTourelle.Missile, 2, new Vector3(-20, -12, 0), true);
-            d.SystemePlanetaire[6].ajouterTourelle(TypeTourelle.SlowMotion, 4, new Vector3(-8, -22, 0), true);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.Gravitational, 2, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.Missile, 2, new Vector3(-20, -18, 0), true);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.SlowMotion, 4, new Vector3(-8, -22, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(450, -100, 0), "1-8", "planete6", 0, 8);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(200, -150, 0), "1-9", "planete7", 0, 9);
-            d.SystemePlanetaire[8].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[8].ajouterTourelle(TypeTourelle.SlowMotion, 4, new Vector3(12, -5, 0), true);
+            d.SystemePlanetaire[8].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[8].ajouterTourelle(TurretType.SlowMotion, 4, new Vector3(12, -5, 0), true);
 
             d.ajouterTrouRose(new Vector3(-50, -220, 0), "Go to World 2!", 0, 10);
-            d.SystemePlanetaire[9].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[9].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.CorpsCelesteAProteger = "Go to World 2!";
 
@@ -530,12 +476,12 @@
             c.Representations.Add("Trojan");
             c.Representations.Add("Meteoroid");
             c.Priorite = 0;
-            c.TourellesPermises = new List<TypeTourelle>();
+            c.TourellesPermises = new List<TurretType>();
             c.Selectionnable = false;
             e = new DescripteurEmplacement();
             e.Position = Vector3.Zero;
             e.Tourelle = new DescripteurTourelle();
-            e.Tourelle.Type = TypeTourelle.GravitationnelleAlien;
+            e.Tourelle.Type = TurretType.Alien;
             e.Tourelle.PeutVendre = false;
             e.Tourelle.PeutMettreAJour = false;
             c.Emplacements.Add(e);
@@ -570,50 +516,50 @@
             d.FondEcran = "fondecran16";
 
             d.ajouterTrouRose(new Vector3(0, 300, 0), "Go back\nto World 1!", 0, 1);
-            d.SystemePlanetaire[0].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-150, 200, 0), "2-1", "planete6", 0, 2);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(250, 250, 0), "2-2", "planete7", 0, 3);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.Base, 6, new Vector3(-10, -5, 0), true);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.Base, 7, new Vector3(20, 6, 0), true);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Basic, 6, new Vector3(-10, -5, 0), true);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Basic, 7, new Vector3(20, 6, 0), true);
 
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(0, 100, 0), "2-3", "planete1", 0, 4);
-            d.SystemePlanetaire[3].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-300, 175, 0), "2-4", "planete2", 0, 5);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Missile, 5, new Vector3(-18, -20, 0), true);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.LaserMultiple, 6, new Vector3(-18, -8, 0), true);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.SlowMotion, 4, new Vector3(17, -15, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Missile, 5, new Vector3(-18, -20, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.MultipleLasers, 6, new Vector3(-18, -8, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.SlowMotion, 4, new Vector3(17, -15, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(0, -75, 0), "2-5", "planete3", 0, 6);
-            d.SystemePlanetaire[5].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[5].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(250, 50, 0), "2-6", "planete4", 0, 7);
-            d.SystemePlanetaire[6].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[6].ajouterTourelle(TypeTourelle.Missile, 8, new Vector3(-6, -25, 0), true);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.Missile, 8, new Vector3(-6, -25, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(400, -150, 0), "2-7", "planete5", 0, 8);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.LaserSimple, 5, new Vector3(24, 0, 0), true);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.LaserSimple, 6, new Vector3(20, 8, 0), true);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.LaserSimple, 7, new Vector3(18, 16, 0), true);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.LaserSimple, 8, new Vector3(10, 24, 0), true);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.LaserSimple, 9, new Vector3(0, 32, 0), true);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.LaserSimple, 10, new Vector3(0, 40, 0), true);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Laser, 5, new Vector3(24, 0, 0), true);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Laser, 6, new Vector3(20, 8, 0), true);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Laser, 7, new Vector3(18, 16, 0), true);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Laser, 8, new Vector3(10, 24, 0), true);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Laser, 9, new Vector3(0, 32, 0), true);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Laser, 10, new Vector3(0, 40, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(100, -220, 0), "2-8", "planete6", 0, 9);
-            d.SystemePlanetaire[8].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[8].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(-300, -100, 0), "2-9", "planete7", 0, 10);
-            d.SystemePlanetaire[9].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[9].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterTrouRose(new Vector3(-125, -200, 0), "Go to World 3!", 0, 11);
-            d.SystemePlanetaire[10].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[10].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.CorpsCelesteAProteger = "Go to World 3!";
 
@@ -625,12 +571,12 @@
             c.Taille = Taille.Petite;
             c.Representations.Add("Plutoid");
             c.Priorite = 0;
-            c.TourellesPermises = new List<TypeTourelle>();
+            c.TourellesPermises = new List<TurretType>();
             c.Selectionnable = false;
             e = new DescripteurEmplacement();
             e.Position = Vector3.Zero;
             e.Tourelle = new DescripteurTourelle();
-            e.Tourelle.Type = TypeTourelle.GravitationnelleAlien;
+            e.Tourelle.Type = TurretType.Alien;
             e.Tourelle.PeutVendre = false;
             e.Tourelle.PeutMettreAJour = false;
             c.Emplacements.Add(e);
@@ -665,44 +611,44 @@
             d.FondEcran = "fondecran15";
 
             d.ajouterTrouRose(new Vector3(500, 0, 0), "Go back\nto World\n2!", 0, 1);
-            d.SystemePlanetaire[0].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(450, -200, 0), "3-1", "stationSpatiale1", 0, 2);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[1].ajouterTourelle(TypeTourelle.LaserMultiple, 10, new Vector3(-20, -15, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.MultipleLasers, 10, new Vector3(-20, -15, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(350, 200, 0), "3-2", "stationSpatiale1", 0, 3);
-            d.SystemePlanetaire[2].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(250, 0, 0), "3-3", "stationSpatiale2", 0, 4);
-            d.SystemePlanetaire[3].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(150, -200, 0), "3-4", "stationSpatiale1", 0, 5);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Base, 10, new Vector3(-17, -13, 0), true);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Base, 10, new Vector3(-19, 0, 0), true);
-            d.SystemePlanetaire[4].ajouterTourelle(TypeTourelle.Base, 10, new Vector3(-3, 15, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Basic, 10, new Vector3(-17, -13, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Basic, 10, new Vector3(-19, 0, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.Basic, 10, new Vector3(-3, 15, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(50, 200, 0), "3-5", "stationSpatiale2", 0, 6);
-            d.SystemePlanetaire[5].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[5].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(-50, 0, 0), "3-6", "stationSpatiale2", 0, 7);
-            d.SystemePlanetaire[6].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-150, -200, 0), "3-7", "stationSpatiale1", 0, 8);
-            d.SystemePlanetaire[7].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[7].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(-200, 225, 0), "3-8", "stationSpatiale1", 0, 9);
-            d.SystemePlanetaire[8].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[8].ajouterTourelle(TypeTourelle.Missile, 10, new Vector3(-25, 0, 0), true);
-            d.SystemePlanetaire[8].ajouterTourelle(TypeTourelle.Missile, 10, new Vector3(-18, -8, 0), true);
+            d.SystemePlanetaire[8].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[8].ajouterTourelle(TurretType.Missile, 10, new Vector3(-25, 0, 0), true);
+            d.SystemePlanetaire[8].ajouterTourelle(TurretType.Missile, 10, new Vector3(-18, -8, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(-300, 30, 0), "3-9", "stationSpatiale2", 0, 10);
-            d.SystemePlanetaire[9].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[9].ajouterTourelle(TypeTourelle.LaserMultiple, 10, new Vector3(-20, 0, 0), true);
+            d.SystemePlanetaire[9].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[9].ajouterTourelle(TurretType.MultipleLasers, 10, new Vector3(-20, 0, 0), true);
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(-400, -160, 0), "3-10", "planete1", 0, 11);
-            d.SystemePlanetaire[10].ajouterTourelle(TypeTourelle.Gravitationnelle, 1, new Vector3(1, -2, 0), false);
+            d.SystemePlanetaire[10].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
 
             d.CorpsCelesteAProteger = "3-10";
@@ -715,12 +661,12 @@
             c.Taille = Taille.Petite;
             c.Representations.Add("Asteroid");
             c.Priorite = 0;
-            c.TourellesPermises = new List<TypeTourelle>();
+            c.TourellesPermises = new List<TurretType>();
             c.Selectionnable = false;
             e = new DescripteurEmplacement();
             e.Position = Vector3.Zero;
             e.Tourelle = new DescripteurTourelle();
-            e.Tourelle.Type = TypeTourelle.GravitationnelleAlien;
+            e.Tourelle.Type = TurretType.Alien;
             e.Tourelle.PeutVendre = false;
             e.Tourelle.PeutMettreAJour = false;
             c.Emplacements.Add(e);

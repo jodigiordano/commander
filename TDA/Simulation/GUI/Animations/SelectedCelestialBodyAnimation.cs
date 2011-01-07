@@ -52,7 +52,7 @@ namespace EphemereGames.Commander
                 WidgetName.Texte = celestialBody.Nom;
                 WidgetName.Origine = WidgetName.Centre;
 
-                ((CircleEmitter)Selection.ParticleEffect[0]).Radius = celestialBody.Cercle.Rayon + 5;
+                ((CircleEmitter)Selection.ParticleEffect[0]).Radius = celestialBody.Cercle.Radius + 5;
             }
         }
 
@@ -69,7 +69,7 @@ namespace EphemereGames.Commander
                 Selection.Deplacer(ref deplacement);
 
             Selection.Emettre(ref CelestialBody.position);
-            PositionLastEmission = CelestialBody.Position;
+            PositionLastEmission = CelestialBody.position;
         }
 
 
@@ -78,11 +78,11 @@ namespace EphemereGames.Commander
             if (CelestialBody == null || !CelestialBody.EstVivant)
                 return;
 
-            if (!Simulation.ModeDemo)
-            {
-                WidgetName.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - ((CircleEmitter)Selection.ParticleEffect[0]).Radius - 13, 0);
-                Simulation.Scene.ajouterScenable(WidgetName);
-            }
+            //if (!Simulation.ModeDemo)
+            //{
+            //    WidgetName.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - ((CircleEmitter)Selection.ParticleEffect[0]).Radius - 13, 0);
+            //    Simulation.Scene.ajouterScenable(WidgetName);
+            //}
         }
     }
 }

@@ -71,8 +71,8 @@
 
         private void VerifyFrame()
         {
-            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.DeadZoneXbox.X + Cercle.Rayon, 640 - Preferences.DeadZoneXbox.X - Cercle.Rayon);
-            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.DeadZoneXbox.Y + Cercle.Rayon, 370 - Preferences.DeadZoneXbox.Y - Cercle.Rayon);
+            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.DeadZoneXbox.X + Cercle.Radius, 640 - Preferences.DeadZoneXbox.X - Cercle.Radius);
+            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.DeadZoneXbox.Y + Cercle.Radius, 370 - Preferences.DeadZoneXbox.Y - Cercle.Radius);
         }
     }
 }

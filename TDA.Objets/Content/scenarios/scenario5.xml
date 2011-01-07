@@ -1,27 +1,28 @@
 <?xml version="1.0"?>
 <DescripteurScenario>
-  <Numero>4</Numero>
-  <Mission>1-5</Mission>
-  <Annee>2105</Annee>
-  <Lieu>Multum system</Lieu>
-  <Objectif>Protect Veritas</Objectif>
+  <Numero>5</Numero>
+  <Mission>1-6</Mission>
+  <Annee>2106</Annee>
+  <Lieu>Universus system</Lieu>
+  <Objectif>Protect Aurum</Objectif>
   <Description>none</Description>
   <Image>scenario1</Image>
   <Difficulte>Easy</Difficulte>
   <SystemePlanetaire>
     <DescripteurCorpsCeleste>
       <Representations>
-        <string>Meteoroid</string>
-        <string>Plutoid</string>
+        <string>Centaur</string>
+        <string>Comet</string>
+        <string>Trojan</string>
       </Representations>
       <Nom>CeintureAsteroide</Nom>
       <Emplacements>
         <DescripteurEmplacement>
           <Tourelle>
-            <Type>Gravitationnelle</Type>
+            <Type>Gravitational</Type>
             <PeutVendre>false</PeutVendre>
             <PeutMettreAJour>false</PeutMettreAJour>
-            <Visible>true</Visible>
+            <Visible>false</Visible>
             <Niveau>1</Niveau>
           </Tourelle>
           <Position>
@@ -33,10 +34,10 @@
         </DescripteurEmplacement>
       </Emplacements>
       <Taille>Petite</Taille>
-      <Vitesse>900000</Vitesse>
+      <Vitesse>600000</Vitesse>
       <Priorite>0</Priorite>
       <Position>
-        <X>700</X>
+        <X>-700</X>
         <Y>-400</Y>
         <Z>0</Z>
       </Position>
@@ -54,75 +55,36 @@
       <Selectionnable>false</Selectionnable>
       <Invincible>true</Invincible>
       <TourellesPermises />
-      <PositionDepart>38</PositionDepart>
+      <PositionDepart>68</PositionDepart>
     </DescripteurCorpsCeleste>
     <DescripteurCorpsCeleste>
       <Representations />
-      <Nom>Est</Nom>
-      <Emplacements />
-      <Representation>planete4</Representation>
-      <Taille>Petite</Taille>
-      <Vitesse>120000</Vitesse>
-      <Priorite>8</Priorite>
-      <Position>
-        <X>93</X>
-        <Y>134</Y>
-        <Z>0</Z>
-      </Position>
-      <Offset>
-        <X>-195</X>
-        <Y>74</Y>
-        <Z>0</Z>
-      </Offset>
-      <Rotation>226</Rotation>
-      <EnBackground>false</EnBackground>
-      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
-      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
-      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
-      <PeutDetruire>false</PeutDetruire>
-      <Selectionnable>true</Selectionnable>
-      <Invincible>false</Invincible>
-      <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
-      </TourellesPermises>
-      <PositionDepart>72</PositionDepart>
-    </DescripteurCorpsCeleste>
-    <DescripteurCorpsCeleste>
-      <Representations />
-      <Nom>In</Nom>
+      <Nom>Ut</Nom>
       <Emplacements>
         <DescripteurEmplacement>
-          <Tourelle>
-            <Type>Gravitationnelle</Type>
-            <PeutVendre>false</PeutVendre>
-            <PeutMettreAJour>false</PeutMettreAJour>
-            <Visible>true</Visible>
-            <Niveau>1</Niveau>
-          </Tourelle>
           <Position>
-            <X>0</X>
-            <Y>-2</Y>
+            <X>5</X>
+            <Y>4</Y>
             <Z>0</Z>
           </Position>
           <Representation>emplacement</Representation>
         </DescripteurEmplacement>
       </Emplacements>
-      <Representation>planete2</Representation>
+      <Representation>stationSpatiale1</Representation>
       <Taille>Petite</Taille>
-      <Vitesse>240000</Vitesse>
-      <Priorite>9</Priorite>
+      <Vitesse>0</Vitesse>
+      <Priorite>8</Priorite>
       <Position>
-        <X>-51</X>
-        <Y>-163</Y>
+        <X>276</X>
+        <Y>80</Y>
         <Z>0</Z>
       </Position>
       <Offset>
-        <X>-112</X>
-        <Y>130</Y>
+        <X>-34</X>
+        <Y>-176</Y>
         <Z>0</Z>
       </Offset>
-      <Rotation>-42</Rotation>
+      <Rotation>4</Rotation>
       <EnBackground>false</EnBackground>
       <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
       <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
@@ -131,74 +93,20 @@
       <Selectionnable>true</Selectionnable>
       <Invincible>false</Invincible>
       <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
       </TourellesPermises>
-      <PositionDepart>31</PositionDepart>
+      <PositionDepart>62</PositionDepart>
     </DescripteurCorpsCeleste>
     <DescripteurCorpsCeleste>
       <Representations />
-      <Nom>Negamus</Nom>
-      <Emplacements />
-      <Representation>planete6</Representation>
-      <Taille>Moyenne</Taille>
-      <Vitesse>10000</Vitesse>
-      <Priorite>3</Priorite>
-      <Position>
-        <X>64</X>
-        <Y>-6</Y>
-        <Z>0</Z>
-      </Position>
-      <Offset>
-        <X>145</X>
-        <Y>3</Y>
-        <Z>0</Z>
-      </Offset>
-      <Rotation>-292</Rotation>
-      <EnBackground>false</EnBackground>
-      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
-      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
-      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
-      <PeutDetruire>false</PeutDetruire>
-      <Selectionnable>true</Selectionnable>
-      <Invincible>false</Invincible>
-      <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
-      </TourellesPermises>
-      <PositionDepart>81</PositionDepart>
-    </DescripteurCorpsCeleste>
-    <DescripteurCorpsCeleste>
-      <Representations />
-      <Nom>Nulla</Nom>
+      <Nom>Totum</Nom>
       <Emplacements>
         <DescripteurEmplacement>
-          <Tourelle>
-            <Type>Gravitationnelle</Type>
-            <PeutVendre>false</PeutVendre>
-            <PeutMettreAJour>false</PeutMettreAJour>
-            <Visible>true</Visible>
-            <Niveau>1</Niveau>
-          </Tourelle>
           <Position>
-            <X>-4</X>
-            <Y>3</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-        <DescripteurEmplacement>
-          <Position>
-            <X>-5</X>
-            <Y>-5</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-        <DescripteurEmplacement>
-          <Position>
-            <X>5</X>
-            <Y>-5</Y>
+            <X>-3</X>
+            <Y>-6</Y>
             <Z>0</Z>
           </Position>
           <Representation>emplacement</Representation>
@@ -206,139 +114,19 @@
       </Emplacements>
       <Representation>planete7</Representation>
       <Taille>Petite</Taille>
-      <Vitesse>480000</Vitesse>
-      <Priorite>6</Priorite>
-      <Position>
-        <X>-32</X>
-        <Y>79</Y>
-        <Z>0</Z>
-      </Position>
-      <Offset>
-        <X>-107</X>
-        <Y>-154</Y>
-        <Z>0</Z>
-      </Offset>
-      <Rotation>322</Rotation>
-      <EnBackground>false</EnBackground>
-      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
-      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
-      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
-      <PeutDetruire>false</PeutDetruire>
-      <Selectionnable>true</Selectionnable>
-      <Invincible>false</Invincible>
-      <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
-      </TourellesPermises>
-      <PositionDepart>65</PositionDepart>
-    </DescripteurCorpsCeleste>
-    <DescripteurCorpsCeleste>
-      <Representations />
-      <Nom>Si</Nom>
-      <Emplacements>
-        <DescripteurEmplacement>
-          <Tourelle>
-            <Type>Gravitationnelle</Type>
-            <PeutVendre>false</PeutVendre>
-            <PeutMettreAJour>false</PeutMettreAJour>
-            <Visible>true</Visible>
-            <Niveau>1</Niveau>
-          </Tourelle>
-          <Position>
-            <X>4</X>
-            <Y>-3</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-        <DescripteurEmplacement>
-          <Position>
-            <X>-6</X>
-            <Y>2</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-      </Emplacements>
-      <Representation>planete4</Representation>
-      <Taille>Petite</Taille>
-      <Vitesse>240000</Vitesse>
-      <Priorite>1</Priorite>
-      <Position>
-        <X>37</X>
-        <Y>1</Y>
-        <Z>0</Z>
-      </Position>
-      <Offset>
-        <X>-320</X>
-        <Y>237</Y>
-        <Z>0</Z>
-      </Offset>
-      <Rotation>-1</Rotation>
-      <EnBackground>false</EnBackground>
-      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
-      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
-      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
-      <PeutDetruire>false</PeutDetruire>
-      <Selectionnable>true</Selectionnable>
-      <Invincible>false</Invincible>
-      <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
-      </TourellesPermises>
-      <PositionDepart>74</PositionDepart>
-    </DescripteurCorpsCeleste>
-    <DescripteurCorpsCeleste>
-      <Representations />
-      <Nom>Fallimur</Nom>
-      <Emplacements>
-        <DescripteurEmplacement>
-          <Tourelle>
-            <Type>Gravitationnelle</Type>
-            <PeutVendre>false</PeutVendre>
-            <PeutMettreAJour>false</PeutMettreAJour>
-            <Visible>true</Visible>
-            <Niveau>1</Niveau>
-          </Tourelle>
-          <Position>
-            <X>-1</X>
-            <Y>0</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-        <DescripteurEmplacement>
-          <Position>
-            <X>4</X>
-            <Y>4</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-        <DescripteurEmplacement>
-          <Position>
-            <X>5</X>
-            <Y>-3</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-      </Emplacements>
-      <Representation>planete4</Representation>
-      <Taille>Petite</Taille>
-      <Vitesse>10000</Vitesse>
+      <Vitesse>900000</Vitesse>
       <Priorite>4</Priorite>
       <Position>
-        <X>-3</X>
-        <Y>-68</Y>
+        <X>131</X>
+        <Y>-85</Y>
         <Z>0</Z>
       </Position>
       <Offset>
-        <X>368</X>
-        <Y>142</Y>
+        <X>79</X>
+        <Y>-27</Y>
         <Z>0</Z>
       </Offset>
-      <Rotation>179</Rotation>
+      <Rotation>-298</Rotation>
       <EnBackground>false</EnBackground>
       <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
       <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
@@ -347,58 +135,43 @@
       <Selectionnable>true</Selectionnable>
       <Invincible>false</Invincible>
       <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
       </TourellesPermises>
-      <PositionDepart>16</PositionDepart>
+      <PositionDepart>58</PositionDepart>
     </DescripteurCorpsCeleste>
     <DescripteurCorpsCeleste>
       <Representations />
-      <Nom>Nobis</Nom>
-      <Emplacements />
-      <Representation>planete2</Representation>
-      <Taille>Petite</Taille>
-      <Vitesse>120000</Vitesse>
-      <Priorite>10</Priorite>
-      <Position>
-        <X>190</X>
-        <Y>-29</Y>
-        <Z>0</Z>
-      </Position>
-      <Offset>
-        <X>-356</X>
-        <Y>55</Y>
-        <Z>0</Z>
-      </Offset>
-      <Rotation>-51</Rotation>
-      <EnBackground>false</EnBackground>
-      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
-      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
-      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
-      <PeutDetruire>false</PeutDetruire>
-      <Selectionnable>true</Selectionnable>
-      <Invincible>false</Invincible>
-      <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
-      </TourellesPermises>
-      <PositionDepart>12</PositionDepart>
-    </DescripteurCorpsCeleste>
-    <DescripteurCorpsCeleste>
-      <Representations />
-      <Nom>Et</Nom>
+      <Nom>Splendet</Nom>
       <Emplacements>
         <DescripteurEmplacement>
           <Tourelle>
-            <Type>Gravitationnelle</Type>
+            <Type>Gravitational</Type>
             <PeutVendre>false</PeutVendre>
             <PeutMettreAJour>false</PeutMettreAJour>
-            <Visible>true</Visible>
+            <Visible>false</Visible>
             <Niveau>1</Niveau>
           </Tourelle>
           <Position>
-            <X>3</X>
-            <Y>-1</Y>
+            <X>2</X>
+            <Y>7</Y>
+            <Z>0</Z>
+          </Position>
+          <Representation>emplacement</Representation>
+        </DescripteurEmplacement>
+        <DescripteurEmplacement>
+          <Position>
+            <X>2</X>
+            <Y>-6</Y>
+            <Z>0</Z>
+          </Position>
+          <Representation>emplacement</Representation>
+        </DescripteurEmplacement>
+        <DescripteurEmplacement>
+          <Position>
+            <X>-9</X>
+            <Y>8</Y>
             <Z>0</Z>
           </Position>
           <Representation>emplacement</Representation>
@@ -406,35 +179,27 @@
         <DescripteurEmplacement>
           <Position>
             <X>-4</X>
-            <Y>-3</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-        <DescripteurEmplacement>
-          <Position>
-            <X>-6</X>
-            <Y>5</Y>
+            <Y>1</Y>
             <Z>0</Z>
           </Position>
           <Representation>emplacement</Representation>
         </DescripteurEmplacement>
       </Emplacements>
-      <Representation>planete3</Representation>
-      <Taille>Petite</Taille>
-      <Vitesse>1200000</Vitesse>
-      <Priorite>5</Priorite>
+      <Representation>planete4</Representation>
+      <Taille>Moyenne</Taille>
+      <Vitesse>480000</Vitesse>
+      <Priorite>6</Priorite>
       <Position>
-        <X>-3</X>
-        <Y>80</Y>
+        <X>167</X>
+        <Y>38</Y>
         <Z>0</Z>
       </Position>
       <Offset>
-        <X>321</X>
-        <Y>-140</Y>
+        <X>-274</X>
+        <Y>44</Y>
         <Z>0</Z>
       </Offset>
-      <Rotation>317</Rotation>
+      <Rotation>-316</Rotation>
       <EnBackground>false</EnBackground>
       <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
       <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
@@ -443,19 +208,43 @@
       <Selectionnable>true</Selectionnable>
       <Invincible>false</Invincible>
       <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
       </TourellesPermises>
-      <PositionDepart>13</PositionDepart>
+      <PositionDepart>62</PositionDepart>
     </DescripteurCorpsCeleste>
     <DescripteurCorpsCeleste>
       <Representations />
-      <Nom>Peccasse</Nom>
+      <Nom>Teneas</Nom>
       <Emplacements>
         <DescripteurEmplacement>
+          <Tourelle>
+            <Type>Gravitational</Type>
+            <PeutVendre>false</PeutVendre>
+            <PeutMettreAJour>false</PeutMettreAJour>
+            <Visible>false</Visible>
+            <Niveau>1</Niveau>
+          </Tourelle>
           <Position>
-            <X>1</X>
+            <X>-4</X>
             <Y>0</Y>
+            <Z>0</Z>
+          </Position>
+          <Representation>emplacement</Representation>
+        </DescripteurEmplacement>
+        <DescripteurEmplacement>
+          <Position>
+            <X>4</X>
+            <Y>1</Y>
+            <Z>0</Z>
+          </Position>
+          <Representation>emplacement</Representation>
+        </DescripteurEmplacement>
+        <DescripteurEmplacement>
+          <Position>
+            <X>2</X>
+            <Y>-6</Y>
             <Z>0</Z>
           </Position>
           <Representation>emplacement</Representation>
@@ -469,21 +258,21 @@
           <Representation>emplacement</Representation>
         </DescripteurEmplacement>
       </Emplacements>
-      <Representation>planete5</Representation>
+      <Representation>planete6</Representation>
       <Taille>Petite</Taille>
-      <Vitesse>10000</Vitesse>
+      <Vitesse>1200000</Vitesse>
       <Priorite>2</Priorite>
       <Position>
-        <X>-39</X>
-        <Y>-11</Y>
+        <X>38</X>
+        <Y>-68</Y>
         <Z>0</Z>
       </Position>
       <Offset>
-        <X>288</X>
-        <Y>-1</Y>
+        <X>260</X>
+        <Y>-38</Y>
         <Z>0</Z>
       </Offset>
-      <Rotation>-276</Rotation>
+      <Rotation>45</Rotation>
       <EnBackground>false</EnBackground>
       <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
       <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
@@ -492,33 +281,68 @@
       <Selectionnable>true</Selectionnable>
       <Invincible>false</Invincible>
       <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
       </TourellesPermises>
-      <PositionDepart>72</PositionDepart>
+      <PositionDepart>88</PositionDepart>
     </DescripteurCorpsCeleste>
     <DescripteurCorpsCeleste>
       <Representations />
-      <Nom>Veritas</Nom>
+      <Nom>Quod</Nom>
       <Emplacements>
         <DescripteurEmplacement>
           <Tourelle>
-            <Type>Gravitationnelle</Type>
+            <Type>Gravitational</Type>
             <PeutVendre>false</PeutVendre>
             <PeutMettreAJour>false</PeutMettreAJour>
-            <Visible>true</Visible>
+            <Visible>false</Visible>
             <Niveau>1</Niveau>
           </Tourelle>
           <Position>
-            <X>-5</X>
-            <Y>-2</Y>
+            <X>0</X>
+            <Y>0</Y>
             <Z>0</Z>
           </Position>
           <Representation>emplacement</Representation>
         </DescripteurEmplacement>
+      </Emplacements>
+      <Representation>planete5</Representation>
+      <Taille>Petite</Taille>
+      <Vitesse>900000</Vitesse>
+      <Priorite>5</Priorite>
+      <Position>
+        <X>-161</X>
+        <Y>40</Y>
+        <Z>0</Z>
+      </Position>
+      <Offset>
+        <X>474</X>
+        <Y>77</Y>
+        <Z>0</Z>
+      </Offset>
+      <Rotation>-72</Rotation>
+      <EnBackground>false</EnBackground>
+      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
+      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
+      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
+      <PeutDetruire>false</PeutDetruire>
+      <Selectionnable>true</Selectionnable>
+      <Invincible>false</Invincible>
+      <TourellesPermises>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
+      </TourellesPermises>
+      <PositionDepart>21</PositionDepart>
+    </DescripteurCorpsCeleste>
+    <DescripteurCorpsCeleste>
+      <Representations />
+      <Nom>Non</Nom>
+      <Emplacements>
         <DescripteurEmplacement>
           <Position>
-            <X>3</X>
+            <X>4</X>
             <Y>-5</Y>
             <Z>0</Z>
           </Position>
@@ -526,36 +350,28 @@
         </DescripteurEmplacement>
         <DescripteurEmplacement>
           <Position>
-            <X>-2</X>
-            <Y>4</Y>
-            <Z>0</Z>
-          </Position>
-          <Representation>emplacement</Representation>
-        </DescripteurEmplacement>
-        <DescripteurEmplacement>
-          <Position>
-            <X>4</X>
-            <Y>1</Y>
+            <X>-4</X>
+            <Y>-3</Y>
             <Z>0</Z>
           </Position>
           <Representation>emplacement</Representation>
         </DescripteurEmplacement>
       </Emplacements>
-      <Representation>planete6</Representation>
+      <Representation>planete4</Representation>
       <Taille>Petite</Taille>
-      <Vitesse>10000</Vitesse>
-      <Priorite>2147483647</Priorite>
+      <Vitesse>1200000</Vitesse>
+      <Priorite>1</Priorite>
       <Position>
-        <X>28</X>
-        <Y>-93</Y>
+        <X>18</X>
+        <Y>-47</Y>
         <Z>0</Z>
       </Position>
       <Offset>
-        <X>197</X>
-        <Y>190</Y>
+        <X>247</X>
+        <Y>198</Y>
         <Z>0</Z>
       </Offset>
-      <Rotation>-223</Rotation>
+      <Rotation>251</Rotation>
       <EnBackground>false</EnBackground>
       <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
       <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
@@ -564,139 +380,179 @@
       <Selectionnable>true</Selectionnable>
       <Invincible>false</Invincible>
       <TourellesPermises>
-        <TypeTourelle>Base</TypeTourelle>
-        <TypeTourelle>LaserMultiple</TypeTourelle>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
       </TourellesPermises>
-      <PositionDepart>92</PositionDepart>
+      <PositionDepart>56</PositionDepart>
+    </DescripteurCorpsCeleste>
+    <DescripteurCorpsCeleste>
+      <Representations />
+      <Nom>Aurumm</Nom>
+      <Emplacements>
+        <DescripteurEmplacement>
+          <Position>
+            <X>-1</X>
+            <Y>1</Y>
+            <Z>0</Z>
+          </Position>
+          <Representation>emplacement</Representation>
+        </DescripteurEmplacement>
+      </Emplacements>
+      <Representation>planete4</Representation>
+      <Taille>Petite</Taille>
+      <Vitesse>900000</Vitesse>
+      <Priorite>3</Priorite>
+      <Position>
+        <X>85</X>
+        <Y>126</Y>
+        <Z>0</Z>
+      </Position>
+      <Offset>
+        <X>55</X>
+        <Y>174</Y>
+        <Z>0</Z>
+      </Offset>
+      <Rotation>-265</Rotation>
+      <EnBackground>false</EnBackground>
+      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
+      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
+      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
+      <PeutDetruire>false</PeutDetruire>
+      <Selectionnable>true</Selectionnable>
+      <Invincible>false</Invincible>
+      <TourellesPermises>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
+      </TourellesPermises>
+      <PositionDepart>34</PositionDepart>
+    </DescripteurCorpsCeleste>
+    <DescripteurCorpsCeleste>
+      <Representations />
+      <Nom>Aurum</Nom>
+      <Emplacements>
+        <DescripteurEmplacement>
+          <Tourelle>
+            <Type>Gravitational</Type>
+            <PeutVendre>false</PeutVendre>
+            <PeutMettreAJour>false</PeutMettreAJour>
+            <Visible>false</Visible>
+            <Niveau>1</Niveau>
+          </Tourelle>
+          <Position>
+            <X>5</X>
+            <Y>-1</Y>
+            <Z>0</Z>
+          </Position>
+          <Representation>emplacement</Representation>
+        </DescripteurEmplacement>
+        <DescripteurEmplacement>
+          <Position>
+            <X>-4</X>
+            <Y>-3</Y>
+            <Z>0</Z>
+          </Position>
+          <Representation>emplacement</Representation>
+        </DescripteurEmplacement>
+      </Emplacements>
+      <Representation>planete4</Representation>
+      <Taille>Petite</Taille>
+      <Vitesse>900000</Vitesse>
+      <Priorite>2147483647</Priorite>
+      <Position>
+        <X>24</X>
+        <Y>237</Y>
+        <Z>0</Z>
+      </Position>
+      <Offset>
+        <X>9</X>
+        <Y>25</Y>
+        <Z>0</Z>
+      </Offset>
+      <Rotation>186</Rotation>
+      <EnBackground>false</EnBackground>
+      <PeutAvoirCollecteur>false</PeutAvoirCollecteur>
+      <PeutAvoirDoItYourself>false</PeutAvoirDoItYourself>
+      <PeutAvoirTheResistance>false</PeutAvoirTheResistance>
+      <PeutDetruire>false</PeutDetruire>
+      <Selectionnable>true</Selectionnable>
+      <Invincible>false</Invincible>
+      <TourellesPermises>
+        <TurretType>Laser</TurretType>
+        <TurretType>Missile</TurretType>
+        <TurretType>SlowMotion</TurretType>
+      </TourellesPermises>
+      <PositionDepart>68</PositionDepart>
     </DescripteurCorpsCeleste>
   </SystemePlanetaire>
   <Waves>
     <WaveDescriptor>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Meteoroid</EnemyType>
+        <EnemyType>Trojan</EnemyType>
       </Enemies>
-      <SpeedLevel>4</SpeedLevel>
-      <LivesLevel>4</LivesLevel>
-      <CashValue>14</CashValue>
-      <Quantity>32</Quantity>
-      <Distance>Eloigne</Distance>
-      <Delay>2139</Delay>
-      <ApplyDelayEvery>16</ApplyDelayEvery>
-      <SwitchEvery>16</SwitchEvery>
+      <SpeedLevel>2</SpeedLevel>
+      <LivesLevel>2</LivesLevel>
+      <CashValue>13</CashValue>
+      <Quantity>40</Quantity>
+      <Distance>Normal</Distance>
+      <Delay>0</Delay>
+      <ApplyDelayEvery>-1</ApplyDelayEvery>
+      <SwitchEvery>-1</SwitchEvery>
     </WaveDescriptor>
     <WaveDescriptor>
-      <StartingTime>30000</StartingTime>
+      <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Comet</EnemyType>
       </Enemies>
       <SpeedLevel>5</SpeedLevel>
       <LivesLevel>5</LivesLevel>
-      <CashValue>12</CashValue>
-      <Quantity>45</Quantity>
+      <CashValue>20</CashValue>
+      <Quantity>30</Quantity>
       <Distance>Proche</Distance>
-      <Delay>4867</Delay>
+      <Delay>7055</Delay>
       <ApplyDelayEvery>10</ApplyDelayEvery>
       <SwitchEvery>-1</SwitchEvery>
     </WaveDescriptor>
     <WaveDescriptor>
-      <StartingTime>60000</StartingTime>
-      <Enemies>
-        <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Meteoroid</EnemyType>
-      </Enemies>
-      <SpeedLevel>6</SpeedLevel>
-      <LivesLevel>6</LivesLevel>
-      <CashValue>13</CashValue>
-      <Quantity>40</Quantity>
-      <Distance>Normal</Distance>
-      <Delay>2525</Delay>
-      <ApplyDelayEvery>20</ApplyDelayEvery>
-      <SwitchEvery>20</SwitchEvery>
-    </WaveDescriptor>
-    <WaveDescriptor>
-      <StartingTime>60000</StartingTime>
-      <Enemies>
-        <EnemyType>Meteoroid</EnemyType>
-        <EnemyType>Plutoid</EnemyType>
-      </Enemies>
-      <SpeedLevel>7</SpeedLevel>
-      <LivesLevel>7</LivesLevel>
-      <CashValue>18</CashValue>
-      <Quantity>36</Quantity>
-      <Distance>Normal</Distance>
-      <Delay>3908</Delay>
-      <ApplyDelayEvery>18</ApplyDelayEvery>
-      <SwitchEvery>18</SwitchEvery>
-    </WaveDescriptor>
-    <WaveDescriptor>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Centaur</EnemyType>
       </Enemies>
-      <SpeedLevel>8</SpeedLevel>
-      <LivesLevel>8</LivesLevel>
-      <CashValue>23</CashValue>
-      <Quantity>30</Quantity>
+      <SpeedLevel>9</SpeedLevel>
+      <LivesLevel>9</LivesLevel>
+      <CashValue>19</CashValue>
+      <Quantity>40</Quantity>
+      <Distance>Normal</Distance>
+      <Delay>0</Delay>
+      <ApplyDelayEvery>-1</ApplyDelayEvery>
+      <SwitchEvery>-1</SwitchEvery>
+    </WaveDescriptor>
+    <WaveDescriptor>
+      <StartingTime>80000</StartingTime>
+      <Enemies>
+        <EnemyType>Centaur</EnemyType>
+      </Enemies>
+      <SpeedLevel>12</SpeedLevel>
+      <LivesLevel>12</LivesLevel>
+      <CashValue>31</CashValue>
+      <Quantity>40</Quantity>
       <Distance>Proche</Distance>
-      <Delay>7117</Delay>
+      <Delay>4241</Delay>
       <ApplyDelayEvery>10</ApplyDelayEvery>
       <SwitchEvery>-1</SwitchEvery>
     </WaveDescriptor>
     <WaveDescriptor>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Trojan</EnemyType>
       </Enemies>
-      <SpeedLevel>9</SpeedLevel>
-      <LivesLevel>9</LivesLevel>
-      <CashValue>25</CashValue>
-      <Quantity>40</Quantity>
-      <Distance>Proche</Distance>
-      <Delay>7117</Delay>
-      <ApplyDelayEvery>10</ApplyDelayEvery>
-      <SwitchEvery>-1</SwitchEvery>
-    </WaveDescriptor>
-    <WaveDescriptor>
-      <StartingTime>60000</StartingTime>
-      <Enemies>
-        <EnemyType>Plutoid</EnemyType>
-      </Enemies>
-      <SpeedLevel>10</SpeedLevel>
-      <LivesLevel>10</LivesLevel>
-      <CashValue>33</CashValue>
-      <Quantity>40</Quantity>
-      <Distance>Proche</Distance>
-      <Delay>7479</Delay>
-      <ApplyDelayEvery>10</ApplyDelayEvery>
-      <SwitchEvery>-1</SwitchEvery>
-    </WaveDescriptor>
-    <WaveDescriptor>
-      <StartingTime>30000</StartingTime>
-      <Enemies>
-        <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Meteoroid</EnemyType>
-      </Enemies>
-      <SpeedLevel>11</SpeedLevel>
-      <LivesLevel>11</LivesLevel>
-      <CashValue>53</CashValue>
-      <Quantity>40</Quantity>
-      <Distance>Eloigne</Distance>
-      <Delay>3991</Delay>
-      <ApplyDelayEvery>20</ApplyDelayEvery>
-      <SwitchEvery>20</SwitchEvery>
-    </WaveDescriptor>
-    <WaveDescriptor>
-      <StartingTime>30000</StartingTime>
-      <Enemies>
-        <EnemyType>Meteoroid</EnemyType>
-      </Enemies>
-      <SpeedLevel>12</SpeedLevel>
-      <LivesLevel>12</LivesLevel>
-      <CashValue>91</CashValue>
-      <Quantity>50</Quantity>
-      <Distance>Eloigne</Distance>
+      <SpeedLevel>16</SpeedLevel>
+      <LivesLevel>16</LivesLevel>
+      <CashValue>60</CashValue>
+      <Quantity>45</Quantity>
+      <Distance>Normal</Distance>
       <Delay>0</Delay>
       <ApplyDelayEvery>-1</ApplyDelayEvery>
       <SwitchEvery>-1</SwitchEvery>
@@ -704,10 +560,10 @@
   </Waves>
   <Joueur>
     <ReserveUnites>1000</ReserveUnites>
-    <PointsDeVie>5</PointsDeVie>
+    <PointsDeVie>3</PointsDeVie>
   </Joueur>
-  <CorpsCelesteAProteger>Veritas</CorpsCelesteAProteger>
-  <FondEcran>fondecran2</FondEcran>
+  <CorpsCelesteAProteger>Aurum</CorpsCelesteAProteger>
+  <FondEcran>fondecran12</FondEcran>
   <ValeurMinerauxDonnes>0</ValeurMinerauxDonnes>
   <PourcentageMinerauxDonnes>
     <X>0.6</X>

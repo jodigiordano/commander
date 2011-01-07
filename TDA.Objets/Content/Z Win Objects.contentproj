@@ -1198,27 +1198,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="projectiles\explosion1.xml">
-      <Name>explosion1</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="projectiles\Explosions.png">
-      <Name>Explosions</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="projectiles\missile.png">
-      <Name>missile</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="projectiles\missile1.png">
       <Name>missile1</Name>
       <Importer>TextureImporter</Importer>
@@ -1259,6 +1238,14 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\scenario0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>scenario0</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="scenarios\scenario1.xml">
@@ -1317,22 +1304,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\scenario8.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario8</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ConsoleFont.spritefont">
+    <Compile Include="polices\ConsoleFont.spritefont">
       <Name>ConsoleFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
-    <None Include="scenarios\scenario9.xml">
+    <None Include="scenarios\scenario8.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario9</Name>
+      <Name>scenario8</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </None>
@@ -1709,21 +1688,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="buy.png">
+    <Compile Include="GUI\buy.png">
       <Name>buy</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="buy2.png">
+    <Compile Include="GUI\buy2.png">
       <Name>buy2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="collecteur.png">
+    <Compile Include="spaceships\collecteur.png">
       <Name>collecteur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1758,13 +1737,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LIFE.png">
-      <Name>LIFE</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="mineral1.png">
       <Name>mineral1</Name>
       <Importer>TextureImporter</Importer>
@@ -1794,28 +1766,28 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="resistance1.png">
+    <Compile Include="spaceships\resistance1.png">
       <Name>resistance1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="resistance2.png">
+    <Compile Include="spaceships\resistance2.png">
       <Name>resistance2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="resistance3.png">
+    <Compile Include="spaceships\resistance3.png">
       <Name>resistance3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TheResistance.png">
+    <Compile Include="spaceships\TheResistance.png">
       <Name>TheResistance</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1829,7 +1801,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Vaisseau.png">
+    <Compile Include="spaceships\Vaisseau.png">
       <Name>Vaisseau</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1866,6 +1838,18 @@
   <ItemGroup>
     <Compile Include="GUI\star.png">
       <Name>star</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GUI\done.png">
+      <Name>done</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\notdone.png">
+      <Name>notdone</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

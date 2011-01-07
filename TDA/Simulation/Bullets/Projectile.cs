@@ -5,7 +5,7 @@ namespace EphemereGames.Commander
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
 
-    enum TypeProjectile
+    enum BulletType
     {
         Base,
         Missile,

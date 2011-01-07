@@ -1,11 +1,11 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Physique;
+
 
     class TheResistance : IObjetPhysique
     {
@@ -17,15 +17,6 @@
         private List<Ennemi> Ennemis;
         public CorpsCeleste CorpsCelesteDepart;
 
-        public virtual bool Actif
-        {
-            get { return TempsActif > 0; }
-        }
-
-        public bool CibleAtteinte
-        {
-            get { return Vaisseaux[0].CibleAtteinte && Vaisseaux[1].CibleAtteinte && Vaisseaux[2].CibleAtteinte; }
-        }
 
         public TheResistance(Simulation simulation, CorpsCeleste corpsCelesteDepart, List<Ennemi> ennemis)
         {
@@ -71,6 +62,29 @@
             Vaisseaux.Add(v);
         }
 
+
+        public byte AlphaChannel
+        {
+            set
+            {
+                foreach (var spaceship in Vaisseaux)
+                    spaceship.Representation.Couleur.A = value;
+            }
+        }
+
+
+        public virtual bool Actif
+        {
+            get { return TempsActif > 0; }
+        }
+
+
+        public bool CibleAtteinte
+        {
+            get { return Vaisseaux[0].CibleAtteinte && Vaisseaux[1].CibleAtteinte && Vaisseaux[2].CibleAtteinte; }
+        }
+
+
         public void Update(GameTime gameTime)
         {
             TempsActif -= gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -93,6 +107,7 @@
                 vaisseau.Update(gameTime);
             }
         }
+
 
         private List<Projectile> projectilesCeTick = new List<Projectile>();
         public List<Projectile> ProjectilesCeTick(GameTime gameTime)
@@ -122,6 +137,7 @@
             foreach (var vaisseau in Vaisseaux)
                 vaisseau.Draw(gameTime);
         }
+
 
         #region IObjetPhysique Membres
 

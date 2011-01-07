@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
     <Item>
       <Name>Emitter08</Name>
       <Budget>25</Budget>
       <Term>0.25</Term>
-      <ReleaseQuantity>25</ReleaseQuantity>
+      <ReleaseQuantity>5</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
-        <Value>550</Value>
-        <Variation>300</Variation>
+        <Value>350</Value>
+        <Variation>100</Variation>
       </ReleaseSpeed>
       <ReleaseColour>
         <Value>1 1 1</Value>
@@ -20,8 +20,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>30</Value>
-        <Variation>30</Variation>
+        <Value>15</Value>
+        <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -30,7 +30,7 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:OpacityModifier">
+        <Item Type="ProjectMercury.Modifiers.OpacityModifier">
           <Initial>1</Initial>
           <Ultimate>0</Ultimate>
         </Item>
@@ -41,6 +41,6 @@
     </Item>
     <Name>Particle Effect</Name>
     <Author>None</Author>
-    <Description>None</Description>    
+    <Description>None</Description>
   </Asset>
 </XnaContent>

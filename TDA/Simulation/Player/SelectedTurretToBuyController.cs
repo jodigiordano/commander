@@ -6,16 +6,16 @@
     class SelectedTurretToBuyController
     {
         // Out
-        public Dictionary<Tourelle, bool> AvailableTurretsInScenario { get; private set; }
+        public Dictionary<Turret, bool> AvailableTurretsInScenario { get; private set; }
 
-        public Tourelle TurretToBuy
+        public Turret TurretToBuy
         {
             get { return (SelectedTurret == null) ? null : SelectedTurret.Value; }
         }
 
 
-        private LinkedListNode<Tourelle> SelectedTurret;
-        private LinkedList<Tourelle> AvailableTurretsToBuy;
+        private LinkedListNode<Turret> SelectedTurret;
+        private LinkedList<Turret> AvailableTurretsToBuy;
         private CommonStash CommonStash;
 
 
@@ -24,8 +24,8 @@
             CommonStash = commonStash;
 
             SelectedTurret = null;
-            AvailableTurretsInScenario = new Dictionary<Tourelle, bool>();
-            AvailableTurretsToBuy = new LinkedList<Tourelle>();
+            AvailableTurretsInScenario = new Dictionary<Turret, bool>();
+            AvailableTurretsToBuy = new LinkedList<Turret>();
         }
 
 
@@ -47,14 +47,32 @@
         }
 
 
-        public void Update(CorpsCeleste celestialBody, Emplacement turretSpot)
+        public Turret FirstAvailable
+        {
+            get { return (AvailableTurretsToBuy.First != null) ? AvailableTurretsToBuy.First.Value : null; }
+        }
+
+
+        public Turret LastAvailable
+        {
+            get { return (AvailableTurretsToBuy.Last != null) ? AvailableTurretsToBuy.Last.Value : null; }
+        }
+
+
+        public void SetSelectedTurret(Turret turret)
+        {
+            SelectedTurret = AvailableTurretsToBuy.Find(turret);
+        }
+
+
+        public void Update(CorpsCeleste celestialBody)
         {
             bool previousSelection = SelectedTurret != null;
 
             AvailableTurretsInScenario.Clear();
             AvailableTurretsToBuy.Clear();
 
-            if (celestialBody == null || turretSpot == null || turretSpot.EstOccupe)
+            if (celestialBody == null)
             {
                 SelectedTurret = null;
                 return;
@@ -63,9 +81,9 @@
 
             for (int i = 0; i < celestialBody.TourellesPermises.Count; i++)
             {
-                Tourelle turret = celestialBody.TourellesPermises[i];
+                Turret turret = celestialBody.TourellesPermises[i];
 
-                if (turret.PrixAchat <= CommonStash.Cash)
+                if (turret.BuyPrice <= CommonStash.Cash)
                 {
                     AvailableTurretsToBuy.AddLast(turret);
                     AvailableTurretsInScenario.Add(turret, true);

@@ -17,44 +17,59 @@
 
     public enum Taille
     {
-        Petite = 32,
-        Moyenne = 60,
-        Grande = 88
+        Petite = 28,
+        Moyenne = 50,
+        Grande = 68
+    }
+
+
+    public class WorldDescriptor
+    {
+        public int Id;
+        public List<int> Levels;
+        public List<KeyValuePair<int, int>> Warps;
+        public DescripteurScenario SimulationDescription;
+        public List<int> UnlockedCondition;
+        public string WarpBlockedMessage;
+
+
+        public WorldDescriptor()
+        {
+            Id = -1;
+            Levels = new List<int>();
+            Warps = new List<KeyValuePair<int, int>>();
+            SimulationDescription = new DescripteurScenario();
+            UnlockedCondition = new List<int>();
+            WarpBlockedMessage = "";
+        }
     }
 
 
     public class DescripteurScenario
     {
-        public int Numero { get; set; }
-        public String Mission { get; set; }
-        public String Annee { get; set; }
-        public String Lieu { get; set; }
-        public String Objectif { get; set; }
-        public String Description { get; set; }
-        public String Image { get; set; }
-        public String Difficulte { get; set; }
-
-        public List<DescripteurCorpsCeleste> SystemePlanetaire { get; set; }
-
+        public int Numero;
+        public String Mission;
+        public String Annee;
+        public String Lieu;
+        public String Objectif;
+        public String Description;
+        public String Image;
+        public String Difficulte;
+        public List<DescripteurCorpsCeleste> SystemePlanetaire;
         [ContentSerializer(Optional = true)]
-        public DescripteurVaguesInfinies VaguesInfinies { get; set; }
-
-        public List<WaveDescriptor> Waves { get; set; }
-        
-        public DescripteurJoueur Joueur { get; set; }
-
-        public String CorpsCelesteAProteger { get; set; }
-
-        public String FondEcran { get; set; }
-
+        public DescripteurVaguesInfinies VaguesInfinies;
+        public List<WaveDescriptor> Waves;
+        public DescripteurJoueur Joueur;
+        public String CorpsCelesteAProteger;
+        public String FondEcran;
         [ContentSerializer(Optional = true)]
-        public int ValeurMinerauxDonnes { get; set; }
-
+        public int ValeurMinerauxDonnes;
         [ContentSerializer(Optional = true)]
-        public Vector3 PourcentageMinerauxDonnes { get; set; }
-
+        public Vector3 PourcentageMinerauxDonnes;
         [ContentSerializer(Optional = true)]
-        public int NbPackViesDonnes { get; set; }
+        public int NbPackViesDonnes;
+        [ContentSerializer(Optional = true)]
+        public List<string> HelpTexts;
 
 
         public DescripteurScenario()
@@ -79,6 +94,8 @@
             ValeurMinerauxDonnes = 500;
             PourcentageMinerauxDonnes = new Vector3(0.6f, 0.3f, 0.1f);
             NbPackViesDonnes = 5;
+
+            HelpTexts = new List<string>();
         }
 
 
@@ -157,12 +174,12 @@
 
     public class DescripteurVaguesInfinies
     {
-        public List<EnemyType> EnnemisPresents     { get; set; }
-        public int DifficulteDepart                 { get; set; }
-        public int IncrementDifficulte              { get; set; }
-        public Vector2 MinMaxEnnemisParVague        { get; set; }
-        public int MinerauxParVague                 { get; set; }
-        public bool FirstOneStartNow                { get; set; }
+        public List<EnemyType> EnnemisPresents;
+        public int DifficulteDepart;
+        public int IncrementDifficulte;
+        public Vector2 MinMaxEnnemisParVague;
+        public int MinerauxParVague;
+        public bool FirstOneStartNow;
 
         public DescripteurVaguesInfinies()
         {
@@ -177,50 +194,37 @@
 
     public class DescripteurCorpsCeleste
     {
-        public String Nom { get; set; }
-        public List<DescripteurEmplacement> Emplacements { get; set; }
-
+        public String Nom;
+        public List<DescripteurEmplacement> Emplacements;
         [ContentSerializer(Optional = true)]
-        public String Representation { get; set; }
-        public Taille Taille { get; set; }
-
+        public String Representation;
+        public Taille Taille;
         [ContentSerializer(Optional = true)]
-        public String RepresentationParticules { get; set; }
-
-        public int Vitesse { get; set; }
-        public int Priorite { get; set; }
-        public Vector3 Position { get; set; }
-
+        public String RepresentationParticules;
+        public int Vitesse;
+        public int Priorite;
+        public Vector3 Position;
         [ContentSerializer(Optional = true)]
-        public Vector3 Offset { get; set; }
-
+        public Vector3 Offset;
         [ContentSerializer(Optional = true)]
-        public int Rotation { get; set; }
-
+        public int Rotation;
         [ContentSerializer(Optional = true)]
-        public bool EnBackground { get; set; }
-
+        public bool EnBackground;
         [ContentSerializer(Optional = true)]
-        public bool PeutAvoirCollecteur { get; set; }
-
+        public bool PeutAvoirCollecteur;
         [ContentSerializer(Optional = true)]
-        public bool PeutAvoirDoItYourself { get; set; }
-
+        public bool PeutAvoirDoItYourself;
         [ContentSerializer(Optional = true)]
-        public bool PeutAvoirTheResistance { get; set; }
-
+        public bool PeutAvoirTheResistance;
         [ContentSerializer(Optional = true)]
-        public bool PeutDetruire { get; set; }
-
-        public bool Selectionnable { get; set; }
-        public bool Invincible { get; set; }
-
+        public bool PeutDetruire;
+        public bool Selectionnable;
+        public bool Invincible;
         [ContentSerializer(Optional = true)]
-        public List<TypeTourelle> TourellesPermises { get; set; }
-
-        public int PositionDepart { get; set; }
-        
+        public List<TurretType> TourellesPermises;
+        public int PositionDepart;
         public List<String> Representations;
+
 
         public DescripteurCorpsCeleste()
         {
@@ -246,7 +250,8 @@
             Rotation = 0;
         }
 
-        public void ajouterTourelle(TypeTourelle typeTourelle, int niveau, Vector3 position, bool visible)
+
+        public void ajouterTourelle(TurretType typeTourelle, int niveau, Vector3 position, bool visible)
         {
             DescripteurEmplacement e = new DescripteurEmplacement();
             e.Position = position;
@@ -332,8 +337,8 @@
 
     public class DescripteurJoueur
     {
-        public int ReserveUnites { get; set; }
-        public int PointsDeVie { get; set; }
+        public int ReserveUnites;
+        public int PointsDeVie;
 
         public DescripteurJoueur()
         {
@@ -345,18 +350,18 @@
 
     public class DescripteurTourelle
     {
-        public TypeTourelle Type { get; set; }
-        public bool PeutVendre { get; set; }
-        public bool PeutMettreAJour { get; set; }
-        public bool Visible { get; set; }
+        public TurretType Type;
+        public bool PeutVendre;
+        public bool PeutMettreAJour;
+        public bool Visible;
 
 
         [ContentSerializer(Optional = true)]
-        public int Niveau { get; set; }
+        public int Niveau;
 
         public DescripteurTourelle()
         {
-            Type = TypeTourelle.Inconnu;
+            Type = TurretType.Unknown;
             PeutVendre = true;
             PeutMettreAJour = true;
             Niveau = 1;
@@ -368,10 +373,10 @@
     public class DescripteurEmplacement
     {
         [ContentSerializer(Optional = true)]
-        public DescripteurTourelle Tourelle { get; set; }
+        public DescripteurTourelle Tourelle;
 
-        public Vector3 Position { get; set; }
-        public String Representation { get; set; }
+        public Vector3 Position;
+        public String Representation;
 
         public DescripteurEmplacement()
         {

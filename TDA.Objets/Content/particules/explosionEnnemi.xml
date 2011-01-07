@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Modifiers="ProjectMercury.Modifiers" xmlns:Emitters="ProjectMercury.Emitters">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
     <Item>
       <Name>Emitter01</Name>
       <Budget>10</Budget>
-      <Term>1</Term>
-      <ReleaseQuantity>10</ReleaseQuantity>
+      <Term>0.5</Term>
+      <ReleaseQuantity>5</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
-        <Value>200</Value>
-        <Variation>0</Variation>
+        <Value>100</Value>
+        <Variation>200</Variation>
       </ReleaseSpeed>
       <ReleaseColour>
         <Value>1 1 1</Value>
@@ -20,8 +20,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>20</Value>
-        <Variation>10</Variation>
+        <Value>10</Value>
+        <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -30,11 +30,11 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:ScaleModifier">
-          <InitialScale>60</InitialScale>
+        <Item Type="ProjectMercury.Modifiers.ScaleModifier">
+          <InitialScale>50</InitialScale>
           <UltimateScale>20</UltimateScale>
         </Item>
-        <Item Type="Modifiers:OpacityModifier">
+        <Item Type="ProjectMercury.Modifiers.OpacityModifier">
           <Initial>1</Initial>
           <Ultimate>0</Ultimate>
         </Item>
@@ -43,7 +43,7 @@
       <TriggerOffset>0 0</TriggerOffset>
       <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
     </Item>
-    <Item Type="Emitters:CircleEmitter">
+    <Item Type="ProjectMercury.Emitters.CircleEmitter">
       <Name>Emitter05</Name>
       <Budget>1</Budget>
       <Term>0.25</Term>
@@ -62,8 +62,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>250</Value>
-        <Variation>50</Variation>
+        <Value>100</Value>
+        <Variation>10</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>

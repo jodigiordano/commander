@@ -5,7 +5,7 @@
 
     public enum PowerUp
     {
-        Aucune = -1,
+        None = -1,
         DoItYourself = 0,
         CollectTheRent = 1,
         FinalSolution = 2,
@@ -21,46 +21,80 @@
     }
 
 
+    public enum GameAction
+    {
+        None = -1,
+        Resume = 0,
+        New = 1
+    }
+
+
     class PlayerSelection
     {
         public CorpsCeleste CelestialBody;
-        public PowerUp CelestialBodyOption;
-        public Dictionary<PowerUp, bool> AvailableCelestialBodyOptions;
+        public PowerUp PowerUpToBuy;
+        public Dictionary<PowerUp, bool> AvailablePowerUpsToBuy;
 
-        public Emplacement TurretSpot;
+        public Turret Turret;
         public TurretAction TurretOption;
         public Dictionary<TurretAction, bool> AvailableTurretOptions;
 
-        public Tourelle TurretToBuy;
-        public Dictionary<Tourelle, bool> AvailableTurretsToBuy;
+        public Turret TurretToBuy;
+        public Turret TurretToPlace;
+        public Dictionary<Turret, bool> AvailableTurretsToBuy;
+
+        public GameAction GameAction;
 
 
         public PlayerSelection()
         {
-            CelestialBody = null;
-            CelestialBodyOption = PowerUp.Aucune;
-
-            AvailableCelestialBodyOptions = new Dictionary<PowerUp, bool>();
-            AvailableCelestialBodyOptions.Add(PowerUp.CollectTheRent, false);
-            AvailableCelestialBodyOptions.Add(PowerUp.DoItYourself, false);
-            AvailableCelestialBodyOptions.Add(PowerUp.FinalSolution, false);
-            AvailableCelestialBodyOptions.Add(PowerUp.TheResistance, false);
-
-            TurretSpot = null;
-            TurretToBuy = null;
-            TurretOption = TurretAction.None;
+            AvailablePowerUpsToBuy = new Dictionary<PowerUp, bool>();
+            AvailablePowerUpsToBuy.Add(PowerUp.CollectTheRent, false);
+            AvailablePowerUpsToBuy.Add(PowerUp.DoItYourself, false);
+            AvailablePowerUpsToBuy.Add(PowerUp.FinalSolution, false);
+            AvailablePowerUpsToBuy.Add(PowerUp.TheResistance, false);
 
             AvailableTurretOptions = new Dictionary<TurretAction, bool>();
             AvailableTurretOptions.Add(TurretAction.Sell, false);
             AvailableTurretOptions.Add(TurretAction.Update, false);
 
-            AvailableTurretsToBuy = new Dictionary<Tourelle, bool>();
+            AvailableTurretsToBuy = new Dictionary<Turret, bool>();
+
+            CelestialBody = null;
+            PowerUpToBuy = PowerUp.None;
+            Turret = null;
+            TurretToBuy = null;
+            TurretOption = TurretAction.None;
+            TurretToPlace = null;
+            GameAction = GameAction.None;
         }
 
 
-        public Tourelle Turret
+        public void NextGameAction()
         {
-            get { return (TurretSpot != null && TurretSpot.EstOccupe) ? TurretSpot.Tourelle : null; }
+            int actual = (int) GameAction;
+            int nbChoices = 2;
+
+            actual += 1;
+
+            if (actual >= nbChoices)
+                actual = 0;
+
+            GameAction = (GameAction) actual;
+        }
+
+
+        public void PreviousGameAction()
+        {
+            int actual = (int) GameAction;
+            int nbChoices = 2;
+
+            actual -= 1;
+
+            if (actual < 0)
+                actual = nbChoices - 1;
+
+            GameAction = (GameAction) actual;
         }
 
 
@@ -68,7 +102,7 @@
         {
             int actual = (int) TurretOption;
             int nbChoices = AvailableTurretOptions.Count;
-            int next = -1;
+            int next = actual;
 
             for (int i = 1; i < nbChoices; i++)
             {
@@ -92,7 +126,7 @@
         {
             int actual = (int) TurretOption;
             int nbChoices = AvailableTurretOptions.Count;
-            int previous = -1;
+            int previous = actual;
 
             for (int i = 1; i < nbChoices; i++)
             {
@@ -112,11 +146,11 @@
         }
 
 
-        public void NextCelestialBodyOption()
+        public void NextPowerUpToBuy()
         {
-            PowerUp actual = CelestialBodyOption;
+            PowerUp actual = PowerUpToBuy;
 
-            int nbChoices = AvailableCelestialBodyOptions.Count;
+            int nbChoices = AvailablePowerUpsToBuy.Count;
             int actualInt = (int) actual;
             int next = -1;
 
@@ -127,22 +161,22 @@
                 if (actualInt >= nbChoices)
                     actualInt = 0;
 
-                if (AvailableCelestialBodyOptions[(PowerUp)actualInt])
+                if (AvailablePowerUpsToBuy[(PowerUp)actualInt])
                 {
                     next = actualInt;
                     break;
                 }
             }
 
-            CelestialBodyOption = (PowerUp) next;
+            PowerUpToBuy = (PowerUp) next;
         }
 
 
-        public void PreviousCelestialBodyOption()
+        public void PreviousPowerUpToBuy()
         {
-            PowerUp actual = CelestialBodyOption;
+            PowerUp actual = PowerUpToBuy;
 
-            int nbChoices = AvailableCelestialBodyOptions.Count;
+            int nbChoices = AvailablePowerUpsToBuy.Count;
             int actualInt = (int) actual;
             int previous = -1;
 
@@ -153,25 +187,61 @@
                 if (actualInt < 0)
                     actualInt = nbChoices - 1;
 
-                if (AvailableCelestialBodyOptions[(PowerUp)actualInt])
+                if (AvailablePowerUpsToBuy[(PowerUp)actualInt])
                 {
                     previous = actualInt;
                     break;
                 }
             }
 
-            CelestialBodyOption = (PowerUp) previous;
+            PowerUpToBuy = (PowerUp) previous;
+        }
+
+
+        public PowerUp FirstPowerUpToBuyAvailable
+        {
+            get
+            {
+                PowerUp actual = PowerUp.None;
+
+                for (int i = 0; i < AvailablePowerUpsToBuy.Count; i++)
+                    if (AvailablePowerUpsToBuy[(PowerUp) i])
+                    {
+                        actual = (PowerUp) i;
+                        break;
+                    }
+
+                return actual;
+            }
+        }
+
+
+        public PowerUp LastPowerUpToBuyAvailable
+        {
+            get
+            {
+                PowerUp actual = PowerUp.None;
+
+                for (int i = AvailablePowerUpsToBuy.Count - 1; i > -1; i--)
+                    if (AvailablePowerUpsToBuy[(PowerUp) i])
+                    {
+                        actual = (PowerUp) i;
+                        break;
+                    }
+
+                return actual;
+            }
         }
 
 
         public void SynchronizeFrom(PlayerSelection other)
         {
-            this.AvailableCelestialBodyOptions.Clear();
+            this.AvailablePowerUpsToBuy.Clear();
             this.AvailableTurretOptions.Clear();
             this.AvailableTurretsToBuy.Clear();
 
-            foreach (var kvp in other.AvailableCelestialBodyOptions)
-                this.AvailableCelestialBodyOptions.Add(kvp.Key, kvp.Value);
+            foreach (var kvp in other.AvailablePowerUpsToBuy)
+                this.AvailablePowerUpsToBuy.Add(kvp.Key, kvp.Value);
 
             foreach (var kvp in other.AvailableTurretOptions)
                 this.AvailableTurretOptions.Add(kvp.Key, kvp.Value);
@@ -180,9 +250,9 @@
                 this.AvailableTurretsToBuy.Add(kvp.Key, kvp.Value);
 
             this.CelestialBody = other.CelestialBody;
-            this.CelestialBodyOption = other.CelestialBodyOption;
+            this.PowerUpToBuy = other.PowerUpToBuy;
             this.TurretOption = other.TurretOption;
-            this.TurretSpot = other.TurretSpot;
+            this.Turret = other.Turret;
             this.TurretToBuy = other.TurretToBuy;
         }
 
@@ -196,13 +266,13 @@
 
             return
                 this.CelestialBody == other.CelestialBody &&
-                this.CelestialBodyOption == other.CelestialBodyOption &&
+                this.PowerUpToBuy == other.PowerUpToBuy &&
                 this.TurretOption == other.TurretOption &&
-                this.TurretSpot == other.TurretSpot &&
+                this.Turret == other.Turret &&
                 this.TurretToBuy == other.TurretToBuy &&
-                DictEquals<PowerUp, bool>(this.AvailableCelestialBodyOptions, other.AvailableCelestialBodyOptions) &&
+                DictEquals<PowerUp, bool>(this.AvailablePowerUpsToBuy, other.AvailablePowerUpsToBuy) &&
                 DictEquals<TurretAction, bool>(this.AvailableTurretOptions, other.AvailableTurretOptions) &&
-                DictEquals<Tourelle, bool>(this.AvailableTurretsToBuy, other.AvailableTurretsToBuy);
+                DictEquals<Turret, bool>(this.AvailableTurretsToBuy, other.AvailableTurretsToBuy);
         }
 
 

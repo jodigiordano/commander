@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:PolygonEmitter">
+    <Item Type="ProjectMercury.Emitters.PolygonEmitter">
       <Name>Emitter07</Name>
       <Budget>60</Budget>
       <Term>1</Term>
-      <ReleaseQuantity>1</ReleaseQuantity>
+      <ReleaseQuantity>3</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
         <Value>0</Value>
@@ -16,11 +16,11 @@
         <Variation>0 0 0</Variation>
       </ReleaseColour>
       <ReleaseOpacity>
-        <Value>1</Value>
+        <Value>0.5</Value>
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>20</Value>
+        <Value>10</Value>
         <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>
@@ -29,12 +29,7 @@
       </ReleaseRotation>
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
-      <Modifiers>
-        <Item Type="Modifiers:ColourModifier">
-          <InitialColour>1 1 1</InitialColour>
-          <UltimateColour>0 0.58 1</UltimateColour>
-        </Item>
-      </Modifiers>
+      <Modifiers />
       <BlendMode>Add</BlendMode>
       <TriggerOffset>0 0</TriggerOffset>
       <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
@@ -47,7 +42,7 @@
     <Item>
       <Name>Emitter06</Name>
       <Budget>60</Budget>
-      <Term>0.5</Term>
+      <Term>0.25</Term>
       <ReleaseQuantity>1</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
@@ -63,7 +58,7 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>35</Value>
+        <Value>15</Value>
         <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>

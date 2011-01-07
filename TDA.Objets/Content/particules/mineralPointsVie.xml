@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:PolygonEmitter">
+    <Item Type="ProjectMercury.Emitters.PolygonEmitter">
       <Name>Emitter07</Name>
       <Budget>1000</Budget>
       <Term>1</Term>
-      <ReleaseQuantity>1</ReleaseQuantity>
+      <ReleaseQuantity>4</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
         <Value>0</Value>
@@ -16,11 +16,11 @@
         <Variation>0 0 0</Variation>
       </ReleaseColour>
       <ReleaseOpacity>
-        <Value>1</Value>
+        <Value>0.5</Value>
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>20</Value>
+        <Value>10</Value>
         <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>
@@ -30,7 +30,7 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:ColourModifier">
+        <Item Type="ProjectMercury.Modifiers.ColourModifier">
           <InitialColour>1 1 1</InitialColour>
           <UltimateColour>1 0 0</UltimateColour>
         </Item>
@@ -73,7 +73,7 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:ColourModifier">
+        <Item Type="ProjectMercury.Modifiers.ColourModifier">
           <InitialColour>0.5019608 0 0</InitialColour>
           <UltimateColour>0.7529412 0 0</UltimateColour>
         </Item>

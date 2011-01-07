@@ -106,7 +106,7 @@
 
         public override void doMeurt()
         {
-            ((CircleEmitter)RepresentationExplose.ParticleEffect[1]).Radius = ZoneImpact.Rayon;
+            ((CircleEmitter)RepresentationExplose.ParticleEffect[1]).Radius = ZoneImpact.Radius;
 
             base.doMeurt();
 

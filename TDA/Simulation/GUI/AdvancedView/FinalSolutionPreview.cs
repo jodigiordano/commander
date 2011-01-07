@@ -27,7 +27,7 @@
                 return;
 
             BlowUpZoneVisual.Position = CelestialBody.Position;
-            BlowUpZoneVisual.Taille = (CelestialBody.ZoneImpactDestruction.Rayon / 100) * 2;
+            BlowUpZoneVisual.Taille = (CelestialBody.ZoneImpactDestruction.Radius / 100) * 2;
             Simulation.Scene.ajouterScenable(BlowUpZoneVisual);
         }
     }

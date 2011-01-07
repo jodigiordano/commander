@@ -10,14 +10,16 @@ namespace EphemereGames.Commander
             ObjectRemoved
         }
 
-        private Chemin Path;
+        private Path Path;
+        private Path ActualPath;
         private CorpsCeleste CelestialObject;
         private PathState State;
 
 
-        public PathPreview(Chemin path)
+        public PathPreview(Path path, Path actualPath)
         {
             Path = path;
+            ActualPath = actualPath;
             State = PathState.None;
         }
 
@@ -31,6 +33,8 @@ namespace EphemereGames.Commander
             CelestialObject.ContientTourelleGravitationnelleByPass = true;
             Path.ajouterCorpsCeleste(obj);
             State = PathState.ObjectAdded;
+            ActualPath.AlphaChannel = 25;
+            Path.AlphaChannel = 200;
         }
 
 
@@ -43,6 +47,8 @@ namespace EphemereGames.Commander
             CelestialObject.ContientTourelleGravitationnelleByPass = false;
             Path.enleverCorpsCeleste(obj);
             State = PathState.ObjectRemoved;
+            ActualPath.AlphaChannel = 25;
+            Path.AlphaChannel = 200;
         }
 
 
@@ -61,6 +67,18 @@ namespace EphemereGames.Commander
                     State = PathState.None;
                     break;
             }
+
+            ActualPath.AlphaChannel = 100;
+            Path.AlphaChannel = 25;
+        }
+
+
+        public void Commit()
+        {
+            CelestialObject = null;
+            State = PathState.None;
+            ActualPath.AlphaChannel = 100;
+            Path.AlphaChannel = 25;
         }
 
 

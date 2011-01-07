@@ -10,6 +10,7 @@
     enum GameState
     {
         Running,
+        Paused,
         Won,
         Lost
     }
@@ -22,20 +23,22 @@
 
         public bool DemoMode = false;
         public bool EditorMode = false;
+        public Help Help;
 
         public List<CorpsCeleste> CelestialBodies   { get { return Scenario.SystemePlanetaire; } }
         public VaguesInfinies InfiniteWaves         { get { return Scenario.VaguesInfinies; } }
-        public LinkedList<Wave> Waves              { get { return Scenario.Vagues; } }
+        public LinkedList<Wave> Waves               { get { return Scenario.Vagues; } }
         public CommonStash CommonStash              { get { return Scenario.CommonStash; } }
-        public List<Tourelle> StartingTurrets       { get { return Scenario.Tourelles; } }
+        public List<Turret> StartingTurrets         { get { return Scenario.Tourelles; } }
         public CorpsCeleste CelestialBodyToProtect  { get { return Scenario.CorpsCelesteAProteger; } }
 
-        public GameState State                      { get; private set; }
+        public GameState State;
+        public Scenario Scenario;
+
         private Simulation Simulation;
         private int WavesCounter;
         private ParticuleEffectWrapper Stars;
         private double StarsEmitter;
-        public Scenario Scenario;
         private double ElapsedTime;
 
 
@@ -50,11 +53,16 @@
 
             WavesCounter = 0;
             ElapsedTime = 0;
+
+            Help = new Help(simulation, scenario.HelpTexts);
         }
 
 
         public void Update(GameTime gameTime)
         {
+            if (Help.Active)
+                Help.Update(gameTime);
+
             StarsEmitter += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (StarsEmitter >= 100)
@@ -71,9 +79,18 @@
         }
 
 
+        public void TriggerNewGameState(GameState state)
+        {
+            notifyNouvelEtatPartie(state);
+        }
+
+
         public void Draw(GameTime gameTime)
         {
             Simulation.Scene.ajouterScenable(Scenario.FondEcran);
+
+            if (Help.Active)
+                Help.Draw();
         }
 
 
@@ -105,7 +122,7 @@
             if (State == GameState.Won)
                 return;
 
-            if (!(celestialBody is CeintureAsteroide))
+            if (!(celestialBody is AsteroidBelt))
                 celestialBody.doTouche(enemy);
 
             if (!Simulation.ModeDemo && Simulation.Etat != GameState.Lost)

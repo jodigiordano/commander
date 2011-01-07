@@ -27,7 +27,7 @@
             Simulation.Players = Main.Players;
             Simulation.Initialize();
             Simulation.ModeEditeur = true;
-            Simulation.EnPause = true;
+            Simulation.Etat = GameState.Paused;
 
             Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIConsoleEditeur);
             GenerateurGUI = new GenerateurGUI(Simulation, Curseur, new Vector3(-300, 80, 0));
@@ -51,7 +51,11 @@
             if (Transition != TransitionType.None)
                 return;
 
-            Simulation.EnPause = GenerateurGUI.Visible;
+            if (GenerateurGUI.Visible)
+                Simulation.Etat = GameState.Paused;
+            else
+                Simulation.Etat = GameState.Running;
+
             GenerateurGUI.Update(gameTime);
             Simulation.Update(gameTime);
         }
@@ -86,7 +90,7 @@
         {
             Curseur.Draw();
             GenerateurGUI.Draw(null);
-            Simulation.Draw(null);
+            Simulation.Draw();
 
             if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);

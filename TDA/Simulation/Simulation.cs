@@ -7,11 +7,14 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
+
     delegate void PhysicalObjectHandler(IObjetPhysique obj);
     delegate void SimPlayerHandler(SimPlayer player);
     delegate void CommonStashHandler(CommonStash stash);
     delegate void CelestialObjectHandler(CorpsCeleste celestialObject);
     delegate void NewGameStateHandler(GameState state);
+    delegate void TurretHandler(Turret turret);
+
 
     class Simulation : InputListener
     {
@@ -21,61 +24,27 @@ namespace EphemereGames.Commander
         public DescripteurScenario DescriptionScenario;
         public bool Debug;
         public Dictionary<PlayerIndex, Player> Players;
+        public GameAction GameAction;
+        public TurretsFactory TurretFactory;
+        public RectanglePhysique Terrain;
+        public GameState Etat { get { return ScenarioController.State; } set { ScenarioController.State = value; } }
+        public bool HelpMode { get { return ScenarioController.Help.Active; } }
+        public CorpsCeleste CelestialBodyPausedGame;
+        public bool WorldMode;
+        public Vector3 PositionCurseur; 
 
-        private ScenarioController ControleurScenario;
+        public PlanetarySystemController ControleurSystemePlanetaire;
+        public ControleurMessages ControleurMessages;
+        private ScenarioController ScenarioController;
         private ControleurEnnemis ControleurEnnemis;
         private ControleurProjectiles ControleurProjectiles;
         private ControleurCollisions ControleurCollisions;
         private SimPlayersController SimPlayersController;
-        private ControleurTourelles ControleurTourelles;
-        public ControleurSystemePlanetaire ControleurSystemePlanetaire;
-        private ControleurVaisseaux ControleurVaisseaux;
-        public ControleurMessages ControleurMessages;
+        private TurretsController TurretsController;
+        private ControleurVaisseaux ControleurVaisseaux;   
         private GUIController GUIController;
-        
-        public RectanglePhysique Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
-
-        public bool EnPause;
-        public GameState Etat                      { get { return ControleurScenario.State; } }
-
         private bool modeDemo = false;
-        public bool ModeDemo
-        {
-            get { return modeDemo; }
-            set
-            {
-                modeDemo = value;
-
-                SimPlayersController.ModeDemo = value;
-                ControleurScenario.DemoMode = value;
-            }
-        }
-
-
         private bool modeEditeur = false;
-        public bool ModeEditeur
-        {
-            get { return modeEditeur; }
-            set
-            {
-                modeEditeur = value;
-
-                ControleurScenario.EditorMode = value;
-            }
-        }
-
-        public bool InitParticules = true;
-
-
-        public CorpsCeleste CorpsCelesteSelectionne
-        {
-            get
-            {
-                return SimPlayersController.CelestialBodySelected;
-            }
-        }
-
-        public Vector3 PositionCurseur; 
 
 
         public Simulation(Main main, Scene scene, DescripteurScenario scenario)
@@ -83,6 +52,7 @@ namespace EphemereGames.Commander
             Scene = scene;
             Main = main;
             DescriptionScenario = scenario;
+            TurretFactory = new TurretsFactory(this);
 
 #if DEBUG
             this.Debug = true;
@@ -94,47 +64,51 @@ namespace EphemereGames.Commander
 
         public void Initialize()
         {
-            if (InitParticules)
-            {
-                Scene.Particules.vider();
-                Scene.Particules.ajouter("projectileMissileDeplacement");
-                Scene.Particules.ajouter("projectileBaseExplosion");
-                Scene.Particules.ajouter("etoile");
-                Scene.Particules.ajouter("etoileBleue");
-                Scene.Particules.ajouter("planeteGazeuse");
-                Scene.Particules.ajouter("etoilesScintillantes");
-                Scene.Particules.ajouter("projectileMissileExplosion");
-                Scene.Particules.ajouter("projectileLaserSimple");
-                Scene.Particules.ajouter("projectileLaserMultiple");
-                Scene.Particules.ajouter("selectionCorpsCeleste");
-                Scene.Particules.ajouter("traineeMissile");
-                Scene.Particules.ajouter("etincelleLaser");
-                Scene.Particules.ajouter("toucherTerre");
-                Scene.Particules.ajouter("anneauTerreMeurt");
-                Scene.Particules.ajouter("bouleTerreMeurt");
-                Scene.Particules.ajouter("missileAlien");
-                Scene.Particules.ajouter("implosionAlien");
-                Scene.Particules.ajouter("explosionEnnemi");
-                Scene.Particules.ajouter("mineral1");
-                Scene.Particules.ajouter("mineral2");
-                Scene.Particules.ajouter("mineral3");
-                Scene.Particules.ajouter("mineralPointsVie");
-                Scene.Particules.ajouter("mineralPris");
-                Scene.Particules.ajouter("etincelleMissile");
-                Scene.Particules.ajouter("etincelleLaserSimple");
-                Scene.Particules.ajouter("etincelleSlowMotion");
-                Scene.Particules.ajouter("etincelleSlowMotionTouche");
-                Scene.Particules.ajouter("etoileFilante");
-                Scene.Particules.ajouter("trouRose");
-            }
+            Scene.Particules.Add(
+                new List<string>() {
+                    "projectileMissileDeplacement",
+                    "projectileBaseExplosion",
+                    "etoile",
+                    "etoileBleue",
+                    "planeteGazeuse",
+                    "etoilesScintillantes",
+                    "projectileMissileExplosion",
+                    "projectileLaserSimple",
+                    "projectileLaserMultiple",
+                    "selectionCorpsCeleste",
+                    "traineeMissile",
+                    "etincelleLaser",
+                    "toucherTerre",
+                    "anneauTerreMeurt",
+                    "bouleTerreMeurt",
+                    "missileAlien",
+                    "implosionAlien",
+                    "explosionEnnemi",
+                    "mineral1",
+                    "mineral2",
+                    "mineral3",
+                    "mineralPointsVie",
+                    "mineralPris",
+                    "etincelleMissile",
+                    "etincelleLaserSimple",
+                    "etincelleSlowMotion",
+                    "etincelleSlowMotionTouche",
+                    "etoileFilante",
+                    "trouRose"
+                }, false);
+
+            DemoModeSelectedScenario = new DescripteurScenario();
+            WorldMode = false;
+            GameAction = GameAction.None;
+            Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
 
             ControleurCollisions = new ControleurCollisions(this);
             ControleurProjectiles = new ControleurProjectiles(this);
             ControleurEnnemis = new ControleurEnnemis(this);
             SimPlayersController = new SimPlayersController(this);
-            ControleurTourelles = new ControleurTourelles(this);
-            ControleurSystemePlanetaire = new ControleurSystemePlanetaire(this);
-            ControleurScenario = new ScenarioController(this, new Scenario(this, DescriptionScenario));
+            TurretsController = new TurretsController(this);
+            ControleurSystemePlanetaire = new PlanetarySystemController(this);
+            ScenarioController = new ScenarioController(this, new Scenario(this, DescriptionScenario));
             ControleurVaisseaux = new ControleurVaisseaux(this);
             ControleurMessages = new ControleurMessages(this);
             GUIController = new GUIController(this);
@@ -142,92 +116,95 @@ namespace EphemereGames.Commander
 
             ControleurCollisions.Projectiles = ControleurProjectiles.Projectiles;
             ControleurCollisions.Ennemis = ControleurEnnemis.Ennemis;
-            SimPlayersController.CelestialBodies = ControleurScenario.CelestialBodies;
-            ControleurSystemePlanetaire.CorpsCelestes = ControleurScenario.CelestialBodies;
-            ControleurTourelles.ControleurSystemePlanetaire = ControleurSystemePlanetaire;
-            ControleurEnnemis.VaguesInfinies = ControleurScenario.InfiniteWaves;
-            ControleurEnnemis.Vagues = ControleurScenario.Waves;
-            ControleurCollisions.Tourelles = ControleurTourelles.Tourelles;
-            SimPlayersController.CommonStash = ControleurScenario.CommonStash;
-            SimPlayersController.CelestialBodyToProtect = ControleurScenario.CelestialBodyToProtect;
-            GUIController.Path = ControleurSystemePlanetaire.Chemin;
-            GUIController.PathPreview = ControleurSystemePlanetaire.CheminProjection;
-            ControleurEnnemis.CheminProjection = ControleurSystemePlanetaire.CheminProjection;
-            ControleurTourelles.TourellesDepart = ControleurScenario.StartingTurrets;
-            ControleurEnnemis.Chemin = ControleurSystemePlanetaire.Chemin;
-            ControleurCollisions.CorpsCelestes = ControleurScenario.CelestialBodies;
+            SimPlayersController.CelestialBodies = ScenarioController.CelestialBodies;
+            ControleurSystemePlanetaire.CelestialBodies = ScenarioController.CelestialBodies;
+            TurretsController.PlanetarySystemController = ControleurSystemePlanetaire;
+            ControleurEnnemis.VaguesInfinies = ScenarioController.InfiniteWaves;
+            ControleurEnnemis.Vagues = ScenarioController.Waves;
+            ControleurCollisions.Tourelles = TurretsController.Turrets;
+            SimPlayersController.CommonStash = ScenarioController.CommonStash;
+            SimPlayersController.CelestialBodyToProtect = ScenarioController.CelestialBodyToProtect;
+            GUIController.Path = ControleurSystemePlanetaire.Path;
+            GUIController.PathPreview = ControleurSystemePlanetaire.PathPreview;
+            ControleurEnnemis.CheminProjection = ControleurSystemePlanetaire.PathPreview;
+            TurretsController.StartingTurrets = ScenarioController.StartingTurrets;
+            ControleurEnnemis.Chemin = ControleurSystemePlanetaire.Path;
+            ControleurCollisions.CorpsCelestes = ScenarioController.CelestialBodies;
             SimPlayersController.AvailableSpaceships = ControleurVaisseaux.OptionsDisponibles;
             ControleurCollisions.Mineraux = ControleurEnnemis.Mineraux;
-            ControleurEnnemis.ValeurTotalMineraux = ControleurScenario.Scenario.ValeurMinerauxDonnes;
-            ControleurEnnemis.PourcentageMinerauxDonnes = ControleurScenario.Scenario.PourcentageMinerauxDonnes;
-            ControleurEnnemis.NbPackViesDonnes = ControleurScenario.Scenario.NbPackViesDonnes;
+            ControleurEnnemis.ValeurTotalMineraux = ScenarioController.Scenario.ValeurMinerauxDonnes;
+            ControleurEnnemis.PourcentageMinerauxDonnes = ScenarioController.Scenario.PourcentageMinerauxDonnes;
+            ControleurEnnemis.NbPackViesDonnes = ScenarioController.Scenario.NbPackViesDonnes;
             ControleurVaisseaux.Ennemis = ControleurEnnemis.Ennemis;
-            ControleurMessages.Tourelles = ControleurTourelles.Tourelles;
-            //ControleurMessages.BulleGUI = PlayerController.BulleGUI;
-            ControleurMessages.CorpsCelesteAProteger = ControleurScenario.CelestialBodyToProtect;
-            ControleurMessages.CorpsCelestes = ControleurScenario.CelestialBodies;
-            ControleurMessages.Chemin = ControleurSystemePlanetaire.Chemin;
+            ControleurMessages.Tourelles = TurretsController.Turrets;
+            ControleurMessages.CorpsCelesteAProteger = ScenarioController.CelestialBodyToProtect;
+            ControleurMessages.CorpsCelestes = ScenarioController.CelestialBodies;
+            ControleurMessages.Chemin = ControleurSystemePlanetaire.Path;
             ControleurMessages.Sablier = GUIController.SandGlass;
             GUIController.CompositionNextWave = ControleurEnnemis.CompositionProchaineVague;
             SimPlayersController.SandGlass = GUIController.SandGlass;
-            GUIController.CelestialBodies = ControleurSystemePlanetaire.CorpsCelestes;
-            GUIController.Scenario = ControleurScenario.Scenario;
+            GUIController.CelestialBodies = ControleurSystemePlanetaire.CelestialBodies;
+            GUIController.Scenario = ScenarioController.Scenario;
             GUIController.Enemies = ControleurEnnemis.Ennemis;
-            //ControleurMessages.Curseur = GUIController.Cursor;
             SimPlayersController.InitialPlayerPosition = PositionCurseur;
-            GUIController.InfiniteWaves = ControleurScenario.InfiniteWaves;
-            GUIController.Waves = ControleurScenario.Waves;
+            GUIController.InfiniteWaves = ScenarioController.InfiniteWaves;
+            GUIController.Waves = ScenarioController.Waves;
             GUIController.DemoModeSelectedScenario = this.DemoModeSelectedScenario;
 
 
             ControleurCollisions.ObjetTouche += new ControleurCollisions.ObjetToucheHandler(ControleurEnnemis.doObjetTouche);
-            SimPlayersController.AchatTourelleDemande += new SimPlayersController.TurretTypeCelestialObjectTurretSpotHandler(ControleurTourelles.doAcheterTourelle);
-            ControleurEnnemis.VagueTerminee += new ControleurEnnemis.VagueTermineeHandler(ControleurScenario.doWaveEnded);
+            SimPlayersController.AchatTourelleDemande += new TurretHandler(TurretsController.DoBuyTurret);
+            ControleurEnnemis.VagueTerminee += new ControleurEnnemis.VagueTermineeHandler(ScenarioController.doWaveEnded);
             ControleurEnnemis.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
-            ControleurCollisions.DansZoneActivation += new ControleurCollisions.DansZoneActivationHandler(ControleurTourelles.doDansZoneActivationTourelle);
-            ControleurTourelles.ObjectCreated += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
-            ControleurEnnemis.ObjetCree += new PhysicalObjectHandler(ControleurSystemePlanetaire.doObjetCree);
+            ControleurCollisions.DansZoneActivation += new ControleurCollisions.DansZoneActivationHandler(TurretsController.DoInRangeTurret);
+            TurretsController.ObjectCreated += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
             ControleurProjectiles.ObjetDetruit += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
             ControleurEnnemis.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doWaveStarted);
-            SimPlayersController.VenteTourelleDemande += new SimPlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doVendreTourelle);
-            ControleurTourelles.TurretSold += new ControleurTourelles.TurretHandler(SimPlayersController.doTourelleVendue);
-            ControleurTourelles.TurretBought += new ControleurTourelles.TurretHandler(SimPlayersController.doTourelleAchetee);
-            ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(ControleurScenario.doEnemyReachedEnd);
+            SimPlayersController.VenteTourelleDemande += new TurretHandler(TurretsController.DoSellTurret);
+            TurretsController.TurretSold += new TurretHandler(SimPlayersController.doTourelleVendue);
+            TurretsController.TurretBought += new TurretHandler(SimPlayersController.doTourelleAchetee);
+            ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(ScenarioController.doEnemyReachedEnd);
             SimPlayersController.AchatCollecteurDemande += new CelestialObjectHandler(ControleurVaisseaux.doAcheterCollecteur);
-            ControleurTourelles.TurretUpdated += new ControleurTourelles.TurretHandler(SimPlayersController.doTourelleMiseAJour);
-            SimPlayersController.MiseAJourTourelleDemande += new SimPlayersController.CelestialObjectTurretSpotHandler(ControleurTourelles.doMettreAJourTourelle);
-            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurTourelles.doObjetDetruit);
-            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
+            TurretsController.TurretUpdated += new TurretHandler(SimPlayersController.doTourelleMiseAJour);
+            SimPlayersController.MiseAJourTourelleDemande += new TurretHandler(TurretsController.DoUpgradeTurret);
+            ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
+            ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
             SimPlayersController.ProchaineVagueDemandee += new NoneHandler(ControleurEnnemis.doProchaineVagueDemandee);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
             SimPlayersController.AchatDoItYourselfDemande += new CelestialObjectHandler(ControleurVaisseaux.doAcheterDoItYourself);
             ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
-            SimPlayersController.DestructionCorpsCelesteDemande += new CelestialObjectHandler(ControleurSystemePlanetaire.doDetruireCorpsCeleste);
-            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
+            SimPlayersController.DestructionCorpsCelesteDemande += new CelestialObjectHandler(ControleurSystemePlanetaire.DoDestroyCelestialBody);
+            ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
             ControleurEnnemis.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
             SimPlayersController.AchatTheResistanceDemande += new CelestialObjectHandler(ControleurVaisseaux.doAcheterTheResistance);
-            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(ControleurScenario.doObjectDestroyed);
+            ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(ScenarioController.doObjectDestroyed);
 
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(this.doEnnemiAtteintFinTrajet);
-            ControleurSystemePlanetaire.ObjetDetruit += new PhysicalObjectHandler(this.doCorpsCelesteDetruit);
+            ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(this.doCorpsCelesteDetruit);
             ControleurEnnemis.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doNextWave);
             SimPlayersController.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
-            ControleurScenario.NewGameState += new NewGameStateHandler(GUIController.doGameStateChanged);
+            ScenarioController.NewGameState += new NewGameStateHandler(GUIController.doGameStateChanged);
             ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(GUIController.doObjectDestroyed);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.doPlayerSelectionChanged);
-            ControleurTourelles.TurretReactivated += new ControleurTourelles.TurretHandler(SimPlayersController.doTurretReactivated);
+            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(this.doPlayerSelectionChanged);
+            TurretsController.TurretReactivated += new TurretHandler(SimPlayersController.doTurretReactivated);
             SimPlayersController.PlayerMoved += new SimPlayerHandler(GUIController.doPlayerMoved);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(SimPlayersController.doObjetCree);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(GUIController.doObjectCreated);
             ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(GUIController.doObjectDestroyed);
-            ControleurScenario.NewGameState += new NewGameStateHandler(this.doNewGameState);
-            ControleurScenario.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
+            ScenarioController.NewGameState += new NewGameStateHandler(this.doNewGameState);
+            ScenarioController.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
+
+            SimPlayersController.TurretToPlaceSelected += new TurretHandler(GUIController.doTurretToPlaceSelected);
+            SimPlayersController.TurretToPlaceDeselected += new TurretHandler(GUIController.doTurretToPlaceDeselected);
+            SimPlayersController.AchatTourelleDemande += new TurretHandler(GUIController.doTurretBought);
+            SimPlayersController.VenteTourelleDemande += new TurretHandler(GUIController.doTurretSold);
 
             SimPlayersController.Initialize();
             ControleurEnnemis.Initialize();
             ControleurProjectiles.Initialize();
-            ControleurTourelles.Initialize();
+            TurretsController.Initialize();
             ControleurSystemePlanetaire.Initialize();
             ControleurCollisions.Initialize();
             ControleurVaisseaux.Initialize();
@@ -239,57 +216,104 @@ namespace EphemereGames.Commander
         }
 
 
+        public bool ModeDemo
+        {
+            get { return modeDemo; }
+            set
+            {
+                modeDemo = value;
+
+                SimPlayersController.ModeDemo = value;
+                ScenarioController.DemoMode = value;
+                TurretsController.DemoMode = value;
+                ControleurSystemePlanetaire.DemoMode = value;
+            }
+        }
+
+
+        public bool ModeEditeur
+        {
+            get { return modeEditeur; }
+            set
+            {
+                modeEditeur = value;
+
+                ScenarioController.EditorMode = value;
+            }
+        }
+
+
+        public CorpsCeleste CorpsCelesteSelectionne
+        {
+            get
+            {
+                return SimPlayersController.CelestialBodySelected;
+            }
+        }
+
+
         public void Update(GameTime gameTime)
         {
-            if (EnPause)
+            ScenarioController.Update(gameTime);
+
+            if (ScenarioController.Help.Active)
                 return;
 
             ControleurCollisions.Update(gameTime);
             ControleurProjectiles.Update(gameTime);
-            ControleurTourelles.Update(gameTime); //doit etre fait avant le controleurEnnemi pour les associations ennemis <--> tourelles
+            ControleurSystemePlanetaire.Update(gameTime); // must be done before the TurretController because the celestial bodies must move before the turrets
+            TurretsController.Update(gameTime); //doit etre fait avant le controleurEnnemi pour les associations ennemis <--> tourelles
             ControleurEnnemis.Update(gameTime);
             SimPlayersController.Update(gameTime);
-            ControleurSystemePlanetaire.Update(gameTime);
-            ControleurScenario.Update(gameTime);
             ControleurVaisseaux.Update(gameTime);
             ControleurMessages.Update(gameTime);
             GUIController.Update(gameTime);
         }
 
 
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
             ControleurCollisions.Draw(null);
             ControleurProjectiles.Draw(null);
             ControleurEnnemis.Draw(null);
-            ControleurTourelles.Draw(null);
-            ControleurSystemePlanetaire.Draw(null);
-            ControleurScenario.Draw(null);
+            TurretsController.Draw();
+            ControleurSystemePlanetaire.Draw();
+            ScenarioController.Draw(null);
             ControleurVaisseaux.Draw(null);
             ControleurMessages.Draw(null);
             GUIController.Draw();
+            SimPlayersController.Draw();
         }
 
 
         public void EtreNotifierNouvelEtatPartie(NewGameStateHandler handler)
         {
-            ControleurScenario.NewGameState += handler;
+            ScenarioController.NewGameState += handler;
+        }
+
+
+        private void doPlayerSelectionChanged(SimPlayer player)
+        {
+            GameAction = player.ActualSelection.GameAction;
         }
 
 
         private void doNewGameState(GameState state)
         {
-            ControleurEnnemis.ObjetDetruit -= SimPlayersController.doObjetDetruit;
+            if (state == GameState.Won || state == GameState.Lost)
+            {
+                ControleurEnnemis.ObjetDetruit -= SimPlayersController.doObjetDetruit;
 
-            int scenario = ControleurScenario.Scenario.Numero;
-            int score = ControleurScenario.Scenario.CommonStash.TotalScore;
+                int scenario = ScenarioController.Scenario.Numero;
+                int score = ScenarioController.Scenario.CommonStash.TotalScore;
 
-            if (!Main.SaveGame.HighScores.ContainsKey(scenario))
-                Main.SaveGame.HighScores.Add(scenario, new HighScores(scenario));
+                if (!Main.SaveGame.HighScores.ContainsKey(scenario))
+                    Main.SaveGame.HighScores.Add(scenario, new HighScores(scenario));
 
-            Main.SaveGame.HighScores[scenario].Add(Main.PlayersController.MasterPlayer.Name, score);
+                Main.SaveGame.HighScores[scenario].Add(Main.PlayersController.MasterPlayer.Name, score);
 
-            EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
+                EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
+            }
         }
 
 
@@ -328,8 +352,22 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
-            if (this.Debug && key == p.KeyboardConfiguration.Debug)
+            if (Debug && key == p.KeyboardConfiguration.Debug)
                 ControleurCollisions.Debug = true;
+
+            if (ScenarioController.Help.Active)
+            {
+                if (key == p.KeyboardConfiguration.Cancel)
+                    ScenarioController.Help.Skip();
+
+                return;
+            }
+
+            if (!ModeDemo && (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel))
+            {
+                Etat = GameState.Paused;
+                ScenarioController.TriggerNewGameState(Etat);
+            }
         }
 
 
@@ -342,6 +380,9 @@ namespace EphemereGames.Commander
 
             if (this.Debug && key == p.KeyboardConfiguration.Debug)
                 ControleurCollisions.Debug = false;
+
+            if (ScenarioController.Help.Active)
+                return;
         }
 
 
@@ -352,12 +393,22 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
+            if (ScenarioController.Help.Active)
+            {
+                if (button == p.MouseConfiguration.Select)
+                    ScenarioController.Help.NextDirective();
+                else if (button == p.MouseConfiguration.Back)
+                    ScenarioController.Help.PreviousDirective();
+
+                return;
+            }
+
             if (ControleurVaisseaux.VaisseauCollecteurActif && button == p.MouseConfiguration.Cancel)
                 ControleurVaisseaux.VaisseauCollecteurActif = false;
 
             SimPlayersController.doMouseButtonPressedOnce(p, button);
 
-            if (button == p.MouseConfiguration.AdvancedView)
+            if (!ModeDemo && button == p.MouseConfiguration.AdvancedView)
                 GUIController.doShowAdvancedView();
         }
 
@@ -369,7 +420,10 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
-            if (button == p.MouseConfiguration.AdvancedView)
+            if (ScenarioController.Help.Active)
+                return;
+
+            if (!ModeDemo && button == p.MouseConfiguration.AdvancedView)
                 GUIController.doHideAdvancedView();
         }
 
@@ -381,6 +435,9 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
+            if (ScenarioController.Help.Active)
+                return;
+
             SimPlayersController.doMouseScrolled(p, delta);
         }
 
@@ -390,6 +447,9 @@ namespace EphemereGames.Commander
             Player p = Players[inputIndex];
 
             if (!p.Master)
+                return;
+
+            if (ScenarioController.Help.Active)
                 return;
 
             if (ControleurVaisseaux.VaisseauControllablePresent)
@@ -406,13 +466,25 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
+            if (Debug && button == p.GamePadConfiguration.Debug)
+                ControleurCollisions.Debug = true;
+
+            if (ScenarioController.Help.Active)
+            {
+                if (button == p.GamePadConfiguration.SelectionNext)
+                    ScenarioController.Help.NextDirective();
+                else if (button == p.GamePadConfiguration.SelectionPrevious)
+                    ScenarioController.Help.PreviousDirective();
+                else if (button == p.GamePadConfiguration.Cancel)
+                    ScenarioController.Help.Skip();
+
+                return;
+            }
+
             if (ControleurVaisseaux.VaisseauCollecteurActif && button == p.GamePadConfiguration.Cancel)
                 ControleurVaisseaux.VaisseauCollecteurActif = false;
 
             SimPlayersController.doGamePadButtonPressedOnce(p, button);
-
-            if (this.Debug && button == p.GamePadConfiguration.Debug)
-                ControleurCollisions.Debug = true;
 
             if (button == p.GamePadConfiguration.AdvancedView)
                 GUIController.doShowAdvancedView();
@@ -426,11 +498,14 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
+            if (Debug && button == p.GamePadConfiguration.Debug)
+                ControleurCollisions.Debug = false;
+
+            if (ScenarioController.Help.Active)
+                return;
+
             if (button == p.GamePadConfiguration.AdvancedView)
                 GUIController.doHideAdvancedView();
-
-            if (this.Debug && button == p.GamePadConfiguration.Debug)
-                ControleurCollisions.Debug = false;
         }
 
 
@@ -439,6 +514,9 @@ namespace EphemereGames.Commander
             Player p = Players[inputIndex];
 
             if (!p.Master)
+                return;
+
+            if (ScenarioController.Help.Active)
                 return;
 
             if (ControleurVaisseaux.VaisseauControllablePresent && button == p.GamePadConfiguration.PilotSpaceShip)

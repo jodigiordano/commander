@@ -3,13 +3,13 @@
 
     <!-- Textures -->
 
-    <asset nom="LIFE"                 type="Texture2D" chemin="LIFE" />
     <asset nom="Logo"                 type="Texture2D" chemin="EphemereLogo" />
     <asset nom="VaisseauAlien"        type="Texture2D" chemin="scenarios/vaisseauAlien" />
     <asset nom="PixelBlanc"           type="Texture2D" chemin="pixelBlanc" />
     <asset nom="sablier"              type="Texture2D" chemin="GUI/sablier" />
     <asset nom="Curseur"              type="Texture2D" chemin="GUI/Curseur" />
     <asset nom="emplacement"          type="Texture2D" chemin="planetes/emplacement" />
+    <asset nom="SplashScreenBg"       type="Texture2D" chemin="fonds/fondecran16" />
 
     
     <!-- Sprites -->
@@ -65,7 +65,7 @@
     <asset nom="policePointsDeVie"    type="Police" chemin="polices/PointsDeVie" />
     <asset nom="Pixel1"               type="Police" chemin="polices/Pixel1" />
     <asset nom="policeGagnePerdu"     type="Police" chemin="polices/DataControlGrand" />
-    <asset nom="ConsoleFont"          type="Police" chemin="ConsoleFont" />
+    <asset nom="ConsoleFont"          type="Police" chemin="polices/ConsoleFont" />
     <asset nom="DataControlBold"      type="Police" chemin="polices/DataControlBold" />
     <asset nom="DataControlMini"      type="Police" chemin="polices/DataControlMini" />
     <asset nom="DataControl"          type="Police" chemin="polices/DataControl" />
@@ -111,7 +111,6 @@
     <asset nom="Star"                       type="Texture2D" chemin="GUI/star" />
     <asset nom="Cercle"                     type="Texture2D" chemin="particules/cercle" />
     <asset nom="ProjectileBase"             type="Texture2D" chemin="projectiles/projectileBase" />
-    <asset nom="ProjectileMissile"          type="Texture2D" chemin="projectiles/missile" />
 
     <asset nom="LigneTrajet"                type="Texture2D" chemin="GUI/ligne_trajet" />
     <asset nom="Asteroid"                   type="Texture2D" chemin="asteroides/asteroid" />
@@ -234,8 +233,10 @@
     <asset nom="HelpMercenaries"                  type="Texture2D" chemin="GUI/HelpMercenaries" />
     <asset nom="HelpTheResistance"                type="Texture2D" chemin="GUI/HelpTheResistance" />
     <asset nom="titre"                            type="Texture2D" chemin="titre" />
-    <asset nom="buy"                              type="Texture2D" chemin="buy" />
-    <asset nom="buy2"                             type="Texture2D" chemin="buy2" />
+    <asset nom="buy"                              type="Texture2D" chemin="GUI/buy" />
+    <asset nom="buy2"                             type="Texture2D" chemin="GUI/buy2" />
+    <asset nom="LevelDone"                        type="Texture2D" chemin="GUI/done" />
+    <asset nom="LevelNotDone"                     type="Texture2D" chemin="GUI/notdone" />
 
     <asset nom="bulleBlabla"                      type="Texture2D" chemin="GUI/bulleBlabla" />
     <asset nom="bulleCoin"                        type="Texture2D" chemin="GUI/bulleCoin" />
@@ -256,23 +257,22 @@
     <asset nom="PointsVieJoueur1"                 type="Texture2D" chemin="GUI/PointsVieJoueur1" />
     <asset nom="PointsVieJoueur2"                 type="Texture2D" chemin="GUI/PointsVieJoueur2" />
 
-    <asset nom="Vaisseau"                         type="Texture2D" chemin="Vaisseau" />
+    <asset nom="Vaisseau"                         type="Texture2D" chemin="spaceships/Vaisseau" />
     <asset nom="Destruction"                      type="Texture2D" chemin="Destruction" />
-    <asset nom="TheResistance"                    type="Texture2D" chemin="TheResistance" />
+    <asset nom="TheResistance"                    type="Texture2D" chemin="spaceships/TheResistance" />
     <asset nom="HealthPack"                       type="Texture2D" chemin="healthPack" />
     <asset nom="Mineral1"                         type="Texture2D" chemin="mineral1" />
     <asset nom="Mineral2"                         type="Texture2D" chemin="mineral2" />
     <asset nom="Mineral3"                         type="Texture2D" chemin="mineral3" />
-    <asset nom="Resistance1"                      type="Texture2D" chemin="resistance1" />
-    <asset nom="Resistance2"                      type="Texture2D" chemin="resistance2" />
-    <asset nom="Resistance3"                      type="Texture2D" chemin="resistance3" />
-    <asset nom="Collecteur"                       type="Texture2D" chemin="Collecteur" />
+    <asset nom="Resistance1"                      type="Texture2D" chemin="spaceships/resistance1" />
+    <asset nom="Resistance2"                      type="Texture2D" chemin="spaceships/resistance2" />
+    <asset nom="Resistance3"                      type="Texture2D" chemin="spaceships/resistance3" />
+    <asset nom="Collecteur"                       type="Texture2D" chemin="spaceships/collecteur" />
     <asset nom="ProjectileMissile1"               type="Texture2D" chemin="projectiles/missile1" />
     <asset nom="ProjectileMissile2"               type="Texture2D" chemin="projectiles/missile2" />
     
     <!-- Sprites -->    
     
-    <asset nom="explosion1"                 type="Sprite" chemin="projectiles/explosion1" />
     <asset nom="tentacules"                 type="Sprite" chemin="scenarios/tentacules1" />
 
 

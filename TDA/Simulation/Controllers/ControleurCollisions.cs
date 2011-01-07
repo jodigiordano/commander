@@ -15,7 +15,7 @@
         public event ObjetDeserteHandler ObjetDeserte;
         public delegate void ObjetToucheHandler(IObjetPhysique objet, IObjetPhysique par);
         public event ObjetToucheHandler ObjetTouche;
-        public delegate void DansZoneActivationHandler(Tourelle tourelle, IObjetPhysique objet);
+        public delegate void DansZoneActivationHandler(Turret tourelle, IObjetPhysique objet);
         public event DansZoneActivationHandler DansZoneActivation;
 
         private Scene Scene;
@@ -26,7 +26,7 @@
 
         public List<Projectile> Projectiles;
         public List<Ennemi> Ennemis;
-        public List<Tourelle> Tourelles;
+        public List<Turret> Tourelles;
         public List<CorpsCeleste> CorpsCelestes;
         public List<Mineral> Mineraux;
         public bool Debug;
@@ -40,7 +40,7 @@
             this.Projectiles = new List<Projectile>();
             this.Ennemis = new List<Ennemi>();
             this.CorpsCelestes = new List<CorpsCeleste>();
-            this.Tourelles = new List<Tourelle>();
+            this.Tourelles = new List<Turret>();
             this.Mineraux = new List<Mineral>();
             this.Terrain = simulation.Terrain;
             this.Grille = new GridWorld(this.Scene, this.Terrain, 50);
@@ -59,7 +59,7 @@
                 ObjetTouche(objet, par);
         }
 
-        protected virtual void notifyDansZoneActivation(Tourelle tourelle, IObjetPhysique objet)
+        protected virtual void notifyDansZoneActivation(Turret tourelle, IObjetPhysique objet)
         {
             if (DansZoneActivation != null)
                 DansZoneActivation(tourelle, objet);
@@ -316,7 +316,7 @@
         }
 
 
-        private List<KeyValuePair<Tourelle, IObjetPhysique>> collisionsDansZoneActivationCeTick = new List<KeyValuePair<Tourelle, IObjetPhysique>>();
+        private List<KeyValuePair<Turret, IObjetPhysique>> collisionsDansZoneActivationCeTick = new List<KeyValuePair<Turret, IObjetPhysique>>();
 
         private void doDansZoneActivationCeTick()
         {
@@ -328,12 +328,12 @@
 
             for (int i = 0; i < Tourelles.Count; i++)
             {
-                Tourelle tourelle = Tourelles[i];
+                Turret tourelle = Tourelles[i];
 
-                if (tourelle.Type == TypeTourelle.Gravitationnelle)
+                if (tourelle.Type == TurretType.Gravitational)
                     continue;
 
-                IEnumerable<int> candidats = Grille.getItems(tourelle.ZoneActivation.Rectangle);
+                IEnumerable<int> candidats = Grille.getItems(tourelle.Range.Rectangle);
 
                 foreach (var indice in candidats)
                 {
@@ -342,9 +342,9 @@
                     if (ennemisCaches.ContainsKey(e.GetHashCode()))
                         continue;
 
-                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(tourelle.ZoneActivation, e.Cercle))
+                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(tourelle.Range, e.Cercle))
                     {
-                        collisionsDansZoneActivationCeTick.Add(new KeyValuePair<Tourelle, IObjetPhysique>(tourelle, e));
+                        collisionsDansZoneActivationCeTick.Add(new KeyValuePair<Turret, IObjetPhysique>(tourelle, e));
                         break; // passe à la prochaine tourelle
                     }
                 }

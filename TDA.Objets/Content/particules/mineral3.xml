@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:PolygonEmitter">
+    <Item Type="ProjectMercury.Emitters.PolygonEmitter">
       <Name>Emitter07</Name>
       <Budget>60</Budget>
       <Term>1</Term>
-      <ReleaseQuantity>1</ReleaseQuantity>
+      <ReleaseQuantity>3</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
         <Value>0</Value>
@@ -20,8 +20,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>25</Value>
-        <Variation>10</Variation>
+        <Value>10</Value>
+        <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -30,7 +30,7 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules\FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:ColourModifier">
+        <Item Type="ProjectMercury.Modifiers.ColourModifier">
           <InitialColour>1 1 1</InitialColour>
           <UltimateColour>1 0 1</UltimateColour>
         </Item>
@@ -51,7 +51,7 @@
       <ReleaseQuantity>1</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
-        <Value>50</Value>
+        <Value>30</Value>
         <Variation>0</Variation>
       </ReleaseSpeed>
       <ReleaseColour>
@@ -63,8 +63,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>50</Value>
-        <Variation>20</Variation>
+        <Value>40</Value>
+        <Variation>10</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -73,13 +73,13 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules\FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:RadialGravityModifier">
+        <Item Type="ProjectMercury.Modifiers.RadialGravityModifier">
           <Radius>60</Radius>
           <InnerRadius>0</InnerRadius>
           <Position>640 300</Position>
           <Strength>0.8</Strength>
         </Item>
-        <Item Type="Modifiers:OpacityModifier">
+        <Item Type="ProjectMercury.Modifiers.OpacityModifier">
           <Initial>1</Initial>
           <Ultimate>0</Ultimate>
         </Item>

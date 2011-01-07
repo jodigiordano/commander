@@ -11,19 +11,12 @@
     class CorpsCeleste : DrawableGameComponent, IObjetVivant, IObjetPhysique
     {
         public String Nom;
-        public List<Emplacement> Emplacements = new List<Emplacement>();
-        protected Simulation Simulation;
-        public IVisible representation;
-        public ParticuleEffectWrapper representationParticules;
-        private ParticuleEffectWrapper toucherTerre;
-        private ParticuleEffectWrapper bouleMeurt;
-        private ParticuleEffectWrapper anneauMeurt;
+        public List<Turret> Turrets = new List<Turret>();
+        public IVisible Representation;
+        public ParticuleEffectWrapper ParticulesRepresentation;
         public int Priorite;
-        protected Vector3 AnciennePosition;
-
         public Vector3 position;
         public Vector3 Position                                     { get { return position; } set { this.AnciennePosition = position; position = value; } }
-
         public float Vitesse                                        { get; set; }
         public float Rotation                                       { get; set; }
         public Vector3 Direction                                    { get; set; }
@@ -31,11 +24,9 @@
         public Cercle Cercle                                        { get; set; }
         public Ligne Ligne                                          { get; set; }
         public RectanglePhysique Rectangle                          { get; set; }
-
         public float PointsVie                                      { get; set; }
         public float PointsAttaque                                  { get; set; }
         public bool EstVivant                                       { get { return PointsVie > 0; } }
-
         public bool PeutAvoirCollecteur;
         public bool PeutAvoirDoItYourself;
         public bool PeutAvoirTheResistance;
@@ -43,54 +34,32 @@
         public bool Selectionnable;
         public bool Invincible;
         public bool EstDernierRelais;
-
         public int PrixDestruction;
         public int PrixCollecteur;
         public int PrixDoItYourself;
         public int PrixTheResistance;
         public Cercle ZoneImpactDestruction;
-
         public Vector3 Offset;
-
         public Vector3[] SousPoints;
-
-        public List<Tourelle> TourellesPermises;
-
+        public List<Turret> TourellesPermises;
         public List<Lune> Lunes;
-
-        public float PrioriteAffichage
-        {
-            get
-            {
-                if (this.representation != null)
-                    return this.representation.VisualPriority;
-
-                else
-                    return this.representationParticules.VisualPriority;
-            }
-
-            set
-            {
-                PrioriteAffichageBackup = (this.representation != null) ? this.representation.VisualPriority : this.representationParticules.VisualPriority;
-
-                if (this.representation != null)
-                    this.representation.VisualPriority = value;
-
-                if (this.representationParticules != null)
-                    this.representationParticules.VisualPriority = value;
-
-                for (int i = 0; i < Emplacements.Count; i++)
-                    Emplacements[i].PrioriteAffichage = value;
-            }
-        }
-
+        public bool ContientTourelleGravitationnelleByPass;
         public float PrioriteAffichageBackup;
+        public Cercle TurretsZone;
+        public bool ShowTurretsZone;
 
+        protected Simulation Simulation;
+        protected Vector3 AnciennePosition;
         protected double TempsRotation;
         protected double TempsRotationActuel;
         protected Vector3 PositionBase;
 
+        private ParticuleEffectWrapper toucherTerre;
+        private ParticuleEffectWrapper bouleMeurt;
+        private ParticuleEffectWrapper anneauMeurt;
         private Matrix MatriceRotation;
+        private Image TurretsZoneImage;
+
 
         public CorpsCeleste(
             Simulation simulation,
@@ -106,80 +75,67 @@
             int rotation)
             : base(simulation.Main)
         {
-            this.Simulation = simulation;
-            this.Nom = nom;
-            this.PointsVie = float.MaxValue;
-            this.Priorite = 0;
-            this.Selectionnable = true;
-            this.Invincible = false;
-            this.EstDernierRelais = false;
+            Simulation = simulation;
+            Nom = nom;
+            PointsVie = float.MaxValue;
+            Priorite = 0;
+            Selectionnable = true;
+            Invincible = false;
+            EstDernierRelais = false;
 
-            this.representation = representation;
-            this.representation.Origine = representation.Centre;
+            Representation = representation;
+            Representation.Taille = 6;
+            Representation.Origine = representation.Centre;
 
             if (enBackground)
             {
-                this.representation.VisualPriority = Preferences.PrioriteFondEcran - 0.07f;
-                this.representation.Couleur.A = 60;
+                Representation.VisualPriority = Preferences.PrioriteFondEcran - 0.07f;
+                Representation.Couleur.A = 60;
             }
             else
-                this.representation.VisualPriority = prioriteAffichage;
+                Representation.VisualPriority = prioriteAffichage;
 
             PrioriteAffichageBackup = prioriteAffichage;
 
-            this.Offset = offset;
-            this.Position = this.AnciennePosition = this.PositionBase = positionBase;
-            this.TempsRotation = tempsRotation;
-            this.TempsRotationActuel = TempsRotation * (pourcDepart / 100.0f);
+            Offset = offset;
+            Position = AnciennePosition = PositionBase = positionBase;
+            TempsRotation = tempsRotation;
+            TempsRotationActuel = TempsRotation * (pourcDepart / 100.0f);
 
             Matrix.CreateRotationZ(MathHelper.ToRadians(rotation), out MatriceRotation);
 
             if (TempsRotation != 0)
                 deplacer();
 
-            this.Forme = Forme.Cercle;
-            this.Cercle = new Cercle(Position, rayon);
+            Forme = Forme.Cercle;
+            Cercle = new Cercle(Position, rayon);
+            TurretsZone = new Cercle(Position, rayon * 2);
 
-            this.SousPoints = new Vector3[4];
+            SousPoints = new Vector3[4];
 
-            this.TourellesPermises = new List<Tourelle>();
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.Base));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.Gravitationnelle));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.LaserMultiple));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.LaserSimple));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.Missile));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.SlowMotion));
+            TourellesPermises = new List<Turret>();
 
-            this.PeutAvoirDoItYourself = true;
-            this.PeutDetruire = true;
-            this.PrixDestruction = 500;
-            this.PrixCollecteur = 0;
-            this.PrixDoItYourself = 50;
-            this.ZoneImpactDestruction = new Cercle(this.Position, 300);
-            this.PointsAttaque = 50000;
-            this.PeutAvoirCollecteur = true;
-            this.PeutAvoirTheResistance = true;
-            this.PrixTheResistance = 250;
+            foreach (var turret in simulation.TurretFactory.AvailableTurrets)
+                TourellesPermises.Add(turret);
+
+            PeutAvoirDoItYourself = true;
+            PeutDetruire = true;
+            PrixDestruction = 500;
+            PrixCollecteur = 0;
+            PrixDoItYourself = 50;
+            ZoneImpactDestruction = new Cercle(this.Position, 300);
+            PointsAttaque = 50000;
+            PeutAvoirCollecteur = true;
+            PeutAvoirTheResistance = true;
+            PrixTheResistance = 250;
 
             initLunes();
-        }
 
-        private void initLunes()
-        {
-            Lunes = new List<Lune>();
-            int nbLunes = Main.Random.Next(0, 3);
-
-            for (int i = 0; i < nbLunes; i++)
-            {
-                Lune lune;
-
-                if ((Main.Random.Next(0, 2) == 0))
-                    lune = new LuneMatrice(Simulation, this);
-                else
-                    lune = new LuneTrajet(Simulation, this);
-
-                Lunes.Add(lune);
-            }
+            TurretsZoneImage = new Image("CercleBlanc", Vector3.Zero);
+            TurretsZoneImage.Color = Color.White;
+            TurretsZoneImage.Color.A = 100;
+            TurretsZoneImage.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.002f;
+            ShowTurretsZone = false;
         }
 
 
@@ -205,13 +161,13 @@
             this.Invincible = false;
             this.EstDernierRelais = false;
 
-            this.representationParticules = representation;
+            this.ParticulesRepresentation = representation;
 
             if (enBackground)
             {
-                this.representationParticules.VisualPriority = Preferences.PrioriteFondEcran - 0.07f;
+                this.ParticulesRepresentation.VisualPriority = Preferences.PrioriteFondEcran - 0.07f;
 
-                foreach (var emetteur in this.representationParticules.ParticleEffect)
+                foreach (var emetteur in this.ParticulesRepresentation.ParticleEffect)
                 {
                     emetteur.ReleaseOpacity.Value = 0.23f;
 
@@ -227,7 +183,7 @@
                 }
             }
             else
-                this.representationParticules.VisualPriority = prioriteAffichage;
+                this.ParticulesRepresentation.VisualPriority = prioriteAffichage;
 
             PrioriteAffichageBackup = prioriteAffichage;
 
@@ -243,16 +199,14 @@
 
             this.Forme = Forme.Cercle;
             this.Cercle = new Cercle(Position, rayon);
+            TurretsZone = new Cercle(Position, rayon * 2);
 
             this.SousPoints = new Vector3[4];
 
-            this.TourellesPermises = new List<Tourelle>();
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.Base));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.Gravitationnelle));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.LaserMultiple));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.LaserSimple));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.Missile));
-            this.TourellesPermises.Add(FactoryTourelles.creerTourelle(simulation, TypeTourelle.SlowMotion));
+            this.TourellesPermises = new List<Turret>();
+
+            foreach (var turret in simulation.TurretFactory.AvailableTurrets)
+                TourellesPermises.Add(turret);
 
             this.PeutAvoirDoItYourself = true;
             this.PeutDetruire = true;
@@ -268,7 +222,34 @@
             Lunes = new List<Lune>();
         }
 
-        public bool ContientTourelleGravitationnelleByPass;
+
+        public float PrioriteAffichage
+        {
+            get
+            {
+                if (this.Representation != null)
+                    return this.Representation.VisualPriority;
+
+                else
+                    return this.ParticulesRepresentation.VisualPriority;
+            }
+
+            set
+            {
+                PrioriteAffichageBackup = (this.Representation != null) ? this.Representation.VisualPriority : this.ParticulesRepresentation.VisualPriority;
+
+                if (this.Representation != null)
+                    this.Representation.VisualPriority = value;
+
+                if (this.ParticulesRepresentation != null)
+                    this.ParticulesRepresentation.VisualPriority = value;
+
+                for (int i = 0; i < Turrets.Count; i++)
+                    Turrets[i].VisualPriority = value;
+            }
+        }
+
+
         public bool ContientTourelleGravitationnelle
         {
             get
@@ -276,8 +257,8 @@
                 if (ContientTourelleGravitationnelleByPass)
                     return true;
 
-                for (int i = 0; i < Emplacements.Count; i++)
-                    if (Emplacements[i].EstOccupe && Emplacements[i].Tourelle.Type == TypeTourelle.Gravitationnelle)
+                for (int i = 0; i < Turrets.Count; i++)
+                    if (Turrets[i].Type == TurretType.Gravitational)
                         return true;
 
                 return false;
@@ -289,8 +270,8 @@
         {
             get
             {
-                for (int i = 0; i < Emplacements.Count; i++)
-                    if (Emplacements[i].EstOccupe && Emplacements[i].Tourelle.Type == TypeTourelle.Gravitationnelle && Emplacements[i].Tourelle.Niveau >= 2)
+                for (int i = 0; i < Turrets.Count; i++)
+                    if (Turrets[i].Type == TurretType.Gravitational && Turrets[i].Level >= 2)
                         return true;
 
                 return false;
@@ -307,43 +288,20 @@
                 deplacer();
             }
 
-            this.Cercle.Position = this.Position;
-            this.ZoneImpactDestruction.Position = this.Position;
+            Cercle.Position = Position;
+            ZoneImpactDestruction.Position = Position;
+            TurretsZone.Position = Position;
 
-            if (this.representationParticules != null)
+            if (ParticulesRepresentation != null)
             {
                 Vector3 deplacement;
                 Vector3.Subtract(ref this.position, ref this.AnciennePosition, out deplacement);
-                this.representationParticules.Deplacer(ref deplacement);
-                this.representationParticules.Emettre(ref this.position);
+                ParticulesRepresentation.Deplacer(ref deplacement);
+                ParticulesRepresentation.Emettre(ref position);
             }
-
-            for (int i = 0; i < Emplacements.Count; i++)
-                Emplacements[i].Update(gameTime);
 
             for (int i = 0; i < Lunes.Count; i++)
                 Lunes[i].Update(gameTime);
-        }
-
-        private void deplacer()
-        {
-            this.AnciennePosition = position;
-
-            this.position.X = this.PositionBase.X * (float)Math.Cos((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
-            this.position.Y = this.PositionBase.Y * (float)Math.Sin((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
-
-            Vector3.Transform(ref position, ref MatriceRotation, out position);
-            Vector3.Add(ref this.position, ref this.Offset, out this.position);
-        }
-
-        public static void Deplacer(double tempsRotation, double tempsRotationActuel, ref Vector3 positionBase, ref Vector3 offset, ref Vector3 resultat)
-        {
-
-            resultat.X = positionBase.X * (float)Math.Cos((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
-            resultat.Y = positionBase.Y * (float)Math.Sin((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
-            resultat.Z = 0;
-
-            Vector3.Add(ref resultat, ref offset, out resultat);
         }
 
 
@@ -352,17 +310,21 @@
             if (this.PointsVie <= 0)
                 return;
 
-            if (representation != null)
+            if (Representation != null)
             {
-                representation.position = this.Position;
-                Simulation.Scene.ajouterScenable(representation);
+                Representation.position = this.Position;
+                Simulation.Scene.ajouterScenable(Representation);
             }
-
-            for (int i = 0; i < Emplacements.Count; i++)
-                Emplacements[i].Draw(gameTime);
 
             for (int i = 0; i < Lunes.Count; i++)
                 Lunes[i].Draw(gameTime);
+
+            if (ShowTurretsZone)
+            {
+                TurretsZoneImage.Position = TurretsZone.Position;
+                TurretsZoneImage.SizeX = (TurretsZone.Radius / 100) * 2;
+                Simulation.Scene.ajouterScenable(TurretsZoneImage);
+            }
         }
 
 
@@ -370,10 +332,10 @@
         {
             toucherTerre = Simulation.Scene.Particules.recuperer("toucherTerre");
 
-            if (this.representation != null)
-                toucherTerre.VisualPriority = this.representation.VisualPriority - 0.001f;
+            if (this.Representation != null)
+                toucherTerre.VisualPriority = this.Representation.VisualPriority - 0.001f;
             else
-                toucherTerre.VisualPriority = this.representationParticules.VisualPriority - 0.001f;
+                toucherTerre.VisualPriority = this.ParticulesRepresentation.VisualPriority - 0.001f;
 
             toucherTerre.Emettre(ref this.position);
             Simulation.Scene.Particules.retourner(toucherTerre);
@@ -395,21 +357,65 @@
             bouleMeurt = Simulation.Scene.Particules.recuperer("bouleTerreMeurt");
             anneauMeurt = Simulation.Scene.Particules.recuperer("anneauTerreMeurt");
 
-            if (this.representation != null)
+            if (this.Representation != null)
             {
-                bouleMeurt.VisualPriority = this.representation.VisualPriority - 0.001f;
-                anneauMeurt.VisualPriority = this.representation.VisualPriority - 0.001f;
+                bouleMeurt.VisualPriority = this.Representation.VisualPriority - 0.001f;
+                anneauMeurt.VisualPriority = this.Representation.VisualPriority - 0.001f;
             }
             else
             {
-                bouleMeurt.VisualPriority = this.representationParticules.VisualPriority - 0.001f;
-                anneauMeurt.VisualPriority = this.representationParticules.VisualPriority - 0.001f;
+                bouleMeurt.VisualPriority = this.ParticulesRepresentation.VisualPriority - 0.001f;
+                anneauMeurt.VisualPriority = this.ParticulesRepresentation.VisualPriority - 0.001f;
             }
 
             bouleMeurt.Emettre(ref this.position);
             anneauMeurt.Emettre(ref this.position);
             Simulation.Scene.Particules.retourner(bouleMeurt);
             Simulation.Scene.Particules.retourner(anneauMeurt);
+        }
+
+
+        private void initLunes()
+        {
+            Lunes = new List<Lune>();
+            int nbLunes = Main.Random.Next(0, 3);
+
+            for (int i = 0; i < nbLunes; i++)
+            {
+                Lune lune;
+
+                if ((Main.Random.Next(0, 2) == 0))
+                    lune = new LuneMatrice(Simulation, this);
+                else
+                    lune = new LuneTrajet(Simulation, this);
+
+                lune.Representation.Couleur.A = 50;
+
+                Lunes.Add(lune);
+            }
+        }
+
+
+        private void deplacer()
+        {
+            this.AnciennePosition = position;
+
+            this.position.X = this.PositionBase.X * (float)Math.Cos((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
+            this.position.Y = this.PositionBase.Y * (float)Math.Sin((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
+
+            Vector3.Transform(ref position, ref MatriceRotation, out position);
+            Vector3.Add(ref this.position, ref this.Offset, out this.position);
+        }
+
+
+        public static void Deplacer(double tempsRotation, double tempsRotationActuel, ref Vector3 positionBase, ref Vector3 offset, ref Vector3 resultat)
+        {
+
+            resultat.X = positionBase.X * (float)Math.Cos((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
+            resultat.Y = positionBase.Y * (float)Math.Sin((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
+            resultat.Z = 0;
+
+            Vector3.Add(ref resultat, ref offset, out resultat);
         }
     }
 }

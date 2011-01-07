@@ -18,7 +18,7 @@
         public LuneTrajet(Simulation simulation, CorpsCeleste corpsCeleste)
             : base(simulation, corpsCeleste)
         {
-            PositionRelative = new Vector3(corpsCeleste.Cercle.Rayon + Main.Random.Next(10, 30), 0, 0);
+            PositionRelative = new Vector3(corpsCeleste.Cercle.Radius + Main.Random.Next(10, 30), 0, 0);
             
             float PositionRelativeY = Main.Random.Next(10, 30);
 

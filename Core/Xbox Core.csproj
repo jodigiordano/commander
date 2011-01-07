@@ -143,6 +143,7 @@
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\FadeCouleur.cs" />
     <Compile Include="Utilities\KeyAndValue.cs" />
+    <Compile Include="Utilities\LinkedListWithInit.cs" />
     <Compile Include="Utilities\ManagedThread.cs" />
     <Compile Include="Utilities\Pool.cs" />
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />

@@ -2,12 +2,10 @@ namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Utilities;
-    using EphemereGames.Core.Persistance;
-    using EphemereGames.Core.Physique;
 
     class Ennemi : IObjetPhysique, IObjetVivant
     {
@@ -42,15 +40,13 @@ namespace EphemereGames.Commander
         public bool FinCheminProjection                            { get { return Deplacement > CheminProjection.Longueur; } }
 
         public IVisible RepresentationVivant;
-        public IVisible RepresentationVivantProjection;
         public IVisible RepresentationMort;
-        public IVisible RepresentationMortProjection;
         public ParticuleEffectWrapper RepresentationExplose;
         public ParticuleEffectWrapper RepresentationDeplacement;
 
         public float VitesseRotation;
-        public Chemin Chemin;
-        public Chemin CheminProjection;
+        public Path Chemin;
+        public Path CheminProjection;
         public double Deplacement;
         public Simulation Simulation;
         public String Nom;
@@ -86,11 +82,8 @@ namespace EphemereGames.Commander
             {
                 RepresentationVivant = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(Nom), Vector3.Zero);
                 RepresentationVivant.Origine = RepresentationVivant.Centre;
-
+                RepresentationVivant.Taille = 3;
                 RepresentationMort = RepresentationVivant;
-
-                RepresentationVivantProjection = (IVisible)RepresentationVivant.Clone();
-                RepresentationMortProjection = (IVisible)RepresentationMort.Clone();
             }
 
             EtincellesLaserMultiple = Simulation.Scene.Particules.recuperer("etincelleLaser");
@@ -103,12 +96,12 @@ namespace EphemereGames.Commander
             Deplacement = 0;
 
             Rectangle.Width = Rectangle.Height = FactoryEnnemis.Instance.getTaille(Type);
-            Cercle.Rayon = Rectangle.Width / 2 - 3;
+            Cercle.Radius = Rectangle.Width / 2 - 3;
 
             Rectangle.X = (int)Position.X - Rectangle.Width / 2;
             Rectangle.Y = (int)Position.Y - Rectangle.Height / 2;
-            Cercle.Position.X = Position.X - Cercle.Rayon;
-            Cercle.Position.Y = Position.Y - Cercle.Rayon;
+            Cercle.Position.X = Position.X - Cercle.Radius;
+            Cercle.Position.Y = Position.Y - Cercle.Radius;
 
             EtincellesLaserMultiple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
             EtincellesMissile.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
@@ -165,26 +158,6 @@ namespace EphemereGames.Commander
                 RepresentationMort.Position = Position;
 
             Simulation.Scene.ajouterScenable(EstVivant ? RepresentationVivant : RepresentationMort);
-        }
-
-
-        public void DrawProjection(GameTime gameTime)
-        {
-            if (EstVivant)
-            {
-                RepresentationVivantProjection.Couleur = new Color(255, 255, 255, 25);
-                RepresentationVivantProjection.Blend = TypeBlend.Substract;
-                CheminProjection.Position(Deplacement, ref RepresentationVivantProjection.position);
-            }
-
-            else
-            {
-                RepresentationMortProjection.Couleur = RepresentationMort.Couleur;
-                RepresentationMortProjection.Couleur.A = 100;
-                CheminProjection.Position(Deplacement, ref RepresentationMortProjection.position);
-            }
-
-            Simulation.Scene.ajouterScenable(EstVivant ? RepresentationVivantProjection : RepresentationMortProjection);
         }
 
 
@@ -257,9 +230,6 @@ namespace EphemereGames.Commander
         }
 
 
-        /// <summary>
-        /// Crée un evenement qui dit que l'ennemi à atteint son relais
-        /// </summary>
         protected virtual void notifyRelaisAtteint(Ennemi ennemi)
         {
             if (RelaisAtteint != null)

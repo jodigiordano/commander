@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:PolygonEmitter">
+    <Item Type="ProjectMercury.Emitters.PolygonEmitter">
       <Name>Emitter07</Name>
       <Budget>60</Budget>
       <Term>1</Term>
-      <ReleaseQuantity>1</ReleaseQuantity>
+      <ReleaseQuantity>3</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
         <Value>0</Value>
@@ -13,6 +13,44 @@
       </ReleaseSpeed>
       <ReleaseColour>
         <Value>1 1 1</Value>
+        <Variation>0 0 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>0.5</Value>
+        <Variation>0</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>10</Value>
+        <Variation>5</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>0</Value>
+        <Variation>0</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>0 0</ReleaseImpulse>
+      <ParticleTextureAssetName>particules\FlowerBurst</ParticleTextureAssetName>
+      <Modifiers />
+      <BlendMode>Add</BlendMode>
+      <TriggerOffset>0 0</TriggerOffset>
+      <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
+      <Points>0 125 40 75 40 25 0 -25 -40 25 -40 75</Points>
+      <Origin>Default</Origin>
+      <Rotation>-3.1415925</Rotation>
+      <Scale>0.2</Scale>
+      <Close>true</Close>
+    </Item>
+    <Item>
+      <Name>Emitter10</Name>
+      <Budget>60</Budget>
+      <Term>0.25</Term>
+      <ReleaseQuantity>1</ReleaseQuantity>
+      <Enabled>true</Enabled>
+      <ReleaseSpeed>
+        <Value>35</Value>
+        <Variation>5</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>0.43 0.6 0</Value>
         <Variation>0 0 0</Variation>
       </ReleaseColour>
       <ReleaseOpacity>
@@ -29,50 +67,7 @@
       </ReleaseRotation>
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules\FlowerBurst</ParticleTextureAssetName>
-      <Modifiers>
-        <Item Type="Modifiers:ColourModifier">
-          <InitialColour>1 1 1</InitialColour>
-          <UltimateColour>0 0.7529412 0</UltimateColour>
-        </Item>
-      </Modifiers>
-      <BlendMode>Add</BlendMode>
-      <TriggerOffset>0 0</TriggerOffset>
-      <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
-      <Points>0 125 40 75 40 25 0 -25 -40 25 -40 75</Points>
-      <Origin>Default</Origin>
-      <Rotation>-3.1415925</Rotation>
-      <Scale>0.2</Scale>
-      <Close>true</Close>
-    </Item>
-    <Item>
-      <Name>Emitter10</Name>
-      <Budget>60</Budget>
-      <Term>0.5</Term>
-      <ReleaseQuantity>1</ReleaseQuantity>
-      <Enabled>true</Enabled>
-      <ReleaseSpeed>
-        <Value>35</Value>
-        <Variation>5</Variation>
-      </ReleaseSpeed>
-      <ReleaseColour>
-        <Value>0.43 0.6 0</Value>
-        <Variation>0 0 0</Variation>
-      </ReleaseColour>
-      <ReleaseOpacity>
-        <Value>1</Value>
-        <Variation>0</Variation>
-      </ReleaseOpacity>
-      <ReleaseScale>
-        <Value>40</Value>
-        <Variation>20</Variation>
-      </ReleaseScale>
-      <ReleaseRotation>
-        <Value>0</Value>
-        <Variation>0</Variation>
-      </ReleaseRotation>
-      <ReleaseImpulse>0 0</ReleaseImpulse>
-      <ParticleTextureAssetName>particules\FlowerBurst</ParticleTextureAssetName>
-      <Modifiers/>
+      <Modifiers />
       <BlendMode>Add</BlendMode>
       <TriggerOffset>0 -10</TriggerOffset>
       <MinimumTriggerPeriod>0</MinimumTriggerPeriod>

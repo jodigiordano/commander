@@ -77,9 +77,7 @@
 
             EtatScene = Etat.CHARGEMENT_ASSETS;
 
-            Background = new Image("PixelBlanc", Vector3.Zero);
-            Background.Color = Color.Black;
-            Background.Size = new Vector2(1280, 720);
+            Background = new Image("SplashScreenBg", Vector3.Zero);
             Background.VisualPriority = 1f;
             
             ThreadChargementScenes = new Thread(doChargerScenes);
@@ -298,6 +296,7 @@
             Sablier.Draw(null);
             PressStart.Draw(null);
 
+            this.ajouterScenable(Background);
             this.ajouterScenable(Logo);
         }
 

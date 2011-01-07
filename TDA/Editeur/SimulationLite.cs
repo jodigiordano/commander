@@ -193,8 +193,8 @@
 
                     pointsConsideres.Add(corpsCeleste.Position);
                     pointsConsideres.Add(autre.Position);
-                    cerclesConsideres.Add(new Cercle(corpsCeleste.Cercle.Position, corpsCeleste.Cercle.Rayon));
-                    cerclesConsideres.Add(new Cercle(autre.Cercle.Position, autre.Cercle.Rayon));
+                    cerclesConsideres.Add(new Cercle(corpsCeleste.Cercle.Position, corpsCeleste.Cercle.Radius));
+                    cerclesConsideres.Add(new Cercle(autre.Cercle.Position, autre.Cercle.Radius));
 
                     //if (corpsCeleste.Cercle.Rectangle.Intersects(autre.Cercle.Rectangle))
                     if (corpsCeleste.Cercle.Intersects(autre.Cercle))

@@ -1,11 +1,3 @@
-//=====================================================================
-//
-// Gestionnaire de particules
-// Doit être utilisé comme un Pool. Donc pour chaque "récupérer" doit
-// correspondre un "retourner"
-//
-//=====================================================================
-
 namespace EphemereGames.Core.Visuel
 {
     using System;
@@ -15,22 +7,15 @@ namespace EphemereGames.Core.Visuel
 
     public class GestionnaireParticules
     {
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
-        private Dictionary<string, Pool<ParticuleEffectWrapper>> listePoolParticules;            // Liste des pools de particules
-        private ProjectMercury.Renderers.SpriteBatchRenderer renderer;                           // S'occupe de dessiner les particules à l'écran
-        private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesActives;       // Liste des particules actives à mettre à jour
-        private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesMourantes;     // Liste des particules orphelines qui ne s'updatent plus
+        private Dictionary<string, Pool<ParticuleEffectWrapper>> listePoolParticules;
+        private ProjectMercury.Renderers.SpriteBatchRenderer renderer;
+        private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesActives;
+        private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesMourantes;
         private List<KeyValuePair<string, ParticuleEffectWrapper>> listeParticulesActivesASupprimer;
         private Scene Scene;
+        private List<IScenable> composants = new List<IScenable>();
+        private GameTime _gameTime;
 
-
-        //=====================================================================
-        // Constructeur
-        //=====================================================================
 
         public GestionnaireParticules(Scene scene)
         {
@@ -51,14 +36,6 @@ namespace EphemereGames.Core.Visuel
         }
         
 
-        //=====================================================================
-        // Services
-        //=====================================================================
-
-        /// <summary>
-        /// Les systèmes de particules présentement gérés par le gestionnaire
-        /// </summary>
-        private List<IScenable> composants = new List<IScenable>();
         public List<IScenable> Composants
         {
             get
@@ -76,14 +53,6 @@ namespace EphemereGames.Core.Visuel
         }
 
 
-        /// <summary>
-        /// Ajoute un pool de systèmes de particules dans le gestionnaire
-        /// </summary>
-        /// <param name="nom">Nom du système de particules</param>
-        /// <param name="pool">Un pool de systèmes de particules</param>
-        /// <remarks>
-        /// Si le pool de systèmes de particules est déjà dans le gestionnaire, il n'est pas ajouté de nouveau
-        /// </remarks>
         public void ajouter(string nom)
         {
             if (!listePoolParticules.ContainsKey(nom))
@@ -91,11 +60,16 @@ namespace EphemereGames.Core.Visuel
         }
 
 
-        /// <summary>
-        /// Fourni un système de particules à l'appelant
-        /// </summary>
-        /// <param name="nom">Nom du système de particules</param>
-        /// <returns>Le système de particules demandé</returns>
+        public void Add(List<string> names, bool hard)
+        {
+            if (hard)
+                vider();
+
+            foreach (var name in names)
+                ajouter(name);
+        }
+
+
         public ParticuleEffectWrapper recuperer(string nom)
         {
             ParticuleEffectWrapper particule = listePoolParticules[nom].recuperer();
@@ -123,10 +97,6 @@ namespace EphemereGames.Core.Visuel
         }
 
 
-        /// <summary>
-        /// L'appelant retourne un système de particules
-        /// </summary>
-        /// <param name="particule">Le système de particules retourné</param>
         public void retourner(ParticuleEffectWrapper particule)
         {
             listeParticulesActivesASupprimer.Add(new KeyValuePair<string, ParticuleEffectWrapper>(particule.Nom, particule));
@@ -138,9 +108,6 @@ namespace EphemereGames.Core.Visuel
         }
 
 
-        /// <summary>
-        /// Vide le gestionnaire
-        /// </summary>
         public void vider()
         {
             //this = new GestionnaireParticules(Scene);
@@ -163,12 +130,8 @@ namespace EphemereGames.Core.Visuel
         }
 
 
-        private GameTime _gameTime;
 
-        /// <summary>
-        /// Mise-à-jour du gestionnaire
-        /// </summary>
-        /// <param name="gameTime">Le temps</param>
+
         public void Update(GameTime gameTime)
         {
             _gameTime = gameTime;
@@ -189,6 +152,7 @@ namespace EphemereGames.Core.Visuel
 //#endif
         }
 
+
         private void doEnleverParticulesActives()
         {
             lock (listeParticulesActivesASupprimer)
@@ -199,6 +163,7 @@ namespace EphemereGames.Core.Visuel
                 listeParticulesActivesASupprimer.Clear();
             }
         }
+
 
         private void doEnleverParticulesMourantes()
         {
@@ -212,11 +177,13 @@ namespace EphemereGames.Core.Visuel
             }
         }
 
+
         private void doUpdatePremiereMoitiee()
         {
             doUpdateAsynchrone(listeParticulesActives, 0, listeParticulesActives.Count / 2, _gameTime);
             doUpdateAsynchrone(listeParticulesMourantes, 0, listeParticulesMourantes.Count / 2, _gameTime);
         }
+
 
         private void doUpdateDeuxiemeMoitiee()
         {
@@ -224,11 +191,13 @@ namespace EphemereGames.Core.Visuel
             doUpdateAsynchrone(listeParticulesMourantes, listeParticulesMourantes.Count / 2, listeParticulesMourantes.Count, _gameTime);
         }
 
+
         private void doUpdateAsynchrone(List<KeyValuePair<string, ParticuleEffectWrapper>> particules, int i, int j, GameTime gameTime)
         {
             for (int k = i; k < j; k++)
                 particules[k].Value.ParticleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
+
 
         private void doTmpVerifierNulls()
         {

@@ -31,7 +31,7 @@
         {
             set
             {
-                ((ColourInterpolatorModifier)representationParticules.ParticleEffect[0].Modifiers[2]).MiddleColour = value.ToVector3();
+                ((ColourInterpolatorModifier)ParticulesRepresentation.ParticleEffect[0].Modifiers[2]).MiddleColour = value.ToVector3();
             }
         }
 
@@ -39,14 +39,14 @@
         {
             set
             {
-                representationParticules.Blend = value;
+                ParticulesRepresentation.Blend = value;
             }
         }
 
         public override void Update(GameTime gameTime)
         {
             this.AnciennePosition = this.Position;
-            ((RadialGravityModifier)representationParticules.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
+            ((RadialGravityModifier)ParticulesRepresentation.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
 
             base.Update(gameTime);
         }

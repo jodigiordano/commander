@@ -46,7 +46,7 @@
             this.Representation.Origine = this.Representation.Centre;
             
             this.Position = Vector3.Zero;
-            this.Vitesse = 6;
+            this.Vitesse = 4;
             this.Masse = 1;
             this.Direction = new Vector3(1, 0, 0);
             this.Rotation = 0;
@@ -157,7 +157,7 @@
 
             double tempsRequis = (distance / Vitesse) * 16.33f;
 
-            Simulation.Scene.Effets.Add(this.Representation, PredefinedEffects.FadeOutTo0(255, 0, tempsRequis));
+            Simulation.Scene.Effets.Add(this.Representation, PredefinedEffects.FadeOutTo0(this.Representation.Couleur.A, 0, tempsRequis));
         }
 
 

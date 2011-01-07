@@ -48,6 +48,7 @@
             {
                 IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
                 iv.VisualPriority = this.PrioriteAffichage + 0.00001f;
+                iv.Taille = 4;
                 RepresentationsEnnemis.Add(iv);
 
                 iv = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);

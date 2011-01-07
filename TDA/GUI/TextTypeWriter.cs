@@ -10,7 +10,7 @@
 
     class TextTypeWriter : DrawableGameComponent
     {
-        private String Phrase;
+        private String Raw;
         private double Cadence;
         private bool ArretFinPhrase;
         private Vector2 Canevas;
@@ -25,18 +25,16 @@
         private int NbCaracteresLigne;
         private int NbCaracteresTraites;
         private int NbCaracteresTraitesLigne;
-        private List<String> Mots;
         private double Compteur;
         private bool JouerSons;
         private List<String> Sons;
 
         public IVisible Texte;
 
-        public TextTypeWriter(Main main, String phrase, Color couleur, Vector3 positionDepart, SpriteFont police, float taille, Vector2 canevas, double cadence, bool arretFinPhrase, double tempsArret, bool jouerSons, List<String> sons, Scene scene)
+        public TextTypeWriter(Main main, String raw, Color couleur, Vector3 positionDepart, SpriteFont police, float taille, Vector2 canevas, double cadence, bool arretFinPhrase, double tempsArret, bool jouerSons, List<String> sons, Scene scene)
             : base(main)
         {
             this.Main = main;
-            this.Phrase = phrase;
             this.Police = police;
             this.Canevas = canevas;
             this.Cadence = cadence;
@@ -54,21 +52,29 @@
 
             NbCaracteresLigne = (int) (canevas.X / LongueurCaracterePixel);
 
-            Mots = new List<string>(Phrase.Split(' '));
+            Raw = "";
 
-            Phrase = "";
+            string[] sentences = raw.Split(new string[] { "\n\n\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 0; i < Mots.Count; i++)
+            foreach (var sentence in sentences)
             {
-                if (Mots[i].Length > NbCaracteresLigne - NbCaracteresTraitesLigne)
+                string[] words = sentence.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                NbCaracteresTraitesLigne = 0;
+
+                foreach (var word in words)
                 {
-                    Phrase += "\n\n";
-                    NbCaracteresTraitesLigne = 0;
+                    if (word.Length > NbCaracteresLigne - NbCaracteresTraitesLigne)
+                    {
+                        Raw += "\n\n";
+                        NbCaracteresTraitesLigne = 0;
+                    }
+
+                    Raw += word + " ";
+                    NbCaracteresTraitesLigne += word.Length + 1;
                 }
 
-                Phrase += Mots[i] + " ";
-
-                NbCaracteresTraitesLigne += Mots[i].Length + 1;
+                Raw += "\n\n\n";
             }
 
 
@@ -81,7 +87,7 @@
 
         public bool Termine
         {
-            get { return NbCaracteresTraites >= Phrase.Length; }
+            get { return NbCaracteresTraites >= Raw.Length; }
         }
 
 
@@ -89,11 +95,11 @@
         {
             Compteur -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (Compteur <= 0 && NbCaracteresTraites < Phrase.Length)
+            if (Compteur <= 0 && NbCaracteresTraites < Raw.Length)
             {
-                Compteur = (ArretFinPhrase && Phrase[NbCaracteresTraites] == '.') ? this.TempsArret : Cadence;
+                Compteur = (ArretFinPhrase && Raw[NbCaracteresTraites] == '.') ? this.TempsArret : Cadence;
 
-                Texte.Texte += Phrase[NbCaracteresTraites];
+                Texte.Texte += Raw[NbCaracteresTraites];
 
                 NbCaracteresTraites++;
 

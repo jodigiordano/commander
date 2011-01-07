@@ -30,6 +30,7 @@ namespace EphemereGames.Commander
             Bubble = new Image("bulle", new Vector3(-100, 300, 0));
             Bubble.SizeX = 8;
             Bubble.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
+            Bubble.Origin = Vector2.Zero;
 
             TypeWriter = new TextTypeWriter
             (

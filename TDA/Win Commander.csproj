@@ -15,7 +15,7 @@
     <XnaCrossPlatformGroupID>55a79d11-a65d-458c-a9ca-fc9011e650ac</XnaCrossPlatformGroupID>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <ManifestCertificateThumbprint>F904B111315BF05CCD96B4D0E7951DCCC6F9EECF</ManifestCertificateThumbprint>
     <ManifestKeyFile>TDA_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
@@ -29,10 +29,10 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <PublishUrl>http://www.ephemeregames.com/commander/trial/</PublishUrl>
+    <PublishUrl>C:\Users\Jodi\Desktop\Commander_new\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
@@ -43,10 +43,9 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>Commander</ProductName>
     <PublisherName>Ephemere Games</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>44</ApplicationRevision>
+    <ApplicationRevision>45</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -175,8 +174,8 @@
     <Compile Include="Simulation\Controllers\SimPlayersController.cs" />
     <Compile Include="Simulation\Controllers\ControleurProjectiles.cs" />
     <Compile Include="Simulation\Controllers\ScenarioController.cs" />
-    <Compile Include="Simulation\Controllers\ControleurSystemePlanetaire.cs" />
-    <Compile Include="Simulation\Controllers\ControleurTourelles.cs" />
+    <Compile Include="Simulation\Controllers\PlanetarySystemController.cs" />
+    <Compile Include="Simulation\Controllers\TurretsController.cs" />
     <Compile Include="Simulation\Controllers\ControleurVaisseaux.cs" />
     <Compile Include="Player\PlayersController.cs" />
     <Compile Include="Simulation\Controllers\ControleurMessages.cs" />
@@ -190,6 +189,9 @@
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
     <Compile Include="Simulation\GUI\Annunciations\ScenarioEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\Bulle.cs" />
+    <Compile Include="Simulation\GUI\Help.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuTurret.cs" />
+    <Compile Include="Simulation\GUI\Menus\MenuCelestialBody.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuDemo.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuTurretSpotEmpty.cs" />
     <Compile Include="Simulation\Player\CommonStash.cs" />
@@ -213,8 +215,8 @@
     <Compile Include="GUI\Sablier.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuGeneral.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\AdvancedView.cs" />
-    <Compile Include="Simulation\Factories\FactoryTourelles.cs" />
-    <Compile Include="Simulation\PlanetarySystem\CeintureAsteroide.cs" />
+    <Compile Include="Simulation\Factories\TurretsFactory.cs" />
+    <Compile Include="Simulation\PlanetarySystem\AsteroidBelt.cs" />
     <Compile Include="Simulation\GUI\Bubbles\AideNiveau.cs" />
     <Compile Include="Player\TrialMode.cs" />
     <Compile Include="Simulation\PlanetarySystem\TrouRose.cs" />
@@ -224,7 +226,8 @@
     <Compile Include="Simulation\PlanetarySystem\Lune.cs" />
     <Compile Include="Simulation\Bullets\ProjectileSlowMotion.cs" />
     <Compile Include="Simulation\Player\SimPlayer.cs" />
-    <Compile Include="Simulation\Turrets\TourelleSlowMotion.cs" />
+    <Compile Include="Simulation\Turrets\AlienTurret.cs" />
+    <Compile Include="Simulation\Turrets\SlowMotionTurret.cs" />
     <Compile Include="Simulation\Spaceships\TheResistance.cs" />
     <Compile Include="Simulation\GridWorld.cs" />
     <Compile Include="Simulation\Spaceships\VaisseauAlien.cs" />
@@ -233,12 +236,12 @@
     <Compile Include="Simulation\Spaceships\VaisseauCollecteur.cs" />
     <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
     <Compile Include="Simulation\Factories\FactoryEnnemis.cs" />
-    <Compile Include="Simulation\Turrets\NiveauTourelle.cs" />
+    <Compile Include="Simulation\Turrets\TurretLevel.cs" />
     <Compile Include="Player\SaveGame.cs" />
     <Compile Include="Simulation\Scenario.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />
-    <Compile Include="Simulation\Turrets\TourelleLasersSimples.cs" />
+    <Compile Include="Simulation\Turrets\LaserTurret.cs" />
     <Compile Include="Simulation\Bullets\ProjectileLaserSimple.cs" />
     <Compile Include="Simulation\Bullets\ProjectileLaserMultiple.cs" />
     <Compile Include="Simulation\Bullets\ProjectileBase.cs" />
@@ -248,11 +251,11 @@
     <Compile Include="Simulation\Enemies\Ennemi.cs" />
     <Compile Include="Simulation\IObjetVivant.cs" />
     <Compile Include="Simulation\Bullets\ProjectileMissile.cs" />
-    <Compile Include="Simulation\Turrets\Tourelle.cs" />
-    <Compile Include="Simulation\Turrets\TourelleBase.cs" />
-    <Compile Include="Simulation\Turrets\TourelleGravitationnelle.cs" />
-    <Compile Include="Simulation\Turrets\TourelleLasersMultiples.cs" />
-    <Compile Include="Simulation\Turrets\TourelleMissiles.cs" />
+    <Compile Include="Simulation\Turrets\Turret.cs" />
+    <Compile Include="Simulation\Turrets\BasicTurret.cs" />
+    <Compile Include="Simulation\Turrets\GravitationalTurret.cs" />
+    <Compile Include="Simulation\Turrets\MultipleLasersTurret.cs" />
+    <Compile Include="Simulation\Turrets\MissileTurret.cs" />
     <Compile Include="Simulation\Chemin.cs" />
     <Compile Include="GUI\Translator.cs" />
     <Compile Include="Simulation\Enemies\Wave.cs" />
@@ -262,7 +265,7 @@
     <Compile Include="Scenes\Chargement.cs" />
     <Compile Include="Scenes\Aide.cs" />
     <Compile Include="Scenes\Validation.cs" />
-    <Compile Include="Scenes\Monde.cs" />
+    <Compile Include="Scenes\World.cs" />
     <Compile Include="Scenes\Options.cs" />
     <Compile Include="Scenes\Menu.cs" />
     <Compile Include="Scenes\NouvellePartie.cs" />

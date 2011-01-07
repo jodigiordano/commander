@@ -20,8 +20,8 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>32</Value>
-        <Variation>16</Variation>
+        <Value>16</Value>
+        <Variation>8</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -58,7 +58,7 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>120</Value>
+        <Value>60</Value>
         <Variation>0</Variation>
       </ReleaseScale>
       <ReleaseRotation>

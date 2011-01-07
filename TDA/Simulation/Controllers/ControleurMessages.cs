@@ -10,12 +10,12 @@
 
     class ControleurMessages : DrawableGameComponent
     {
-        public List<Tourelle> Tourelles;
+        public List<Turret> Tourelles;
         public CorpsCeleste CorpsCelesteAProteger;
         public Sablier Sablier;
         public Cursor Curseur;
         public List<CorpsCeleste> CorpsCelestes;
-        public Chemin Chemin;
+        public Path Chemin;
         public Bulle BulleGUI;
         public AideNiveau AideNiveau;
 
@@ -252,6 +252,17 @@
             "I don't have\n\nto have fought in a war\n\nto love peace.",
         };
 
+
+        private static List<String> QuotesPause = new List<string>()
+        {
+            "Get back to work,\n\ncommander!",
+            "Finish your job,\n\ncommander!",
+            "This world needs\n\nto be saved, commander!",
+            "Don't leave them\n\nbehind, commander!",
+            "The Resistance\n\nneeds you,\n\ncommander!"
+        };
+
+
         public ControleurMessages(Simulation simulation)
             : base(simulation.Main)
         {
@@ -320,7 +331,7 @@
                 return;
 
             IVisible texteInfos = new IVisible(message, EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
-            texteInfos.Taille = 2;
+            texteInfos.Taille = 1;
 
             prioriteAffichage = (prioriteAffichage == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : prioriteAffichage;
 
@@ -372,14 +383,14 @@
                 if (Main.Random.Next(0, 5) == 0)
                 {
 
-                    Tourelle tourelle = Tourelles[Main.Random.Next(0, Tourelles.Count)];
+                    Turret tourelle = Tourelles[Main.Random.Next(0, Tourelles.Count)];
 
-                    if (!tourelle.Visible || !tourelle.Spectateur || tourelle.Type == TypeTourelle.GravitationnelleAlien || ObjetsParlants.ContainsKey(tourelle))
+                    if (!tourelle.Visible || !tourelle.Watcher || tourelle.Type == TurretType.Alien || ObjetsParlants.ContainsKey(tourelle))
                         return;
 
                     IVisible texte = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
-                    texte.Taille = 2;
-                    texte.Couleur = tourelle.Couleur;
+                    texte.Taille = 1;
+                    texte.Couleur = tourelle.Color;
 
                     if (Main.Random.Next(0, 10) == 1)
                     {
@@ -390,12 +401,12 @@
                     {
                         switch (tourelle.Type)
                         {
-                            case TypeTourelle.Base: texte.Texte = QuotesBase[Main.Random.Next(0, QuotesBase.Count)]; break;
-                            case TypeTourelle.Gravitationnelle: texte.Texte = QuotesGravitationnelle[Main.Random.Next(0, QuotesGravitationnelle.Count)]; break;
-                            case TypeTourelle.LaserMultiple: texte.Texte = QuotesLaserMultiple[Main.Random.Next(0, QuotesLaserMultiple.Count)]; break;
-                            case TypeTourelle.LaserSimple: texte.Texte = QuotesLaserSimple[Main.Random.Next(0, QuotesLaserSimple.Count)]; break;
-                            case TypeTourelle.Missile: texte.Texte = QuotesMissile[Main.Random.Next(0, QuotesMissile.Count)]; break;
-                            case TypeTourelle.SlowMotion: texte.Texte = QuotesSlowMotion[Main.Random.Next(0, QuotesSlowMotion.Count)]; break;
+                            case TurretType.Basic: texte.Texte = QuotesBase[Main.Random.Next(0, QuotesBase.Count)]; break;
+                            case TurretType.Gravitational: texte.Texte = QuotesGravitationnelle[Main.Random.Next(0, QuotesGravitationnelle.Count)]; break;
+                            case TurretType.MultipleLasers: texte.Texte = QuotesLaserMultiple[Main.Random.Next(0, QuotesLaserMultiple.Count)]; break;
+                            case TurretType.Laser: texte.Texte = QuotesLaserSimple[Main.Random.Next(0, QuotesLaserSimple.Count)]; break;
+                            case TurretType.Missile: texte.Texte = QuotesMissile[Main.Random.Next(0, QuotesMissile.Count)]; break;
+                            case TurretType.SlowMotion: texte.Texte = QuotesSlowMotion[Main.Random.Next(0, QuotesSlowMotion.Count)]; break;
                         }
                     }
 
@@ -442,6 +453,19 @@
             }
         }
 
+
+        public void DisplayPausedMessage()
+        {
+            this.afficherMessage(Simulation.CelestialBodyPausedGame, QuotesPause[Main.Random.Next(0, QuotesPause.Count)], 1000000000, -1);
+        }
+
+
+        public void StopPausedMessage()
+        {
+            this.arreterMessage(Simulation.CelestialBodyPausedGame);
+        }
+
+
         private void initAideNiveau()
         {
             if (AideNiveau == null)
@@ -463,17 +487,17 @@
                     case "Curseur":
                         AideNiveau.QuotesObjets.Add(objet, Curseur);
                         break;
-                    case "Emplacement":
-                        for (int i = 1; i < CorpsCelestes.Count; i++)
-                            if (CorpsCelestes[i].Emplacements != null && CorpsCelestes[i].Emplacements.Count > 1)
-                            {
-                                AideNiveau.QuotesObjets.Add(objet, CorpsCelestes[i].Emplacements[1]);
-                                break;
-                            }
-                        break;
-                    case "Grav":
-                        AideNiveau.QuotesObjets.Add(objet, Chemin.prochainRelais(Chemin.PremierRelais).Emplacements[0]);
-                        break;
+                    //case "Emplacement":
+                    //    for (int i = 1; i < CorpsCelestes.Count; i++)
+                    //        if (CorpsCelestes[i].Emplacements != null && CorpsCelestes[i].Emplacements.Count > 1)
+                    //        {
+                    //            AideNiveau.QuotesObjets.Add(objet, CorpsCelestes[i].Emplacements[1]);
+                    //            break;
+                    //        }
+                    //    break;
+                    //case "Grav":
+                    //    AideNiveau.QuotesObjets.Add(objet, Chemin.prochainRelais(Chemin.PremierRelais).Emplacements[0]);
+                    //    break;
                     case "Planete":
                         AideNiveau.QuotesObjets.Add(objet, CorpsCelestes[CorpsCelestes.Count - 2]);
                         break;

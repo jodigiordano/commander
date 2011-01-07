@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters" xmlns:Modifiers="ProjectMercury.Modifiers">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:ConeEmitter">
+    <Item Type="ProjectMercury.Emitters.ConeEmitter">
       <Name>Emitter04</Name>
       <Budget>60</Budget>
       <Term>1</Term>
@@ -20,7 +20,7 @@
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>45</Value>
+        <Value>25</Value>
         <Variation>10</Variation>
       </ReleaseScale>
       <ReleaseRotation>
@@ -30,11 +30,11 @@
       <ReleaseImpulse>0 0</ReleaseImpulse>
       <ParticleTextureAssetName>particules/FlowerBurst</ParticleTextureAssetName>
       <Modifiers>
-        <Item Type="Modifiers:OpacityModifier">
+        <Item Type="ProjectMercury.Modifiers.OpacityModifier">
           <Initial>1</Initial>
           <Ultimate>0</Ultimate>
         </Item>
-        <Item Type="Modifiers:ColourInterpolatorModifier">
+        <Item Type="ProjectMercury.Modifiers.ColourInterpolatorModifier">
           <InitialColour>1 0 0</InitialColour>
           <MiddleColour>1 1 1</MiddleColour>
           <MiddlePosition>0.5</MiddlePosition>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Emitters="ProjectMercury.Emitters">
+<XnaContent>
   <Asset Type="ProjectMercury.ParticleEffect">
-    <Item Type="Emitters:CircleEmitter">
+    <Item Type="ProjectMercury.Emitters.CircleEmitter">
       <Name>Emitter01</Name>
       <Budget>300</Budget>
       <Term>0.3</Term>
@@ -16,12 +16,12 @@
         <Variation>0 0 0</Variation>
       </ReleaseColour>
       <ReleaseOpacity>
-        <Value>1</Value>
+        <Value>0.5</Value>
         <Variation>0</Variation>
       </ReleaseOpacity>
       <ReleaseScale>
-        <Value>30</Value>
-        <Variation>15</Variation>
+        <Value>20</Value>
+        <Variation>5</Variation>
       </ReleaseScale>
       <ReleaseRotation>
         <Value>0</Value>
@@ -39,6 +39,6 @@
     </Item>
     <Name>Particle Effect</Name>
     <Author>None</Author>
-    <Description>None</Description>    
+    <Description>None</Description>
   </Asset>
 </XnaContent>

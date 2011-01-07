@@ -34,6 +34,16 @@
         }
 
 
+        public Text(string fontName)
+        {
+            Data = "";
+            Font = Core.Persistance.Facade.GetAsset<SpriteFont>(fontName);
+            Color = Color.White;
+            Position = Vector3.Zero;
+            Size = new Vector2(1);
+        }
+
+
         private Vector2 TextSize
         {
             get { return Font.MeasureString(Data); }

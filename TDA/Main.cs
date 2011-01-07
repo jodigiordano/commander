@@ -15,6 +15,7 @@ namespace EphemereGames.Commander
         public SaveGame SaveGame;
         public PlayersController PlayersController;
         public TrialMode TrialMode;
+        public Partie GameInProgress;
 
         private GraphicsDeviceManager Graphics;
         private bool Initializing = true;
@@ -130,7 +131,7 @@ namespace EphemereGames.Commander
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Aide", null);
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Options", null);
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Editeur", null);
-
+                        
                 Initializing = false;
             }
 

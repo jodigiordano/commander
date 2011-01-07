@@ -30,6 +30,7 @@
             Bouton = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("emplacement"), Position);
             Bouton.VisualPriority = priorite;
             Bouton.Origine = Bouton.Centre;
+            Bouton.Taille = 4;
 
             BoutonCercle = new Cercle(Position, 16);
         }
