@@ -172,18 +172,18 @@
 
         public void doHide(double temps)
         {
-            Scene.Effets.Add(Representation, PredefinedEffects.FadeOutTo0(255, 0, temps));
+            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, temps));
 
             foreach (var pixel in Pixels)
-                Scene.Effets.Add(pixel, PredefinedEffects.FadeOutTo0(255, 0, temps));
+                Scene.Effets.Add(pixel, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, temps));
         }
 
         public void doShow(double temps)
         {
-            Scene.Effets.Add(Representation, PredefinedEffects.FadeInFrom0(255, 0, temps));
+            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, temps));
 
             foreach (var pixel in Pixels)
-                Scene.Effets.Add(pixel, PredefinedEffects.FadeInFrom0(255, 0, temps));
+                Scene.Effets.Add(pixel, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, temps));
         }
 
         #region IObjetPhysique Membres

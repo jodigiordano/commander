@@ -88,6 +88,11 @@
         public bool Termine
         {
             get { return NbCaracteresTraites >= Raw.Length; }
+            set
+            {
+                NbCaracteresTraites = Raw.Length;
+                Texte.Texte = Raw;
+            }
         }
 
 

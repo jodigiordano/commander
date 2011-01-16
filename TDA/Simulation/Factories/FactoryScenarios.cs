@@ -150,19 +150,19 @@
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-300, -150, 0), "save the\nworld", "planete2", 0, 100);
             d.SystemePlanetaire[0].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Basic, 5, new Vector3(10, -8, 0), true);
+            d.SystemePlanetaire[0].ajouterTourelle(TurretType.Basic, 5, new Vector3(10, -14, 0), true);
 
             d.CorpsCelesteAProteger = d.SystemePlanetaire[0].Nom;
 
             d.ajouterCorpsCeleste(Taille.Grande, new Vector3(300, -220, 0), "options", "planete4", 0, 99);
             d.SystemePlanetaire[1].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(3, 2, 0), false);
-            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 8, new Vector3(-9, -5, 0), true);
-            d.SystemePlanetaire[1].ajouterTourelle(TurretType.MultipleLasers, 4, new Vector3(22, 0, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 8, new Vector3(-20, -5, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.MultipleLasers, 4, new Vector3(12, 0, 0), true);
 
-            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-50, 150, 0), "resume game", "planete3", 0, 98);
+            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-50, 150, 0), "editor", "planete3", 0, 98);
             d.SystemePlanetaire[2].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(4, 2, 0), false);
             d.SystemePlanetaire[2].ajouterTourelle(TurretType.Laser, 7, new Vector3(3, -7, 0), true);
-            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Missile, 3, new Vector3(-6, 14, 0), true);
+            d.SystemePlanetaire[2].ajouterTourelle(TurretType.Missile, 3, new Vector3(-8, 0, 0), true);
 
 
             d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-400, 200, 0), "help", "planete6", 0, 97);
@@ -170,10 +170,10 @@
 
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(350, 200, 0), "quit", "planete5", 0, 96);
             d.SystemePlanetaire[4].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(-5, 3, 0), false);
-            d.SystemePlanetaire[4].ajouterTourelle(TurretType.SlowMotion, 6, new Vector3(6, 3, 0), true);
+            d.SystemePlanetaire[4].ajouterTourelle(TurretType.SlowMotion, 6, new Vector3(-10, -3, 0), true);
 
             c = new DescripteurCorpsCeleste();
-            c.Nom = "editor";
+            c.Nom = "whatever";
             c.Position = new Vector3(700, -400, 0);
             c.Vitesse = 320000;
             c.Taille = Taille.Petite;
@@ -185,7 +185,7 @@
             c.Representations.Add("Meteoroid");
             c.Priorite = 1;
             c.TourellesPermises = new List<TurretType>();
-            c.Selectionnable = true;
+            c.Selectionnable = false;
             e = new DescripteurEmplacement();
             e.Position = Vector3.Zero;
             e.Tourelle = new DescripteurTourelle();
@@ -424,39 +424,39 @@
             d.SystemePlanetaire[0].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             d.SystemePlanetaire[0].ajouterTourelle(TurretType.Basic, 5, new Vector3(5, -4, 0), true);
 
-            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-500, -50, 0), "1-2", "planete7", 0, 2);
+            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(-450, -50, 0), "1-2", "planete7", 0, 2);
             d.SystemePlanetaire[1].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(-14, 8, 0), true);
-            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(-12, 16, 0), true);
-            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(-8, 24, 0), true);
-
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(0, 8, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(6, 16, 0), true);
+            d.SystemePlanetaire[1].ajouterTourelle(TurretType.Basic, 3, new Vector3(-6, 24, 0), true);
+            
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-400, 150, 0), "1-3", "planete1", 0, 3);
             d.SystemePlanetaire[2].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             
             d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(-150, 30, 0), "1-4", "planete2", 0, 4);
             d.SystemePlanetaire[3].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(-10, 10, 0), true);
-            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(16, -12, 0), true);
-            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(0, -20, 0), true);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(-3, 10, 0), true);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(10, -6, 0), true);
+            d.SystemePlanetaire[3].ajouterTourelle(TurretType.Laser, 5, new Vector3(0, -10, 0), true);
 
-            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(0, 250, 0), "1-5", "planete3", 0, 5);
+            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(0, 200, 0), "1-5", "planete3", 0, 5);
             d.SystemePlanetaire[4].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
-            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(100, 125, 0), "1-6", "planete4", 0, 6);
+            d.ajouterCorpsCeleste(Taille.Petite, new Vector3(100, 75, 0), "1-6", "planete4", 0, 6);
             d.SystemePlanetaire[5].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             d.SystemePlanetaire[5].ajouterTourelle(TurretType.MultipleLasers, 1, new Vector3(5, 5, 0), true);
 
-            d.ajouterCorpsCeleste(Taille.Grande, new Vector3(400, 200, 0), "1-7", "planete5", 0, 7);
+            d.ajouterCorpsCeleste(Taille.Grande, new Vector3(400, 150, 0), "1-7", "planete5", 0, 7);
             d.SystemePlanetaire[6].ajouterTourelle(TurretType.Gravitational, 2, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[6].ajouterTourelle(TurretType.Missile, 2, new Vector3(-20, -18, 0), true);
-            d.SystemePlanetaire[6].ajouterTourelle(TurretType.SlowMotion, 4, new Vector3(-8, -22, 0), true);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.Missile, 2, new Vector3(-14, -9, 0), true);
+            d.SystemePlanetaire[6].ajouterTourelle(TurretType.SlowMotion, 4, new Vector3(0, -12, 0), true);
 
-            d.ajouterCorpsCeleste(Taille.Grande, new Vector3(450, -100, 0), "1-8", "planete6", 0, 8);
+            d.ajouterCorpsCeleste(Taille.Grande, new Vector3(450, -150, 0), "1-8", "planete6", 0, 8);
             d.SystemePlanetaire[7].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             
-            d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(200, -150, 0), "1-9", "planete7", 0, 9);
+            d.ajouterCorpsCeleste(Taille.Moyenne, new Vector3(200, -200, 0), "1-9", "planete7", 0, 9);
             d.SystemePlanetaire[8].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
-            d.SystemePlanetaire[8].ajouterTourelle(TurretType.SlowMotion, 4, new Vector3(12, -5, 0), true);
+            d.SystemePlanetaire[8].ajouterTourelle(TurretType.SlowMotion, 4, new Vector3(12, 2, 0), true);
 
             d.ajouterTrouRose(new Vector3(-50, -220, 0), "Go to World 2!", 0, 10);
             d.SystemePlanetaire[9].ajouterTourelle(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);

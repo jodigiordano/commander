@@ -184,8 +184,11 @@
     <Compile Include="Editeur\SimulationLite.cs" />
     <Compile Include="Editeur\Descripteurs.cs" />
     <Compile Include="Editeur\GenerateurScenario.cs" />
+    <Compile Include="Simulation\Factories\MineralDefinition.cs" />
+    <Compile Include="Simulation\Factories\MineralsFactory.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\FinalSolutionPreview.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\PathPreview.cs" />
+    <Compile Include="Simulation\GUI\Animations\MineralTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
     <Compile Include="Simulation\GUI\Annunciations\ScenarioEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\Bulle.cs" />
@@ -235,7 +238,7 @@
     <Compile Include="Simulation\Mineral.cs" />
     <Compile Include="Simulation\Spaceships\VaisseauCollecteur.cs" />
     <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
-    <Compile Include="Simulation\Factories\FactoryEnnemis.cs" />
+    <Compile Include="Simulation\Factories\EnemiesFactory.cs" />
     <Compile Include="Simulation\Turrets\TurretLevel.cs" />
     <Compile Include="Player\SaveGame.cs" />
     <Compile Include="Simulation\Scenario.cs" />

@@ -26,6 +26,8 @@ namespace EphemereGames.Commander
         public Dictionary<PlayerIndex, Player> Players;
         public GameAction GameAction;
         public TurretsFactory TurretFactory;
+        public EnemiesFactory EnemiesFactory;
+        public MineralsFactory MineralsFactory;
         public RectanglePhysique Terrain;
         public GameState Etat { get { return ScenarioController.State; } set { ScenarioController.State = value; } }
         public bool HelpMode { get { return ScenarioController.Help.Active; } }
@@ -53,6 +55,8 @@ namespace EphemereGames.Commander
             Main = main;
             DescriptionScenario = scenario;
             TurretFactory = new TurretsFactory(this);
+            EnemiesFactory = new EnemiesFactory(this);
+            MineralsFactory = new MineralsFactory(this);
 
 #if DEBUG
             this.Debug = true;
@@ -193,7 +197,7 @@ namespace EphemereGames.Commander
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(SimPlayersController.doObjetCree);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(GUIController.doObjectCreated);
             ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(GUIController.doObjectDestroyed);
-            ScenarioController.NewGameState += new NewGameStateHandler(this.doNewGameState);
+            ScenarioController.NewGameState += new NewGameStateHandler(this.doNewGameState); //must come after GUIController.doGameStateChanged
             ScenarioController.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
 
             SimPlayersController.TurretToPlaceSelected += new TurretHandler(GUIController.doTurretToPlaceSelected);
@@ -257,6 +261,9 @@ namespace EphemereGames.Commander
             ScenarioController.Update(gameTime);
 
             if (ScenarioController.Help.Active)
+                return;
+
+            if (Etat == GameState.Paused)
                 return;
 
             ControleurCollisions.Update(gameTime);
@@ -359,6 +366,10 @@ namespace EphemereGames.Commander
             {
                 if (key == p.KeyboardConfiguration.Cancel)
                     ScenarioController.Help.Skip();
+                if (key == p.KeyboardConfiguration.Next)
+                    ScenarioController.Help.NextDirective();
+                if (key == p.KeyboardConfiguration.Back)
+                    ScenarioController.Help.PreviousDirective();
 
                 return;
             }

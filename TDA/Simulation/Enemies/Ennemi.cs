@@ -9,15 +9,10 @@ namespace EphemereGames.Commander
 
     class Ennemi : IObjetPhysique, IObjetVivant
     {
-        private static int NEXT_ID = 0;
         public static int NextID { get { return NEXT_ID++; } }
-
         public delegate void RelaisAtteintHandler(Ennemi ennemi);
         public event RelaisAtteintHandler RelaisAtteint;
-
         public int Id;
-
-        private Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
         public float Vitesse                                        { get; set; }
         public float Rotation                                       { get; set; }
@@ -26,26 +21,20 @@ namespace EphemereGames.Commander
         public Cercle Cercle                                        { get; set; }
         public Ligne Ligne                                          { get; set; }
         public RectanglePhysique Rectangle                          { get; set; }
-
         public float PointsVie                                      { get; set; }
         public float PointsVieDepart                                { get; set; }
         public float PointsAttaque                                  { get; set; }
-
         public int ValeurUnites;
         public int ValeurPoints;
-
         public float Resistance;
-
         public bool EstVivant                                      { get { return PointsVie > 0; } }
         public bool FinCheminProjection                            { get { return Deplacement > CheminProjection.Longueur; } }
-
         public IVisible RepresentationVivant;
         public IVisible RepresentationMort;
         public ParticuleEffectWrapper RepresentationExplose;
         public ParticuleEffectWrapper RepresentationDeplacement;
-
         public float VitesseRotation;
-        public Path Chemin;
+        public Path Path;
         public Path CheminProjection;
         public double Deplacement;
         public Simulation Simulation;
@@ -57,6 +46,9 @@ namespace EphemereGames.Commander
         public Color Couleur;
 
         private ParticuleEffectWrapper EtincellesLaserMultiple, EtincellesMissile, EtincellesLaserSimple, EtincellesSlowMotion;
+        private static int NEXT_ID = 0;
+        private Vector3 position;
+        private float VisualPriority;
 
 
         public Ennemi()
@@ -92,21 +84,24 @@ namespace EphemereGames.Commander
             EtincellesSlowMotion = Simulation.Scene.Particules.recuperer("etincelleSlowMotionTouche");
             RepresentationExplose = Simulation.Scene.Particules.recuperer("explosionEnnemi");
 
+            VisualPriority = EnemiesFactory.GetVisualPriority(Type, 0);
+            RepresentationVivant.VisualPriority = VisualPriority;
+            RepresentationExplose.VisualPriority = VisualPriority - 0.001f;
+            EtincellesLaserMultiple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+            EtincellesMissile.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+            EtincellesLaserSimple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+            EtincellesSlowMotion.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+
             Resistance = 0;
             Deplacement = 0;
 
-            Rectangle.Width = Rectangle.Height = FactoryEnnemis.Instance.getTaille(Type);
+            Rectangle.Width = Rectangle.Height = EnemiesFactory.GetSize(Type);
             Cercle.Radius = Rectangle.Width / 2 - 3;
 
             Rectangle.X = (int)Position.X - Rectangle.Width / 2;
             Rectangle.Y = (int)Position.Y - Rectangle.Height / 2;
             Cercle.Position.X = Position.X - Cercle.Radius;
             Cercle.Position.Y = Position.Y - Cercle.Radius;
-
-            EtincellesLaserMultiple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
-            EtincellesMissile.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
-            EtincellesLaserSimple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
-            EtincellesSlowMotion.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
 
             ProjectMercury.VariableFloat3 float3 = new ProjectMercury.VariableFloat3();
             float3.Value = Couleur.ToVector3();
@@ -115,10 +110,6 @@ namespace EphemereGames.Commander
             RepresentationDeplacement = null;
 
             VitesseRotation = Main.Random.Next(-5, 6) / 100.0f;
-
-            RepresentationVivant.VisualPriority = Preferences.PrioriteSimulationEnnemi;
-            RepresentationMort.VisualPriority = Preferences.PrioriteSimulationEnnemi;
-            RepresentationExplose.VisualPriority = Preferences.PrioriteSimulationEnnemi - 0.001f;
 
             Mineraux.Clear();
         }
@@ -130,11 +121,11 @@ namespace EphemereGames.Commander
 
             Deplacement += Math.Max(this.Vitesse - this.Resistance, 0);
 
-            Chemin.Position(Deplacement, ref position);
+            Path.Position(Deplacement, ref position);
             Vector3.Add(ref position, ref this.Translation, out position);
 
 
-            if (Deplacement > Chemin.Longueur)
+            if (Deplacement > Path.Longueur)
                 notifyRelaisAtteint(this);
 
             Rectangle.X = (int)Position.X - Rectangle.Width / 2;
@@ -152,10 +143,21 @@ namespace EphemereGames.Commander
 
         public void Draw(GameTime gameTime)
         {
+            float pourcPath = Path.Pourc(Deplacement);
+
+            if (pourcPath > 0.95f)
+                VisualPriority = EnemiesFactory.GetVisualPriority(Type, pourcPath);
+
             if (EstVivant)
+            {
                 RepresentationVivant.Position = Position;
+                RepresentationVivant.VisualPriority = VisualPriority + pourcPath / 1000f;
+            }
             else
+            {
                 RepresentationMort.Position = Position;
+                RepresentationMort.VisualPriority = VisualPriority + pourcPath / 1000f;
+            }
 
             Simulation.Scene.ajouterScenable(EstVivant ? RepresentationVivant : RepresentationMort);
         }
@@ -226,7 +228,7 @@ namespace EphemereGames.Commander
             Simulation.Scene.Particules.retourner(RepresentationExplose);
 
             RelaisAtteint = null;
-            FactoryEnnemis.Instance.retournerEnnemi(this);
+            Simulation.EnemiesFactory.ReturnEnemy(this);
         }
 
 

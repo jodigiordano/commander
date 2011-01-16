@@ -29,7 +29,7 @@
             Bla.VisualPriority = prioriteAffichage;
 
             Filtre = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
-            Filtre.Couleur = new Color(0, 0, 0, 128);
+            Filtre.Couleur = new Color(0, 0, 0, 200);
             Filtre.VisualPriority = prioriteAffichage + 0.02f;
 
 

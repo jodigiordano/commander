@@ -57,14 +57,14 @@
 
         public void doShow()
         {
-            Scene.Effets.Add(Representation, PredefinedEffects.FadeInFrom0(255, 0, 250));
+            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
             Actif = true;
         }
 
 
         public void doHide()
         {
-            Scene.Effets.Add(Representation, PredefinedEffects.FadeOutTo0(255, 0, 250));
+            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
             Actif = false;
         }
 

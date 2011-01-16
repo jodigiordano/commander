@@ -73,7 +73,7 @@
             }
 
             if (Main.Random.Next(0, 1000) == 0)
-                Simulation.Scene.Animations.Insert(Simulation.Scene, new AnimationEtoileFilante(Simulation));
+                Simulation.Scene.Animations.Insert(new AnimationEtoileFilante(Simulation));
 
             ElapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
         }

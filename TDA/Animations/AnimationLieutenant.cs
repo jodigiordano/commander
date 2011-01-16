@@ -102,17 +102,17 @@ namespace EphemereGames.Commander
 
         public void doShow()
         {
-            GE.Add(Bubble, PredefinedEffects.FadeInFrom0(255, 0, 250));
-            GE.Add(TheLieutenant, PredefinedEffects.FadeInFrom0(255, 0, 250));
-            GE.Add(TypeWriter.Texte, PredefinedEffects.FadeInFrom0(255, 0, 250));
+            GE.Add(Bubble, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
+            GE.Add(TheLieutenant, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
+            GE.Add(TypeWriter.Texte, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
         }
 
 
         public void doHide()
         {
-            GE.Add(Bubble, PredefinedEffects.FadeOutTo0(255, 0, 250));
-            GE.Add(TheLieutenant, PredefinedEffects.FadeOutTo0(255, 0, 250));
-            GE.Add(TypeWriter.Texte, PredefinedEffects.FadeOutTo0(255, 0, 250));
+            GE.Add(Bubble, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
+            GE.Add(TheLieutenant, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
+            GE.Add(TypeWriter.Texte, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
         }
 
 

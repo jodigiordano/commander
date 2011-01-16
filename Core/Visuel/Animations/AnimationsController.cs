@@ -7,15 +7,22 @@
 
     public class AnimationsController
     {
-        private List<Animation> animations = new List<Animation>();
+        private Scene Scene;
+        private List<Animation> Animations = new List<Animation>();
+
+
+        public AnimationsController(Scene scene)
+        {
+            Scene = scene;
+        }
 
 
         public Animation First
         {
             get
             {
-                if (animations.Count > 0)
-                    return animations[0];
+                if (Animations.Count > 0)
+                    return Animations[0];
                 
                 else
                     return null;
@@ -25,62 +32,62 @@
 
         public List<Animation> Components
         {
-            get { return animations; }
+            get { return Animations; }
         }
 
 
-        public void Insert(Scene scene, Animation animation)
+        public void Insert(Animation animation)
         {
-            animation.Scene = scene;
+            animation.Scene = Scene;
             animation.Initialize();
 
-            animations.Add(animation);
+            Animations.Add(animation);
         }
 
 
-        public void Insert(Scene scene, List<Animation> animations)
+        public void Insert(List<Animation> animations)
         {
             foreach (var animation in animations)
-                Insert(scene, animation);
+                Insert(animation);
         }
 
 
         public void Update(GameTime gameTime)
         {
-            for (int i = 0; i < animations.Count; i++)
+            for (int i = 0; i < Animations.Count; i++)
             {
-                if (animations[i].Paused) { continue; }
+                if (Animations[i].Paused) { continue; }
 
-                if (animations[i].Finished(gameTime))
+                if (Animations[i].Finished(gameTime))
                 {
-                    animations[i].Stop();
-                    animations.RemoveAt(i);
+                    Animations[i].Stop();
+                    Animations.RemoveAt(i);
                     i--;
                     continue;
                 }
 
-                animations[i].Update(gameTime);
+                Animations[i].Update(gameTime);
             }
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < animations.Count; i++)
-                animations[i].Draw(spriteBatch);
+            for (int i = 0; i < Animations.Count; i++)
+                Animations[i].Draw(spriteBatch);
         }
 
 
         public void PauseAll()
         {
-            for (int i = 0; i < animations.Count; i++)
-                animations[i].Paused = true;
+            for (int i = 0; i < Animations.Count; i++)
+                Animations[i].Paused = true;
         }
 
 
         public void Clear()
         {
-            animations.Clear();
+            Animations.Clear();
         }
     }
 }

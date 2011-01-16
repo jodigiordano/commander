@@ -8,21 +8,20 @@
     using EphemereGames.Core.Physique;
     using EphemereGames.Core.Utilities;
     
-    class PushButton : DrawableGameComponent
+
+    class PushButton
     {
-        private Main Main;
+        public bool Pressed;
+
         private Scene Scene; 
         private Cursor Curseur;
         public IVisible Bouton;
         private Cercle BoutonCercle;
         private Vector3 Position;
 
-        public bool Pressed;
 
-        public PushButton(Main main, Scene scene, Cursor curseur, Vector3 position, float priorite)
-            : base(main)
+        public PushButton(Scene scene, Cursor curseur, Vector3 position, float priorite)
         {
-            Main = main;
             Scene = scene;
             Curseur = curseur;
             Position = position;
@@ -42,13 +41,13 @@
         }
 
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             Pressed = false;
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public void Draw()
         {
             Scene.ajouterScenable(Bouton);
         }

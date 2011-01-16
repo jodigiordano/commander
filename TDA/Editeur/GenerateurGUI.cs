@@ -1,12 +1,10 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Physique;
-    using EphemereGames.Core.Utilities;
+
 
     public struct DonneesGenerateur
     {
@@ -35,8 +33,11 @@
         public int ArgentEnnemis;
     }
 
-    class GenerateurGUI : DrawableGameComponent
+
+    class GenerateurGUI
     {
+        public bool Visible;
+
         private DonneesGenerateur DonneesGenerateur;
         private DescripteurScenario DescriptionScenario;
 
@@ -44,6 +45,7 @@
         private GenerateurScenario GenerateurScenario;
         private GenerateurVagues GenerateurVagues;
         private Vector3 Position;
+
 
         #region Systeme Planetaire
         private IVisible FiltreSystemePlanetaire;
@@ -153,10 +155,10 @@
         #endregion
 
         public GenerateurGUI(Simulation simulation, Cursor curseur, Vector3 position)
-            : base(simulation.Main)
         {
             Simulation = simulation;
             Position = position;
+            Visible = true;
 
             #region Systeme Planetaire
 
@@ -176,45 +178,45 @@
             NbPlanetesRep.Taille = 2;
             NbPlanetesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            NbPlanetesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 210, 0), 1, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            NbPlanetesSlider = new HorizontalSlider(Simulation.Scene, curseur, Position - new Vector3(-150, 210, 0), 1, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             NbPlanetesFixesRep = new IVisible("Fixed planets", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 180, 0));
             NbPlanetesFixesRep.Taille = 2;
             NbPlanetesFixesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            NbPlanetesFixesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 170, 0), 0, 15, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            NbPlanetesFixesSlider = new HorizontalSlider(Simulation.Scene, curseur, Position - new Vector3(-150, 170, 0), 0, 15, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             NbEmplacementsRep = new IVisible("Slots", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 140, 0));
             NbEmplacementsRep.Taille = 2;
             NbEmplacementsRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            NbEmplacementsSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 130, 0), 1, 50, 10, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            NbEmplacementsSlider = new HorizontalSlider(Simulation.Scene, curseur, Position - new Vector3(-150, 130, 0), 1, 50, 10, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             NbPlanetesCheminDepartRep = new IVisible("Path length", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 100, 0));
             NbPlanetesCheminDepartRep.Taille = 2;
             NbPlanetesCheminDepartRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            NbPlanetesCheminDepartSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-150, 90, 0), 0, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            NbPlanetesCheminDepartSlider = new HorizontalSlider(Simulation.Scene, curseur, Position - new Vector3(-150, 90, 0), 0, 15, 3, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             EtoileRep = new IVisible("Star in the middle?", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 60, 0));
             EtoileRep.Taille = 2;
             EtoileRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            EtoileCheckBox = new CheckBox(Simulation, curseur, Position - new Vector3(-200, 50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            EtoileCheckBox = new CheckBox(Simulation.Scene, curseur, Position - new Vector3(-200, 50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             SystemeCentreRep = new IVisible("Centre?", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(250, 20, 0));
             SystemeCentreRep.Taille = 2;
             SystemeCentreRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            SystemeCentreCheckBox = new CheckBox(Simulation, curseur, Position - new Vector3(-200, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            SystemeCentreCheckBox = new CheckBox(Simulation.Scene, curseur, Position - new Vector3(-200, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             GenererSystemePlanetaireRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position - new Vector3(-90, -40, 0));
             GenererSystemePlanetaireRep.Taille = 2;
             GenererSystemePlanetaireRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            GenererSystemePlanetairePushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, Position - new Vector3(-240, -50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            GenererSystemePlanetairePushButton = new PushButton(Simulation.Scene, curseur, Position - new Vector3(-240, -50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             #endregion
 
@@ -235,28 +237,28 @@
             ReserveDepartRep.Taille = 2;
             ReserveDepartRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            ReserveDepartSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 110, 0), 0, 10000, 0, 100, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            ReserveDepartSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 110, 0), 0, 10000, 0, 100, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             NbViesRep = new IVisible("Lives", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 80, 0));
             NbViesRep.Taille = 2;
             NbViesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            NbViesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 70, 0), 1, 50, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            NbViesSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 70, 0), 1, 50, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             ValeurMinerauxRep = new IVisible("Enemies minerals", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 40, 0));
             ValeurMinerauxRep.Taille = 2;
             ValeurMinerauxRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            ValeurMinerauxSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 30, 0), 0, 5000, 250, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            ValeurMinerauxSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, 30, 0), 0, 5000, 250, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             NbPacksVieRep = new IVisible("Life packs", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(250, 0, 0));
             NbPacksVieRep.Taille = 2;
             NbPacksVieRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            NbPacksVieSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, -10, 0), 0, 20, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            NbPacksVieSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, -10, 0), 0, 20, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             TourellesRep = new Dictionary<TurretType, IVisible>();
             TourellesCheckBoxes = new Dictionary<TurretType, CheckBox>();
@@ -270,7 +272,7 @@
                 iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
                 TourellesRep.Add(tourelle.Type, iv);
-                TourellesCheckBoxes.Add(tourelle.Type, new CheckBox(Simulation, curseur, iv.Position + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+                TourellesCheckBoxes.Add(tourelle.Type, new CheckBox(Simulation.Scene, curseur, iv.Position + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
 
                 TourellesCheckBoxes[tourelle.Type].Checked = true;
 
@@ -287,7 +289,7 @@
             PowerUpsRep[PowerUp.DoItYourself].Taille = 4;
             PowerUpsRep[PowerUp.DoItYourself].Origine = PowerUpsRep[PowerUp.DoItYourself].Centre;
             PowerUpsRep[PowerUp.DoItYourself].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.DoItYourself, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes.Add(PowerUp.DoItYourself, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.DoItYourself].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
@@ -295,7 +297,7 @@
             PowerUpsRep[PowerUp.CollectTheRent].Taille = 4;
             PowerUpsRep[PowerUp.CollectTheRent].Origine = PowerUpsRep[PowerUp.CollectTheRent].Centre;
             PowerUpsRep[PowerUp.CollectTheRent].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.CollectTheRent, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes.Add(PowerUp.CollectTheRent, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.CollectTheRent].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
@@ -303,7 +305,7 @@
             PowerUpsRep[PowerUp.FinalSolution].Taille = 4;
             PowerUpsRep[PowerUp.FinalSolution].Origine = PowerUpsRep[PowerUp.FinalSolution].Centre;
             PowerUpsRep[PowerUp.FinalSolution].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.FinalSolution, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes.Add(PowerUp.FinalSolution, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.FinalSolution].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
@@ -311,7 +313,7 @@
             PowerUpsRep[PowerUp.TheResistance].Taille = 4;
             PowerUpsRep[PowerUp.TheResistance].Origine = PowerUpsRep[PowerUp.TheResistance].Centre;
             PowerUpsRep[PowerUp.TheResistance].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.TheResistance, new CheckBox(Simulation, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes.Add(PowerUp.TheResistance, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
             PowerUpsCheckBoxes[PowerUp.TheResistance].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
@@ -319,7 +321,7 @@
             GenererGameplayRep.Taille = 2;
             GenererGameplayRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            GenererGameplayPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-240, -140, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            GenererGameplayPushButton = new PushButton(Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-240, -140, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             #endregion
@@ -343,35 +345,35 @@
             NbVaguesRep.Taille = 2;
             NbVaguesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            NbVaguesSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 40, 0), 1, 30, 1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            NbVaguesSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 40, 0), 1, 30, 1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             QteEnnemisRep = new IVisible("Quantity", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, 10, 0));
             QteEnnemisRep.Taille = 2;
             QteEnnemisRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            QteEnnemisSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 0, 0), 20, 1000, 20, 20, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            QteEnnemisSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, 0, 0), 20, 1000, 20, 20, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             ReserveEnnemisRep = new IVisible("Money", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(550, -30, 0));
             ReserveEnnemisRep.Taille = 2;
             ReserveEnnemisRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            ReserveEnnemisSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, -40, 0), 0, 10000, 0, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            ReserveEnnemisSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(300, -40, 0), 0, 10000, 0, 250, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             DifficulteDebutRep = new IVisible("Diff. start", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(200, 30, 0));
             DifficulteDebutRep.Taille = 2;
             DifficulteDebutRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            DifficulteDebutSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-100, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            DifficulteDebutSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-100, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             DifficulteFinRep = new IVisible("Diff. end", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-200, 30, 0));
             DifficulteFinRep.Taille = 2;
             DifficulteFinRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            DifficulteFinSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-450, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            DifficulteFinSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-450, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
  
             EnnemisDisponiblesRep = new Dictionary<EnemyType, IVisible>();
@@ -379,7 +381,7 @@
 
             Vector3 positionEnnemis = FiltreWaves.Position - new Vector3(190, -30, 0);
 
-            foreach (var ennemi in FactoryEnnemis.Instance.GetEnnemisDisponibles(Simulation))
+            foreach (var ennemi in Simulation.EnemiesFactory.AvailableEnemies)
             {
                 ennemi.Initialize();
                 IVisible iv = (IVisible)ennemi.RepresentationVivant.Clone();
@@ -387,7 +389,7 @@
                 iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
                 EnnemisDisponiblesRep.Add(ennemi.Type, iv);
-                EnnemisDisponiblesCheckBoxes.Add(ennemi.Type, new CheckBox(Simulation, curseur, iv.Position + new Vector3(45, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+                EnnemisDisponiblesCheckBoxes.Add(ennemi.Type, new CheckBox(Simulation.Scene, curseur, iv.Position + new Vector3(45, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
 
                 EnnemisDisponiblesCheckBoxes[ennemi.Type].Checked = true;
 
@@ -399,7 +401,7 @@
             GenererVaguesRep.Taille = 2;
             GenererVaguesRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            GenererVaguesPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-540, -50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            GenererVaguesPushButton = new PushButton(Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-540, -50, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             #endregion
@@ -422,35 +424,35 @@
             LoadRep.Taille = 2;
             LoadRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            LoadSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, 10, 0), -1, 1000, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
-            LoadPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            LoadSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, 10, 0), -1, 1000, 0, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            LoadPushButton = new PushButton(Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             DeleteRep = new IVisible("Delete", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(350, -20, 0));
             DeleteRep.Taille = 2;
             DeleteRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            DeleteSlider = new HorizontalSlider(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, -30, 0), -1, 1000, -1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
-            DeletePushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, -30, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            DeleteSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(150, -30, 0), -1, 1000, -1, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            DeletePushButton = new PushButton(Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(50, -30, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             GenererRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(-175, 20, 0));
             GenererRep.Taille = 2;
             GenererRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            GenererPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-330, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            GenererPushButton = new PushButton(Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-330, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             RestartRep = new IVisible("Restart", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, 20, 0));
             RestartRep.Taille = 2;
             RestartRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            RestartPushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-150, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            RestartPushButton = new PushButton(Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-150, 10, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
 
             SaveRep = new IVisible("Save", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreEditeur.Position - new Vector3(0, -20, 0));
             SaveRep.Taille = 2;
             SaveRep.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-            SavePushButton = new PushButton(Simulation.Main, Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-150, -30, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
+            SavePushButton = new PushButton(Simulation.Scene, curseur, FiltreEditeur.Position - new Vector3(-150, -30, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
             #endregion
 
@@ -459,45 +461,10 @@
         }
 
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (!Visible)
                 return;
-
-            NbPlanetesSlider.Update(gameTime);
-            NbEmplacementsSlider.Update(gameTime);
-            GenererPushButton.Update(gameTime);
-            NbPlanetesFixesSlider.Update(gameTime);
-            NbPlanetesCheminDepartSlider.Update(gameTime);
-            NbViesSlider.Update(gameTime);
-            ValeurMinerauxSlider.Update(gameTime);
-            NbPacksVieSlider.Update(gameTime);
-            EtoileCheckBox.Update(gameTime);
-            ReserveDepartSlider.Update(gameTime);
-            LoadPushButton.Update(gameTime);
-            LoadSlider.Update(gameTime);
-            DeletePushButton.Update(gameTime);
-            DeleteSlider.Update(gameTime);
-            RestartPushButton.Update(gameTime);
-            SavePushButton.Update(gameTime);
-            NbVaguesSlider.Update(gameTime);
-            QteEnnemisSlider.Update(gameTime);
-            DifficulteDebutSlider.Update(gameTime);
-            DifficulteFinSlider.Update(gameTime);
-            GenererSystemePlanetairePushButton.Update(gameTime);
-            GenererVaguesPushButton.Update(gameTime);
-            GenererGameplayPushButton.Update(gameTime);
-            ReserveEnnemisSlider.Update(gameTime);
-            SystemeCentreCheckBox.Update(gameTime);
-
-            foreach (var tourelle in TourellesCheckBoxes)
-                tourelle.Value.Update(gameTime);
-
-            foreach (var powerUp in PowerUpsCheckBoxes)
-                powerUp.Value.Update(gameTime);
-
-            foreach (var ennemi in EnnemisDisponiblesCheckBoxes)
-                ennemi.Value.Update(gameTime);
 
             NbPlanetesFixesSlider.Valeur = (int)MathHelper.Clamp(NbPlanetesFixesSlider.Valeur, NbPlanetesFixesSlider.Min, NbPlanetesSlider.Valeur);
             NbPlanetesCheminDepartSlider.Valeur = (int)MathHelper.Clamp(NbPlanetesCheminDepartSlider.Valeur, 0, NbPlanetesSlider.Valeur);
@@ -640,9 +607,58 @@
 
             //    EphemereGames.Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
             //}
+
+            GenererPushButton.Update(gameTime);
+            LoadPushButton.Update(gameTime);
+            DeletePushButton.Update(gameTime);
+            RestartPushButton.Update(gameTime);
+            SavePushButton.Update(gameTime);
+            GenererSystemePlanetairePushButton.Update(gameTime);
+            GenererVaguesPushButton.Update(gameTime);
+            GenererGameplayPushButton.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+
+        public void DoClick()
+        {
+            NbPlanetesSlider.doClick();
+            NbEmplacementsSlider.doClick();
+            NbPlanetesFixesSlider.doClick();
+            NbPlanetesCheminDepartSlider.doClick();
+            NbViesSlider.doClick();
+            ValeurMinerauxSlider.doClick();
+            NbPacksVieSlider.doClick();
+            EtoileCheckBox.doClick();
+            ReserveDepartSlider.doClick();
+            LoadSlider.doClick();
+            DeleteSlider.doClick();
+            NbVaguesSlider.doClick();
+            QteEnnemisSlider.doClick();
+            DifficulteDebutSlider.doClick();
+            DifficulteFinSlider.doClick();
+            ReserveEnnemisSlider.doClick();
+            SystemeCentreCheckBox.doClick();
+            GenererPushButton.doClick();
+            LoadPushButton.doClick();
+            DeletePushButton.doClick();
+            RestartPushButton.doClick();
+            SavePushButton.doClick();
+            GenererSystemePlanetairePushButton.doClick();
+            GenererVaguesPushButton.doClick();
+            GenererGameplayPushButton.doClick();
+
+            foreach (var tourelle in TourellesCheckBoxes)
+                tourelle.Value.doClick();
+
+            foreach (var powerUp in PowerUpsCheckBoxes)
+                powerUp.Value.doClick();
+
+            foreach (var ennemi in EnnemisDisponiblesCheckBoxes)
+                ennemi.Value.doClick();
+        }
+
+
+        public void Draw()
         {
             if (!Visible)
                 return;
@@ -672,19 +688,19 @@
                 Simulation.Scene.ajouterScenable(tourelle.Value);
             
             foreach (var tourelle in TourellesCheckBoxes)
-                tourelle.Value.Draw(gameTime);
+                tourelle.Value.Draw();
 
             foreach (var powerUp in PowerUpsRep)
                 Simulation.Scene.ajouterScenable(powerUp.Value);
 
             foreach (var powerUp in PowerUpsCheckBoxes)
-                powerUp.Value.Draw(gameTime);
+                powerUp.Value.Draw();
 
             foreach (var ennemi in EnnemisDisponiblesRep)
                 Simulation.Scene.ajouterScenable(ennemi.Value);
 
             foreach (var ennemi in EnnemisDisponiblesCheckBoxes)
-                ennemi.Value.Draw(gameTime);
+                ennemi.Value.Draw();
 
 
             Simulation.Scene.ajouterScenable(FiltreEditeur);
@@ -706,33 +722,33 @@
 
             Simulation.Scene.ajouterScenable(SystemeCentreRep);
 
-            SystemeCentreCheckBox.Draw(gameTime);
-            LoadSlider.Draw(gameTime);
-            DeletePushButton.Draw(gameTime);
-            DeleteSlider.Draw(gameTime);
+            SystemeCentreCheckBox.Draw();
+            LoadSlider.Draw();
+            DeletePushButton.Draw();
+            DeleteSlider.Draw();
 
-            NbVaguesSlider.Draw(gameTime);
-            QteEnnemisSlider.Draw(gameTime);
-            DifficulteDebutSlider.Draw(gameTime);
-            DifficulteFinSlider.Draw(gameTime);
-            ReserveEnnemisSlider.Draw(gameTime);
+            NbVaguesSlider.Draw();
+            QteEnnemisSlider.Draw();
+            DifficulteDebutSlider.Draw();
+            DifficulteFinSlider.Draw();
+            ReserveEnnemisSlider.Draw();
 
-            NbPlanetesSlider.Draw(gameTime);
-            NbEmplacementsSlider.Draw(gameTime);
-            NbPlanetesFixesSlider.Draw(gameTime);
-            GenererPushButton.Draw(gameTime);
-            NbPlanetesCheminDepartSlider.Draw(gameTime);
-            NbViesSlider.Draw(gameTime);
-            ValeurMinerauxSlider.Draw(gameTime);
-            NbPacksVieSlider.Draw(gameTime);
-            EtoileCheckBox.Draw(gameTime);
-            ReserveDepartSlider.Draw(gameTime);
-            LoadPushButton.Draw(gameTime);
-            RestartPushButton.Draw(gameTime);
-            SavePushButton.Draw(gameTime);
-            GenererSystemePlanetairePushButton.Draw(gameTime);
-            GenererVaguesPushButton.Draw(gameTime);
-            GenererGameplayPushButton.Draw(gameTime);
+            NbPlanetesSlider.Draw();
+            NbEmplacementsSlider.Draw();
+            NbPlanetesFixesSlider.Draw();
+            GenererPushButton.Draw();
+            NbPlanetesCheminDepartSlider.Draw();
+            NbViesSlider.Draw();
+            ValeurMinerauxSlider.Draw();
+            NbPacksVieSlider.Draw();
+            EtoileCheckBox.Draw();
+            ReserveDepartSlider.Draw();
+            LoadPushButton.Draw();
+            RestartPushButton.Draw();
+            SavePushButton.Draw();
+            GenererSystemePlanetairePushButton.Draw();
+            GenererVaguesPushButton.Draw();
+            GenererGameplayPushButton.Draw();
         }
 
         private void updateSystemePlanetaire()

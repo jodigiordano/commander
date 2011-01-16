@@ -69,9 +69,8 @@
             {
                 var desc = EnemiesToCreate[i];
 
-                Ennemi e = FactoryEnnemis.Instance.creerEnnemi
+                Ennemi e = Simulation.EnemiesFactory.CreateEnemy
                 (
-                    Simulation,
                     desc.Type,
                     desc.SpeedLevel,
                     desc.LivesLevel,

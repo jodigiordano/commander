@@ -1,17 +1,17 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Physique;
-    using EphemereGames.Core.Utilities;
-    
-    class HorizontalSlider : DrawableGameComponent
+
+
+    class HorizontalSlider
     {
+        public int Valeur, Min, Max, Increment;
+
         private Scene Scene;
-        private Main Main;
         private Cursor Curseur;
         private IVisible Gauche;
         private IVisible Droite;
@@ -19,13 +19,10 @@
         private Vector3 Position;
         private Cercle GaucheCercle;
         private Cercle DroiteCercle;
+        
 
-        public int Valeur, Min, Max, Increment;
-
-        public HorizontalSlider(Main main, Scene scene, Cursor curseur, Vector3 position, int min, int max, int valeur, int increment, float priorite)
-            : base(main)
+        public HorizontalSlider(Scene scene, Cursor curseur, Vector3 position, int min, int max, int valeur, int increment, float priorite)
         {
-            Main = main;
             Scene = scene;
             Curseur = curseur;
             Position = position;
@@ -62,7 +59,7 @@
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public void Draw()
         {
             ValeurRep.Texte = Valeur.ToString();
 

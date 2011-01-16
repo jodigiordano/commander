@@ -79,7 +79,7 @@
             titre.Origine = titre.Centre;
             titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-#if WINDOWS && !MANETTE_WINDOWS
+#if WINDOWS
             slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpControlsWin"), new Vector3(0, 50, 0));
 #else
             slide = new IVisible(EphemereGames.Core.Persistance.Facade.recuperer<Texture2D>("HelpControls"), new Vector3(0, 50, 0));
@@ -101,29 +101,39 @@
 
             TitresSlides.Add(new KeyValuePair<IVisible, IVisible>(titre, slide));
 
-            titre = new IVisible("Help:Mercenaries", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
+            titre = new IVisible("Help:Turrets/Power-ups", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
             titre.Taille = 4;
             titre.Origine = titre.Centre;
             titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpMercenaries"), new Vector3(0, 50, 0));
+#if WINDOWS
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpMercenariesWin"), new Vector3(0, 50, 0));
+#else
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.recuperer<Texture2D>("HelpMercenaries"), new Vector3(0, 50, 0));
+#endif
+
             slide.Origine = slide.Centre;
             slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<IVisible, IVisible>(titre, slide));
 
-            titre = new IVisible("Help:The Resistance", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
+            titre = new IVisible("Help:Other", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(0, -300, 0));
             titre.Taille = 4;
             titre.Origine = titre.Centre;
             titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpTheResistance"), new Vector3(0, 50, 0));
+#if WINDOWS
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpTheResistanceWin"), new Vector3(0, 50, 0));
+#else
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.recuperer<Texture2D>("HelpTheResistance"), new Vector3(0, 50, 0));
+#endif
+
             slide.Origine = slide.Centre;
             slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<IVisible, IVisible>(titre, slide));
 
-            SlidesSlider = new HorizontalSlider(Main, this, Curseur, new Vector3(0, -250, 0), 0, 3, 0, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
+            SlidesSlider = new HorizontalSlider(this, Curseur, new Vector3(0, -250, 0), 0, 3, 0, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
             AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
@@ -145,7 +155,6 @@
                 return;
 
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            SlidesSlider.Update(gameTime);
         }
 
 
@@ -179,7 +188,7 @@
             ajouterScenable(FondEcran);
             ajouterScenable(TitresSlides[SlidesSlider.Valeur].Key);
             ajouterScenable(TitresSlides[SlidesSlider.Valeur].Value);
-            SlidesSlider.Draw(null);
+            SlidesSlider.Draw();
             Curseur.Draw();
 
             if (Transition != TransitionType.None)

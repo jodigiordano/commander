@@ -1,10 +1,10 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Physique;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
+    using EphemereGames.Core.Physique;
 
 
     class Path
@@ -16,19 +16,19 @@
         public List<CorpsCeleste> CorpsCelestes;
 
         private Trajet3D Trajet;
-        private Vector3[] Positions;
         private double[] Temps;
         private SortedList<int, CorpsCeleste> CorpsCelestesChemin;
         private int DistanceDeuxPoints = 40;
         private Image[] Lignes;
         private Scene Scene;
         public double Longueur;
+        private Vector3[] SousPoints;
+        private int NbSousPoints;
 
 
         public Path(Simulation simulation, Color couleur, TypeBlend melange)
         {
             Scene = simulation.Scene;
-            Positions = new Vector3[MaxCurvePoints];
             Temps = new double[MaxCurvePoints];
             Trajet = new Trajet3D();
             Longueur = 0;
@@ -45,6 +45,9 @@
 
                 Lignes[i] = line;
             }
+
+            SousPoints = new Vector3[500];
+            NbSousPoints = 0;
         }
 
 
@@ -105,12 +108,10 @@
         public void enleverCorpsCeleste(CorpsCeleste corpsCeleste)
         {
             DernierRelais.EstDernierRelais = false;
-            DernierRelais.PrioriteAffichage = DernierRelais.PrioriteAffichageBackup;
 
             CorpsCelestesChemin.Remove(corpsCeleste.Priorite);
 
             DernierRelais.EstDernierRelais = true;
-            DernierRelais.PrioriteAffichage = Preferences.PrioriteSimulationEnnemi + 0.01f;
         }
 
 
@@ -128,12 +129,10 @@
             if (DernierRelais != null)
             {
                 DernierRelais.EstDernierRelais = false;
-                DernierRelais.PrioriteAffichage = DernierRelais.PrioriteAffichageBackup;
 
                 CorpsCelestesChemin.Add(corpsCeleste.Priorite, corpsCeleste);
 
                 DernierRelais.EstDernierRelais = true;
-                DernierRelais.PrioriteAffichage = Preferences.PrioriteSimulationEnnemi + 0.01f;
             }
 
             else
@@ -157,6 +156,12 @@
         }
 
 
+        public float Pourc(double deplacement)
+        {
+            return Trajet.Pourc(deplacement);
+        }
+
+
         public void Update(GameTime gameTime)
         {
             recalculerTrajet();
@@ -166,56 +171,22 @@
         {
             mettreAJourSousPoints();
 
-            //int NbPointsDansTrajet = (CorpsCelestesChemin.Count - 2) * 3 + 2;
-            int NbPointsDansTrajet = 0;
-
-            int k = 0;
-            for (int i = 0; i < CorpsCelestesChemin.Count; i++)
-                if (i == 0 || i == CorpsCelestesChemin.Count - 1)
-                {
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[0];
-                    NbPointsDansTrajet++;
-                }
-                else if (CorpsCelestesChemin.Values[i].ContientTourelleGravitationnelleNiveau2)
-                {
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[0];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[1];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[2];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[3];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[0];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[1];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[2];
-
-                    NbPointsDansTrajet += 7;
-                }
-                else
-                {
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[0];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[1];
-                    Positions[k++] = CorpsCelestesChemin.Values[i].SousPoints[2];
-
-                    NbPointsDansTrajet += 3;
-                }
-
             Longueur = 0;
             Temps[0] = Longueur;
 
-            for (int i = 1; i < NbPointsDansTrajet; i++)
+            for (int i = 1; i < NbSousPoints; i++)
             {
-                Vector3.Subtract(ref Positions[i], ref Positions[i - 1], out _vecteur1);
-
+                _vecteur1 = Vector3.Subtract(SousPoints[i], SousPoints[i - 1]);
                 Longueur += _vecteur1.Length();
-
                 Temps[i] = Longueur;
             }
 
-            Trajet.Initialize(Positions, Temps, NbPointsDansTrajet);
+            Trajet.Initialize(SousPoints, Temps, NbSousPoints);
         }
 
 
         public void Draw()
         {
-            //int indiceLignes = 0;
             int nbLines = (int) (Longueur / DistanceDeuxPoints) + 1;
 
             for (int j = 0; j < nbLines; j++)
@@ -223,10 +194,9 @@
                 Trajet.Position(j * DistanceDeuxPoints, ref Lignes[j].position);
 
                 Lignes[j].Rotation = Trajet.rotation(j * DistanceDeuxPoints);
-                Lignes[j].Color.G = Lignes[j].Color.B = (byte) (255 * (1 - (((float)j + 1) / nbLines))); 
+                Lignes[j].Color.G = Lignes[j].Color.B = (byte) (255 * (1 - (((float)j + 1) / nbLines)));
+                Lignes[j].VisualPriority = Preferences.PrioriteSimulationChemin + Trajet.Pourc(j * DistanceDeuxPoints) / 1000f;
                 Scene.ajouterScenable(Lignes[j]);
-
-                //indiceLignes++;
 
                 if (j >= MaxVisibleLines)
                     break;
@@ -239,15 +209,18 @@
 
         private void mettreAJourSousPoints()
         {
+            NbSousPoints = 0;
+
             for (int i = 0; i < CorpsCelestesChemin.Count; i++)
             {
                 if (i == 0 || i == CorpsCelestesChemin.Count - 1)
-                    CorpsCelestesChemin.Values[i].SousPoints[0] = CorpsCelestesChemin.Values[i].Position;
-
-                else
                 {
-                    // Point le plus proche sur le vecteur qui relie le corps céleste précédent et le suivant
-                    Ligne.PointPlusProche
+                    SousPoints[NbSousPoints++] = CorpsCelestesChemin.Values[i].Position;
+                    continue;
+                }
+
+                // Ligne
+                Ligne.PointPlusProche
                     (
                         ref CorpsCelestesChemin.Values[i - 1].position,
                         ref CorpsCelestesChemin.Values[i + 1].position,
@@ -255,78 +228,50 @@
                         ref _vecteur1
                     );
 
-                    // Vecteur perpendiculaire unitaire
-                    Vector3.Subtract(ref CorpsCelestesChemin.Values[i].position, ref _vecteur1, out _vecteur1);
+                // Vecteur perpendiculaire
+                Vector3.Subtract(ref CorpsCelestesChemin.Values[i].position, ref _vecteur1, out _vecteur1);
 
-                    _vecteur1.Normalize();
+                //Radius
+                //float radius = CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance;
+                float radius = MathHelper.Min(_vecteur1.Length(), CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance);
 
-                    if (float.IsNaN(_vecteur1.X))
-                        _vecteur1 = Vector3.Zero;
+                //Entry point
+                Vector3 vecPO = CorpsCelestesChemin.Values[i].position - CorpsCelestesChemin.Values[i - 1].position;
+                float POangle = Core.Physique.Utilities.VectorToAngle(ref vecPO);
+                POangle += MathHelper.PiOver2;
+                Vector3 entryVec = CorpsCelestesChemin.Values[i].position +
+                    Core.Physique.Utilities.AngleToVector(POangle) * radius;
 
-                    //(Bx - Ax) * (Cy - Ay) - (By - Ay) * (Cx - Ax)
-                    double coteLigne =
-                        (CorpsCelestesChemin.Values[i - 1].position.X - CorpsCelestesChemin.Values[i + 1].position.X) *
-                        (CorpsCelestesChemin.Values[i].position.Y - CorpsCelestesChemin.Values[i + 1].position.Y) -
-                        (CorpsCelestesChemin.Values[i - 1].position.Y - CorpsCelestesChemin.Values[i + 1].position.Y) *
-                        (CorpsCelestesChemin.Values[i].position.X - CorpsCelestesChemin.Values[i + 1].position.X);
+                //Exit point
+                Vector3 vecPD = CorpsCelestesChemin.Values[i].position - CorpsCelestesChemin.Values[i + 1].position;
+                float PDangle = Core.Physique.Utilities.VectorToAngle(ref vecPD);
+                PDangle -= MathHelper.PiOver2;
+                Vector3 exitVec = CorpsCelestesChemin.Values[i].position +
+                    Core.Physique.Utilities.AngleToVector(PDangle) * radius;
 
+                SousPoints[NbSousPoints++] = entryVec;
 
-                    if (coteLigne > 0)
-                    {
-                        Matrix.CreateRotationZ(-MathHelper.PiOver2, out _matrice1);
-                        Vector3.Transform(ref _vecteur1, ref _matrice1, out _vecteur2); //v1: direction, v2: perpendiculaire
-                        _vecteur2.Normalize();
+                if (POangle < 0)
+                    POangle += MathHelper.TwoPi;
 
-                        Vector3.Multiply(ref _vecteur2, CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance, out _vecteur2);
-                        CorpsCelestesChemin.Values[i].SousPoints[0] = CorpsCelestesChemin.Values[i].position + _vecteur2;
+                if (PDangle < 0)
+                    PDangle += MathHelper.TwoPi;
 
-                        Vector3.Multiply(ref _vecteur1, CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance, out _vecteur2);
-                        CorpsCelestesChemin.Values[i].SousPoints[1] = CorpsCelestesChemin.Values[i].position + _vecteur2;
+                float angle = (POangle < PDangle) ? POangle + (MathHelper.TwoPi - PDangle) : POangle - PDangle;
+                float step = angle / 4;
 
-                        Matrix.CreateRotationZ(MathHelper.PiOver2, out _matrice1);
-                        Vector3.Transform(ref _vecteur1, ref _matrice1, out _vecteur2);
-                        _vecteur2.Normalize();
+                for (int y = 1; y < 4; y++)
+                {
+                    float next = POangle - y * step;
 
-                        Vector3.Multiply(ref _vecteur2, CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance, out _vecteur2);
-                        CorpsCelestesChemin.Values[i].SousPoints[2] = CorpsCelestesChemin.Values[i].position + _vecteur2;
+                    if (next < 0)
+                        next += MathHelper.TwoPi;
 
-                        if (CorpsCelestesChemin.Values[i].ContientTourelleGravitationnelleNiveau2)
-                        {
-                            Vector3.Multiply(ref _vecteur1, -(CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance), out _vecteur2);
-                            CorpsCelestesChemin.Values[i].SousPoints[3] = CorpsCelestesChemin.Values[i].position + _vecteur2;
-                        }
-                    }
-
-                    else
-                    {
-                        Matrix.CreateRotationZ(MathHelper.PiOver2, out _matrice1);
-                        Vector3.Transform(ref _vecteur1, ref _matrice1, out _vecteur2);
-
-                        if (_vecteur2 != Vector3.Zero)
-                            _vecteur2.Normalize();
-
-                        Vector3.Multiply(ref _vecteur2, CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance, out _vecteur2);
-                        CorpsCelestesChemin.Values[i].SousPoints[0] = CorpsCelestesChemin.Values[i].Position + _vecteur2;
-
-                        Vector3.Multiply(ref _vecteur1, CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance, out _vecteur2);
-                        CorpsCelestesChemin.Values[i].SousPoints[1] = CorpsCelestesChemin.Values[i].Position + _vecteur2;
-
-                        Matrix.CreateRotationZ(-MathHelper.PiOver2, out _matrice1);
-                        Vector3.Transform(ref _vecteur1, ref _matrice1, out _vecteur2);
-
-                        if (_vecteur2 != Vector3.Zero)
-                        _vecteur2.Normalize();
-
-                        Vector3.Multiply(ref _vecteur2, CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance, out _vecteur2);
-                        CorpsCelestesChemin.Values[i].SousPoints[2] = CorpsCelestesChemin.Values[i].Position + _vecteur2;
-
-                        if (CorpsCelestesChemin.Values[i].ContientTourelleGravitationnelleNiveau2)
-                        {
-                            Vector3.Multiply(ref _vecteur1, -(CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance), out _vecteur2);
-                            CorpsCelestesChemin.Values[i].SousPoints[3] = CorpsCelestesChemin.Values[i].position + _vecteur2;
-                        }
-                    }
+                    SousPoints[NbSousPoints++] = CorpsCelestesChemin.Values[i].position +
+                    Core.Physique.Utilities.AngleToVector(next) * radius;
                 }
+
+                SousPoints[NbSousPoints++] = exitVec;
             }
         }
     }

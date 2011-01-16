@@ -40,7 +40,6 @@
         public int PrixTheResistance;
         public Cercle ZoneImpactDestruction;
         public Vector3 Offset;
-        public Vector3[] SousPoints;
         public List<Turret> TourellesPermises;
         public List<Lune> Lunes;
         public bool ContientTourelleGravitationnelleByPass;
@@ -110,8 +109,6 @@
             Forme = Forme.Cercle;
             Cercle = new Cercle(Position, rayon);
             TurretsZone = new Cercle(Position, rayon * 2);
-
-            SousPoints = new Vector3[4];
 
             TourellesPermises = new List<Turret>();
 
@@ -200,8 +197,6 @@
             this.Forme = Forme.Cercle;
             this.Cercle = new Cercle(Position, rayon);
             TurretsZone = new Cercle(Position, rayon * 2);
-
-            this.SousPoints = new Vector3[4];
 
             this.TourellesPermises = new List<Turret>();
 

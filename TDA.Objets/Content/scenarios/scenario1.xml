@@ -444,4 +444,24 @@
     <Z>0.1</Z>
   </PourcentageMinerauxDonnes>
   <NbPackViesDonnes>0</NbPackViesDonnes>
+  <HelpTexts>
+    <string>
+      <![CDATA[Welcome back, Commander.
+
+
+In this level, a new turret is available, the pink one. It's a she. Threat her right. You can cycle the buy menu with the [Cycle].
+
+
+[Continue]]]>
+    </string>
+    <string>
+      <![CDATA[Don't forget to maintain the [AdvancedView] pressed to know if your turret is well placed.
+
+
+When enemies are on the path, you will also see their remaining lives. Good luck!
+
+
+[Continue]]]>
+    </string>
+  </HelpTexts>  
 </DescripteurScenario>

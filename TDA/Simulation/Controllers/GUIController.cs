@@ -41,8 +41,8 @@
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
             MenuGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
             Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
-            MenuTurret = new MenuTurret(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.01f);
-            MenuCelestialBody = new MenuCelestialBody(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.01f);
+            MenuTurret = new MenuTurret(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
+            MenuCelestialBody = new MenuCelestialBody(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuDemo = new MenuDemo(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste - 0.01f);
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
             InSpaceShip = false;

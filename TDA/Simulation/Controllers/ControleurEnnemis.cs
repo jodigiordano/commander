@@ -22,7 +22,7 @@
         public event PhysicalObjectHandler ObjetCree;
         public delegate void EnnemiAtteintFinTrajetHandler(Ennemi ennemi, CorpsCeleste corpsCeleste);
         public event EnnemiAtteintFinTrajetHandler EnnemiAtteintFinTrajet;
-        private Scene Scene;
+        private Simulation Simulation;
         private LinkedListNode<Wave> ProchaineVague                    { get; set; }
         private List<Wave> VaguesActives                               { get; set; }
         private double CompteurVague                                    { get; set; }
@@ -31,20 +31,20 @@
         public int ValeurTotalMineraux;
         public int NbPackViesDonnes;
         public List<Mineral> Mineraux;
-        private List<KeyValuePair<int, int>> DistributionMineraux;
+        private List<KeyValuePair<int, MineralType>> DistributionMineraux;
 
         private int NbEnnemisCrees;
 
         public ControleurEnnemis(Simulation simulation)
             : base(simulation.Main)
         {
-            this.Scene = simulation.Scene;
+            Simulation = simulation;
 
             Ennemis = new List<Ennemi>();
             Vagues = new LinkedList<Wave>();
             VaguesActives = new List<Wave>();
             Mineraux = new List<Mineral>();
-            DistributionMineraux = new List<KeyValuePair<int, int>>();
+            DistributionMineraux = new List<KeyValuePair<int, MineralType>>();
             CompositionProchaineVague = new Dictionary<EnemyType, EnemyDescriptor>();
         }
 
@@ -70,24 +70,27 @@
             foreach (var vague in Vagues)
                 nbEnnemis += vague.NbEnemies;
 
-            Vector3 valeurUnitaire = new Vector3(10, 25, 50);
+            Vector3 valeurUnitaire = new Vector3(
+                Simulation.MineralsFactory.GetValue(MineralType.Cash10),
+                Simulation.MineralsFactory.GetValue(MineralType.Cash25),
+                Simulation.MineralsFactory.GetValue(MineralType.Cash150));
             Vector3 valeurParType = PourcentageMinerauxDonnes * ValeurTotalMineraux; //atention: float
             Vector3 qteParType = valeurParType / valeurUnitaire;
 
 
             for (int i = 0; i < qteParType.X; i++)
-                DistributionMineraux.Add(new KeyValuePair<int, int>(Main.Random.Next(0, nbEnnemis), 0));
+                DistributionMineraux.Add(new KeyValuePair<int, MineralType>(Main.Random.Next(0, nbEnnemis), MineralType.Cash10));
 
             for (int i = 0; i < qteParType.Y; i++)
-                DistributionMineraux.Add(new KeyValuePair<int, int>(Main.Random.Next(0, nbEnnemis), 1));
+                DistributionMineraux.Add(new KeyValuePair<int, MineralType>(Main.Random.Next(0, nbEnnemis), MineralType.Cash25));
 
             for (int i = 0; i < qteParType.Z; i++)
-                DistributionMineraux.Add(new KeyValuePair<int, int>(Main.Random.Next(0, nbEnnemis), 2));
+                DistributionMineraux.Add(new KeyValuePair<int, MineralType>(Main.Random.Next(0, nbEnnemis), MineralType.Cash150));
 
             for (int i = 0; i < NbPackViesDonnes; i++)
-                DistributionMineraux.Add(new KeyValuePair<int, int>(Main.Random.Next(0, nbEnnemis), 3));
+                DistributionMineraux.Add(new KeyValuePair<int, MineralType>(Main.Random.Next(0, nbEnnemis), MineralType.Life1));
 
-            DistributionMineraux.Sort(delegate(KeyValuePair<int, int> m1, KeyValuePair<int, int> m2)
+            DistributionMineraux.Sort(delegate(KeyValuePair<int, MineralType> m1, KeyValuePair<int, MineralType> m2)
             {
                 return m1.Key.CompareTo(m2.Key);
             });
@@ -190,7 +193,7 @@
                 {
                     Ennemi ennemi = listeEnnemis[j];
 
-                    ennemi.Chemin = this.Chemin;
+                    ennemi.Path = this.Chemin;
                     ennemi.CheminProjection = this.CheminProjection;
                     ennemi.RelaisAtteint += new Ennemi.RelaisAtteintHandler(this.listenRelaisAtteint);
                     ennemi.Translation.Y = Main.Random.Next(-20, 20);
@@ -199,12 +202,12 @@
 
                     while (DistributionMineraux.Count > 0 && DistributionMineraux[DistributionMineraux.Count - 1].Key == NbEnnemisCrees)
                     {
-                        ennemi.Mineraux.Add(new Mineral(base.Game, this.Scene, DistributionMineraux[DistributionMineraux.Count - 1].Value, ennemi.RepresentationVivant.VisualPriority + 0.01f));
+                        ennemi.Mineraux.Add(Simulation.MineralsFactory.CreateMineral(DistributionMineraux[DistributionMineraux.Count - 1].Value, ennemi.RepresentationVivant.VisualPriority + 0.01f));
 
                         DistributionMineraux.RemoveAt(DistributionMineraux.Count - 1);
                     }
 
-                    Scene.Effets.Add(ennemi.RepresentationVivant, PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                    Simulation.Scene.Effets.Add(ennemi.RepresentationVivant, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
 
                     NbEnnemisCrees++;
 
@@ -224,9 +227,6 @@
         {
             for (int i = 0; i < Ennemis.Count; i++)
                 Ennemis[i].Draw(null);
-
-            for (int i = 0; i < Mineraux.Count; i++)
-                Mineraux[i].Draw(null);
         }
 
 

@@ -1,13 +1,10 @@
-﻿
-namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Utilities;
     using ProjectMercury.Emitters;
+
 
     class SelectedCelestialBodyAnimation
     {
@@ -77,12 +74,6 @@ namespace EphemereGames.Commander
         {
             if (CelestialBody == null || !CelestialBody.EstVivant)
                 return;
-
-            //if (!Simulation.ModeDemo)
-            //{
-            //    WidgetName.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - ((CircleEmitter)Selection.ParticleEffect[0]).Radius - 13, 0);
-            //    Simulation.Scene.ajouterScenable(WidgetName);
-            //}
         }
     }
 }

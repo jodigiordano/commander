@@ -1,34 +1,33 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Physique;
-    using EphemereGames.Core.Utilities;
-    
-    class CheckBox : DrawableGameComponent
+
+
+    class CheckBox
     {
-        private Simulation Simulation;
+        public bool Checked;
+
+        private Scene Scene;
         private Cursor Curseur;
         private IVisible Box;
         private IVisible CheckedRep;
         private Cercle BoxCercle;
         private Vector3 Position;
+        
 
-        public bool Checked;
-
-        public CheckBox(Simulation simulation, Cursor curseur, Vector3 position, float priorite)
-            : base(simulation.Main)
+        public CheckBox(Scene scene, Cursor curseur, Vector3 position, float priorite)
         {
-            Simulation = simulation;
+            Scene = scene;
             Curseur = curseur;
             Position = position;
 
             Box = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("emplacement"), Position);
             Box.VisualPriority = priorite;
             Box.Origine = Box.Centre;
+            Box.Taille = 4;
 
             CheckedRep = new IVisible("X", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position);
             CheckedRep.Taille = 2;
@@ -46,12 +45,12 @@
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public void Draw()
         {
-            Simulation.Scene.ajouterScenable(Box);
+            Scene.ajouterScenable(Box);
 
             if (Checked)
-                Simulation.Scene.ajouterScenable(CheckedRep);
+                Scene.ajouterScenable(CheckedRep);
         }
     }
 }

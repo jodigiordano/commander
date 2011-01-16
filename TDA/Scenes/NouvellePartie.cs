@@ -18,7 +18,7 @@
         private DescripteurScenario ChoixScenario;
         private double TempsEntreDeuxChangementMusique;
         private Menu Menu;
-        private List<AideNiveau> AidesNiveaux;
+        //private List<AideNiveau> AidesNiveaux;
         private String MessagePause;
         private AnimationLieutenant AnimationFinMonde1 = null;
         private AnimationLieutenant AnimationFinDemo = null;
@@ -42,76 +42,76 @@
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
 
-            AidesNiveaux = new List<AideNiveau>();
+//            AidesNiveaux = new List<AideNiveau>();
 
-            AidesNiveaux.Add(new AideNiveau
-            (
-                Main,
-                0,
-                new List<KeyValuePair<string, string>>()
-                {
-                    new KeyValuePair<string, string>("PAP", "The goal of this game is to\n\nprotect me against asteroids."),
-                    new KeyValuePair<string, string>("Ceinture", "Asteroids will come from here.\n\nThey follow the white path."),
-                    new KeyValuePair<string, string>("PAP", "You see my moons ?\n\nA maximum of 5 asteroids\n\ncan reach me."),
-                    new KeyValuePair<string, string>("Grav", "The path is the\n\nwhite dotted line."),
-                    new KeyValuePair<string, string>("Emplacement", "This is where you buy\n\nmercenaries to kill the asteroids."),
-                    new KeyValuePair<string, string>("Emplacement", "Only the green\n\nmercenary is\n\navailable right now."),
-                    new KeyValuePair<string, string>("Emplacement", "You can upgrade or sell a\n\nmercenary. Use LT/RT to\n\nnavigate the choices."),
-                    new KeyValuePair<string, string>("Sablier", "When I'm depleted, a wave\n\nof asteroids will come."),
-                    new KeyValuePair<string, string>("Sablier", "The upper-right number is the\n\nnumber of waves remaining."),
-                    new KeyValuePair<string, string>("Sablier", "The bottom-right number\n\nis your cash flow. Kill\n\nasteroids to get more cash!"),
-                    new KeyValuePair<string, string>("Sablier", "Put your cursor over\n\nme to see the next wave."),
-                    new KeyValuePair<string, string>("Sablier", "If you're bored,\n\nclick on me to call\n\nthe next wave earlier."),
-#if WINDOWS && !MANETTE_WINDOWS
-                    new KeyValuePair<string, string>("Curseur", "Maintain the middle mouse button\n\npressed to see the enemies' lifes\n\nand the mercenaries' sight."),
-#else
-                    new KeyValuePair<string, string>("Curseur", "Maintain the X button pressed\n\nto see the enemies' lifes\n\nand the mercenaries' sight."),
-#endif
-                    new KeyValuePair<string, string>("PAP", "The help in the main\n\nmenu have all the answers.\n\nThese annoying hints\n\nwill repeat 2 times.")
-                }
-            ));
+//            AidesNiveaux.Add(new AideNiveau
+//            (
+//                Main,
+//                0,
+//                new List<KeyValuePair<string, string>>()
+//                {
+//                    new KeyValuePair<string, string>("PAP", "The goal of this game is to\n\nprotect me against asteroids."),
+//                    new KeyValuePair<string, string>("Ceinture", "Asteroids will come from here.\n\nThey follow the white path."),
+//                    new KeyValuePair<string, string>("PAP", "You see my moons ?\n\nA maximum of 5 asteroids\n\ncan reach me."),
+//                    new KeyValuePair<string, string>("Grav", "The path is the\n\nwhite dotted line."),
+//                    new KeyValuePair<string, string>("Emplacement", "This is where you buy\n\nmercenaries to kill the asteroids."),
+//                    new KeyValuePair<string, string>("Emplacement", "Only the green\n\nmercenary is\n\navailable right now."),
+//                    new KeyValuePair<string, string>("Emplacement", "You can upgrade or sell a\n\nmercenary. Use LT/RT to\n\nnavigate the choices."),
+//                    new KeyValuePair<string, string>("Sablier", "When I'm depleted, a wave\n\nof asteroids will come."),
+//                    new KeyValuePair<string, string>("Sablier", "The upper-right number is the\n\nnumber of waves remaining."),
+//                    new KeyValuePair<string, string>("Sablier", "The bottom-right number\n\nis your cash flow. Kill\n\nasteroids to get more cash!"),
+//                    new KeyValuePair<string, string>("Sablier", "Put your cursor over\n\nme to see the next wave."),
+//                    new KeyValuePair<string, string>("Sablier", "If you're bored,\n\nclick on me to call\n\nthe next wave earlier."),
+//#if WINDOWS && !MANETTE_WINDOWS
+//                    new KeyValuePair<string, string>("Curseur", "Maintain the middle mouse button\n\npressed to see the enemies' lifes\n\nand the mercenaries' sight."),
+//#else
+//                    new KeyValuePair<string, string>("Curseur", "Maintain the X button pressed\n\nto see the enemies' lifes\n\nand the mercenaries' sight."),
+//#endif
+//                    new KeyValuePair<string, string>("PAP", "The help in the main\n\nmenu have all the answers.\n\nThese annoying hints\n\nwill repeat 2 times.")
+//                }
+//            ));
 
-            AidesNiveaux.Add(new AideNiveau
-            (
-                Main,
-                1,
-                new List<KeyValuePair<string, string>>()
-                {
-                    new KeyValuePair<string, string>("Emplacement", "A new mercenary is available.\n\nThe pink one. It's a she.\n\nThreat her right."),
-                    new KeyValuePair<string, string>("Curseur", "Every level is possible. This\n\ngame is hard. It's normal to\n\nredo 5-10 times a level."),
-#if WINDOWS && !MANETTE_WINDOWS
-                    new KeyValuePair<string, string>("Curseur", "Don't forget to use the middle\n\nmouse button to know if your\n\nmercenary is well placed.")
-#else
-                    new KeyValuePair<string, string>("Curseur", "Don't forget to use the X\n\nbutton to know if your\n\nmercenary is well placed.")
-#endif
-                }
-            ));
+//            AidesNiveaux.Add(new AideNiveau
+//            (
+//                Main,
+//                1,
+//                new List<KeyValuePair<string, string>>()
+//                {
+//                    new KeyValuePair<string, string>("Emplacement", "A new mercenary is available.\n\nThe pink one. It's a she.\n\nThreat her right."),
+//                    new KeyValuePair<string, string>("Curseur", "Every level is possible. This\n\ngame is hard. It's normal to\n\nredo 5-10 times a level."),
+//#if WINDOWS && !MANETTE_WINDOWS
+//                    new KeyValuePair<string, string>("Curseur", "Don't forget to use the middle\n\nmouse button to know if your\n\nmercenary is well placed.")
+//#else
+//                    new KeyValuePair<string, string>("Curseur", "Don't forget to use the X\n\nbutton to know if your\n\nmercenary is well placed.")
+//#endif
+//                }
+//            ));
 
-            AidesNiveaux.Add(new AideNiveau
-            (
-                Main,
-                2,
-                new List<KeyValuePair<string, string>>()
-                {
-                    new KeyValuePair<string, string>("Grav", "Hello I'm the\n\nwhite mercenary."),
-                    new KeyValuePair<string, string>("Grav", "The path cross the\n\nplanet where I'm installed."),
-                    new KeyValuePair<string, string>("Emplacement", "The white mercenary is\n\navailable. It will\n\nmodify the path."),
-                    new KeyValuePair<string, string>("Emplacement", "You must lengthen the\n\npath to survive."),
-                    new KeyValuePair<string, string>("Emplacement", "Upgrade the white mercenary\n\nto see what will occur!")
-                }
-            ));
+//            AidesNiveaux.Add(new AideNiveau
+//            (
+//                Main,
+//                2,
+//                new List<KeyValuePair<string, string>>()
+//                {
+//                    new KeyValuePair<string, string>("Grav", "Hello I'm the\n\nwhite mercenary."),
+//                    new KeyValuePair<string, string>("Grav", "The path cross the\n\nplanet where I'm installed."),
+//                    new KeyValuePair<string, string>("Emplacement", "The white mercenary is\n\navailable. It will\n\nmodify the path."),
+//                    new KeyValuePair<string, string>("Emplacement", "You must lengthen the\n\npath to survive."),
+//                    new KeyValuePair<string, string>("Emplacement", "Upgrade the white mercenary\n\nto see what will occur!")
+//                }
+//            ));
 
-            AidesNiveaux.Add(new AideNiveau
-            (
-                Main,
-                3,
-                new List<KeyValuePair<string, string>>()
-                {
-                    new KeyValuePair<string, string>("Planete", "Select me (without touching\n\na square) to grab the collector."),
-                    new KeyValuePair<string, string>("Planete", "In some levels, check the\n\nplanets for useful powerups"),
-                    new KeyValuePair<string, string>("Planete", "When an asteroid explode,\n\nit will drop extra cash. Use\n\nthe collector to collect them.")
-                }
-            ));
+//            AidesNiveaux.Add(new AideNiveau
+//            (
+//                Main,
+//                3,
+//                new List<KeyValuePair<string, string>>()
+//                {
+//                    new KeyValuePair<string, string>("Planete", "Select me (without touching\n\na square) to grab the collector."),
+//                    new KeyValuePair<string, string>("Planete", "In some levels, check the\n\nplanets for useful powerups"),
+//                    new KeyValuePair<string, string>("Planete", "When an asteroid explode,\n\nit will drop extra cash. Use\n\nthe collector to collect them.")
+//                }
+//            ));
         }
 
 
@@ -197,8 +197,8 @@
 
                         if (ChoixScenario.Numero <= 3)
                         {
-                            AidesNiveaux[ChoixScenario.Numero].QuotesObjets.Clear();
-                            Main.GameInProgress.Simulation.ControleurMessages.AideNiveau = AidesNiveaux[ChoixScenario.Numero];
+                            //AidesNiveaux[ChoixScenario.Numero].QuotesObjets.Clear();
+                            //Main.GameInProgress.Simulation.ControleurMessages.AideNiveau = AidesNiveaux[ChoixScenario.Numero];
                             Main.GameInProgress.Simulation.ControleurMessages.Initialize();
                         }
 

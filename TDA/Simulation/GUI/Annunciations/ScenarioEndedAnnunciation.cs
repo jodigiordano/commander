@@ -26,7 +26,8 @@
         private Translator TranslatorScoreExplanations;
         private Translator TranslatorTotalScore;
         private Simulation Simulation;
-
+        private bool HighscoreBeaten;
+        private IVisible NewHighscore;
         private IVisible[] Stars;
 
 
@@ -86,6 +87,11 @@
             Stars[2].Taille = 0.5f;
             Stars[2].Origine = Stars[0].Centre;
             Stars[2].VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
+
+            HighscoreBeaten = false;
+            NewHighscore = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), new Color(234, 196, 28, 0), new Vector3(0, -30, 0));
+            NewHighscore.Taille = 3;
+            NewHighscore.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
         }
 
 
@@ -136,6 +142,14 @@
             );
 
 
+            HighScores h;
+            Simulation.Main.SaveGame.HighScores.TryGetValue(Scenario.Numero, out h);
+            HighscoreBeaten = h == null || h.Scores.Count <= 0 || Scenario.CommonStash.TotalScore > h.Scores[0].Value;
+            int diff = (h == null || h.Scores.Count <= 0) ? Scenario.CommonStash.TotalScore : Scenario.CommonStash.TotalScore - h.Scores[0].Value;
+
+            NewHighscore.Texte = ((HighscoreBeaten) ? "new highscore!" : "not your best!") + " (" + (diff > 0 ? "+" : "") + diff + ")";
+
+
             if (GameState == GameState.Won)
             {
                 TranslatorGameWon = new Translator
@@ -176,36 +190,40 @@
 
                 this.Simulation.Scene.Effets.Add(AlienShip.Representation, e);
 
-                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 5000, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieNonTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieTraduite, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorGameWon.PartieNonTraduite, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 5000, 1000));
 
-                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
 
                 int nbStars = Scenario.NbStars(Scenario.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
-                    this.Simulation.Scene.Effets.Add(Stars[i], PredefinedEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 5000, 1000));
+                    this.Simulation.Scene.Effets.Add(Stars[i], Core.Visuel.PredefinedEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 5000, 1000));
+
+                 Simulation.Scene.Effets.Add(NewHighscore, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
             }
 
             else if (GameState == GameState.Lost)
             {
-                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.Effets.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
 
                 int nbStars = Scenario.NbStars(Scenario.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
-                    this.Simulation.Scene.Effets.Add(Stars[i], PredefinedEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 0, 1000));
+                    this.Simulation.Scene.Effets.Add(Stars[i], Core.Visuel.PredefinedEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 0, 1000));
+
+                Simulation.Scene.Effets.Add(NewHighscore, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
             }
 
-            this.Simulation.Scene.Effets.Add(Filter, PredefinedEffects.FadeInFrom0(200, 0, 1000));
+            this.Simulation.Scene.Effets.Add(Filter, Core.Visuel.PredefinedEffects.FadeInFrom0(200, 0, 1000));
 
             EffetDeplacementTrajet effet = new EffetDeplacementTrajet();
             effet.Delay = 0;
@@ -301,6 +319,7 @@
                 TranslatorScoreExplanations.Draw(null);
                 TranslatorTotalScore.Draw(null);
 
+                Simulation.Scene.ajouterScenable(NewHighscore);
                 Simulation.Scene.ajouterScenable(Stars[0]);
                 Simulation.Scene.ajouterScenable(Stars[1]);
                 Simulation.Scene.ajouterScenable(Stars[2]);

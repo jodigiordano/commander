@@ -203,14 +203,14 @@
 
             if (mineral != null)
             {
-                if (mineral.Type == 3)
+                if (mineral.Type == MineralType.Life1)
                 {
-                    CommonStash.Lives += mineral.Valeur;
-                    CelestialBodyToProtect.PointsVie += mineral.Valeur;
+                    CommonStash.Lives += mineral.Value;
+                    CelestialBodyToProtect.PointsVie += mineral.Value;
                 }
                 else
                 {
-                    CommonStash.Cash += mineral.Valeur;
+                    CommonStash.Cash += mineral.Value;
                     notifyCommonStashChanged(CommonStash);
                 }
 

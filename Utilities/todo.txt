@@ -1,15 +1,42 @@
 ================================================================================
-                          todo for next release
+                         todo for Windows release
 ================================================================================
+. gravitational turret preview fucked up
 . test Xbox360 controller and normal controller
-D new tutorial system
-. fix world/menu scenarios turrets placements
-. fix highscore visibility
-D Partie scene inputs
+. no editor in release
 . verify trial mode
+. checks and correct errors from the error database
+. put up forum
+. spread the word on towerdefence.net
+. answer customers emails
+. replug upgrade gravitational turret
+. change level done/not done assets
+
+D new way to calculate the path that doesn't do hicups
+D diminish time before first wave in tutorials levels
+D 5 new loading quotes
+D +1/+10+50/+1life when a mineral is taken
+D at the end of level, show beaten highscore
+D new tutorial system
+D fix world/menu scenarios turrets placements
+D fix highscore visibility
+D Partie scene inputs
 D increase ingame menu choices size
-. redo the help menu and include both mouse/gamepad for Windows version
-. finish tutorial entries and unplug old system
+D redo the help menu and include both mouse/gamepad for Windows version
+D finish tutorial entries
+D unplug old tutorial system
+D help message: one click => end transcription and not skip to next msg
+D visual priority between two enemies (flickering when one outrace another)
+
+. replug the editor
+. 2 new turrets
+. 2 new enemies (mini-planet, swarm?)
+   . enemy who put dangerous minerals on the battlefield
+. 9 new levels
+. 1 new world
+. 1 new mineral
+. finish easy levels to get access to world 2
+. new planets / backgrounds assets
 
 
 ================================================================================
@@ -30,9 +57,10 @@ D increase ingame menu choices size
 ================================================================================
                                  features
 ================================================================================
-. +1/+10+50/+1life when a mineral is taken
-. at the end of level, show beaten highscore
 . ingame, show potential highscore?
+. make the world 1 levels less difficult
+. adjust the pacing of world 1
+. change the menu
 
 
 ================================================================================
@@ -45,5 +73,4 @@ D increase ingame menu choices size
                                 random ideas
 ================================================================================
 . Battle for Ovula: a special theme where the action takes place in an uterus
-. Battle for Heart: a special theme where the action takes place in the heart
 . Commander - The screensaver: a minimal simulation where a random level is generated 

@@ -51,7 +51,12 @@
             "Organizing the resistance. Please wait.",
             "Generating the universe. Please wait.",
             "Understanding my girlfriend. Please wait.",
-            "Getting rid of poverty. Please wait."
+            "Getting rid of poverty. Please wait.",
+            "Searching my soulmate. Please wait.",
+            "Compiling the kernel. Please wait.",
+            "Learning quantum physic. Please wait.",
+            "Mastering chinese langage. Please wait.",
+            "Watching a trilogy. Please wait."
         };
 
         public Chargement(Main main)

@@ -312,8 +312,8 @@
                 double delay = ((i + 1) % ApplyDelayEvery == 0) ? Delay : 0;
 
                 double frequency =
-                    FactoryEnnemis.Instance.getTaille(type) + (int)Distance /
-                    FactoryEnnemis.Instance.getVitesse(type, SpeedLevel) * (1000f / 60f);
+                    EnemiesFactory.GetSize(type) + (int)Distance /
+                    EnemiesFactory.GetSpeed(type, SpeedLevel) * (1000f / 60f);
 
                 var e = new EnemyDescriptor()
                 {

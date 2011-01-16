@@ -71,6 +71,15 @@
 
         public void NextDirective()
         {
+            if (HiddingOverride)
+                return;
+
+            if (!Directive.Termine)
+            {
+                Directive.Termine = true;
+                return;
+            }
+            
             ActiveText++;
 
             if (ActiveText > Texts.Count)
@@ -86,6 +95,15 @@
 
         public void PreviousDirective()
         {
+            if (HiddingOverride)
+                return;
+
+            if (!Directive.Termine)
+            {
+                Directive.Termine = true;
+                return;
+            }
+
             ActiveText--;
 
             if (ActiveText < 0)
@@ -97,6 +115,9 @@
 
         public void Skip()
         {
+            if (HiddingOverride)
+                return;
+
             ActiveOverride = false;
 
             Hide();
@@ -126,6 +147,8 @@
             text = text.Replace("[Continue]", Preferences.Target == Setting.Xbox360 ? "[Press A to continue]" : "[Click to continue]");
             text = text.Replace("[Action]", Preferences.Target == Setting.Xbox360 ? "[Press A]" : "[Click]");
             text = text.Replace("[AdvancedView]", Preferences.Target == Setting.Xbox360 ? "[X]" : "[Middle mouse]");
+            text = text.Replace("[Cycle]", Preferences.Target == Setting.Xbox360 ? "[LT/RT]" : "[Middle mouse scroll]");
+
 
             Directive = new TextTypeWriter(
                 Simulation.Main,

@@ -26,7 +26,7 @@ namespace EphemereGames.Commander
 
         public void AddCelestialObject(CorpsCeleste obj)
         {
-            if (State == PathState.ObjectAdded)
+            if (State == PathState.ObjectAdded || Path.contientCorpsCeleste(obj))
                 return;
 
             CelestialObject = obj;

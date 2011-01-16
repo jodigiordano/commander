@@ -9,6 +9,7 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
+
     class Validation : Scene
     {
         public Main Main;
@@ -60,77 +61,77 @@ namespace EphemereGames.Commander
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("0", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 100, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-450, 100, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-450, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("1", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 100, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-400, 100, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-400, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("2", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 100, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-350, 100, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-350, 100, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("3", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 150, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-450, 150, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-450, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("4", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 150, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-400, 150, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-400, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("5", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 150, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-350, 150, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-350, 150, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("6", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 200, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-450, 200, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-450, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("7", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 200, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-400, 200, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-400, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("8", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-350, 200, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-350, 200, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-350, 200, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("9", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-450, 250, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-450, 250, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-450, 250, 0), 0.3f)
                 )
             );
             Clavier.Add
             (
                 new KeyValuePair<IVisible, PushButton>(
                 new IVisible("Clear", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(-400, 300, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(-400, 300, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(-400, 300, 0), 0.3f)
                 )
             );
 
@@ -155,7 +156,7 @@ namespace EphemereGames.Commander
             Exit = new KeyValuePair<IVisible,PushButton>
             (
                 new IVisible("Exit", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 200, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(550, 200, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(550, 200, 0), 0.3f)
             );
             Exit.Key.Taille = 3;
             Exit.Key.Origine = Exit.Key.Centre;
@@ -164,7 +165,7 @@ namespace EphemereGames.Commander
             Continue = new KeyValuePair<IVisible, PushButton>
             (
                 new IVisible("Continue", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, new Vector3(400, 300, 0)),
-                new PushButton(Main, this, Curseur, new Vector3(550, 300, 0), 0.3f)
+                new PushButton(this, Curseur, new Vector3(550, 300, 0), 0.3f)
             );
             Continue.Key.Taille = 3;
             Continue.Key.Origine = Continue.Key.Centre;
@@ -290,17 +291,17 @@ namespace EphemereGames.Commander
             foreach (var kvp in Clavier)
             {
                 this.ajouterScenable(kvp.Key);
-                kvp.Value.Draw(null);
+                kvp.Value.Draw();
             }
 
             Saisie.Origine = Saisie.Centre;
             this.ajouterScenable(Saisie);
 
             this.ajouterScenable(Exit.Key);
-            Exit.Value.Draw(null);
+            Exit.Value.Draw();
 
             this.ajouterScenable(Continue.Key);
-            Continue.Value.Draw(null);
+            Continue.Value.Draw();
 
             Curseur.Draw();
 

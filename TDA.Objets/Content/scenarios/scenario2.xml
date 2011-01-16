@@ -561,7 +561,7 @@
   </SystemePlanetaire>
   <Waves>
     <WaveDescriptor>
-      <StartingTime>90000</StartingTime>
+      <StartingTime>30000</StartingTime>
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
       </Enemies>
@@ -690,4 +690,28 @@
     <Z>0.1</Z>
   </PourcentageMinerauxDonnes>
   <NbPackViesDonnes>0</NbPackViesDonnes>
+  <HelpTexts>
+    <string>
+      <![CDATA[Hey, Commander.
+
+
+As you can see, your path is really short in this level. You must lengthen it to survive. To lengthen the path, buy the gravitational turret (1000$).
+
+
+[Continue]]]>
+    </string>
+    <string>
+      <![CDATA[Try to upgrade the gravitational turret to see what happens!
+
+
+
+
+Good luck, Commander!
+
+
+
+
+[Continue]]]>
+    </string>
+  </HelpTexts>  
 </DescripteurScenario>

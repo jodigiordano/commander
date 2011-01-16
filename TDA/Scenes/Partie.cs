@@ -166,7 +166,7 @@
             if (!p.Master)
                 return;
 
-            if (key == p.KeyboardConfiguration.Cancel && Simulation.HelpMode)
+            if ((key == p.KeyboardConfiguration.Cancel || key == p.KeyboardConfiguration.Back) && Simulation.HelpMode)
                 return;
 
             if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)

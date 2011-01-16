@@ -84,7 +84,7 @@
 
             foreach (var ennemiQte in EnnemisQtes)
             {
-                RepresentationsEnnemis[indiceRepresentations].Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(FactoryEnnemis.Instance.getTexture(ennemiQte.Key));
+                RepresentationsEnnemis[indiceRepresentations].Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(EnemiesFactory.GetTexture(ennemiQte.Key));
                 RepresentationsEnnemis[indiceRepresentations].Origine = RepresentationsEnnemis[indiceRepresentations].Centre;
                               
                 RepresentationsEnnemis[indiceRepresentations].Position = this.Position + new Vector3

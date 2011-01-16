@@ -157,7 +157,7 @@
 
             double tempsRequis = (distance / Vitesse) * 16.33f;
 
-            Simulation.Scene.Effets.Add(this.Representation, PredefinedEffects.FadeOutTo0(this.Representation.Couleur.A, 0, tempsRequis));
+            Simulation.Scene.Effets.Add(this.Representation, Core.Visuel.PredefinedEffects.FadeOutTo0(this.Representation.Couleur.A, 0, tempsRequis));
         }
 
 

@@ -232,6 +232,8 @@
     <asset nom="HelpControlsWin"                  type="Texture2D" chemin="GUI/HelpControlsWin" />
     <asset nom="HelpMercenaries"                  type="Texture2D" chemin="GUI/HelpMercenaries" />
     <asset nom="HelpTheResistance"                type="Texture2D" chemin="GUI/HelpTheResistance" />
+    <asset nom="HelpMercenariesWin"               type="Texture2D" chemin="GUI/HelpMercenariesWin" />
+    <asset nom="HelpTheResistanceWin"             type="Texture2D" chemin="GUI/HelpTheResistanceWin" />    
     <asset nom="titre"                            type="Texture2D" chemin="titre" />
     <asset nom="buy"                              type="Texture2D" chemin="GUI/buy" />
     <asset nom="buy2"                             type="Texture2D" chemin="GUI/buy2" />
@@ -270,7 +272,13 @@
     <asset nom="Collecteur"                       type="Texture2D" chemin="spaceships/collecteur" />
     <asset nom="ProjectileMissile1"               type="Texture2D" chemin="projectiles/missile1" />
     <asset nom="ProjectileMissile2"               type="Texture2D" chemin="projectiles/missile2" />
-    
+    <asset nom="1up"                              type="Texture2D" chemin="GUI/1up" />
+    <asset nom="cash10"                           type="Texture2D" chemin="GUI/cash10" />
+    <asset nom="cash25"                           type="Texture2D" chemin="GUI/cash25" />
+    <asset nom="cash150"                          type="Texture2D" chemin="GUI/cash150" />
+
+
+
     <!-- Sprites -->    
     
     <asset nom="tentacules"                 type="Sprite" chemin="scenarios/tentacules1" />

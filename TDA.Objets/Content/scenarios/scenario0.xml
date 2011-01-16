@@ -352,7 +352,7 @@
   </SystemePlanetaire>
   <Waves>
     <WaveDescriptor>
-      <StartingTime>180000</StartingTime>
+      <StartingTime>60000</StartingTime>
       <Enemies>
         <EnemyType>Plutoid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
@@ -456,13 +456,13 @@ You see the planet with 5 pink moons? It means a maximum of 5 asteroids can reac
 [Continue]]]>
     </string>
     <string>
-      <![CDATA[But before we talk about turrets, look at the hourglass at the top-right of the screen. When the hourglass is depleted, a wave of asteroids will start. The numbers means, in order: the number of waves remaining (5), the amount of cash you have to buy turrets (1000M$) and your score (0!).
+      <![CDATA[But before we talk about turrets, look at the sandglass at the top-right of the screen. When the sandglass is depleted, a wave of asteroids will start. The numbers means, in order: the number of waves remaining (5), the amount of cash you have to buy turrets (1000M$) and your score (0!).
 
 
 [Continue]]]>
     </string>
     <string>
-      <![CDATA[Here an important tip: you can click on the hourglass to make the next wave start faster!
+      <![CDATA[Here an important tip: you can click on the sandglass to make the next wave start faster!
 
 
 Now the fun part: your main job is to build and upgrade turrets. These two actions cost money and you gain money by killing asteroids. You can buy a turret on a planet.
@@ -474,19 +474,13 @@ Now the fun part: your main job is to build and upgrade turrets. These two actio
       <![CDATA[You can only place turrets around planets. Upgrading turrets make them stronger in various ways (range, fire rate, etc). To upgrade a turret, you put your cursor on it and choose the green option.
 
 
-Here's another important tip: Maintain [AdvancedView] to see the range of your turrets (and more!).
-
-
 [Continue]]]>
     </string>
     <string>
-      <![CDATA[This is it for now, Commander. You'll receive further instructions in other levels.
+      <![CDATA[Here's another important tip: Maintain [AdvancedView] to see the range of your turrets (and more!).
 
 
-Oh, one last thing, Commander: you better save this system, otherwise you're fired!
-
-
-Good luck.
+This is it for now, Commander. You'll receive further instructions in other levels. Oh, one last thing: you better save this system, otherwise you're fired! Good luck.
 
 
 [Continue]]]>

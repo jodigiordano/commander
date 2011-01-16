@@ -49,7 +49,7 @@
             Camera = new Camera();
             Camera.Origin = new Vector2(this.Tampon.Largeur / 2.0f, this.Tampon.Hauteur / 2.0f);
             Nom = nom;
-            animations = new AnimationsController();
+            animations = new AnimationsController(this);
             effets = new EffectsController();
             particules = new GestionnaireParticules(this);
             EphemereGames.Core.Input.Facade.AddListener(this);

@@ -7,7 +7,8 @@
 
     class KeyboardConfiguration
     {
-        public Keys Back = Keys.Enter;
+        public Keys Next = Keys.Enter;
+        public Keys Back = Keys.Back;
         public Keys Cancel = Keys.Escape;
         public Keys ChangeMusic = Keys.RightShift;
         public Keys NextWave = Keys.RightControl;
@@ -21,6 +22,7 @@
                 return new List<Keys>()
                 {
                     Back,
+                    Next,
                     Cancel,
                     ChangeMusic,
                     NextWave,

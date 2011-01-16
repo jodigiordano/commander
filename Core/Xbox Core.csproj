@@ -118,14 +118,14 @@
     <Compile Include="Persistance\Facade.cs" />
     <Compile Include="Persistance\Preferences.cs" />
     <Compile Include="Physique\Collisions.cs" />
-    <Compile Include="Physique\Effets\EffetDeplacement.cs" />
     <Compile Include="Physique\Effets\EffetDeplacementOffset.cs" />
     <Compile Include="Physique\Effets\EffetDeplacementTrajet.cs" />
     <Compile Include="Physique\Effets\EffetPhysique.cs" />
     <Compile Include="Physique\Effets\EffetRotation.cs" />
-    <Compile Include="Physique\Effets\EffetsPredefinis.cs" />
     <Compile Include="Physique\Effets\EffetSuivre.cs" />
     <Compile Include="Physique\Effets\EffetVitesseTrajet.cs" />
+    <Compile Include="Physique\Effets\MoveEffect.cs" />
+    <Compile Include="Physique\Effets\PredefinedEffects.cs" />
     <Compile Include="Physique\Facade.cs" />
     <Compile Include="Physique\Formes\Cercle.cs" />
     <Compile Include="Physique\Formes\Ligne.cs" />
@@ -133,6 +133,7 @@
     <Compile Include="Physique\Formes\Triangle.cs" />
     <Compile Include="Physique\IObjetPhysique.cs" />
     <Compile Include="Physique\IPhysique.cs" />
+    <Compile Include="Physique\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AbstractEffet.cs" />
     <Compile Include="Utilities\ControleurThreads.cs" />

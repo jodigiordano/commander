@@ -639,7 +639,7 @@
   </SystemePlanetaire>
   <Waves>
     <WaveDescriptor>
-      <StartingTime>60000</StartingTime>
+      <StartingTime>30000</StartingTime>
       <Enemies>
         <EnemyType>Meteoroid</EnemyType>
       </Enemies>
@@ -809,4 +809,15 @@
     <Z>0.1</Z>
   </PourcentageMinerauxDonnes>
   <NbPackViesDonnes>20</NbPackViesDonnes>
+  <HelpTexts>
+    <string>
+      <![CDATA[Welcome back, Commander.
+
+
+In this level, you have access to the collector power-up. When enemies die, they spread minerals on the battlefield. Use the collector to collect these minerals and make extra cash!
+
+
+[Continue]]]>
+    </string>
+  </HelpTexts>  
 </DescripteurScenario>

@@ -38,6 +38,7 @@ namespace EphemereGames.Core.Utilities
         private CurveTangent typeRecalculerTangeantes = CurveTangent.Linear;
 
         private Vector3 _tmp1, _tmp2;
+        private double MaxTime;
 
 
         //=====================================================================
@@ -50,6 +51,7 @@ namespace EphemereGames.Core.Utilities
             TrajetY = new Curve();
             TrajetZ = new Curve();
             tangeantes = CurveTangent.Smooth;
+            MaxTime = 0;
         }
 
 
@@ -82,6 +84,8 @@ namespace EphemereGames.Core.Utilities
             TrajetY.PreLoop = CurveLoopType.Linear;
             TrajetZ.PostLoop = CurveLoopType.Linear;
             TrajetZ.PreLoop = CurveLoopType.Linear;
+
+            MaxTime = (Qte > 0) ? gameTimes[Qte - 1] : 0;
         }
 
 
@@ -114,6 +118,8 @@ namespace EphemereGames.Core.Utilities
                 TrajetY.PreLoop = CurveLoopType.Linear;
                 TrajetZ.PostLoop = CurveLoopType.Linear;
                 TrajetZ.PreLoop = CurveLoopType.Linear;
+
+                MaxTime = (value.Key.Length > 0) ? value.Key[value.Key.Length - 1] : 0;
             }
         }
 
@@ -194,6 +200,13 @@ namespace EphemereGames.Core.Utilities
             resultat.Y = TrajetY.Evaluate((float)temps);
             resultat.Z = TrajetZ.Evaluate((float)temps);
         }
+
+
+        public float Pourc(double deplacement)
+        {
+            return (MaxTime != 0) ? (float) (deplacement / MaxTime) : 0;
+        }
+
 
         //
         // Position relative sur le trajet (par rapport à l'origine du trajet) selon un certain +temps+
