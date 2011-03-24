@@ -395,26 +395,24 @@
                     "This is the end of World 1, Commander, and what you see right now is World 2, which will be available if I sell enough of World 1 ;) You can expect more mercenaries, enemies and power ups in this World! \n\nVisit ephemeregames.com to know when World 2 will be available.", 25000);
             }
 
-            else if (MondeSelectionne.LevelSelected != null)
+            else if (Main.TrialMode.Active && MondeSelectionne.LevelSelected != null && MondeSelectionne.LevelSelected.Numero > 2)
+            {
+                if (AnimationFinDemo == null)
+                AnimationFinDemo = new AnimationLieutenant(
+                    Main,
+                    this,
+                    "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000 );
+            }
+
+            else if ( MondeSelectionne.LevelSelected != null )
             {
                 ChoixScenario = MondeSelectionne.LevelSelected;
 
-                beginTransition(MondeSelectionne.LevelSelected.Mission);
+                beginTransition( MondeSelectionne.LevelSelected.Mission );
             }
 
 
-            //else if (Main.TrialMode.Active &&
-            //         MondeSelectionne.CorpsSelectionne != "" &&
-            //         MondeSelectionne.CorpsSelectionne[2] != '1' &&
-            //         MondeSelectionne.CorpsSelectionne[2] != '2' &&
-            //         MondeSelectionne.CorpsSelectionne[2] != '3' &&
-            //         AnimationFinDemo == null)
-            //{
-            //    AnimationFinDemo = new AnimationLieutenant(
-            //        Main,
-            //        this,
-            //        "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000);
-            //}
+
 
 //#if XBOX
             //            else if (button == p.MouseConfiguration.Select &&

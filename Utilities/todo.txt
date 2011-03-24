@@ -1,17 +1,18 @@
 ================================================================================
                          todo for Windows release
 ================================================================================
-. gravitational turret preview fucked up
-. test Xbox360 controller and normal controller
-. no editor in release
-. verify trial mode
-. checks and correct errors from the error database
-. put up forum
 . spread the word on towerdefence.net
 . answer customers emails
-. replug upgrade gravitational turret
-. change level done/not done assets
+. test Xbox360 controller and normal controller
 
+D checks and correct errors from the error database
+D verify trial mode
+D no editor in release
+D put up forum (http://community.ephemeregames.com/)
+D replug upgrade gravitational turret
+C change level done/not done assets
+D only popup tutorial two times
+D gravitational turret preview fucked up
 D new way to calculate the path that doesn't do hicups
 D diminish time before first wave in tutorials levels
 D 5 new loading quotes
@@ -38,6 +39,8 @@ D visual priority between two enemies (flickering when one outrace another)
 . finish easy levels to get access to world 2
 . new planets / backgrounds assets
 
+. Cd7 - Schubert - Nummer 5, vers 4 min.
+. Cd7 - Schubert - Nummer 8, vers la fin.
 
 ================================================================================
                          todo for Xbox360 release

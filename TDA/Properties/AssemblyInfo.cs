@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 #if WINDOWS && TRIAL
-[assembly: AssemblyTitle("Commander - Trial")]
-[assembly: AssemblyProduct("Commander - Trial")]
+[assembly: AssemblyTitle( "Commander" )]
+[assembly: AssemblyProduct( "Commander" )]
 [assembly: AssemblyDescription("An epic and lovely tower defense game.")]
 [assembly: AssemblyCompany("Ephemere Games")]
 

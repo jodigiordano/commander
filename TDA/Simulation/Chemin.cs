@@ -272,6 +272,24 @@
                 }
 
                 SousPoints[NbSousPoints++] = exitVec;
+
+                if (CorpsCelestesChemin.Values[i].ContientTourelleGravitationnelleNiveau2)
+                {
+                    step = MathHelper.TwoPi / 8;
+
+                    for (int y = 1; y < 8; y++)
+                    {
+                        float next = PDangle - y * step;
+
+                        if (next < 0)
+                            next += MathHelper.TwoPi;
+
+                        SousPoints[NbSousPoints++] = CorpsCelestesChemin.Values[i].position +
+                        Core.Physique.Utilities.AngleToVector(next) * radius;
+                    }
+
+                    SousPoints[NbSousPoints++] = exitVec;
+                }
             }
         }
     }

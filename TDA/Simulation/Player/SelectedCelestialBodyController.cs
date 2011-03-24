@@ -117,7 +117,7 @@
 
         public Vector3 DoGlueMode()
         {
-            if (SelectedCelestialBodyIndex != -1)
+            if ( SelectedCelestialBodyIndex >= 0 && SelectedCelestialBodyIndex < CelestialBodies.Count)
             {
                 Vector3 diff = CelestialBodies[SelectedCelestialBodyIndex].Position - LastPositionSelectedCelestialBody;
 
@@ -126,7 +126,7 @@
                 return diff;
             }
 
-            else if (SelectedTurretCelestialBodyIndex != -1)
+            else if ( SelectedCelestialBodyIndex >= 0 && SelectedCelestialBodyIndex < CelestialBodies.Count )
             {
                 Vector3 diff = CelestialBodies[SelectedTurretCelestialBodyIndex].Position - LastPositionSelectedCelestialBody;
 

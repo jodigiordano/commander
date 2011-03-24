@@ -41,6 +41,8 @@
         private double StarsEmitter;
         private double ElapsedTime;
 
+        private bool HelpSaved;
+
 
         public ScenarioController(Simulation simulation, Scenario scenario)
         {
@@ -54,7 +56,17 @@
             WavesCounter = 0;
             ElapsedTime = 0;
 
-            Help = new Help(simulation, scenario.HelpTexts);
+            if (Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Numero) && Simulation.Main.SaveGame.Tutorials[Scenario.Numero] > 2)
+            {
+                Help = new Help(Simulation, new List<string>());
+                HelpSaved = true;
+            }
+
+            else
+            {
+                Help = new Help(simulation, scenario.HelpTexts);
+                HelpSaved = false;
+            }
         }
 
 
@@ -62,6 +74,16 @@
         {
             if (Help.Active)
                 Help.Update(gameTime);
+            else if (!HelpSaved)
+            {
+                if (!Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Numero))
+                    Simulation.Main.SaveGame.Tutorials.Add(new KeyValuePair<int,int>(Scenario.Numero, 0));
+
+                Simulation.Main.SaveGame.Tutorials[Scenario.Numero]++;
+
+                HelpSaved = true;
+            }
+
 
             StarsEmitter += gameTime.ElapsedGameTime.TotalMilliseconds;
 

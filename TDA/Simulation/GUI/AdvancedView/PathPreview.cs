@@ -44,7 +44,6 @@ namespace EphemereGames.Commander
                 return;
 
             CelestialObject = obj;
-            CelestialObject.ContientTourelleGravitationnelleByPass = false;
             Path.enleverCorpsCeleste(obj);
             State = PathState.ObjectRemoved;
             ActualPath.AlphaChannel = 25;
@@ -58,6 +57,7 @@ namespace EphemereGames.Commander
             {
                 case PathState.ObjectAdded:
                     Path.enleverCorpsCeleste(CelestialObject);
+                    CelestialObject.ContientTourelleGravitationnelleByPass = false;
                     CelestialObject = null;
                     State = PathState.None;
                     break;
@@ -75,6 +75,9 @@ namespace EphemereGames.Commander
 
         public void Commit()
         {
+            if (CelestialObject != null)
+                CelestialObject.ContientTourelleGravitationnelleByPass = false;
+
             CelestialObject = null;
             State = PathState.None;
             ActualPath.AlphaChannel = 100;

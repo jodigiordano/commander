@@ -238,6 +238,7 @@
                 selection.Turret != null &&
                 selection.Turret.Type == TurretType.Gravitational &&
                 selection.Turret.CanSell &&
+                !selection.Turret.Disabled &&
                 selection.TurretOption == TurretAction.Sell)
                 PathPreviewing.RemoveCelestialObject(selection.Turret.CelestialBody);
             else if (PathPreviewing != null &&

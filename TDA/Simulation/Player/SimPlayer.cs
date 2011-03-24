@@ -338,7 +338,8 @@
             bool majEtaitIndisponible = !ActualSelection.AvailableTurretOptions[TurretAction.Update];
 
             ActualSelection.AvailableTurretOptions[TurretAction.Sell] =
-                ActualSelection.Turret.CanSell;
+                ActualSelection.Turret.CanSell &&
+                !ActualSelection.Turret.Disabled;
 
             ActualSelection.AvailableTurretOptions[TurretAction.Update] =
                 ActualSelection.Turret.CanUpdate &&

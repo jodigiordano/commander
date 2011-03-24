@@ -97,7 +97,7 @@
 
         public override void Draw()
         {
-            if (Turret == null)
+            if (Turret == null || Turret.Disabled)
                 return;
 
             base.Draw();

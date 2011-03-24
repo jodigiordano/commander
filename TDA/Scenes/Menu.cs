@@ -236,7 +236,11 @@
                     case "quit":                ajouterScenable(QuitterPartie);     break;
                     case "help":                ajouterScenable(Aide);              break;
                     case "options":             ajouterScenable(Options);           break;
-                    case "editor":              ajouterScenable(Editeur);           break;
+                    case "editor":
+#if DEBUG
+                        ajouterScenable(Editeur);
+#endif
+                        break;
                     case "resume game":
                         if (Main.GameInProgress != null && !Main.GameInProgress.EstTerminee)
                             ajouterScenable(ReprendrePartie);
@@ -321,13 +325,19 @@
             if (Transition != TransitionType.None)
                 return;
 
-            if ((Simulation.CorpsCelesteSelectionne != null &&
-                Simulation.CorpsCelesteSelectionne.Nom == "resume game" &&
+            if (Simulation.CorpsCelesteSelectionne == null)
+                return;
+
+#if !DEBUG
+            if (Simulation.CorpsCelesteSelectionne.Nom == "editor")
+                return;
+#endif
+
+            if ((Simulation.CorpsCelesteSelectionne.Nom == "resume game" &&
                 Main.GameInProgress != null &&
                 !Main.GameInProgress.EstTerminee) ||
                 
-                (Simulation.CorpsCelesteSelectionne != null &&
-                Simulation.CorpsCelesteSelectionne.Nom != "resume game"))
+                (Simulation.CorpsCelesteSelectionne.Nom != "resume game"))
             {
                 Transition = TransitionType.Out;
                 ChoixTransition = Simulation.CorpsCelesteSelectionne.Nom;

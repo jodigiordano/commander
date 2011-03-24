@@ -42,7 +42,7 @@ namespace EphemereGames.Core.Persistance
                     return (T)asset;
             }
 
-            throw new Exception("Asset introuvable ! Pas supposé");
+            throw new Exception("Couln't find asset " + nom + " in package.");
         }
 
         public T recupererParCopie<T>(String nom)

@@ -323,6 +323,19 @@
 
         public void doGamePadButtonPressedOnce(Player player, Buttons button)
         {
+            if ( ModeDemo )
+            {
+                if ( Player.ActualSelection.CelestialBody == null )
+                    return;
+
+                if ( button == player.GamePadConfiguration.SelectionNext )
+                    Player.NextGameAction();
+                else if ( button == player.GamePadConfiguration.SelectionPrevious )
+                    Player.PreviousGameAction();
+
+                return;
+            }
+
             if (button == player.GamePadConfiguration.Select)
                 doSelectAction();
             else if (button == player.GamePadConfiguration.Cancel)
