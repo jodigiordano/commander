@@ -164,6 +164,7 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="Editeur\GenerateurData.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\Scores.cs" />
     <Compile Include="Simulation\Animations\AnimationEtoileFilante.cs" />

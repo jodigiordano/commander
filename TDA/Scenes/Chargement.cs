@@ -208,8 +208,11 @@
 
                     if (!WaitingForPlayerToConnect)
                     {
-                        if (!EphemereGames.Core.Persistance.Facade.DataLoaded("savePlayer"))
-                            EphemereGames.Core.Persistance.Facade.LoadData("savePlayer");
+                        if ( !EphemereGames.Core.Persistance.Facade.DataLoaded( "savePlayer" ) )
+                        {
+                            EphemereGames.Core.Persistance.Facade.LoadData( "savePlayer" );
+                            EphemereGames.Core.Persistance.Facade.LoadData( "generateurData" );
+                        }
 
                         EtatScene = Etat.CHARGEMENT_SAUVEGARDE;
                     }

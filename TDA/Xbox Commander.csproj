@@ -121,6 +121,7 @@
     <Compile Include="Editeur\Editeur.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Editeur\GenerateurData.cs" />
     <Compile Include="Editeur\GenerateurGUI.cs" />
     <Compile Include="Editeur\GenerateurScenario.cs" />
     <Compile Include="Editeur\GenerateurVagues.cs" />

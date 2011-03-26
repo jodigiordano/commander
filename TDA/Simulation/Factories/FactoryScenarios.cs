@@ -101,16 +101,6 @@
                 return d;
             }
 
-            else if (id >= 10 && id <= 18)
-            {
-                d = new DescripteurScenario();
-                d.Numero = id;
-                d.Mission = "2-" + (id - 9);
-                d.Difficulte = (id == 10 || id == 17) ? "Easy" : (id == 11 || id == 12 || id == 13 || id == 14) ? "Normal" : "Hard";
-
-                return d;
-            }
-
             else if (id >= 21 && id <= 30)
             {
                 d = new DescripteurScenario();

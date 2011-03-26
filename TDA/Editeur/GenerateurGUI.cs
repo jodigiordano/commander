@@ -577,26 +577,24 @@
             //    Simulation.Initialize();
             //}
 
-            //if (SavePushButton.Pressed && DescriptionScenario != null)
-            //{
-            //    updateDonneesSystemePlanetaire();
-            //    updateDonneesGameplay();
-            //    updateDonneesVagues();
+            if ( SavePushButton.Pressed && DescriptionScenario != null )
+            {
+                updateDonneesSystemePlanetaire();
+                updateDonneesGameplay();
+                updateDonneesVagues();
 
-            //    if (LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Simulation.Main.SaveGame.DescriptionsScenarios.Count)
-            //    {
-            //        Simulation.Main.SaveGame.DescriptionsScenarios.Add(DescriptionScenario);
-            //        Simulation.Main.SaveGame.DonneesGenerateur.Add(DonneesGenerateur);
-            //    }
+                if ( LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Simulation.Main.GenerateurData.Scenarios.Count )
+                {
+                    Simulation.Main.GenerateurData.Scenarios.Add( DescriptionScenario );
+                }
 
-            //    else
-            //    {
-            //        Simulation.Main.SaveGame.DescriptionsScenarios[LoadSlider.Valeur] = DescriptionScenario;
-            //        Simulation.Main.SaveGame.DonneesGenerateur[LoadSlider.Valeur] = DonneesGenerateur;
-            //    }
+                else
+                {
+                    Simulation.Main.GenerateurData.Scenarios[LoadSlider.Valeur] = DescriptionScenario;
+                }
 
-            //    EphemereGames.Core.Persistance.Facade.sauvegarderDonnee("savePlayer");
-            //}
+                EphemereGames.Core.Persistance.Facade.SaveData( "generateurData" );
+            }
 
             //if (DeletePushButton.Pressed && DeleteSlider.Valeur != -1 && DeleteSlider.Valeur < Simulation.Main.SaveGame.DescriptionsScenarios.Count)
             //{

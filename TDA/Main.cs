@@ -13,6 +13,7 @@ namespace EphemereGames.Commander
     {
         public ManagedThread[] Threads;
         public SaveGame SaveGame;
+        public GenerateurData GenerateurData;
         public PlayersController PlayersController;
         public TrialMode TrialMode;
         public Partie GameInProgress;
@@ -39,6 +40,7 @@ namespace EphemereGames.Commander
             Graphics.IsFullScreen = Preferences.FullScreen;
             Content.RootDirectory = "Content";
             SaveGame = new SaveGame();
+            GenerateurData = new GenerateurData();
             Window.AllowUserResizing = false;
             PlayersController = new PlayersController();
 
@@ -83,7 +85,8 @@ namespace EphemereGames.Commander
             EphemereGames.Core.Physique.Facade.Initialize();
             EphemereGames.Core.Audio.Facade.Initialize(0, 0);
 
-            EphemereGames.Core.Persistance.Facade.AddData(SaveGame);
+            EphemereGames.Core.Persistance.Facade.AddData( SaveGame );
+            EphemereGames.Core.Persistance.Facade.AddData( GenerateurData );
 
             EphemereGames.Core.Persistance.Facade.LoadPackage("chargement");
 
