@@ -1,21 +1,22 @@
 ﻿namespace EphemereGames.Core.Physique
 {
     using Microsoft.Xna.Framework;
+    using System;
 
 
     public class MoveEffect : EffetPhysique
     {
-        public Vector3 PositionStart { get; set; }
-        private Vector3 PositionEnd { get; set; }
+        public Vector3 PositionEnd { get; set; }
+        private Vector3 PositionStart { get; set; }
 
         private Vector3 Displacement = Vector3.Zero;
 
 
         protected override void InitializeLogic()
         {
-            PositionEnd = Objet.Position;
+            PositionStart = Objet.Position;
 
-            Displacement = PositionStart - PositionEnd;
+            Displacement = PositionEnd - PositionStart;
         }
 
 
@@ -23,21 +24,31 @@
         {
             Objet.Position =
                 new Vector3(
-                    (float)(PositionEnd.X + (Displacement.X * (ElaspedTime / Length))),
-                    (float)(PositionEnd.Y + (Displacement.Y * (ElaspedTime / Length))),
-                    (float)(PositionEnd.Z + (Displacement.Z * (ElaspedTime / Length))));
+                    (float)(PositionStart.X + (Displacement.X * (ElaspedTime / Length))),
+                    (float)(PositionStart.Y + (Displacement.Y * (ElaspedTime / Length))),
+                    (float)(PositionStart.Z + (Displacement.Z * (ElaspedTime / Length))));
+        }
+
+
+        protected override void LogicLogarithmic()
+        {
+            Objet.Position =
+                new Vector3(
+                    (float) (PositionStart.X + (Displacement.X * (Math.Log(ElaspedTime) / Math.Log(Length)))),
+                    (float) (PositionStart.Y + (Displacement.Y * (Math.Log(ElaspedTime) / Math.Log(Length)))),
+                    (float) (PositionStart.Z + (Displacement.Z * (Math.Log(ElaspedTime) / Math.Log(Length)))));
         }
 
 
         protected override void LogicAfter()
         {
-            Objet.Position = PositionStart;
+            Objet.Position = PositionEnd;
         }
 
 
         protected override void LogicNow()
         {
-            Objet.Position = PositionStart;
+            Objet.Position = PositionEnd;
         }
     }
 }

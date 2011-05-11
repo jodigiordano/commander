@@ -12,7 +12,7 @@
     public class GenerateurData : Data
     {
         [ContentSerializer(Optional = false)]
-        public List<DescripteurScenario> Scenarios { get; set; }
+        public List<ScenarioDescriptor> Scenarios { get; set; }
 
 
         public GenerateurData()
@@ -47,7 +47,7 @@
 
         private void premierChargement()
         {
-            this.Scenarios = new List<DescripteurScenario>();
+            this.Scenarios = new List<ScenarioDescriptor>();
 
             EphemereGames.Core.Persistance.Facade.SaveData(this.Name);
             Loaded = true;

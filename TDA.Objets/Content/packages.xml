@@ -3,13 +3,14 @@
 
     <!-- Textures -->
 
-    <asset nom="Logo"                 type="Texture2D" chemin="EphemereLogo" />
+    <asset nom="Logo"                 type="Texture2D" chemin="GUI/EphemereLogo" />
     <asset nom="VaisseauAlien"        type="Texture2D" chemin="scenarios/vaisseauAlien" />
+    <asset nom="HumanBattleship"      type="Texture2D" chemin="scenarios/humanBattleship" />
     <asset nom="PixelBlanc"           type="Texture2D" chemin="pixelBlanc" />
     <asset nom="sablier"              type="Texture2D" chemin="GUI/sablier" />
     <asset nom="Curseur"              type="Texture2D" chemin="GUI/Curseur" />
-    <asset nom="emplacement"          type="Texture2D" chemin="planetes/emplacement" />
     <asset nom="SplashScreenBg"       type="Texture2D" chemin="fonds/fondecran16" />
+    <asset nom="checkbox"             type="Texture2D" chemin="GUI/checkbox" />
 
     
     <!-- Sprites -->
@@ -19,7 +20,6 @@
     
     <!-- Polices -->
     
-    <asset nom="Chargement"           type="Police" chemin="polices/Chargement" />
     <asset nom="Pixelite"             type="Police" chemin="polices/pixelite" />
     <asset nom="PixelBig"             type="Police" chemin="polices/pixelbig" />
     <asset nom="Alien"                type="Police" chemin="polices/alien" />
@@ -52,26 +52,10 @@
     <asset nom="sfxPowerUpCollecteurOut"              type="EffetSonore" chemin="sfx/sfxCollecteurOut"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxPowerUpDoItYourselfIn"             type="EffetSonore" chemin="sfx/sfxDoItYourselfIn"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxPowerUpDoItYourselfOut"            type="EffetSonore" chemin="sfx/sfxDoItYourselfOut"><param nom="banque" valeur="Partie" /></asset>
-
-    
-    
   </Package>
   
   
   <Package nom="principal" temporaire="false" niveau="0">
-
-    <!-- Polices -->
-
-    <asset nom="policePointsDeVie"    type="Police" chemin="polices/PointsDeVie" />
-    <asset nom="Pixel1"               type="Police" chemin="polices/Pixel1" />
-    <asset nom="policeGagnePerdu"     type="Police" chemin="polices/DataControlGrand" />
-    <asset nom="ConsoleFont"          type="Police" chemin="polices/ConsoleFont" />
-    <asset nom="DataControlBold"      type="Police" chemin="polices/DataControlBold" />
-    <asset nom="DataControlMini"      type="Police" chemin="polices/DataControlMini" />
-    <asset nom="DataControl"          type="Police" chemin="polices/DataControl" />
-    <asset nom="SpriteFont1"          type="Police" chemin="polices/SpriteFont1" />
-    <asset nom="ScenarioTitre"        type="Police" chemin="polices/ScenarioTitre" />
-
 
     <!-- Particules -->
     
@@ -104,7 +88,7 @@
     <asset nom="mineralPris"                  type="Particules" chemin="particules/mineralPris"/>
     <asset nom="etoileFilante"                type="Particules" chemin="particules/etoileFilante"/>
     <asset nom="trouRose"                     type="Particules" chemin="particules/trouRose"/>
-    
+    <asset nom="boosterTurret"                type="Particules" chemin="particules/booster"/>
 
     <!-- Textures -->
 
@@ -113,12 +97,12 @@
     <asset nom="ProjectileBase"             type="Texture2D" chemin="projectiles/projectileBase" />
 
     <asset nom="LigneTrajet"                type="Texture2D" chemin="GUI/ligne_trajet" />
-    <asset nom="Asteroid"                   type="Texture2D" chemin="asteroides/asteroid" />
-    <asset nom="Comet"                      type="Texture2D" chemin="asteroides/comet" />
-    <asset nom="Plutoid"                    type="Texture2D" chemin="asteroides/plutoid" />
-    <asset nom="Centaur"                    type="Texture2D" chemin="asteroides/centaur" />
-    <asset nom="Trojan"                     type="Texture2D" chemin="asteroides/trojan" />
-    <asset nom="Meteoroid"                  type="Texture2D" chemin="asteroides/meteoroid" />
+    <asset nom="Asteroid"                   type="Texture2D" chemin="asteroids/asteroid" />
+    <asset nom="Comet"                      type="Texture2D" chemin="asteroids/comet" />
+    <asset nom="Plutoid"                    type="Texture2D" chemin="asteroids/plutoid" />
+    <asset nom="Centaur"                    type="Texture2D" chemin="asteroids/centaur" />
+    <asset nom="Trojan"                     type="Texture2D" chemin="asteroids/trojan" />
+    <asset nom="Meteoroid"                  type="Texture2D" chemin="asteroids/meteoroid" />
     <asset nom="Filtre"                     type="Texture2D" chemin="GUI/filtre" />
 
     <asset nom="etoile13"                   type="Texture2D" chemin="planetes/etoile1" />
@@ -189,7 +173,6 @@
     <asset nom="fondecran20"                type="Texture2D" chemin="fonds/fondecran20" />
     <asset nom="fondecran21"                type="Texture2D" chemin="fonds/fondecran21" />
     <asset nom="fondecran22"                type="Texture2D" chemin="fonds/fondecran22" />
-    <asset nom="fondecran23"                type="Texture2D" chemin="fondnoir" />
 
     <asset nom="tourelleBase1"                    type="Texture2D" chemin="tourelles/tourelleBase1" />
     <asset nom="tourelleBase2"                    type="Texture2D" chemin="tourelles/tourelleBase2" />
@@ -215,26 +198,25 @@
     <asset nom="tourelleSlowMotionCanon3"         type="Texture2D" chemin="tourelles/tourelleSlowMotionCanon3" />
     <asset nom="tourelleAlienBase"                type="Texture2D" chemin="tourelles/tourelleAlienBase" />
     <asset nom="tourelleAlien"                    type="Texture2D" chemin="tourelles/tourelleAlien" />
-    
+    <asset nom="tourelleBooster"                  type="Texture2D" chemin="tourelles/tourelleBoosterBase" />
+    <asset nom="tourelleGunner1"                  type="Texture2D" chemin="tourelles/tourelleGunnerCanon1" />
+    <asset nom="tourelleGunner2"                  type="Texture2D" chemin="tourelles/tourelleGunnerCanon2" />
+    <asset nom="tourelleGunner3"                  type="Texture2D" chemin="tourelles/tourelleGunnerCanon3" />
+    <asset nom="tourelleGunnerBase"               type="Texture2D" chemin="tourelles/tourelleGunnerBase" />
+    <asset nom="tourelleMortar1"                  type="Texture2D" chemin="tourelles/tourelleMortarCanon1" />
+    <asset nom="tourelleMortar2"                  type="Texture2D" chemin="tourelles/tourelleMortarCanon2" />
+    <asset nom="tourelleMortar3"                  type="Texture2D" chemin="tourelles/tourelleMortarCanon3" />
+    <asset nom="tourelleMortarBase"               type="Texture2D" chemin="tourelles/tourelleMortarBase" />
+    <asset nom="tourelleNanobots1"                type="Texture2D" chemin="tourelles/tourelleNanobotsCanon1" />
+    <asset nom="tourelleNanobots2"                type="Texture2D" chemin="tourelles/tourelleNanobotsCanon2" />
+    <asset nom="tourelleNanobots3"                type="Texture2D" chemin="tourelles/tourelleNanobotsCanon3" />
+    <asset nom="tourelleNanobotsBase"             type="Texture2D" chemin="tourelles/tourelleNanobotsBase" />
+
     <asset nom="bulle"                            type="Texture2D" chemin="scenarios/bulle" />
     <asset nom="bulleRenversee"                   type="Texture2D" chemin="scenarios/bulleRenversee" />
-    <asset nom="leftTrigger"                      type="Texture2D" chemin="GUI/leftTrigger" />
-    <asset nom="rightTrigger"                     type="Texture2D" chemin="GUI/rightTrigger" />
     <asset nom="lieutenant"                       type="Texture2D" chemin="scenarios/lieutenant" />
-    <asset nom="pressBack"                        type="Texture2D" chemin="GUI/pressBack" />
-    <asset nom="pressExecute"                     type="Texture2D" chemin="GUI/pressExecute" />
-    <asset nom="pressPlay"                        type="Texture2D" chemin="GUI/pressPlay" />
-    <asset nom="options"                          type="Texture2D" chemin="GUI/options" />
     <asset nom="Gauche"                           type="Texture2D" chemin="GUI/gauche" />
     <asset nom="Droite"                           type="Texture2D" chemin="GUI/droite" />
-    <asset nom="HelpBattlefield"                  type="Texture2D" chemin="GUI/HelpBattlefield" />
-    <asset nom="HelpControls"                     type="Texture2D" chemin="GUI/HelpControls" />
-    <asset nom="HelpControlsWin"                  type="Texture2D" chemin="GUI/HelpControlsWin" />
-    <asset nom="HelpMercenaries"                  type="Texture2D" chemin="GUI/HelpMercenaries" />
-    <asset nom="HelpTheResistance"                type="Texture2D" chemin="GUI/HelpTheResistance" />
-    <asset nom="HelpMercenariesWin"               type="Texture2D" chemin="GUI/HelpMercenariesWin" />
-    <asset nom="HelpTheResistanceWin"             type="Texture2D" chemin="GUI/HelpTheResistanceWin" />    
-    <asset nom="titre"                            type="Texture2D" chemin="titre" />
     <asset nom="buy"                              type="Texture2D" chemin="GUI/buy" />
     <asset nom="buy2"                             type="Texture2D" chemin="GUI/buy2" />
     <asset nom="LevelDone"                        type="Texture2D" chemin="GUI/done" />
@@ -247,6 +229,8 @@
 
     <asset nom="CercleBlanc"                      type="Texture2D" chemin="GUI/cercleBlanc" />
 
+    <asset nom="options"                          type="Texture2D" chemin="GUI/options" />
+
     <asset nom="ViesEnnemis1"                     type="Texture2D" chemin="GUI/viesEnnemis01" />
     <asset nom="ViesEnnemis2"                     type="Texture2D" chemin="GUI/viesEnnemis02" />
     <asset nom="ViesEnnemis3"                     type="Texture2D" chemin="GUI/viesEnnemis03" />
@@ -256,35 +240,49 @@
 
     <asset nom="BarreInactivite"                  type="Texture2D" chemin="tourelles/barreInactivite" />
 
-    <asset nom="PointsVieJoueur1"                 type="Texture2D" chemin="GUI/PointsVieJoueur1" />
-    <asset nom="PointsVieJoueur2"                 type="Texture2D" chemin="GUI/PointsVieJoueur2" />
-
     <asset nom="Vaisseau"                         type="Texture2D" chemin="spaceships/Vaisseau" />
-    <asset nom="Destruction"                      type="Texture2D" chemin="Destruction" />
     <asset nom="TheResistance"                    type="Texture2D" chemin="spaceships/TheResistance" />
-    <asset nom="HealthPack"                       type="Texture2D" chemin="healthPack" />
-    <asset nom="Mineral1"                         type="Texture2D" chemin="mineral1" />
-    <asset nom="Mineral2"                         type="Texture2D" chemin="mineral2" />
-    <asset nom="Mineral3"                         type="Texture2D" chemin="mineral3" />
     <asset nom="Resistance1"                      type="Texture2D" chemin="spaceships/resistance1" />
     <asset nom="Resistance2"                      type="Texture2D" chemin="spaceships/resistance2" />
     <asset nom="Resistance3"                      type="Texture2D" chemin="spaceships/resistance3" />
     <asset nom="Collecteur"                       type="Texture2D" chemin="spaceships/collecteur" />
     <asset nom="ProjectileMissile1"               type="Texture2D" chemin="projectiles/missile1" />
     <asset nom="ProjectileMissile2"               type="Texture2D" chemin="projectiles/missile2" />
-    <asset nom="1up"                              type="Texture2D" chemin="GUI/1up" />
-    <asset nom="cash10"                           type="Texture2D" chemin="GUI/cash10" />
-    <asset nom="cash25"                           type="Texture2D" chemin="GUI/cash25" />
-    <asset nom="cash150"                          type="Texture2D" chemin="GUI/cash150" />
+    
+    
+    <!-- Minerals -->
+    <asset nom="HealthPack"                       type="Texture2D" chemin="minerals/healthPack" />
+    <asset nom="Mineral1"                         type="Texture2D" chemin="minerals/mineral1" />
+    <asset nom="Mineral2"                         type="Texture2D" chemin="minerals/mineral2" />
+    <asset nom="Mineral3"                         type="Texture2D" chemin="minerals/mineral3" />
+    <asset nom="1up"                              type="Texture2D" chemin="minerals/1up" />
+    <asset nom="cash10"                           type="Texture2D" chemin="minerals/cash10" />
+    <asset nom="cash25"                           type="Texture2D" chemin="minerals/cash25" />
+    <asset nom="cash150"                          type="Texture2D" chemin="minerals/cash150" />
+    
+    
+    <!-- Power-Ups -->
+    <asset nom="powerUpPlaceHolder"               type="Texture2D" chemin="powerups/placeHolder" />
+    <asset nom="Destruction"                      type="Texture2D" chemin="powerups/destruction" />
 
+    
+    <!-- Help stuff -->
+    
+    <asset nom="HelpBattlefield"                  type="Texture2D" chemin="help/battlefield" />
+    <asset nom="HelpControls"                     type="Texture2D" chemin="help/controls" />
+    <asset nom="HelpControlsWin"                  type="Texture2D" chemin="help/controlsWin" />
+    <asset nom="HelpMercenaries"                  type="Texture2D" chemin="help/mercenaries" />
+    <asset nom="HelpTheResistance"                type="Texture2D" chemin="help/theResistance" />
+    <asset nom="HelpMercenariesWin"               type="Texture2D" chemin="help/mercenariesWin" />
+    <asset nom="HelpTheResistanceWin"             type="Texture2D" chemin="help/theResistanceWin" />
 
-
+    
     <!-- Sprites -->    
     
     <asset nom="tentacules"                 type="Sprite" chemin="scenarios/tentacules1" />
 
 
-    <!-- Musiques -->
+    <!-- Musics -->
 
     <asset nom="ingame1"                 type="Musique" chemin="musiques/Chopin1" />
     <asset nom="ingame2"                 type="Musique" chemin="musiques/Chopin2" />
@@ -298,10 +296,5 @@
     <asset nom="ingame7"                 type="Musique" chemin="musiques/Chopin10" />
     <asset nom="gameover2"               type="Musique" chemin="musiques/Chopin11-gameover" />
     <asset nom="ingame8"                 type="Musique" chemin="musiques/Chopin12" />
-    
-    <!--asset nom="musiquePrincipale"          type="Musique" chemin="musiquePrincipale" />
-    <asset nom="chopine"                 type="Musique" chemin="chopine" /-->
-
-
   </Package>
 </Packages>

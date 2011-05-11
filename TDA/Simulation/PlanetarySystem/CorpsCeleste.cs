@@ -27,25 +27,16 @@
         public float PointsVie                                      { get; set; }
         public float PointsAttaque                                  { get; set; }
         public bool EstVivant                                       { get { return PointsVie > 0; } }
-        public bool PeutAvoirCollecteur;
-        public bool PeutAvoirDoItYourself;
-        public bool PeutAvoirTheResistance;
-        public bool PeutDetruire;
         public bool Selectionnable;
         public bool Invincible;
         public bool EstDernierRelais;
-        public int PrixDestruction;
-        public int PrixCollecteur;
-        public int PrixDoItYourself;
-        public int PrixTheResistance;
-        public Cercle ZoneImpactDestruction;
         public Vector3 Offset;
-        public List<Turret> TourellesPermises;
         public List<Lune> Lunes;
         public bool ContientTourelleGravitationnelleByPass;
         public float PrioriteAffichageBackup;
         public Cercle TurretsZone;
         public bool ShowTurretsZone;
+        public Cercle ZoneImpactDestruction;
 
         protected Simulation Simulation;
         protected Vector3 AnciennePosition;
@@ -110,22 +101,6 @@
             Cercle = new Cercle(Position, rayon);
             TurretsZone = new Cercle(Position, rayon * 2);
 
-            TourellesPermises = new List<Turret>();
-
-            foreach (var turret in simulation.TurretFactory.AvailableTurrets)
-                TourellesPermises.Add(turret);
-
-            PeutAvoirDoItYourself = true;
-            PeutDetruire = true;
-            PrixDestruction = 500;
-            PrixCollecteur = 0;
-            PrixDoItYourself = 50;
-            ZoneImpactDestruction = new Cercle(this.Position, 300);
-            PointsAttaque = 50000;
-            PeutAvoirCollecteur = true;
-            PeutAvoirTheResistance = true;
-            PrixTheResistance = 250;
-
             initLunes();
 
             TurretsZoneImage = new Image("CercleBlanc", Vector3.Zero);
@@ -133,6 +108,8 @@
             TurretsZoneImage.Color.A = 100;
             TurretsZoneImage.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.002f;
             ShowTurretsZone = false;
+
+            ZoneImpactDestruction = new Cercle(this, 1);
         }
 
 
@@ -198,23 +175,11 @@
             this.Cercle = new Cercle(Position, rayon);
             TurretsZone = new Cercle(Position, rayon * 2);
 
-            this.TourellesPermises = new List<Turret>();
-
-            foreach (var turret in simulation.TurretFactory.AvailableTurrets)
-                TourellesPermises.Add(turret);
-
-            this.PeutAvoirDoItYourself = true;
-            this.PeutDetruire = true;
-            this.PrixDestruction = 500;
-            this.PrixCollecteur = 0;
-            this.PrixDoItYourself = 50;
-            this.ZoneImpactDestruction = new Cercle(this.Position, 300);
             this.PointsAttaque = 50000;
-            this.PeutAvoirCollecteur = true;
-            this.PeutAvoirTheResistance = true;
-            this.PrixTheResistance = 250;
 
             Lunes = new List<Lune>();
+
+            ZoneImpactDestruction = new Cercle(this, 1);
         }
 
 
@@ -284,7 +249,7 @@
             }
 
             Cercle.Position = Position;
-            ZoneImpactDestruction.Position = Position;
+            //ZoneImpactDestruction.Position = Position;
             TurretsZone.Position = Position;
 
             if (ParticulesRepresentation != null)

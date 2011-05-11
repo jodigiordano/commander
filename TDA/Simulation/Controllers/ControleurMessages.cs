@@ -487,17 +487,6 @@
                     case "Curseur":
                         AideNiveau.QuotesObjets.Add(objet, Curseur);
                         break;
-                    //case "Emplacement":
-                    //    for (int i = 1; i < CorpsCelestes.Count; i++)
-                    //        if (CorpsCelestes[i].Emplacements != null && CorpsCelestes[i].Emplacements.Count > 1)
-                    //        {
-                    //            AideNiveau.QuotesObjets.Add(objet, CorpsCelestes[i].Emplacements[1]);
-                    //            break;
-                    //        }
-                    //    break;
-                    //case "Grav":
-                    //    AideNiveau.QuotesObjets.Add(objet, Chemin.prochainRelais(Chemin.PremierRelais).Emplacements[0]);
-                    //    break;
                     case "Planete":
                         AideNiveau.QuotesObjets.Add(objet, CorpsCelestes[CorpsCelestes.Count - 2]);
                         break;

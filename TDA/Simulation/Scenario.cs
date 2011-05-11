@@ -6,163 +6,186 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+
     class Scenario
     {
-        public int Numero;
+        public int Id;
         public string Mission;
-        public string Annee;
-        public string Lieu;
-        public string Objectif;
-        public string Description;
-        public string Difficulte;
+        public string Difficulty;
         public double ParTime;
+        public Image Background;
 
-        public List<CorpsCeleste> SystemePlanetaire;
-        public VaguesInfinies VaguesInfinies;
-        public LinkedList<Wave> Vagues;
+        public List<CorpsCeleste> PlanetarySystem;
+        public List<Turret> Turrets;
+
+        public VaguesInfinies InfiniteWaves;
+        public LinkedList<Wave> Waves;
+
         public CommonStash CommonStash;
-        public List<Turret> Tourelles;
-        public CorpsCeleste CorpsCelesteAProteger;
-        public IVisible FondEcran;
 
-        public int ValeurMinerauxDonnes;
-        public Vector3 PourcentageMinerauxDonnes;
-        public int NbPackViesDonnes;
+        public Dictionary<TurretType, Turret> AvailableTurrets;
+        public Dictionary<PowerUpType, PowerUp> AvailablePowerUps;
+        public CorpsCeleste CelestialBodyToProtect;
+
+        public int MineralsValue;
+        public Vector3 MineralsPercentages;
+        public int LifePacks;
+
         public List<string> HelpTexts;
 
         private Simulation Simulation;
-        private float ProchainePrioriteAffichageCorpsCeleste = Preferences.PrioriteSimulationCorpsCeleste;
-        private DescripteurScenario Descriptor;
+        private ScenarioDescriptor Descriptor;
+
+        private float NextCelestialBodyVisualPriority = Preferences.PrioriteSimulationCorpsCeleste;
 
 
-        public Scenario(Simulation simulation, DescripteurScenario descripteur)
+        public Scenario(Simulation simulation, ScenarioDescriptor descriptor)
         {
             Simulation = simulation;
-            Descriptor = descripteur;
+            Descriptor = descriptor;
 
-            Mission = descripteur.Mission;
-            Annee = descripteur.Annee;
-            Lieu = descripteur.Lieu;
-            Objectif = descripteur.Objectif;
-            Description = descripteur.Description;
-            Difficulte = descripteur.Difficulte;
-            Numero = descripteur.Numero;
+            Id = descriptor.Id;
+            Mission = descriptor.Mission;
+            Difficulty = descriptor.Difficulty;
+            ParTime = descriptor.ParTime;
 
-            ValeurMinerauxDonnes = descripteur.ValeurMinerauxDonnes;
-            PourcentageMinerauxDonnes = descripteur.PourcentageMinerauxDonnes;
-            NbPackViesDonnes = descripteur.NbPackViesDonnes;
+            Background = new Image(descriptor.Background, Vector3.Zero);
+            Background.VisualPriority = Preferences.PrioriteFondEcran;
 
-            SystemePlanetaire = new List<CorpsCeleste>();
-            Tourelles = new List<Turret>();
-            Vagues = new LinkedList<Wave>();
+            InitializePlanetarySystem();
+            InitializeTurrets();
+            InitializeWaves();
+            InitializeAvailableTurrets();
+            InitializeAvailablePowerUps();
+
+            CelestialBodyToProtect = PlanetarySystem.Find(c => c.Priorite == Descriptor.CelestialBodyToProtect);
+            CelestialBodyToProtect.PointsVie = descriptor.Player.Lives;
 
             CommonStash = new CommonStash();
-            CommonStash.Lives = descripteur.Joueur.PointsDeVie;
-            CommonStash.Cash = descripteur.Joueur.ReserveUnites;
+            CommonStash.Lives = descriptor.Player.Lives;
+            CommonStash.Cash = descriptor.Player.Money;
 
-            FondEcran = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(descripteur.FondEcran), Vector3.Zero);
-            FondEcran.Origine = FondEcran.Centre;
-            FondEcran.VisualPriority = Preferences.PrioriteFondEcran;
+            MineralsValue = descriptor.MineralsValue;
+            MineralsPercentages = descriptor.MineralsPercentages;
+            LifePacks = descriptor.LifePacks;
 
-            for (int i = 0; i < descripteur.SystemePlanetaire.Count; i++)
+            HelpTexts = descriptor.HelpTexts;
+        }
+
+
+        private String nomRepresentation(Size taille, String nomBase)
+        {
+            return nomBase + ((taille == Size.Small) ? 1 : (taille == Size.Normal) ? 2 : 3).ToString();
+        }
+
+
+        public int NbStars(int score)
+        {
+            return Descriptor.NbStars(score);
+        }
+
+
+        private void InitializePlanetarySystem()
+        {
+            PlanetarySystem = new List<CorpsCeleste>();
+
+            foreach (var descriptor in Descriptor.PlanetarySystem)
             {
-                DescripteurCorpsCeleste corpsCeleste = descripteur.SystemePlanetaire[i];
-
                 CorpsCeleste c;
 
-                // Trou Rose
-                if (corpsCeleste.Representation == null &&
-                    corpsCeleste.RepresentationParticules != null &&
-                    corpsCeleste.RepresentationParticules == "trouRose")
+                // Pink Hole
+                if (descriptor.Image == null &&
+                    descriptor.ParticulesEffect != null &&
+                    descriptor.ParticulesEffect == "trouRose")
                 {
                     c = new TrouRose
                     (
                        Simulation,
-                       corpsCeleste.Nom,
-                       corpsCeleste.Position,
-                       corpsCeleste.Offset,
-                       (int)corpsCeleste.Taille,
-                       corpsCeleste.Vitesse,
-                       Simulation.Scene.Particules.recuperer(corpsCeleste.RepresentationParticules),
-                       corpsCeleste.PositionDepart,
-                       ProchainePrioriteAffichageCorpsCeleste -= 0.001f,
-                       corpsCeleste.EnBackground,
-                       corpsCeleste.Rotation
+                       descriptor.Name,
+                       descriptor.Position,
+                       descriptor.Offset,
+                       (int) descriptor.Size,
+                       descriptor.Speed,
+                       Simulation.Scene.Particules.recuperer(descriptor.ParticulesEffect),
+                       descriptor.StartingPosition,
+                       NextCelestialBodyVisualPriority -= 0.001f,
+                       descriptor.InBackground,
+                       descriptor.Rotation
                     );
 
                 }
 
-                // Soleil
-                else if (corpsCeleste.Representation == null && corpsCeleste.RepresentationParticules != null)
+                // Sun
+                else if (descriptor.Image == null && descriptor.ParticulesEffect != null)
                 {
                     c = new CorpsCeleste
                     (
                        Simulation,
-                       corpsCeleste.Nom,
-                       corpsCeleste.Position,
-                       corpsCeleste.Offset,
-                       (int)corpsCeleste.Taille,
-                       corpsCeleste.Vitesse,
-                       Simulation.Scene.Particules.recuperer(corpsCeleste.RepresentationParticules),
-                       corpsCeleste.PositionDepart,
-                       ProchainePrioriteAffichageCorpsCeleste -= 0.001f,
-                       corpsCeleste.EnBackground,
-                       corpsCeleste.Rotation
+                       descriptor.Name,
+                       descriptor.Position,
+                       descriptor.Offset,
+                       (int) descriptor.Size,
+                       descriptor.Speed,
+                       Simulation.Scene.Particules.recuperer(descriptor.ParticulesEffect),
+                       descriptor.StartingPosition,
+                       NextCelestialBodyVisualPriority -= 0.001f,
+                       descriptor.InBackground,
+                       descriptor.Rotation
                     );
 
                 }
 
-                // Corps gazeux
-                else if (corpsCeleste.Representation != null && corpsCeleste.RepresentationParticules != null)
+                // Gaz body
+                else if (descriptor.Image != null && descriptor.ParticulesEffect != null)
                 {
                     c = new CorpsCeleste
                     (
                         Simulation,
-                        corpsCeleste.Nom,
-                        corpsCeleste.Position,
-                        corpsCeleste.Offset,
-                        (int)corpsCeleste.Taille,
-                        corpsCeleste.Vitesse,
-                        Simulation.Scene.Particules.recuperer(corpsCeleste.RepresentationParticules),
-                        corpsCeleste.PositionDepart, ProchainePrioriteAffichageCorpsCeleste -= 0.001f,
-                        corpsCeleste.EnBackground,
-                       corpsCeleste.Rotation
+                        descriptor.Name,
+                        descriptor.Position,
+                        descriptor.Offset,
+                        (int) descriptor.Size,
+                        descriptor.Speed,
+                        Simulation.Scene.Particules.recuperer(descriptor.ParticulesEffect),
+                        descriptor.StartingPosition, NextCelestialBodyVisualPriority -= 0.001f,
+                        descriptor.InBackground,
+                       descriptor.Rotation
                     );
-                    c.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero);
+                    c.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(descriptor.Size, descriptor.Image)), Vector3.Zero);
                     c.Representation.Origine = c.Representation.Centre;
                     c.Representation.VisualPriority = c.ParticulesRepresentation.VisualPriority + 0.001f;
 
-                    if (corpsCeleste.EnBackground)
+                    if (descriptor.InBackground)
                         c.Representation.Couleur.A = 60;
                 }
 
-                // Corps normal
-                else if (corpsCeleste.Representation != null)
+                // Normal
+                else if (descriptor.Image != null)
                 {
                     c = new CorpsCeleste
                     (
                        Simulation,
-                       corpsCeleste.Nom,
-                       corpsCeleste.Position,
-                       corpsCeleste.Offset,
-                       (int)corpsCeleste.Taille,
-                       corpsCeleste.Vitesse,
-                       new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(corpsCeleste.Taille, corpsCeleste.Representation)), Vector3.Zero),
-                       corpsCeleste.PositionDepart,
-                       ProchainePrioriteAffichageCorpsCeleste -= 0.001f,
-                       corpsCeleste.EnBackground,
-                       corpsCeleste.Rotation
+                       descriptor.Name,
+                       descriptor.Position,
+                       descriptor.Offset,
+                       (int) descriptor.Size,
+                       descriptor.Speed,
+                       new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(descriptor.Size, descriptor.Image)), Vector3.Zero),
+                       descriptor.StartingPosition,
+                       NextCelestialBodyVisualPriority -= 0.001f,
+                       descriptor.InBackground,
+                       descriptor.Rotation
                     );
                 }
 
-                // Ceinture d'asteroides
+                // Asteroids belt
                 else
                 {
                     List<IVisible> representations = new List<IVisible>();
 
-                    for (int j = 0; j < corpsCeleste.Representations.Count; j++)
+                    for (int j = 0; j < descriptor.Images.Count; j++)
                     {
-                        IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(corpsCeleste.Representations[j]), Vector3.Zero);
+                        IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(descriptor.Images[j]), Vector3.Zero);
                         iv.Origine = iv.Centre;
                         representations.Add(iv);
                     }
@@ -170,90 +193,100 @@
                     c = new AsteroidBelt
                     (
                         Simulation,
-                        corpsCeleste.Nom,
-                        corpsCeleste.Position,
-                        (int)corpsCeleste.Taille,
-                        corpsCeleste.Vitesse,
+                        descriptor.Name,
+                        descriptor.Position,
+                        (int) descriptor.Size,
+                        descriptor.Speed,
                         representations,
-                        corpsCeleste.PositionDepart
+                        descriptor.StartingPosition
                     );
                 }
 
-                c.PeutAvoirCollecteur = corpsCeleste.PeutAvoirCollecteur;
-                c.PeutAvoirDoItYourself = corpsCeleste.PeutAvoirDoItYourself;
-                c.PeutAvoirTheResistance = corpsCeleste.PeutAvoirTheResistance;
-                c.PeutDetruire = corpsCeleste.PeutDetruire;
-                c.Priorite = corpsCeleste.Priorite;
-                c.Selectionnable = corpsCeleste.Selectionnable;
-                c.Invincible = corpsCeleste.Invincible;
+                c.Priorite = descriptor.PathPriority;
+                c.Selectionnable = descriptor.CanSelect;
+                c.Invincible = descriptor.Invincible;
 
-                if (corpsCeleste.TourellesPermises != null)
-                {
-                    c.TourellesPermises = new List<Turret>();
-
-                    for (int j = 0; j < corpsCeleste.TourellesPermises.Count; j++)
-                        c.TourellesPermises.Add(Simulation.TurretFactory.CreateTurret(corpsCeleste.TourellesPermises[j]));
-                }
-
-
-                for (int j = 0; j < corpsCeleste.Emplacements.Count; j++)
-                {
-                    DescripteurEmplacement emplacement = corpsCeleste.Emplacements[j];
-
-                    if (emplacement.Tourelle != null)
-                    {
-                        Turret turret = Simulation.TurretFactory.CreateTurret(emplacement.Tourelle.Type);
-                        turret.CanSell = emplacement.Tourelle.PeutVendre;
-                        turret.CanUpdate = emplacement.Tourelle.PeutMettreAJour;
-                        turret.Level = emplacement.Tourelle.Niveau;
-                        turret.BackActiveThisTickOverride = true;
-                        turret.Visible = emplacement.Tourelle.Visible;
-                        turret.CelestialBody = c;
-                        turret.RelativePosition = emplacement.Position * 8;
-                        turret.Position = c.Position + turret.RelativePosition;
-
-                        c.Turrets.Add(turret);
-
-                        Tourelles.Add(turret);
-                    }
-                }
-
-                if (corpsCeleste.Nom == descripteur.CorpsCelesteAProteger)
-                {
-                    c.PointsVie = descripteur.Joueur.PointsDeVie;
-                    CorpsCelesteAProteger = c;
-                }
-
-                SystemePlanetaire.Add(c);
+                PlanetarySystem.Add(c);
             }
+        }
 
 
+        private void InitializeTurrets()
+        {
+            Turrets = new List<Turret>();
 
-            if (descripteur.VaguesInfinies != null)
+            foreach (var descriptor in Descriptor.PlanetarySystem)
             {
-                VaguesInfinies = new VaguesInfinies(Simulation, descripteur.VaguesInfinies);
-                Vagues.AddLast(VaguesInfinies.getProchaineVague());
+                CorpsCeleste celestialBody = PlanetarySystem.Find(c => c.Priorite == descriptor.PathPriority);
+                Turret t;
+
+                if (descriptor.HasGravitationalTurret)
+                {
+                    t = Simulation.TurretsFactory.Create(TurretType.Gravitational);
+
+                    t.CanSell = false;
+                    t.CanUpdate = false;
+                    t.Level = 1;
+                    t.BackActiveThisTickOverride = true;
+                    t.Visible = false;
+                    t.CelestialBody = celestialBody;
+                    t.Position = celestialBody.Position;
+
+                    celestialBody.Turrets.Add(t);
+                    Turrets.Add(t);
+                }
+
+                foreach (var turretDesc in descriptor.StartingTurrets)
+                {
+                    t = Simulation.TurretsFactory.Create(turretDesc.Type);
+
+                    t.CanSell = turretDesc.CanSell;
+                    t.CanUpdate = turretDesc.CanUpgrade;
+                    t.Level = turretDesc.Level;
+                    t.BackActiveThisTickOverride = true;
+                    t.Visible = turretDesc.Visible;
+                    t.CelestialBody = celestialBody;
+                    t.RelativePosition = Vector3.Multiply(turretDesc.Position, 8);
+                    t.Position = celestialBody.Position;
+
+                    celestialBody.Turrets.Add(t);
+                    Turrets.Add(t);
+                }
+            }
+        }
+
+
+        private void InitializeWaves()
+        {
+            Waves = new LinkedList<Wave>();
+
+            if (Descriptor.InfiniteWaves != null)
+            {
+                InfiniteWaves = new VaguesInfinies(Simulation, Descriptor.InfiniteWaves);
+                Waves.AddLast(InfiniteWaves.getProchaineVague());
             }
 
             else
-                for (int i = 0; i < descripteur.Waves.Count; i++)
-                    Vagues.AddLast(new Wave(Simulation, descripteur.Waves[i]));
-
-            ParTime = descripteur.ParTime;
-
-            HelpTexts = descripteur.HelpTexts;
+                for (int i = 0; i < Descriptor.Waves.Count; i++)
+                    Waves.AddLast(new Wave(Simulation, Descriptor.Waves[i]));
         }
 
 
-        private String nomRepresentation(Taille taille, String nomBase)
+        private void InitializeAvailableTurrets()
         {
-            return nomBase + ((taille == Taille.Petite) ? 1 : (taille == Taille.Moyenne) ? 2 : 3).ToString();
+            AvailableTurrets = new Dictionary<TurretType, Turret>();
+
+            foreach (var type in Descriptor.AvailableTurrets)
+                AvailableTurrets.Add(type, Simulation.TurretsFactory.Create(type));
         }
 
 
-        public int NbStars(int score)
+        private void InitializeAvailablePowerUps()
         {
-            return Descriptor.NbStars(score);
+            AvailablePowerUps = new Dictionary<PowerUpType, PowerUp>();
+
+            foreach (var type in Descriptor.AvailablePowerUps)
+                AvailablePowerUps.Add(type, Simulation.PowerUpsFactory.Create(type));
         }
     }
 }

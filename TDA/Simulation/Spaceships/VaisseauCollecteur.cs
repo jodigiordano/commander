@@ -7,9 +7,10 @@
     using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Physique;
 
-    class VaisseauCollecteur : VaisseauDoItYourself
+    class VaisseauCollecteur : VaisseauDoItYourself, PowerUp
     {
         public new bool Actif { get; set; }
+        public Vector3 BuyPosition { get; set; }
 
         public VaisseauCollecteur(Simulation simulation)
             : base(simulation)
@@ -23,6 +24,24 @@
             CadenceTir = double.NaN;
             TempsActif = double.MaxValue;
             Actif = true;
+        }
+
+
+        public PowerUpType Type
+        {
+            get { return PowerUpType.Collector; }
+        }
+
+
+        public string BuyImage
+        {
+            get { return "Collecteur"; }
+        }
+
+
+        public int BuyPrice
+        {
+            get { return 0; }
         }
     }
 }

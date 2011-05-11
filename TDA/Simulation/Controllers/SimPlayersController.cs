@@ -11,7 +11,7 @@
         public CorpsCeleste CelestialBodyToProtect;
         public List<CorpsCeleste> CelestialBodies;
         public CommonStash CommonStash;
-        public Dictionary<PowerUp, bool> AvailableSpaceships;
+        public Dictionary<PowerUpType, bool> AvailableSpaceships;
         public Sablier SandGlass;
         public bool ModeDemo;
         public Vector3 InitialPlayerPosition;
@@ -33,7 +33,7 @@
 
         public void Initialize()
         {
-            Player = new SimPlayer();
+            Player = new SimPlayer(Simulation);
             Player.CelestialBodies = CelestialBodies;
             Player.AvailableSpaceships = AvailableSpaceships;
             Player.CommonStash = CommonStash;
@@ -62,10 +62,10 @@
         public event CommonStashHandler CommonStashChanged;
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
-        public event CelestialObjectHandler AchatDoItYourselfDemande;
-        public event CelestialObjectHandler DestructionCorpsCelesteDemande;
-        public event CelestialObjectHandler AchatCollecteurDemande;
-        public event CelestialObjectHandler AchatTheResistanceDemande;
+        public event NoneHandler AchatDoItYourselfDemande;
+        public event PhysicalObjectHandler DestructionCorpsCelesteDemande;
+        public event NoneHandler AchatCollecteurDemande;
+        public event NoneHandler AchatTheResistanceDemande;
 
 
         private void notifyTurretToPlaceSelected(Turret turret)
@@ -96,10 +96,10 @@
         }
 
 
-        private void notifyDoItYourselfDemande(CorpsCeleste corpsCeleste)
+        private void notifyDoItYourselfDemande()
         {
             if (AchatDoItYourselfDemande != null)
-                AchatDoItYourselfDemande(corpsCeleste);
+                AchatDoItYourselfDemande();
         }
 
 
@@ -117,17 +117,17 @@
         }
 
 
-        private void notifyAchatCollecteurDemande(CorpsCeleste corpsCeleste)
+        private void notifyAchatCollecteurDemande()
         {
             if (AchatCollecteurDemande != null)
-                AchatCollecteurDemande(corpsCeleste);
+                AchatCollecteurDemande();
         }
 
 
-        private void notifyAchatTheResistanceDemande(CorpsCeleste corpsCeleste)
+        private void notifyAchatTheResistanceDemande()
         {
             if (AchatTheResistanceDemande != null)
-                AchatTheResistanceDemande(corpsCeleste);
+                AchatTheResistanceDemande();
         }
 
 
@@ -480,29 +480,29 @@
         private void doSelectAction()
         {
             // buy a powerup
-            if (Player.ActualSelection.PowerUpToBuy != PowerUp.None)
+            if (Player.ActualSelection.PowerUpToBuy != PowerUpType.None)
             {
                 switch (Player.ActualSelection.PowerUpToBuy)
                 {
-                    case PowerUp.DoItYourself:
-                        notifyDoItYourselfDemande(Player.ActualSelection.CelestialBody);
-                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixDoItYourself;
+                    case PowerUpType.Spaceship:
+                        notifyDoItYourselfDemande();
+                        CommonStash.Cash -= Simulation.PowerUpsFactory.Availables[PowerUpType.Spaceship].BuyPrice;
                         notifyCommonStashChanged(CommonStash);
                         break;
-                    case PowerUp.CollectTheRent:
-                        notifyAchatCollecteurDemande(Player.ActualSelection.CelestialBody);
-                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixCollecteur;
+                    case PowerUpType.Collector:
+                        notifyAchatCollecteurDemande();
+                        CommonStash.Cash -= Simulation.PowerUpsFactory.Availables[PowerUpType.Collector].BuyPrice;
                         notifyCommonStashChanged(CommonStash);
                         break;
-                    case PowerUp.FinalSolution:
-                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixDestruction;
+                    case PowerUpType.FinalSolution:
+                        CommonStash.Cash -= Simulation.PowerUpsFactory.Availables[PowerUpType.FinalSolution].BuyPrice;
                         notifyCommonStashChanged(CommonStash);
-                        Player.ActualSelection.PowerUpToBuy = PowerUp.None;
+                        Player.ActualSelection.PowerUpToBuy = PowerUpType.None;
                         notifyDestructionCorpsCelesteDemande(Player.ActualSelection.CelestialBody);
                         break;
-                    case PowerUp.TheResistance:
-                        notifyAchatTheResistanceDemande(Player.ActualSelection.CelestialBody);
-                        CommonStash.Cash -= Player.ActualSelection.CelestialBody.PrixTheResistance;
+                    case PowerUpType.TheResistance:
+                        notifyAchatTheResistanceDemande();
+                        CommonStash.Cash -= Simulation.PowerUpsFactory.Availables[PowerUpType.TheResistance].BuyPrice;
                         notifyCommonStashChanged(CommonStash);
                         break;
                 }
@@ -516,7 +516,7 @@
             // buy a turret
             if (Player.ActualSelection.TurretToBuy != null)
             {
-                Player.ActualSelection.TurretToPlace = Simulation.TurretFactory.CreateTurret(Player.ActualSelection.TurretToBuy.Type);
+                Player.ActualSelection.TurretToPlace = Simulation.TurretsFactory.Create(Player.ActualSelection.TurretToBuy.Type);
                 Player.ActualSelection.TurretToPlace.CelestialBody = Player.ActualSelection.CelestialBody;
                 Player.ActualSelection.TurretToPlace.Position = Player.Position;
                 Player.ActualSelection.TurretToPlace.ToPlaceMode = true;

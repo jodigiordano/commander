@@ -19,7 +19,7 @@
         public Cercle Cercle                    { get; set; }
         public RectanglePhysique Rectangle      { get; set; }
         public Ligne Ligne                      { get; set; }
-        public CorpsCeleste CorpsCelesteDepart;
+        public IObjetPhysique ObjetDepart;
         public bool CibleAtteinte;
 
         private Vector3 positionVisee;
@@ -153,7 +153,7 @@
 
         public void doDisparaitre()
         {
-            float distance = (CorpsCelesteDepart.Position - Position).Length();
+            float distance = (ObjetDepart.Position - Position).Length();
 
             double tempsRequis = (distance / Vitesse) * 16.33f;
 

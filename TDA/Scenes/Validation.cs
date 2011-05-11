@@ -171,7 +171,7 @@ namespace EphemereGames.Commander
             Continue.Key.Origine = Continue.Key.Centre;
             Continue.Key.VisualPriority = 0.3f;
             Continue.Key.Couleur = new Color(155, 255, 102);
-            Continue.Value.Bouton.Couleur = new Color(155, 255, 102);
+            Continue.Value.Bouton.Color = new Color(155, 255, 102);
 
             this.Effets.Add(Exit.Key, PredefinedEffects.FadeInFrom0(255, 0, 1000));
             this.Effets.Add(Continue.Key, PredefinedEffects.FadeInFrom0(255, 0, 1000));

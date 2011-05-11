@@ -7,14 +7,14 @@
 
     class SimulationLite
     {
-        public DescripteurScenario Descripteur;
+        public ScenarioDescriptor Descripteur;
 
         private class CorpsCelesteLite
         {
             public Vector3 Position;
             public Vector3 Offset;
             public float Rotation;
-            public Taille Taille;
+            public Size Taille;
             public double TempsRotation;
 
             private Vector3 PositionBase;
@@ -23,7 +23,7 @@
             public double TempsRotationActuel;
             private Matrix MatriceRotation;
 
-            public CorpsCelesteLite(Vector3 position, Vector3 offset, float rotation, int positionDepart, Taille taille, double vitesse)
+            public CorpsCelesteLite(Vector3 position, Vector3 offset, float rotation, int positionDepart, Size taille, double vitesse)
             {
                 Position = position;
                 Offset = offset;
@@ -64,80 +64,65 @@
         {
             CorpsCelestes.Clear();
 
-            foreach (var descCorps in Descripteur.SystemePlanetaire)
+            foreach (var descCorps in Descripteur.PlanetarySystem)
             {
                 CorpsCelestes.Add(
                     new CorpsCelesteLite(
                         descCorps.Position,
                         descCorps.Offset,
                         descCorps.Rotation,
-                        descCorps.PositionDepart,
-                        descCorps.Taille,
-                        descCorps.Vitesse));
+                        descCorps.StartingPosition,
+                        descCorps.Size,
+                        descCorps.Speed));
             }
         }
 
-        public bool dansLesBornes(DescripteurCorpsCeleste descripteur, RectanglePhysique cadre)
+        public bool dansLesBornes(CelestialBodyDescriptor descripteur, RectanglePhysique cadre)
         {
             CorpsCelesteLite corpsCeleste = new CorpsCelesteLite
             (
                 descripteur.Position,
                 descripteur.Offset,
                 descripteur.Rotation,
-                descripteur.PositionDepart,
-                descripteur.Taille,
-                descripteur.Vitesse
+                descripteur.StartingPosition,
+                descripteur.Size,
+                descripteur.Speed
             );
-
-
-            //for (double x = 0; x < corpsCeleste.TempsRotation; x += 1000)
-            //{
-            //    corpsCeleste.TempsRotationActuel = x;
-            //    corpsCeleste.deplacer();
-
-            //    Console.WriteLine(corpsCeleste.Position);
-
-            //    if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Taille, 0, 0)) ||
-            //        !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Taille, 0, 0)) ||
-            //        !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Taille, 0)) ||
-            //        !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Taille, 0)))
-            //        return false;
-            //}
 
             // au temps 0
             corpsCeleste.TempsRotationActuel = 0;
             corpsCeleste.deplacer();
-            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Taille, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Taille, 0)))
+            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Size, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Size, 0)))
                 return false;
 
             // au temps 1/4
             corpsCeleste.TempsRotationActuel = corpsCeleste.TempsRotation / 4;
             corpsCeleste.deplacer();
-            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Taille, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Taille, 0)))
+            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Size, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Size, 0)))
                 return false;
 
             // au temps 1/2
             corpsCeleste.TempsRotationActuel = corpsCeleste.TempsRotation / 2;
             corpsCeleste.deplacer();
-            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Taille, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Taille, 0)))
+            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Size, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Size, 0)))
                 return false;
 
             // au temps 3/4
             corpsCeleste.TempsRotationActuel = corpsCeleste.TempsRotation * (3.0/4.0);
             corpsCeleste.deplacer();
-            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Taille, 0, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Taille, 0)) ||
-                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Taille, 0)))
+            if (!cadre.Includes(corpsCeleste.Position + new Vector3((int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(-(int)descripteur.Size, 0, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, (int)descripteur.Size, 0)) ||
+                !cadre.Includes(corpsCeleste.Position + new Vector3(0, -(int)descripteur.Size, 0)))
                 return false;
 
             return true;
@@ -147,16 +132,16 @@
         public List<Vector3> pointsConsideres = new List<Vector3>();
         public List<Cercle> cerclesConsideres = new List<Cercle>();
 
-        public bool collisionPlanetaire(DescripteurCorpsCeleste descripteur, List<DescripteurCorpsCeleste> autres)
+        public bool collisionPlanetaire(CelestialBodyDescriptor descripteur, List<CelestialBodyDescriptor> autres)
         {
             CorpsCelesteLite corpsCeleste = new CorpsCelesteLite
             (
                 descripteur.Position,
                 descripteur.Offset,
                 descripteur.Rotation,
-                descripteur.PositionDepart,
-                descripteur.Taille,
-                descripteur.Vitesse
+                descripteur.StartingPosition,
+                descripteur.Size,
+                descripteur.Speed
             );
 
             List<CorpsCelesteLite> autresCorpsCelestes = new List<CorpsCelesteLite>();
@@ -167,9 +152,9 @@
                         corps.Position,
                         corps.Offset,
                         corps.Rotation,
-                        corps.PositionDepart,
-                        corps.Taille,
-                        corps.Vitesse
+                        corps.StartingPosition,
+                        corps.Size,
+                        corps.Speed
                     ));
 
             pointsConsideres.Clear();
@@ -189,31 +174,14 @@
                     autre.TempsRotationActuel = (autre.TempsDepart + x) % autre.TempsRotation;
                     autre.deplacer();
 
-                    //Console.WriteLine(corpsCeleste.Position + " vs " + autre.Position);
-
                     pointsConsideres.Add(corpsCeleste.Position);
                     pointsConsideres.Add(autre.Position);
                     cerclesConsideres.Add(new Cercle(corpsCeleste.Cercle.Position, corpsCeleste.Cercle.Radius));
                     cerclesConsideres.Add(new Cercle(autre.Cercle.Position, autre.Cercle.Radius));
 
-                    //if (corpsCeleste.Cercle.Rectangle.Intersects(autre.Cercle.Rectangle))
                     if (corpsCeleste.Cercle.Intersects(autre.Cercle))
                         return true;
                 }
-            }
-
-            return false;
-        }
-
-
-        public bool emplacementTropProche(DescripteurEmplacement emplacement, List<DescripteurEmplacement> autres)
-        {
-            foreach (var autre in autres)
-            {
-                //Console.WriteLine((emplacement.Position - autre.Position).Length());
-
-                if ((emplacement.Position - autre.Position).Length() < 6)
-                    return true;
             }
 
             return false;

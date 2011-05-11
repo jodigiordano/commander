@@ -20,12 +20,13 @@ namespace EphemereGames.Commander
     {
         public Scene Scene;
         public Main Main;
-        public DescripteurScenario DemoModeSelectedScenario;
-        public DescripteurScenario DescriptionScenario;
+        public ScenarioDescriptor DemoModeSelectedScenario;
+        public ScenarioDescriptor DescriptionScenario;
         public bool Debug;
         public Dictionary<PlayerIndex, Player> Players;
         public GameAction GameAction;
-        public TurretsFactory TurretFactory;
+        public TurretsFactory TurretsFactory;
+        public PowerUpsFactory PowerUpsFactory;
         public EnemiesFactory EnemiesFactory;
         public MineralsFactory MineralsFactory;
         public RectanglePhysique Terrain;
@@ -49,12 +50,13 @@ namespace EphemereGames.Commander
         private bool modeEditeur = false;
 
 
-        public Simulation(Main main, Scene scene, DescripteurScenario scenario)
+        public Simulation(Main main, Scene scene, ScenarioDescriptor scenario)
         {
             Scene = scene;
             Main = main;
             DescriptionScenario = scenario;
-            TurretFactory = new TurretsFactory(this);
+            TurretsFactory = new TurretsFactory(this);
+            PowerUpsFactory = new PowerUpsFactory(this);
             EnemiesFactory = new EnemiesFactory(this);
             MineralsFactory = new MineralsFactory(this);
 
@@ -98,10 +100,11 @@ namespace EphemereGames.Commander
                     "etincelleSlowMotion",
                     "etincelleSlowMotionTouche",
                     "etoileFilante",
-                    "trouRose"
+                    "trouRose",
+                    "boosterTurret"
                 }, false);
 
-            DemoModeSelectedScenario = new DescripteurScenario();
+            DemoModeSelectedScenario = new ScenarioDescriptor();
             WorldMode = false;
             GameAction = GameAction.None;
             Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
@@ -117,6 +120,8 @@ namespace EphemereGames.Commander
             ControleurMessages = new ControleurMessages(this);
             GUIController = new GUIController(this);
 
+            TurretsFactory.Availables = ScenarioController.AvailableTurrets;
+            PowerUpsFactory.Availables = ScenarioController.AvailablePowerUps;
 
             ControleurCollisions.Projectiles = ControleurProjectiles.Projectiles;
             ControleurCollisions.Ennemis = ControleurEnnemis.Ennemis;
@@ -134,11 +139,11 @@ namespace EphemereGames.Commander
             TurretsController.StartingTurrets = ScenarioController.StartingTurrets;
             ControleurEnnemis.Chemin = ControleurSystemePlanetaire.Path;
             ControleurCollisions.CorpsCelestes = ScenarioController.CelestialBodies;
-            SimPlayersController.AvailableSpaceships = ControleurVaisseaux.OptionsDisponibles;
+            SimPlayersController.AvailableSpaceships = ControleurVaisseaux.AvailableSpaceships;
             ControleurCollisions.Mineraux = ControleurEnnemis.Mineraux;
-            ControleurEnnemis.ValeurTotalMineraux = ScenarioController.Scenario.ValeurMinerauxDonnes;
-            ControleurEnnemis.PourcentageMinerauxDonnes = ScenarioController.Scenario.PourcentageMinerauxDonnes;
-            ControleurEnnemis.NbPackViesDonnes = ScenarioController.Scenario.NbPackViesDonnes;
+            ControleurEnnemis.ValeurTotalMineraux = ScenarioController.Scenario.MineralsValue;
+            ControleurEnnemis.PourcentageMinerauxDonnes = ScenarioController.Scenario.MineralsPercentages;
+            ControleurEnnemis.NbPackViesDonnes = ScenarioController.Scenario.LifePacks;
             ControleurVaisseaux.Ennemis = ControleurEnnemis.Ennemis;
             ControleurMessages.Tourelles = TurretsController.Turrets;
             ControleurMessages.CorpsCelesteAProteger = ScenarioController.CelestialBodyToProtect;
@@ -154,6 +159,7 @@ namespace EphemereGames.Commander
             GUIController.InfiniteWaves = ScenarioController.InfiniteWaves;
             GUIController.Waves = ScenarioController.Waves;
             GUIController.DemoModeSelectedScenario = this.DemoModeSelectedScenario;
+            ControleurVaisseaux.HumanBattleship = GUIController.HumanBattleship;
 
 
             ControleurCollisions.ObjetTouche += new ControleurCollisions.ObjetToucheHandler(ControleurEnnemis.doObjetTouche);
@@ -168,20 +174,20 @@ namespace EphemereGames.Commander
             TurretsController.TurretSold += new TurretHandler(SimPlayersController.doTourelleVendue);
             TurretsController.TurretBought += new TurretHandler(SimPlayersController.doTourelleAchetee);
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(ScenarioController.doEnemyReachedEnd);
-            SimPlayersController.AchatCollecteurDemande += new CelestialObjectHandler(ControleurVaisseaux.doAcheterCollecteur);
+            SimPlayersController.AchatCollecteurDemande += new NoneHandler(ControleurVaisseaux.doAcheterCollecteur);
             TurretsController.TurretUpdated += new TurretHandler(SimPlayersController.doTourelleMiseAJour);
             SimPlayersController.MiseAJourTourelleDemande += new TurretHandler(TurretsController.DoUpgradeTurret);
             ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
             ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
             SimPlayersController.ProchaineVagueDemandee += new NoneHandler(ControleurEnnemis.doProchaineVagueDemandee);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurProjectiles.doObjetCree);
-            SimPlayersController.AchatDoItYourselfDemande += new CelestialObjectHandler(ControleurVaisseaux.doAcheterDoItYourself);
+            SimPlayersController.AchatDoItYourselfDemande += new NoneHandler(ControleurVaisseaux.doAcheterDoItYourself);
             ControleurVaisseaux.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.doObjetDetruit);
-            SimPlayersController.DestructionCorpsCelesteDemande += new CelestialObjectHandler(ControleurSystemePlanetaire.DoDestroyCelestialBody);
+            SimPlayersController.DestructionCorpsCelesteDemande += new PhysicalObjectHandler(ControleurSystemePlanetaire.DoDestroyCelestialBody);
             ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(ControleurCollisions.doObjetDetruit);
             ControleurVaisseaux.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
             ControleurEnnemis.ObjetCree += new PhysicalObjectHandler(ControleurCollisions.doObjetCree);
-            SimPlayersController.AchatTheResistanceDemande += new CelestialObjectHandler(ControleurVaisseaux.doAcheterTheResistance);
+            SimPlayersController.AchatTheResistanceDemande += new NoneHandler(ControleurVaisseaux.doAcheterTheResistance);
             ControleurSystemePlanetaire.ObjectDestroyed += new PhysicalObjectHandler(ScenarioController.doObjectDestroyed);
 
             ControleurEnnemis.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(this.doEnnemiAtteintFinTrajet);
@@ -311,7 +317,7 @@ namespace EphemereGames.Commander
             {
                 ControleurEnnemis.ObjetDetruit -= SimPlayersController.doObjetDetruit;
 
-                int scenario = ScenarioController.Scenario.Numero;
+                int scenario = ScenarioController.Scenario.Id;
                 int score = ScenarioController.Scenario.CommonStash.TotalScore;
 
                 if (!Main.SaveGame.HighScores.ContainsKey(scenario))

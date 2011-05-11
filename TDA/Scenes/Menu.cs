@@ -116,7 +116,7 @@
             NomJoueur.Taille = 3;
             NomJoueur.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
-            DescripteurScenario descripteurScenario = FactoryScenarios.getDescripteurMenu();
+            ScenarioDescriptor descripteurScenario = ScenariosFactory.getDescripteurMenu();
 
 #if !DEBUG
             descripteurScenario.SystemePlanetaire[5].Selectionnable = false;

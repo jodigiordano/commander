@@ -42,9 +42,6 @@
             set
             {
                 demoMode = value;
-
-                //foreach (var celestialBody in CelestialBodies)
-                //    celestialBody.ShowTurretsZone = value;
             }
         }
 
@@ -121,8 +118,10 @@
         }
 
 
-        public void DoDestroyCelestialBody(CorpsCeleste celestialBody)
+        public void DoDestroyCelestialBody(IObjetPhysique physicalObject)
         {
+            var celestialBody = (CorpsCeleste) physicalObject;
+
             celestialBody.doMeurt();
 
             Path.enleverCorpsCeleste(celestialBody);

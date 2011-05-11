@@ -27,6 +27,9 @@
         private Texture2D Texture;
 
 
+        public Image(string imageName) : this(imageName, Vector3.Zero) {}
+
+
         public Image(string imageName, Vector3 position)
         {
             Texture = Persistance.Facade.GetAsset<Texture2D>(imageName);
@@ -64,6 +67,12 @@
                 Size,
                 Effect,
                 0);
+        }
+
+
+        public Image Clone()
+        {
+            return (Image) this.MemberwiseClone();
         }
 
 

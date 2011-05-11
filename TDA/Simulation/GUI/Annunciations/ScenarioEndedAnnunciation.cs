@@ -143,7 +143,7 @@
 
 
             HighScores h;
-            Simulation.Main.SaveGame.HighScores.TryGetValue(Scenario.Numero, out h);
+            Simulation.Main.SaveGame.HighScores.TryGetValue(Scenario.Id, out h);
             HighscoreBeaten = h == null || h.Scores.Count <= 0 || Scenario.CommonStash.TotalScore > h.Scores[0].Value;
             int diff = (h == null || h.Scores.Count <= 0) ? Scenario.CommonStash.TotalScore : Scenario.CommonStash.TotalScore - h.Scores[0].Value;
 
@@ -161,7 +161,7 @@
                     Color.White,
                     EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
                     new Color(234, 196, 28, 0),
-                    "Thank you Commander!\n\nBut our enemy destroyed " + Simulation.DescriptionScenario.Lieu + " anyway!",
+                    "Thank you Commander!\n\nBut our enemy destroyed the colony anyway!",
                     3,
                     true,
                     2000,

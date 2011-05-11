@@ -7,22 +7,21 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    class TheResistance : IObjetPhysique
+    class TheResistance : IObjetPhysique, PowerUp
     {
         public double TempsActif;
         public bool EntreAuBercail;
+        public Vector3 BuyPosition { get; set; }
 
         private Simulation Simulation;
         private List<Vaisseau> Vaisseaux;
         private List<Ennemi> Ennemis;
-        public CorpsCeleste CorpsCelesteDepart;
+        public IObjetPhysique CorpsCelesteDepart;
 
 
-        public TheResistance(Simulation simulation, CorpsCeleste corpsCelesteDepart, List<Ennemi> ennemis)
+        public TheResistance(Simulation simulation)
         {
             Simulation = simulation;
-            CorpsCelesteDepart = corpsCelesteDepart;
-            Ennemis = ennemis;
 
             EntreAuBercail = false;
 
@@ -36,7 +35,6 @@
             v.CadenceTir = 100;
             v.PuissanceProjectile = 10;
             v.RotationMaximaleRad = 0.15f;
-            v.CorpsCelesteDepart = corpsCelesteDepart;
             Vaisseaux.Add(v);
 
             v = new Vaisseau(simulation);
@@ -47,7 +45,6 @@
             v.CadenceTir = 200;
             v.PuissanceProjectile = 30;
             v.RotationMaximaleRad = 0.05f;
-            v.CorpsCelesteDepart = corpsCelesteDepart;
             Vaisseaux.Add(v);
 
             v = new Vaisseau(simulation);
@@ -58,8 +55,22 @@
             v.CadenceTir = 500;
             v.PuissanceProjectile = 100;
             v.RotationMaximaleRad = 0.2f;
-            v.CorpsCelesteDepart = corpsCelesteDepart;
             Vaisseaux.Add(v);
+        }
+
+
+        public void Initialize(IObjetPhysique corpsCelesteDepart, List<Ennemi> ennemis)
+        {
+            CorpsCelesteDepart = corpsCelesteDepart;
+            Ennemis = ennemis;
+
+            foreach (var spaceship in Vaisseaux)
+            {
+                spaceship.ObjetDepart = CorpsCelesteDepart;
+
+                if (corpsCelesteDepart != null)
+                    spaceship.Position = corpsCelesteDepart.Position;
+            }
         }
 
 
@@ -151,5 +162,22 @@
         public Ligne Ligne { get; set; }
 
         #endregion
+
+
+        public PowerUpType Type
+        {
+            get { return PowerUpType.TheResistance; }
+        }
+
+
+        public string BuyImage
+        {
+            get { return "TheResistance"; }
+        }
+
+        public int BuyPrice
+        {
+            get { return 250; }
+        }
     }
 }

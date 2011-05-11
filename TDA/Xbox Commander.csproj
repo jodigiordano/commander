@@ -118,6 +118,7 @@
     <Compile Include="Animations\AnimationLieutenant.cs" />
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="Editeur\Descriptors.cs" />
     <Compile Include="Editeur\Editeur.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -139,7 +140,6 @@
     <Compile Include="GUI\Sablier.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />
     <Compile Include="GUI\Translator.cs" />
-    <Compile Include="Editeur\Descripteurs.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\Player.cs" />
@@ -181,9 +181,10 @@
     <Compile Include="Simulation\Enemies\VaguesInfinies.cs" />
     <Compile Include="Simulation\Enemies\Wave.cs" />
     <Compile Include="Simulation\Factories\EnemiesFactory.cs" />
-    <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
     <Compile Include="Simulation\Factories\MineralDefinition.cs" />
     <Compile Include="Simulation\Factories\MineralsFactory.cs" />
+    <Compile Include="Simulation\Factories\PowerUpsFactory.cs" />
+    <Compile Include="Simulation\Factories\ScenariosFactory.cs" />
     <Compile Include="Simulation\Factories\TurretsFactory.cs" />
     <Compile Include="Simulation\GridWorld.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\AdvancedView.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="Simulation\GUI\Menus\MenuPowerUps.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuProchaineVague.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuTurret.cs" />
-    <Compile Include="Simulation\GUI\Menus\MenuTurretSpotEmpty.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuTurretSpotOccupied.cs" />
     <Compile Include="Simulation\GUI\PlayerLives.cs" />
     <Compile Include="Simulation\IObjetVivant.cs" />
@@ -222,10 +222,14 @@
     <Compile Include="Simulation\Player\CommonStash.cs" />
     <Compile Include="Simulation\Player\PlayerSelection.cs" />
     <Compile Include="Simulation\Player\SelectedCelestialBodyController.cs" />
+    <Compile Include="Simulation\Player\SelectedPowerUpController.cs" />
     <Compile Include="Simulation\Player\SelectedTurretToBuyController.cs" />
     <Compile Include="Simulation\Player\SimPlayer.cs" />
+    <Compile Include="Simulation\PowerUps\PowerUp.cs" />
+    <Compile Include="Simulation\PowerUps\PowerUpLastSolution.cs" />
     <Compile Include="Simulation\Scenario.cs" />
     <Compile Include="Simulation\Simulation.cs" />
+    <Compile Include="Simulation\Spaceships\HumanBattleship.cs" />
     <Compile Include="Simulation\Spaceships\TheResistance.cs" />
     <Compile Include="Simulation\Spaceships\Vaisseau.cs" />
     <Compile Include="Simulation\Spaceships\VaisseauAlien.cs" />
@@ -233,9 +237,13 @@
     <Compile Include="Simulation\Spaceships\VaisseauDoItYourself.cs" />
     <Compile Include="Simulation\Turrets\AlienTurret.cs" />
     <Compile Include="Simulation\Turrets\BasicTurret.cs" />
+    <Compile Include="Simulation\Turrets\BoosterTurret.cs" />
+    <Compile Include="Simulation\Turrets\NanobotsTurret.cs" />
+    <Compile Include="Simulation\Turrets\GunnerTurret.cs" />
     <Compile Include="Simulation\Turrets\GravitationalTurret.cs" />
     <Compile Include="Simulation\Turrets\LaserTurret.cs" />
     <Compile Include="Simulation\Turrets\MissileTurret.cs" />
+    <Compile Include="Simulation\Turrets\MortarTurret.cs" />
     <Compile Include="Simulation\Turrets\MultipleLasersTurret.cs" />
     <Compile Include="Simulation\Turrets\SlowMotionTurret.cs" />
     <Compile Include="Simulation\Turrets\Turret.cs" />

@@ -11,12 +11,13 @@
         public List<CorpsCeleste> CelestialBodies;
         public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave;
         public Scenario Scenario;
-        public DescripteurScenario DemoModeSelectedScenario;
+        public ScenarioDescriptor DemoModeSelectedScenario;
         public List<Ennemi> Enemies;
         public VaguesInfinies InfiniteWaves;
         public LinkedList<Wave> Waves;
         public Path Path;
         public Path PathPreview;
+        public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
 
         private Simulation Simulation;
         private SelectedCelestialBodyAnimation SelectedCelestialBodyAnimation;
@@ -26,6 +27,7 @@
         private AdvancedView AdvancedView;
         private PlayerLives PlayerLives;
         private MenuCelestialBody MenuCelestialBody;
+        private MenuPowerUps MenuPowerUps;
         private MenuTurret MenuTurret;
         private MenuDemo MenuDemo;
         private FinalSolutionPreview FinalSolutionPreview;
@@ -43,10 +45,12 @@
             Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
             MenuTurret = new MenuTurret(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuCelestialBody = new MenuCelestialBody(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
+            MenuPowerUps = new MenuPowerUps(Simulation, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuDemo = new MenuDemo(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste - 0.01f);
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
             InSpaceShip = false;
-            GamePausedResistance = new TheResistance(Simulation, null, new List<Ennemi>());
+            GamePausedResistance = new TheResistance(Simulation);
+            GamePausedResistance.Initialize(null, new List<Ennemi>());
             GamePausedResistance.AlphaChannel = 100;
         }
 
@@ -57,8 +61,10 @@
             ScenarioAnnunciation = new ScenarioAnnunciation(Simulation, Scenario);
             ScenarioEndedAnnunciation = new ScenarioEndedAnnunciation(Simulation, CelestialBodies, Scenario);
             AdvancedView = new AdvancedView(Simulation, Enemies, CelestialBodies);
-            PlayerLives = new PlayerLives(Simulation, Scenario.CorpsCelesteAProteger, new Color(255, 0, 220));
+            PlayerLives = new PlayerLives(Simulation, Scenario.CelestialBodyToProtect, new Color(255, 0, 220));
             PathPreviewing = new PathPreview(PathPreview, Path);
+            MenuCelestialBody.Initialize();
+            MenuPowerUps.Initialize();
 
             MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             MenuGeneral.TimeNextWave = Waves.First.Value.StartingTime;
@@ -186,10 +192,6 @@
             Cursor.doShow();
             turret.CelestialBody.ShowTurretsZone = false;
             turret.ShowRange = false;
-            //turret.ShowForm = false;
-
-            //foreach (var turret2 in turret.CelestialBody.Turrets)
-            //    turret2.ShowForm = false;
         }
 
 
@@ -214,10 +216,12 @@
             var selection = player.ActualSelection;
 
             MenuCelestialBody.CelestialBody = selection.CelestialBody;
-            MenuCelestialBody.Options = selection.AvailablePowerUpsToBuy;
-            MenuCelestialBody.SelectedOption = selection.PowerUpToBuy;
+            MenuCelestialBody.AvailableTurrets = selection.AvailableTurrets;
             MenuCelestialBody.TurretToBuy = selection.TurretToBuy;
-            MenuCelestialBody.AvailableTurretsToBuy = selection.AvailableTurretsToBuy;
+            MenuCelestialBody.Visible = selection.TurretToPlace == null && selection.CelestialBody != null && selection.AvailableTurrets.Count != 0;
+
+            MenuPowerUps.AvailablePowerUpsToBuy = selection.AvailablePowerUpsToBuy;
+            MenuPowerUps.PowerUpToBuy = selection.PowerUpToBuy;
 
             MenuTurret.Turret = selection.Turret;
             MenuTurret.AvailableTurretOptions = selection.AvailableTurretOptions;
@@ -232,7 +236,7 @@
             SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
 
             FinalSolutionPreview.CelestialBody =
-                (selection.PowerUpToBuy == PowerUp.FinalSolution) ? selection.CelestialBody : null;
+                (selection.PowerUpToBuy == PowerUpType.FinalSolution) ? selection.CelestialBody : null;
 
             if (PathPreviewing != null &&
                 selection.Turret != null &&
@@ -243,7 +247,7 @@
                 PathPreviewing.RemoveCelestialObject(selection.Turret.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.CelestialBody != null &&
-                selection.PowerUpToBuy == PowerUp.FinalSolution &&
+                selection.PowerUpToBuy == PowerUpType.FinalSolution &&
                 selection.CelestialBody.ContientTourelleGravitationnelle)
                 PathPreviewing.RemoveCelestialObject(selection.CelestialBody);
             else if (PathPreviewing != null &&
@@ -319,6 +323,7 @@
             ScenarioEndedAnnunciation.Draw();
             AdvancedView.Draw();
             PlayerLives.Draw();
+            MenuPowerUps.Draw();
 
             if (InSpaceShip)
                 return;

@@ -7,7 +7,7 @@
     class MenuDemo : MenuAbstract
     {
         public CorpsCeleste CelestialBody;
-        public DescripteurScenario Scenario;
+        public ScenarioDescriptor Scenario;
         public GameAction Action;
 
         private Text ResumeGame;
@@ -134,7 +134,7 @@
             Title.Data = Scenario.Mission;
             Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Cercle.Radius - 32, 0);
             Title.Origin = Title.Center;
-            Difficulty.Data = Scenario.Difficulte;
+            Difficulty.Data = Scenario.Difficulty;
             Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Cercle.Radius + 16, 0);
             Difficulty.Origin = Difficulty.Center;
 
@@ -149,7 +149,7 @@
         {
             HighScores highscores = null;
 
-            Simulation.Main.SaveGame.HighScores.TryGetValue(Scenario.Numero, out highscores);
+            Simulation.Main.SaveGame.HighScores.TryGetValue(Scenario.Id, out highscores);
 
             Highscore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
             Highscore.Origin = Highscore.Center;

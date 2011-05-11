@@ -22,32 +22,18 @@
             1200000
         };
 
-        private static Dictionary<Taille, RectanglePhysique> Cadres = new Dictionary<Taille, RectanglePhysique>()
+        private static Dictionary<Size, RectanglePhysique> Cadres = new Dictionary<Size, RectanglePhysique>()
         {
-            { Taille.Petite,  new RectanglePhysique(-640 + 123, -370 + 112, 1098, 560) },
-            { Taille.Moyenne, new RectanglePhysique(-640 + 147, -370 + 136, 1050, 512) },
-            { Taille.Grande,  new RectanglePhysique(-640 + 179, -370 + 168,  986, 448) }
+            { Size.Small,  new RectanglePhysique(-640 + 123, -370 + 112, 1098, 560) },
+            { Size.Normal, new RectanglePhysique(-640 + 147, -370 + 136, 1050, 512) },
+            { Size.Big,  new RectanglePhysique(-640 + 179, -370 + 168,  986, 448) }
         };
 
-        private static Dictionary<Taille, RectanglePhysique> EspaceGenerationEmplacements = new Dictionary<Taille,RectanglePhysique>()
+        private static Dictionary<Size, Vector3> DistancesMin = new Dictionary<Size, Vector3>()
         {
-            { Taille.Petite,  new RectanglePhysique( -6,  -6, 12, 12) },
-            { Taille.Moyenne, new RectanglePhysique(-9, -9, 18, 18) },
-            { Taille.Grande,  new RectanglePhysique(-12, -12, 24, 24) }
-        };
-
-        private static Dictionary<Taille, Vector3> DistancesMin = new Dictionary<Taille, Vector3>()
-        {
-            { Taille.Petite,  new Vector3( 64,  92, 120) },
-            { Taille.Moyenne, new Vector3( 92, 120, 144) },
-            { Taille.Grande,  new Vector3(120, 144, 176) }
-        };
-
-        private static Dictionary<Taille, int> MaxEmplacements = new Dictionary<Taille, int>()
-        {
-            { Taille.Petite,  4 },
-            { Taille.Moyenne, 10 },
-            { Taille.Grande,  20 }
+            { Size.Small,  new Vector3( 64,  92, 120) },
+            { Size.Normal, new Vector3( 92, 120, 144) },
+            { Size.Big,  new Vector3(120, 144, 176) }
         };
 
         private static Dictionary<EnemyType, string> RepresentationsEnnemis = new Dictionary<EnemyType, string>()
@@ -64,7 +50,7 @@
         public int NbCorpsCelestes;
         public int NbCorpsCelestesFixes;
         public List<TurretType> TourellesDisponibles;
-        public List<PowerUp> PowerUpsDisponibles;
+        public List<PowerUpType> PowerUpsDisponibles;
         public bool AvecEtoileAuMilieu;
         public int NbPlanetesCheminDeDepart;
         public int ViesPlaneteAProteger;
@@ -73,37 +59,34 @@
         public int NbEmplacements;
         public int ArgentDepart;
         public List<EnemyType> EnnemisPresents;
-        public DescripteurScenario DescripteurScenario;
+        public ScenarioDescriptor DescripteurScenario;
         public bool SystemeCentre;
 
         private SimulationLite SimulationLite;
-        private List<DescripteurCorpsCeleste> CorpsCelestes;
+        private List<CelestialBodyDescriptor> CorpsCelestes;
 
         public GenerateurScenario()
         {
             SimulationLite = new SimulationLite();
-            CorpsCelestes = new List<DescripteurCorpsCeleste>();
+            CorpsCelestes = new List<CelestialBodyDescriptor>();
         }
 
         public void genererGameplay()
         {
-            DescripteurScenario.Annee = Main.Random.Next(2100, 2201).ToString();
-            DescripteurScenario.FondEcran = "fondecran" + Main.Random.Next(1, 23);
-            DescripteurScenario.Joueur.PointsDeVie = ViesPlaneteAProteger;
-            DescripteurScenario.Joueur.ReserveUnites = ArgentDepart;
-            DescripteurScenario.ValeurMinerauxDonnes = ArgentExtra;
-            DescripteurScenario.NbPackViesDonnes = NbPacksVie;
-            DescripteurScenario.Objectif = "Protect " + DescripteurScenario.CorpsCelesteAProteger;
+            DescripteurScenario.Background = "fondecran" + Main.Random.Next(1, 23);
+            DescripteurScenario.Player.Lives = ViesPlaneteAProteger;
+            DescripteurScenario.Player.Money = ArgentDepart;
+            DescripteurScenario.MineralsValue = ArgentExtra;
+            DescripteurScenario.LifePacks = NbPacksVie;
         }
 
         public void genererSystemePlanetaire()
         {
-            DescripteurScenario = FactoryScenarios.getDescripteurBidon();
+            DescripteurScenario = ScenariosFactory.getDescripteurBidon();
 
             CorpsCelestes.Clear();
 
             genererCorpsCelestes();
-            genererEmplacements();
             genererCheminDepart(); //doit etre fait avant les priorites pour un peu plus de random(awsom)nesssssssss
             genererPriorites();
             genererPlaneteAProteger();
@@ -117,96 +100,54 @@
         {
             for (int i = 0; i < NbCorpsCelestes; i++)
             {
-                DescripteurCorpsCeleste dcc = genererCorpsCeleste(i < NbCorpsCelestesFixes);
-
-                dcc.PeutAvoirCollecteur = PowerUpsDisponibles.Contains(PowerUp.CollectTheRent);
-                dcc.PeutAvoirDoItYourself = PowerUpsDisponibles.Contains(PowerUp.DoItYourself);
-                dcc.PeutAvoirTheResistance = PowerUpsDisponibles.Contains(PowerUp.TheResistance);
-                dcc.PeutDetruire = PowerUpsDisponibles.Contains(PowerUp.FinalSolution);
-
-                dcc.TourellesPermises = TourellesDisponibles;
+                CelestialBodyDescriptor dcc = genererCorpsCeleste(i < NbCorpsCelestesFixes);
 
                 CorpsCelestes.Add(dcc);
 
-                DescripteurScenario.SystemePlanetaire.Add(dcc);
+                DescripteurScenario.PlanetarySystem.Add(dcc);
             }
         }
 
         public void genererCeintureAsteroides()
         {
-            DescripteurCorpsCeleste ceinture = DescripteurScenario.SystemePlanetaire[0];
+            CelestialBodyDescriptor ceinture = DescripteurScenario.PlanetarySystem[0];
 
             ceinture.Position = new Vector3((Main.Random.Next(0, 2) == 0) ? 700 : -700, -400, 0);
-            ceinture.Priorite = 0;
-            ceinture.Vitesse = TempsRotationPossible[Main.Random.Next(TempsRotationPossible.Length / 2, TempsRotationPossible.Length)];
-            ceinture.Representations = new List<string>();
-            ceinture.PositionDepart = Main.Random.Next(0, 100);
+            ceinture.PathPriority = 0;
+            ceinture.Speed = TempsRotationPossible[Main.Random.Next(TempsRotationPossible.Length / 2, TempsRotationPossible.Length)];
+            ceinture.Images = new List<string>();
+            ceinture.StartingPosition = Main.Random.Next(0, 100);
 
             foreach (var ennemi in EnnemisPresents)
-                ceinture.Representations.Add(RepresentationsEnnemis[ennemi]);
+                ceinture.Images.Add(RepresentationsEnnemis[ennemi]);
         }
 
         private void genererEtoile()
         {
-            DescripteurCorpsCeleste c = new DescripteurCorpsCeleste();
-            c.Nom = "Etoile";
+            CelestialBodyDescriptor c = new CelestialBodyDescriptor();
+            c.Name = "Etoile";
             c.Position = Vector3.Zero;
-            c.Taille = Taille.Grande;
-            c.Representation = "planete2";
-            c.RepresentationParticules = "etoile";
-            c.Priorite = -1;
-            c.TourellesPermises = new List<TurretType>();
-            c.EnBackground = true;
+            c.Size = Size.Big;
+            c.Image = "planete2";
+            c.ParticulesEffect = "etoile";
+            c.PathPriority = -1;
+            c.InBackground = true;
             c.Invincible = false;
-            c.Selectionnable = false;
-            c.Vitesse = 0;
+            c.CanSelect = false;
+            c.Speed = 0;
 
-            DescripteurScenario.SystemePlanetaire.Add(c);
+            DescripteurScenario.PlanetarySystem.Add(c);
         }
 
         private void genererPlaneteAProteger()
         {
-            DescripteurCorpsCeleste aProteger = DescripteurScenario.SystemePlanetaire[DescripteurScenario.SystemePlanetaire.Count - 1];
+            CelestialBodyDescriptor aProteger = DescripteurScenario.PlanetarySystem[DescripteurScenario.PlanetarySystem.Count - 1];
 
-            aProteger.Priorite = int.MaxValue;
+            aProteger.PathPriority = int.MaxValue;
 
-            if (aProteger.Emplacements.Count == 0)
-            {
-                DescripteurEmplacement dE = new DescripteurEmplacement();
-                dE.Representation = "emplacement";
+            aProteger.HasGravitationalTurret = true;
 
-                RectanglePhysique espaceGeneration = EspaceGenerationEmplacements[aProteger.Taille];
-
-                dE.Position = new Vector3
-                (
-                    Main.Random.Next(espaceGeneration.X, espaceGeneration.X + espaceGeneration.Width),
-                    Main.Random.Next(espaceGeneration.Y, espaceGeneration.Y + espaceGeneration.Height),
-                    0
-                );
-
-                aProteger.Emplacements.Add(dE);
-            }
-
-            if (aProteger.Emplacements[0].Tourelle == null || aProteger.Emplacements[0].Tourelle.Type != TurretType.Gravitational)
-            {
-                DescripteurTourelle dT = new DescripteurTourelle();
-                dT.Niveau = 1;
-                dT.PeutMettreAJour = false;
-                dT.PeutVendre = false;
-                dT.Type = TurretType.Gravitational;
-                //dT.Visible = false;
-
-                aProteger.Emplacements[0].Tourelle = dT;
-            }
-
-            else
-            {
-                aProteger.Emplacements[0].Tourelle.PeutMettreAJour = false;
-                aProteger.Emplacements[0].Tourelle.PeutVendre = false;
-                //aProteger.Emplacements[0].Tourelle.Visible = false;
-            }
-
-            DescripteurScenario.CorpsCelesteAProteger = aProteger.Nom;
+            DescripteurScenario.CelestialBodyToProtect = aProteger.PathPriority;
         }
 
         public List<Vector3> pointsConsideres()
@@ -219,24 +160,17 @@
             return SimulationLite.cerclesConsideres;
         }
 
-        private DescripteurCorpsCeleste genererCorpsCeleste(bool fixe)
+        private CelestialBodyDescriptor genererCorpsCeleste(bool fixe)
         {
-            DescripteurCorpsCeleste d = new DescripteurCorpsCeleste();
+            CelestialBodyDescriptor d = new CelestialBodyDescriptor();
 
-            d.Nom = "Planete" + Main.Random.Next(0, int.MaxValue); //todo
+            d.Name = "Planete" + Main.Random.Next(0, int.MaxValue); //todo
             d.Invincible = false;
-            d.EnBackground = false;
-            d.PeutAvoirCollecteur = false;
-            d.PeutAvoirDoItYourself = false;
-            d.PeutAvoirTheResistance = false;
-            d.PeutDetruire = false;
+            d.InBackground = false;
 
             d.Invincible = false;
-            d.Selectionnable = true;
-            d.TourellesPermises = null;
-            d.Priorite = -1;
-
-            d.Emplacements = new List<DescripteurEmplacement>();
+            d.CanSelect = true;
+            d.PathPriority = -1;
 
             int nbTentatives = 0;
 
@@ -247,15 +181,15 @@
                 nbTentatives++;
 
                 int taille = Main.Random.Next(0, 3);
-                d.Taille = (taille == 0) ? Taille.Petite : (taille == 1) ? Taille.Moyenne : Taille.Grande;
-                d.Representation = (fixe) ? "stationSpatiale" + Main.Random.Next(1, 3).ToString() :
+                d.Size = (taille == 0) ? Size.Small : (taille == 1) ? Size.Normal : Size.Big;
+                d.Image = (fixe) ? "stationSpatiale" + Main.Random.Next(1, 3).ToString() :
                                             "planete" + Main.Random.Next(2, 8).ToString();
 
                 //RepresentationParticules = null; //todo
 
-                d.Vitesse = (fixe) ? 0 : TempsRotationPossible[Main.Random.Next(0, TempsRotationPossible.Length)];
+                d.Speed = (fixe) ? 0 : TempsRotationPossible[Main.Random.Next(0, TempsRotationPossible.Length)];
 
-                rp = Cadres[d.Taille];
+                rp = Cadres[d.Size];
 
                 d.Position = new Vector3(Main.Random.Next(rp.X, rp.X + rp.Width), Main.Random.Next(rp.Y, rp.Y + rp.Height), 0);
 
@@ -264,7 +198,7 @@
                     new Vector3(Main.Random.Next((int)(rp.X - d.Position.X + 200), (int)(rp.X + rp.Width - d.Position.X - 200)), Main.Random.Next((int)(rp.Y - d.Position.Y + 100), (int)(rp.Y + rp.Width - d.Position.Y - 100)), 0);
 
                 d.Rotation = Main.Random.Next(-360, 360);
-                d.PositionDepart = Main.Random.Next(0, 100);
+                d.StartingPosition = Main.Random.Next(0, 100);
             }
             while (!SimulationLite.dansLesBornes(d, rp) || SimulationLite.collisionPlanetaire(d, CorpsCelestes));
 
@@ -274,74 +208,11 @@
         }
 
 
-        private void genererEmplacements()
-        {
-
-            // Distribuer les emplacements aux divers corps célestes
-
-            Dictionary<int, int> IndiceQte = new Dictionary<int, int>();
-
-            int nbEmplacementsEffectif = 0;
-
-            for (int i = 0; i < CorpsCelestes.Count; i++)
-            {
-                IndiceQte.Add(i, 0);
-                nbEmplacementsEffectif += MaxEmplacements[CorpsCelestes[i].Taille];
-            }
-
-            nbEmplacementsEffectif = Math.Min(nbEmplacementsEffectif, NbEmplacements);
-
-            for (int i = 0; i < nbEmplacementsEffectif; i++)
-            {
-                bool place = false;
-
-                do
-                {
-                    int indice = Main.Random.Next(0, CorpsCelestes.Count);
-
-                    if (IndiceQte[indice] < MaxEmplacements[CorpsCelestes[indice].Taille])
-                    {
-                        IndiceQte[indice] += 1;
-                        place = true;
-                    }
-                }
-                while (!place);
-            }
-
-
-            // Pour un corps céleste, distribuer ses emplacements en terme de positions relatives
-            //List<DescripteurEmplacement> emplacements = new List<DescripteurEmplacement>();
-
-            for (int i = 0; i < CorpsCelestes.Count; i++)
-            {
-                for (int j = 0; j < IndiceQte[i]; j++)
-                {
-                    DescripteurEmplacement emplacement = new DescripteurEmplacement();
-                    emplacement.Representation = "emplacement";
-                    
-                    RectanglePhysique espaceGeneration = EspaceGenerationEmplacements[CorpsCelestes[i].Taille];
-
-                    do
-                    {
-                        emplacement.Position = new Vector3
-                        (
-                            Main.Random.Next(espaceGeneration.X, espaceGeneration.X + espaceGeneration.Width),
-                            Main.Random.Next(espaceGeneration.Y, espaceGeneration.Y + espaceGeneration.Height),
-                            0
-                        );
-                    }
-                    while (SimulationLite.emplacementTropProche(emplacement, CorpsCelestes[i].Emplacements));
-
-                    CorpsCelestes[i].Emplacements.Add(emplacement);
-                }
-            }
-        }
-
         private void genererPriorites()
         {
             int priorite = 1;
 
-            CorpsCelestes.Sort(delegate(DescripteurCorpsCeleste corps1, DescripteurCorpsCeleste corps2)
+            CorpsCelestes.Sort(delegate(CelestialBodyDescriptor corps1, CelestialBodyDescriptor corps2)
             {
                 if (corps1.Position.Length() > corps2.Position.Length())
                     return 1;
@@ -353,8 +224,9 @@
             });
 
             foreach (var corpsCeleste in CorpsCelestes)
-                corpsCeleste.Priorite = priorite++;
+                corpsCeleste.PathPriority = priorite++;
         }
+
 
         private void genererCheminDepart()
         {
@@ -362,51 +234,29 @@
 
             foreach (var planete in CorpsCelestes)
             {
-                if (planete.Emplacements.Count > 0)
+                if (planete.HasGravitationalTurret)
                     nbPlanetesCheminDepartEffectif++;
             }
 
             nbPlanetesCheminDepartEffectif = Math.Min(nbPlanetesCheminDepartEffectif, NbPlanetesCheminDeDepart);
 
-            List<DescripteurCorpsCeleste> corps = new List<DescripteurCorpsCeleste>(CorpsCelestes);
+            List<CelestialBodyDescriptor> corps = new List<CelestialBodyDescriptor>(CorpsCelestes);
 
             while (corps.Count > 0 && nbPlanetesCheminDepartEffectif > 0)
             {
                 int indice = Main.Random.Next(0, corps.Count);
 
-                DescripteurCorpsCeleste corpsSelectionne = corps[indice];
+                CelestialBodyDescriptor corpsSelectionne = corps[indice];
 
                 corps.RemoveAt(indice);
 
-                if (corpsSelectionne.Emplacements.Count > 0)
+                if (!corpsSelectionne.HasGravitationalTurret)
                 {
-                    DescripteurTourelle dt = new DescripteurTourelle();
-                    dt.Niveau = 1;
-                    dt.PeutMettreAJour = true;
-                    dt.PeutVendre = true;
-                    dt.Type = TurretType.Gravitational;
-
-                    corpsSelectionne.Emplacements[0].Tourelle = dt;
+                    corpsSelectionne.HasGravitationalTurret = true;
 
                     nbPlanetesCheminDepartEffectif--;
                 }
             }
-
-            //for (int i = 0; i < CorpsCelestes.Count && nbPlanetesCheminDepartEffectif > 0; i++)
-            //{
-            //    if (CorpsCelestes[i].Emplacements.Count > 0)
-            //    {
-            //        DescripteurTourelle dt = new DescripteurTourelle();
-            //        dt.Niveau = 1;
-            //        dt.PeutMettreAJour = true;
-            //        dt.PeutVendre = true;
-            //        dt.Type = TypeTourelle.Gravitationnelle;
-
-            //        CorpsCelestes[i].Emplacements[0].Tourelle = dt;
-
-            //        nbPlanetesCheminDepartEffectif--;
-            //    }
-            //}
         }
     }
 }

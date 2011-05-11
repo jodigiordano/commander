@@ -15,7 +15,7 @@
         private int IndiceMondeSelectionne;
         private AnimationTransition AnimationTransition;
         private String ChoixTransition;
-        private DescripteurScenario ChoixScenario;
+        private ScenarioDescriptor ChoixScenario;
         private double TempsEntreDeuxChangementMusique;
         private Menu Menu;
         private String MessagePause;
@@ -32,9 +32,9 @@
             AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
 
             Mondes = new Dictionary<int, World>();
-            Mondes.Add(1, new World(main, this, FactoryScenarios.GetWorldDescriptor(1)));
-            Mondes.Add(2, new World(main, this, FactoryScenarios.GetWorldDescriptor(2)));
-            Mondes.Add(3, new World(main, this, FactoryScenarios.GetWorldDescriptor(3)));
+            Mondes.Add(1, new World(main, this, ScenariosFactory.GetWorldDescriptor(1)));
+            Mondes.Add(2, new World(main, this, ScenariosFactory.GetWorldDescriptor(2)));
+            Mondes.Add(3, new World(main, this, ScenariosFactory.GetWorldDescriptor(3)));
 
             IndiceMondeSelectionne = 1;
 
@@ -118,7 +118,7 @@
                         Main.GameInProgress.Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
                         MondeSelectionne.Simulation.ControleurMessages.StopPausedMessage();
 
-                        if (ChoixScenario.Numero <= 3)
+                        if (ChoixScenario.Id <= 3)
                         {
                             Main.GameInProgress.Simulation.ControleurMessages.Initialize();
                         }
@@ -278,7 +278,7 @@
                 }
             }
 
-            else if (Main.TrialMode.Active && MondeSelectionne.LevelSelected != null && MondeSelectionne.LevelSelected.Numero > 2)
+            else if (Main.TrialMode.Active && MondeSelectionne.LevelSelected != null && MondeSelectionne.LevelSelected.Id > 2)
             {
                 if (AnimationFinDemo == null)
                 AnimationFinDemo = new AnimationLieutenant(

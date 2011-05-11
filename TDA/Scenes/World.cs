@@ -15,7 +15,7 @@
         private Main Main;
         private Scene Scene;
         private WorldDescriptor Descriptor;
-        private Dictionary<string, DescripteurScenario> LevelsDescriptors;
+        private Dictionary<string, ScenarioDescriptor> LevelsDescriptors;
         private List<KeyAndValue<CorpsCeleste, Image>> LevelsStates;
         private Dictionary<string, int> Warps;
 
@@ -32,18 +32,18 @@
             Simulation.ModeDemo = true;
             Simulation.WorldMode = true;
 
-            LevelsDescriptors = new Dictionary<string, DescripteurScenario>();
+            LevelsDescriptors = new Dictionary<string, ScenarioDescriptor>();
             Warps = new Dictionary<string, int>();
 
             foreach (var level in descriptor.Levels)
             {
-                DescripteurScenario d = FactoryScenarios.GetLevelScenario(level);
+                ScenarioDescriptor d = ScenariosFactory.GetLevelScenario(level);
                 LevelsDescriptors.Add(d.Mission, d);
             }
 
             foreach (var level in descriptor.Warps)
             {
-                DescripteurScenario d = FactoryScenarios.GetLevelScenario(level.Key);
+                ScenarioDescriptor d = ScenariosFactory.GetLevelScenario(level.Key);
                 LevelsDescriptors.Add(d.Mission, d);
                 Warps.Add(d.Mission, level.Value);
             }
@@ -85,7 +85,7 @@
         }
 
 
-        public DescripteurScenario LevelSelected
+        public ScenarioDescriptor LevelSelected
         {
             get
             {
@@ -107,7 +107,7 @@
         {
             get
             {
-                return Main.GameInProgress != null && LevelSelected != null && Main.GameInProgress.Simulation.DescriptionScenario.Numero == LevelSelected.Numero;
+                return Main.GameInProgress != null && LevelSelected != null && Main.GameInProgress.Simulation.DescriptionScenario.Id == LevelSelected.Id;
             }
         }
 
@@ -122,12 +122,12 @@
         {
             if (LevelSelected != null)
             {
-                Simulation.DemoModeSelectedScenario.Numero = LevelSelected.Numero;
+                Simulation.DemoModeSelectedScenario.Id = LevelSelected.Id;
                 Simulation.DemoModeSelectedScenario.Mission = LevelSelected.Mission;
-                Simulation.DemoModeSelectedScenario.Difficulte = LevelSelected.Difficulte;
+                Simulation.DemoModeSelectedScenario.Difficulty = LevelSelected.Difficulty;
                 Simulation.DemoModeSelectedScenario.Waves = LevelSelected.Waves;
-                Simulation.DemoModeSelectedScenario.Joueur = LevelSelected.Joueur;
-                Simulation.DemoModeSelectedScenario.NbPackViesDonnes = LevelSelected.NbPackViesDonnes;
+                Simulation.DemoModeSelectedScenario.Player = LevelSelected.Player;
+                Simulation.DemoModeSelectedScenario.LifePacks = LevelSelected.LifePacks;
             }
 
             if (Main.GameInProgress != null)
@@ -165,14 +165,14 @@
                 var descriptor = LevelsDescriptors[kvp.Key.Nom];
 
                 int value = 0;
-                bool done = Main.SaveGame.Progress.TryGetValue(descriptor.Numero, out value) && value > 0;
+                bool done = Main.SaveGame.Progress.TryGetValue(descriptor.Id, out value) && value > 0;
 
                 kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone",
                     kvp.Key.Position + new Vector3(kvp.Key.Cercle.Radius, kvp.Key.Cercle.Radius, 0) +
-                    ((kvp.Key.Cercle.Radius < (int) Taille.Moyenne) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0)));
+                    ((kvp.Key.Cercle.Radius < (int) Size.Normal) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0)));
 
                 kvp.Value.VisualPriority = kvp.Key.Representation.VisualPriority - 0.0001f;
-                kvp.Value.SizeX = (kvp.Key.Cercle.Radius < (int) Taille.Moyenne) ? 0.5f : 0.80f;
+                kvp.Value.SizeX = (kvp.Key.Cercle.Radius < (int) Size.Normal) ? 0.5f : 0.80f;
             }
         }
     }

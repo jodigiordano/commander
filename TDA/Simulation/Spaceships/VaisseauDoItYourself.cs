@@ -7,7 +7,7 @@
     using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Physique;
 
-    class VaisseauDoItYourself : Vaisseau
+    class VaisseauDoItYourself : Vaisseau, PowerUp
     {
         private Vector3 Acceleration;
         
@@ -16,6 +16,7 @@
         public bool ModeAutomatique;
         public int PrixAchat;
         public Vector3 NextInput;
+        public Vector3 BuyPosition { get; set; }
 
 
         public virtual bool Actif
@@ -95,10 +96,29 @@
 
         public override void doModeAutomatique()
         {
-            PositionVisee = CorpsCelesteDepart.Position;
+            PositionVisee = ObjetDepart.Position;
 
             base.doModeAutomatique();
         }
+
+
+        public PowerUpType Type
+        {
+            get { return PowerUpType.Spaceship; }
+        }
+
+
+        public string BuyImage
+        {
+            get { return "Vaisseau"; }
+        }
+
+
+        public int BuyPrice
+        {
+            get { return 50; }
+        }
+
 
         private void doBouncing()
         {

@@ -10,6 +10,7 @@
         {
             Linear,
             Now,
+            Logarithmic,
             After
         }
 
@@ -81,6 +82,9 @@
             else if (!Finished && Progress == ProgressType.Linear)
                 LogicLinear();
 
+            else if (!Finished && Progress == ProgressType.Logarithmic)
+                LogicLogarithmic();
+
             else if (Finished && Progress == ProgressType.After)
                 LogicAfter();
 
@@ -91,6 +95,7 @@
 
         protected virtual void InitializeLogic() { }
         protected virtual void LogicLinear() { }
+        protected virtual void LogicLogarithmic() { }
         protected virtual void LogicAfter() { }
         protected virtual void LogicNow() { }
         protected virtual void LogicEnd() { }

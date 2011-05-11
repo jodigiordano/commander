@@ -5,8 +5,7 @@
 
     class SelectedTurretToBuyController
     {
-        // Out
-        public Dictionary<Turret, bool> AvailableTurretsInScenario { get; private set; }
+        public Dictionary<TurretType, bool> AvailableTurrets;
 
         public Turret TurretToBuy
         {
@@ -17,14 +16,16 @@
         private LinkedListNode<Turret> SelectedTurret;
         private LinkedList<Turret> AvailableTurretsToBuy;
         private CommonStash CommonStash;
+        private Simulation Simulation;
 
 
-        public SelectedTurretToBuyController(CommonStash commonStash)
+        public SelectedTurretToBuyController(Simulation simulation, CommonStash commonStash)
         {
+            Simulation = simulation;
             CommonStash = commonStash;
 
             SelectedTurret = null;
-            AvailableTurretsInScenario = new Dictionary<Turret, bool>();
+            AvailableTurrets = new Dictionary<TurretType, bool>();
             AvailableTurretsToBuy = new LinkedList<Turret>();
         }
 
@@ -69,8 +70,8 @@
         {
             bool previousSelection = SelectedTurret != null;
 
-            AvailableTurretsInScenario.Clear();
             AvailableTurretsToBuy.Clear();
+            AvailableTurrets.Clear();
 
             if (celestialBody == null)
             {
@@ -78,20 +79,12 @@
                 return;
             }
 
-
-            for (int i = 0; i < celestialBody.TourellesPermises.Count; i++)
+            foreach (var turret in Simulation.TurretsFactory.Availables.Values)
             {
-                Turret turret = celestialBody.TourellesPermises[i];
-
                 if (turret.BuyPrice <= CommonStash.Cash)
-                {
                     AvailableTurretsToBuy.AddLast(turret);
-                    AvailableTurretsInScenario.Add(turret, true);
-                }
-                else
-                {
-                    AvailableTurretsInScenario.Add(turret, false);
-                }
+
+                AvailableTurrets.Add(turret.Type, turret.BuyPrice <= CommonStash.Cash);
             }
 
             if (AvailableTurretsToBuy.Count > 0 && !previousSelection)

@@ -30,7 +30,7 @@
 
             Filtre = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
             Filtre.Couleur = new Color(0, 0, 0, 200);
-            Filtre.VisualPriority = prioriteAffichage + 0.02f;
+            Filtre.VisualPriority = prioriteAffichage + 0.00002f;
 
 
             Coins = new List<IVisible>();
@@ -39,12 +39,12 @@
             for (int i = 0; i < 4; i++)
             {
                 IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("bulleCoin"), Vector3.Zero);
-                iv.VisualPriority = prioriteAffichage + 0.01f;
+                iv.VisualPriority = prioriteAffichage + 0.00001f;
 
                 Coins.Add(iv);
 
                 iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
-                iv.VisualPriority = prioriteAffichage + 0.01f;
+                iv.VisualPriority = prioriteAffichage + 0.00001f;
 
                 Contours.Add(iv);
 

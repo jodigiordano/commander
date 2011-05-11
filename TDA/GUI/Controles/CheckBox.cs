@@ -12,8 +12,8 @@
 
         private Scene Scene;
         private Cursor Curseur;
-        private IVisible Box;
-        private IVisible CheckedRep;
+        private Image Box;
+        private Text CheckedRep;
         private Cercle BoxCercle;
         private Vector3 Position;
         
@@ -24,15 +24,13 @@
             Curseur = curseur;
             Position = position;
 
-            Box = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("emplacement"), Position);
+            Box = new Image("checkbox", Position);
             Box.VisualPriority = priorite;
-            Box.Origine = Box.Centre;
-            Box.Taille = 4;
+            Box.SizeX = 4;
 
-            CheckedRep = new IVisible("X", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Position);
-            CheckedRep.Taille = 2;
+            CheckedRep = new Text("X", "Pixelite", Color.White, Position);
+            CheckedRep.SizeX = 2;
             CheckedRep.VisualPriority = priorite;
-            CheckedRep.Origine = CheckedRep.Centre;
 
             BoxCercle = new Cercle(Position, 16);
         }

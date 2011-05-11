@@ -25,10 +25,10 @@
 
         private static List<Distance> DistancesDisponibles = new List<Distance>()
         {
-            Distance.Colles,
-            Distance.Proche,
+            Distance.Joined,
+            Distance.Near,
             Distance.Normal,
-            Distance.Eloigne
+            Distance.Far
         };
 
         private enum TypeVague
@@ -236,7 +236,7 @@
         private void genererPackHomogene(WaveDescriptor description, int qte, List<EnemyType> ennemis)
         {
             description.Enemies = ennemis;
-            description.Distance = Distance.Proche;
+            description.Distance = Distance.Near;
             description.Quantity = qte;
             description.SwitchEvery = qte / Main.Random.Next(5, 10);
             description.Delay = Main.Random.Next(4000, 8000);

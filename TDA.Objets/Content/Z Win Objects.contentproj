@@ -160,42 +160,42 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asteroides\asteroid.png">
+    <Compile Include="asteroids\asteroid.png">
       <Name>asteroid</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asteroides\centaur.png">
+    <Compile Include="asteroids\centaur.png">
       <Name>centaur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asteroides\comet.png">
+    <Compile Include="asteroids\comet.png">
       <Name>comet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asteroides\meteoroid.png">
+    <Compile Include="asteroids\meteoroid.png">
       <Name>meteoroid</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asteroides\plutoid.png">
+    <Compile Include="asteroids\plutoid.png">
       <Name>plutoid</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="asteroides\trojan.png">
+    <Compile Include="asteroids\trojan.png">
       <Name>trojan</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -265,43 +265,36 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\HelpBattlefield.png">
-      <Name>HelpBattlefield</Name>
+    <Compile Include="help\battlefield.png">
+      <Name>battlefield</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\HelpControls.png">
-      <Name>HelpControls</Name>
+    <Compile Include="help\controls.png">
+      <Name>controls</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\HelpControlsWin.png">
-      <Name>HelpControlsWin</Name>
+    <Compile Include="help\controlsWin.png">
+      <Name>controlsWin</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\HelpMercenaries.png">
-      <Name>HelpMercenaries</Name>
+    <Compile Include="help\mercenaries.png">
+      <Name>mercenaries</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\HelpTheResistance.png">
-      <Name>HelpTheResistance</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GUI\leftTrigger.png">
-      <Name>leftTrigger</Name>
+    <Compile Include="help\theResistance.png">
+      <Name>theResistance</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -314,50 +307,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\options.png">
-      <Name>options</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GUI\PointsVieJoueur1.png">
-      <Name>PointsVieJoueur1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GUI\PointsVieJoueur2.png">
-      <Name>PointsVieJoueur2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GUI\pressBack.png">
+    <Compile Include="controls\pressBack.png">
       <Name>pressBack</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\pressExecute.png">
+    <Compile Include="controls\pressExecute.png">
       <Name>pressExecute</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\pressPlay.png">
+    <Compile Include="controls\pressPlay.png">
       <Name>pressPlay</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GUI\rightTrigger.png">
-      <Name>rightTrigger</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -685,13 +650,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="planetes\emplacement.png">
-      <Name>emplacement</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="planetes\etoile1.png">
       <Name>etoile1</Name>
       <Importer>TextureImporter</Importer>
@@ -944,76 +902,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="polices\Chargement.spritefont">
-      <Name>Chargement</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\ChoixMenu.spritefont">
-      <Name>ChoixMenu</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\DataControl.spritefont">
-      <Name>DataControl</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\DataControlBold.spritefont">
-      <Name>DataControlBold</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\DataControlGrand.spritefont">
-      <Name>DataControlGrand</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\DataControlMini.spritefont">
-      <Name>DataControlMini</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\Menu.spritefont">
-      <Name>Menu</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\MenuSelection.spritefont">
-      <Name>MenuSelection</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\MenuTitre.spritefont">
-      <Name>MenuTitre</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\Pixel1.spritefont">
-      <Name>Pixel1</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="polices\pixelbig.bmp">
       <Name>pixelbig</Name>
       <Importer>TextureImporter</Importer>
@@ -1025,34 +913,6 @@
       <Name>pixelite</Name>
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\PointsDeVie.spritefont">
-      <Name>PointsDeVie</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\ScenarioBackVS.spritefont">
-      <Name>ScenarioBackVS</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\ScenarioTitre.spritefont">
-      <Name>ScenarioTitre</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\SpriteFont1.spritefont">
-      <Name>SpriteFont1</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1103,76 +963,6 @@
       <Name>scenario0</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\scenario1.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario1</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\scenario2.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario2</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\scenario3.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario3</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\scenario4.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario4</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\scenario5.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario5</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\scenario6.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario6</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\scenario7.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario7</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="polices\ConsoleFont.spritefont">
-      <Name>ConsoleFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-    <None Include="scenarios\scenario8.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario8</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1568,49 +1358,42 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Destruction.png">
-      <Name>Destruction</Name>
+    <Compile Include="powerups\destruction.png">
+      <Name>destruction</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EphemereLogo.png">
+    <Compile Include="GUI\EphemereLogo.png">
       <Name>EphemereLogo</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fondnoir.png">
-      <Name>fondnoir</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="healthPack.png">
+    <Compile Include="minerals\healthPack.png">
       <Name>healthPack</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mineral1.png">
+    <Compile Include="minerals\mineral1.png">
       <Name>mineral1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mineral2.png">
+    <Compile Include="minerals\mineral2.png">
       <Name>mineral2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mineral3.png">
+    <Compile Include="minerals\mineral3.png">
       <Name>mineral3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1648,13 +1431,6 @@
   <ItemGroup>
     <Compile Include="spaceships\TheResistance.png">
       <Name>TheResistance</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="titre.png">
-      <Name>titre</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1714,36 +1490,36 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\HelpMercenariesWin.png">
-      <Name>HelpMercenariesWin</Name>
+    <Compile Include="help\mercenariesWin.png">
+      <Name>mercenariesWin</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="GUI\HelpTheResistanceWin.png">
-      <Name>HelpTheResistanceWin</Name>
+    <Compile Include="help\theResistanceWin.png">
+      <Name>theResistanceWin</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\1up.png">
+    <Compile Include="minerals\1up.png">
       <Name>1up</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\cash10.png">
+    <Compile Include="minerals\cash10.png">
       <Name>cash10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="GUI\cash150.png">
+    <Compile Include="minerals\cash150.png">
       <Name>cash150</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="GUI\cash25.png">
+    <Compile Include="minerals\cash25.png">
       <Name>cash25</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1884,93 +1660,131 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario21.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario21</Name>
+    <Compile Include="tourelles\tourelleBoosterBase.png">
+      <Name>tourelleBoosterBase</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="particules\booster.xml">
+      <Name>booster</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario10.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario10</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+    <Compile Include="tourelles\tourelleGunnerBase.png">
+      <Name>tourelleGunnerBase</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleGunnerCanon1.png">
+      <Name>tourelleGunnerCanon1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleGunnerCanon2.png">
+      <Name>tourelleGunnerCanon2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleGunnerCanon3.png">
+      <Name>tourelleGunnerCanon3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario18.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario18</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+    <Compile Include="tourelles\tourelleMortarBase.png">
+      <Name>tourelleMortarBase</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleMortarCanon1.png">
+      <Name>tourelleMortarCanon1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleMortarCanon2.png">
+      <Name>tourelleMortarCanon2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleMortarCanon3.png">
+      <Name>tourelleMortarCanon3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario17.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario17</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+    <Compile Include="tourelles\tourelleNanobotsBase.png">
+      <Name>tourelleNanobotsBase</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleNanobotsCanon1.png">
+      <Name>tourelleNanobotsCanon1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleNanobotsCanon2.png">
+      <Name>tourelleNanobotsCanon2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleNanobotsCanon3.png">
+      <Name>tourelleNanobotsCanon3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario16.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario16</Name>
+    <None Include="scenarios\scenario8.xml">
+      <Name>scenario8</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="powerups\placeHolder.png">
+      <Name>placeHolder</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario15.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario15</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+    <Compile Include="controls\leftTrigger.png">
+      <Name>leftTrigger</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="controls\rightTrigger.png">
+      <Name>rightTrigger</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario14.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario14</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+    <Compile Include="GUI\checkbox.png">
+      <Name>checkbox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario13.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario13</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+    <Compile Include="GUI\options.png">
+      <Name>options</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\scenario12.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario12</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="scenarios\scenario11.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario11</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+    <Compile Include="scenarios\humanBattleship.png">
+      <Name>humanBattleship</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

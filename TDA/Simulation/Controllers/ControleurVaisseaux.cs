@@ -9,9 +9,10 @@
         public event PhysicalObjectHandler ObjetCree;
         public event PhysicalObjectHandler ObjetDetruit;
 
-        public Dictionary<PowerUp, bool> OptionsDisponibles;
+        public Dictionary<PowerUpType, bool> AvailableSpaceships;
         public List<Ennemi> Ennemis;
         public Vector3 NextInputVaisseau;
+        public HumanBattleship HumanBattleship;
 
         private Simulation Simulation;
         private VaisseauDoItYourself VaisseauDoItYourself;
@@ -30,23 +31,23 @@
             : base(simulation.Main)
         {
             this.Simulation = simulation;
-            this.OptionsDisponibles = new Dictionary<PowerUp, bool>();
+            this.AvailableSpaceships = new Dictionary<PowerUpType, bool>();
         }
 
 
         public override void Initialize()
         {
-            this.OptionsDisponibles.Add(PowerUp.DoItYourself, true);
-            this.OptionsDisponibles.Add(PowerUp.CollectTheRent, true);
-            this.OptionsDisponibles.Add(PowerUp.TheResistance, true);
+            this.AvailableSpaceships.Add(PowerUpType.Spaceship, true);
+            this.AvailableSpaceships.Add(PowerUpType.Collector, true);
+            this.AvailableSpaceships.Add(PowerUpType.TheResistance, true);
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            this.OptionsDisponibles[PowerUp.DoItYourself] = (VaisseauDoItYourself == null || !VaisseauDoItYourself.Actif);
-            this.OptionsDisponibles[PowerUp.CollectTheRent] = (VaisseauCollecteur == null || !VaisseauCollecteur.Actif);
-            this.OptionsDisponibles[PowerUp.TheResistance] = (TheResistance == null || !TheResistance.Actif);
+            this.AvailableSpaceships[PowerUpType.Spaceship] = (VaisseauDoItYourself == null || !VaisseauDoItYourself.Actif);
+            this.AvailableSpaceships[PowerUpType.Collector] = (VaisseauCollecteur == null || !VaisseauCollecteur.Actif);
+            this.AvailableSpaceships[PowerUpType.TheResistance] = (TheResistance == null || !TheResistance.Actif);
 
             traiterVaisseauDoItYourself(gameTime);
             traiterVaisseauCollecteur(gameTime);
@@ -167,17 +168,17 @@
         }
 
 
-        public void doAcheterDoItYourself(CorpsCeleste corpsCeleste)
+        public void doAcheterDoItYourself()
         {
             VaisseauDoItYourself = new VaisseauDoItYourself(Simulation);
             VaisseauDoItYourself.CadenceTir = 100;
             VaisseauDoItYourself.PuissanceProjectile = 50;
-            VaisseauDoItYourself.Position = corpsCeleste.Position; 
+            VaisseauDoItYourself.Position = HumanBattleship.Position; 
             VaisseauDoItYourself.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
             VaisseauDoItYourself.Bouncing = new Vector3(Main.Random.Next(-25, 25), Main.Random.Next(-25, 25), 0);
             VaisseauDoItYourself.TempsActif = 5000;
-            VaisseauDoItYourself.CorpsCelesteDepart = corpsCeleste;
-            this.OptionsDisponibles[PowerUp.DoItYourself] = false;
+            VaisseauDoItYourself.ObjetDepart = HumanBattleship;
+            this.AvailableSpaceships[PowerUpType.Spaceship] = false;
 
             EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpDoItYourselfIn");
 
@@ -185,14 +186,14 @@
         }
 
 
-        public void doAcheterCollecteur(CorpsCeleste corpsCeleste)
+        public void doAcheterCollecteur()
         {
             VaisseauCollecteur = new VaisseauCollecteur(Simulation);
-            VaisseauCollecteur.Position = corpsCeleste.Position;
+            VaisseauCollecteur.Position = HumanBattleship.Position;
             VaisseauCollecteur.PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
             VaisseauCollecteur.Bouncing = new Vector3(Main.Random.Next(-25, 25), Main.Random.Next(-25, 25), 0);
-            VaisseauCollecteur.CorpsCelesteDepart = corpsCeleste;
-            this.OptionsDisponibles[PowerUp.CollectTheRent] = false;
+            VaisseauCollecteur.ObjetDepart = HumanBattleship;
+            this.AvailableSpaceships[PowerUpType.Collector] = false;
 
             EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpCollecteurIn");
 
@@ -200,11 +201,13 @@
         }
 
 
-        public void doAcheterTheResistance(CorpsCeleste corpsCeleste)
+        public void doAcheterTheResistance()
         {
-            TheResistance = new TheResistance(Simulation, corpsCeleste, Ennemis);
+            TheResistance = new TheResistance(Simulation);
             TheResistance.TempsActif = 20000;
-            this.OptionsDisponibles[PowerUp.TheResistance] = false;
+            TheResistance.Initialize(HumanBattleship, Ennemis);
+
+            this.AvailableSpaceships[PowerUpType.TheResistance] = false;
 
             EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPowerUpResistanceIn");
 

@@ -25,12 +25,14 @@
         public bool EditorMode = false;
         public Help Help;
 
-        public List<CorpsCeleste> CelestialBodies   { get { return Scenario.SystemePlanetaire; } }
-        public VaguesInfinies InfiniteWaves         { get { return Scenario.VaguesInfinies; } }
-        public LinkedList<Wave> Waves               { get { return Scenario.Vagues; } }
-        public CommonStash CommonStash              { get { return Scenario.CommonStash; } }
-        public List<Turret> StartingTurrets         { get { return Scenario.Tourelles; } }
-        public CorpsCeleste CelestialBodyToProtect  { get { return Scenario.CorpsCelesteAProteger; } }
+        public List<CorpsCeleste> CelestialBodies                   { get { return Scenario.PlanetarySystem; } }
+        public VaguesInfinies InfiniteWaves                         { get { return Scenario.InfiniteWaves; } }
+        public LinkedList<Wave> Waves                               { get { return Scenario.Waves; } }
+        public CommonStash CommonStash                              { get { return Scenario.CommonStash; } }
+        public List<Turret> StartingTurrets                         { get { return Scenario.Turrets; } }
+        public CorpsCeleste CelestialBodyToProtect                  { get { return Scenario.CelestialBodyToProtect; } }
+        public Dictionary<TurretType, Turret> AvailableTurrets      { get { return Scenario.AvailableTurrets; } }
+        public Dictionary<PowerUpType, PowerUp> AvailablePowerUps   { get { return Scenario.AvailablePowerUps; } }
 
         public GameState State;
         public Scenario Scenario;
@@ -56,7 +58,7 @@
             WavesCounter = 0;
             ElapsedTime = 0;
 
-            if (Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Numero) && Simulation.Main.SaveGame.Tutorials[Scenario.Numero] > 2)
+            if (Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Id) && Simulation.Main.SaveGame.Tutorials[Scenario.Id] > 2)
             {
                 Help = new Help(Simulation, new List<string>());
                 HelpSaved = true;
@@ -76,10 +78,10 @@
                 Help.Update(gameTime);
             else if (!HelpSaved)
             {
-                if (!Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Numero))
-                    Simulation.Main.SaveGame.Tutorials.Add(new KeyValuePair<int,int>(Scenario.Numero, 0));
+                if (!Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Id))
+                    Simulation.Main.SaveGame.Tutorials.Add(new KeyValuePair<int,int>(Scenario.Id, 0));
 
-                Simulation.Main.SaveGame.Tutorials[Scenario.Numero]++;
+                Simulation.Main.SaveGame.Tutorials[Scenario.Id]++;
 
                 HelpSaved = true;
             }
@@ -109,7 +111,7 @@
 
         public void Draw(GameTime gameTime)
         {
-            Simulation.Scene.ajouterScenable(Scenario.FondEcran);
+            Simulation.Scene.ajouterScenable(Scenario.Background);
 
             if (Help.Active)
                 Help.Draw();
@@ -124,13 +126,13 @@
             {
                 State = GameState.Won;
 
-                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Numero))
-                    Simulation.Main.SaveGame.Progress.Add(Scenario.Numero, 0);
+                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Id))
+                    Simulation.Main.SaveGame.Progress.Add(Scenario.Id, 0);
 
-                if (Simulation.Main.SaveGame.Progress[Scenario.Numero] < 0)
-                    Simulation.Main.SaveGame.Progress[Scenario.Numero] = Math.Abs(Simulation.Main.SaveGame.Progress[Scenario.Numero]);
-                else if (Simulation.Main.SaveGame.Progress[Scenario.Numero] == 0)
-                    Simulation.Main.SaveGame.Progress[Scenario.Numero] = 1;
+                if (Simulation.Main.SaveGame.Progress[Scenario.Id] < 0)
+                    Simulation.Main.SaveGame.Progress[Scenario.Id] = Math.Abs(Simulation.Main.SaveGame.Progress[Scenario.Id]);
+                else if (Simulation.Main.SaveGame.Progress[Scenario.Id] == 0)
+                    Simulation.Main.SaveGame.Progress[Scenario.Id] = 1;
 
                 computeFinalScore();
 
@@ -161,11 +163,11 @@
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
-                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Numero))
-                    Simulation.Main.SaveGame.Progress.Add(Scenario.Numero, 0);
+                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Id))
+                    Simulation.Main.SaveGame.Progress.Add(Scenario.Id, 0);
 
-                if ((Simulation.Main.SaveGame.Progress[Scenario.Numero] <= 0))
-                    Simulation.Main.SaveGame.Progress[Scenario.Numero] -= 1;
+                if ((Simulation.Main.SaveGame.Progress[Scenario.Id] <= 0))
+                    Simulation.Main.SaveGame.Progress[Scenario.Id] -= 1;
 
                 computeFinalScore();
 
@@ -190,11 +192,11 @@
             {
                 State = GameState.Lost;
 
-                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Numero))
-                    Simulation.Main.SaveGame.Progress.Add(Scenario.Numero, 0);
+                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Id))
+                    Simulation.Main.SaveGame.Progress.Add(Scenario.Id, 0);
 
-                if ((Simulation.Main.SaveGame.Progress[Scenario.Numero] <= 0))
-                    Simulation.Main.SaveGame.Progress[Scenario.Numero] -= 1;
+                if ((Simulation.Main.SaveGame.Progress[Scenario.Id] <= 0))
+                    Simulation.Main.SaveGame.Progress[Scenario.Id] -= 1;
 
                 computeFinalScore();
 

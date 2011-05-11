@@ -3,16 +3,6 @@
     using System.Collections.Generic;
 
 
-    public enum PowerUp
-    {
-        None = -1,
-        DoItYourself = 0,
-        CollectTheRent = 1,
-        FinalSolution = 2,
-        TheResistance = 3
-    }
-
-
     public enum TurretAction
     {
         None = -1,
@@ -32,36 +22,36 @@
     class PlayerSelection
     {
         public CorpsCeleste CelestialBody;
-        public PowerUp PowerUpToBuy;
-        public Dictionary<PowerUp, bool> AvailablePowerUpsToBuy;
+        public PowerUpType PowerUpToBuy;
+        public Dictionary<PowerUpType, bool> AvailablePowerUpsToBuy;
 
         public Turret Turret;
         public TurretAction TurretOption;
         public Dictionary<TurretAction, bool> AvailableTurretOptions;
 
         public Turret TurretToBuy;
+        public Dictionary<TurretType, bool> AvailableTurrets;
+
         public Turret TurretToPlace;
-        public Dictionary<Turret, bool> AvailableTurretsToBuy;
 
         public GameAction GameAction;
 
 
         public PlayerSelection()
         {
-            AvailablePowerUpsToBuy = new Dictionary<PowerUp, bool>();
-            AvailablePowerUpsToBuy.Add(PowerUp.CollectTheRent, false);
-            AvailablePowerUpsToBuy.Add(PowerUp.DoItYourself, false);
-            AvailablePowerUpsToBuy.Add(PowerUp.FinalSolution, false);
-            AvailablePowerUpsToBuy.Add(PowerUp.TheResistance, false);
+            AvailableTurrets = new Dictionary<TurretType, bool>();
+            AvailablePowerUpsToBuy = new Dictionary<PowerUpType, bool>();
+            AvailablePowerUpsToBuy.Add(PowerUpType.Collector, false);
+            AvailablePowerUpsToBuy.Add(PowerUpType.Spaceship, false);
+            AvailablePowerUpsToBuy.Add(PowerUpType.FinalSolution, false);
+            AvailablePowerUpsToBuy.Add(PowerUpType.TheResistance, false);
 
             AvailableTurretOptions = new Dictionary<TurretAction, bool>();
             AvailableTurretOptions.Add(TurretAction.Sell, false);
             AvailableTurretOptions.Add(TurretAction.Update, false);
 
-            AvailableTurretsToBuy = new Dictionary<Turret, bool>();
-
             CelestialBody = null;
-            PowerUpToBuy = PowerUp.None;
+            PowerUpToBuy = PowerUpType.None;
             Turret = null;
             TurretToBuy = null;
             TurretOption = TurretAction.None;
@@ -146,108 +136,104 @@
         }
 
 
-        public void NextPowerUpToBuy()
-        {
-            PowerUp actual = PowerUpToBuy;
+        //public void NextPowerUpToBuy()
+        //{
+        //    PowerUpType actual = PowerUpToBuy;
 
-            int nbChoices = AvailablePowerUpsToBuy.Count;
-            int actualInt = (int) actual;
-            int next = -1;
+        //    int nbChoices = AvailablePowerUpsToBuy.Count;
+        //    int actualInt = (int) actual;
+        //    int next = -1;
 
-            for (int i = 1; i < nbChoices; i++)
-            {
-                actualInt += 1;
+        //    for (int i = 1; i < nbChoices; i++)
+        //    {
+        //        actualInt += 1;
 
-                if (actualInt >= nbChoices)
-                    actualInt = 0;
+        //        if (actualInt >= nbChoices)
+        //            actualInt = 0;
 
-                if (AvailablePowerUpsToBuy[(PowerUp)actualInt])
-                {
-                    next = actualInt;
-                    break;
-                }
-            }
+        //        if (AvailablePowerUpsToBuy[(PowerUpType)actualInt])
+        //        {
+        //            next = actualInt;
+        //            break;
+        //        }
+        //    }
 
-            PowerUpToBuy = (PowerUp) next;
-        }
-
-
-        public void PreviousPowerUpToBuy()
-        {
-            PowerUp actual = PowerUpToBuy;
-
-            int nbChoices = AvailablePowerUpsToBuy.Count;
-            int actualInt = (int) actual;
-            int previous = -1;
-
-            for (int i = 1; i < nbChoices; i++)
-            {
-                actualInt -= 1;
-
-                if (actualInt < 0)
-                    actualInt = nbChoices - 1;
-
-                if (AvailablePowerUpsToBuy[(PowerUp)actualInt])
-                {
-                    previous = actualInt;
-                    break;
-                }
-            }
-
-            PowerUpToBuy = (PowerUp) previous;
-        }
+        //    PowerUpToBuy = (PowerUpType) next;
+        //}
 
 
-        public PowerUp FirstPowerUpToBuyAvailable
-        {
-            get
-            {
-                PowerUp actual = PowerUp.None;
+        //public void PreviousPowerUpToBuy()
+        //{
+        //    PowerUpType actual = PowerUpToBuy;
 
-                for (int i = 0; i < AvailablePowerUpsToBuy.Count; i++)
-                    if (AvailablePowerUpsToBuy[(PowerUp) i])
-                    {
-                        actual = (PowerUp) i;
-                        break;
-                    }
+        //    int nbChoices = AvailablePowerUpsToBuy.Count;
+        //    int actualInt = (int) actual;
+        //    int previous = -1;
 
-                return actual;
-            }
-        }
+        //    for (int i = 1; i < nbChoices; i++)
+        //    {
+        //        actualInt -= 1;
+
+        //        if (actualInt < 0)
+        //            actualInt = nbChoices - 1;
+
+        //        if (AvailablePowerUpsToBuy[(PowerUpType)actualInt])
+        //        {
+        //            previous = actualInt;
+        //            break;
+        //        }
+        //    }
+
+        //    PowerUpToBuy = (PowerUpType) previous;
+        //}
 
 
-        public PowerUp LastPowerUpToBuyAvailable
-        {
-            get
-            {
-                PowerUp actual = PowerUp.None;
+        //public PowerUpType FirstPowerUpToBuyAvailable
+        //{
+        //    get
+        //    {
+        //        PowerUpType actual = PowerUpType.None;
 
-                for (int i = AvailablePowerUpsToBuy.Count - 1; i > -1; i--)
-                    if (AvailablePowerUpsToBuy[(PowerUp) i])
-                    {
-                        actual = (PowerUp) i;
-                        break;
-                    }
+        //        for (int i = 0; i < AvailablePowerUpsToBuy.Count; i++)
+        //            if (AvailablePowerUpsToBuy[(PowerUpType) i])
+        //            {
+        //                actual = (PowerUpType) i;
+        //                break;
+        //            }
 
-                return actual;
-            }
-        }
+        //        return actual;
+        //    }
+        //}
+
+
+        //public PowerUpType LastPowerUpToBuyAvailable
+        //{
+        //    get
+        //    {
+        //        PowerUpType actual = PowerUpType.None;
+
+        //        for (int i = AvailablePowerUpsToBuy.Count - 1; i > -1; i--)
+        //            if (AvailablePowerUpsToBuy[(PowerUpType) i])
+        //            {
+        //                actual = (PowerUpType) i;
+        //                break;
+        //            }
+
+        //        return actual;
+        //    }
+        //}
 
 
         public void SynchronizeFrom(PlayerSelection other)
         {
             this.AvailablePowerUpsToBuy.Clear();
             this.AvailableTurretOptions.Clear();
-            this.AvailableTurretsToBuy.Clear();
 
             foreach (var kvp in other.AvailablePowerUpsToBuy)
                 this.AvailablePowerUpsToBuy.Add(kvp.Key, kvp.Value);
 
             foreach (var kvp in other.AvailableTurretOptions)
                 this.AvailableTurretOptions.Add(kvp.Key, kvp.Value);
-
-            foreach (var kvp in other.AvailableTurretsToBuy)
-                this.AvailableTurretsToBuy.Add(kvp.Key, kvp.Value);
 
             this.CelestialBody = other.CelestialBody;
             this.PowerUpToBuy = other.PowerUpToBuy;
@@ -270,9 +256,8 @@
                 this.TurretOption == other.TurretOption &&
                 this.Turret == other.Turret &&
                 this.TurretToBuy == other.TurretToBuy &&
-                DictEquals<PowerUp, bool>(this.AvailablePowerUpsToBuy, other.AvailablePowerUpsToBuy) &&
-                DictEquals<TurretAction, bool>(this.AvailableTurretOptions, other.AvailableTurretOptions) &&
-                DictEquals<Turret, bool>(this.AvailableTurretsToBuy, other.AvailableTurretsToBuy);
+                DictEquals<PowerUpType, bool>(this.AvailablePowerUpsToBuy, other.AvailablePowerUpsToBuy) &&
+                DictEquals<TurretAction, bool>(this.AvailableTurretOptions, other.AvailableTurretOptions);
         }
 
 

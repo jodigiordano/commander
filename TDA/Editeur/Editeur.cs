@@ -24,7 +24,7 @@
 
             Nom = "Editeur";
 
-            Simulation = new Simulation(main, this, FactoryScenarios.getDescripteurBidon());
+            Simulation = new Simulation(main, this, ScenariosFactory.getDescripteurBidon());
             Simulation.Players = Main.Players;
             Simulation.Initialize();
             Simulation.ModeEditeur = true;

@@ -183,8 +183,9 @@
     <Compile Include="Editeur\GenerateurVagues.cs" />
     <Compile Include="Editeur\Editeur.cs" />
     <Compile Include="Editeur\SimulationLite.cs" />
-    <Compile Include="Editeur\Descripteurs.cs" />
+    <Compile Include="Editeur\Descriptors.cs" />
     <Compile Include="Editeur\GenerateurScenario.cs" />
+    <Compile Include="Simulation\Factories\PowerUpsFactory.cs" />
     <Compile Include="Simulation\Factories\MineralDefinition.cs" />
     <Compile Include="Simulation\Factories\MineralsFactory.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\FinalSolutionPreview.cs" />
@@ -197,9 +198,9 @@
     <Compile Include="Simulation\GUI\Menus\MenuTurret.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuCelestialBody.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuDemo.cs" />
-    <Compile Include="Simulation\GUI\Menus\MenuTurretSpotEmpty.cs" />
     <Compile Include="Simulation\Player\CommonStash.cs" />
     <Compile Include="Player\Player.cs" />
+    <Compile Include="Simulation\Player\SelectedPowerUpController.cs" />
     <Compile Include="Simulation\Player\SelectedTurretToBuyController.cs" />
     <Compile Include="Simulation\GUI\Bubbles\BulleTexte.cs" />
     <Compile Include="GUI\Controles\CheckBox.cs" />
@@ -230,7 +231,14 @@
     <Compile Include="Simulation\PlanetarySystem\Lune.cs" />
     <Compile Include="Simulation\Bullets\ProjectileSlowMotion.cs" />
     <Compile Include="Simulation\Player\SimPlayer.cs" />
+    <Compile Include="Simulation\PowerUps\PowerUp.cs" />
+    <Compile Include="Simulation\PowerUps\PowerUpLastSolution.cs" />
+    <Compile Include="Simulation\Spaceships\HumanBattleship.cs" />
     <Compile Include="Simulation\Turrets\AlienTurret.cs" />
+    <Compile Include="Simulation\Turrets\BoosterTurret.cs" />
+    <Compile Include="Simulation\Turrets\MortarTurret.cs" />
+    <Compile Include="Simulation\Turrets\GunnerTurret.cs" />
+    <Compile Include="Simulation\Turrets\NanobotsTurret.cs" />
     <Compile Include="Simulation\Turrets\SlowMotionTurret.cs" />
     <Compile Include="Simulation\Spaceships\TheResistance.cs" />
     <Compile Include="Simulation\GridWorld.cs" />
@@ -238,7 +246,7 @@
     <Compile Include="Simulation\Spaceships\VaisseauDoItYourself.cs" />
     <Compile Include="Simulation\Mineral.cs" />
     <Compile Include="Simulation\Spaceships\VaisseauCollecteur.cs" />
-    <Compile Include="Simulation\Factories\FactoryScenarios.cs" />
+    <Compile Include="Simulation\Factories\ScenariosFactory.cs" />
     <Compile Include="Simulation\Factories\EnemiesFactory.cs" />
     <Compile Include="Simulation\Turrets\TurretLevel.cs" />
     <Compile Include="Player\SaveGame.cs" />

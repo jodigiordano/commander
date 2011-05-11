@@ -15,8 +15,20 @@
             var e = new MoveEffect();
             e.Delay = delay;
             e.Length = length;
-            e.PositionStart = positionEnd;
+            e.PositionEnd = positionEnd;
             e.Progress = AbstractEffect.ProgressType.Linear;
+
+            return e;
+        }
+
+
+        public static MoveEffect Arrival(Vector3 positionEnd, double delay, double length)
+        {
+            var e = new MoveEffect();
+            e.Delay = delay;
+            e.Length = length;
+            e.PositionEnd = positionEnd;
+            e.Progress = AbstractEffect.ProgressType.Logarithmic;
 
             return e;
         }
@@ -26,7 +38,7 @@
         {
             var e = new MoveEffect();
 
-            e.PositionStart = position;
+            e.PositionEnd = position;
             e.Progress = AbstractEffect.ProgressType.Now;
             e.Length = 500;
 

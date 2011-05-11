@@ -15,7 +15,7 @@
 
         private Scene Scene; 
         private Cursor Curseur;
-        public IVisible Bouton;
+        public Image Bouton;
         private Cercle BoutonCercle;
         private Vector3 Position;
 
@@ -26,10 +26,9 @@
             Curseur = curseur;
             Position = position;
 
-            Bouton = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("emplacement"), Position);
+            Bouton = new Image("checkbox", Position);
             Bouton.VisualPriority = priorite;
-            Bouton.Origine = Bouton.Centre;
-            Bouton.Taille = 4;
+            Bouton.SizeX = 4;
 
             BoutonCercle = new Cercle(Position, 16);
         }

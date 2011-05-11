@@ -12,8 +12,8 @@
     {
         public Vector3 RelativePosition;
         public Vector3 Position                     { get; set; }
-        public IVisible CanonImage;
-        public IVisible BaseImage;
+        public Image CanonImage;
+        public Image BaseImage;
         public bool Disabled                        { get { return DisabledOverride && DisabledCounter > 0; } set { DisabledOverride = value; } }
         public virtual Ennemi EnemyWatched          { get; set; }
         public double TimeLastBullet;
@@ -45,16 +45,16 @@
         protected LinkedList<TurretLevel> Levels;
         protected String SfxShooting;
 
-        private Simulation Simulation;
+        protected Simulation Simulation;
         private bool DisabledOverride;
         private bool CanUpdateOverride;
         private float RotationWander = 0;
         private LinkedListNode<TurretLevel> actualLevel;
         private float DisabledCounter;
         private float DisabledAnnounciationCounter;
-        private IVisible DisabledProgressBarImage;
-        private IVisible DisabledBarImage;
-        private float VisualPriorityBackup;
+        private Image DisabledProgressBarImage;
+        private Image DisabledBarImage;
+        protected float VisualPriorityBackup;
         private List<Projectile> Bullets = new List<Projectile>();
         private Image RangeImage;
         private Image FormImage;
@@ -70,12 +70,16 @@
             DisabledCounter = 0;
             CanUpdateOverride = true;
             DisabledOverride = true;
-            DisabledProgressBarImage = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
-            DisabledProgressBarImage.TailleVecteur = new Vector2(36, 4);
-            DisabledProgressBarImage.Couleur = new Color(255, 0, 220, 255);
-            DisabledBarImage = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("BarreInactivite"), Vector3.Zero);
-            DisabledBarImage.Origine = this.DisabledBarImage.Centre;
-            DisabledBarImage.Taille = 3f;
+            DisabledProgressBarImage = new Image("PixelBlanc", Vector3.Zero)
+            {
+                Size = new Vector2(36, 4),
+                Color = new Color(255, 0, 220, 255),
+                Origin = new Vector2()
+            };
+            DisabledBarImage = new Image("BarreInactivite", Vector3.Zero)
+            {
+                SizeX = 3f
+            };
             DisabledAnnounciationCounter = float.NaN;
             Watcher = true;
             VisualPriorityBackup = Preferences.PrioriteSimulationTourelle;
@@ -86,15 +90,18 @@
             Cercle = new Cercle(this, 30);
             ToPlaceMode = false;
             CelestialBody = null;
-            RangeImage = new Image("CercleBlanc", Vector3.Zero);
-            RangeImage.Color = Color;
-            RangeImage.Color.A = 100;
-            RangeImage.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.001f;
+            RangeImage = new Image("CercleBlanc", Vector3.Zero)
+            {
+                Color = new Color(Color.R, Color.G, Color.B, 100),
+                VisualPriority = Preferences.PrioriteGUIEtoiles - 0.001f
+            };
             ShowRange = false;
             CanPlace = true;
-            FormImage = new Image("CercleBlanc", Vector3.Zero);
-            FormImage.Color.A = 100;
-            FormImage.VisualPriority = Preferences.PrioriteSimulationTourelle + 0.001f;
+            FormImage = new Image("CercleBlanc", Vector3.Zero)
+            {
+                Color = new Color(Color.R, Color.G, Color.B, 100),
+                VisualPriority = Preferences.PrioriteSimulationTourelle + 0.001f
+            };
             ShowForm = true;
         }
 
@@ -344,7 +351,7 @@
 
                 float pourcTemps = (float)(DisabledCounter / ActualLevel.Value.BuildingTime);
 
-                DisabledProgressBarImage.TailleVecteur = new Vector2(pourcTemps * 30, 8);
+                DisabledProgressBarImage.Size = new Vector2(pourcTemps * 30, 8);
                 DisabledProgressBarImage.Position = DisabledBarImage.Position - new Vector3(16, 4, 0);
                 Simulation.Scene.ajouterScenable(DisabledProgressBarImage);
                 Simulation.Scene.ajouterScenable(DisabledBarImage);
@@ -367,8 +374,8 @@
 
             if (ToPlaceMode)
             {
-                CanonImage.Couleur = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
-                BaseImage.Couleur = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
+                CanonImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
+                BaseImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
                 RangeImage.Color = (CanPlace) ? new Color(Color.R, Color.G, Color.B, 100) : new Color(255, 0, 0, 100);
             }
         }
@@ -381,23 +388,21 @@
 
             if (ActualLevel.Value.BaseImageName != ActualLevel.Next.Value.BaseImageName)
             {
-                BaseImage = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(ActualLevel.Next.Value.BaseImageName), Vector3.Zero);
-                BaseImage.Origine = BaseImage.Centre;
+                BaseImage = new Image(ActualLevel.Next.Value.BaseImageName, Vector3.Zero);
             }
 
             if (ActualLevel.Value.CanonImageName != ActualLevel.Next.Value.CanonImageName)
             {
-                CanonImage = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(ActualLevel.Next.Value.CanonImageName), Vector3.Zero);
-                CanonImage.Origine = CanonImage.Centre;
+                CanonImage = new Image(ActualLevel.Next.Value.CanonImageName, Vector3.Zero);
             }
 
             VisualPriority = this.VisualPriorityBackup;
 
             ActualLevel = ActualLevel.Next;
 
-            CanonImage.Taille = 3;
-            BaseImage.Taille = 3;
-            CanonImage.Origine = new Vector2(6, 8);
+            CanonImage.SizeX = 3;
+            BaseImage.SizeX = 3;
+            CanonImage.Origin = new Vector2(6, 8);
 
             return true;
         }

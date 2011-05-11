@@ -11,7 +11,7 @@
     {
         public Main Main;
         public Simulation Simulation;
-        protected DescripteurScenario Scenario;
+        protected ScenarioDescriptor Scenario;
         protected GameTime GameTime = new GameTime();
 
         private AnimationTransition AnimationTransition;
@@ -19,7 +19,7 @@
         private double TempsEntreDeuxChangementMusique;
         private String ChoixTransition;
 
-        public Partie(Main main, DescripteurScenario scenario)
+        public Partie(Main main, ScenarioDescriptor scenario)
             : base(Vector2.Zero, 720, 1280)
         {
             Main = main;

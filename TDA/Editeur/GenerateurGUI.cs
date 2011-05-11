@@ -18,7 +18,7 @@
 
         // Gameplay
         public List<TurretType> TourellesDisponibles;
-        public List<PowerUp> PowerUpsDisponibles;        
+        public List<PowerUpType> PowerUpsDisponibles;        
         public int ViesPlaneteAProteger;
         public int ArgentExtra;
         public int NbPacksVie;
@@ -39,7 +39,7 @@
         public bool Visible;
 
         private DonneesGenerateur DonneesGenerateur;
-        private DescripteurScenario DescriptionScenario;
+        private ScenarioDescriptor DescriptionScenario;
 
         private Simulation Simulation;
         private GenerateurScenario GenerateurScenario;
@@ -91,11 +91,11 @@
         private IVisible ReserveDepartRep;
         private HorizontalSlider ReserveDepartSlider;
 
-        private Dictionary<TurretType, IVisible> TourellesRep;
+        private Dictionary<TurretType, Image> TourellesRep;
         private Dictionary<TurretType, CheckBox> TourellesCheckBoxes;
 
-        private Dictionary<PowerUp, IVisible> PowerUpsRep;
-        private Dictionary<PowerUp, CheckBox> PowerUpsCheckBoxes;
+        private Dictionary<PowerUpType, IVisible> PowerUpsRep;
+        private Dictionary<PowerUpType, CheckBox> PowerUpsCheckBoxes;
 
         private IVisible GenererGameplayRep;
         private PushButton GenererGameplayPushButton;
@@ -260,21 +260,21 @@
 
             NbPacksVieSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreGameplay.Position - new Vector3(-150, -10, 0), 0, 20, 5, 1, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
-            TourellesRep = new Dictionary<TurretType, IVisible>();
+            TourellesRep = new Dictionary<TurretType, Image>();
             TourellesCheckBoxes = new Dictionary<TurretType, CheckBox>();
 
             Vector3 positionTourelle = FiltreGameplay.Position - new Vector3(230, -60, 0);
 
-            foreach (var tourelle in simulation.TurretFactory.AvailableTurrets)
+            foreach (var tourelle in simulation.TurretsFactory.Availables)
             {
-                IVisible iv = (IVisible) tourelle.BaseImage.Clone();
+                Image iv = tourelle.Value.BaseImage.Clone();
                 iv.Position = positionTourelle;
                 iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-                TourellesRep.Add(tourelle.Type, iv);
-                TourellesCheckBoxes.Add(tourelle.Type, new CheckBox(Simulation.Scene, curseur, iv.Position + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+                TourellesRep.Add(tourelle.Key, iv);
+                TourellesCheckBoxes.Add(tourelle.Key, new CheckBox(Simulation.Scene, curseur, iv.Position + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
 
-                TourellesCheckBoxes[tourelle.Type].Checked = true;
+                TourellesCheckBoxes[tourelle.Key].Checked = true;
 
                 positionTourelle += new Vector3(85, 0, 0);
             }
@@ -282,39 +282,39 @@
 
             Vector3 positionPowerUp = FiltreGameplay.Position - new Vector3(230, -120, 0);
 
-            PowerUpsRep = new Dictionary<PowerUp, IVisible>();
-            PowerUpsCheckBoxes = new Dictionary<PowerUp, CheckBox>();
+            PowerUpsRep = new Dictionary<PowerUpType, IVisible>();
+            PowerUpsCheckBoxes = new Dictionary<PowerUpType, CheckBox>();
 
-            PowerUpsRep.Add(PowerUp.DoItYourself, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Vaisseau"), positionPowerUp));
-            PowerUpsRep[PowerUp.DoItYourself].Taille = 4;
-            PowerUpsRep[PowerUp.DoItYourself].Origine = PowerUpsRep[PowerUp.DoItYourself].Centre;
-            PowerUpsRep[PowerUp.DoItYourself].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.DoItYourself, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
-            PowerUpsCheckBoxes[PowerUp.DoItYourself].Checked = true;
+            PowerUpsRep.Add(PowerUpType.Spaceship, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Vaisseau"), positionPowerUp));
+            PowerUpsRep[PowerUpType.Spaceship].Taille = 4;
+            PowerUpsRep[PowerUpType.Spaceship].Origine = PowerUpsRep[PowerUpType.Spaceship].Centre;
+            PowerUpsRep[PowerUpType.Spaceship].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsCheckBoxes.Add(PowerUpType.Spaceship, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes[PowerUpType.Spaceship].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.CollectTheRent, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Collecteur"), positionPowerUp));
-            PowerUpsRep[PowerUp.CollectTheRent].Taille = 4;
-            PowerUpsRep[PowerUp.CollectTheRent].Origine = PowerUpsRep[PowerUp.CollectTheRent].Centre;
-            PowerUpsRep[PowerUp.CollectTheRent].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.CollectTheRent, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
-            PowerUpsCheckBoxes[PowerUp.CollectTheRent].Checked = true;
+            PowerUpsRep.Add(PowerUpType.Collector, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Collecteur"), positionPowerUp));
+            PowerUpsRep[PowerUpType.Collector].Taille = 4;
+            PowerUpsRep[PowerUpType.Collector].Origine = PowerUpsRep[PowerUpType.Collector].Centre;
+            PowerUpsRep[PowerUpType.Collector].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsCheckBoxes.Add(PowerUpType.Collector, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes[PowerUpType.Collector].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.FinalSolution, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Destruction"), positionPowerUp));
-            PowerUpsRep[PowerUp.FinalSolution].Taille = 4;
-            PowerUpsRep[PowerUp.FinalSolution].Origine = PowerUpsRep[PowerUp.FinalSolution].Centre;
-            PowerUpsRep[PowerUp.FinalSolution].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.FinalSolution, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
-            PowerUpsCheckBoxes[PowerUp.FinalSolution].Checked = true;
+            PowerUpsRep.Add(PowerUpType.FinalSolution, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Destruction"), positionPowerUp));
+            PowerUpsRep[PowerUpType.FinalSolution].Taille = 4;
+            PowerUpsRep[PowerUpType.FinalSolution].Origine = PowerUpsRep[PowerUpType.FinalSolution].Centre;
+            PowerUpsRep[PowerUpType.FinalSolution].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsCheckBoxes.Add(PowerUpType.FinalSolution, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes[PowerUpType.FinalSolution].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
-            PowerUpsRep.Add(PowerUp.TheResistance, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("TheResistance"), positionPowerUp));
-            PowerUpsRep[PowerUp.TheResistance].Taille = 4;
-            PowerUpsRep[PowerUp.TheResistance].Origine = PowerUpsRep[PowerUp.TheResistance].Centre;
-            PowerUpsRep[PowerUp.TheResistance].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
-            PowerUpsCheckBoxes.Add(PowerUp.TheResistance, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
-            PowerUpsCheckBoxes[PowerUp.TheResistance].Checked = true;
+            PowerUpsRep.Add(PowerUpType.TheResistance, new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("TheResistance"), positionPowerUp));
+            PowerUpsRep[PowerUpType.TheResistance].Taille = 4;
+            PowerUpsRep[PowerUpType.TheResistance].Origine = PowerUpsRep[PowerUpType.TheResistance].Centre;
+            PowerUpsRep[PowerUpType.TheResistance].VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            PowerUpsCheckBoxes.Add(PowerUpType.TheResistance, new CheckBox(Simulation.Scene, curseur, positionPowerUp + new Vector3(40, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            PowerUpsCheckBoxes[PowerUpType.TheResistance].Checked = true;
             positionPowerUp += new Vector3(85, 0, 0);
 
             GenererGameplayRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreGameplay.Position - new Vector3(-90, -130, 0));
@@ -813,7 +813,7 @@
 
             DonneesGenerateur.TourellesDisponibles = tourellesDisponibles;
 
-            List<PowerUp> powerUpsDisponibles = new List<PowerUp>();
+            List<PowerUpType> powerUpsDisponibles = new List<PowerUpType>();
 
             foreach (var powerUp in PowerUpsCheckBoxes)
                 if (powerUp.Value.Checked)

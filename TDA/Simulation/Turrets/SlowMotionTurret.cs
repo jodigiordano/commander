@@ -55,7 +55,7 @@ namespace EphemereGames.Commander
         {
             if (base.Upgrade())
             {
-                CanonImage.Origine = CanonImage.Centre;
+                CanonImage.Origin = CanonImage.Center;
                 return true;
             }
 
