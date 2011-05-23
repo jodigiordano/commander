@@ -9,7 +9,7 @@
     {
         public Vector2 Origin;
         public Vector2 Size;
-        public Vector2 Center { get { return TextSize / 2f; } }
+        public Vector2 Center { get { return RelativeTextSize / 2f; } }
         public Vector2 TextureSize;
         public float Rotation;
 
@@ -17,11 +17,12 @@
         public TypeBlend Blend { get; set; }
         public float VisualPriority { get; set; }
         public virtual List<IScenable> Components { get; set; }
-
-        public string Data;
         public Color Color;
 
         private SpriteFont Font;
+        private bool TextSizeComputed;
+        private Vector2 textSize;
+        private string data;
 
 
         public Text(string data, string fontName, Color color, Vector3 position)
@@ -31,30 +32,38 @@
             Color = color;
             Position = position;
             Size = new Vector2(1);
+            TextSizeComputed = false;
         }
 
 
-        public Text(string fontName)
+        public Text(string fontName) : this("", fontName, Color.White, Vector3.Zero) {}
+
+
+        public Vector2 TextSize
         {
-            Data = "";
-            Font = Core.Persistance.Facade.GetAsset<SpriteFont>(fontName);
-            Color = Color.White;
-            Position = Vector3.Zero;
-            Size = new Vector2(1);
+            get { return Vector2.Multiply(RelativeTextSize, Size); }
         }
 
 
-        private Vector2 TextSize
+        public string Data
         {
-            get { return Font.MeasureString(Data); }
+            get { return data; }
+            set
+            {
+                data = value;
+                TextSizeComputed = false;
+            }
         }
-
 
 
         public float SizeX
         {
             get { return Size.X; }
-            set { Size = new Vector2(value); }
+            set
+            {
+                Size = new Vector2(value);
+                TextSizeComputed = false;
+            }
         }
 
 
@@ -70,6 +79,21 @@
                 Size,
                 SpriteEffects.None,
                 0);
+        }
+
+
+        private Vector2 RelativeTextSize
+        {
+            get
+            {
+                if (TextSizeComputed)
+                    return textSize;
+
+                textSize = Font.MeasureString(Data);
+                TextSizeComputed = true;
+
+                return textSize;
+            }
         }
     }
 }

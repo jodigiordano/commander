@@ -17,7 +17,10 @@
         private Dictionary<PowerUpType, Image> ImagesPlaceHolders;
         
         private Bulle PowerUpPriceBubble;
-        private Text PowerUpPriceText;
+        private Text PowerUpPriceTitleAndCost;
+        private Text PowerUpDescription;
+        private Color ColorPowerUpAvailable;
+        private Color ColorPowerUpNotAvailable;
 
         private Simulation Simulation;
         private float VisualPriority;
@@ -38,20 +41,30 @@
             DistanceBetweenTwoChoices = new Vector3(30, 30, 0);
             PowerUpsLayout = new Vector3(4, 4, 0);
 
-            PowerUpPriceText = new Text("Pixelite")
+            PowerUpPriceTitleAndCost = new Text("Pixelite")
             {
-                SizeX = TextSize
+                SizeX = TextSize,
+                VisualPriority = VisualPriority + 0.001f
             };
 
-            PowerUpPriceBubble = new Bulle(Simulation, new Rectangle(0, 0, 100, 30), VisualPriority)
+            PowerUpDescription = new Text("Pixelite")
+            {
+                SizeX = TextSize - 1,
+                VisualPriority = VisualPriority + 0.001f
+            };
+
+            PowerUpPriceBubble = new Bulle(Simulation, new Rectangle(0, 0, 100, 30), VisualPriority + 0.002f)
             {
                 PositionBla = 3
             };
 
+            ColorPowerUpAvailable = Color.White;
+            ColorPowerUpNotAvailable = Color.Red;
+
             ImagesPowerUpsBuy = new Dictionary<PowerUpType, Image>();
             ImagesPlaceHolders = new Dictionary<PowerUpType, Image>();
 
-            HumanBattleship = new HumanBattleship(Simulation, this.Position - new Vector3(300, 75, 0), this.VisualPriority + 0.0002f);
+            HumanBattleship = new HumanBattleship(Simulation, this.Position - new Vector3(300, 75, 0), this.VisualPriority + 0.005f);
         }
 
 
@@ -69,7 +82,7 @@
 
                 Image image = new Image(p.BuyImage)
                 {
-                    VisualPriority = this.VisualPriority,
+                    VisualPriority = this.VisualPriority + 0.003f,
                     SizeX = ImageSize,
                     Position = position
                 };
@@ -77,7 +90,7 @@
 
                 Image placeHolder = new Image("powerUpPlaceHolder")
                 {
-                    VisualPriority = this.VisualPriority + 0.0001f,
+                    VisualPriority = this.VisualPriority + 0.004f,
                     SizeX = ImageSize,
                     Position = position
                 };
@@ -123,14 +136,21 @@
             {
                 PowerUp p = Simulation.PowerUpsFactory.Availables[PowerUpToBuy];
 
-                PowerUpPriceText.Data = p.BuyPrice + " M$";
-                PowerUpPriceText.Position = ImagesPowerUpsBuy[p.Type].Position - new Vector3(0, 60, 0);
+                PowerUpPriceTitleAndCost.Data = p.BuyTitle + " (" + p.BuyPrice + " M$)";
+                PowerUpPriceTitleAndCost.Position = ImagesPowerUpsBuy[p.Type].Position - new Vector3(0, 60, 0);
+                PowerUpPriceTitleAndCost.Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
+
+                PowerUpDescription.Data = p.BuyDescription;
+                PowerUpDescription.Position = ImagesPowerUpsBuy[p.Type].Position - new Vector3(0, 40, 0);
+                PowerUpDescription.Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
 
                 PowerUpPriceBubble.Dimension.X = (int) ImagesPowerUpsBuy[p.Type].Position.X;
                 PowerUpPriceBubble.Dimension.Y = (int) ImagesPowerUpsBuy[p.Type].Position.Y - 60;
 
-                Simulation.Scene.ajouterScenable(PowerUpPriceText);
+                Simulation.Scene.ajouterScenable(PowerUpPriceTitleAndCost);
+                Simulation.Scene.ajouterScenable(PowerUpDescription);
 
+                PowerUpPriceBubble.Dimension.Width = (int) MathHelper.Max(PowerUpPriceTitleAndCost.TextSize.X, PowerUpDescription.TextSize.X) + 10;
                 PowerUpPriceBubble.Draw(null);
             }
 

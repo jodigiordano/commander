@@ -8,7 +8,7 @@
     class SimPlayer
     {
         public List<CorpsCeleste> CelestialBodies;
-        public Dictionary<PowerUpType, bool> AvailableSpaceships;
+        public Dictionary<PowerUpType, bool> ActivesPowerUps;
 
         private Vector3 position;
         private PlayerSelection PreviousSelection;
@@ -39,8 +39,8 @@
 
         public void Initialize()
         {
-            ActualSelection = new PlayerSelection();
-            PreviousSelection = new PlayerSelection();
+            ActualSelection = new PlayerSelection(Simulation);
+            PreviousSelection = new PlayerSelection(Simulation);
             TurretToBuyController = new SelectedTurretToBuyController(Simulation, CommonStash);
             CelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Cercle);
             SelectedPowerUpController = new SelectedPowerUpController(Simulation.PowerUpsFactory.Availables, Cercle);
@@ -119,6 +119,8 @@
 
             if (ActualSelection.PowerUpToBuy != PowerUpType.None)
             {
+                checkAvailablePowerUps();
+
                 ActualSelection.CelestialBody = null;
                 ActualSelection.Turret = null;
                 ActualSelection.TurretToBuy = null;
@@ -194,87 +196,15 @@
 
         public void NextShitToBuy()
         {
-            //if (ActualSelection.TurretToBuy != null)
-            //{
-                //ActualSelection.PowerUpToBuy = PowerUpType.None;
-
-                TurretToBuyController.Next();
-                ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-
-                //if (TurretToBuyController.TurretToBuy == TurretToBuyController.FirstAvailable &&
-                //    ActualSelection.FirstPowerUpToBuyAvailable != PowerUpType.None)
-                //{
-                //    ActualSelection.TurretToBuy = null;
-                //    ActualSelection.PowerUpToBuy = ActualSelection.FirstPowerUpToBuyAvailable;
-
-                //    if (ActualSelection.PowerUpToBuy == PowerUpType.None)
-                //    {
-                //        TurretToBuyController.Next();
-                //        ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-                //    }
-                //}
-            //}
-
-            //else
-            //{
-            //    ActualSelection.TurretToBuy = null;
-
-            //    ActualSelection.NextPowerUpToBuy();
-
-            //    if (ActualSelection.PowerUpToBuy == PowerUpType.None ||
-            //        ActualSelection.PowerUpToBuy == ActualSelection.FirstPowerUpToBuyAvailable)
-            //    {
-            //        ActualSelection.PowerUpToBuy = PowerUpType.None;
-            //        ActualSelection.TurretToBuy = TurretToBuyController.FirstAvailable;
-            //        TurretToBuyController.SetSelectedTurret(ActualSelection.TurretToBuy);
-
-            //        if (ActualSelection.TurretToBuy == null)
-            //            ActualSelection.NextPowerUpToBuy();
-            //    }
-            //}
+            TurretToBuyController.Next();
+            ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
         }
 
 
         public void PreviousShitToBuy()
         {
-            //if (ActualSelection.TurretToBuy != null)
-            //{
-                //ActualSelection.PowerUpToBuy = PowerUpType.None;
-
-                TurretToBuyController.Previous();
-                ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-
-            //    if (TurretToBuyController.TurretToBuy == TurretToBuyController.LastAvailable &&
-            //        ActualSelection.LastPowerUpToBuyAvailable != PowerUpType.None)
-            //    {
-            //        ActualSelection.TurretToBuy = null;
-            //        ActualSelection.PowerUpToBuy = ActualSelection.LastPowerUpToBuyAvailable;
-
-            //        if (ActualSelection.PowerUpToBuy == PowerUpType.None)
-            //        {
-            //            TurretToBuyController.Previous();
-            //            ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-            //        }
-            //    }
-            //}
-
-            //else
-            //{
-            //    ActualSelection.TurretToBuy = null;
-
-            //    ActualSelection.PreviousPowerUpToBuy();
-
-            //    if (ActualSelection.PowerUpToBuy == PowerUpType.None ||
-            //        ActualSelection.PowerUpToBuy == ActualSelection.LastPowerUpToBuyAvailable)
-            //    {
-            //        ActualSelection.PowerUpToBuy = PowerUpType.None;
-            //        ActualSelection.TurretToBuy = TurretToBuyController.LastAvailable;
-            //        TurretToBuyController.SetSelectedTurret(ActualSelection.TurretToBuy);
-
-            //        if (ActualSelection.TurretToBuy == null)
-            //            ActualSelection.PreviousPowerUpToBuy();
-            //    }
-            //}
+            TurretToBuyController.Previous();
+            ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
         }
 
 
@@ -363,22 +293,10 @@
 
         private void checkAvailablePowerUps()
         {
-            ActualSelection.AvailablePowerUpsToBuy[PowerUpType.Spaceship] =
-                AvailableSpaceships[PowerUpType.Spaceship] &&
-                Simulation.PowerUpsFactory.Availables.ContainsKey(PowerUpType.Spaceship) &&
-                Simulation.PowerUpsFactory.Availables[PowerUpType.Spaceship].BuyPrice <= CommonStash.Cash;
-
-            ActualSelection.AvailablePowerUpsToBuy[PowerUpType.FinalSolution] =
-                Simulation.PowerUpsFactory.Availables.ContainsKey(PowerUpType.FinalSolution) &&
-                Simulation.PowerUpsFactory.Availables[PowerUpType.FinalSolution].BuyPrice <= CommonStash.Cash;
-
-            ActualSelection.AvailablePowerUpsToBuy[PowerUpType.Collector] =
-                Simulation.PowerUpsFactory.Availables.ContainsKey(PowerUpType.Collector) &&
-                Simulation.PowerUpsFactory.Availables[PowerUpType.Collector].BuyPrice <= CommonStash.Cash;
-
-            ActualSelection.AvailablePowerUpsToBuy[PowerUpType.TheResistance] =
-                Simulation.PowerUpsFactory.Availables.ContainsKey(PowerUpType.TheResistance) &&
-                Simulation.PowerUpsFactory.Availables[PowerUpType.TheResistance].BuyPrice <= CommonStash.Cash;
+            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Values)
+                ActualSelection.AvailablePowerUpsToBuy[powerUp.Type] =
+                    powerUp.BuyPrice <= CommonStash.Cash &&
+                    ActivesPowerUps[powerUp.Type];
         }
     }
 }

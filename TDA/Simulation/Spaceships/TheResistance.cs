@@ -7,69 +7,73 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    class TheResistance : IObjetPhysique, PowerUp
+    class TheResistance : Spaceship
     {
         public double TempsActif;
-        public bool EntreAuBercail;
-        public Vector3 BuyPosition { get; set; }
 
-        private Simulation Simulation;
-        private List<Vaisseau> Vaisseaux;
+        private List<Spaceship> Vaisseaux;
         private List<Ennemi> Ennemis;
-        public IObjetPhysique CorpsCelesteDepart;
 
 
         public TheResistance(Simulation simulation)
+            : base(simulation)
         {
-            Simulation = simulation;
+            Vaisseaux = new List<Spaceship>();
 
-            EntreAuBercail = false;
+            Vaisseaux.Add(new Spaceship(simulation)
+            {
+                ShootingFrequency = 100,
+                BulletHitPoints = 10,
+                RotationMaximaleRad = 0.15f,
+                Image = new Image("Resistance1")
+                {
+                    SizeX = 4,
+                    VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
+                },
+                AutomaticMode = true
+            });
 
-            Vaisseaux = new List<Vaisseau>();
+            Vaisseaux.Add(new Spaceship(simulation)
+            {
+                ShootingFrequency = 200,
+                BulletHitPoints = 30,
+                RotationMaximaleRad = 0.05f,
+                Image = new Image("Resistance2")
+                {
+                    SizeX = 4,
+                    VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
+                },
+                AutomaticMode = true
+            });
 
-            Vaisseau v = new Vaisseau(simulation);
-            v.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Resistance1"), Vector3.Zero);
-            v.Representation.Taille = 4;
-            v.Representation.Origine = v.Representation.Centre;
-            v.Representation.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
-            v.CadenceTir = 100;
-            v.PuissanceProjectile = 10;
-            v.RotationMaximaleRad = 0.15f;
-            Vaisseaux.Add(v);
+            Vaisseaux.Add(new Spaceship(simulation)
+            {
+                ShootingFrequency = 500,
+                BulletHitPoints = 100,
+                RotationMaximaleRad = 0.2f,
+                Image = new Image("Resistance3")
+                {
+                    SizeX = 4,
+                    VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
+                },
+                AutomaticMode = true
+            });
 
-            v = new Vaisseau(simulation);
-            v.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Resistance2"), Vector3.Zero);
-            v.Representation.Taille = 4;
-            v.Representation.Origine = v.Representation.Centre;
-            v.Representation.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
-            v.CadenceTir = 200;
-            v.PuissanceProjectile = 30;
-            v.RotationMaximaleRad = 0.05f;
-            Vaisseaux.Add(v);
-
-            v = new Vaisseau(simulation);
-            v.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Resistance3"), Vector3.Zero);
-            v.Representation.Taille = 4;
-            v.Representation.Origine = v.Representation.Centre;
-            v.Representation.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f;
-            v.CadenceTir = 500;
-            v.PuissanceProjectile = 100;
-            v.RotationMaximaleRad = 0.2f;
-            Vaisseaux.Add(v);
+            SfxGoHome = "sfxPowerUpResistanceOut";
+            SfxIn = "sfxPowerUpResistanceIn";
         }
 
 
-        public void Initialize(IObjetPhysique corpsCelesteDepart, List<Ennemi> ennemis)
+        public void Initialize(List<Ennemi> ennemis)
         {
-            CorpsCelesteDepart = corpsCelesteDepart;
             Ennemis = ennemis;
 
             foreach (var spaceship in Vaisseaux)
             {
-                spaceship.ObjetDepart = CorpsCelesteDepart;
+                spaceship.StartingObject = StartingObject;
 
-                if (corpsCelesteDepart != null)
-                    spaceship.Position = corpsCelesteDepart.Position;
+                if (StartingObject != null)
+                    spaceship.Position = StartingObject.Position;
             }
         }
 
@@ -79,105 +83,74 @@
             set
             {
                 foreach (var spaceship in Vaisseaux)
-                    spaceship.Representation.Couleur.A = value;
+                    spaceship.Image.Color.A = value;
             }
         }
 
 
-        public virtual bool Actif
+        public override bool Active
         {
             get { return TempsActif > 0; }
         }
 
 
-        public bool CibleAtteinte
+        public override bool TargetReached
         {
-            get { return Vaisseaux[0].CibleAtteinte && Vaisseaux[1].CibleAtteinte && Vaisseaux[2].CibleAtteinte; }
+            get { return Vaisseaux[0].TargetReached && Vaisseaux[1].TargetReached && Vaisseaux[2].TargetReached; }
         }
 
 
-        public void Update(GameTime gameTime)
+        public override void Update()
         {
-            TempsActif -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            TempsActif -= 16.66f;
 
             for (int i = 0; i < Vaisseaux.Count; i++)
             {
-                if (!Vaisseaux[i].EnAttaque)
+                if (!Vaisseaux[i].InCombat)
                 {
-                    Vector3 direction = ((Ennemis.Count > i) ? Ennemis[i].Position : CorpsCelesteDepart.Position) - Vaisseaux[i].Position;
+                    Vector3 direction = ((Ennemis.Count > i) ? Ennemis[i].Position : StartingObject.Position) - Vaisseaux[i].Position;
                     direction.Normalize();
 
-                    Vaisseaux[i].PositionVisee = ((Ennemis.Count > i) ? Ennemis[i].Position : CorpsCelesteDepart.Position) + direction * 100;
+                    Vaisseaux[i].TargetPosition = ((Ennemis.Count > i) ? Ennemis[i].Position : StartingObject.Position) + direction * 100;
                 }
             }
 
             foreach (var vaisseau in Vaisseaux)
             {
 
-                vaisseau.doModeAutomatique();
-                vaisseau.Update(gameTime);
+                vaisseau.DoAutomaticMode();
+                vaisseau.Update();
             }
         }
 
 
         private List<Projectile> projectilesCeTick = new List<Projectile>();
-        public List<Projectile> ProjectilesCeTick(GameTime gameTime)
+        public override List<Projectile> BulletsThisTick()
         {
             projectilesCeTick.Clear();
 
             foreach (var vaisseau in Vaisseaux)
-                projectilesCeTick.AddRange(vaisseau.ProjectilesCeTick(gameTime));
+                projectilesCeTick.AddRange(vaisseau.BulletsThisTick());
 
             return projectilesCeTick;
         }
 
 
-        public void doDisparaitre()
+        public override void DoHide()
         {
 
             foreach (var vaisseau in Vaisseaux)
             {
-                vaisseau.PositionVisee = CorpsCelesteDepart.Position;
-                vaisseau.doDisparaitre();
+                vaisseau.TargetPosition = StartingObject.Position;
+                vaisseau.DoHide();
             }
         }
 
 
-        public void Draw(GameTime gameTime)
+        public override void Draw()
         {
             foreach (var vaisseau in Vaisseaux)
-                vaisseau.Draw(gameTime);
-        }
-
-
-        #region IObjetPhysique Membres
-
-        public Vector3 Position { get; set; }
-        public float Vitesse { get; set; }
-        public Vector3 Direction { get; set; }
-        public float Rotation { get; set; }
-        public Forme Forme { get; set; }
-        public Cercle Cercle { get; set; }
-        public RectanglePhysique Rectangle { get; set; }
-        public Ligne Ligne { get; set; }
-
-        #endregion
-
-
-        public PowerUpType Type
-        {
-            get { return PowerUpType.TheResistance; }
-        }
-
-
-        public string BuyImage
-        {
-            get { return "TheResistance"; }
-        }
-
-        public int BuyPrice
-        {
-            get { return 250; }
+                vaisseau.Draw();
         }
     }
 }

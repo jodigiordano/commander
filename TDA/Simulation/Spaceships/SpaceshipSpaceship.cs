@@ -7,54 +7,55 @@
     using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Physique;
 
-    class VaisseauDoItYourself : Vaisseau, PowerUp
+
+    class SpaceshipSpaceship : Spaceship
     {
         private Vector3 Acceleration;
         
         public Vector3 Bouncing;
-        public double TempsActif;
-        public bool ModeAutomatique;
-        public int PrixAchat;
-        public Vector3 NextInput;
-        public Vector3 BuyPosition { get; set; }
+        public double ActiveTime;
+        public int BuyPrice;
 
 
-        public virtual bool Actif
-        {
-            get { return TempsActif > 0; }
-        }
-
-        public float PrioriteAffichage
-        {
-            set { this.Representation.VisualPriority = value; }
-        }
-
-
-        public VaisseauDoItYourself(Simulation simulation)
+        public SpaceshipSpaceship(Simulation simulation)
             : base(simulation)
         {
             RotationMaximaleRad = 0.2f;
             Acceleration = Vector3.Zero;
-            PrixAchat = 50;
+            BuyPrice = 50;
+            SfxGoHome = "sfxPowerUpDoItYourselfOut";
+            SfxIn = "sfxPowerUpDoItYourselfIn";
         }
 
 
-        public override void Update(GameTime gameTime)
+        public override bool Active
         {
-            base.Update(gameTime);
-
-            TempsActif -= gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (ModeAutomatique)
-                doModeAutomatique();
-            else
-                doModeManuel(NextInput);
-
-            doBouncing();
+            get { return ActiveTime > 0; }
         }
 
 
-        private void doModeManuel(Vector3 donneesThumbstick)
+        public float VisualPriority
+        {
+            set { this.Image.VisualPriority = value; }
+        }
+
+
+        public override void Update()
+        {
+            base.Update();
+
+            ActiveTime -= 16.66f;
+
+            if (AutomaticMode)
+                DoAutomaticMode();
+            else
+                DoManualMode(NextInput);
+
+            DoBouncing();
+        }
+
+
+        private void DoManualMode(Vector3 donneesThumbstick)
         {
             donneesThumbstick /= 10;
 
@@ -68,7 +69,7 @@
                 Vector3 direction = Direction;
 
                 // Trouver l'angle d'alignement
-                float angle = signedAngle(ref directionVisee, ref direction);
+                float angle = SignedAngle(ref directionVisee, ref direction);
 
                 // Trouver la rotation nécessaire pour s'enligner
                 float rotation = MathHelper.Clamp(RotationMaximaleRad, 0, Math.Abs(angle));
@@ -77,8 +78,8 @@
                     rotation = -rotation;
 
                 // Appliquer la rotation
-                Matrix.CreateRotationZ(rotation, out MatriceRotation);
-                Vector3.Transform(ref direction, ref MatriceRotation, out direction);
+                Matrix.CreateRotationZ(rotation, out RotationMatrix);
+                Vector3.Transform(ref direction, ref RotationMatrix, out direction);
 
                 if (direction != Vector3.Zero)
                     direction.Normalize();
@@ -88,41 +89,23 @@
 
 
 
-            doAcceleration(ref donneesThumbstick);
+            DoAcceleration(ref donneesThumbstick);
 
             Position += Vitesse * Acceleration;
         }
 
 
-        public override void doModeAutomatique()
+        public override void DoAutomaticMode()
         {
-            PositionVisee = ObjetDepart.Position;
+            TargetPosition = StartingObject.Position;
 
-            base.doModeAutomatique();
+            base.DoAutomaticMode();
         }
 
 
-        public PowerUpType Type
+        private void DoBouncing()
         {
-            get { return PowerUpType.Spaceship; }
-        }
-
-
-        public string BuyImage
-        {
-            get { return "Vaisseau"; }
-        }
-
-
-        public int BuyPrice
-        {
-            get { return 50; }
-        }
-
-
-        private void doBouncing()
-        {
-            if (Position.X > 640 - Preferences.DeadZoneXbox.X - Representation.Rectangle.Width / 2)
+            if (Position.X > 640 - Preferences.DeadZoneXbox.X - Cercle.Radius)
             {
                 Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Acceleration.X) * Vitesse * 1.5f;
                 Bouncing.Y = Bouncing.Y + Acceleration.Y * Vitesse * 1.5f;
@@ -131,7 +114,7 @@
                 Acceleration.Y = 0;
             }
 
-            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Representation.Rectangle.Width / 2)
+            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Cercle.Radius)
             {
                 Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Acceleration.X) * Vitesse * 1.5f;
                 Bouncing.Y = Bouncing.Y + Acceleration.Y * Vitesse * 1.5f;
@@ -140,7 +123,7 @@
                 Acceleration.Y = 0;
             }
 
-            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Representation.Rectangle.Height / 2)
+            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Cercle.Radius)
             {
                 Bouncing.X = Bouncing.X + Acceleration.X * Vitesse * 1.5f;
                 Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Acceleration.Y) * Vitesse * 1.5f;
@@ -149,7 +132,7 @@
                 Acceleration.Y = 0;
             }
 
-            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Representation.Rectangle.Height / 2)
+            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Cercle.Radius)
             {
                 Bouncing.X = Bouncing.X + Acceleration.X * Vitesse * 1.5f;
                 Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Acceleration.Y) * Vitesse * 1.5f;
@@ -171,7 +154,8 @@
                 Bouncing.Y = Math.Min(0, Bouncing.Y + 0.5f);
         }
 
-        private void doAcceleration(ref Vector3 donneesThumbstick)
+
+        private void DoAcceleration(ref Vector3 donneesThumbstick)
         {
             Acceleration += donneesThumbstick / 5f;
 
@@ -187,14 +171,6 @@
                 Acceleration.Y = Math.Max(0, Acceleration.Y - 0.03f);
             else if (Acceleration.Y < 0)
                 Acceleration.Y = Math.Min(0, Acceleration.Y + 0.03f);
-        }
-
-
-        private float signedAngle(ref Vector3 vecteur1, ref Vector3 vecteur2)
-        {
-            float perpDot = vecteur1.X * vecteur2.Y - vecteur1.Y * vecteur2.X;
-
-            return (float)Math.Atan2(perpDot, Vector3.Dot(vecteur1, vecteur2));
         }
     }
 }

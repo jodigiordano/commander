@@ -5,11 +5,36 @@
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
 
-    interface PowerUp
+
+    abstract class PowerUp
     {
-        PowerUpType Type    { get; }
-        String BuyImage     { get; }
-        int BuyPrice        { get; }
-        Vector3 BuyPosition { get; set; }
+        public PowerUpType Type             { get; protected set; }
+        public string BuyImage              { get; protected set; }
+        public int BuyPrice                 { get; protected set; }
+        public Vector3 BuyPosition          { get; set; }
+        public string BuyTitle              { get; protected set; }
+        public string BuyDescription        { get; protected set; }
+        public bool NeedInput               { get; protected set; }
+        public Vector3 Position             { get; protected set; }
+        public abstract bool Terminated     { get; }
+
+        protected Simulation Simulation;
+
+
+        public PowerUp(Simulation simulation)
+        {
+            Simulation = simulation;
+            Type = PowerUpType.None;
+            BuyImage = "";
+            BuyPrice = 0;
+            BuyPosition = Vector3.Zero;
+            BuyTitle = "";
+            BuyDescription = "";
+            NeedInput = false;
+            Position = Vector3.Zero;
+        }
+
+
+        public abstract void Start();
     }
 }

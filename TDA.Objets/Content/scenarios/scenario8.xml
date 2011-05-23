@@ -355,6 +355,7 @@
     <PowerUpType>FinalSolution</PowerUpType>
     <PowerUpType>Spaceship</PowerUpType>
     <PowerUpType>TheResistance</PowerUpType>
+    <PowerUpType>DeadlyShootingStars</PowerUpType>
   </AvailablePowerUps>
   <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
   <MineralsValue>2000</MineralsValue>

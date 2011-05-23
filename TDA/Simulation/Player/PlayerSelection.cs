@@ -37,14 +37,14 @@
         public GameAction GameAction;
 
 
-        public PlayerSelection()
+        public PlayerSelection(Simulation simulation)
         {
             AvailableTurrets = new Dictionary<TurretType, bool>();
+
             AvailablePowerUpsToBuy = new Dictionary<PowerUpType, bool>();
-            AvailablePowerUpsToBuy.Add(PowerUpType.Collector, false);
-            AvailablePowerUpsToBuy.Add(PowerUpType.Spaceship, false);
-            AvailablePowerUpsToBuy.Add(PowerUpType.FinalSolution, false);
-            AvailablePowerUpsToBuy.Add(PowerUpType.TheResistance, false);
+
+            foreach (var powerUp in simulation.PowerUpsFactory.Availables.Keys)
+                AvailablePowerUpsToBuy.Add(powerUp, false);
 
             AvailableTurretOptions = new Dictionary<TurretAction, bool>();
             AvailableTurretOptions.Add(TurretAction.Sell, false);

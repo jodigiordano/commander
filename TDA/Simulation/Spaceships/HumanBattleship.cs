@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using EphemereGames.Core.Physique;
 
+
     class HumanBattleship : IObjetPhysique, IPhysique
     {
         public Vector3 Position                 { get; set; }
@@ -34,6 +35,7 @@
                 Position = position
             };
         }
+
 
         public void Draw()
         {

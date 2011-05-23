@@ -12,16 +12,25 @@
         Collector = 0,
         FinalSolution = 1,
         Spaceship = 2,
-        TheResistance = 3
+        TheResistance = 3,
+        DeadlyShootingStars = 4,
+        Pulse = 5,
+        Nodes = 6,
+        Shield = 7,
+        Sniper = 8,
+        AutomaticCollector = 9,
+        DarkSide = 10
     };
 
 
     class PowerUpsFactory
     {
         public Dictionary<PowerUpType, PowerUp> Availables;
+        public HumanBattleship HumanBattleship;
         private Simulation Simulation;
 
-        public PowerUpsFactory( Simulation simulation )
+
+        public PowerUpsFactory(Simulation simulation)
         {
             Simulation = simulation;
 
@@ -35,11 +44,12 @@
 
             switch (type)
             {
-                case PowerUpType.Collector:         t = new VaisseauCollecteur(Simulation);     break;
-                case PowerUpType.FinalSolution:     t = new PowerUpLastSolution(Simulation);    break;
-                case PowerUpType.Spaceship:         t = new VaisseauDoItYourself(Simulation);   break;
-                case PowerUpType.TheResistance:     t = new TheResistance(Simulation);          break;
-                default:                            t = new VaisseauCollecteur(Simulation);     break;
+                case PowerUpType.Collector:             t = new PowerUpCollector(Simulation, HumanBattleship);      break;
+                case PowerUpType.FinalSolution:         t = new PowerUpLastSolution(Simulation);                    break;
+                case PowerUpType.Spaceship:             t = new PowerUpSpaceship(Simulation, HumanBattleship);      break;
+                case PowerUpType.TheResistance:         t = new PowerUpTheResistance(Simulation, HumanBattleship);  break;
+                case PowerUpType.DeadlyShootingStars:   t = new PowerUpDeadlyShootingStars(Simulation);             break;
+                default:                                t = new PowerUpCollector(Simulation, HumanBattleship);      break;
             }
 
             return t;

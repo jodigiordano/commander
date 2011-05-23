@@ -14,27 +14,29 @@ namespace EphemereGames.Commander
 
 
         public PowerUpLastSolution(Simulation simulation)
+            : base(simulation)
         {
             ZoneImpactDestruction = new Cercle(new Vector3(), 300);
             PointsAttaque = 50000;
+            Type = PowerUpType.FinalSolution;
+            BuyImage = "Destruction";
+            BuyPrice = 500;
+            BuyTitle = "The final solution";
+            BuyDescription = "Create a massive explosion by destroying a planet.";
+            NeedInput = true;
+            Position = Vector3.Zero;
         }
 
 
-        public PowerUpType Type
+        public override bool Terminated
         {
-            get { return PowerUpType.FinalSolution; }
+            get { return false; }
         }
 
 
-        public String BuyImage
+        public override void Start()
         {
-            get { return "Destruction"; }
-        }
 
-
-        public int BuyPrice
-        {
-            get { return 50; }
         }
     }
 }

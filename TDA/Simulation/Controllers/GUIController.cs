@@ -50,7 +50,7 @@
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
             InSpaceShip = false;
             GamePausedResistance = new TheResistance(Simulation);
-            GamePausedResistance.Initialize(null, new List<Ennemi>());
+            GamePausedResistance.Initialize(new List<Ennemi>());
             GamePausedResistance.AlphaChannel = 100;
         }
 
@@ -121,30 +121,22 @@
         }
 
 
-        public void doObjectCreated(IObjetPhysique obj)
+        public void DoPowerUpStarted(PowerUp powerUp)
         {
-            Vaisseau spaceship = obj as Vaisseau;
-
-            if (spaceship != null)
+            if (powerUp.NeedInput)
             {
                 Cursor.doHide();
                 InSpaceShip = true;
-
-                return;
             }
         }
 
 
-        public void doObjectDestroyed(IObjetPhysique obj)
+        public void DoPowerUpStopped(PowerUp powerUp)
         {
-            Vaisseau spaceship = obj as Vaisseau;
-
-            if (spaceship != null)
+            if (powerUp.NeedInput)
             {
                 Cursor.doShow();
                 InSpaceShip = false;
-
-                return;
             }
         }
 
@@ -276,14 +268,14 @@
 
             if (Simulation.ModeDemo)
             {
-                GamePausedResistance.CorpsCelesteDepart = null;
+                GamePausedResistance.StartingObject = null;
 
                 if (Simulation.Main.GameInProgress != null && Simulation.Main.GameInProgress.State == GameState.Paused)
                 {
-                    GamePausedResistance.CorpsCelesteDepart = Simulation.CelestialBodyPausedGame;
+                    GamePausedResistance.StartingObject = Simulation.CelestialBodyPausedGame;
 
-                    if (GamePausedResistance.CorpsCelesteDepart != null)
-                        GamePausedResistance.Update(gameTime);
+                    if (GamePausedResistance.StartingObject != null)
+                        GamePausedResistance.Update();
                 }
             }
 
@@ -311,8 +303,8 @@
                 {
                     MenuDemo.Draw();
 
-                    if (GamePausedResistance.CorpsCelesteDepart != null)
-                        GamePausedResistance.Draw(null);
+                    if (GamePausedResistance.StartingObject != null)
+                        GamePausedResistance.Draw();
                 }
 
                 return;

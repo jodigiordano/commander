@@ -52,7 +52,7 @@
             LevelsStates = new List<KeyAndValue<CorpsCeleste, Image>>();
             WarpsCelestialBodies = new Dictionary<CorpsCeleste, int>();
 
-            foreach (var celestialBody in Simulation.ControleurSystemePlanetaire.CelestialBodies)
+            foreach (var celestialBody in Simulation.PlanetarySystemController.CelestialBodies)
             {
                 if (LevelsDescriptors.ContainsKey(celestialBody.Nom) && !(celestialBody is TrouRose))
                     LevelsStates.Add(new KeyAndValue<CorpsCeleste, Image>(celestialBody, null));
@@ -114,7 +114,7 @@
 
         public void ShowWarpBlockedMessage()
         {
-            Simulation.ControleurMessages.afficherMessage(Simulation.CorpsCelesteSelectionne, Descriptor.WarpBlockedMessage, 5000, -1);
+            Simulation.MessagesController.afficherMessage(Simulation.CorpsCelesteSelectionne, Descriptor.WarpBlockedMessage, 5000, -1);
         }
 
 
@@ -132,12 +132,12 @@
 
             if (Main.GameInProgress != null)
             {
-                Simulation.CelestialBodyPausedGame = Simulation.ControleurSystemePlanetaire.CelestialBodies.Find(e => e.Nom == Main.GameInProgress.Simulation.DescriptionScenario.Mission);
+                Simulation.CelestialBodyPausedGame = Simulation.PlanetarySystemController.CelestialBodies.Find(e => e.Nom == Main.GameInProgress.Simulation.DescriptionScenario.Mission);
 
                 if (Main.GameInProgress.State != GameState.Paused || PausedGameSelected)
-                    Simulation.ControleurMessages.StopPausedMessage();
+                    Simulation.MessagesController.StopPausedMessage();
                 else
-                    Simulation.ControleurMessages.DisplayPausedMessage();
+                    Simulation.MessagesController.DisplayPausedMessage();
             }
 
             else

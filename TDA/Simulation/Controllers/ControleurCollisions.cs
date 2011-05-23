@@ -21,7 +21,7 @@
         private Scene Scene;
         private Simulation Simulation;
         private RectanglePhysique Terrain;
-        private VaisseauCollecteur Collecteur;
+        private SpaceshipCollector Collecteur;
         private GridWorld Grille;
 
         public List<Projectile> Projectiles;
@@ -382,7 +382,7 @@
             }
 
 
-            VaisseauCollecteur collecteur = objet as VaisseauCollecteur;
+            SpaceshipCollector collecteur = objet as SpaceshipCollector;
 
             if (collecteur != null)
             {
@@ -395,7 +395,7 @@
 
         public void doObjetCree(IObjetPhysique objet)
         {
-            VaisseauCollecteur collecteur = objet as VaisseauCollecteur;
+            SpaceshipCollector collecteur = objet as SpaceshipCollector;
 
             if (collecteur != null)
                 Collecteur = collecteur;

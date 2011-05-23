@@ -116,11 +116,11 @@
 
                         Main.GameInProgress = new Partie(Main, ChoixScenario);
                         Main.GameInProgress.Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
-                        MondeSelectionne.Simulation.ControleurMessages.StopPausedMessage();
+                        MondeSelectionne.Simulation.MessagesController.StopPausedMessage();
 
                         if (ChoixScenario.Id <= 3)
                         {
-                            Main.GameInProgress.Simulation.ControleurMessages.Initialize();
+                            Main.GameInProgress.Simulation.MessagesController.Initialize();
                         }
 
                         EphemereGames.Core.Visuel.Facade.UpdateScene("Partie", Main.GameInProgress);
