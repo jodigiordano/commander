@@ -11,11 +11,14 @@
 
     class ProjectileBase : Projectile
     {
+        public static float StartingSpeed = 10;
+
+
         public override void Initialize()
         {
             base.Initialize();
 
-            Vitesse = 10;
+            base.Vitesse = ProjectileBase.StartingSpeed;
             Forme = Forme.Rectangle;
 
             if (RepresentationVivant == null)
@@ -32,36 +35,36 @@
             RepresentationVivant.Position = Position;
             RepresentationVivant.Origine = RepresentationVivant.Centre;
             RepresentationVivant.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
-            RepresentationDeplacement = Scene.Particules.recuperer("projectileMissileDeplacement");
-            RepresentationExplose = Scene.Particules.recuperer("projectileBaseExplosion");
+            MovingEffect = Scene.Particules.recuperer("projectileMissileDeplacement");
+            ExplodingEffect = Scene.Particules.recuperer("projectileBaseExplosion");
             RepresentationVivant.VisualPriority = PrioriteAffichage + 0.001f;
-            RepresentationDeplacement.VisualPriority = PrioriteAffichage + 0.001f;
-            RepresentationExplose.VisualPriority = 0.35f;
+            MovingEffect.VisualPriority = PrioriteAffichage + 0.001f;
+            ExplodingEffect.VisualPriority = 0.35f;
             Rectangle.X = (int)Position.X;
             Rectangle.Y = (int)Position.Y;
-            PointsVie = 5;
+            LifePoints = 5;
         }
 
-        public override void doMeurt()
+        public override void DoDie()
         {
-            base.doMeurt();
+            base.DoDie();
 
             Projectile.PoolProjectilesBase.retourner(this);
         }
 
-        public override void doMeurtSilencieusement()
+        public override void DoDieSilent()
         {
-            base.doMeurtSilencieusement();
+            base.DoDieSilent();
 
             Projectile.PoolProjectilesBase.retourner(this);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Rectangle.set(ref RepresentationVivant.rectangle);
             Position += Vitesse * Direction;
 
-            base.Update(gameTime);
+            base.Update();
         }
     }
 }

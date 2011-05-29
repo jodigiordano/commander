@@ -137,7 +137,7 @@
         {
             // Pour les ennemis qui meurent par eux-memes
             for (int i = Ennemis.Count - 1; i > -1; i--)
-                if (!Ennemis[i].EstVivant)
+                if (!Ennemis[i].Alive)
                     Ennemis.RemoveAt(i);
 
             for (int i = 0; i < Ennemis.Count; i++)
@@ -147,7 +147,7 @@
             {
                 Mineraux[i].Update(gameTime);
 
-                if (!Mineraux[i].EstVivant)
+                if (!Mineraux[i].Alive)
                     Mineraux.RemoveAt(i);
 
             }
@@ -234,13 +234,13 @@
         {
             Ennemi ennemi = objet as Ennemi;
 
-            if (ennemi != null && ennemi.EstVivant)
+            if (ennemi != null && ennemi.Alive)
             {
-                ennemi.doTouche((IObjetVivant)par);
+                ennemi.DoHit((ILivingObject)par);
 
-                if (!ennemi.EstVivant)
+                if (!ennemi.Alive)
                 {
-                    ennemi.doMeurt();
+                    ennemi.DoDie();
 
                     foreach (var vague in VaguesActives)
                         vague.doEnemyDestroyed(ennemi);
@@ -274,7 +274,7 @@
 
             if (min != null)
             {
-                min.doMeurt();
+                min.DoDie();
 
                 Mineraux.Remove(min);
 
@@ -305,7 +305,7 @@
 
         public void listenRelaisAtteint(Ennemi ennemi)
         {
-            ennemi.doMeurt();
+            ennemi.DoDie();
 
             foreach (var vague in VaguesActives)
                 vague.doEnemyDestroyed(ennemi);

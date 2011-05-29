@@ -169,6 +169,7 @@
     <Compile Include="Player\Scores.cs" />
     <Compile Include="Simulation\Animations\AnimationEtoileFilante.cs" />
     <Compile Include="Animations\AnimationLieutenant.cs" />
+    <Compile Include="Simulation\Bullets\GunnerBullet.cs" />
     <Compile Include="Simulation\Controllers\ControleurCollisions.cs" />
     <Compile Include="Simulation\Controllers\ControleurEnnemis.cs" />
     <Compile Include="Simulation\Controllers\GUIController.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Simulation\Spaceships\SpaceshipCollector.cs" />
     <Compile Include="Simulation\Factories\ScenariosFactory.cs" />
     <Compile Include="Simulation\Factories\EnemiesFactory.cs" />
+    <Compile Include="Simulation\Turrets\TurretBoostLevel.cs" />
     <Compile Include="Simulation\Turrets\TurretLevel.cs" />
     <Compile Include="Player\SaveGame.cs" />
     <Compile Include="Simulation\Scenario.cs" />
@@ -264,9 +266,9 @@
     <Compile Include="Simulation\Bullets\ProjectileBase.cs" />
     <Compile Include="Simulation\PlanetarySystem\CorpsCeleste.cs" />
     <Compile Include="Simulation\PlanetarySystem\Emplacement.cs" />
-    <Compile Include="Simulation\Bullets\Projectile.cs" />
+    <Compile Include="Simulation\Bullets\Bullet.cs" />
     <Compile Include="Simulation\Enemies\Ennemi.cs" />
-    <Compile Include="Simulation\IObjetVivant.cs" />
+    <Compile Include="Simulation\ILivingObject.cs" />
     <Compile Include="Simulation\Bullets\ProjectileMissile.cs" />
     <Compile Include="Simulation\Turrets\Turret.cs" />
     <Compile Include="Simulation\Turrets\BasicTurret.cs" />

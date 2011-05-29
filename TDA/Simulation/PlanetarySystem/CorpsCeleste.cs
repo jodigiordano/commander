@@ -8,7 +8,7 @@
     using EphemereGames.Core.Physique;
     using ProjectMercury.Modifiers;
 
-    class CorpsCeleste : DrawableGameComponent, IObjetVivant, IObjetPhysique
+    class CorpsCeleste : DrawableGameComponent, ILivingObject, IObjetPhysique
     {
         public String Nom;
         public List<Turret> Turrets = new List<Turret>();
@@ -24,9 +24,9 @@
         public Cercle Cercle                                        { get; set; }
         public Ligne Ligne                                          { get; set; }
         public RectanglePhysique Rectangle                          { get; set; }
-        public float PointsVie                                      { get; set; }
-        public float PointsAttaque                                  { get; set; }
-        public bool EstVivant                                       { get { return PointsVie > 0; } }
+        public float LifePoints                                      { get; set; }
+        public float AttackPoints                                  { get; set; }
+        public bool Alive                                       { get { return LifePoints > 0; } }
         public bool Selectionnable;
         public bool Invincible;
         public bool EstDernierRelais;
@@ -67,7 +67,7 @@
         {
             Simulation = simulation;
             Nom = nom;
-            PointsVie = float.MaxValue;
+            LifePoints = float.MaxValue;
             Priorite = 0;
             Selectionnable = true;
             Invincible = false;
@@ -129,7 +129,7 @@
         {
             this.Simulation = simulation;
             this.Nom = nom;
-            this.PointsVie = float.MaxValue;
+            this.LifePoints = float.MaxValue;
             this.Priorite = 0;
             this.Selectionnable = true;
             this.Invincible = false;
@@ -175,7 +175,7 @@
             this.Cercle = new Cercle(Position, rayon);
             TurretsZone = new Cercle(Position, rayon * 2);
 
-            this.PointsAttaque = 50000;
+            this.AttackPoints = 50000;
 
             Lunes = new List<Lune>();
 
@@ -267,7 +267,7 @@
 
         public override void Draw(GameTime gameTime)
         {
-            if (this.PointsVie <= 0)
+            if (this.LifePoints <= 0)
                 return;
 
             if (Representation != null)
@@ -288,7 +288,7 @@
         }
 
 
-        public void doTouche(IObjetVivant par)
+        public void DoHit(ILivingObject par)
         {
             toucherTerre = Simulation.Scene.Particules.recuperer("toucherTerre");
 
@@ -303,16 +303,16 @@
             if (Invincible)
                 return;
 
-            this.PointsVie -= par.PointsAttaque;
+            this.LifePoints -= par.AttackPoints;
         }
 
 
-        public void doMeurt()
+        public void DoDie()
         {
             if (Invincible)
                 return;
 
-            this.PointsVie = Math.Min(this.PointsVie, 0);
+            this.LifePoints = Math.Min(this.LifePoints, 0);
 
             bouleMeurt = Simulation.Scene.Particules.recuperer("bouleTerreMeurt");
             anneauMeurt = Simulation.Scene.Particules.recuperer("anneauTerreMeurt");

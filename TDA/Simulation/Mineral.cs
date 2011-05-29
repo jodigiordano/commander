@@ -7,14 +7,14 @@
     using ProjectMercury.Modifiers;
 
 
-    class Mineral : IObjetPhysique, IObjetVivant
+    class Mineral : IObjetPhysique, ILivingObject
     {
         public Vector3 Position                     { get { return position; } set { position = value; } }
         public float Vitesse                        { get; set; }
         public Vector3 Direction                    { get; set; }
         public Forme Forme                          { get; set; }
         public Cercle Cercle                        { get; set; }
-        public bool EstVivant                       { get { return TempsExistence > 0; } }
+        public bool Alive                       { get { return TempsExistence > 0; } }
         public MineralType Type                     { get { return Definition.Type; } }
         public int Value                            { get { return Definition.Value; } }
         public MineralDefinition Definition;
@@ -67,10 +67,10 @@
         }
 
 
-        public void doTouche(IObjetVivant par) {}
+        public void DoHit(ILivingObject par) {}
 
 
-        public void doMeurt()
+        public void DoDie()
         {
             Scene.Particules.retourner(RepresentationParticules);
 
@@ -129,13 +129,13 @@
         }
 
         #region Useless
-        public float PointsAttaque { get; set; }
+        public float AttackPoints { get; set; }
         public RectanglePhysique Rectangle { get; set; }
         public Ligne Ligne { get; set; }
         public float Masse { get; set; }
         public float Rotation { get; set; }
         public float ResistanceRotation { get; set; }
-        public float PointsVie { get; set; }
+        public float LifePoints { get; set; }
         #endregion
     }
 }

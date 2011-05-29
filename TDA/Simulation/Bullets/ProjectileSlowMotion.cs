@@ -26,50 +26,50 @@
             Cercle = new Cercle(Position, Rayon);
             Rectangle = new RectanglePhysique(Cercle.Rectangle);
 
-            RepresentationExplose = Scene.Particules.recuperer("etincelleSlowMotion");
-            RepresentationExplose.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
+            ExplodingEffect = Scene.Particules.recuperer("etincelleSlowMotion");
+            ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
 
-            PointsVie = Int16.MaxValue;
+            LifePoints = Int16.MaxValue;
 
             DureeVie = 1;
         }
 
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Cercle.Position = this.Position;
             
             Rectangle.X = (int)(this.Position.X - Rectangle.Width / 2);
             Rectangle.Y = (int)(this.Position.Y - Rectangle.Height / 2);
 
-            DureeVie -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            DureeVie -= 16.66;
 
             if (DureeVie <= 0)
-                PointsVie = 0;
+                LifePoints = 0;
 
-            base.Update(gameTime);
+            base.Update();
         }
 
 
-        public override void doTouche(IObjetVivant par) {}
+        public override void DoHit(ILivingObject par) {}
 
-        public override void doMeurt()
+        public override void DoDie()
         {
-            ((CircleEmitter)RepresentationExplose.ParticleEffect[0]).Radius = Cercle.Radius;
-            ((RadialGravityModifier)RepresentationExplose.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.Position.X, this.Position.Y);
+            ((CircleEmitter)ExplodingEffect.ParticleEffect[0]).Radius = Cercle.Radius;
+            ((RadialGravityModifier)ExplodingEffect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.Position.X, this.Position.Y);
 
-            RepresentationExplose.Emettre(ref this.position);
-            Scene.Particules.retourner(RepresentationExplose);
+            ExplodingEffect.Emettre(ref this.position);
+            Scene.Particules.retourner(ExplodingEffect);
 
             Projectile.PoolProjectilesSlowMotion.retourner(this);
         }
 
 
-        public override void doMeurtSilencieusement()
+        public override void DoDieSilent()
         {
-            base.doMeurtSilencieusement();
+            base.DoDieSilent();
 
-            Scene.Particules.retourner(RepresentationExplose);
+            Scene.Particules.retourner(ExplodingEffect);
 
             Projectile.PoolProjectilesSlowMotion.retourner(this);
         }

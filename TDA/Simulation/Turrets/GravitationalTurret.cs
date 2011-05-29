@@ -25,9 +25,9 @@ namespace EphemereGames.Commander
 
             Levels = new LinkedListWithInit<TurretLevel>()
             {
-                new TurretLevel(0, 0, 0, new Cercle(Vector3.Zero, 1), Int16.MaxValue, 1, 0, BulletType.Aucun, "", "", 0, null, 0),
-                new TurretLevel(1, 1000, 500, new Cercle(Vector3.Zero, 1), Int16.MaxValue, 1, 500, BulletType.Aucun, "tourelleGravitationnelleAntenne", "tourelleGravitationnelleBase", 0, null, 0),
-                new TurretLevel(2, 500, 750, new Cercle(Vector3.Zero, 1), Int16.MaxValue, 1, 500, BulletType.Aucun, "tourelleGravitationnelleAntenne", "tourelleGravitationnelleBase", 0, null, 0)
+                new TurretLevel(0, 0, 0, 1, Int16.MaxValue, 1, 0, BulletType.Aucun, "", "", 0, 0, 0),
+                new TurretLevel(1, 1000, 500, 1, Int16.MaxValue, 1, 500, BulletType.Aucun, "tourelleGravitationnelleAntenne", "tourelleGravitationnelleBase", 0, 0, 0),
+                new TurretLevel(2, 500, 750, 1, Int16.MaxValue, 1, 500, BulletType.Aucun, "tourelleGravitationnelleAntenne", "tourelleGravitationnelleBase", 0, 0, 0)
             };
 
             ActualLevel = Levels.First;

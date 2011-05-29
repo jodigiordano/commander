@@ -63,7 +63,7 @@
 
             e.Simulation = Simulation;
             e.Vitesse = GetSpeed(type, speedLevel);
-            e.PointsVie = e.PointsVieDepart = GetLives(type, livesLevel); ;
+            e.LifePoints = e.PointsVieDepart = GetLives(type, livesLevel); ;
             e.ValeurUnites = value;
             e.ValeurPoints = livesLevel;
             e.Id = Ennemi.NextID;

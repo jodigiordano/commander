@@ -44,7 +44,7 @@
             {
                 Ennemi enemy = Enemies[i];
 
-                float LivesRatio = enemy.PointsVie / enemy.PointsVieDepart;
+                float LivesRatio = enemy.LifePoints / enemy.PointsVieDepart;
 
                 int index = (int)Math.Round((1 - LivesRatio) * 5);
 

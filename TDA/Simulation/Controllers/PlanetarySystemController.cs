@@ -50,7 +50,7 @@
         {
             // Pour les corps celestes qui meurent par eux-memes
             for (int i = CelestialBodies.Count - 1; i > -1; i--)
-                if (!CelestialBodies[i].EstVivant)
+                if (!CelestialBodies[i].Alive)
                 {
                     NotifyObjetDetruit(CelestialBodies[i]);
 
@@ -122,7 +122,7 @@
         {
             var celestialBody = (CorpsCeleste) physicalObject;
 
-            celestialBody.doMeurt();
+            celestialBody.DoDie();
 
             Path.enleverCorpsCeleste(celestialBody);
             PathPreview.enleverCorpsCeleste(celestialBody);

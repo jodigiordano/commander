@@ -9,6 +9,10 @@
 => object created / object destroyed for powerUps
 => use object destroyed for powerUps to recheck for powerUp availability
 => install and use redgate ants profiler to make this bitch run faster
+=> pixeliser les etoiles
+=> remettre les quotes lorsqu'on meurt (rester dans le drole)
+=> changer le "niveau complete" par un petit vaisseau extra-terrestre
+
 
 ================================================================================
                                  TODO BUGS

@@ -41,10 +41,10 @@
             RepresentationVivantAlt2 = new LigneVisuel(this.Position, this.Position + this.Direction * LONGUEUR_LIGNE, new Color(255, 216, 0, 100), 4);
             RepresentationVivantAlt2.VisualPriority = PrioriteAffichage + 0.002f;
 
-            RepresentationDeplacement = null;
-            RepresentationExplose = null;
+            MovingEffect = null;
+            ExplodingEffect = null;
 
-            PointsVie = Int16.MaxValue;
+            LifePoints = Int16.MaxValue;
 
             DureeVie = 800;
 
@@ -52,11 +52,11 @@
         }
 
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Position = TourelleEmettrice.Position + CibleOffset;
 
-            if (!Orphelin && Cible.EstVivant)
+            if (!Orphelin && Cible.Alive)
             {
                 Vector3 nouvelleDirection = (Cible.Position + CibleOffset) - this.Position;
                 nouvelleDirection.Normalize();
@@ -72,18 +72,18 @@
             Ligne.Debut = this.Position;
             Ligne.Fin = this.Position + this.Direction * LONGUEUR_LIGNE;
 
-            DureeVie -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            DureeVie -= 16.66;
 
             if (DureeVie <= 0)
-                PointsVie = 0;
+                LifePoints = 0;
 
             RepresentationVivantAlt.Emettre(ref this.position);
 
-            base.Update(gameTime);
+            base.Update();
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
             LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
             emetteur.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
@@ -94,25 +94,25 @@
 
             Scene.ajouterScenable(RepresentationVivantAlt2);
 
-            base.Draw(gameTime);
+            base.Draw();
         }
 
 
-        public override void doTouche(IObjetVivant par) {}
+        public override void DoHit(ILivingObject par) {}
 
 
-        public override void doMeurt()
+        public override void DoDie()
         {
-            base.doMeurt();
+            base.DoDie();
 
             Scene.Particules.retourner(RepresentationVivantAlt);
 
             Projectile.PoolProjectilesLaserMultiple.retourner(this);
         }
 
-        public override void doMeurtSilencieusement()
+        public override void DoDieSilent()
         {
-            base.doMeurtSilencieusement();
+            base.DoDieSilent();
 
             Scene.Particules.retourner(RepresentationVivantAlt);
 

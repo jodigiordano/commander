@@ -6,6 +6,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Physique;
+    using ProjectMercury.Emitters;
 
 
     abstract class Turret : IObjetPhysique
@@ -24,8 +25,8 @@
         public int BuyPrice                         { get { return ActualLevel.Value.BuyPrice; } }
         public int UpdatePrice                      { get { return (ActualLevel.Equals(Levels.Last)) ? ActualLevel.Value.BuyPrice : ActualLevel.Next.Value.BuyPrice; } }
         public int SellPrice                        { get { return ActualLevel.Value.SellPrice; } }
-        public Cercle Range                         { get { return ActualLevel.Value.Range; } }
-        public double ShootingFrequency             { get { return ActualLevel.Value.ShootingFrequency; } }
+        public float Range                          { get { return ActualLevel.Value.Range * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].RangeMultiplier; } }
+        public double ShootingFrequency             { get { return ActualLevel.Value.ShootingFrequency * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].ShootingFrequencyMultiplier; } }
         public int NbCanons                         { get { return ActualLevel.Value.NbCanons; } }
         public double BuildingTime                  { get { return ActualLevel.Value.BuildingTime; } }
         public BulletType Bullet                    { get { return ActualLevel.Value.Bullet; } }
@@ -41,6 +42,7 @@
         public bool CanPlace;
         public bool ShowRange;
         public bool ShowForm;
+        public int BoostMultiplier;
 
         protected LinkedList<TurretLevel> Levels;
         protected String SfxShooting;
@@ -58,6 +60,7 @@
         private List<Projectile> Bullets = new List<Projectile>();
         private Image RangeImage;
         private Image FormImage;
+        private ParticuleEffectWrapper BoostGlow;
 
         
         public Turret(Simulation simulation)
@@ -103,6 +106,7 @@
                 VisualPriority = Preferences.PrioriteSimulationTourelle + 0.001f
             };
             ShowForm = true;
+            BoostMultiplier = 0;
         }
 
 
@@ -142,6 +146,11 @@
 
         public virtual float VisualPriority
         {
+            get
+            {
+                return this.VisualPriorityBackup;
+            }
+
             set
             {
                 this.VisualPriorityBackup = value;
@@ -164,7 +173,6 @@
         {
             BackActiveThisTick = false;
 
-            Range.Position = this.Position;
             Cercle.Position = this.Position;
 
             DisabledCounter = MathHelper.Clamp(DisabledCounter - (float) gameTime.ElapsedGameTime.TotalMilliseconds, 0, float.MaxValue);
@@ -182,6 +190,20 @@
 
                 DisabledAnnounciationCounter = float.NaN;
                 BackActiveThisTick = true;
+            }
+
+            if (BoostGlow == null)
+            {
+                BoostGlow = Simulation.Scene.Particules.recuperer("boosterTurret");
+                BoostGlow.VisualPriority = this.VisualPriorityBackup + 0.006f;
+
+                CircleEmitter emitter = (CircleEmitter) BoostGlow.ParticleEffect[0];
+
+                emitter.Radius = this.Cercle.Radius;
+                emitter.ReleaseScale.Value = 50;
+                emitter.ReleaseScale.Variation = 10;
+                emitter.Term = this.Cercle.Radius / 300f;
+                emitter.ReleaseColour = this.Color.ToVector3();
             }
         }
 
@@ -213,6 +235,7 @@
                 Matrix matriceRotation = Matrix.CreateRotationZ(MathHelper.PiOver2);
                 Vector3 directionUnitairePerpendiculaire = Vector3.Transform(direction, matriceRotation);
                 directionUnitairePerpendiculaire.Normalize();
+                TurretBoostLevel boostLevel = Simulation.TurretsFactory.BoostLevels[BoostMultiplier];
                 
                 switch (Bullet)
                 {
@@ -227,7 +250,8 @@
                             p.Scene = Simulation.Scene;
                             p.Position = this.Position + translation;
                             p.Direction = direction;
-                            p.PointsAttaque = ActualLevel.Value.BulletHitPoints;
+                            p.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
+                            p.Vitesse = ProjectileBase.StartingSpeed * boostLevel.BulletSpeedMultiplier;
                             p.PrioriteAffichage = this.CanonImage.VisualPriority;
                             p.Initialize();
 
@@ -241,10 +265,10 @@
                         pm.Position = this.Position;
                         pm.Direction = EnemyWatched.Position - this.Position;
                         pm.Cible = EnemyWatched;
-                        pm.PointsAttaque = ActualLevel.Value.BulletHitPoints;
+                        pm.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         pm.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        pm.Vitesse = ActualLevel.Value.BulletSpeed;
-                        pm.ZoneImpact = ActualLevel.Value.BulletExplosionRange;
+                        pm.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        pm.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         pm.Initialize();
                         pm.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile1");
                         pm.RepresentationVivant.Taille = 1;
@@ -259,10 +283,10 @@
                         p2.Position = this.Position;
                         p2.Direction = EnemyWatched.Position - this.Position;
                         p2.Cible = EnemyWatched;
-                        p2.PointsAttaque = ActualLevel.Value.BulletHitPoints;
+                        p2.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         p2.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        p2.Vitesse = ActualLevel.Value.BulletSpeed;
-                        p2.ZoneImpact = ActualLevel.Value.BulletExplosionRange;
+                        p2.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        p2.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         p2.Initialize();
                         p2.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile2");
                         p2.RepresentationVivant.Taille = 2;
@@ -280,7 +304,7 @@
                             pLM.CibleOffset = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
                             pLM.Cible = EnemyWatched;
                             pLM.Direction = EnemyWatched.Position - this.Position;
-                            pLM.PointsAttaque = ActualLevel.Value.BulletHitPoints;
+                            pLM.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                             pLM.PrioriteAffichage = this.CanonImage.VisualPriority;
                             pLM.Initialize();
 
@@ -294,7 +318,7 @@
                         pLS.TourelleEmettrice = this;
                         pLS.Cible = EnemyWatched;
                         pLS.Direction = EnemyWatched.Position - this.Position;
-                        pLS.PointsAttaque = ActualLevel.Value.BulletHitPoints;
+                        pLS.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         pLS.PrioriteAffichage = this.CanonImage.VisualPriority;
                         pLS.Initialize();
 
@@ -303,12 +327,27 @@
                         Bullets.Add(pLS);
                         break;
 
+                    case BulletType.Gunner:
+                        GunnerBullet gb = Projectile.PoolGunnerBullets.recuperer();
+                        gb.Scene = Simulation.Scene;
+                        gb.Turret = this;
+                        gb.Target = EnemyWatched;
+                        gb.Direction = EnemyWatched.Position - this.Position;
+                        gb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
+                        gb.PrioriteAffichage = this.CanonImage.VisualPriority;
+                        gb.Initialize();
+
+                        ((GunnerTurret) this).ActiveBullet = gb;
+
+                        Bullets.Add(gb);
+                        break;
+
                     case BulletType.SlowMotion:
                         ProjectileSlowMotion pSM = Projectile.PoolProjectilesSlowMotion.recuperer();
                         pSM.Scene = Simulation.Scene;
                         pSM.Position = this.Position;
-                        pSM.Rayon = ActualLevel.Value.Range.Radius;
-                        pSM.PointsAttaque = ActualLevel.Value.BulletHitPoints;
+                        pSM.Rayon = Range;
+                        pSM.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         pSM.PrioriteAffichage = this.CanonImage.VisualPriority;
                         pSM.Initialize();
 
@@ -361,7 +400,7 @@
             {
                 RangeImage.Position = this.Position;
                 RangeImage.Color = new Color(Color.R, Color.G, Color.B, 100);
-                RangeImage.SizeX = (Range.Radius / 100) * 2;
+                RangeImage.SizeX = (Range / 100) * 2;
                 Simulation.Scene.ajouterScenable(RangeImage);
             }
 
@@ -377,6 +416,12 @@
                 CanonImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
                 BaseImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
                 RangeImage.Color = (CanPlace) ? new Color(Color.R, Color.G, Color.B, 100) : new Color(255, 0, 0, 100);
+            }
+
+            if (BoostMultiplier > 0)
+            {
+                Vector3 pos = this.Position;
+                BoostGlow.Emettre(ref pos);
             }
         }
 

@@ -75,14 +75,14 @@ namespace EphemereGames.Commander
         {
             // Pour les projectiles qui meurent par eux-memes
             for (int i = Projectiles.Count - 1; i > -1; i--)
-                if (!Projectiles[i].EstVivant)
+                if (!Projectiles[i].Alive)
                 {
-                    Projectiles[i].doMeurt();
+                    Projectiles[i].DoDie();
                     Projectiles.RemoveAt(i);
                 }
 
             for (int i = 0; i < Projectiles.Count; i++)
-                Projectiles[i].Update(gameTime);
+                Projectiles[i].Update();
         }
 
 
@@ -93,7 +93,7 @@ namespace EphemereGames.Commander
         public override void Draw(GameTime gameTime)
         {
             for (int i = 0; i < Projectiles.Count; i++)
-                Projectiles[i].Draw(null);
+                Projectiles[i].Draw();
         }
 
         #endregion

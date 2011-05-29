@@ -26,13 +26,44 @@
     class TurretsFactory
     {
         public Dictionary<TurretType, Turret> Availables;
+        public Dictionary<int, TurretBoostLevel> BoostLevels;
         private Simulation Simulation;
+
 
         public TurretsFactory(Simulation simulation)
         {
             Simulation = simulation;
 
             Availables = new Dictionary<TurretType, Turret>();
+
+            BoostLevels = new Dictionary<int, TurretBoostLevel>();
+            BoostLevels.Add(0, new TurretBoostLevel()
+            {
+                ShootingFrequencyMultiplier = 1,
+                RangeMultiplier = 1,
+                Level = 1,
+                BulletSpeedMultiplier = 1,
+                BulletHitPointsMultiplier = 1,
+                BulletExplosionRangeMultiplier = 1
+            });
+            BoostLevels.Add(1, new TurretBoostLevel()
+            {
+                ShootingFrequencyMultiplier = 1.1f,
+                RangeMultiplier = 1.5f,
+                Level = 1,
+                BulletSpeedMultiplier = 1.1f,
+                BulletHitPointsMultiplier = 1.1f,
+                BulletExplosionRangeMultiplier = 1.1f
+            });
+            BoostLevels.Add(2, new TurretBoostLevel()
+            {
+                ShootingFrequencyMultiplier = 1.2f,
+                RangeMultiplier = 2.0f,
+                Level = 2,
+                BulletSpeedMultiplier = 1.2f,
+                BulletHitPointsMultiplier = 1.2f,
+                BulletExplosionRangeMultiplier = 1.2f
+            });
         }
 
 

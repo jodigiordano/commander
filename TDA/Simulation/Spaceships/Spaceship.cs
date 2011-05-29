@@ -140,12 +140,12 @@
                 p.Scene = Simulation.Scene;
                 p.Position = Position + translation;
                 p.Direction = Direction;
-                p.PointsAttaque = BulletHitPoints;
+                p.AttackPoints = BulletHitPoints;
                 p.PrioriteAffichage = Image.VisualPriority + 0.001f;
                 p.Initialize();
 
-                Simulation.Scene.Particules.retourner(p.RepresentationDeplacement);
-                p.RepresentationDeplacement = null;
+                Simulation.Scene.Particules.retourner(p.MovingEffect);
+                p.MovingEffect = null;
 
                 Bullets.Add(p);
             }

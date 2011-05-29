@@ -147,7 +147,7 @@
                 return;
 
             if (!(celestialBody is AsteroidBelt))
-                celestialBody.doTouche(enemy);
+                celestialBody.DoHit(enemy);
 
             if (!Simulation.ModeDemo && Simulation.Etat != GameState.Lost)
             {
@@ -155,11 +155,11 @@
             }
 
             if (celestialBody == CelestialBodyToProtect)
-                CommonStash.Lives = (int) CelestialBodyToProtect.PointsVie; //correct de caster?
+                CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints; //correct de caster?
 
             if (CommonStash.Lives <= 0 && State == GameState.Running && !DemoMode && !EditorMode)
             {
-                CelestialBodyToProtect.doMeurt();
+                CelestialBodyToProtect.DoDie();
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 

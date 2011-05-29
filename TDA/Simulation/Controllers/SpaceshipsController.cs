@@ -119,6 +119,8 @@
                 ((TheResistance) spaceship).Initialize(Ennemis);
 
             Spaceships.Add(spaceship);
+
+            NotifyObjetCree(spaceship);
         }
 
 

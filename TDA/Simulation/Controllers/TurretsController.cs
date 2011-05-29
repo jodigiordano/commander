@@ -19,6 +19,7 @@
 
         private Simulation Simulation;
         private Dictionary<Turret, Ennemi> AssociationsThisTick;
+        private Dictionary<Turret, int> BoostedTurretsThisTick;
         private bool demoMode;
 
 
@@ -27,6 +28,7 @@
             Simulation = simulation;
             Turrets = new List<Turret>();
             AssociationsThisTick = new Dictionary<Turret, Ennemi>();
+            BoostedTurretsThisTick = new Dictionary<Turret, int>();
             DemoMode = false;
         }
 
@@ -70,7 +72,7 @@
                     t.EnemyWatched = enemyAttacked;
                     t.Watcher = false;
                 }
-                else if (t.EnemyWatched != null && !t.EnemyWatched.EstVivant)
+                else if (t.EnemyWatched != null && !t.EnemyWatched.Alive)
                 {
                     t.EnemyWatched = null;
                     t.Watcher = true;
@@ -95,6 +97,8 @@
             // lancé par le ControleurCollisions et capturé par ce controleur, qui ensuite associerait/dissocierait
             // l'ennemi d'une tourelle. Résultat: moins d'événements lancés à chaque tick.
             AssociationsThisTick.Clear();
+
+            BoostTurrets();
         }
 
 
@@ -147,6 +151,18 @@
         }
 
 
+        public void DoTurretBoosted(Turret boosting, Turret boosted)
+        {
+            int value = -1;
+            bool contained = BoostedTurretsThisTick.TryGetValue(boosted, out value);
+
+            if (!contained)
+                BoostedTurretsThisTick.Add(boosted, boosting.Level);
+            else if (value < boosting.Level)
+                BoostedTurretsThisTick[boosted] = boosted.Level;
+        }
+
+
         public void DoObjectDestroyed(IObjetPhysique obj)
         {
             CorpsCeleste corpsCeleste = obj as CorpsCeleste;
@@ -156,6 +172,18 @@
 
             foreach (var turret in corpsCeleste.Turrets)
                     Turrets.Remove(turret);
+        }
+
+
+        private void BoostTurrets()
+        {
+            foreach (var turret in Turrets)
+                turret.BoostMultiplier = 0;
+
+            foreach (var kvp in BoostedTurretsThisTick)
+                kvp.Key.BoostMultiplier = kvp.Value;
+
+            BoostedTurretsThisTick.Clear();
         }
 
 

@@ -59,7 +59,7 @@
             InitializeAvailablePowerUps();
 
             CelestialBodyToProtect = PlanetarySystem.Find(c => c.Priorite == Descriptor.CelestialBodyToProtect);
-            CelestialBodyToProtect.PointsVie = descriptor.Player.Lives;
+            CelestialBodyToProtect.LifePoints = descriptor.Player.Lives;
 
             CommonStash = new CommonStash();
             CommonStash.Lives = descriptor.Player.Lives;

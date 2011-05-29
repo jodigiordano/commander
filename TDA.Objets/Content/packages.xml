@@ -89,6 +89,7 @@
     <asset nom="etoileFilante"                type="Particules" chemin="particules/etoileFilante"/>
     <asset nom="trouRose"                     type="Particules" chemin="particules/trouRose"/>
     <asset nom="boosterTurret"                type="Particules" chemin="particules/booster"/>
+    <asset nom="gunnerTurret"                 type="Particules" chemin="particules/gunner"/>
 
     <!-- Textures -->
 

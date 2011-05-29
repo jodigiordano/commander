@@ -9,6 +9,7 @@ namespace EphemereGames.Commander
 
 
     delegate void PhysicalObjectHandler(IObjetPhysique obj);
+    delegate void PhysicalObjectPhysicalObjectHandler(IObjetPhysique obj1, IObjetPhysique obj2);
     delegate void SimPlayerHandler(SimPlayer player);
     delegate void CommonStashHandler(CommonStash stash);
     delegate void CelestialObjectHandler(CorpsCeleste celestialObject);
@@ -16,6 +17,7 @@ namespace EphemereGames.Commander
     delegate void TurretHandler(Turret turret);
     delegate void PowerUpTypeHandler(PowerUpType powerUp);
     delegate void PowerUpHandler(PowerUp powerUp);
+    delegate void TurretTurretHandler(Turret turret1, Turret turret2);
 
 
     class Simulation : InputListener
@@ -104,7 +106,8 @@ namespace EphemereGames.Commander
                     "etincelleSlowMotionTouche",
                     "etoileFilante",
                     "trouRose",
-                    "boosterTurret"
+                    "boosterTurret",
+                    "gunnerTurret"
                 }, false);
 
             DemoModeSelectedScenario = new ScenarioDescriptor();
@@ -167,7 +170,7 @@ namespace EphemereGames.Commander
             SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
 
 
-            CollisionsController.ObjetTouche += new ControleurCollisions.ObjetToucheHandler(EnemiesController.doObjetTouche);
+            CollisionsController.ObjetTouche += new PhysicalObjectPhysicalObjectHandler(EnemiesController.doObjetTouche);
             SimPlayersController.AchatTourelleDemande += new TurretHandler(TurretsController.DoBuyTurret);
             EnemiesController.VagueTerminee += new ControleurEnnemis.VagueTermineeHandler(ScenarioController.doWaveEnded);
             EnemiesController.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
@@ -211,6 +214,7 @@ namespace EphemereGames.Commander
             PowerUpsController.PowerUpStopped += new PowerUpHandler(GUIController.DoPowerUpStopped);
             PowerUpsController.PowerUpStarted += new PowerUpHandler(SimPlayersController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpHandler(SimPlayersController.DoPowerUpStopped);
+            CollisionsController.TurretBoosted += new TurretTurretHandler(TurretsController.DoTurretBoosted);
 
             SimPlayersController.Initialize();
             EnemiesController.Initialize();

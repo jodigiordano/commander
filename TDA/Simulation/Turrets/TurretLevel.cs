@@ -9,7 +9,7 @@
         public int Level;
         public int BuyPrice;
         public int SellPrice;
-        public Cercle Range;
+        public float Range;
         public double ShootingFrequency;
         public int NbCanons;
         public double BuildingTime;
@@ -17,7 +17,7 @@
         public String CanonImageName;
         public String BaseImageName;
         public float BulletHitPoints;
-        public Cercle BulletExplosionRange;
+        public float BulletExplosionRange;
         public float BulletSpeed;
 
 
@@ -26,7 +26,7 @@
             Level = 1;
             BuyPrice = 0;
             SellPrice = 0;
-            Range = new Cercle(Vector3.Zero, 1);
+            Range = 1;
             ShootingFrequency = 1;
             NbCanons = 1;
             BuildingTime = 1;
@@ -34,7 +34,7 @@
             CanonImageName = "";
             BaseImageName = "";
             BulletHitPoints = 0;
-            BulletExplosionRange = new Cercle(Vector3.Zero, 1);
+            BulletExplosionRange = 1;
             BulletSpeed = 0;
         }
 
@@ -43,7 +43,7 @@
             int niveau,
             int prixAchat,
             int prixVente,
-            Cercle zoneActivation,
+            float zoneActivation,
             double cadenceTir,
             int nombreCanons,
             double tempsConstruction,
@@ -51,7 +51,7 @@
             String representation,
             String representationBase,
             float projectilePointsAttaque,
-            Cercle projectileZoneImpact,
+            float projectileZoneImpact,
             float projectileVitesse)
         {
             this.Level = niveau;

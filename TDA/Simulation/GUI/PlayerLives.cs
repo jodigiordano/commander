@@ -21,14 +21,14 @@
 
             Moons = new List<Lune>();
 
-            for (int i = 0; i < celestialBody.PointsVie; i++)
+            for (int i = 0; i < celestialBody.LifePoints; i++)
                 Moons.Add(CreateMoon());
         }
 
 
         public void Update(GameTime gameTime)
         {
-            int difference = (int) (Moons.Count - CelestialBody.PointsVie);
+            int difference = (int) (Moons.Count - CelestialBody.LifePoints);
 
             if (difference < 0)
             {
@@ -49,7 +49,7 @@
 
         public void Draw()
         {
-            if (CelestialBody.EstVivant)
+            if (CelestialBody.Alive)
             {
                 foreach (var lune in Moons)
                     lune.Draw(null);

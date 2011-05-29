@@ -12,7 +12,7 @@
 
     class ProjectileMissile : Projectile
     {
-        public Cercle ZoneImpact;
+        public float ZoneImpact;
         public Ennemi Cible;
         private ParticuleEffectWrapper Trainee;
         private double CompteurTrainee;
@@ -42,11 +42,11 @@
             RepresentationVivant.Rotation = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
             RepresentationVivant.VisualPriority = PrioriteAffichage + 0.001f;
 
-            RepresentationDeplacement = null;
-            RepresentationExplose = Scene.Particules.recuperer("projectileMissileExplosion");
-            RepresentationExplose.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
+            MovingEffect = null;
+            ExplodingEffect = Scene.Particules.recuperer("projectileMissileExplosion");
+            ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
 
-            PointsVie = 5;
+            LifePoints = 5;
 
             Trainee = Scene.Particules.recuperer("traineeMissile");
             Trainee.VisualPriority = this.RepresentationVivant.VisualPriority - 0.0001f;
@@ -58,20 +58,14 @@
             Orphelin = false;
         }
 
-        //public ProjectileMissile(Simulation simulation, Vector3 position, Ennemi cible, float pointsAttaque, float prioriteAffichage)
-        //    : base(simulation, position, cible.Position - position)
-        //{
 
-        //}
-
-
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            CompteurTrainee -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            CompteurTrainee -= 16.66;
 
             Rectangle.set(ref RepresentationVivant.rectangle);
 
-            if (!Orphelin && Cible.EstVivant)
+            if (!Orphelin && Cible.Alive)
             {
                 Vector3 nouvelleDirection = Cible.Position - this.Position;
                 nouvelleDirection.Normalize();
@@ -84,31 +78,29 @@
 
             Position += Vitesse * Direction;
 
-            ZoneImpact.Position = this.Position;
-
             ConeEmitter emetteur = (ConeEmitter)Trainee.ParticleEffect[0];
             emetteur.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
 
             if (CompteurTrainee > 0)
                 Trainee.Emettre(ref this.position);
 
-            base.Update(gameTime);
+            base.Update();
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
-            if (Cible.EstVivant)
+            if (Cible.Alive)
                 RepresentationVivant.Rotation = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
 
-            base.Draw(gameTime);
+            base.Draw();
         }
 
-        public override void doMeurt()
+        public override void DoDie()
         {
-            ((CircleEmitter)RepresentationExplose.ParticleEffect[1]).Radius = ZoneImpact.Radius;
+            ((CircleEmitter)ExplodingEffect.ParticleEffect[1]).Radius = ZoneImpact;
 
-            base.doMeurt();
+            base.DoDie();
 
             EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMissileExplosion");
 
@@ -118,9 +110,9 @@
         }
 
 
-        public override void doMeurtSilencieusement()
+        public override void DoDieSilent()
         {
-            base.doMeurtSilencieusement();
+            base.DoDieSilent();
 
             Scene.Particules.retourner(Trainee);
 

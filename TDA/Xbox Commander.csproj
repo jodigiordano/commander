@@ -160,7 +160,8 @@
     <Compile Include="Scenes\Validation.cs" />
     <Compile Include="Scenes\World.cs" />
     <Compile Include="Simulation\Animations\AnimationEtoileFilante.cs" />
-    <Compile Include="Simulation\Bullets\Projectile.cs" />
+    <Compile Include="Simulation\Bullets\Bullet.cs" />
+    <Compile Include="Simulation\Bullets\GunnerBullet.cs" />
     <Compile Include="Simulation\Bullets\ProjectileBase.cs" />
     <Compile Include="Simulation\Bullets\ProjectileLaserMultiple.cs" />
     <Compile Include="Simulation\Bullets\ProjectileLaserSimple.cs" />
@@ -211,7 +212,7 @@
     <Compile Include="Simulation\GUI\Menus\MenuTurret.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuTurretSpotOccupied.cs" />
     <Compile Include="Simulation\GUI\PlayerLives.cs" />
-    <Compile Include="Simulation\IObjetVivant.cs" />
+    <Compile Include="Simulation\ILivingObject.cs" />
     <Compile Include="Simulation\Mineral.cs" />
     <Compile Include="Simulation\PlanetarySystem\AsteroidBelt.cs" />
     <Compile Include="Simulation\PlanetarySystem\CorpsCeleste.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Simulation\Turrets\AlienTurret.cs" />
     <Compile Include="Simulation\Turrets\BasicTurret.cs" />
     <Compile Include="Simulation\Turrets\BoosterTurret.cs" />
+    <Compile Include="Simulation\Turrets\TurretBoostLevel.cs" />
     <Compile Include="Simulation\Turrets\NanobotsTurret.cs" />
     <Compile Include="Simulation\Turrets\GunnerTurret.cs" />
     <Compile Include="Simulation\Turrets\GravitationalTurret.cs" />

@@ -184,7 +184,7 @@
                 if (mineral.Type == MineralType.Life1)
                 {
                     CommonStash.Lives += mineral.Value;
-                    CelestialBodyToProtect.PointsVie += mineral.Value;
+                    CelestialBodyToProtect.LifePoints += mineral.Value;
                 }
                 else
                 {

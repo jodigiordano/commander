@@ -22,10 +22,10 @@ namespace EphemereGames.Commander
 
             Levels = new LinkedListWithInit<TurretLevel>()
             {
-                new TurretLevel(0, 0, 0, new Cercle(Vector3.Zero, 50), Int16.MaxValue, 1, 0, BulletType.Aucun, "", "", 0, null, 0),
-                new TurretLevel(1, 200, 500, new Cercle(Vector3.Zero, 50), Int16.MaxValue, 1, 500, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, null, 0),
-                new TurretLevel(2, 100, 750, new Cercle(Vector3.Zero, 75), Int16.MaxValue, 1, 500, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, null, 0),
-                new TurretLevel(2, 100, 750, new Cercle(Vector3.Zero, 125), Int16.MaxValue, 1, 500, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, null, 0)
+                new TurretLevel(0, 0, 0, 50, Int16.MaxValue, 1, 0, BulletType.Aucun, "", "", 0, 0, 0),
+                new TurretLevel(1, 200, 500, 50, Int16.MaxValue, 1, 500, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, 0, 0),
+                new TurretLevel(2, 100, 750, 75, Int16.MaxValue, 1, 500, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, 0, 0),
+                new TurretLevel(2, 100, 750, 125, Int16.MaxValue, 1, 500, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, 0, 0)
             };
 
             ActualLevel = Levels.First;
@@ -68,8 +68,8 @@ namespace EphemereGames.Commander
 
             CircleEmitter emitter = (CircleEmitter) Glow.ParticleEffect[0];
 
-            emitter.Radius = this.Range.Radius;
-            emitter.Term = this.Range.Radius / 300f;
+            emitter.Radius = this.Range;
+            emitter.Term = this.Range / 300f;
             emitter.ReleaseColour = this.Color.ToVector3();
         }
     }

@@ -19,8 +19,8 @@ namespace EphemereGames.Commander
 
             Levels = new LinkedListWithInit<TurretLevel>()
             {
-                new TurretLevel(0, 0, 0, new Cercle(Vector3.Zero, 1), Int16.MaxValue, 1, 0, BulletType.Aucun, "", "", 0, null, 0),
-                new TurretLevel(1, 1000, 500, new Cercle(Vector3.Zero, 1), Int16.MaxValue, 1, 1000, BulletType.Aucun, "tourelleAlien", "tourelleAlienBase", 0, null, 0)
+                new TurretLevel(0, 0, 0, 1, Int16.MaxValue, 1, 0, BulletType.Aucun, "", "", 0, 0, 0),
+                new TurretLevel(1, 1000, 500, 1, Int16.MaxValue, 1, 1000, BulletType.Aucun, "tourelleAlien", "tourelleAlienBase", 0, 0, 0)
             };
 
             Upgrade();

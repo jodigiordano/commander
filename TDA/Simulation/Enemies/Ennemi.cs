@@ -7,7 +7,7 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    class Ennemi : IObjetPhysique, IObjetVivant
+    class Ennemi : IObjetPhysique, ILivingObject
     {
         public static int NextID { get { return NEXT_ID++; } }
         public delegate void RelaisAtteintHandler(Ennemi ennemi);
@@ -21,13 +21,13 @@ namespace EphemereGames.Commander
         public Cercle Cercle                                        { get; set; }
         public Ligne Ligne                                          { get; set; }
         public RectanglePhysique Rectangle                          { get; set; }
-        public float PointsVie                                      { get; set; }
+        public float LifePoints                                      { get; set; }
         public float PointsVieDepart                                { get; set; }
-        public float PointsAttaque                                  { get; set; }
+        public float AttackPoints                                  { get; set; }
         public int ValeurUnites;
         public int ValeurPoints;
         public float Resistance;
-        public bool EstVivant                                      { get { return PointsVie > 0; } }
+        public bool Alive                                      { get { return LifePoints > 0; } }
         public bool FinCheminProjection                            { get { return Deplacement > CheminProjection.Longueur; } }
         public IVisible RepresentationVivant;
         public IVisible RepresentationMort;
@@ -57,7 +57,7 @@ namespace EphemereGames.Commander
 
             RepresentationDeplacement = null;
 
-            PointsAttaque = 1;
+            AttackPoints = 1;
             ValeurPoints = 1;
 
             Forme = Forme.Rectangle;
@@ -135,7 +135,7 @@ namespace EphemereGames.Commander
 
             RepresentationVivant.Rotation += VitesseRotation;
 
-            if (RepresentationDeplacement != null && EstVivant)
+            if (RepresentationDeplacement != null && Alive)
                 RepresentationDeplacement.Emettre(ref this.position);
         }
 
@@ -148,7 +148,7 @@ namespace EphemereGames.Commander
             if (pourcPath > 0.95f)
                 VisualPriority = EnemiesFactory.GetVisualPriority(Type, pourcPath);
 
-            if (EstVivant)
+            if (Alive)
             {
                 RepresentationVivant.Position = Position;
                 RepresentationVivant.VisualPriority = VisualPriority + pourcPath / 1000f;
@@ -159,14 +159,14 @@ namespace EphemereGames.Commander
                 RepresentationMort.VisualPriority = VisualPriority + pourcPath / 1000f;
             }
 
-            Simulation.Scene.ajouterScenable(EstVivant ? RepresentationVivant : RepresentationMort);
+            Simulation.Scene.ajouterScenable(Alive ? RepresentationVivant : RepresentationMort);
         }
 
 
-        public void doTouche(IObjetVivant par)
+        public void DoHit(ILivingObject par)
         {
             if (!(par is ProjectileSlowMotion))
-                this.PointsVie -= par.PointsAttaque;
+                this.LifePoints -= par.AttackPoints;
 
             Projectile p = par as Projectile;
 
@@ -188,7 +188,7 @@ namespace EphemereGames.Commander
                 }
                 else if (p is ProjectileSlowMotion)
                 {
-                    float pointsAttaqueEffectif = (this.Type == EnemyType.Comet) ? p.PointsAttaque * 3 : p.PointsAttaque;
+                    float pointsAttaqueEffectif = (this.Type == EnemyType.Comet) ? p.AttackPoints * 3 : p.AttackPoints;
 
                     this.Resistance = (float)Math.Min(this.Resistance + pointsAttaqueEffectif, 0.75 * this.Vitesse);
                     EtincellesSlowMotion.Emettre(ref this.position);
@@ -206,9 +206,9 @@ namespace EphemereGames.Commander
         }
 
 
-        public void doMeurt()
+        public void DoDie()
         {
-            PointsVie = 0;
+            LifePoints = 0;
 
             if (RepresentationExplose != null && PositionDernierProjectileTouche != null)
             {

@@ -56,7 +56,7 @@
 
         public void Update(GameTime gameTime)
         {
-            if (CelestialBody == null || !CelestialBody.EstVivant)
+            if (CelestialBody == null || !CelestialBody.Alive)
                 return;
 
             Vector3 deplacement;
@@ -72,7 +72,7 @@
 
         public void Draw()
         {
-            if (CelestialBody == null || !CelestialBody.EstVivant)
+            if (CelestialBody == null || !CelestialBody.Alive)
                 return;
         }
     }

@@ -55,6 +55,15 @@
         }
 
 
+        public Vector2 AbsoluteSize
+        {
+            get
+            {
+                return Size * TextureSize;
+            }
+        }
+
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(

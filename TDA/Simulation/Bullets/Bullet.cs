@@ -13,16 +13,18 @@ namespace EphemereGames.Commander
         LaserMultiple,
         LaserSimple,
         Aucun,
-        SlowMotion
+        SlowMotion,
+        Gunner
     };
 
-    abstract class Projectile : IObjetPhysique, IObjetVivant
+    abstract class Projectile : IObjetPhysique, ILivingObject
     {
         public static Pool<ProjectileBase> PoolProjectilesBase = new Pool<ProjectileBase>();
         public static Pool<ProjectileLaserMultiple> PoolProjectilesLaserMultiple = new Pool<ProjectileLaserMultiple>();
         public static Pool<ProjectileLaserSimple> PoolProjectilesLaserSimple = new Pool<ProjectileLaserSimple>();
         public static Pool<ProjectileMissile> PoolProjectilesMissile = new Pool<ProjectileMissile>();
         public static Pool<ProjectileSlowMotion> PoolProjectilesSlowMotion = new Pool<ProjectileSlowMotion>();
+        public static Pool<GunnerBullet> PoolGunnerBullets = new Pool<GunnerBullet>();
 
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
@@ -36,15 +38,15 @@ namespace EphemereGames.Commander
         public Ligne Ligne                                          { get; set; }
 
         public RectanglePhysique Rectangle                          { get; set; }
-        public float PointsVie                                      { get; set; }
-        public float PointsAttaque                                  { get; set; }
+        public float LifePoints                                     { get; set; }
+        public float AttackPoints                                   { get; set; }
 
         public Scene Scene;
         public float PrioriteAffichage;
-        public bool EstVivant                                       { get { return PointsVie > 0; } }
+        public bool Alive                                           { get { return LifePoints > 0; } }
         public IVisible RepresentationVivant                        { get; set; }
-        public ParticuleEffectWrapper RepresentationExplose         { get; set; }
-        public ParticuleEffectWrapper RepresentationDeplacement     { get; set; }
+        public ParticuleEffectWrapper ExplodingEffect               { get; set; }
+        public ParticuleEffectWrapper MovingEffect                  { get; set; }
 
 
         public virtual void Initialize()
@@ -60,7 +62,7 @@ namespace EphemereGames.Commander
         }
 
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update()
         {
             switch (Forme)
             {
@@ -74,14 +76,14 @@ namespace EphemereGames.Commander
                     break;
             }
 
-            if (EstVivant && RepresentationDeplacement != null)
-                RepresentationDeplacement.Emettre(ref this.position);
+            if (Alive && MovingEffect != null)
+                MovingEffect.Emettre(ref this.position);
         }
 
 
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw()
         {
-            if (EstVivant && RepresentationVivant != null)
+            if (Alive && RepresentationVivant != null)
             {
                 RepresentationVivant.Position = this.Position;
 
@@ -90,43 +92,36 @@ namespace EphemereGames.Commander
         }
 
 
-        public virtual void doTouche(IObjetVivant par)
+        public virtual void DoHit(ILivingObject by)
         {
-            PointsVie = 0;
+            LifePoints = 0;
         }
 
 
-        public virtual void doMeurt()
+        public virtual void DoDie()
         {
-            PointsVie = 0;
+            LifePoints = 0;
 
-            if (RepresentationExplose != null)
-                RepresentationExplose.Emettre(ref this.position);
+            if (ExplodingEffect != null)
+                ExplodingEffect.Emettre(ref this.position);
 
-            if (RepresentationDeplacement != null)
-                Scene.Particules.retourner(RepresentationDeplacement);
+            if (MovingEffect != null)
+                Scene.Particules.retourner(MovingEffect);
 
-            if (RepresentationExplose != null)
-                Scene.Particules.retourner(RepresentationExplose);
+            if (ExplodingEffect != null)
+                Scene.Particules.retourner(ExplodingEffect);
         }
 
-        public virtual void doMeurtSilencieusement()
+
+        public virtual void DoDieSilent()
         {
-            PointsVie = 0;
+            LifePoints = 0;
 
-            if (RepresentationDeplacement != null)
-                Scene.Particules.retourner(RepresentationDeplacement);
+            if (MovingEffect != null)
+                Scene.Particules.retourner(MovingEffect);
 
-            if (RepresentationExplose != null)
-                Scene.Particules.retourner(RepresentationExplose);
-        }
-
-        public void getRectangle(ref Rectangle rectangle)
-        {
-            rectangle.X = this.Rectangle.X;
-            rectangle.Y = this.Rectangle.Y;
-            rectangle.Width = this.Rectangle.Width;
-            rectangle.Height = this.Rectangle.Height;
+            if (ExplodingEffect != null)
+                Scene.Particules.retourner(ExplodingEffect);
         }
     }
 }

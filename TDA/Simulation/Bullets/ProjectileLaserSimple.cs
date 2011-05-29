@@ -40,18 +40,18 @@
             RepresentationVivantAlt2 = new LigneVisuel(Ligne.Debut, Ligne.Fin, new Color(255, 0, 110), 4);
             RepresentationVivantAlt2.VisualPriority = PrioriteAffichage + 0.002f;
 
-            RepresentationDeplacement = null;
-            RepresentationExplose = null;
+            MovingEffect = null;
+            ExplodingEffect = null;
 
-            PointsVie = Int16.MaxValue;
+            LifePoints = Int16.MaxValue;
 
             DureeVie = 800;
         }
 
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            if (Cible.EstVivant)
+            if (Cible.Alive)
             {
                 Vector3 nouvelleDirection = Cible.Position - this.Position;
                 nouvelleDirection.Normalize();
@@ -61,7 +61,7 @@
 
             else
             {
-                PointsVie = 0;
+                LifePoints = 0;
                 return;
             }
 
@@ -70,18 +70,18 @@
             Ligne.Debut = this.Position;
             Ligne.Fin = Cible.Position;
 
-            DureeVie -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            DureeVie -= 16.66;
 
             if (DureeVie <= 0)
-                PointsVie = 0;
+                LifePoints = 0;
 
             RepresentationVivantAlt.Emettre(ref this.position);
 
-            base.Update(gameTime);
+            base.Update();
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
             LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
             LineEmitter emetteur2 = (LineEmitter)RepresentationVivantAlt.ParticleEffect[1];
@@ -97,19 +97,19 @@
 
             Scene.ajouterScenable(RepresentationVivantAlt2);
 
-            base.Draw(gameTime);
+            base.Draw();
         }
 
 
-        public override void doTouche(IObjetVivant par)
+        public override void DoHit(ILivingObject par)
         {
 
         }
 
 
-        public override void doMeurt()
+        public override void DoDie()
         {
-            base.doMeurt();
+            base.DoDie();
 
             Scene.Particules.retourner(RepresentationVivantAlt);
 
@@ -117,9 +117,9 @@
         }
 
 
-        public override void doMeurtSilencieusement()
+        public override void DoDieSilent()
         {
-            base.doMeurtSilencieusement();
+            base.DoDieSilent();
 
             Scene.Particules.retourner(RepresentationVivantAlt);
 

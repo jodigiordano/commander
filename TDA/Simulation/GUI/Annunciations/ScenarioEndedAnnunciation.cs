@@ -280,7 +280,7 @@
                             Implosions[ImplosionsIndex].Emettre(ref Missiles[i].Key.position);
                             ImplosionsIndex++;
 
-                            Missiles[i].Value.doMeurt();
+                            Missiles[i].Value.DoDie();
 
                             Missiles.RemoveAt(i);
                         }
