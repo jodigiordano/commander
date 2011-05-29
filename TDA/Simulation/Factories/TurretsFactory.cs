@@ -18,7 +18,6 @@
         SlowMotion,
         Booster,
         Gunner,
-        Mortar,
         Nanobots
     };
 
@@ -82,7 +81,6 @@
                 case TurretType.SlowMotion:         t = new SlowMotionTurret(Simulation);       break;
                 case TurretType.Booster:            t = new BoosterTurret(Simulation);          break;
                 case TurretType.Gunner:             t = new GunnerTurret(Simulation);           break;
-                case TurretType.Mortar:             t = new MortarTurret(Simulation);           break;
                 case TurretType.Nanobots:           t = new NanobotsTurret(Simulation);         break;
                 default:                            t = new BasicTurret(Simulation);            break;
             }

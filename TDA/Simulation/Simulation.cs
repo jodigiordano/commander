@@ -107,7 +107,9 @@ namespace EphemereGames.Commander
                     "etoileFilante",
                     "trouRose",
                     "boosterTurret",
-                    "gunnerTurret"
+                    "gunnerTurret",
+                    "nanobots",
+                    "nanobots2"
                 }, false);
 
             DemoModeSelectedScenario = new ScenarioDescriptor();

@@ -90,6 +90,10 @@
     <asset nom="trouRose"                     type="Particules" chemin="particules/trouRose"/>
     <asset nom="boosterTurret"                type="Particules" chemin="particules/booster"/>
     <asset nom="gunnerTurret"                 type="Particules" chemin="particules/gunner"/>
+    <asset nom="nanobots"                     type="Particules" chemin="particules/nanobots"/>
+    <asset nom="nanobots2"                    type="Particules" chemin="particules/nanobots2"/>
+
+
 
     <!-- Textures -->
 

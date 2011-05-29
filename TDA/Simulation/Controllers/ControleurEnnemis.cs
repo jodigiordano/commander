@@ -138,7 +138,33 @@
             // Pour les ennemis qui meurent par eux-memes
             for (int i = Ennemis.Count - 1; i > -1; i--)
                 if (!Ennemis[i].Alive)
+                {
+                    Ennemi ennemi = Ennemis[i];
+
+                    ennemi.DoDie();
+
+                    foreach (var vague in VaguesActives)
+                        vague.doEnemyDestroyed(ennemi);
+
+                    List<Mineral> mineraux = ennemi.Mineraux;
+
+                    for (int j = 0; j < mineraux.Count; j++)
+                    {
+                        Mineral mineral = mineraux[j];
+
+                        mineral.Position = ennemi.Position;
+
+                        Vector3 direction = ennemi.Position - ennemi.PositionDernierProjectileTouche;
+                        direction.Normalize();
+                        mineral.Direction = direction;
+                    }
+
+                    Mineraux.AddRange(mineraux);
+
+                    notifyObjetDetruit(ennemi);
+
                     Ennemis.RemoveAt(i);
+                }
 
             for (int i = 0; i < Ennemis.Count; i++)
                 Ennemis[i].Update(gameTime);
@@ -237,33 +263,6 @@
             if (ennemi != null && ennemi.Alive)
             {
                 ennemi.DoHit((ILivingObject)par);
-
-                if (!ennemi.Alive)
-                {
-                    ennemi.DoDie();
-
-                    foreach (var vague in VaguesActives)
-                        vague.doEnemyDestroyed(ennemi);
-
-                    List<Mineral> mineraux = ennemi.Mineraux;
-
-                    for (int i = 0; i < mineraux.Count; i++)
-                    {
-                        Mineral mineral = mineraux[i];
-
-                        mineral.Position = ennemi.Position;
-
-                        Vector3 direction = ennemi.Position - ennemi.PositionDernierProjectileTouche;
-                        direction.Normalize();
-                        mineral.Direction = direction;
-                    }
-
-                    Mineraux.AddRange(mineraux);
-
-                    //Ennemis.Remove(ennemi); //sera fait au prochain tick
-
-                    notifyObjetDetruit(ennemi);
-                }
 
                 return;
             }

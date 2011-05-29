@@ -169,6 +169,7 @@
     <Compile Include="Player\Scores.cs" />
     <Compile Include="Simulation\Animations\AnimationEtoileFilante.cs" />
     <Compile Include="Animations\AnimationLieutenant.cs" />
+    <Compile Include="Simulation\Bullets\NanobotsBullet.cs" />
     <Compile Include="Simulation\Bullets\GunnerBullet.cs" />
     <Compile Include="Simulation\Controllers\ControleurCollisions.cs" />
     <Compile Include="Simulation\Controllers\ControleurEnnemis.cs" />
@@ -243,7 +244,6 @@
     <Compile Include="Simulation\Spaceships\SpaceshipSpaceship.cs" />
     <Compile Include="Simulation\Turrets\AlienTurret.cs" />
     <Compile Include="Simulation\Turrets\BoosterTurret.cs" />
-    <Compile Include="Simulation\Turrets\MortarTurret.cs" />
     <Compile Include="Simulation\Turrets\GunnerTurret.cs" />
     <Compile Include="Simulation\Turrets\NanobotsTurret.cs" />
     <Compile Include="Simulation\Turrets\SlowMotionTurret.cs" />

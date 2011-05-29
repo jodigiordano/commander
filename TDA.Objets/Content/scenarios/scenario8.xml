@@ -347,7 +347,6 @@
     <TurretType>SlowMotion</TurretType>
     <TurretType>Booster</TurretType>
     <TurretType>Gunner</TurretType>
-    <TurretType>Mortar</TurretType>
     <TurretType>Nanobots</TurretType>
   </AvailableTurrets>
   <AvailablePowerUps>

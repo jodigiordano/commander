@@ -267,12 +267,12 @@
                                 projectile.DoDie();
                                 Projectiles.RemoveAt(i);
 
-                                if (projectile is ProjectileMissile)
+                                if (projectile is ProjectileMissile || projectile is NanobotsBullet)
                                 {
-                                    ProjectileMissile projectileMissile = (ProjectileMissile) projectile;
-
-                                    c.Position = projectileMissile.Position;
-                                    c.Radius = projectileMissile.ZoneImpact;
+                                    c.Position = projectile.Position;
+                                    c.Radius = projectile is ProjectileMissile ?
+                                        ((ProjectileMissile) projectile).ZoneImpact :
+                                        ((NanobotsBullet) projectile).ZoneImpact;
 
                                     tmpObjetsTraites.Clear();
                                     IEnumerable<int> candidats2 = EnemiesGrid.GetItems(c.Rectangle);

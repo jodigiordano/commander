@@ -14,7 +14,8 @@ namespace EphemereGames.Commander
         LaserSimple,
         Aucun,
         SlowMotion,
-        Gunner
+        Gunner,
+        Nanobots
     };
 
     abstract class Projectile : IObjetPhysique, ILivingObject
@@ -25,6 +26,7 @@ namespace EphemereGames.Commander
         public static Pool<ProjectileMissile> PoolProjectilesMissile = new Pool<ProjectileMissile>();
         public static Pool<ProjectileSlowMotion> PoolProjectilesSlowMotion = new Pool<ProjectileSlowMotion>();
         public static Pool<GunnerBullet> PoolGunnerBullets = new Pool<GunnerBullet>();
+        public static Pool<NanobotsBullet> PoolNanobotsBullets = new Pool<NanobotsBullet>();
 
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
@@ -73,16 +75,20 @@ namespace EphemereGames.Commander
 
                 case Forme.Cercle:
                     Cercle.Position = this.Position;
+                    Rectangle.X = (int) (Position.X - Cercle.Radius);
+                    Rectangle.Y = (int) (Position.Y - Cercle.Radius);
+                    Rectangle.Width = (int) (Cercle.Radius * 2);
+                    Rectangle.Height = (int) (Cercle.Radius * 2);
                     break;
             }
-
-            if (Alive && MovingEffect != null)
-                MovingEffect.Emettre(ref this.position);
         }
 
 
         public virtual void Draw()
         {
+            if (Alive && MovingEffect != null)
+                MovingEffect.Emettre(ref this.position);
+
             if (Alive && RepresentationVivant != null)
             {
                 RepresentationVivant.Position = this.Position;

@@ -12,6 +12,8 @@
 => pixeliser les etoiles
 => remettre les quotes lorsqu'on meurt (rester dans le drole)
 => changer le "niveau complete" par un petit vaisseau extra-terrestre
+=> Utiliser RunningSlowly pour les particules
+=> Si planete a proteger hitted + qu'une fois par x temps, pas jouer x particules
 
 
 ================================================================================

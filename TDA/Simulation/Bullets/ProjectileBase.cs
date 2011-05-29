@@ -11,14 +11,10 @@
 
     class ProjectileBase : Projectile
     {
-        public static float StartingSpeed = 10;
-
-
         public override void Initialize()
         {
             base.Initialize();
 
-            base.Vitesse = ProjectileBase.StartingSpeed;
             Forme = Forme.Rectangle;
 
             if (RepresentationVivant == null)

@@ -12,11 +12,11 @@
 
     class ProjectileLaserSimple : Projectile
     {
-        private double DureeVie                                     { get; set; }
-        public Ennemi Cible                                         { get; set; }
-        public Turret TourelleEmettrice                             { get; set; }
-        private ParticuleEffectWrapper RepresentationVivantAlt      { get; set; }
-        private LigneVisuel RepresentationVivantAlt2                { get; set; }
+        private double DureeVie;
+        public Ennemi Cible;
+        public Turret TourelleEmettrice;
+        private ParticuleEffectWrapper RepresentationVivantAlt;
+        private LigneVisuel RepresentationVivantAlt2;
 
 
         public override void Initialize()
@@ -75,14 +75,15 @@
             if (DureeVie <= 0)
                 LifePoints = 0;
 
-            RepresentationVivantAlt.Emettre(ref this.position);
-
             base.Update();
         }
 
 
         public override void Draw()
         {
+            if (Alive)
+                RepresentationVivantAlt.Emettre(ref this.position);
+
             LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
             LineEmitter emetteur2 = (LineEmitter)RepresentationVivantAlt.ParticleEffect[1];
             emetteur.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);

@@ -251,7 +251,7 @@
                             p.Position = this.Position + translation;
                             p.Direction = direction;
                             p.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                            p.Vitesse = ProjectileBase.StartingSpeed * boostLevel.BulletSpeedMultiplier;
+                            p.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                             p.PrioriteAffichage = this.CanonImage.VisualPriority;
                             p.Initialize();
 
@@ -352,6 +352,20 @@
                         pSM.Initialize();
 
                         Bullets.Add(pSM);
+                        break;
+
+                    case BulletType.Nanobots:
+                        NanobotsBullet nb = Projectile.PoolNanobotsBullets.recuperer();
+                        nb.Scene = Simulation.Scene;
+                        nb.Position = this.Position;
+                        nb.Direction = direction;
+                        nb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
+                        nb.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        nb.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
+                        nb.PrioriteAffichage = this.CanonImage.VisualPriority;
+                        nb.Initialize();
+
+                        Bullets.Add(nb);
                         break;
                 }
 

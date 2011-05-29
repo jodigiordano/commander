@@ -21,14 +21,14 @@ namespace EphemereGames.Commander
         public Cercle Cercle                                        { get; set; }
         public Ligne Ligne                                          { get; set; }
         public RectanglePhysique Rectangle                          { get; set; }
-        public float LifePoints                                      { get; set; }
+        public float LifePoints                                     { get; set; }
         public float PointsVieDepart                                { get; set; }
-        public float AttackPoints                                  { get; set; }
+        public float AttackPoints                                   { get; set; }
         public int ValeurUnites;
         public int ValeurPoints;
         public float Resistance;
-        public bool Alive                                      { get { return LifePoints > 0; } }
-        public bool FinCheminProjection                            { get { return Deplacement > CheminProjection.Longueur; } }
+        public bool Alive                                           { get { return LifePoints > 0; } }
+        public bool FinCheminProjection                             { get { return Deplacement > CheminProjection.Longueur; } }
         public IVisible RepresentationVivant;
         public IVisible RepresentationMort;
         public ParticuleEffectWrapper RepresentationExplose;
@@ -45,7 +45,15 @@ namespace EphemereGames.Commander
         public Vector3 PositionDernierProjectileTouche;
         public Color Couleur;
 
-        private ParticuleEffectWrapper EtincellesLaserMultiple, EtincellesMissile, EtincellesLaserSimple, EtincellesSlowMotion;
+        public float NanobotsInfectionTime;
+        public float NanobotsInfectionHitPoints;
+        public ParticuleEffectWrapper NanobotsInfectionEffect;
+        private Vector3 NanobotsInfectionLastPosition;
+
+        private ParticuleEffectWrapper EtincellesLaserMultiple;
+        private ParticuleEffectWrapper EtincellesMissile;
+        private ParticuleEffectWrapper EtincellesLaserSimple;
+        private ParticuleEffectWrapper EtincellesSlowMotion;
         private static int NEXT_ID = 0;
         private Vector3 position;
         private float VisualPriority;
@@ -83,14 +91,17 @@ namespace EphemereGames.Commander
             EtincellesLaserSimple = Simulation.Scene.Particules.recuperer("etincelleLaserSimple");
             EtincellesSlowMotion = Simulation.Scene.Particules.recuperer("etincelleSlowMotionTouche");
             RepresentationExplose = Simulation.Scene.Particules.recuperer("explosionEnnemi");
+            NanobotsInfectionEffect = Simulation.Scene.Particules.recuperer("nanobots");
+            NanobotsInfectionEffect.ParticleEffect[0].ReleaseColour = Color.Red.ToVector3();
 
             VisualPriority = EnemiesFactory.GetVisualPriority(Type, 0);
             RepresentationVivant.VisualPriority = VisualPriority;
             RepresentationExplose.VisualPriority = VisualPriority - 0.001f;
-            EtincellesLaserMultiple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
-            EtincellesMissile.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
-            EtincellesLaserSimple.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
-            EtincellesSlowMotion.VisualPriority = RepresentationVivant.VisualPriority - 0.001f;
+            EtincellesLaserMultiple.VisualPriority = VisualPriority - 0.001f;
+            EtincellesMissile.VisualPriority = VisualPriority - 0.001f;
+            EtincellesLaserSimple.VisualPriority = VisualPriority - 0.001f;
+            EtincellesSlowMotion.VisualPriority = VisualPriority - 0.001f;
+            NanobotsInfectionEffect.VisualPriority = VisualPriority - 0.001f;
 
             Resistance = 0;
             Deplacement = 0;
@@ -103,15 +114,16 @@ namespace EphemereGames.Commander
             Cercle.Position.X = Position.X - Cercle.Radius;
             Cercle.Position.Y = Position.Y - Cercle.Radius;
 
-            ProjectMercury.VariableFloat3 float3 = new ProjectMercury.VariableFloat3();
-            float3.Value = Couleur.ToVector3();
-
-            RepresentationExplose.ParticleEffect[0].ReleaseColour = float3;
+            RepresentationExplose.ParticleEffect[0].ReleaseColour = Couleur.ToVector3();
             RepresentationDeplacement = null;
 
             VitesseRotation = Main.Random.Next(-5, 6) / 100.0f;
 
             Mineraux.Clear();
+
+            NanobotsInfectionTime = 0;
+            NanobotsInfectionHitPoints = 0;
+            NanobotsInfectionLastPosition = Position;
         }
 
 
@@ -124,7 +136,6 @@ namespace EphemereGames.Commander
             Path.Position(Deplacement, ref position);
             Vector3.Add(ref position, ref this.Translation, out position);
 
-
             if (Deplacement > Path.Longueur)
                 notifyRelaisAtteint(this);
 
@@ -135,10 +146,12 @@ namespace EphemereGames.Commander
 
             RepresentationVivant.Rotation += VitesseRotation;
 
-            if (RepresentationDeplacement != null && Alive)
-                RepresentationDeplacement.Emettre(ref this.position);
+            if (NanobotsInfectionTime > 0 && LifePoints > 0)
+            {
+                LifePoints = Math.Max(0, LifePoints - NanobotsInfectionHitPoints);
+                NanobotsInfectionTime -= 16.66f;
+            }
         }
-
 
 
         public void Draw(GameTime gameTime)
@@ -152,6 +165,23 @@ namespace EphemereGames.Commander
             {
                 RepresentationVivant.Position = Position;
                 RepresentationVivant.VisualPriority = VisualPriority + pourcPath / 1000f;
+
+                if (RepresentationDeplacement != null)
+                    RepresentationDeplacement.Emettre(ref this.position);
+
+                if (NanobotsInfectionTime > 0)
+                {
+                    Vector3 deplacement;
+                    Vector3.Subtract(ref this.position, ref NanobotsInfectionLastPosition, out deplacement);
+
+                    if (deplacement.X != 0 && deplacement.Y != 0)
+                    {
+                        NanobotsInfectionEffect.Deplacer(ref deplacement);
+                        NanobotsInfectionLastPosition = this.position;
+                    }
+
+                    NanobotsInfectionEffect.Emettre(ref this.position);
+                }
             }
             else
             {
@@ -193,6 +223,13 @@ namespace EphemereGames.Commander
                     this.Resistance = (float)Math.Min(this.Resistance + pointsAttaqueEffectif, 0.75 * this.Vitesse);
                     EtincellesSlowMotion.Emettre(ref this.position);
                 }
+                else if (p is NanobotsBullet)
+                {
+                    NanobotsBullet nb = p as NanobotsBullet;
+
+                    NanobotsInfectionTime = nb.InfectionTime;
+                    NanobotsInfectionHitPoints = nb.AttackPoints;
+                }
 
                 return;
             }
@@ -210,14 +247,13 @@ namespace EphemereGames.Commander
         {
             LifePoints = 0;
 
-            if (RepresentationExplose != null && PositionDernierProjectileTouche != null)
+            if (RepresentationExplose != null)
             {
                 Vector3 direction = this.Position - PositionDernierProjectileTouche;
                 direction.Normalize();
                 direction *= 150;
 
                 RepresentationExplose.ParticleEffect[0].ReleaseImpulse = new Vector2(direction.X, direction.Y);
-
                 RepresentationExplose.Emettre(ref this.position);
             }
 
@@ -226,6 +262,7 @@ namespace EphemereGames.Commander
             Simulation.Scene.Particules.retourner(EtincellesLaserSimple);
             Simulation.Scene.Particules.retourner(EtincellesSlowMotion);
             Simulation.Scene.Particules.retourner(RepresentationExplose);
+            Simulation.Scene.Particules.retourner(NanobotsInfectionEffect);
 
             RelaisAtteint = null;
             Simulation.EnemiesFactory.ReturnEnemy(this);

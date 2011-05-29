@@ -142,6 +142,7 @@
                 p.Direction = Direction;
                 p.AttackPoints = BulletHitPoints;
                 p.PrioriteAffichage = Image.VisualPriority + 0.001f;
+                p.Vitesse = 10;
                 p.Initialize();
 
                 Simulation.Scene.Particules.retourner(p.MovingEffect);
