@@ -18,7 +18,8 @@
         SlowMotion,
         Booster,
         Gunner,
-        Nanobots
+        Nanobots,
+        RailGun
     };
 
 
@@ -38,7 +39,7 @@
             BoostLevels = new Dictionary<int, TurretBoostLevel>();
             BoostLevels.Add(0, new TurretBoostLevel()
             {
-                ShootingFrequencyMultiplier = 1,
+                FireRateMultiplier = 1,
                 RangeMultiplier = 1,
                 Level = 1,
                 BulletSpeedMultiplier = 1,
@@ -47,7 +48,7 @@
             });
             BoostLevels.Add(1, new TurretBoostLevel()
             {
-                ShootingFrequencyMultiplier = 1.1f,
+                FireRateMultiplier = 1.1f,
                 RangeMultiplier = 1.5f,
                 Level = 1,
                 BulletSpeedMultiplier = 1.1f,
@@ -56,7 +57,7 @@
             });
             BoostLevels.Add(2, new TurretBoostLevel()
             {
-                ShootingFrequencyMultiplier = 1.2f,
+                FireRateMultiplier = 1.2f,
                 RangeMultiplier = 2.0f,
                 Level = 2,
                 BulletSpeedMultiplier = 1.2f,
@@ -82,6 +83,7 @@
                 case TurretType.Booster:            t = new BoosterTurret(Simulation);          break;
                 case TurretType.Gunner:             t = new GunnerTurret(Simulation);           break;
                 case TurretType.Nanobots:           t = new NanobotsTurret(Simulation);         break;
+                case TurretType.RailGun:            t = new RailGunTurret(Simulation);          break;
                 default:                            t = new BasicTurret(Simulation);            break;
             }
 

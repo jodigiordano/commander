@@ -9,6 +9,7 @@
     abstract class PowerUp
     {
         public PowerUpType Type             { get; protected set; }
+        public PowerUpCategory Category     { get; protected set; }
         public string BuyImage              { get; protected set; }
         public int BuyPrice                 { get; protected set; }
         public Vector3 BuyPosition          { get; set; }
@@ -32,9 +33,22 @@
             BuyDescription = "";
             NeedInput = false;
             Position = Vector3.Zero;
+            Category = PowerUpCategory.Other;
         }
 
 
+        public virtual void Update() { }
+
+        public virtual void DoInputMoved(Vector3 position) { }
+
+        public virtual void DoInputReleased() { }
+
+        public virtual void DoInputCanceled() { }
+
+        public virtual void DoInputPressed() { }
+
         public abstract void Start();
+
+        public virtual void DoInputMovedDelta(Vector3 delta) { }
     }
 }

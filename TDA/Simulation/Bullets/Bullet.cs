@@ -15,7 +15,8 @@ namespace EphemereGames.Commander
         Aucun,
         SlowMotion,
         Gunner,
-        Nanobots
+        Nanobots,
+        RailGun
     };
 
     abstract class Projectile : IObjetPhysique, ILivingObject
@@ -27,6 +28,7 @@ namespace EphemereGames.Commander
         public static Pool<ProjectileSlowMotion> PoolProjectilesSlowMotion = new Pool<ProjectileSlowMotion>();
         public static Pool<GunnerBullet> PoolGunnerBullets = new Pool<GunnerBullet>();
         public static Pool<NanobotsBullet> PoolNanobotsBullets = new Pool<NanobotsBullet>();
+        public static Pool<RailGunBullet> PoolRailGunBullet = new Pool<RailGunBullet>();
 
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }

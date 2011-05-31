@@ -236,7 +236,6 @@
             if (button != player.GamePadConfiguration.MoveCursor)
                 return;
 
-
             if (ModeDemo)
             {
                 Player.Move(ref delta, player.GamePadConfiguration.Speed);
@@ -244,7 +243,6 @@
                 NotifyPlayerMoved(Player);
                 return;
             }
-
 
             Player.Move(ref delta, player.GamePadConfiguration.Speed);
 
@@ -439,7 +437,9 @@
             if (Player.ActualSelection.PowerUpToBuy != PowerUpType.None &&
                 Player.ActualSelection.AvailablePowerUpsToBuy[Player.ActualSelection.PowerUpToBuy])
             {
-                CommonStash.Cash -= Simulation.PowerUpsFactory.Availables[Player.ActualSelection.PowerUpToBuy].BuyPrice;
+                if (Player.ActualSelection.PowerUpToBuy != PowerUpType.RailGun)
+                    CommonStash.Cash -= Simulation.PowerUpsFactory.Availables[Player.ActualSelection.PowerUpToBuy].BuyPrice;
+                
                 NotifyBuyAPowerUpAsked(Player.ActualSelection.PowerUpToBuy);
                 NotifyCommonStashChanged(CommonStash);
 

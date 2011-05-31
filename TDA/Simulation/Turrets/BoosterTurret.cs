@@ -33,9 +33,9 @@ namespace EphemereGames.Commander
         }
 
 
-        public override void Update( GameTime gameTime )
+        public override void Update()
         {
-            base.Update( gameTime );
+            base.Update();
 
             if (Glow == null)
             {

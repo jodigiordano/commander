@@ -19,8 +19,17 @@
         Shield = 7,
         Sniper = 8,
         AutomaticCollector = 9,
-        DarkSide = 10
+        DarkSide = 10,
+        RailGun = 11
     };
+
+
+    public enum PowerUpCategory
+    {
+        Spaceship,
+        Turret,
+        Other
+    }
 
 
     class PowerUpsFactory
@@ -49,6 +58,7 @@
                 case PowerUpType.Spaceship:             t = new PowerUpSpaceship(Simulation, HumanBattleship);      break;
                 case PowerUpType.TheResistance:         t = new PowerUpTheResistance(Simulation, HumanBattleship);  break;
                 case PowerUpType.DeadlyShootingStars:   t = new PowerUpDeadlyShootingStars(Simulation);             break;
+                case PowerUpType.RailGun:               t = new PowerUpRailGun(Simulation, HumanBattleship);        break;
                 default:                                t = new PowerUpCollector(Simulation, HumanBattleship);      break;
             }
 

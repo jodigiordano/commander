@@ -19,6 +19,7 @@ namespace EphemereGames.Commander
             ZoneImpactDestruction = new Cercle(new Vector3(), 300);
             PointsAttaque = 50000;
             Type = PowerUpType.FinalSolution;
+            Category = PowerUpCategory.Other;
             BuyImage = "Destruction";
             BuyPrice = 500;
             BuyTitle = "The final solution";

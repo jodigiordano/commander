@@ -109,7 +109,9 @@ namespace EphemereGames.Commander
                     "boosterTurret",
                     "gunnerTurret",
                     "nanobots",
-                    "nanobots2"
+                    "nanobots2",
+                    "railgun",
+                    "railgunExplosion"
                 }, false);
 
             DemoModeSelectedScenario = new ScenarioDescriptor();
@@ -170,6 +172,7 @@ namespace EphemereGames.Commander
             SpaceshipsController.HumanBattleship = GUIController.HumanBattleship;
             PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
             SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
+            GUIController.Turrets = TurretsController.Turrets;
 
 
             CollisionsController.ObjetTouche += new PhysicalObjectPhysicalObjectHandler(EnemiesController.doObjetTouche);
@@ -217,6 +220,7 @@ namespace EphemereGames.Commander
             PowerUpsController.PowerUpStarted += new PowerUpHandler(SimPlayersController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpHandler(SimPlayersController.DoPowerUpStopped);
             CollisionsController.TurretBoosted += new TurretTurretHandler(TurretsController.DoTurretBoosted);
+            SimPlayersController.PlayerMoved += new SimPlayerHandler(PowerUpsController.DoPlayerMoved);
 
             SimPlayersController.Initialize();
             EnemiesController.Initialize();
@@ -428,8 +432,13 @@ namespace EphemereGames.Commander
                 return;
             }
 
-            if (SpaceshipsController.InCollector && button == p.MouseConfiguration.Cancel)
-                SpaceshipsController.InCollector = false;
+            if (PowerUpsController.InPowerUp)
+            {
+                if (button == p.MouseConfiguration.Cancel)
+                    PowerUpsController.DoInputCanceled();
+                else if (button == p.MouseConfiguration.Select)
+                    PowerUpsController.DoInputPressed();
+            }
 
             SimPlayersController.DoMouseButtonPressedOnce(p, button);
 
@@ -450,6 +459,9 @@ namespace EphemereGames.Commander
 
             if (!ModeDemo && button == p.MouseConfiguration.AdvancedView)
                 GUIController.doHideAdvancedView();
+
+            if (PowerUpsController.InPowerUp && button == p.MouseConfiguration.Select)
+                PowerUpsController.DoInputReleased();
         }
 
 
@@ -477,8 +489,8 @@ namespace EphemereGames.Commander
             if (ScenarioController.Help.Active)
                 return;
 
-            if (SpaceshipsController.InControllableSpaceship)
-                SpaceshipsController.NextInput = delta;
+            if (PowerUpsController.InPowerUp)
+                PowerUpsController.DoInputMovedDelta(delta);
 
             SimPlayersController.DoMouseMoved(p, ref delta);
         }
@@ -506,8 +518,8 @@ namespace EphemereGames.Commander
                 return;
             }
 
-            if (SpaceshipsController.InCollector && button == p.GamePadConfiguration.Cancel)
-                SpaceshipsController.InCollector = false;
+            if (PowerUpsController.InPowerUp && button == p.GamePadConfiguration.Cancel)
+                PowerUpsController.DoInputCanceled();
 
             SimPlayersController.DoGamePadButtonPressedOnce(p, button);
 
@@ -544,8 +556,8 @@ namespace EphemereGames.Commander
             if (ScenarioController.Help.Active)
                 return;
 
-            if (SpaceshipsController.InControllableSpaceship && button == p.GamePadConfiguration.PilotSpaceShip)
-                SpaceshipsController.NextInput = delta * p.GamePadConfiguration.Speed;
+            if (PowerUpsController.InPowerUp)
+                PowerUpsController.DoInputMovedDelta(delta);
 
             SimPlayersController.DoGamePadJoystickMoved(p, button, ref delta);
         }

@@ -19,6 +19,7 @@ namespace EphemereGames.Commander
             HumanBattleship = humanBattleship;
 
             Type = PowerUpType.TheResistance;
+            Category = PowerUpCategory.Spaceship;
             BuyImage = "TheResistance";
             BuyPrice = 250;
             BuyTitle = "The resistance";

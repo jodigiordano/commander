@@ -9,6 +9,7 @@
     class GUIController
     {
         public List<CorpsCeleste> CelestialBodies;
+        public List<Turret> Turrets;
         public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave;
         public Scenario Scenario;
         public ScenarioDescriptor DemoModeSelectedScenario;
@@ -33,7 +34,8 @@
         private FinalSolutionPreview FinalSolutionPreview;
         private PathPreview PathPreviewing;
         private Cursor Cursor;
-        private bool InSpaceShip;
+        private Cursor Crosshair;
+        private bool PowerUpInputMode;
         private TheResistance GamePausedResistance;
 
 
@@ -43,12 +45,13 @@
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
             MenuGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
             Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
+            Crosshair = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshair", false);
             MenuTurret = new MenuTurret(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuCelestialBody = new MenuCelestialBody(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuPowerUps = new MenuPowerUps(Simulation, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuDemo = new MenuDemo(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste - 0.01f);
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
-            InSpaceShip = false;
+            PowerUpInputMode = false;
             GamePausedResistance = new TheResistance(Simulation);
             GamePausedResistance.Initialize(new List<Ennemi>());
             GamePausedResistance.AlphaChannel = 100;
@@ -64,11 +67,13 @@
             PlayerLives = new PlayerLives(Simulation, Scenario.CelestialBodyToProtect, new Color(255, 0, 220));
             PathPreviewing = new PathPreview(PathPreview, Path);
             MenuCelestialBody.Initialize();
+
+            MenuPowerUps.Turrets = Turrets;
             MenuPowerUps.Initialize();
 
             MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             MenuGeneral.TimeNextWave = Waves.First.Value.StartingTime;
-            InSpaceShip = false;
+            PowerUpInputMode = false;
         }
 
 
@@ -126,7 +131,10 @@
             if (powerUp.NeedInput)
             {
                 Cursor.doHide();
-                InSpaceShip = true;
+                PowerUpInputMode = true;
+
+                if (powerUp.Type == PowerUpType.RailGun)
+                    Crosshair.doShow();
             }
         }
 
@@ -136,7 +144,10 @@
             if (powerUp.NeedInput)
             {
                 Cursor.doShow();
-                InSpaceShip = false;
+                PowerUpInputMode = false;
+
+                if (powerUp.Type == PowerUpType.RailGun)
+                    Crosshair.doHide();
             }
         }
 
@@ -164,6 +175,7 @@
         public void doPlayerMoved(SimPlayer player)
         {
             Cursor.Position = player.Position;
+            Crosshair.Position = player.Position;
         }
 
 
@@ -260,7 +272,7 @@
             if (MenuGeneral.TimeNextWave > 0)
                 MenuGeneral.TimeNextWave = Math.Max(0, MenuGeneral.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
 
-            if (!InSpaceShip)
+            if (!PowerUpInputMode)
                 SelectedCelestialBodyAnimation.Update(gameTime);
 
             //todo event-based
@@ -285,6 +297,7 @@
                 ScenarioAnnunciation.Update(gameTime);
                 ScenarioEndedAnnunciation.Update(gameTime);
                 PlayerLives.Update(gameTime);
+                MenuPowerUps.Update();
             }
         }
 
@@ -292,9 +305,10 @@
         public void Draw()
         {
             Cursor.Draw();
+            Crosshair.Draw();
             Path.Draw();
 
-            if (!InSpaceShip)
+            if (!PowerUpInputMode)
                 SelectedCelestialBodyAnimation.Draw();
 
             if (Simulation.ModeDemo)
@@ -317,7 +331,7 @@
             PlayerLives.Draw();
             MenuPowerUps.Draw();
 
-            if (InSpaceShip)
+            if (PowerUpInputMode)
                 return;
 
             MenuCelestialBody.Draw();

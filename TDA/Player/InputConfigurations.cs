@@ -96,7 +96,6 @@
         public Buttons AdvancedView = Buttons.X;
         public Buttons SelectionNext = Buttons.RightTrigger;
         public Buttons SelectionPrevious = Buttons.LeftTrigger;
-        public Buttons PilotSpaceShip = Buttons.LeftStick;
         public Buttons MoveCursor = Buttons.LeftStick;
         public float Speed = 10;
 
@@ -116,8 +115,7 @@
                     Select,
                     AdvancedView,
                     SelectionNext,
-                    SelectionPrevious,
-                    PilotSpaceShip,
+                    SelectionPrevious
                 };
             }
         }

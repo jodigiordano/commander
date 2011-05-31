@@ -92,6 +92,8 @@
     <asset nom="gunnerTurret"                 type="Particules" chemin="particules/gunner"/>
     <asset nom="nanobots"                     type="Particules" chemin="particules/nanobots"/>
     <asset nom="nanobots2"                    type="Particules" chemin="particules/nanobots2"/>
+    <asset nom="railgun"                      type="Particules" chemin="particules/railgun"/>
+    <asset nom="railgunExplosion"             type="Particules" chemin="particules/railgunExplosion"/>
 
 
 
@@ -216,6 +218,9 @@
     <asset nom="tourelleNanobots2"                type="Texture2D" chemin="tourelles/tourelleNanobotsCanon2" />
     <asset nom="tourelleNanobots3"                type="Texture2D" chemin="tourelles/tourelleNanobotsCanon3" />
     <asset nom="tourelleNanobotsBase"             type="Texture2D" chemin="tourelles/tourelleNanobotsBase" />
+    <asset nom="railGunTurretBase"                type="Texture2D" chemin="tourelles/tourelleRailGunBase" />
+    <asset nom="railGunTurretCanon"               type="Texture2D" chemin="tourelles/tourelleRailGunCanon" />
+    <asset nom="crosshair"                        type="Texture2D" chemin="GUI/crosshair" />
 
     <asset nom="bulle"                            type="Texture2D" chemin="scenarios/bulle" />
     <asset nom="bulleRenversee"                   type="Texture2D" chemin="scenarios/bulleRenversee" />

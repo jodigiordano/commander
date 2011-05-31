@@ -17,14 +17,21 @@ namespace EphemereGames.Commander
             : base(simulation)
         {
             HumanBattleship = humanBattleship;
-            
+
             Type = PowerUpType.Spaceship;
+            Category = PowerUpCategory.Spaceship;
             BuyImage = "Vaisseau";
             BuyPrice = 50;
             BuyTitle = "The spaceship";
             BuyDescription = "Control a crazy spaceship for 10 seconds.";
             NeedInput = true;
             Position = Vector3.Zero;
+        }
+
+
+        public override void DoInputMovedDelta(Vector3 delta)
+        {
+            Spaceship.NextInput = delta;
         }
 
 

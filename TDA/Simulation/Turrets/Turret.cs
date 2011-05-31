@@ -9,7 +9,7 @@
     using ProjectMercury.Emitters;
 
 
-    abstract class Turret : IObjetPhysique
+    abstract class Turret : IObjetPhysique, IPhysique
     {
         public Vector3 RelativePosition;
         public Vector3 Position                     { get; set; }
@@ -26,7 +26,7 @@
         public int UpdatePrice                      { get { return (ActualLevel.Equals(Levels.Last)) ? ActualLevel.Value.BuyPrice : ActualLevel.Next.Value.BuyPrice; } }
         public int SellPrice                        { get { return ActualLevel.Value.SellPrice; } }
         public float Range                          { get { return ActualLevel.Value.Range * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].RangeMultiplier; } }
-        public double ShootingFrequency             { get { return ActualLevel.Value.ShootingFrequency * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].ShootingFrequencyMultiplier; } }
+        public double FireRate                      { get { return ActualLevel.Value.FireRate * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].FireRateMultiplier; } }
         public int NbCanons                         { get { return ActualLevel.Value.NbCanons; } }
         public double BuildingTime                  { get { return ActualLevel.Value.BuildingTime; } }
         public BulletType Bullet                    { get { return ActualLevel.Value.Bullet; } }
@@ -43,6 +43,9 @@
         public bool ShowRange;
         public bool ShowForm;
         public int BoostMultiplier;
+        public bool Wander;
+        public bool PlayerControlled;
+        public bool UpdatePosition;
 
         protected LinkedList<TurretLevel> Levels;
         protected String SfxShooting;
@@ -52,7 +55,7 @@
         private bool CanUpdateOverride;
         private float RotationWander = 0;
         private LinkedListNode<TurretLevel> actualLevel;
-        private float DisabledCounter;
+        public float DisabledCounter;
         private float DisabledAnnounciationCounter;
         private Image DisabledProgressBarImage;
         private Image DisabledBarImage;
@@ -61,6 +64,8 @@
         private Image RangeImage;
         private Image FormImage;
         private ParticuleEffectWrapper BoostGlow;
+
+        private Matrix rotationMatrix;
 
         
         public Turret(Simulation simulation)
@@ -107,6 +112,9 @@
             };
             ShowForm = true;
             BoostMultiplier = 0;
+            Wander = true;
+            PlayerControlled = false;
+            UpdatePosition = true;
         }
 
 
@@ -169,19 +177,19 @@
         public void DoDie() { }
 
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update()
         {
             BackActiveThisTick = false;
 
             Cercle.Position = this.Position;
 
-            DisabledCounter = MathHelper.Clamp(DisabledCounter - (float) gameTime.ElapsedGameTime.TotalMilliseconds, 0, float.MaxValue);
-            DisabledAnnounciationCounter -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            DisabledCounter = Math.Max(DisabledCounter - 16.66f, 0);
+            DisabledAnnounciationCounter -= 16.66f;
 
-            TimeLastBullet -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            TimeLastBullet -= 16.66f;
 
             if (Type != TurretType.SlowMotion && Type != TurretType.Gravitational && Type != TurretType.Alien)
-                DoWanderRotation(gameTime);
+                DoWanderRotation();
 
             if (DisabledAnnounciationCounter < 0 && !Simulation.ModeDemo)
             {
@@ -208,9 +216,9 @@
         }
 
 
-        private void DoWanderRotation(GameTime gameTime)
+        private void DoWanderRotation()
         {
-            if (EnemyWatched == null)
+            if (EnemyWatched == null && Wander)
             {
                 if (RotationWander > 0)
                     RotationWander = Math.Max(0, RotationWander - 0.001f);
@@ -222,18 +230,31 @@
         }
 
 
-        public List<Projectile> BulletsThisTick(GameTime gameTime)
+        public void Fire()
+        {
+            TimeLastBullet = FireRate;
+        }
+
+
+        public void StopFire()
+        {
+            TimeLastBullet = Double.MaxValue;
+        }
+
+
+        public List<Projectile> BulletsThisTick()
         {
             Bullets.Clear();
 
-            if (Disabled || EnemyWatched == null || Watcher)
+            if (Disabled || (EnemyWatched == null && !PlayerControlled) || Watcher)
                 return Bullets;
 
             if (TimeLastBullet <= 0)
             {
-                Vector3 direction = EnemyWatched.Position - this.Position;
-                Matrix matriceRotation = Matrix.CreateRotationZ(MathHelper.PiOver2);
-                Vector3 directionUnitairePerpendiculaire = Vector3.Transform(direction, matriceRotation);
+                Vector3 direction = (PlayerControlled) ? Direction : EnemyWatched.Position - this.Position;
+                direction.Normalize();
+                Matrix.CreateRotationZ(MathHelper.PiOver2, out rotationMatrix);
+                Vector3 directionUnitairePerpendiculaire = Vector3.Transform(direction, rotationMatrix);
                 directionUnitairePerpendiculaire.Normalize();
                 TurretBoostLevel boostLevel = Simulation.TurretsFactory.BoostLevels[BoostMultiplier];
                 
@@ -367,9 +388,23 @@
 
                         Bullets.Add(nb);
                         break;
+
+                    case BulletType.RailGun:
+                        RailGunBullet rgb = Projectile.PoolRailGunBullet.recuperer();
+                        rgb.Scene = Simulation.Scene;
+                        rgb.Position = this.Position;
+                        rgb.Direction = direction;
+                        rgb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
+                        rgb.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        rgb.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
+                        rgb.PrioriteAffichage = this.CanonImage.VisualPriority;
+                        rgb.Initialize();
+
+                        Bullets.Add(rgb);
+                        break;
                 }
 
-                TimeLastBullet = ShootingFrequency;
+                TimeLastBullet = FireRate;
             }
 
             if (Bullets.Count != 0)
@@ -391,18 +426,27 @@
                 CanonImage.Rotation = MathHelper.PiOver2 + (float)Math.Atan2(direction.Y, direction.X);
             }
 
-            else
+            else if (Wander)
+            {
                 CanonImage.Rotation += RotationWander;
+            }
+
+            else
+            {
+                CanonImage.Rotation = Rotation;
+            }
 
             Simulation.Scene.ajouterScenable(CanonImage);
             Simulation.Scene.ajouterScenable(BaseImage);
 
 
-            if (Disabled && !Simulation.ModeDemo && !ToPlaceMode)
+            if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulation.ModeDemo && !ToPlaceMode)
             {
                 DisabledBarImage.Position = this.Position;
 
-                float pourcTemps = (float)(DisabledCounter / ActualLevel.Value.BuildingTime);
+                float pourcTemps = (PlayerControlled) ?
+                    (float) (1 - TimeLastBullet / FireRate) :
+                    (float) (DisabledCounter / BuildingTime);
 
                 DisabledProgressBarImage.Size = new Vector2(pourcTemps * 30, 8);
                 DisabledProgressBarImage.Position = DisabledBarImage.Position - new Vector3(16, 4, 0);

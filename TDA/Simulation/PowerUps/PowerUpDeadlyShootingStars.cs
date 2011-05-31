@@ -18,6 +18,7 @@ namespace EphemereGames.Commander
             DestructionRange = new Cercle(new Vector3(), 100);
             AttackPoints = 50000;
             Type = PowerUpType.DeadlyShootingStars;
+            Category = PowerUpCategory.Other;
             BuyImage = "Destruction";
             BuyPrice = 500;
             BuyTitle = "Deadly Shooting Stars";

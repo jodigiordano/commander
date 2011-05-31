@@ -58,12 +58,17 @@
             for (int i = 0; i < Turrets.Count; i++)
             {
                 Turret t = Turrets[i];
-                t.Position = t.CelestialBody.Position + t.RelativePosition;
 
-                t.Update(gameTime);
+                if (t.UpdatePosition)
+                    t.Position = t.CelestialBody.Position + t.RelativePosition;
+
+                t.Update();
 
                 if (t.BackActiveThisTick)
                     NotifyTurretReactivated(t);
+
+                if (t.PlayerControlled)
+                    continue;
 
                 Ennemi enemyAttacked;
 
@@ -84,7 +89,7 @@
 
             for (int i = 0; i < Turrets.Count; i++)
             {
-                List<Projectile> projectiles = Turrets[i].BulletsThisTick(gameTime);
+                List<Projectile> projectiles = Turrets[i].BulletsThisTick();
 
                 for (int j = 0; j < projectiles.Count; j++)
                     NotifyObjectCreated(projectiles[j]);

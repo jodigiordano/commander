@@ -17,6 +17,8 @@
         public RectanglePhysique Rectangle      { get; set; }
         public Ligne Ligne                      { get; set; }
 
+        public RailGunTurret RailGun;
+
         private Simulation Simulation;
         private float VisualPriority;
         private Image Image;

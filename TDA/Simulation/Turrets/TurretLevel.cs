@@ -10,7 +10,7 @@
         public int BuyPrice;
         public int SellPrice;
         public float Range;
-        public double ShootingFrequency;
+        public double FireRate;
         public int NbCanons;
         public double BuildingTime;
         public BulletType Bullet;
@@ -27,7 +27,7 @@
             BuyPrice = 0;
             SellPrice = 0;
             Range = 1;
-            ShootingFrequency = 1;
+            FireRate = 1;
             NbCanons = 1;
             BuildingTime = 1;
             Bullet = BulletType.Aucun;
@@ -58,7 +58,7 @@
             this.BuyPrice = prixAchat;
             this.SellPrice = prixVente;
             this.Range = zoneActivation;
-            this.ShootingFrequency = cadenceTir;
+            this.FireRate = cadenceTir;
             this.NbCanons = nombreCanons;
             this.BuildingTime = tempsConstruction;
             this.Bullet = projectileLance;

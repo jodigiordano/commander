@@ -8,7 +8,6 @@
     class SpaceshipsController
     {
         public List<Ennemi> Ennemis;
-        public Vector3 NextInput;
         public HumanBattleship HumanBattleship;
         public event PhysicalObjectHandler ObjetCree;
 
@@ -23,45 +22,12 @@
         }
 
 
-        public bool InControllableSpaceship
-        {
-            get
-            {
-                foreach (var spaceship in Spaceships)
-                    if (spaceship is SpaceshipSpaceship || spaceship is SpaceshipCollector)
-                        return true;
-
-                return false;
-            }
-        }
-
-
-        public bool InCollector
-        {
-            get
-            {
-                foreach (var spaceship in Spaceships)
-                    if (spaceship is SpaceshipCollector && spaceship.Active)
-                        return true;
-
-                return false;
-            }
-            set
-            {
-                foreach (var spaceship in Spaceships)
-                    if (spaceship is SpaceshipCollector)
-                        spaceship.Active = value;
-            }
-        }
-
-
         public void Update()
         {
             for (int i = Spaceships.Count - 1; i > -1; i--)
             {
                 var spaceship = Spaceships[i];
 
-                spaceship.NextInput = NextInput;
                 spaceship.Update();
 
                 if (!spaceship.Active && !spaceship.GoBackToStartingObject)
@@ -83,9 +49,9 @@
 
                 if (spaceship.GoBackToStartingObject && spaceship.TargetReached)
                     Spaceships.RemoveAt(i);
-            }
 
-            NextInput = Vector3.Zero;
+                spaceship.NextInput = Vector3.Zero;
+            }
         }
 
 

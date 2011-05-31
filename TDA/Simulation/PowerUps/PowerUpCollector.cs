@@ -18,6 +18,7 @@ namespace EphemereGames.Commander
             HumanBattleship = humanBattleship;
 
             Type = PowerUpType.Collector;
+            Category = PowerUpCategory.Spaceship;
             BuyImage = "Collecteur";
             BuyPrice = 0;
             BuyTitle = "The collector";
@@ -30,6 +31,18 @@ namespace EphemereGames.Commander
         public override bool Terminated
         {
             get { return !Spaceship.Active; }
+        }
+
+
+        public override void DoInputMovedDelta(Vector3 delta)
+        {
+            Spaceship.NextInput = delta;
+        }
+
+
+        public override void DoInputCanceled()
+        {
+            Spaceship.Active = false;
         }
 
 

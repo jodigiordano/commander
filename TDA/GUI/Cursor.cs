@@ -21,38 +21,51 @@
 
         private Scene Scene;
         private Main Main;
-        private IVisible Representation;
+        private Image Representation;
+        private Vector2 Size;
         private Text Text;
 
 
         public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, float visualPriority)
+            : this(main, scene, initialPosition, speed, visualPriority, "Curseur", true)
         {
-            Main = main;
-            Scene = scene;
-            
-            Vitesse = speed;
 
-            Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Curseur"), initialPosition);
-            Representation.Origine = Representation.Centre;
-            Representation.VisualPriority = visualPriority;
-            Representation.Couleur = new Color(255, 255, 255, 0);
-
-            Forme = Forme.Cercle;
-            Cercle = new Cercle(initialPosition, Representation.Rectangle.Width / 4);
-
-            Position = initialPosition;
-
-            doShow();
-
-            Text = new Text("Pixelite");
-            Text.SizeX = 1;
-            Text.Color = Color.Black;
-            Text.VisualPriority = visualPriority - 0.0000001f;
         }
 
 
-        public int Width { get { return this.Representation.Rectangle.Width; } }
-        public int Height { get { return this.Representation.Rectangle.Height; } }
+        public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, float visualPriority, string imageName, bool visible)
+        {
+            Main = main;
+            Scene = scene;
+
+            Vitesse = speed;
+
+            Representation = new Image(imageName, initialPosition)
+            {
+                VisualPriority = visualPriority,
+                Color = new Color(255, 255, 255, 0)
+            };
+            Size = Representation.AbsoluteSize;
+
+            Forme = Forme.Cercle;
+            Cercle = new Cercle(initialPosition, Size.X / 4);
+
+            Position = initialPosition;
+
+            if (visible)
+                doShow();
+
+            Text = new Text("Pixelite")
+            {
+                SizeX = 1,
+                Color = Color.Black,
+                VisualPriority = visualPriority - 0.0000001f
+            };
+        }
+
+
+        public int Width { get { return (int) (Size.X); } }
+        public int Height { get { return (int) (Size.Y); } }
 
 
         public void doShow()
@@ -74,12 +87,6 @@
             Representation.Position = this.Position;
 
             Scene.ajouterScenable(Representation);
-
-//#if DEBUG
-//            Text.Data = Position.ToString();
-//            Text.Position = Position;
-//            Scene.ajouterScenable(Text);
-//#endif
         }
 
 
