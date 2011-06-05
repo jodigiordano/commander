@@ -4,21 +4,29 @@
     using EphemereGames.Core.Physique;
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
+    using EphemereGames.Core.Utilities;
 
 
     class PlanetarySystemController
     {
         public List<CorpsCeleste> CelestialBodies;
+        public List<ShootingStar> ShootingStars;
         public event PhysicalObjectHandler ObjectDestroyed;
         public Path Path;
         public Path PathPreview;
 
         private bool demoMode;
 
+        private Simulation Simulation;
+        private Pool<ShootingStar> ShootingStarsFactory;
+
 
         public PlanetarySystemController(Simulation simulation)
         {
+            Simulation = simulation;
             CelestialBodies = new List<CorpsCeleste>();
+            ShootingStars = new List<ShootingStar>();
+            ShootingStarsFactory = new Pool<ShootingStar>();
             Path = new Path(simulation, new Color(255, 255, 255, 100), TypeBlend.Add);
             PathPreview = new Path(simulation, new Color(255, 255, 255, 25), TypeBlend.Add);
             DemoMode = false;
@@ -65,6 +73,8 @@
 
             for (int i = 0; i < CelestialBodies.Count; i++)
                 CelestialBodies[i].Update(gameTime);
+
+            UpdateShootingStars();
 
             Path.Update(gameTime);
             PathPreview.Update(gameTime);
@@ -133,10 +143,58 @@
         }
 
 
+        public void DoPowerUpStarted(PowerUp powerUp)
+        {
+            if (powerUp.Type == PowerUpType.Pulse)
+                ((PowerUpPulse) powerUp).Path = Path;
+        }
+
+
+        public void DoPowerUpStopped(PowerUp powerUp)
+        {
+            if (powerUp.Type != PowerUpType.FinalSolution)
+                return;
+
+            PowerUpLastSolution p = (PowerUpLastSolution) powerUp;
+
+            if (!p.GoAhead)
+                return;
+
+            p.Selection.CelestialBody.ZoneImpactDestruction = p.ZoneImpactDestruction;
+            p.Selection.CelestialBody.AttackPoints = p.AttackPoints;
+
+            DoDestroyCelestialBody(p.Selection.CelestialBody);
+        }
+
+
         private void NotifyObjetDetruit(IObjetPhysique obj)
         {
             if (ObjectDestroyed != null)
                 ObjectDestroyed(obj);
+        }
+
+
+        private void UpdateShootingStars()
+        {
+            if (Main.Random.Next(0, 100) == 0)
+            {
+                ShootingStar ss = ShootingStarsFactory.recuperer();
+                ss.Simulation = Simulation;
+                ss.LoadContent();
+                ss.Initialize();
+
+                ShootingStars.Add(ss);
+            }
+
+            for (int i = ShootingStars.Count - 1; i > -1; i--)
+            {
+                ShootingStar ss = ShootingStars[i];
+
+                ss.Update();
+
+                if (!ss.Alive)
+                    ShootingStars.RemoveAt(i);
+            }
         }
     }
 }

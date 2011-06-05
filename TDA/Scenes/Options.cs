@@ -23,7 +23,7 @@
         private IVisible Bulle;
         private IVisible Lieutenant;
 
-        private static String Credits = "Hello, my name is Jodi Giordano. I glued all this stuff together. Special thanks to my supporting friends, la familia, the LATECE laboratory crew, UQAM, Mercury Project, SFXR and of course, my muse. Yeah, you over there. Stay tuned for updates by visiting ephemeregames.com... Now get back to work, commander!";
+        private static String Credits = "Hello, my name is Jodi Giordano. I glued all this stuff together. Special thanks to my supporting friends and my family, the LATECE laboratory crew, UQAM, Mercury Project and SFXR. If you want more info about me and my games, please visit ephemeregames.com... Now get back to work, commander!";
         private TextTypeWriter TypeWriter;
 
         private AnimationTransition AnimationTransition;

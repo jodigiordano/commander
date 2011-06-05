@@ -95,14 +95,6 @@
         }
 
 
-        public override void DoAutomaticMode()
-        {
-            TargetPosition = StartingObject.Position;
-
-            base.DoAutomaticMode();
-        }
-
-
         private void DoBouncing()
         {
             if (Position.X > 640 - Preferences.DeadZoneXbox.X - Cercle.Radius)

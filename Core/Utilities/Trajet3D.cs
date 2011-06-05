@@ -1,17 +1,4 @@
-﻿//=====================================================================
-//
-// Un trajet qui est défini par un ensemble de points (Vecteur3D)
-// et les temps (un autre ensemble...) où l'on passe par ces points.
-// Habituellement, on passe par le premier point au temps 0.
-//
-// Note : ce qui n'est pas (enEphemereGames.Core) défini : ce qui se passe lorsque
-// l'on demande une position à l'extérieur des bornes du trajet
-// (avant ou après). XNA propose une manière de le définir si
-// nécessaire.
-//
-//=====================================================================
-
-namespace EphemereGames.Core.Utilities
+﻿namespace EphemereGames.Core.Utilities
 {
     using System;
     using System.Collections.Generic;
@@ -21,16 +8,10 @@ namespace EphemereGames.Core.Utilities
     [Serializable()] 
     public class Trajet3D
     {
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
         public Curve TrajetX;
         public Curve TrajetY;
         public Curve TrajetZ;
 
-        private KeyValuePair<double[], Vector3[]> positionsTemps;
         private CurveTangent tangeantes = CurveTangent.Smooth;
 
         private bool recalculerTangeantes = false;
@@ -41,37 +22,38 @@ namespace EphemereGames.Core.Utilities
         private double MaxTime;
 
 
-        //=====================================================================
-        // Constructeur
-        //=====================================================================
+        public Trajet3D() : this(new List<Vector3>(), new List<double>()) { }
 
-        public Trajet3D()
+
+        public Trajet3D(List<Vector3> positions, List<double> gameTimes)
         {
             TrajetX = new Curve();
             TrajetY = new Curve();
             TrajetZ = new Curve();
             tangeantes = CurveTangent.Smooth;
             MaxTime = 0;
+
+            Initialize(positions, gameTimes);
         }
 
 
-        public Trajet3D(Vector3[] positions, double[] gameTimes)
+        public void Initialize(List<Vector3> positions, List<double> gameTimes)
         {
-            Initialize(positions, gameTimes, positions.Length);
+            Initialize(positions, gameTimes, (int) Math.Min(positions.Count, gameTimes.Count));
         }
 
 
-        public void Initialize(Vector3[] positions, double[] gameTimes, int Qte)
+        public void Initialize(List<Vector3> positions, List<double> gameTimes, int qty)
         {
-            TrajetX = new Curve();
-            TrajetY = new Curve();
-            TrajetZ = new Curve();
+            TrajetX.Keys.Clear();
+            TrajetY.Keys.Clear();
+            TrajetZ.Keys.Clear();
 
-            for (int i = 0; i < Qte; i++)
+            for (int i = 0; i < qty; i++)
             {
-                TrajetX.Keys.Add(new CurveKey((float)gameTimes[i], positions[i].X));
-                TrajetY.Keys.Add(new CurveKey((float)gameTimes[i], positions[i].Y));
-                TrajetZ.Keys.Add(new CurveKey((float)gameTimes[i], positions[i].Z));
+                TrajetX.Keys.Add(new CurveKey((float) gameTimes[i], positions[i].X));
+                TrajetY.Keys.Add(new CurveKey((float) gameTimes[i], positions[i].Y));
+                TrajetZ.Keys.Add(new CurveKey((float) gameTimes[i], positions[i].Z));
             }
 
             TrajetX.ComputeTangents(tangeantes);
@@ -85,42 +67,7 @@ namespace EphemereGames.Core.Utilities
             TrajetZ.PostLoop = CurveLoopType.Linear;
             TrajetZ.PreLoop = CurveLoopType.Linear;
 
-            MaxTime = (Qte > 0) ? gameTimes[Qte - 1] : 0;
-        }
-
-
-        //=====================================================================
-        // Getters / Setters
-        //=====================================================================
-
-        [ContentSerializerIgnore]
-        public KeyValuePair<double[], Vector3[]> PositionsTemps
-        {
-            get { return positionsTemps; }
-            set
-            {
-                positionsTemps = value;
-
-                for (int i = 0; i < value.Key.Length; i++)
-                {
-                    TrajetX.Keys.Add(new CurveKey((float)value.Key[i], value.Value[i].X));
-                    TrajetY.Keys.Add(new CurveKey((float)value.Key[i], value.Value[i].Y));
-                    TrajetZ.Keys.Add(new CurveKey((float)value.Key[i], value.Value[i].Z));
-                }
-
-                TrajetX.ComputeTangents(tangeantes);
-                TrajetY.ComputeTangents(tangeantes);
-                TrajetZ.ComputeTangents(tangeantes);
-
-                TrajetX.PostLoop = CurveLoopType.Linear;
-                TrajetX.PreLoop = CurveLoopType.Linear;
-                TrajetY.PostLoop = CurveLoopType.Linear;
-                TrajetY.PreLoop = CurveLoopType.Linear;
-                TrajetZ.PostLoop = CurveLoopType.Linear;
-                TrajetZ.PreLoop = CurveLoopType.Linear;
-
-                MaxTime = (value.Key.Length > 0) ? value.Key[value.Key.Length - 1] : 0;
-            }
+            MaxTime = (qty > 0) ? gameTimes[qty - 1] : 0;
         }
 
 
@@ -288,24 +235,15 @@ namespace EphemereGames.Core.Utilities
             switch (type)
             {
                 case Type.Lineaire:
-                    trajet.PositionsTemps = new KeyValuePair<double[], Vector3[]>(
-                        new double[] {0, temps},
-                        new Vector3[] {new Vector3(0, 0, 0), new Vector3(1, 1, 1)}
-                    );
+                    trajet.Initialize(new List<Vector3>() { Vector3.Zero, Vector3.One }, new List<double> { 0 , temps });
                     break;
 
                 case Type.Exponentiel:
-                    trajet.PositionsTemps = new KeyValuePair<double[], Vector3[]>(
-                        new double[] { 0, temps / 2, temps },
-                        new Vector3[] { new Vector3(0, 0, 0), new Vector3(0.8f, 0.1f, 0.1f), new Vector3(1, 1, 1) }
-                    );
+                    trajet.Initialize(new List<Vector3>() { Vector3.Zero, new Vector3(0.8f, 0.1f, 0.1f), Vector3.One }, new List<double> { 0, temps / 2, temps });
                     break;
 
                 case Type.Logarithmique:
-                    trajet.PositionsTemps = new KeyValuePair<double[], Vector3[]>(
-                        new double[] { 0, temps / 2, temps },
-                        new Vector3[] { new Vector3(0, 0, 0), new Vector3(0.1f, 0.8f, 0.8f), new Vector3(1, 1, 1) }
-                    );
+                    trajet.Initialize(new List<Vector3>() { Vector3.Zero, new Vector3(0.1f, 0.8f, 0.8f), Vector3.One }, new List<double> { 0, temps / 2, temps });
                     break;
             }
 

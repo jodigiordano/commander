@@ -22,24 +22,22 @@ namespace EphemereGames.Commander
 
             Type = PowerUpType.RailGun;
             Category = PowerUpCategory.Turret;
+            PayOnActivation = false;
+            PayOnUse = true;
             BuyImage = "";
             BuyPrice = 0;
-            BuyTitle = "The railgun";
+            UsePrice = 100;
+            BuyTitle = "The railgun (" + UsePrice + "M$ per shot)";
             BuyDescription = "Control a poweful, yet unstable, deadly weapon!";
             NeedInput = true;
+            Crosshair = "crosshairRailGun";
             Position = Vector3.Zero;
         }
 
 
         public override bool Terminated
         {
-            get { return terminated; }
-        }
-
-
-        public override void Update()
-        {
-
+            get { return TerminatedOverride || terminated; }
         }
 
 
@@ -56,7 +54,6 @@ namespace EphemereGames.Commander
         public override void DoInputCanceled()
         {
             terminated = true;
-            HumanBattleship.RailGun.Wander = true;
 
             DoInputReleased();
         }
@@ -71,6 +68,8 @@ namespace EphemereGames.Commander
 
         public override void DoInputMoved(Vector3 position)
         {
+            base.DoInputMoved(position);
+
             Vector3 direction = position - HumanBattleship.RailGun.Position;
 
             HumanBattleship.RailGun.Rotation = MathHelper.PiOver2 + (float) Math.Atan2(direction.Y, direction.X);
@@ -84,6 +83,14 @@ namespace EphemereGames.Commander
             HumanBattleship.RailGun.Wander = false;
             Turret = HumanBattleship.RailGun;
             Firing = false;
+        }
+
+
+        public override void Stop()
+        {
+            Turret.StopFire();
+            Firing = false;
+            HumanBattleship.RailGun.Wander = true;
         }
     }
 }

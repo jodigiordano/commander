@@ -30,7 +30,7 @@
         public Vector3 PourcentageMinerauxDonnes;
         public int ValeurTotalMineraux;
         public int NbPackViesDonnes;
-        public List<Mineral> Mineraux;
+        public List<Mineral> Minerals;
         private List<KeyValuePair<int, MineralType>> DistributionMineraux;
 
         private int NbEnnemisCrees;
@@ -43,7 +43,7 @@
             Ennemis = new List<Ennemi>();
             Vagues = new LinkedList<Wave>();
             VaguesActives = new List<Wave>();
-            Mineraux = new List<Mineral>();
+            Minerals = new List<Mineral>();
             DistributionMineraux = new List<KeyValuePair<int, MineralType>>();
             CompositionProchaineVague = new Dictionary<EnemyType, EnemyDescriptor>();
         }
@@ -159,7 +159,7 @@
                         mineral.Direction = direction;
                     }
 
-                    Mineraux.AddRange(mineraux);
+                    Minerals.AddRange(mineraux);
 
                     notifyObjetDetruit(ennemi);
 
@@ -169,12 +169,12 @@
             for (int i = 0; i < Ennemis.Count; i++)
                 Ennemis[i].Update(gameTime);
 
-            for (int i = Mineraux.Count - 1; i > -1; i--)
+            for (int i = Minerals.Count - 1; i > -1; i--)
             {
-                Mineraux[i].Update(gameTime);
+                Minerals[i].Update(gameTime);
 
-                if (!Mineraux[i].Alive)
-                    Mineraux.RemoveAt(i);
+                if (!Minerals[i].Alive)
+                    Minerals.RemoveAt(i);
 
             }
 
@@ -275,7 +275,7 @@
             {
                 min.DoDie();
 
-                Mineraux.Remove(min);
+                Minerals.Remove(min);
 
                 notifyObjetDetruit(min);
 

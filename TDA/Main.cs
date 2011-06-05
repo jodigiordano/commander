@@ -100,7 +100,7 @@ namespace EphemereGames.Commander
                 Threads[i].KillImmediately();
 
             if (Preferences.Target == Setting.WindowsDemo)
-                System.Diagnostics.Process.Start("http://ephemeregames.com/?page_id=35");
+                System.Diagnostics.Process.Start("http://commander.ephemeregames.com");
 
             base.OnExiting(sender, args);
         }
@@ -127,7 +127,6 @@ namespace EphemereGames.Commander
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
 
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Chargement", new Chargement(this));
-                EphemereGames.Core.Visuel.Facade.UpdateScene("Validation", new Validation(this));
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Menu", null);
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Partie", null);
                 EphemereGames.Core.Visuel.Facade.UpdateScene("NouvellePartie", null);

@@ -11,6 +11,7 @@ namespace EphemereGames.Commander
         public TheResistance Spaceship { get; private set; }
 
         private HumanBattleship HumanBattleship;
+        private float ActiveTime;
 
 
         public PowerUpTheResistance(Simulation simulation, HumanBattleship humanBattleship)
@@ -22,8 +23,9 @@ namespace EphemereGames.Commander
             Category = PowerUpCategory.Spaceship;
             BuyImage = "TheResistance";
             BuyPrice = 250;
-            BuyTitle = "The resistance";
-            BuyDescription = "Call reinforcement with a 3-spaceships army.";
+            ActiveTime = 20000;
+            BuyTitle = "The resistance (" + BuyPrice + "M$)";
+            BuyDescription = "Call reinforcement for " + (int) ActiveTime / 1000 + " sec. with a 3-spaceships army.";
             NeedInput = false;
             Position = Vector3.Zero;
         }
@@ -31,7 +33,7 @@ namespace EphemereGames.Commander
 
         public override bool Terminated
         {
-            get { return !Spaceship.Active; }
+            get { return TerminatedOverride || !Spaceship.Active; }
         }
 
 
@@ -39,7 +41,7 @@ namespace EphemereGames.Commander
         {
             Spaceship = new TheResistance(Simulation)
             {
-                TempsActif = 20000,
+                ActiveTime = ActiveTime,
                 StartingObject = HumanBattleship
             };
 

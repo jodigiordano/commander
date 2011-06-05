@@ -36,7 +36,7 @@
         public float PrioriteAffichageBackup;
         public Cercle TurretsZone;
         public bool ShowTurretsZone;
-        public Cercle ZoneImpactDestruction;
+        public float ZoneImpactDestruction;
 
         protected Simulation Simulation;
         protected Vector3 AnciennePosition;
@@ -109,7 +109,7 @@
             TurretsZoneImage.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.002f;
             ShowTurretsZone = false;
 
-            ZoneImpactDestruction = new Cercle(this, 1);
+            ZoneImpactDestruction = 0;
         }
 
 
@@ -179,7 +179,7 @@
 
             Lunes = new List<Lune>();
 
-            ZoneImpactDestruction = new Cercle(this, 1);
+            ZoneImpactDestruction = 0;
         }
 
 

@@ -15,7 +15,7 @@
         TheResistance = 3,
         DeadlyShootingStars = 4,
         Pulse = 5,
-        Nodes = 6,
+        Miner = 6,
         Shield = 7,
         Sniper = 8,
         AutomaticCollector = 9,
@@ -53,13 +53,19 @@
 
             switch (type)
             {
-                case PowerUpType.Collector:             t = new PowerUpCollector(Simulation, HumanBattleship);      break;
-                case PowerUpType.FinalSolution:         t = new PowerUpLastSolution(Simulation);                    break;
-                case PowerUpType.Spaceship:             t = new PowerUpSpaceship(Simulation, HumanBattleship);      break;
-                case PowerUpType.TheResistance:         t = new PowerUpTheResistance(Simulation, HumanBattleship);  break;
-                case PowerUpType.DeadlyShootingStars:   t = new PowerUpDeadlyShootingStars(Simulation);             break;
-                case PowerUpType.RailGun:               t = new PowerUpRailGun(Simulation, HumanBattleship);        break;
-                default:                                t = new PowerUpCollector(Simulation, HumanBattleship);      break;
+                case PowerUpType.Collector:             t = new PowerUpCollector(Simulation, HumanBattleship);          break;
+                case PowerUpType.FinalSolution:         t = new PowerUpLastSolution(Simulation);                        break;
+                case PowerUpType.Spaceship:             t = new PowerUpSpaceship(Simulation, HumanBattleship);          break;
+                case PowerUpType.TheResistance:         t = new PowerUpTheResistance(Simulation, HumanBattleship);      break;
+                case PowerUpType.DeadlyShootingStars:   t = new PowerUpDeadlyShootingStars(Simulation);                 break;
+                case PowerUpType.RailGun:               t = new PowerUpRailGun(Simulation, HumanBattleship);            break;
+                case PowerUpType.AutomaticCollector:    t = new PowerUpAutomaticCollector(Simulation, HumanBattleship); break;
+                case PowerUpType.DarkSide:              t = new PowerUpDarkSide(Simulation);                            break;
+                case PowerUpType.Miner:                 t = new PowerUpMiner(Simulation, HumanBattleship);              break;
+                case PowerUpType.Pulse:                 t = new PowerUpPulse(Simulation);                               break;
+                case PowerUpType.Shield:                t = new PowerUpShield(Simulation);                              break;
+                case PowerUpType.Sniper:                t = new PowerUpSniper(Simulation, HumanBattleship);             break;
+                default:                                t = new PowerUpCollector(Simulation, HumanBattleship);          break;
             }
 
             return t;

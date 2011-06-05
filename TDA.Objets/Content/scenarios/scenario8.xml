@@ -356,6 +356,12 @@
     <PowerUpType>TheResistance</PowerUpType>
     <PowerUpType>DeadlyShootingStars</PowerUpType>
     <PowerUpType>RailGun</PowerUpType>
+    <PowerUpType>Pulse</PowerUpType>
+    <PowerUpType>Miner</PowerUpType>
+    <PowerUpType>Shield</PowerUpType>
+    <PowerUpType>Sniper</PowerUpType>
+    <PowerUpType>AutomaticCollector</PowerUpType>
+    <PowerUpType>DarkSide</PowerUpType>
   </AvailablePowerUps>
   <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
   <MineralsValue>2000</MineralsValue>

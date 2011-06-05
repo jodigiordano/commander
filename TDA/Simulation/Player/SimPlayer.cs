@@ -24,7 +24,7 @@
         public CommonStash CommonStash;
 
         public Cercle Cercle;
-        public bool InSpacehip;
+        public PowerUpType PowerUpInUse;
 
         private Simulation Simulation;
 
@@ -33,7 +33,7 @@
         {
             Simulation = simulation;
             Cercle = new Cercle(Position, 8);
-            InSpacehip = false;
+            PowerUpInUse = PowerUpType.None;
         }
 
 
@@ -45,7 +45,7 @@
             CelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Cercle);
             SelectedPowerUpController = new SelectedPowerUpController(Simulation.PowerUpsFactory.Availables, Cercle);
             ActualSelection.AvailableTurrets = TurretToBuyController.AvailableTurrets;
-            InSpacehip = false;
+            PowerUpInUse = PowerUpType.None;
         }
 
 
@@ -89,11 +89,17 @@
 
         public void UpdateSelection()
         {
-            if (InSpacehip)
+            if (PowerUpInUse != PowerUpType.None)
             {
                 ActualSelection.TurretToBuy = null;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
                 ActualSelection.TurretOption = TurretAction.None;
+
+                if (PowerUpInUse == PowerUpType.FinalSolution)
+                {
+                    CelestialBodyController.UpdateSelection();
+                    ActualSelection.CelestialBody = CelestialBodyController.CelestialBody;
+                }
 
                 return;
             }
@@ -119,7 +125,7 @@
 
             if (ActualSelection.PowerUpToBuy != PowerUpType.None)
             {
-                checkAvailablePowerUps();
+                CheckAvailablePowerUps();
 
                 ActualSelection.CelestialBody = null;
                 ActualSelection.Turret = null;
@@ -132,14 +138,14 @@
             if (ActualSelection.CelestialBody != null)
             {
                 TurretToBuyController.Update(ActualSelection.CelestialBody);
-                checkAvailablePowerUps();
+                CheckAvailablePowerUps();
 
                 if (TurretToBuyController.TurretToBuy != null)
                     ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
             }
             
             if (ActualSelection.Turret != null)
-                checkAvailableTurretOptions();
+                CheckAvailableTurretOptions();
 
             if (CelestialBodyController.CelestialBody != null &&
                 CelestialBodyController.Turret == null &&
@@ -150,7 +156,7 @@
                 ActualSelection.TurretOption = TurretAction.None;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
 
-                checkAvailablePowerUps();
+                CheckAvailablePowerUps();
 
                 //if (ActualSelection.TurretToBuy == null)
                 //    ActualSelection.NextPowerUpToBuy();
@@ -164,7 +170,7 @@
                 if (ActualSelection.TurretOption == TurretAction.None)
                     ActualSelection.TurretOption = TurretAction.Update;
 
-                checkAvailableTurretOptions();
+                CheckAvailableTurretOptions();
             }
 
             else if (CelestialBodyController.CelestialBody == null &&
@@ -236,8 +242,8 @@
         {
             Position += CelestialBodyController.DoGlueMode();
 
-            notifyChanged();
-            notifyMoved();
+            NotifyChanged();
+            NotifyMoved();
         }
 
 
@@ -247,14 +253,23 @@
         }
 
 
-        private void notifyChanged()
+        public void CheckAvailablePowerUps()
+        {
+            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Values)
+                ActualSelection.AvailablePowerUpsToBuy[powerUp.Type] =
+                    powerUp.BuyPrice <= CommonStash.Cash &&
+                    ActivesPowerUps[powerUp.Type];
+        }
+
+
+        private void NotifyChanged()
         {
             if (Changed != null)
                 Changed(this);
         }
 
 
-        private void notifyMoved()
+        private void NotifyMoved()
         {
             if (Moved != null)
                 Moved(this);
@@ -268,7 +283,7 @@
         }
 
 
-        private void checkAvailableTurretOptions()
+        private void CheckAvailableTurretOptions()
         {
             bool majEtaitIndisponible = !ActualSelection.AvailableTurretOptions[TurretAction.Update];
 
@@ -288,15 +303,6 @@
             //change automatiquement la selection de cette option quand elle n'est pas disponible
             if (!ActualSelection.AvailableTurretOptions[TurretAction.Update] && ActualSelection.TurretOption == TurretAction.Update)
                 ActualSelection.TurretOption = TurretAction.Sell;
-        }
-
-
-        private void checkAvailablePowerUps()
-        {
-            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Values)
-                ActualSelection.AvailablePowerUpsToBuy[powerUp.Type] =
-                    powerUp.BuyPrice <= CommonStash.Cash &&
-                    ActivesPowerUps[powerUp.Type];
         }
     }
 }

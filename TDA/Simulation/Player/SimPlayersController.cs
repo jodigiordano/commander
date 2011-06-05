@@ -43,6 +43,8 @@
             Player.Changed += new SimPlayerHandler(DoPlayerChanged);
             Player.Moved += new SimPlayerHandler(DoPlayerMoved);
 
+            Player.CheckAvailablePowerUps();
+
             NotifyCommonStashChanged(CommonStash);
             NotifyPlayerChanged(Player);
             NotifyPlayerMoved(Player);
@@ -63,7 +65,7 @@
         public event CommonStashHandler CommonStashChanged;
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
-        public event PowerUpTypeHandler BuyAPowerUpAsked;
+        public event PowerUpTypeHandler ActivatePowerUpAsked;
 
 
         private void NotifyTurretToPlaceSelected(Turret turret)
@@ -80,10 +82,10 @@
         }
 
 
-        private void NotifyBuyAPowerUpAsked(PowerUpType type)
+        private void NotifyActivatePowerUpAsked(PowerUpType type)
         {
-            if (BuyAPowerUpAsked != null)
-                BuyAPowerUpAsked(type);
+            if (ActivatePowerUpAsked != null)
+                ActivatePowerUpAsked(type);
         }
 
 
@@ -141,7 +143,10 @@
         public void DoPowerUpStarted(PowerUp powerUp)
         {
             if (powerUp.NeedInput)
-                Player.InSpacehip = true;
+                Player.PowerUpInUse = powerUp.Type;
+
+            if (powerUp.Type == PowerUpType.FinalSolution)
+                ((PowerUpLastSolution) powerUp).Selection = Player.ActualSelection;
 
             Player.UpdateSelection();
         }
@@ -151,12 +156,23 @@
         {
             if (powerUp.NeedInput)
             {
-                Player.InSpacehip = false;
                 Player.Position = powerUp.Position;
                 NotifyPlayerMoved(Player);
             }
 
+            if (powerUp.Type == PowerUpType.FinalSolution && ((PowerUpLastSolution) powerUp).GoAhead)
+                DoPowerUpUse();
+
+            Player.PowerUpInUse = PowerUpType.None;
+            Player.CheckAvailablePowerUps();
             Player.UpdateSelection();
+        }
+
+
+        public void DoObjectCreated(IObjetPhysique obj)
+        {
+            if (obj is RailGunBullet)
+                DoPowerUpUse();
         }
 
 
@@ -433,16 +449,21 @@
 
         private void DoSelectAction()
         {
-            // buy a powerup
+            // activate a power-up
             if (Player.ActualSelection.PowerUpToBuy != PowerUpType.None &&
                 Player.ActualSelection.AvailablePowerUpsToBuy[Player.ActualSelection.PowerUpToBuy])
             {
-                if (Player.ActualSelection.PowerUpToBuy != PowerUpType.RailGun)
-                    CommonStash.Cash -= Simulation.PowerUpsFactory.Availables[Player.ActualSelection.PowerUpToBuy].BuyPrice;
-                
-                NotifyBuyAPowerUpAsked(Player.ActualSelection.PowerUpToBuy);
-                NotifyCommonStashChanged(CommonStash);
+                PowerUp p = Simulation.PowerUpsFactory.Availables[Player.ActualSelection.PowerUpToBuy];
 
+                NotifyActivatePowerUpAsked(Player.ActualSelection.PowerUpToBuy);
+
+                if (p.PayOnActivation)
+                {
+                    CommonStash.Cash -= p.BuyPrice;
+                    NotifyCommonStashChanged(CommonStash);
+                }
+                
+                Player.CheckAvailablePowerUps();
                 Player.UpdateSelection();
 
                 return;
@@ -495,7 +516,7 @@
 
 
             // call next wave
-            if (EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
+            if (Player.PowerUpInUse == PowerUpType.None && EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
             {
                 NotifyProchaineVagueDemandee();
                 return;
@@ -510,6 +531,24 @@
 
             NotifyTurretToPlaceDeselected(Player.ActualSelection.TurretToPlace);
             Player.ActualSelection.TurretToPlace = null;
+            Player.UpdateSelection();
+        }
+
+
+        private void DoPowerUpUse()
+        {
+            if (Player.PowerUpInUse == PowerUpType.None)
+                return;
+
+            PowerUp p = Simulation.PowerUpsFactory.Availables[Player.PowerUpInUse];
+
+            if (!p.PayOnUse)
+                return;
+
+            CommonStash.Cash -= p.UsePrice;
+            NotifyCommonStashChanged(CommonStash);
+
+            Player.CheckAvailablePowerUps();
             Player.UpdateSelection();
         }
     }

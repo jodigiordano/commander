@@ -5,25 +5,21 @@
     using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Physique;
 
+
     class Cursor : IObjetPhysique
     {
-        private Vector3 position;
-        public Vector3 Position
-        {
-            get { return position; }
-            set { position = value; Cercle.Position = position; }
-        }
-
         public float Vitesse { get; set; }
         public Cercle Cercle { get; set; }
         public Forme Forme { get; set; }
-        public bool Actif;
-
+        public bool Active;
+ 
+        private Vector3 position;
         private Scene Scene;
         private Main Main;
-        private Image Representation;
+        private Image representation;
         private Vector2 Size;
-        private Text Text;
+        private float VisualPriority;
+        private Color Color;
 
 
         public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, float visualPriority)
@@ -37,56 +33,71 @@
         {
             Main = main;
             Scene = scene;
-
             Vitesse = speed;
-
-            Representation = new Image(imageName, initialPosition)
-            {
-                VisualPriority = visualPriority,
-                Color = new Color(255, 255, 255, 0)
-            };
-            Size = Representation.AbsoluteSize;
-
+            VisualPriority = visualPriority;
+            Color = new Color(255, 255, 255, 0);
+            Representation = imageName;
             Forme = Forme.Cercle;
             Cercle = new Cercle(initialPosition, Size.X / 4);
-
             Position = initialPosition;
 
             if (visible)
-                doShow();
+                DoShow();
+        }
 
-            Text = new Text("Pixelite")
+
+        public string Representation
+        {
+            set
             {
-                SizeX = 1,
-                Color = Color.Black,
-                VisualPriority = visualPriority - 0.0000001f
-            };
+                representation = new Image(value, position)
+                {
+                    VisualPriority = VisualPriority,
+                    Color = Color
+                };
+                Size = representation.AbsoluteSize;
+            }
         }
 
 
-        public int Width { get { return (int) (Size.X); } }
-        public int Height { get { return (int) (Size.Y); } }
-
-
-        public void doShow()
+        public Vector3 Position
         {
-            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
-            Actif = true;
+            get { return position; }
+            set { position = value; Cercle.Position = position; }
         }
 
 
-        public void doHide()
+        public int Width
         {
-            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
-            Actif = false;
+            get { return (int) (Size.X); }
+        }
+
+
+        public int Height
+        {
+            get { return (int) (Size.Y); }
+        }
+
+
+        public void DoShow()
+        {
+            Scene.Effets.Add(representation, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
+            Active = true;
+        }
+
+
+        public void DoHide()
+        {
+            Scene.Effets.Add(representation, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
+            Active = false;
         }
 
 
         public void Draw()
         {
-            Representation.Position = this.Position;
+            representation.Position = this.Position;
 
-            Scene.ajouterScenable(Representation);
+            Scene.ajouterScenable(representation);
         }
 
 

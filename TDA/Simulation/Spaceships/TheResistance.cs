@@ -9,18 +9,17 @@
 
     class TheResistance : Spaceship
     {
-        public double TempsActif;
-
-        private List<Spaceship> Vaisseaux;
-        private List<Ennemi> Ennemis;
+        public double ActiveTime;
+        public List<Ennemi> Enemies;
+        private List<Spaceship> Spaceships;
 
 
         public TheResistance(Simulation simulation)
             : base(simulation)
         {
-            Vaisseaux = new List<Spaceship>();
+            Spaceships = new List<Spaceship>();
 
-            Vaisseaux.Add(new Spaceship(simulation)
+            Spaceships.Add(new Spaceship(simulation)
             {
                 ShootingFrequency = 100,
                 BulletHitPoints = 10,
@@ -33,7 +32,7 @@
                 AutomaticMode = true
             });
 
-            Vaisseaux.Add(new Spaceship(simulation)
+            Spaceships.Add(new Spaceship(simulation)
             {
                 ShootingFrequency = 200,
                 BulletHitPoints = 30,
@@ -46,7 +45,7 @@
                 AutomaticMode = true
             });
 
-            Vaisseaux.Add(new Spaceship(simulation)
+            Spaceships.Add(new Spaceship(simulation)
             {
                 ShootingFrequency = 500,
                 BulletHitPoints = 100,
@@ -64,11 +63,9 @@
         }
 
 
-        public void Initialize(List<Ennemi> ennemis)
+        public override void Initialize()
         {
-            Ennemis = ennemis;
-
-            foreach (var spaceship in Vaisseaux)
+            foreach (var spaceship in Spaceships)
             {
                 spaceship.StartingObject = StartingObject;
 
@@ -82,7 +79,7 @@
         {
             set
             {
-                foreach (var spaceship in Vaisseaux)
+                foreach (var spaceship in Spaceships)
                     spaceship.Image.Color.A = value;
             }
         }
@@ -90,32 +87,32 @@
 
         public override bool Active
         {
-            get { return TempsActif > 0; }
+            get { return ActiveTime > 0; }
         }
 
 
         public override bool TargetReached
         {
-            get { return Vaisseaux[0].TargetReached && Vaisseaux[1].TargetReached && Vaisseaux[2].TargetReached; }
+            get { return Spaceships[0].TargetReached && Spaceships[1].TargetReached && Spaceships[2].TargetReached; }
         }
 
 
         public override void Update()
         {
-            TempsActif -= 16.66f;
+            ActiveTime -= 16.66f;
 
-            for (int i = 0; i < Vaisseaux.Count; i++)
+            for (int i = 0; i < Spaceships.Count; i++)
             {
-                if (!Vaisseaux[i].InCombat)
+                if (!Spaceships[i].InCombat)
                 {
-                    Vector3 direction = ((Ennemis.Count > i) ? Ennemis[i].Position : StartingObject.Position) - Vaisseaux[i].Position;
+                    Vector3 direction = ((Enemies.Count > i) ? Enemies[i].Position : StartingObject.Position) - Spaceships[i].Position;
                     direction.Normalize();
 
-                    Vaisseaux[i].TargetPosition = ((Ennemis.Count > i) ? Ennemis[i].Position : StartingObject.Position) + direction * 100;
+                    Spaceships[i].TargetPosition = ((Enemies.Count > i) ? Enemies[i].Position : StartingObject.Position) + direction * 100;
                 }
             }
 
-            foreach (var vaisseau in Vaisseaux)
+            foreach (var vaisseau in Spaceships)
             {
 
                 vaisseau.DoAutomaticMode();
@@ -129,7 +126,7 @@
         {
             projectilesCeTick.Clear();
 
-            foreach (var vaisseau in Vaisseaux)
+            foreach (var vaisseau in Spaceships)
                 projectilesCeTick.AddRange(vaisseau.BulletsThisTick());
 
             return projectilesCeTick;
@@ -139,7 +136,7 @@
         public override void DoHide()
         {
 
-            foreach (var vaisseau in Vaisseaux)
+            foreach (var vaisseau in Spaceships)
             {
                 vaisseau.TargetPosition = StartingObject.Position;
                 vaisseau.DoHide();
@@ -149,7 +146,7 @@
 
         public override void Draw()
         {
-            foreach (var vaisseau in Vaisseaux)
+            foreach (var vaisseau in Spaceships)
                 vaisseau.Draw();
         }
     }

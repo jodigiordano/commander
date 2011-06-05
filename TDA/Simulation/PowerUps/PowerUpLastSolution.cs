@@ -8,36 +8,60 @@ namespace EphemereGames.Commander
 
     class PowerUpLastSolution : PowerUp
     {
-        public Cercle ZoneImpactDestruction { get; private set; }
-        public int PointsAttaque { get; private set; }
-        public Vector3 BuyPosition { get; set; }
+        public float ZoneImpactDestruction  { get; private set; }
+        public int AttackPoints             { get; private set; }
+        public bool GoAhead                 { get; private set; }
+        public PlayerSelection Selection;
+
+        private bool terminated;
 
 
         public PowerUpLastSolution(Simulation simulation)
             : base(simulation)
         {
-            ZoneImpactDestruction = new Cercle(new Vector3(), 300);
-            PointsAttaque = 50000;
+            ZoneImpactDestruction = 200;
+            AttackPoints = int.MaxValue / 2;
             Type = PowerUpType.FinalSolution;
             Category = PowerUpCategory.Other;
+            PayOnActivation = false;
+            PayOnUse = true;
             BuyImage = "Destruction";
-            BuyPrice = 500;
-            BuyTitle = "The final solution";
+            UsePrice = 500;
+            BuyTitle = "The final solution (" + UsePrice + "M$)";
             BuyDescription = "Create a massive explosion by destroying a planet.";
             NeedInput = true;
+            Crosshair = "crosshairDestruction";
             Position = Vector3.Zero;
+            GoAhead = false;
         }
 
 
         public override bool Terminated
         {
-            get { return false; }
+            get { return TerminatedOverride || terminated; }
+        }
+
+
+        public override void DoInputPressed()
+        {
+            if (Selection.CelestialBody == null)
+                return;
+
+            terminated = true;
+            GoAhead = true;
+        }
+
+
+        public override void DoInputCanceled()
+        {
+            terminated = true;
+            GoAhead = false;
         }
 
 
         public override void Start()
         {
-
+            terminated = false;
         }
     }
 }

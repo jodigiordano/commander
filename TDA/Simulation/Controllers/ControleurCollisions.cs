@@ -11,25 +11,27 @@
 
     class ControleurCollisions : DrawableGameComponent
     {
-        public event PhysicalObjectHandler ObjetDeserte;
-        public event PhysicalObjectPhysicalObjectHandler ObjetTouche;
+        public event PhysicalObjectHandler ObjectOutOfBound;
+        public event PhysicalObjectPhysicalObjectHandler ObjectHit;
         public event TurretTurretHandler TurretBoosted;
 
-        public delegate void DansZoneActivationHandler(Turret tourelle, IObjetPhysique objet);
-        public event DansZoneActivationHandler DansZoneActivation;
+        public delegate void TurretPhysicalObjectHandler(Turret tourelle, IObjetPhysique objet);
+        public event TurretPhysicalObjectHandler InTurretRange;
 
-        private Scene Scene;
         private Simulation Simulation;
-        private RectanglePhysique Terrain;
-        private SpaceshipCollector Collecteur;
+        private RectanglePhysique Battlefield;
+        private Spaceship Collector;
+        private bool DeadlyShootingStars;
+        private bool DarkSide;
         private GridWorld EnemiesGrid;
         private GridWorld TurretsGrid;
 
-        public List<Projectile> Projectiles;
-        public List<Ennemi> Ennemis;
-        public List<Turret> Tourelles;
-        public List<CorpsCeleste> CorpsCelestes;
-        public List<Mineral> Mineraux;
+        public List<Projectile> Bullets;
+        public List<Ennemi> Enemies;
+        public List<Turret> Turrets;
+        public List<CorpsCeleste> CelestialBodies;
+        public List<Mineral> Minerals;
+        public List<ShootingStar> ShootingStars;
         public bool Debug;
 
 
@@ -37,37 +39,36 @@
             : base(simulation.Main)
         {
             this.Simulation = simulation;
-            this.Scene = simulation.Scene;
-            this.Projectiles = new List<Projectile>();
-            this.Ennemis = new List<Ennemi>();
-            this.CorpsCelestes = new List<CorpsCeleste>();
-            this.Tourelles = new List<Turret>();
-            this.Mineraux = new List<Mineral>();
-            this.Terrain = simulation.Terrain;
-            this.EnemiesGrid = new GridWorld(this.Terrain, 50);
-            this.TurretsGrid = new GridWorld(this.Terrain, 50);
+            this.Bullets = new List<Projectile>();
+            this.Enemies = new List<Ennemi>();
+            this.CelestialBodies = new List<CorpsCeleste>();
+            this.Turrets = new List<Turret>();
+            this.Minerals = new List<Mineral>();
+            this.Battlefield = simulation.Terrain;
+            this.EnemiesGrid = new GridWorld(this.Battlefield, 50);
+            this.TurretsGrid = new GridWorld(this.Battlefield, 50);
             this.Debug = false;
         }
 
 
         private void notifyObjetDeserte(IObjetPhysique deserteur)
         {
-            if (ObjetDeserte != null)
-                ObjetDeserte(deserteur);
+            if (ObjectOutOfBound != null)
+                ObjectOutOfBound(deserteur);
         }
 
 
         private void notifyObjetTouche(IObjetPhysique objet, IObjetPhysique par)
         {
-            if (ObjetTouche != null)
-                ObjetTouche(objet, par);
+            if (ObjectHit != null)
+                ObjectHit(objet, par);
         }
 
 
         private void notifyDansZoneActivation(Turret tourelle, IObjetPhysique objet)
         {
-            if (DansZoneActivation != null)
-                DansZoneActivation(tourelle, objet);
+            if (InTurretRange != null)
+                InTurretRange(tourelle, objet);
         }
 
 
@@ -88,40 +89,43 @@
 
 //            while (Simulation.Main.Threads[2].Travaille()) { }
 //#else
-            doDeserteursCeTick();
-            doCollisionsCeTick();
-            doDansZoneActivationCeTick();
-            doBoostCollisionsThisTick();
+            DoOutOfBoundsThisTick();
+            DoHiddenEnemies();
+            DoCollisionsThisTick();
+            DoInTurretRangeThisTick();
+            DoBoostedThisTick();
 //#endif
         }
 
-        public void notifyAll()
+
+        public void NotifyAll()
         {
-            for (int i = 0; i < deserteurs.Count; i++)
-                notifyObjetDeserte(deserteurs[i]);
+            for (int i = 0; i < outOfBounds.Count; i++)
+                notifyObjetDeserte(outOfBounds[i]);
 
-            for (int i = 0; i < collisionsCeTick.Count; i++)
-                notifyObjetTouche(collisionsCeTick[i].Key, collisionsCeTick[i].Value);
+            for (int i = 0; i < CollisionsThisTick.Count; i++)
+                notifyObjetTouche(CollisionsThisTick[i].Key, CollisionsThisTick[i].Value);
 
-            for (int i = 0; i < collisionsDansZoneActivationCeTick.Count; i++)
-                notifyDansZoneActivation(collisionsDansZoneActivationCeTick[i].Key, collisionsDansZoneActivationCeTick[i].Value);
+            for (int i = 0; i < InTurretRangeThisTick.Count; i++)
+                notifyDansZoneActivation(InTurretRangeThisTick[i].Key, InTurretRangeThisTick[i].Value);
 
-            for (int i = 0; i < boostCollisionsThisTick.Count; i++)
-                notifyTurretBoosted(boostCollisionsThisTick[i].Key, boostCollisionsThisTick[i].Value);
+            for (int i = 0; i < BoostedThisTick.Count; i++)
+                notifyTurretBoosted(BoostedThisTick[i].Key, BoostedThisTick[i].Value);
         }
+
 
         public override void Update(GameTime gameTime)
         {
             EnemiesGrid.Clear();
-            for (int i = 0; i < Ennemis.Count; i++)
-                EnemiesGrid.Add(i, Ennemis[i]);
+            for (int i = 0; i < Enemies.Count; i++)
+                EnemiesGrid.Add(i, Enemies[i]);
 
             TurretsGrid.Clear();
-            for (int i = 0; i < Tourelles.Count; i++)
-                TurretsGrid.Add(i, Tourelles[i]);
+            for (int i = 0; i < Turrets.Count; i++)
+                TurretsGrid.Add(i, Turrets[i]);
 
             Update();
-            notifyAll();
+            NotifyAll();
         }
 
 
@@ -131,163 +135,173 @@
             {
                 Cercle c = new Cercle(Vector3.Zero, 0);
 
-                foreach (var p in Projectiles)
+                foreach (var p in Bullets)
                 {
-                    dessinerRectangle(p, Color.Red);
+                    DrawRectangle(p, Color.Red);
 
                     if (p is ProjectileMissile)
                     {
                         c.Position = p.Position;
                         c.Radius = ((ProjectileMissile) p).ZoneImpact;
 
-                        Scene.ajouterScenable(new RectangleVisuel(c.Rectangle, Color.Cyan));
+                        Simulation.Scene.ajouterScenable(new RectangleVisuel(c.Rectangle, Color.Cyan));
                     }
                 }
 
-                foreach (var corpsCeleste in CorpsCelestes)
-                    dessinerRectangle(corpsCeleste, Color.Yellow);
+                foreach (var corpsCeleste in CelestialBodies)
+                    DrawRectangle(corpsCeleste, Color.Yellow);
 
-                foreach (var e in Ennemis)
+                foreach (var e in Enemies)
                 {
-                    Scene.ajouterScenable(new RectangleVisuel(e.Cercle.Rectangle, Color.Yellow));
-                    dessinerRectangle(e, Color.Orange);
+                    Simulation.Scene.ajouterScenable(new RectangleVisuel(e.Cercle.Rectangle, Color.Yellow));
+                    DrawRectangle(e, Color.Orange);
                 }
 
-                foreach (var e in Mineraux)
-                    dessinerRectangle(e, Color.Yellow);
+                foreach (var e in Minerals)
+                    DrawRectangle(e, Color.Yellow);
 
-                if (Collecteur != null)
-                    dessinerRectangle(Collecteur, Color.Yellow);
+                if (Collector != null)
+                    DrawRectangle(Collector, Color.Yellow);
             }
         }
 
-        private void dessinerRectangle(IObjetPhysique objet, Color couleur)
+
+        private void DrawRectangle(IObjetPhysique objet, Color couleur)
         {
             if (objet.Forme == Forme.Rectangle)
-                Scene.ajouterScenable(new RectangleVisuel(objet.Rectangle.RectanglePrimitif, couleur));
+                Simulation.Scene.ajouterScenable(new RectangleVisuel(objet.Rectangle.RectanglePrimitif, couleur));
             else if (objet.Forme == Forme.Cercle)
-                Scene.ajouterScenable(new RectangleVisuel(objet.Cercle.Rectangle, couleur));
+                Simulation.Scene.ajouterScenable(new RectangleVisuel(objet.Cercle.Rectangle, couleur));
         }
 
-        private List<IObjetPhysique> deserteurs = new List<IObjetPhysique>();
-        private void doDeserteursCeTick()
+
+        private List<IObjetPhysique> outOfBounds = new List<IObjetPhysique>();
+        private void DoOutOfBoundsThisTick()
         {
-            deserteurs.Clear();
+            outOfBounds.Clear();
 
             // Pour des raisons de performance, on enleve le projectile de la liste ici et non dans ControleurProjectiles
             // (Ca fait mal au coeur mais performance oblige)
-            for (int i = Projectiles.Count - 1; i > -1; i--)
+            for (int i = Bullets.Count - 1; i > -1; i--)
             {
-                Projectile projectile = Projectiles[i];
+                Projectile projectile = Bullets[i];
 
                 if (projectile.Forme == Forme.Ligne || projectile.Forme == Forme.Cercle)
                     continue;
 
-                if (!EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, this.Terrain))
+                if (!EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, this.Battlefield))
                 {
-                    Projectiles[i].DoDieSilent();
-                    Projectiles.RemoveAt(i);
+                    Bullets[i].DoDieSilent();
+                    Bullets.RemoveAt(i);
                 }
             }
         }
 
 
-        private List<KeyValuePair<IObjetPhysique, IObjetPhysique>> collisionsCeTick = new List<KeyValuePair<IObjetPhysique, IObjetPhysique>>();
-
-        private Dictionary<int, int> tmpObjetsTraites = new Dictionary<int, int>();
+        private List<KeyValuePair<IObjetPhysique, IObjetPhysique>> CollisionsThisTick = new List<KeyValuePair<IObjetPhysique, IObjetPhysique>>();
+        private Dictionary<int, int> TmpObjects = new Dictionary<int, int>();
         //private Bag<int> tmpObjetsTraites = new Bag<int>(); // Ne fonctionne pas sur la Xbox 360
 
-        private void doCollisionsCeTick()
+        private void DoCollisionsThisTick()
         {
-            collisionsCeTick.Clear();
+            CollisionsThisTick.Clear();
 
             Cercle c = new Cercle(Vector3.Zero, 0);
+            RectanglePhysique r = new RectanglePhysique();
+
+            // Collisions Enemies <--> Celestial Bodies
+            if (DarkSide)
+            {
+                foreach (var enemy in hiddenEnemies.Values)
+                    CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(enemy, ((PowerUpDarkSide) Simulation.PowerUpsFactory.Availables[PowerUpType.DarkSide]).CorpsCeleste));
+            }
+
 
             // Collisions Projectiles <--> Ennemis
 
-            for (int i = Projectiles.Count - 1; i > -1; i--)
+            for (int i = Bullets.Count - 1; i > -1; i--)
             {
-                Projectile projectile = Projectiles[i];
+                Projectile bullet = Bullets[i];
 
-                tmpObjetsTraites.Clear();
+                TmpObjects.Clear();
 
-                IEnumerable<int> candidats;
+                IEnumerable<int> candidates;
 
-                if (projectile is ProjectileLaserMultiple || projectile is ProjectileLaserSimple)
-                    candidats = EnemiesGrid.GetItems(projectile.Ligne);
+                if (bullet is ProjectileLaserMultiple || bullet is ProjectileLaserSimple)
+                    candidates = EnemiesGrid.GetItems(bullet.Ligne);
                 else
-                    candidats = EnemiesGrid.GetItems(projectile.Rectangle);
+                    candidates = EnemiesGrid.GetItems(bullet.Rectangle);
 
                 int nbCollisions = 0;
 
-                foreach (var indice in candidats)
+                foreach (var index in candidates)
                 {
                     bool collision = false;
 
-                    if (tmpObjetsTraites.ContainsKey(indice))
+                    if (TmpObjects.ContainsKey(index))
                         continue;
                     else
-                        tmpObjetsTraites.Add(indice, 0);
+                        TmpObjects.Add(index, 0);
 
-                    Ennemi e = Ennemis[indice];
+                    Ennemi e = Enemies[index];
 
                     //Degeux
-                    if (projectile.Forme == Forme.Rectangle && e.Forme == Forme.Rectangle)
+                    if (bullet.Forme == Forme.Rectangle && e.Forme == Forme.Rectangle)
                     {
-                        collision = EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, e.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(bullet.Rectangle, e.Rectangle);
                     }
 
-                    else if (projectile.Forme == Forme.Cercle && e.Forme == Forme.Rectangle)
+                    else if (bullet.Forme == Forme.Cercle && e.Forme == Forme.Rectangle)
                     {
-                        collision = EphemereGames.Core.Physique.Facade.collisionCercleRectangle(projectile.Cercle, e.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionCercleRectangle(bullet.Cercle, e.Rectangle);
                     }
 
-                    else if (projectile.Forme == Forme.Rectangle && e.Forme == Forme.Cercle)
+                    else if (bullet.Forme == Forme.Rectangle && e.Forme == Forme.Cercle)
                     {
-                        collision = EphemereGames.Core.Physique.Facade.collisionCercleRectangle(e.Cercle, projectile.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionCercleRectangle(e.Cercle, bullet.Rectangle);
                     }
 
-                    else if (projectile.Forme == Forme.Ligne && e.Forme == Forme.Rectangle)
+                    else if (bullet.Forme == Forme.Ligne && e.Forme == Forme.Rectangle)
                     {
-                        collision = EphemereGames.Core.Physique.Facade.collisionLigneRectangle(projectile.Ligne, e.Rectangle);
+                        collision = EphemereGames.Core.Physique.Facade.collisionLigneRectangle(bullet.Ligne, e.Rectangle);
                     }
 
                     if (collision)
                     {
                         nbCollisions++;
 
-                        collisionsCeTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, projectile));
+                        CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, bullet));
 
-                        if (!(projectile is ProjectileLaserMultiple || projectile is ProjectileSlowMotion))
+                        if (!(bullet is ProjectileLaserMultiple || bullet is ProjectileSlowMotion))
                         {
-                            projectile.DoHit(e);
+                            bullet.DoHit(e);
 
-                            if (!projectile.Alive)
+                            if (!bullet.Alive)
                             {
-                                projectile.DoDie();
-                                Projectiles.RemoveAt(i);
+                                bullet.DoDie();
+                                Bullets.RemoveAt(i);
 
-                                if (projectile is ProjectileMissile || projectile is NanobotsBullet || projectile is RailGunBullet)
+                                if (bullet is ProjectileMissile || bullet is NanobotsBullet || bullet is RailGunBullet)
                                 {
-                                    c.Position = projectile.Position;
-                                    c.Radius = projectile is ProjectileMissile ? ((ProjectileMissile) projectile).ZoneImpact :
-                                               projectile is NanobotsBullet ? ((NanobotsBullet) projectile).ZoneImpact :
-                                               ((RailGunBullet) projectile).ZoneImpact;
+                                    c.Position = bullet.Position;
+                                    c.Radius = bullet is ProjectileMissile ? ((ProjectileMissile) bullet).ZoneImpact :
+                                               bullet is NanobotsBullet ? ((NanobotsBullet) bullet).ZoneImpact :
+                                               ((RailGunBullet) bullet).ZoneImpact;
 
-                                    tmpObjetsTraites.Clear();
+                                    TmpObjects.Clear();
                                     IEnumerable<int> candidats2 = EnemiesGrid.GetItems(c.Rectangle);
 
                                     foreach (var indice2 in candidats2)
                                     {
-                                        if (tmpObjetsTraites.ContainsKey(indice2))
+                                        if (TmpObjects.ContainsKey(indice2))
                                             continue;
                                         else
-                                            tmpObjetsTraites.Add(indice2, 0);
+                                            TmpObjects.Add(indice2, 0);
 
-                                        Ennemi ennemi = Ennemis[indice2];
+                                        Ennemi ennemi = Enemies[indice2];
 
                                         if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(c, ennemi.Cercle))
-                                            collisionsCeTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(ennemi, projectile));
+                                            CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(ennemi, bullet));
                                     }
                                 }
                             }
@@ -301,31 +315,101 @@
 
             // Collisions Mineraux <--> Collecteur
 
-            if (Collecteur != null)
+            if (Collector != null)
             {
-                for (int i = 0; i < Mineraux.Count; i++)
+                for (int i = 0; i < Minerals.Count; i++)
                 {
-                    Mineral mineral = Mineraux[i];
+                    Mineral mineral = Minerals[i];
 
-                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(mineral.Cercle, Collecteur.Cercle))
+                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(mineral.Cercle, Collector.Cercle))
                     {
-                        collisionsCeTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(mineral, Collecteur));
-                        collisionsCeTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(Collecteur, mineral));
+                        CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(mineral, Collector));
+                        CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(Collector, mineral));
+                    }
+                }
+            }
+
+
+            // Collisions Shooting Stars <--> Enemies
+            if (DeadlyShootingStars)
+            {
+                for (int i = 0; i < ShootingStars.Count; i++)
+                {
+                    ShootingStar star = ShootingStars[i];
+
+                    r.X = (int) (star.Position.X - star.Cercle.Radius);
+                    r.Y = (int) (star.Position.Y - star.Cercle.Radius);
+                    r.Width = (int) (star.Cercle.Radius * 2);
+                    r.Height = (int) (star.Cercle.Radius * 2);
+
+                    TmpObjects.Clear();
+
+                    IEnumerable<int> candidates = EnemiesGrid.GetItems(r);
+
+                    int nbCollisions = 0;
+
+                    foreach (var index in candidates)
+                    {
+                        bool collision = false;
+
+                        if (TmpObjects.ContainsKey(index))
+                            continue;
+                        else
+                            TmpObjects.Add(index, 0);
+
+                        Ennemi e = Enemies[index];
+
+                        if (e.Forme == Forme.Rectangle)
+                        {
+                            collision = EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(r, e.Rectangle);
+                        }
+
+                        else if (e.Forme == Forme.Cercle)
+                        {
+                            collision = EphemereGames.Core.Physique.Facade.collisionCercleCercle(star.Cercle, e.Cercle);
+                        }
+
+                        if (collision)
+                        {
+                            nbCollisions++;
+
+                            CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, star));
+
+                            c.Position = star.Position;
+                            c.Radius = star.ZoneImpact;
+
+                            TmpObjects.Clear();
+                            IEnumerable<int> candidates2 = EnemiesGrid.GetItems(c.Rectangle);
+
+                            foreach (var index2 in candidates2)
+                            {
+                                if (TmpObjects.ContainsKey(index2))
+                                    continue;
+                                else
+                                    TmpObjects.Add(index2, 0);
+
+                                Ennemi ennemi = Enemies[index2];
+
+                                if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(c, ennemi.Cercle))
+                                    CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(ennemi, star));
+                            }
+
+                            break;
+                        }
                     }
                 }
             }
         }
 
 
-        private Dictionary<int, Ennemi> ennemisCaches = new Dictionary<int, Ennemi>();
-
-        private void doEnnemisCachesParCorpsCelestes()
+        private Dictionary<int, Ennemi> hiddenEnemies = new Dictionary<int, Ennemi>();
+        private void DoHiddenEnemies()
         {
-            ennemisCaches.Clear();
+            hiddenEnemies.Clear();
 
-            for (int i = 0; i < CorpsCelestes.Count; i++)
+            for (int i = 0; i < CelestialBodies.Count; i++)
             {
-                CorpsCeleste corpsCeleste = CorpsCelestes[i];
+                CorpsCeleste corpsCeleste = CelestialBodies[i];
 
                 if (corpsCeleste.EstDernierRelais)
                     continue;
@@ -334,32 +418,30 @@
 
                 foreach (var indice in candidats)
                 {
-                    Ennemi e = Ennemis[indice];
+                    Ennemi e = Enemies[indice];
 
-                    if (!ennemisCaches.ContainsKey(e.GetHashCode()) &&
+                    if (!hiddenEnemies.ContainsKey(e.GetHashCode()) &&
                         EphemereGames.Core.Physique.Facade.collisionCercleCercle(corpsCeleste.Cercle, e.Cercle))
                     {
-                        ennemisCaches.Add(e.GetHashCode(), e);
+                        hiddenEnemies.Add(e.GetHashCode(), e);
                     }
                 }
             }
         }
 
 
-        private List<KeyValuePair<Turret, IObjetPhysique>> collisionsDansZoneActivationCeTick = new List<KeyValuePair<Turret, IObjetPhysique>>();
-        private void doDansZoneActivationCeTick()
+        private List<KeyValuePair<Turret, IObjetPhysique>> InTurretRangeThisTick = new List<KeyValuePair<Turret, IObjetPhysique>>();
+        private void DoInTurretRangeThisTick()
         {
-            doEnnemisCachesParCorpsCelestes();
-
-            collisionsDansZoneActivationCeTick.Clear();
+            InTurretRangeThisTick.Clear();
 
             RectanglePhysique r = new RectanglePhysique();
             Cercle c = new Cercle(Vector3.Zero, 1);
 
             // Collisions Tourelle.ZoneActivation <--> Ennemis
-            for (int i = 0; i < Tourelles.Count; i++)
+            for (int i = 0; i < Turrets.Count; i++)
             {
-                Turret tourelle = Tourelles[i];
+                Turret tourelle = Turrets[i];
 
                 if (tourelle.Type == TurretType.Gravitational || tourelle.Type == TurretType.Booster)
                     continue;
@@ -377,14 +459,14 @@
 
                 foreach (var indice in candidats)
                 {
-                    Ennemi e = Ennemis[indice];
+                    Ennemi e = Enemies[indice];
 
-                    if (ennemisCaches.ContainsKey(e.GetHashCode()))
+                    if (hiddenEnemies.ContainsKey(e.GetHashCode()))
                         continue;
 
                     if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(c, e.Cercle))
                     {
-                        collisionsDansZoneActivationCeTick.Add(new KeyValuePair<Turret, IObjetPhysique>(tourelle, e));
+                        InTurretRangeThisTick.Add(new KeyValuePair<Turret, IObjetPhysique>(tourelle, e));
                         break; // passe à la prochaine tourelle
                     }
                 }
@@ -392,18 +474,18 @@
         }
 
 
-        private List<KeyValuePair<Turret, Turret>> boostCollisionsThisTick = new List<KeyValuePair<Turret, Turret>>();
-        private void doBoostCollisionsThisTick()
+        private List<KeyValuePair<Turret, Turret>> BoostedThisTick = new List<KeyValuePair<Turret, Turret>>();
+        private void DoBoostedThisTick()
         {
-            boostCollisionsThisTick.Clear();
+            BoostedThisTick.Clear();
 
             RectanglePhysique r = new RectanglePhysique();
             Cercle c = new Cercle(Vector3.Zero, 1);
 
             // Collisions BoosterTurret <--> Others Turrets
-            for (int i = 0; i < Tourelles.Count; i++)
+            for (int i = 0; i < Turrets.Count; i++)
             {
-                Turret turret = Tourelles[i];
+                Turret turret = Turrets[i];
 
                 if (turret.Type != TurretType.Booster)
                     continue;
@@ -421,41 +503,48 @@
 
                 foreach (var index in candidates)
                 {
-                    Turret boostedTurret = Tourelles[index];
+                    Turret boostedTurret = Turrets[index];
 
                     if (boostedTurret.Type == TurretType.Booster)
                         continue;
 
                     if (Core.Physique.Facade.collisionCercleCercle(turret.Cercle, c))
-                        boostCollisionsThisTick.Add(new KeyValuePair<Turret, Turret>(turret, boostedTurret));
+                        BoostedThisTick.Add(new KeyValuePair<Turret, Turret>(turret, boostedTurret));
                 }
             }
         }
 
 
-        public void doObjetDetruit(IObjetPhysique objet)
+        public void DoObjectDestroyed(IObjetPhysique objet)
         {
             CorpsCeleste corpsCeleste = objet as CorpsCeleste;
 
             if (corpsCeleste != null)
             {
-                tmpObjetsTraites.Clear();
+                TmpObjects.Clear();
 
-                IEnumerable<int> candidats = EnemiesGrid.GetItems(corpsCeleste.ZoneImpactDestruction.Rectangle);
+                RectanglePhysique r = new RectanglePhysique(
+                    (int) (corpsCeleste.position.X - corpsCeleste.ZoneImpactDestruction),
+                    (int) (corpsCeleste.position.Y - corpsCeleste.ZoneImpactDestruction),
+                    (int) (corpsCeleste.ZoneImpactDestruction * 2),
+                    (int) (corpsCeleste.ZoneImpactDestruction * 2));
+                Cercle c = new Cercle(corpsCeleste.position, corpsCeleste.ZoneImpactDestruction);
+
+                IEnumerable<int> candidats = EnemiesGrid.GetItems(r);
 
                 foreach (var indice in candidats)
                 {
-                    if (tmpObjetsTraites.ContainsKey(indice))
+                    if (TmpObjects.ContainsKey(indice))
                         continue;
                     else
-                        tmpObjetsTraites.Add(indice, 0);
+                        TmpObjects.Add(indice, 0);
 
-                    if (indice >= Ennemis.Count)
+                    if (indice >= Enemies.Count)
                         continue;
 
-                    Ennemi ennemi = Ennemis[indice];
+                    Ennemi ennemi = Enemies[indice];
 
-                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(corpsCeleste.ZoneImpactDestruction, ennemi.Cercle))
+                    if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(c, ennemi.Cercle))
                         notifyObjetTouche(ennemi, corpsCeleste);
                 }
 
@@ -467,19 +556,26 @@
 
             if (collecteur != null)
             {
-                Collecteur = null;
+                Collector = null;
 
                 return;
             }
         }
 
 
-        public void doObjetCree(IObjetPhysique objet)
+        public void DoObjectCreated(IObjetPhysique objet)
         {
-            SpaceshipCollector collecteur = objet as SpaceshipCollector;
+            if (objet is SpaceshipCollector || objet is SpaceshipAutomaticCollector)
+                Collector = (Spaceship) objet;
+        }
 
-            if (collecteur != null)
-                Collecteur = collecteur;
+
+        public void DoPowerUpStarted(PowerUp powerUp)
+        {
+            if (powerUp is PowerUpDeadlyShootingStars)
+                DeadlyShootingStars = true;
+            else if (powerUp is PowerUpDarkSide)
+                DarkSide = true;
         }
     }
 }

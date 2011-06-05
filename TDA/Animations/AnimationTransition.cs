@@ -100,9 +100,9 @@ namespace EphemereGames.Commander
                     AlienShips.Add(v);
 
                     if (In)
-                        Paths.Add(new Trajet3D(new Vector3[] { PositionsIn[i].Key, PositionsIn[i].Value }, new double[] { 0, this.Length }));
+                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
                     else
-                        Paths.Add(new Trajet3D(new Vector3[] { PositionsOut[i].Key, PositionsOut[i].Value }, new double[] { 0, this.Length }));
+                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
                 }
             }
 
@@ -118,9 +118,9 @@ namespace EphemereGames.Commander
                     Others.Add(iv);
 
                     if (In)
-                        Paths.Add(new Trajet3D(new Vector3[] { PositionsIn[i].Key, PositionsIn[i].Value }, new double[] { 0, this.Length }));
+                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
                     else
-                        Paths.Add(new Trajet3D(new Vector3[] { PositionsOut[i].Key, PositionsOut[i].Value }, new double[] { 0, this.Length }));
+                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
                 }
             }
         }

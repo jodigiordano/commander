@@ -21,7 +21,7 @@ namespace EphemereGames.Commander
             Category = PowerUpCategory.Spaceship;
             BuyImage = "Collecteur";
             BuyPrice = 0;
-            BuyTitle = "The collector";
+            BuyTitle = "The collector (FREE!)";
             BuyDescription = "Collect minerals on the battlefield.";
             NeedInput = true;
             Position = Vector3.Zero;
@@ -30,8 +30,17 @@ namespace EphemereGames.Commander
 
         public override bool Terminated
         {
-            get { return !Spaceship.Active; }
+            get { return TerminatedOverride || !Spaceship.Active; }
         }
+
+
+        public override void Update()
+        {
+            Position = Spaceship.Position;
+        }
+
+
+        public override void DoInputMoved(Vector3 position) { }
 
 
         public override void DoInputMovedDelta(Vector3 delta)

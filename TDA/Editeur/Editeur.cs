@@ -217,9 +217,9 @@
             GenerateurGUI.Visible = !GenerateurGUI.Visible;
 
             if (GenerateurGUI.Visible)
-                Cursor.doShow();
+                Cursor.DoShow();
             else
-                Cursor.doHide();
+                Cursor.DoHide();
         }
     }
 }

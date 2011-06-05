@@ -34,6 +34,7 @@ namespace EphemereGames.Commander
         public EnemiesFactory EnemiesFactory;
         public MineralsFactory MineralsFactory;
         public RectanglePhysique Terrain;
+        public RectanglePhysique InnerTerrain;
         public GameState Etat { get { return ScenarioController.State; } set { ScenarioController.State = value; } }
         public bool HelpMode { get { return ScenarioController.Help.Active; } }
         public CorpsCeleste CelestialBodyPausedGame;
@@ -44,7 +45,7 @@ namespace EphemereGames.Commander
         public ControleurMessages MessagesController;
         private ScenarioController ScenarioController;
         private ControleurEnnemis EnemiesController;
-        private ControleurProjectiles BulletsController;
+        private BulletsController BulletsController;
         private ControleurCollisions CollisionsController;
         private SimPlayersController SimPlayersController;
         private TurretsController TurretsController;
@@ -111,16 +112,19 @@ namespace EphemereGames.Commander
                     "nanobots",
                     "nanobots2",
                     "railgun",
-                    "railgunExplosion"
+                    "railgunExplosion",
+                    "pulseEffect",
+                    "shieldEffect"
                 }, false);
 
             DemoModeSelectedScenario = new ScenarioDescriptor();
             WorldMode = false;
             GameAction = GameAction.None;
             Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
+            InnerTerrain = new RectanglePhysique(-640, -320, 1280, 720);
 
             CollisionsController = new ControleurCollisions(this);
-            BulletsController = new ControleurProjectiles(this);
+            BulletsController = new BulletsController(this);
             EnemiesController = new ControleurEnnemis(this);
             SimPlayersController = new SimPlayersController(this);
             TurretsController = new TurretsController(this);
@@ -134,14 +138,14 @@ namespace EphemereGames.Commander
             TurretsFactory.Availables = ScenarioController.AvailableTurrets;
             PowerUpsFactory.Availables = ScenarioController.AvailablePowerUps;
 
-            CollisionsController.Projectiles = BulletsController.Projectiles;
-            CollisionsController.Ennemis = EnemiesController.Ennemis;
+            CollisionsController.Bullets = BulletsController.Bullets;
+            CollisionsController.Enemies = EnemiesController.Ennemis;
             SimPlayersController.CelestialBodies = ScenarioController.CelestialBodies;
             PlanetarySystemController.CelestialBodies = ScenarioController.CelestialBodies;
             TurretsController.PlanetarySystemController = PlanetarySystemController;
             EnemiesController.VaguesInfinies = ScenarioController.InfiniteWaves;
             EnemiesController.Vagues = ScenarioController.Waves;
-            CollisionsController.Tourelles = TurretsController.Turrets;
+            CollisionsController.Turrets = TurretsController.Turrets;
             SimPlayersController.CommonStash = ScenarioController.CommonStash;
             SimPlayersController.CelestialBodyToProtect = ScenarioController.CelestialBodyToProtect;
             GUIController.Path = PlanetarySystemController.Path;
@@ -149,12 +153,12 @@ namespace EphemereGames.Commander
             EnemiesController.CheminProjection = PlanetarySystemController.PathPreview;
             TurretsController.StartingTurrets = ScenarioController.StartingTurrets;
             EnemiesController.Chemin = PlanetarySystemController.Path;
-            CollisionsController.CorpsCelestes = ScenarioController.CelestialBodies;
-            CollisionsController.Mineraux = EnemiesController.Mineraux;
+            CollisionsController.CelestialBodies = ScenarioController.CelestialBodies;
+            CollisionsController.Minerals = EnemiesController.Minerals;
             EnemiesController.ValeurTotalMineraux = ScenarioController.Scenario.MineralsValue;
             EnemiesController.PourcentageMinerauxDonnes = ScenarioController.Scenario.MineralsPercentages;
             EnemiesController.NbPackViesDonnes = ScenarioController.Scenario.LifePacks;
-            SpaceshipsController.Ennemis = EnemiesController.Ennemis;
+            SpaceshipsController.Enemies = EnemiesController.Ennemis;
             MessagesController.Tourelles = TurretsController.Turrets;
             MessagesController.CorpsCelesteAProteger = ScenarioController.CelestialBodyToProtect;
             MessagesController.CorpsCelestes = ScenarioController.CelestialBodies;
@@ -173,15 +177,17 @@ namespace EphemereGames.Commander
             PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
             SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
             GUIController.Turrets = TurretsController.Turrets;
+            SpaceshipsController.Minerals = EnemiesController.Minerals;
+            CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
 
 
-            CollisionsController.ObjetTouche += new PhysicalObjectPhysicalObjectHandler(EnemiesController.doObjetTouche);
+            CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.doObjetTouche);
             SimPlayersController.AchatTourelleDemande += new TurretHandler(TurretsController.DoBuyTurret);
             EnemiesController.VagueTerminee += new ControleurEnnemis.VagueTermineeHandler(ScenarioController.doWaveEnded);
             EnemiesController.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
-            CollisionsController.DansZoneActivation += new ControleurCollisions.DansZoneActivationHandler(TurretsController.DoInRangeTurret);
-            TurretsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.doObjetCree);
-            BulletsController.ObjetDetruit += new PhysicalObjectHandler(CollisionsController.doObjetDetruit);
+            CollisionsController.InTurretRange += new ControleurCollisions.TurretPhysicalObjectHandler(TurretsController.DoInRangeTurret);
+            TurretsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
+            BulletsController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             EnemiesController.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doWaveStarted);
             SimPlayersController.VenteTourelleDemande += new TurretHandler(TurretsController.DoSellTurret);
             TurretsController.TurretSold += new TurretHandler(SimPlayersController.DoTourelleVendue);
@@ -192,10 +198,10 @@ namespace EphemereGames.Commander
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
             SimPlayersController.ProchaineVagueDemandee += new NoneHandler(EnemiesController.doProchaineVagueDemandee);
-            SpaceshipsController.ObjetCree += new PhysicalObjectHandler(BulletsController.doObjetCree);
-            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.doObjetDetruit);
-            SpaceshipsController.ObjetCree += new PhysicalObjectHandler(CollisionsController.doObjetCree);
-            EnemiesController.ObjetCree += new PhysicalObjectHandler(CollisionsController.doObjetCree);
+            SpaceshipsController.ObjetCree += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
+            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
+            SpaceshipsController.ObjetCree += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
+            EnemiesController.ObjetCree += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(ScenarioController.doObjectDestroyed);
             EnemiesController.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(this.doEnnemiAtteintFinTrajet);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.doCorpsCelesteDetruit);
@@ -212,25 +218,32 @@ namespace EphemereGames.Commander
             SimPlayersController.TurretToPlaceDeselected += new TurretHandler(GUIController.doTurretToPlaceDeselected);
             SimPlayersController.AchatTourelleDemande += new TurretHandler(GUIController.doTurretBought);
             SimPlayersController.VenteTourelleDemande += new TurretHandler(GUIController.doTurretSold);
-            SimPlayersController.BuyAPowerUpAsked += new PowerUpTypeHandler(PowerUpsController.DoBuyAPowerUpAsked);
+            SimPlayersController.ActivatePowerUpAsked += new PowerUpTypeHandler(PowerUpsController.DoActivatePowerUpAsked);
             PowerUpsController.PowerUpStarted += new PowerUpHandler(SpaceshipsController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpHandler(SpaceshipsController.DoPowerUpStopped);
             PowerUpsController.PowerUpStarted += new PowerUpHandler(GUIController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpHandler(GUIController.DoPowerUpStopped);
             PowerUpsController.PowerUpStarted += new PowerUpHandler(SimPlayersController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpHandler(SimPlayersController.DoPowerUpStopped);
+            PowerUpsController.PowerUpStarted += new PowerUpHandler(CollisionsController.DoPowerUpStarted);
+            PowerUpsController.PowerUpStarted += new PowerUpHandler(BulletsController.DoPowerUpStarted);
+            PowerUpsController.PowerUpStopped += new PowerUpHandler(BulletsController.DoPowerUpStopped);
+            PowerUpsController.PowerUpStarted += new PowerUpHandler(PlanetarySystemController.DoPowerUpStarted);
+            PowerUpsController.PowerUpStopped += new PowerUpHandler(PlanetarySystemController.DoPowerUpStopped);
+            PowerUpsController.PowerUpStarted += new PowerUpHandler(ScenarioController.DoPowerUpStarted);
             CollisionsController.TurretBoosted += new TurretTurretHandler(TurretsController.DoTurretBoosted);
             SimPlayersController.PlayerMoved += new SimPlayerHandler(PowerUpsController.DoPlayerMoved);
+            ScenarioController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
+            TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
 
-            SimPlayersController.Initialize();
             EnemiesController.Initialize();
-            BulletsController.Initialize();
             TurretsController.Initialize();
             PlanetarySystemController.Initialize();
             CollisionsController.Initialize();
             MessagesController.Initialize();
             GUIController.Initialize();
             PowerUpsController.Initialize();
+            SimPlayersController.Initialize(); // Must be done after the PowerUpsController
 
             ModeDemo = modeDemo;
             ModeEditeur = modeEditeur;
@@ -284,7 +297,7 @@ namespace EphemereGames.Commander
                 return;
 
             CollisionsController.Update(gameTime);
-            BulletsController.Update(gameTime);
+            BulletsController.Update();
             PlanetarySystemController.Update(gameTime); // must be done before the TurretController because the celestial bodies must move before the turrets
             TurretsController.Update(gameTime); //doit etre fait avant le controleurEnnemi pour les associations ennemis <--> tourelles
             EnemiesController.Update(gameTime);
@@ -299,7 +312,7 @@ namespace EphemereGames.Commander
         public void Draw()
         {
             CollisionsController.Draw(null);
-            BulletsController.Draw(null);
+            BulletsController.Draw();
             EnemiesController.Draw(null);
             TurretsController.Draw();
             PlanetarySystemController.Draw();

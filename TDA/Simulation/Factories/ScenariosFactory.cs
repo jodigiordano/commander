@@ -19,8 +19,7 @@
                     wd = new WorldDescriptor()
                     {
                         Id = 1,
-                        //Levels = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
-                        Levels = new List<int>() { 0, 8 },
+                        Levels = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
                         Warps = new List<KeyValuePair<int,int>>() { new KeyValuePair<int, int>(9, 2) },
                         SimulationDescription = ScenariosFactory.getDescripteurMonde1(),
                         UnlockedCondition = new List<int>(),

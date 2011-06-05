@@ -119,7 +119,7 @@
             ScenarioDescriptor descripteurScenario = ScenariosFactory.getDescripteurMenu();
 
 #if !DEBUG
-            descripteurScenario.SystemePlanetaire[5].Selectionnable = false;
+            descripteurScenario.PlanetarySystem[5].CanSelect = false;
 #endif
 
             //Simulation = new Simulation(Main, this, FactoryScenarios.getDescripteurTestsPerformance());

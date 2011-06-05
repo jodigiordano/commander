@@ -29,7 +29,7 @@
 
             Position = Target.Position;
 
-            Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 10, 10);
+            Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
             CanonRotation = new Matrix();
 
             ExplodingEffectAlt = Scene.Particules.recuperer("projectileBaseExplosion");

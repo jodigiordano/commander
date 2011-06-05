@@ -163,13 +163,13 @@
             {
                 this.VisualPriorityBackup = value;
 
-                BaseImage.VisualPriority = value - 0.002f;
-                CanonImage.VisualPriority = value - 0.001f;
+                BaseImage.VisualPriority = value - 0.0002f;
+                CanonImage.VisualPriority = value - 0.0001f;
 
-                DisabledBarImage.VisualPriority = value - 0.003f;
-                DisabledProgressBarImage.VisualPriority = value - 0.004f;
+                DisabledBarImage.VisualPriority = value - 0.0003f;
+                DisabledProgressBarImage.VisualPriority = value - 0.0004f;
 
-                FormImage.VisualPriority = BaseImage.VisualPriority + 0.005f;
+                FormImage.VisualPriority = BaseImage.VisualPriority + 0.0005f;
             }
         }
 

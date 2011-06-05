@@ -96,9 +96,6 @@
                 StarsEmitter = 0;
             }
 
-            if (Main.Random.Next(0, 1000) == 0)
-                Simulation.Scene.Animations.Insert(new AnimationEtoileFilante(Simulation));
-
             ElapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
@@ -201,6 +198,16 @@
                 computeFinalScore();
 
                 notifyNouvelEtatPartie(State);
+            }
+        }
+
+
+        public void DoPowerUpStarted(PowerUp powerUp)
+        {
+            if (powerUp.Type == PowerUpType.Shield)
+            {
+                ((PowerUpShield) powerUp).ToProtect = CelestialBodyToProtect;
+                ((PowerUpShield) powerUp).Bullet.Position = CelestialBodyToProtect.Position;
             }
         }
 

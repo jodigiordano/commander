@@ -19,9 +19,9 @@ namespace EphemereGames.Commander
             AttackPoints = 50000;
             Type = PowerUpType.DeadlyShootingStars;
             Category = PowerUpCategory.Other;
-            BuyImage = "Destruction";
+            BuyImage = "shootingStars";
             BuyPrice = 500;
-            BuyTitle = "Deadly Shooting Stars";
+            BuyTitle = "Deadly Shooting Stars (" + BuyPrice + "M$)";
             BuyDescription = "The shooting stars become deadly to enemies.";
             NeedInput = false;
             Position = Vector3.Zero;
@@ -30,7 +30,7 @@ namespace EphemereGames.Commander
 
         public override bool Terminated
         {
-            get { return false; }
+            get { return TerminatedOverride; }
         }
 
 

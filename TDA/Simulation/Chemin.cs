@@ -1,10 +1,10 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Physique;
 
 
     class Path
@@ -14,24 +14,34 @@
         private const int CelestialBodyDistance = 70;
 
         public List<CorpsCeleste> CorpsCelestes;
+        public double Length;
 
         private Trajet3D Trajet;
-        private double[] Temps;
+        private List<double> Temps;
+        private List<Vector3> SousPoints;
         private SortedList<int, CorpsCeleste> CorpsCelestesChemin;
         private int DistanceDeuxPoints = 40;
         private Image[] Lignes;
         private Scene Scene;
-        public double Longueur;
-        private Vector3[] SousPoints;
         private int NbSousPoints;
 
 
         public Path(Simulation simulation, Color couleur, TypeBlend melange)
         {
             Scene = simulation.Scene;
-            Temps = new double[MaxCurvePoints];
+            
             Trajet = new Trajet3D();
-            Longueur = 0;
+            Temps = new List<double>(MaxCurvePoints);
+            SousPoints = new List<Vector3>(MaxCurvePoints);
+
+            for(int i = 0; i < MaxCurvePoints; i++)
+            {
+                Temps.Add(0);
+                SousPoints.Add(Vector3.Zero);
+            }
+
+            NbSousPoints = 0;
+            Length = 0;
 
             Lignes = new Image[MaxVisibleLines];
 
@@ -45,9 +55,6 @@
 
                 Lignes[i] = line;
             }
-
-            SousPoints = new Vector3[500];
-            NbSousPoints = 0;
         }
 
 
@@ -171,14 +178,14 @@
         {
             mettreAJourSousPoints();
 
-            Longueur = 0;
-            Temps[0] = Longueur;
+            Length = 0;
+            Temps[0] = Length;
 
             for (int i = 1; i < NbSousPoints; i++)
             {
                 _vecteur1 = Vector3.Subtract(SousPoints[i], SousPoints[i - 1]);
-                Longueur += _vecteur1.Length();
-                Temps[i] = Longueur;
+                Length += _vecteur1.Length();
+                Temps[i] = Length;
             }
 
             Trajet.Initialize(SousPoints, Temps, NbSousPoints);
@@ -187,7 +194,7 @@
 
         public void Draw()
         {
-            int nbLines = (int) (Longueur / DistanceDeuxPoints) + 1;
+            int nbLines = (int) (Length / DistanceDeuxPoints) + 1;
 
             for (int j = 0; j < nbLines; j++)
             {

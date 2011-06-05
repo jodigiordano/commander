@@ -135,6 +135,8 @@
                     ImagesTurretsPowerUps[p.Type].Draw();
                 else
                 {
+                    ImagesPlaceHolders[p.Type].Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
+
                     Simulation.Scene.ajouterScenable(ImagesPowerUpsBuy[p.Type]);
                     Simulation.Scene.ajouterScenable(ImagesPlaceHolders[p.Type]);
                 }
@@ -150,7 +152,7 @@
                     ImagesTurretsPowerUps[p.Type].Position :
                     ImagesPowerUpsBuy[p.Type].Position;
 
-                PowerUpPriceTitleAndCost.Data = p.BuyTitle + " (" + p.BuyPrice + " M$)";
+                PowerUpPriceTitleAndCost.Data = p.BuyTitle;
                 PowerUpPriceTitleAndCost.Position = position - new Vector3(0, 60, 0);
                 PowerUpPriceTitleAndCost.Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
 
@@ -204,8 +206,8 @@
             {
                 RailGunTurret rgt = new RailGunTurret(Simulation)
                 {
-                    Position = HumanBattleship.Position + new Vector3(120, 30, 0),
-                    VisualPriority = this.VisualPriority + 0.003f,
+                    Position = HumanBattleship.Position + new Vector3(130, 30, 0),
+                    VisualPriority = this.VisualPriority + 0.004f,
                     PlayerControlled = true,
                     UpdatePosition = false,
                     Watcher = false,
@@ -217,6 +219,25 @@
                 Turrets.Add(rgt);
 
                 ImagesTurretsPowerUps.Add(p.Type, rgt);
+            }
+
+            else if (p.Type == PowerUpType.Sniper)
+            {
+                SniperTurret st = new SniperTurret(Simulation)
+                {
+                    Position = HumanBattleship.Position + new Vector3(60, 80, 0),
+                    VisualPriority = this.VisualPriority + 0.004f,
+                    PlayerControlled = true,
+                    UpdatePosition = false,
+                    Watcher = false,
+                    TimeLastBullet = double.MaxValue
+                };
+
+                p.BuyPosition = st.Position + new Vector3(300, 75, 0);
+                HumanBattleship.Sniper = st;
+                Turrets.Add(st);
+
+                ImagesTurretsPowerUps.Add(p.Type, st);
             }
         }
     }

@@ -11,6 +11,7 @@ namespace EphemereGames.Commander
         public Spaceship Spaceship { get; private set; }
 
         private HumanBattleship HumanBattleship;
+        private float ActiveTime;
 
 
         public PowerUpSpaceship(Simulation simulation, HumanBattleship humanBattleship)
@@ -22,11 +23,21 @@ namespace EphemereGames.Commander
             Category = PowerUpCategory.Spaceship;
             BuyImage = "Vaisseau";
             BuyPrice = 50;
-            BuyTitle = "The spaceship";
-            BuyDescription = "Control a crazy spaceship for 10 seconds.";
+            ActiveTime = 10000;
+            BuyTitle = "The spaceship (" + BuyPrice + "M$)";
+            BuyDescription = "Control a crazy spaceship for " + (int) ActiveTime / 1000 + " sec.";
             NeedInput = true;
             Position = Vector3.Zero;
         }
+
+
+        public override void Update()
+        {
+            Position = Spaceship.Position;
+        }
+
+
+        public override void DoInputMoved(Vector3 position) { }
 
 
         public override void DoInputMovedDelta(Vector3 delta)
@@ -44,7 +55,7 @@ namespace EphemereGames.Commander
                 Position = Position,
                 VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f,
                 Bouncing = new Vector3(Main.Random.Next(-25, 25), Main.Random.Next(-25, 25), 0),
-                ActiveTime = 5000,
+                ActiveTime = ActiveTime,
                 StartingObject = HumanBattleship,
                 AutomaticMode = false
             };
@@ -55,7 +66,7 @@ namespace EphemereGames.Commander
 
         public override bool Terminated
         {
-            get { return !Spaceship.Active; }
+            get { return TerminatedOverride || !Spaceship.Active; }
         }
     }
 }

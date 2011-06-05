@@ -7,7 +7,8 @@
 
     class SpaceshipsController
     {
-        public List<Ennemi> Ennemis;
+        public List<Ennemi> Enemies;
+        public List<Mineral> Minerals;
         public HumanBattleship HumanBattleship;
         public event PhysicalObjectHandler ObjetCree;
 
@@ -66,9 +67,11 @@
         {
             switch (powerUp.Type)
             {
-                case PowerUpType.Collector: DoAddSpaceshipAsked(((PowerUpCollector) powerUp).Spaceship); break;
-                case PowerUpType.Spaceship: DoAddSpaceshipAsked(((PowerUpSpaceship) powerUp).Spaceship); break;
-                case PowerUpType.TheResistance: DoAddSpaceshipAsked(((PowerUpTheResistance) powerUp).Spaceship); break;
+                case PowerUpType.Collector: DoAddSpaceshipAsked(((PowerUpCollector) powerUp).Spaceship);                    break;
+                case PowerUpType.Spaceship: DoAddSpaceshipAsked(((PowerUpSpaceship) powerUp).Spaceship);                    break;
+                case PowerUpType.TheResistance: DoAddSpaceshipAsked(((PowerUpTheResistance) powerUp).Spaceship);            break;
+                case PowerUpType.Miner: DoAddSpaceshipAsked(((PowerUpMiner) powerUp).Spaceship);                            break;
+                case PowerUpType.AutomaticCollector: DoAddSpaceshipAsked(((PowerUpAutomaticCollector) powerUp).Spaceship);  break;
             }
         }
 
@@ -82,7 +85,12 @@
         public void DoAddSpaceshipAsked(Spaceship spaceship)
         {
             if (spaceship is TheResistance)
-                ((TheResistance) spaceship).Initialize(Ennemis);
+                ((TheResistance) spaceship).Enemies = Enemies;
+
+            if (spaceship is SpaceshipAutomaticCollector)
+                ((SpaceshipAutomaticCollector) spaceship).Minerals = Minerals;
+
+            spaceship.Initialize();
 
             Spaceships.Add(spaceship);
 

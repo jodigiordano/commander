@@ -19,7 +19,8 @@
         Booster,
         Gunner,
         Nanobots,
-        RailGun
+        RailGun,
+        Sniper
     };
 
 

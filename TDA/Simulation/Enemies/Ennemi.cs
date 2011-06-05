@@ -28,7 +28,7 @@ namespace EphemereGames.Commander
         public int ValeurPoints;
         public float Resistance;
         public bool Alive                                           { get { return LifePoints > 0; } }
-        public bool FinCheminProjection                             { get { return Deplacement > CheminProjection.Longueur; } }
+        public bool FinCheminProjection                             { get { return Deplacement > CheminProjection.Length; } }
         public IVisible RepresentationVivant;
         public IVisible RepresentationMort;
         public ParticuleEffectWrapper RepresentationExplose;
@@ -136,7 +136,7 @@ namespace EphemereGames.Commander
             Path.Position(Deplacement, ref position);
             Vector3.Add(ref position, ref this.Translation, out position);
 
-            if (Deplacement > Path.Longueur)
+            if (Deplacement > Path.Length)
                 notifyRelaisAtteint(this);
 
             Rectangle.X = (int)Position.X - Rectangle.Width / 2;
@@ -234,11 +234,23 @@ namespace EphemereGames.Commander
                 return;
             }
 
+
             CorpsCeleste c = par as CorpsCeleste;
 
             if (c != null)
             {
                 PositionDernierProjectileTouche = c.Position;
+                return;
+            }
+
+
+            ShootingStar s = par as ShootingStar;
+
+            if (s != null)
+            {
+                PositionDernierProjectileTouche = s.Position;
+
+                return;
             }
         }
 

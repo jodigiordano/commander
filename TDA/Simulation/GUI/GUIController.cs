@@ -36,6 +36,7 @@
         private Cursor Cursor;
         private Cursor Crosshair;
         private bool PowerUpInputMode;
+        private bool PowerUpFinalSolution;
         private TheResistance GamePausedResistance;
 
 
@@ -45,7 +46,7 @@
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
             MenuGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
             Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
-            Crosshair = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshair", false);
+            Crosshair = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
             MenuTurret = new MenuTurret(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuCelestialBody = new MenuCelestialBody(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuPowerUps = new MenuPowerUps(Simulation, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
@@ -53,7 +54,8 @@
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
             PowerUpInputMode = false;
             GamePausedResistance = new TheResistance(Simulation);
-            GamePausedResistance.Initialize(new List<Ennemi>());
+            GamePausedResistance.Enemies = new List<Ennemi>();
+            GamePausedResistance.Initialize();
             GamePausedResistance.AlphaChannel = 100;
         }
 
@@ -74,6 +76,7 @@
             MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             MenuGeneral.TimeNextWave = Waves.First.Value.StartingTime;
             PowerUpInputMode = false;
+            PowerUpFinalSolution = false;
         }
 
 
@@ -130,11 +133,17 @@
         {
             if (powerUp.NeedInput)
             {
-                Cursor.doHide();
+                Cursor.DoHide();
                 PowerUpInputMode = true;
 
-                if (powerUp.Type == PowerUpType.RailGun)
-                    Crosshair.doShow();
+                if (powerUp.Crosshair != "")
+                {
+                    Crosshair.Representation = powerUp.Crosshair;
+                    Crosshair.DoShow();
+                }
+
+                if (powerUp.Type == PowerUpType.FinalSolution)
+                    PowerUpFinalSolution = true;
             }
         }
 
@@ -143,11 +152,14 @@
         {
             if (powerUp.NeedInput)
             {
-                Cursor.doShow();
+                Cursor.DoShow();
                 PowerUpInputMode = false;
 
-                if (powerUp.Type == PowerUpType.RailGun)
-                    Crosshair.doHide();
+                if (powerUp.Crosshair != "")
+                    Crosshair.DoHide();
+
+                if (powerUp.Type == PowerUpType.FinalSolution)
+                    PowerUpFinalSolution = false;
             }
         }
 
@@ -181,7 +193,7 @@
 
         public void doTurretToPlaceSelected(Turret turret)
         {
-            Cursor.doHide();
+            Cursor.DoHide();
             turret.CelestialBody.ShowTurretsZone = true;
             turret.ShowRange = true;
             turret.ShowForm = true;
@@ -193,7 +205,7 @@
 
         public void doTurretToPlaceDeselected(Turret turret)
         {
-            Cursor.doShow();
+            Cursor.DoShow();
             turret.CelestialBody.ShowTurretsZone = false;
             turret.ShowRange = false;
         }
@@ -240,7 +252,7 @@
             SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
 
             FinalSolutionPreview.CelestialBody =
-                (selection.PowerUpToBuy == PowerUpType.FinalSolution) ? selection.CelestialBody : null;
+                (PowerUpFinalSolution) ? selection.CelestialBody : null;
 
             if (PathPreviewing != null &&
                 selection.Turret != null &&
@@ -272,11 +284,8 @@
             if (MenuGeneral.TimeNextWave > 0)
                 MenuGeneral.TimeNextWave = Math.Max(0, MenuGeneral.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
 
-            if (!PowerUpInputMode)
-                SelectedCelestialBodyAnimation.Update(gameTime);
-
             //todo event-based
-            MenuGeneral.MenuNextWave.Visible = Cursor.Actif && EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
+            MenuGeneral.MenuNextWave.Visible = Cursor.Active && EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
 
             if (Simulation.ModeDemo)
             {
@@ -307,9 +316,8 @@
             Cursor.Draw();
             Crosshair.Draw();
             Path.Draw();
+            SelectedCelestialBodyAnimation.Draw();
 
-            if (!PowerUpInputMode)
-                SelectedCelestialBodyAnimation.Draw();
 
             if (Simulation.ModeDemo)
             {
@@ -330,14 +338,14 @@
             AdvancedView.Draw();
             PlayerLives.Draw();
             MenuPowerUps.Draw();
+            PathPreviewing.Draw();
+            FinalSolutionPreview.Draw();
 
             if (PowerUpInputMode)
                 return;
 
             MenuCelestialBody.Draw();
             MenuTurret.Draw();
-            PathPreviewing.Draw();
-            FinalSolutionPreview.Draw();
         }
     }
 }

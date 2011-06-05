@@ -21,7 +21,7 @@
         public RectanglePhysique Rectangle      { get; set; }
         public Ligne Ligne                      { get; set; }
 
-        public IObjetPhysique StartingObject;
+        public IObjetPhysique StartingObject    { get; set; }
         public virtual bool TargetReached       { get; set; }
 
         private Vector3 targetPosition;
@@ -79,8 +79,18 @@
         }
 
 
+        public virtual void Initialize()
+        {
+            if (StartingObject != null)
+                Position = StartingObject.Position;
+        }
+
+
         public virtual void Update()
         {
+            if (StartingObject != null && GoBackToStartingObject)
+                TargetPosition = StartingObject.Position;
+
             this.Cercle.Position = this.Position;
 
             LastFireCounter += 16.66f;

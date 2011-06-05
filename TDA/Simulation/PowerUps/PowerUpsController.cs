@@ -43,6 +43,8 @@
 
                 if (PowerUps[i].Terminated)
                 {
+                    p.Stop();
+
                     ActivesPowerUps[p.Type] = true;
 
                     PowerUps.RemoveAt(i);
@@ -56,7 +58,7 @@
         }
 
 
-        public void DoBuyAPowerUpAsked(PowerUpType type)
+        public void DoActivatePowerUpAsked(PowerUpType type)
         {
             ActivesPowerUps[type] = false;
 
@@ -110,6 +112,15 @@
             foreach (var powerUp in PowerUps)
                 if (powerUp.NeedInput)
                     powerUp.DoInputMovedDelta(delta);
+        }
+
+
+        public void DoNewGameState(GameState state)
+        {
+            InPowerUp = false;
+
+            foreach (var p in PowerUps)
+                p.TerminatedOverride = true;
         }
 
 

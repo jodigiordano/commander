@@ -37,7 +37,6 @@
         private Thread ThreadChargementScenes;
         private bool ThreadChargementScenesTermine;
 
-        private ValidationServeur ValidationServeur;
 
         private static List<String> QuotesChargement = new List<string>()
         {
@@ -107,17 +106,9 @@
             if (AnimationTransition.Finished(gameTime))
             {
                 if (Transition == TransitionType.In)
-                {
                     EtatScene = Etat.CONNEXION_JOUEUR;
-                }
-
                 else
-                {
-                    if (!Main.TrialMode.Active && !ValidationServeur.Valide)
-                        EphemereGames.Core.Visuel.Facade.Transite("ChargementToValidation");
-                    else
-                        EphemereGames.Core.Visuel.Facade.Transite("ChargementToMenu");
-                }
+                    EphemereGames.Core.Visuel.Facade.Transite("ChargementToMenu");
 
                 Transition = TransitionType.None;
             }
@@ -225,9 +216,6 @@
                         if (!ThreadChargementScenesTermine)
                             ThreadChargementScenes.Start();
 
-                        ValidationServeur = new ValidationServeur(Preferences.ProductName, Main.SaveGame.ProductKey);
-                        ValidationServeur.valider();
-
                         Effets.Add(PressStart.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
                         Effets.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
 
@@ -255,13 +243,8 @@
 
                     TraductionChargement.Update(gameTime);
                     Sablier.Update(gameTime);
-                    ValidationServeur.Update(gameTime);
 
-                    if (ValidationServeur.DelaiExpire)
-                        ValidationServeur.canceler();
-
-                    if (ThreadChargementScenesTermine &&
-                       (Main.TrialMode.Active || ValidationServeur.ValidationTerminee))
+                    if (ThreadChargementScenesTermine)
                     {
                         EphemereGames.Core.Visuel.Facade.UpdateScene("Menu", SceneMenu);
                         EphemereGames.Core.Visuel.Facade.UpdateScene("NouvellePartie", SceneNouvellePartie);
@@ -269,9 +252,6 @@
                         EphemereGames.Core.Visuel.Facade.UpdateScene("Options", SceneOptions);
                         EphemereGames.Core.Visuel.Facade.UpdateScene("Editeur", SceneEditeur);
                         EphemereGames.Core.Visuel.Facade.UpdateScene("Acheter", SceneAcheter);
-
-                        if (!ValidationServeur.ErreurSurvenue && !ValidationServeur.Valide)
-                            Main.SaveGame.ProductKey = "";
 
                         EtatScene = Etat.FINISHED;
                         Transition = TransitionType.Out;

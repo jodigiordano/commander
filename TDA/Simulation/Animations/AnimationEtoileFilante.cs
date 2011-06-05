@@ -1,6 +1,7 @@
 namespace EphemereGames.Commander
 {
     using System;
+    using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
@@ -53,14 +54,14 @@ namespace EphemereGames.Commander
 
             Trajet = new Trajet3D
             (
-                new Vector3[]
+                new List<Vector3>()
                 {
                     pointDepart,
                     pointMilieu,
                     pointArrivee
                 },
 
-                new double[]
+                new List<double>()
                 {
                     0,
                     temps,

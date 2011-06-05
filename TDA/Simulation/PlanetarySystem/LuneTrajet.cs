@@ -29,7 +29,7 @@
 
             Trajet = new Trajet3D
             (
-                new Vector3[]
+                new List<Vector3>()
                 {
                     PositionRelative + new Vector3(0, -PositionRelativeY, 0),
                     PositionRelative + new Vector3(30, 0, 0),
@@ -39,7 +39,7 @@
                     PositionRelativeInverse + new Vector3(0, -PositionRelativeY, 0),
                     PositionRelative + new Vector3(0, -PositionRelativeY, 0)
                 },
-                new double[]
+                new List<double>()
                 {
                     step * 0,
                     step * 1,
