@@ -10,11 +10,11 @@
     class Mineral : IObjetPhysique, ILivingObject
     {
         public Vector3 Position                     { get { return position; } set { position = value; } }
-        public float Vitesse                        { get; set; }
+        public float Speed                          { get; set; }
         public Vector3 Direction                    { get; set; }
-        public Forme Forme                          { get; set; }
-        public Cercle Cercle                        { get; set; }
-        public bool Alive                       { get { return TempsExistence > 0; } }
+        public Shape Shape                          { get; set; }
+        public Cercle Circle                        { get; set; }
+        public bool Alive                           { get { return TempsExistence > 0; } }
         public MineralType Type                     { get { return Definition.Type; } }
         public int Value                            { get { return Definition.Value; } }
         public MineralDefinition Definition;
@@ -24,28 +24,28 @@
         private Scene Scene;
         private Vector3 Bouncing;
         private double TempsExistence;
-        private ParticuleEffectWrapper RepresentationParticules;
+        private Particle RepresentationParticules;
 
 
         public Mineral(Scene scene, MineralDefinition definition, float visualPriority)
         {
             Scene = scene;
             Definition = definition;
-            Vitesse = Main.Random.Next(10, 20);
-            RepresentationParticules = scene.Particules.recuperer(definition.ParticulesRepresentation);
+            Speed = Main.Random.Next(10, 20);
+            RepresentationParticules = scene.Particules.Get(definition.ParticulesRepresentation);
             RepresentationParticules.VisualPriority = visualPriority - 0.001f;
             TempsExistence = definition.TimeAlive;
-            Cercle = new Cercle(this, definition.Radius);
+            Circle = new Cercle(this, definition.Radius);
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             AnciennePosition = this.Position;
 
-            Vitesse = Math.Max(0, Vitesse - 0.5f);
+            Speed = Math.Max(0, Speed - 0.5f);
 
-            Position += Direction * Vitesse;
+            Position += Direction * Speed;
 
             doBouncing();
 
@@ -55,15 +55,15 @@
             if (Type == MineralType.Cash150)
                 ((RadialGravityModifier) RepresentationParticules.ParticleEffect[1].Modifiers[0]).Position = new Vector2(Position.X - Definition.Origin.X, Position.Y - Definition.Origin.Y);
 
-            TempsExistence -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            TempsExistence -= 16.66;
 
             Vector3 deplacement;
             Vector3.Subtract(ref this.position, ref this.AnciennePosition, out deplacement);
 
             if (deplacement.X != 0 && deplacement.Y != 0)
-                this.RepresentationParticules.Deplacer(ref deplacement);
+                this.RepresentationParticules.Move(ref deplacement);
 
-            this.RepresentationParticules.Emettre(ref this.position);
+            this.RepresentationParticules.Trigger(ref this.position);
         }
 
 
@@ -72,11 +72,11 @@
 
         public void DoDie()
         {
-            Scene.Particules.retourner(RepresentationParticules);
+            Scene.Particules.Return(RepresentationParticules);
 
-            ParticuleEffectWrapper pris = Scene.Particules.recuperer("mineralPris");
-            pris.Emettre(ref this.position);
-            Scene.Particules.retourner(pris);
+            Particle pris = Scene.Particules.Get("mineralPris");
+            pris.Trigger(ref this.position);
+            Scene.Particules.Return(pris);
             Scene.Animations.Insert(new MineralTakenAnimation(Scene, Definition, Position));
         }
 
@@ -85,34 +85,34 @@
         {
             if (Position.X > 640 - Preferences.DeadZoneXbox.X - 20)
             {
-                Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Vitesse);
-                Bouncing.Y = Bouncing.Y + Vitesse;
+                Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Speed);
+                Bouncing.Y = Bouncing.Y + Speed;
 
-                Vitesse = 0;
+                Speed = 0;
             }
 
-            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Cercle.Radius)
+            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Circle.Radius)
             {
-                Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Vitesse);
-                Bouncing.Y = Bouncing.Y + Vitesse;
+                Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Speed);
+                Bouncing.Y = Bouncing.Y + Speed;
 
-                Vitesse = 0;
+                Speed = 0;
             }
 
-            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Cercle.Radius)
+            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Circle.Radius)
             {
-                Bouncing.X = Bouncing.X + Vitesse;
-                Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Vitesse);
+                Bouncing.X = Bouncing.X + Speed;
+                Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Speed);
 
-                Vitesse = 0;
+                Speed = 0;
             }
 
-            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Cercle.Radius)
+            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Circle.Radius)
             {
-                Bouncing.X = Bouncing.X + Vitesse;
-                Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Vitesse);
+                Bouncing.X = Bouncing.X + Speed;
+                Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Speed);
 
-                Vitesse = 0;
+                Speed = 0;
             }
 
             Position += Bouncing;
@@ -131,7 +131,7 @@
         #region Useless
         public float AttackPoints { get; set; }
         public RectanglePhysique Rectangle { get; set; }
-        public Ligne Ligne { get; set; }
+        public Ligne Line { get; set; }
         public float Masse { get; set; }
         public float Rotation { get; set; }
         public float ResistanceRotation { get; set; }

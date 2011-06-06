@@ -13,7 +13,7 @@
         public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave;
         public Scenario Scenario;
         public ScenarioDescriptor DemoModeSelectedScenario;
-        public List<Ennemi> Enemies;
+        public List<Enemy> Enemies;
         public VaguesInfinies InfiniteWaves;
         public LinkedList<Wave> Waves;
         public Path Path;
@@ -54,7 +54,7 @@
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
             PowerUpInputMode = false;
             GamePausedResistance = new TheResistance(Simulation);
-            GamePausedResistance.Enemies = new List<Ennemi>();
+            GamePausedResistance.Enemies = new List<Enemy>();
             GamePausedResistance.Initialize();
             GamePausedResistance.AlphaChannel = 100;
         }
@@ -285,7 +285,7 @@
                 MenuGeneral.TimeNextWave = Math.Max(0, MenuGeneral.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
 
             //todo event-based
-            MenuGeneral.MenuNextWave.Visible = Cursor.Active && EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Cursor.Cercle, SandGlass.Rectangle);
+            MenuGeneral.MenuNextWave.Visible = Cursor.Active && EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Cursor.Circle, SandGlass.Rectangle);
 
             if (Simulation.ModeDemo)
             {

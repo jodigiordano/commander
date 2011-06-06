@@ -9,14 +9,14 @@
     using ProjectMercury.Emitters;
 
 
-    abstract class Turret : IObjetPhysique, IPhysique
+    abstract class Turret : IObjetPhysique, IPhysicalObject
     {
         public Vector3 RelativePosition;
         public Vector3 Position                     { get; set; }
         public Image CanonImage;
         public Image BaseImage;
         public bool Disabled                        { get { return DisabledOverride && DisabledCounter > 0; } set { DisabledOverride = value; } }
-        public virtual Ennemi EnemyWatched          { get; set; }
+        public virtual Enemy EnemyWatched          { get; set; }
         public double TimeLastBullet;
         public TurretType Type                      { get; protected set; }
         public String Name                          { get; protected set; }
@@ -35,8 +35,8 @@
         public bool BackActiveThisTick              { get; private set; }
         public bool BackActiveThisTickOverride;
         public bool Visible;
-        public Forme Forme                          { get; set; }
-        public Cercle Cercle                        { get; set; }
+        public Shape Shape                          { get; set; }
+        public Cercle Circle                        { get; set; }
         public CorpsCeleste CelestialBody;
         public bool ToPlaceMode;
         public bool CanPlace;
@@ -63,7 +63,7 @@
         private List<Projectile> Bullets = new List<Projectile>();
         private Image RangeImage;
         private Image FormImage;
-        private ParticuleEffectWrapper BoostGlow;
+        private Particle BoostGlow;
 
         private Matrix rotationMatrix;
 
@@ -94,8 +94,8 @@
             BackActiveThisTickOverride = false;
             BackActiveThisTick = false;
             Visible = true;
-            Forme = Core.Physique.Forme.Cercle;
-            Cercle = new Cercle(this, 30);
+            Shape = Core.Physique.Shape.Circle;
+            Circle = new Cercle(this, 30);
             ToPlaceMode = false;
             CelestialBody = null;
             RangeImage = new Image("CercleBlanc", Vector3.Zero)
@@ -181,7 +181,7 @@
         {
             BackActiveThisTick = false;
 
-            Cercle.Position = this.Position;
+            Circle.Position = this.Position;
 
             DisabledCounter = Math.Max(DisabledCounter - 16.66f, 0);
             DisabledAnnounciationCounter -= 16.66f;
@@ -202,15 +202,15 @@
 
             if (BoostGlow == null)
             {
-                BoostGlow = Simulation.Scene.Particules.recuperer("boosterTurret");
+                BoostGlow = Simulation.Scene.Particules.Get("boosterTurret");
                 BoostGlow.VisualPriority = this.VisualPriorityBackup + 0.006f;
 
                 CircleEmitter emitter = (CircleEmitter) BoostGlow.ParticleEffect[0];
 
-                emitter.Radius = this.Cercle.Radius;
+                emitter.Radius = this.Circle.Radius;
                 emitter.ReleaseScale.Value = 50;
                 emitter.ReleaseScale.Variation = 10;
-                emitter.Term = this.Cercle.Radius / 300f;
+                emitter.Term = this.Circle.Radius / 300f;
                 emitter.ReleaseColour = this.Color.ToVector3();
             }
         }
@@ -266,13 +266,13 @@
                         {
                             Vector3 translation = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
 
-                            ProjectileBase p = Projectile.PoolProjectilesBase.recuperer();
+                            ProjectileBase p = Projectile.PoolProjectilesBase.Get();
 
                             p.Scene = Simulation.Scene;
                             p.Position = this.Position + translation;
                             p.Direction = direction;
                             p.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                            p.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                            p.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                             p.PrioriteAffichage = this.CanonImage.VisualPriority;
                             p.Initialize();
 
@@ -281,14 +281,14 @@
                         break;
 
                     case BulletType.Missile:
-                        ProjectileMissile pm = Projectile.PoolProjectilesMissile.recuperer();
+                        ProjectileMissile pm = Projectile.PoolProjectilesMissile.Get();
                         pm.Scene = Simulation.Scene;
                         pm.Position = this.Position;
                         pm.Direction = EnemyWatched.Position - this.Position;
                         pm.Cible = EnemyWatched;
                         pm.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         pm.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        pm.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        pm.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         pm.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         pm.Initialize();
                         pm.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile1");
@@ -299,14 +299,14 @@
                         break;
 
                     case BulletType.Missile2:
-                        ProjectileMissile p2 = Projectile.PoolProjectilesMissile.recuperer();
+                        ProjectileMissile p2 = Projectile.PoolProjectilesMissile.Get();
                         p2.Scene = Simulation.Scene;
                         p2.Position = this.Position;
                         p2.Direction = EnemyWatched.Position - this.Position;
                         p2.Cible = EnemyWatched;
                         p2.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         p2.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        p2.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        p2.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         p2.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         p2.Initialize();
                         p2.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile2");
@@ -319,7 +319,7 @@
                     case BulletType.LaserMultiple:
                         for (int i = 0; i < NbCanons; i++)
                         {
-                            ProjectileLaserMultiple pLM = Projectile.PoolProjectilesLaserMultiple.recuperer();
+                            ProjectileLaserMultiple pLM = Projectile.PoolProjectilesLaserMultiple.Get();
                             pLM.Scene = Simulation.Scene;
                             pLM.TourelleEmettrice = this;
                             pLM.CibleOffset = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
@@ -334,7 +334,7 @@
                         break;
 
                     case BulletType.LaserSimple:
-                        ProjectileLaserSimple pLS = Projectile.PoolProjectilesLaserSimple.recuperer();
+                        ProjectileLaserSimple pLS = Projectile.PoolProjectilesLaserSimple.Get();
                         pLS.Scene = Simulation.Scene;
                         pLS.TourelleEmettrice = this;
                         pLS.Cible = EnemyWatched;
@@ -349,7 +349,7 @@
                         break;
 
                     case BulletType.Gunner:
-                        GunnerBullet gb = Projectile.PoolGunnerBullets.recuperer();
+                        GunnerBullet gb = Projectile.PoolGunnerBullets.Get();
                         gb.Scene = Simulation.Scene;
                         gb.Turret = this;
                         gb.Target = EnemyWatched;
@@ -364,7 +364,7 @@
                         break;
 
                     case BulletType.SlowMotion:
-                        ProjectileSlowMotion pSM = Projectile.PoolProjectilesSlowMotion.recuperer();
+                        ProjectileSlowMotion pSM = Projectile.PoolProjectilesSlowMotion.Get();
                         pSM.Scene = Simulation.Scene;
                         pSM.Position = this.Position;
                         pSM.Rayon = Range;
@@ -376,12 +376,12 @@
                         break;
 
                     case BulletType.Nanobots:
-                        NanobotsBullet nb = Projectile.PoolNanobotsBullets.recuperer();
+                        NanobotsBullet nb = Projectile.PoolNanobotsBullets.Get();
                         nb.Scene = Simulation.Scene;
                         nb.Position = this.Position;
                         nb.Direction = direction;
                         nb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                        nb.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        nb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         nb.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         nb.PrioriteAffichage = this.CanonImage.VisualPriority;
                         nb.Initialize();
@@ -390,12 +390,12 @@
                         break;
 
                     case BulletType.RailGun:
-                        RailGunBullet rgb = Projectile.PoolRailGunBullet.recuperer();
+                        RailGunBullet rgb = Projectile.PoolRailGunBullet.Get();
                         rgb.Scene = Simulation.Scene;
                         rgb.Position = this.Position;
                         rgb.Direction = direction;
                         rgb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                        rgb.Vitesse = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
+                        rgb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         rgb.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         rgb.PrioriteAffichage = this.CanonImage.VisualPriority;
                         rgb.Initialize();
@@ -465,7 +465,7 @@
             if (ShowForm)
             {
                 FormImage.Position = this.Position;
-                FormImage.SizeX = (Cercle.Radius / 100) * 2;
+                FormImage.SizeX = (Circle.Radius / 100) * 2;
                 Simulation.Scene.ajouterScenable(FormImage);
             }
 
@@ -479,7 +479,7 @@
             if (BoostMultiplier > 0)
             {
                 Vector3 pos = this.Position;
-                BoostGlow.Emettre(ref pos);
+                BoostGlow.Trigger(ref pos);
             }
         }
 
@@ -523,11 +523,11 @@
 
         //useless
         #region IObjetPhysique Members
-        public float Vitesse { get; set; }
+        public float Speed { get; set; }
         public Vector3 Direction { get; set; }
         public float Rotation { get; set; }
         public RectanglePhysique Rectangle { get; set; }
-        public Ligne Ligne { get; set; }
+        public Ligne Line { get; set; }
         #endregion
     }
 }

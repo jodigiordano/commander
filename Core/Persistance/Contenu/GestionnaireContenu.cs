@@ -205,7 +205,7 @@ namespace EphemereGames.Core.Persistance
         /// <param name="typeAsset">Type de l'asset</param>
         public void ajouterTypeAsset(IContenu typeAsset)
         {
-            TypesAssets.Add(typeAsset.TypeAsset, typeAsset);
+            TypesAssets.Add(typeAsset.AssetType, typeAsset);
         }
 
         public IContenu getTypeAsset(String nomTypeAsset)

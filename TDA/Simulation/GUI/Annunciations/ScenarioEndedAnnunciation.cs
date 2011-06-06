@@ -13,8 +13,8 @@
         private IVisible Filter;
         private VaisseauAlien AlienShip;
         private List<KeyValuePair<IVisible, CorpsCeleste>> Missiles;
-        private List<ParticuleEffectWrapper> MissilesVisual;
-        private List<ParticuleEffectWrapper> Implosions;
+        private List<Particle> MissilesVisual;
+        private List<Particle> Implosions;
         private List<CorpsCeleste> CelestialBodies;
         private Scenario Scenario;
 
@@ -51,17 +51,17 @@
             Scenario = scenario;
 
             Missiles = new List<KeyValuePair<IVisible, CorpsCeleste>>();
-            MissilesVisual = new List<ParticuleEffectWrapper>(CelestialBodies.Count);
-            Implosions = new List<ParticuleEffectWrapper>(CelestialBodies.Count);
+            MissilesVisual = new List<Particle>(CelestialBodies.Count);
+            Implosions = new List<Particle>(CelestialBodies.Count);
 
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
-                ParticuleEffectWrapper particule = this.Simulation.Scene.Particules.recuperer("missileAlien");
+                Particle particule = this.Simulation.Scene.Particules.Get("missileAlien");
                 particule.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.10f;
 
                 MissilesVisual.Add(particule);
 
-                particule = this.Simulation.Scene.Particules.recuperer("implosionAlien");
+                particule = this.Simulation.Scene.Particules.Get("implosionAlien");
                 particule.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.09f;
 
                 Implosions.Add(particule);
@@ -277,7 +277,7 @@
                     {
                         if (Vector3.DistanceSquared(Missiles[i].Key.Position, Missiles[i].Value.Position) <= 400)
                         {
-                            Implosions[ImplosionsIndex].Emettre(ref Missiles[i].Key.position);
+                            Implosions[ImplosionsIndex].Trigger(ref Missiles[i].Key.position);
                             ImplosionsIndex++;
 
                             Missiles[i].Value.DoDie();
@@ -285,7 +285,7 @@
                             Missiles.RemoveAt(i);
                         }
                         else
-                            MissilesVisual[i].Emettre(ref Missiles[i].Key.position);
+                            MissilesVisual[i].Trigger(ref Missiles[i].Key.position);
                     }
                 }
                         

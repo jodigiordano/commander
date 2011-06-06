@@ -24,7 +24,7 @@
 
         public virtual bool EstTerminee { get; protected set; }
         public virtual AnimationsController Animations { get { return animations; } }
-        public virtual GestionnaireParticules Particules { get { return particules; } }
+        public virtual ParticlesController Particules { get { return particules; } }
         public virtual EffectsController Effets { get { return effets; } }
 
         private SpriteBatch Batch;
@@ -32,7 +32,7 @@
         internal bool EstUpdateCeTick;
         private AnimationsController animations;
         private EffectsController effets;
-        private GestionnaireParticules particules;
+        private ParticlesController particules;
         private OrderedBag<IScenable> ElementsAffiches;
         private String nom;
         private TransitionType transition;
@@ -51,7 +51,7 @@
             Nom = nom;
             animations = new AnimationsController(this);
             effets = new EffectsController();
-            particules = new GestionnaireParticules(this);
+            particules = new ParticlesController(this);
             EphemereGames.Core.Input.Facade.AddListener(this);
             Transition = TransitionType.None;
         }
@@ -104,7 +104,7 @@
             UpdateVisuel();
 
             ajouterScenable(animations.Components);
-            ajouterScenable(particules.Composants);
+            ajouterScenable(particules.Particles);
 
             EstUpdateCeTick = true;
 
@@ -192,6 +192,13 @@
                 if (elements[i].Components != null)
                     ajouterScenable(elements[i].Components);
             }
+        }
+
+
+        public void ajouterScenable(List<Particle> elements)
+        {
+            for (int i = 0; i < elements.Count; i++)
+                ElementsAffiches.Add(elements[i]);
         }
 
 

@@ -21,12 +21,12 @@
         {
             base.Initialize();
 
-            Vitesse = 0;
-            Forme = Forme.Cercle;
-            Cercle = new Cercle(Position, Rayon);
-            Rectangle = new RectanglePhysique(Cercle.Rectangle);
+            Speed = 0;
+            Shape = Shape.Circle;
+            Circle = new Cercle(Position, Rayon);
+            Rectangle = new RectanglePhysique(Circle.Rectangle);
 
-            ExplodingEffect = Scene.Particules.recuperer("etincelleSlowMotion");
+            ExplodingEffect = Scene.Particules.Get("etincelleSlowMotion");
             ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
 
             LifePoints = Int16.MaxValue;
@@ -37,7 +37,7 @@
 
         public override void Update()
         {
-            Cercle.Position = this.Position;
+            Circle.Position = this.Position;
             
             Rectangle.X = (int)(this.Position.X - Rectangle.Width / 2);
             Rectangle.Y = (int)(this.Position.Y - Rectangle.Height / 2);
@@ -55,13 +55,13 @@
 
         public override void DoDie()
         {
-            ((CircleEmitter)ExplodingEffect.ParticleEffect[0]).Radius = Cercle.Radius;
+            ((CircleEmitter)ExplodingEffect.ParticleEffect[0]).Radius = Circle.Radius;
             ((RadialGravityModifier)ExplodingEffect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.Position.X, this.Position.Y);
 
-            ExplodingEffect.Emettre(ref this.position);
-            Scene.Particules.retourner(ExplodingEffect);
+            ExplodingEffect.Trigger(ref this.position);
+            Scene.Particules.Return(ExplodingEffect);
 
-            Projectile.PoolProjectilesSlowMotion.retourner(this);
+            Projectile.PoolProjectilesSlowMotion.Return(this);
         }
 
 
@@ -69,9 +69,9 @@
         {
             base.DoDieSilent();
 
-            Scene.Particules.retourner(ExplodingEffect);
+            Scene.Particules.Return(ExplodingEffect);
 
-            Projectile.PoolProjectilesSlowMotion.retourner(this);
+            Projectile.PoolProjectilesSlowMotion.Return(this);
         }
     }
 }

@@ -19,13 +19,13 @@
         {
             base.Initialize();
 
-            Forme = Forme.Rectangle;
+            Shape = Shape.Rectangle;
 
             if (Rectangle == null)
                 Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
 
-            MovingEffect = Scene.Particules.recuperer("railgun");
-            ExplodingEffect = Scene.Particules.recuperer("railgunExplosion");
+            MovingEffect = Scene.Particules.Get("railgun");
+            ExplodingEffect = Scene.Particules.Get("railgunExplosion");
             MovingEffect.VisualPriority = PrioriteAffichage + 0.001f;
             ExplodingEffect.VisualPriority = 0.35f;
             Rectangle.X = (int)Position.X;
@@ -37,19 +37,19 @@
         {
             base.DoDie();
 
-            Projectile.PoolRailGunBullet.retourner(this);
+            Projectile.PoolRailGunBullet.Return(this);
         }
 
         public override void DoDieSilent()
         {
             base.DoDieSilent();
 
-            Projectile.PoolRailGunBullet.retourner(this);
+            Projectile.PoolRailGunBullet.Return(this);
         }
 
         public override void Update()
         {
-            Position += Vitesse * Direction;
+            Position += Speed * Direction;
             Rectangle.X = (int) Position.X;
             Rectangle.Y = (int) Position.Y;
 

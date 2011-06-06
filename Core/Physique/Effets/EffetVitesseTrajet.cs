@@ -31,7 +31,7 @@ namespace EphemereGames.Core.Physique
 
         protected override void LogicLinear()
         {
-            Objet.Vitesse = VitesseDepart + deltaVitesse * Trajet.position(ElaspedTime).Y;
+            Objet.Speed = VitesseDepart + deltaVitesse * Trajet.position(ElaspedTime).Y;
         }
 
         protected override void LogicAfter()
@@ -41,19 +41,19 @@ namespace EphemereGames.Core.Physique
 
         protected override void LogicNow()
         {
-            Objet.Vitesse = VitesseArrivee;
+            Objet.Speed = VitesseArrivee;
         }
 
         protected override void InitializeLogic()
         {
             deltaVitesse = VitesseArrivee - VitesseDepart;
 
-            Objet.Vitesse = VitesseDepart;
+            Objet.Speed = VitesseDepart;
         }
 
         protected override void LogicEnd()
         {
-            Objet.Vitesse = VitesseArrivee;
+            Objet.Speed = VitesseArrivee;
         }
     }
 }

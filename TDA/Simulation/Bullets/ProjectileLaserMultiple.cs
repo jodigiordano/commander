@@ -15,10 +15,10 @@
         private const int LONGUEUR_LIGNE = 1500;
 
         private double DureeVie;
-        public Ennemi Cible;
+        public Enemy Cible;
         public Vector3 CibleOffset;
         public Turret TourelleEmettrice;
-        private ParticuleEffectWrapper RepresentationVivantAlt;
+        private Particle RepresentationVivantAlt;
         private LigneVisuel RepresentationVivantAlt2;
         private bool Orphelin;
 
@@ -27,13 +27,13 @@
             base.Initialize();
 
             Position = TourelleEmettrice.Position + CibleOffset;
-            Vitesse = 0;
-            Forme = Forme.Ligne;
+            Speed = 0;
+            Shape = Shape.Line;
             RepresentationVivant = null;
 
-            Ligne = new Ligne(this.Position, this.Position + this.Direction * LONGUEUR_LIGNE);
+            Line = new Ligne(this.Position, this.Position + this.Direction * LONGUEUR_LIGNE);
 
-            RepresentationVivantAlt = Scene.Particules.recuperer("projectileLaserMultiple");
+            RepresentationVivantAlt = Scene.Particules.Get("projectileLaserMultiple");
             LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
             emetteur.Length = LONGUEUR_LIGNE;
             RepresentationVivantAlt.VisualPriority = PrioriteAffichage + 0.001f;
@@ -69,15 +69,15 @@
                 Orphelin = true;
             }
 
-            Ligne.Debut = this.Position;
-            Ligne.Fin = this.Position + this.Direction * LONGUEUR_LIGNE;
+            Line.Debut = this.Position;
+            Line.Fin = this.Position + this.Direction * LONGUEUR_LIGNE;
 
             DureeVie -= 16.66;
 
             if (DureeVie <= 0)
                 LifePoints = 0;
 
-            RepresentationVivantAlt.Emettre(ref this.position);
+            RepresentationVivantAlt.Trigger(ref this.position);
 
             base.Update();
         }
@@ -89,8 +89,8 @@
             emetteur.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
             emetteur.TriggerOffset = new Vector2(this.Direction.X * (LONGUEUR_LIGNE/2), this.Direction.Y * (LONGUEUR_LIGNE/2));
 
-            RepresentationVivantAlt2.Debut = Ligne.Debut;
-            RepresentationVivantAlt2.Fin = Ligne.Fin;
+            RepresentationVivantAlt2.Debut = Line.Debut;
+            RepresentationVivantAlt2.Fin = Line.Fin;
 
             Scene.ajouterScenable(RepresentationVivantAlt2);
 
@@ -105,18 +105,18 @@
         {
             base.DoDie();
 
-            Scene.Particules.retourner(RepresentationVivantAlt);
+            Scene.Particules.Return(RepresentationVivantAlt);
 
-            Projectile.PoolProjectilesLaserMultiple.retourner(this);
+            Projectile.PoolProjectilesLaserMultiple.Return(this);
         }
 
         public override void DoDieSilent()
         {
             base.DoDieSilent();
 
-            Scene.Particules.retourner(RepresentationVivantAlt);
+            Scene.Particules.Return(RepresentationVivantAlt);
 
-            Projectile.PoolProjectilesLaserMultiple.retourner(this);
+            Projectile.PoolProjectilesLaserMultiple.Return(this);
         }
     }
 }

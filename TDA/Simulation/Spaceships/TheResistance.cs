@@ -10,7 +10,7 @@
     class TheResistance : Spaceship
     {
         public double ActiveTime;
-        public List<Ennemi> Enemies;
+        public List<Enemy> Enemies;
         private List<Spaceship> Spaceships;
 
 

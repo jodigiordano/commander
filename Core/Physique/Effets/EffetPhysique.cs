@@ -8,11 +8,11 @@
     public class EffetPhysique : AbstractEffect, ICloneable
     {
         [ContentSerializerIgnore]
-        public IPhysique Objet
+        public IPhysicalObject Objet
         {
             get
             {
-                return (IPhysique)Obj;
+                return (IPhysicalObject)Obj;
             }
 
             set

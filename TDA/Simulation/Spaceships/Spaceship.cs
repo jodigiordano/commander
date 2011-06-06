@@ -11,15 +11,15 @@
     class Spaceship : IObjetPhysique
     {
         public Vector3 Position                 { get; set; }
-        public float Vitesse                    { get; set; }
+        public float Speed                    { get; set; }
         public float Masse                      { get; set; }
         public Vector3 Direction                { get; set; }
         public float Rotation                   { get; set; }
         public float ResistanceRotation         { get; set; }
-        public Forme Forme                      { get; set; }
-        public Cercle Cercle                    { get; set; }
+        public Shape Shape                      { get; set; }
+        public Cercle Circle                    { get; set; }
         public RectanglePhysique Rectangle      { get; set; }
-        public Ligne Ligne                      { get; set; }
+        public Ligne Line                      { get; set; }
 
         public IObjetPhysique StartingObject    { get; set; }
         public virtual bool TargetReached       { get; set; }
@@ -56,13 +56,13 @@
             };
             
             Position = Vector3.Zero;
-            Vitesse = 4;
+            Speed = 4;
             Masse = 1;
             Direction = new Vector3(1, 0, 0);
             Rotation = 0;
             ResistanceRotation = 0;
-            Forme = Forme.Cercle;
-            Cercle = new Cercle(Position, Image.TextureSize.X * Image.SizeX / 2);
+            Shape = Shape.Circle;
+            Circle = new Cercle(Position, Image.TextureSize.X * Image.SizeX / 2);
 
             RotationMaximaleRad = 0.10f;
             ShootingFrequency = 300;
@@ -91,7 +91,7 @@
             if (StartingObject != null && GoBackToStartingObject)
                 TargetPosition = StartingObject.Position;
 
-            this.Cercle.Position = this.Position;
+            this.Circle.Position = this.Position;
 
             LastFireCounter += 16.66f;
         }
@@ -121,7 +121,7 @@
 
             Direction = direction;
 
-            Position += Direction * Vitesse;
+            Position += Direction * Speed;
 
             if ((TargetPosition - Position).LengthSquared() <= 400)
             {
@@ -146,16 +146,16 @@
 
                 Vector3 translation = directionUnitairePerpendiculaire * Main.Random.Next(-17, 17);
 
-                ProjectileBase p = Projectile.PoolProjectilesBase.recuperer();
+                ProjectileBase p = Projectile.PoolProjectilesBase.Get();
                 p.Scene = Simulation.Scene;
                 p.Position = Position + translation;
                 p.Direction = Direction;
                 p.AttackPoints = BulletHitPoints;
                 p.PrioriteAffichage = Image.VisualPriority + 0.001f;
-                p.Vitesse = 10;
+                p.Speed = 10;
                 p.Initialize();
 
-                Simulation.Scene.Particules.retourner(p.MovingEffect);
+                Simulation.Scene.Particules.Return(p.MovingEffect);
                 p.MovingEffect = null;
 
                 Bullets.Add(p);
@@ -181,7 +181,7 @@
         {
             float distance = (StartingObject.Position - Position).Length();
 
-            double tempsRequis = (distance / Vitesse) * 16.33f;
+            double tempsRequis = (distance / Speed) * 16.33f;
 
             Simulation.Scene.Effets.Add(Image, Core.Visuel.PredefinedEffects.FadeOutTo0(Image.Color.A, 0, tempsRequis));
         }

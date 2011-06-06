@@ -10,7 +10,7 @@
     {
         private CorpsCeleste celestialBody;
         private Simulation Simulation;
-        private ParticuleEffectWrapper Selection;
+        private Particle Selection;
         private Vector3 PositionLastEmission;
 
 
@@ -18,7 +18,7 @@
         {
             Simulation = simulation;
 
-            Selection = Simulation.Scene.Particules.recuperer("selectionCorpsCeleste");
+            Selection = Simulation.Scene.Particules.Get("selectionCorpsCeleste");
             Selection.VisualPriority = Preferences.PrioriteGUISelectionCorpsCeleste;
         }
 
@@ -35,7 +35,7 @@
 
                 PositionLastEmission = celestialBody.Position;
 
-                ((CircleEmitter)Selection.ParticleEffect[0]).Radius = celestialBody.Cercle.Radius + 5;
+                ((CircleEmitter)Selection.ParticleEffect[0]).Radius = celestialBody.Circle.Radius + 5;
             }
         }
 
@@ -49,9 +49,9 @@
             Vector3.Subtract(ref CelestialBody.position, ref PositionLastEmission, out deplacement);
 
             if (deplacement.X != 0 && deplacement.Y != 0)
-                Selection.Deplacer(ref deplacement);
+                Selection.Move(ref deplacement);
 
-            Selection.Emettre(ref CelestialBody.position);
+            Selection.Trigger(ref CelestialBody.position);
             PositionLastEmission = CelestialBody.position;
         }
     }

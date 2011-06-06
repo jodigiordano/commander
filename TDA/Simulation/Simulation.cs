@@ -8,16 +8,17 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework.Input;
 
 
-    delegate void PhysicalObjectHandler(IObjetPhysique obj);
-    delegate void PhysicalObjectPhysicalObjectHandler(IObjetPhysique obj1, IObjetPhysique obj2);
-    delegate void SimPlayerHandler(SimPlayer player);
-    delegate void CommonStashHandler(CommonStash stash);
-    delegate void CelestialObjectHandler(CorpsCeleste celestialObject);
-    delegate void NewGameStateHandler(GameState state);
-    delegate void TurretHandler(Turret turret);
-    delegate void PowerUpTypeHandler(PowerUpType powerUp);
-    delegate void PowerUpHandler(PowerUp powerUp);
-    delegate void TurretTurretHandler(Turret turret1, Turret turret2);
+    delegate void PhysicalObjectHandler(IObjetPhysique o);
+    delegate void PhysicalObjectPhysicalObjectHandler(IObjetPhysique o1, IObjetPhysique o2);
+    delegate void SimPlayerHandler(SimPlayer p);
+    delegate void CommonStashHandler(CommonStash s);
+    delegate void CelestialObjectHandler(CorpsCeleste c);
+    delegate void NewGameStateHandler(GameState s);
+    delegate void TurretHandler(Turret t);
+    delegate void PowerUpTypeHandler(PowerUpType p);
+    delegate void PowerUpHandler(PowerUp p);
+    delegate void TurretTurretHandler(Turret t1, Turret t2);
+    delegate void EnemyCelestialBodyHandler(Enemy e, CorpsCeleste c);
 
 
     class Simulation : InputListener
@@ -44,7 +45,7 @@ namespace EphemereGames.Commander
         public PlanetarySystemController PlanetarySystemController;
         public ControleurMessages MessagesController;
         private ScenarioController ScenarioController;
-        private ControleurEnnemis EnemiesController;
+        private EnemiesController EnemiesController;
         private BulletsController BulletsController;
         private ControleurCollisions CollisionsController;
         private SimPlayersController SimPlayersController;
@@ -125,7 +126,7 @@ namespace EphemereGames.Commander
 
             CollisionsController = new ControleurCollisions(this);
             BulletsController = new BulletsController(this);
-            EnemiesController = new ControleurEnnemis(this);
+            EnemiesController = new EnemiesController(this);
             SimPlayersController = new SimPlayersController(this);
             TurretsController = new TurretsController(this);
             PlanetarySystemController = new PlanetarySystemController(this);
@@ -139,36 +140,36 @@ namespace EphemereGames.Commander
             PowerUpsFactory.Availables = ScenarioController.AvailablePowerUps;
 
             CollisionsController.Bullets = BulletsController.Bullets;
-            CollisionsController.Enemies = EnemiesController.Ennemis;
+            CollisionsController.Enemies = EnemiesController.Enemies;
             SimPlayersController.CelestialBodies = ScenarioController.CelestialBodies;
             PlanetarySystemController.CelestialBodies = ScenarioController.CelestialBodies;
             TurretsController.PlanetarySystemController = PlanetarySystemController;
-            EnemiesController.VaguesInfinies = ScenarioController.InfiniteWaves;
-            EnemiesController.Vagues = ScenarioController.Waves;
+            EnemiesController.InfiniteWaves = ScenarioController.InfiniteWaves;
+            EnemiesController.Waves = ScenarioController.Waves;
             CollisionsController.Turrets = TurretsController.Turrets;
             SimPlayersController.CommonStash = ScenarioController.CommonStash;
             SimPlayersController.CelestialBodyToProtect = ScenarioController.CelestialBodyToProtect;
             GUIController.Path = PlanetarySystemController.Path;
             GUIController.PathPreview = PlanetarySystemController.PathPreview;
-            EnemiesController.CheminProjection = PlanetarySystemController.PathPreview;
+            EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
             TurretsController.StartingTurrets = ScenarioController.StartingTurrets;
-            EnemiesController.Chemin = PlanetarySystemController.Path;
+            EnemiesController.Path = PlanetarySystemController.Path;
             CollisionsController.CelestialBodies = ScenarioController.CelestialBodies;
             CollisionsController.Minerals = EnemiesController.Minerals;
-            EnemiesController.ValeurTotalMineraux = ScenarioController.Scenario.MineralsValue;
-            EnemiesController.PourcentageMinerauxDonnes = ScenarioController.Scenario.MineralsPercentages;
-            EnemiesController.NbPackViesDonnes = ScenarioController.Scenario.LifePacks;
-            SpaceshipsController.Enemies = EnemiesController.Ennemis;
+            EnemiesController.MineralsValue = ScenarioController.Scenario.MineralsValue;
+            EnemiesController.MineralsPercentages = ScenarioController.Scenario.MineralsPercentages;
+            EnemiesController.LifePacksGiven = ScenarioController.Scenario.LifePacks;
+            SpaceshipsController.Enemies = EnemiesController.Enemies;
             MessagesController.Tourelles = TurretsController.Turrets;
             MessagesController.CorpsCelesteAProteger = ScenarioController.CelestialBodyToProtect;
             MessagesController.CorpsCelestes = ScenarioController.CelestialBodies;
             MessagesController.Chemin = PlanetarySystemController.Path;
             MessagesController.Sablier = GUIController.SandGlass;
-            GUIController.CompositionNextWave = EnemiesController.CompositionProchaineVague;
+            GUIController.CompositionNextWave = EnemiesController.NextWaveData;
             SimPlayersController.SandGlass = GUIController.SandGlass;
             GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
             GUIController.Scenario = ScenarioController.Scenario;
-            GUIController.Enemies = EnemiesController.Ennemis;
+            GUIController.Enemies = EnemiesController.Enemies;
             SimPlayersController.InitialPlayerPosition = PositionCurseur;
             GUIController.InfiniteWaves = ScenarioController.InfiniteWaves;
             GUIController.Waves = ScenarioController.Waves;
@@ -181,31 +182,31 @@ namespace EphemereGames.Commander
             CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
 
 
-            CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.doObjetTouche);
+            CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);
             SimPlayersController.AchatTourelleDemande += new TurretHandler(TurretsController.DoBuyTurret);
-            EnemiesController.VagueTerminee += new ControleurEnnemis.VagueTermineeHandler(ScenarioController.doWaveEnded);
-            EnemiesController.ObjetDetruit += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
+            EnemiesController.WaveEnded += new NoneHandler(ScenarioController.doWaveEnded);
+            EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
             CollisionsController.InTurretRange += new ControleurCollisions.TurretPhysicalObjectHandler(TurretsController.DoInRangeTurret);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             BulletsController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
-            EnemiesController.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doWaveStarted);
+            EnemiesController.WaveStarted += new NoneHandler(GUIController.doWaveStarted);
             SimPlayersController.VenteTourelleDemande += new TurretHandler(TurretsController.DoSellTurret);
             TurretsController.TurretSold += new TurretHandler(SimPlayersController.DoTourelleVendue);
             TurretsController.TurretBought += new TurretHandler(SimPlayersController.DoTourelleAchetee);
-            EnemiesController.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(ScenarioController.doEnemyReachedEnd);
+            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(ScenarioController.doEnemyReachedEnd);
             TurretsController.TurretUpdated += new TurretHandler(SimPlayersController.DoTourelleMiseAJour);
             SimPlayersController.MiseAJourTourelleDemande += new TurretHandler(TurretsController.DoUpgradeTurret);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
-            SimPlayersController.ProchaineVagueDemandee += new NoneHandler(EnemiesController.doProchaineVagueDemandee);
+            SimPlayersController.ProchaineVagueDemandee += new NoneHandler(EnemiesController.DoNextWaveAsked);
             SpaceshipsController.ObjetCree += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             SpaceshipsController.ObjetCree += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
-            EnemiesController.ObjetCree += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
+            EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(ScenarioController.doObjectDestroyed);
-            EnemiesController.EnnemiAtteintFinTrajet += new ControleurEnnemis.EnnemiAtteintFinTrajetHandler(this.doEnnemiAtteintFinTrajet);
+            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.doEnnemiAtteintFinTrajet);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.doCorpsCelesteDetruit);
-            EnemiesController.VagueDebutee += new ControleurEnnemis.VagueDebuteeHandler(GUIController.doNextWave);
+            EnemiesController.WaveStarted += new NoneHandler(GUIController.doNextWave);
             SimPlayersController.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
             ScenarioController.NewGameState += new NewGameStateHandler(GUIController.doGameStateChanged);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.doPlayerSelectionChanged);
@@ -300,7 +301,7 @@ namespace EphemereGames.Commander
             BulletsController.Update();
             PlanetarySystemController.Update(gameTime); // must be done before the TurretController because the celestial bodies must move before the turrets
             TurretsController.Update(gameTime); //doit etre fait avant le controleurEnnemi pour les associations ennemis <--> tourelles
-            EnemiesController.Update(gameTime);
+            EnemiesController.Update();
             SimPlayersController.Update(gameTime);
             SpaceshipsController.Update();
             MessagesController.Update(gameTime);
@@ -313,7 +314,7 @@ namespace EphemereGames.Commander
         {
             CollisionsController.Draw(null);
             BulletsController.Draw();
-            EnemiesController.Draw(null);
+            EnemiesController.Draw();
             TurretsController.Draw();
             PlanetarySystemController.Draw();
             ScenarioController.Draw(null);
@@ -340,7 +341,7 @@ namespace EphemereGames.Commander
         {
             if (state == GameState.Won || state == GameState.Lost)
             {
-                EnemiesController.ObjetDetruit -= SimPlayersController.DoObjetDetruit;
+                EnemiesController.ObjectDestroyed -= SimPlayersController.DoObjetDetruit;
 
                 int scenario = ScenarioController.Scenario.Id;
                 int score = ScenarioController.Scenario.CommonStash.TotalScore;
@@ -355,7 +356,7 @@ namespace EphemereGames.Commander
         }
 
 
-        private void doEnnemiAtteintFinTrajet(Ennemi ennemi, CorpsCeleste corpsCeleste)
+        private void doEnnemiAtteintFinTrajet(Enemy ennemi, CorpsCeleste corpsCeleste)
         {
             if (Etat == GameState.Won)
                 return;

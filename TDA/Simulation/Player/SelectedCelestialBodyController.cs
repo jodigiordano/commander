@@ -71,7 +71,7 @@
 
                 for (int j = 0; j < CelestialBodies[i].Turrets.Count; j++)
                     if (CelestialBodies[i].Turrets[j].Visible &&
-                        EphemereGames.Core.Physique.Facade.collisionCercleCercle(Cercle, CelestialBodies[i].Turrets[j].Cercle))
+                        EphemereGames.Core.Physique.Facade.collisionCercleCercle(Cercle, CelestialBodies[i].Turrets[j].Circle))
                     {
                         SelectedCelestialBodyIndex = -1;
                         SelectedTurretCelestialBodyIndex = i;
@@ -101,7 +101,7 @@
                 if (!CelestialBodies[i].Alive || !CelestialBodies[i].Selectionnable)
                     continue;
 
-                if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Cercle, CelestialBodies[i].Cercle))
+                if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Cercle, CelestialBodies[i].Circle))
                 {
                     SelectedCelestialBodyIndex = i;
                     break;

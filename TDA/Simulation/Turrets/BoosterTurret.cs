@@ -11,7 +11,7 @@ namespace EphemereGames.Commander
 
     class BoosterTurret : Turret
     {
-        private ParticuleEffectWrapper Glow;
+        private Particle Glow;
 
         public BoosterTurret( Simulation simulation )
             : base( simulation )
@@ -39,12 +39,12 @@ namespace EphemereGames.Commander
 
             if (Glow == null)
             {
-                Glow = Simulation.Scene.Particules.recuperer( "boosterTurret" );
+                Glow = Simulation.Scene.Particules.Get( "boosterTurret" );
                 setGlow();
             }
 
             Vector3 pos = this.Position;
-            Glow.Emettre( ref pos );
+            Glow.Trigger( ref pos );
         }
 
 

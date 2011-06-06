@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework.Content;
 
+
     public interface IContenu : ICloneable
     {
-        String TypeAsset { get; }
-        object charger(String nom, String chemin, Dictionary<String, String> parametres, ContentManager contenu);
-        //void decharger(String nom);
+        String AssetType { get; }
+
+        object Load(String name, String path, Dictionary<String, String> parameters, ContentManager manager);
     }
 }

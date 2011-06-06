@@ -15,7 +15,7 @@
         {
             base.Initialize();
 
-            Forme = Forme.Rectangle;
+            Shape = Shape.Rectangle;
 
             if (RepresentationVivant == null)
             {
@@ -31,8 +31,8 @@
             RepresentationVivant.Position = Position;
             RepresentationVivant.Origine = RepresentationVivant.Centre;
             RepresentationVivant.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
-            MovingEffect = Scene.Particules.recuperer("projectileMissileDeplacement");
-            ExplodingEffect = Scene.Particules.recuperer("projectileBaseExplosion");
+            MovingEffect = Scene.Particules.Get("projectileMissileDeplacement");
+            ExplodingEffect = Scene.Particules.Get("projectileBaseExplosion");
             RepresentationVivant.VisualPriority = PrioriteAffichage + 0.001f;
             MovingEffect.VisualPriority = PrioriteAffichage + 0.001f;
             ExplodingEffect.VisualPriority = 0.35f;
@@ -45,20 +45,20 @@
         {
             base.DoDie();
 
-            Projectile.PoolProjectilesBase.retourner(this);
+            Projectile.PoolProjectilesBase.Return(this);
         }
 
         public override void DoDieSilent()
         {
             base.DoDieSilent();
 
-            Projectile.PoolProjectilesBase.retourner(this);
+            Projectile.PoolProjectilesBase.Return(this);
         }
 
         public override void Update()
         {
             Rectangle.set(ref RepresentationVivant.rectangle);
-            Position += Vitesse * Direction;
+            Position += Speed * Direction;
 
             base.Update();
         }

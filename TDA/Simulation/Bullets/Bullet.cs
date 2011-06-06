@@ -32,14 +32,14 @@ namespace EphemereGames.Commander
 
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
-        public float Vitesse                                        { get; set; }
+        public float Speed                                        { get; set; }
         public float Masse                                          { get; set; }
         public float Rotation                                       { get; set; }
         public float ResistanceRotation                             { get; set; }
         public Vector3 Direction                                    { get; set; }
-        public Forme Forme                                          { get; set; }
-        public Cercle Cercle                                        { get; set; }
-        public Ligne Ligne                                          { get; set; }
+        public Shape Shape                                          { get; set; }
+        public Cercle Circle                                        { get; set; }
+        public Ligne Line                                          { get; set; }
 
         public RectanglePhysique Rectangle                          { get; set; }
         public float LifePoints                                     { get; set; }
@@ -49,13 +49,13 @@ namespace EphemereGames.Commander
         public float PrioriteAffichage;
         public bool Alive                                           { get { return LifePoints > 0; } }
         public IVisible RepresentationVivant                        { get; set; }
-        public ParticuleEffectWrapper ExplodingEffect               { get; set; }
-        public ParticuleEffectWrapper MovingEffect                  { get; set; }
+        public Particle ExplodingEffect               { get; set; }
+        public Particle MovingEffect                  { get; set; }
 
 
         public virtual void Initialize()
         {
-            Forme = Forme.Rectangle;
+            Shape = Shape.Rectangle;
 
             if (Direction != Vector3.Zero)
             {
@@ -68,19 +68,19 @@ namespace EphemereGames.Commander
 
         public virtual void Update()
         {
-            switch (Forme)
+            switch (Shape)
             {
-                case Forme.Rectangle:
+                case Shape.Rectangle:
                     Rectangle.X = (int)Position.X - Rectangle.Width / 2;
                     Rectangle.Y = (int)Position.Y - Rectangle.Height / 2;
                     break;
 
-                case Forme.Cercle:
-                    Cercle.Position = this.Position;
-                    Rectangle.X = (int) (Position.X - Cercle.Radius);
-                    Rectangle.Y = (int) (Position.Y - Cercle.Radius);
-                    Rectangle.Width = (int) (Cercle.Radius * 2);
-                    Rectangle.Height = (int) (Cercle.Radius * 2);
+                case Shape.Circle:
+                    Circle.Position = this.Position;
+                    Rectangle.X = (int) (Position.X - Circle.Radius);
+                    Rectangle.Y = (int) (Position.Y - Circle.Radius);
+                    Rectangle.Width = (int) (Circle.Radius * 2);
+                    Rectangle.Height = (int) (Circle.Radius * 2);
                     break;
             }
         }
@@ -89,7 +89,7 @@ namespace EphemereGames.Commander
         public virtual void Draw()
         {
             if (Alive && MovingEffect != null)
-                MovingEffect.Emettre(ref this.position);
+                MovingEffect.Trigger(ref this.position);
 
             if (Alive && RepresentationVivant != null)
             {
@@ -111,13 +111,13 @@ namespace EphemereGames.Commander
             LifePoints = 0;
 
             if (ExplodingEffect != null)
-                ExplodingEffect.Emettre(ref this.position);
+                ExplodingEffect.Trigger(ref this.position);
 
             if (MovingEffect != null)
-                Scene.Particules.retourner(MovingEffect);
+                Scene.Particules.Return(MovingEffect);
 
             if (ExplodingEffect != null)
-                Scene.Particules.retourner(ExplodingEffect);
+                Scene.Particules.Return(ExplodingEffect);
         }
 
 
@@ -126,10 +126,10 @@ namespace EphemereGames.Commander
             LifePoints = 0;
 
             if (MovingEffect != null)
-                Scene.Particules.retourner(MovingEffect);
+                Scene.Particules.Return(MovingEffect);
 
             if (ExplodingEffect != null)
-                Scene.Particules.retourner(ExplodingEffect);
+                Scene.Particules.Return(ExplodingEffect);
         }
     }
 }

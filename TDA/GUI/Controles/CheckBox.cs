@@ -38,7 +38,7 @@
 
         public void doClick()
         {
-            if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Curseur.Cercle, BoxCercle))
+            if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(Curseur.Circle, BoxCercle))
                 Checked = !Checked;
         }
 

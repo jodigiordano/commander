@@ -8,9 +8,9 @@
 
     class Cursor : IObjetPhysique
     {
-        public float Vitesse { get; set; }
-        public Cercle Cercle { get; set; }
-        public Forme Forme { get; set; }
+        public float Speed { get; set; }
+        public Cercle Circle { get; set; }
+        public Shape Shape { get; set; }
         public bool Active;
  
         private Vector3 position;
@@ -33,12 +33,12 @@
         {
             Main = main;
             Scene = scene;
-            Vitesse = speed;
+            Speed = speed;
             VisualPriority = visualPriority;
             Color = new Color(255, 255, 255, 0);
             Representation = imageName;
-            Forme = Forme.Cercle;
-            Cercle = new Cercle(initialPosition, Size.X / 4);
+            Shape = Shape.Circle;
+            Circle = new Cercle(initialPosition, Size.X / 4);
             Position = initialPosition;
 
             if (visible)
@@ -63,7 +63,7 @@
         public Vector3 Position
         {
             get { return position; }
-            set { position = value; Cercle.Position = position; }
+            set { position = value; Circle.Position = position; }
         }
 
 
@@ -106,7 +106,7 @@
         public Vector3 Direction { get; set; }
         public float Rotation { get; set; }
         public RectanglePhysique Rectangle { get; set; }
-        public Ligne Ligne { get; set; }
+        public Ligne Line { get; set; }
 
         #endregion
     }

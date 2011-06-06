@@ -9,7 +9,7 @@
     class LaserTurret : Turret
     {
         public Projectile ActiveBullet;
-        private Ennemi EnemyAttacked;
+        private Enemy EnemyAttacked;
 
 
         public LaserTurret(Simulation simulation)
@@ -40,7 +40,7 @@
         }
 
 
-        public override Ennemi EnemyWatched
+        public override Enemy EnemyWatched
         {
             get
             {

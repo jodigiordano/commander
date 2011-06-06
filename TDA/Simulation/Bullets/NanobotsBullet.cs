@@ -23,23 +23,23 @@
         {
             base.Initialize();
 
-            Forme = Forme.Cercle;
+            Shape = Shape.Circle;
 
-            if (Cercle == null)
+            if (Circle == null)
             {
-                Cercle = new Core.Physique.Cercle(Vector3.Zero, ZoneImpact);
+                Circle = new Core.Physique.Cercle(Vector3.Zero, ZoneImpact);
                 Rectangle = new RectanglePhysique();
             }
 
 
-            Cercle.Radius = ZoneImpact;
-            Cercle.Position = Position;
+            Circle.Radius = ZoneImpact;
+            Circle.Position = Position;
 
             LastPosition = Position;
 
-            MovingEffect = Scene.Particules.recuperer("planeteGazeuse");
+            MovingEffect = Scene.Particules.Get("planeteGazeuse");
             CircleEmitter ce = (CircleEmitter) MovingEffect.ParticleEffect[0];
-            ce.Radius = Cercle.Radius - 5;
+            ce.Radius = Circle.Radius - 5;
 
             MovingEffect.VisualPriority = PrioriteAffichage + 0.001f;
             LifePoints = Int16.MaxValue;
@@ -50,7 +50,7 @@
 
         public override void Update()
         {
-            Position += Vitesse * Direction;
+            Position += Speed * Direction;
 
             Length -= 16.66;
 
@@ -68,7 +68,7 @@
 
             if (deplacement.X != 0 && deplacement.Y != 0)
             {
-                MovingEffect.Deplacer(ref deplacement);
+                MovingEffect.Move(ref deplacement);
                 LastPosition = this.position;
             }
 
@@ -83,7 +83,7 @@
         {
             base.DoDie();
 
-            Projectile.PoolNanobotsBullets.retourner(this);
+            Projectile.PoolNanobotsBullets.Return(this);
         }
 
 
@@ -91,7 +91,7 @@
         {
             base.DoDieSilent();
 
-            Projectile.PoolNanobotsBullets.retourner(this);
+            Projectile.PoolNanobotsBullets.Return(this);
         }
     }
 }

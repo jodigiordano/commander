@@ -91,43 +91,43 @@
 
             DoAcceleration(ref donneesThumbstick);
 
-            Position += Vitesse * Acceleration;
+            Position += Speed * Acceleration;
         }
 
 
         private void DoBouncing()
         {
-            if (Position.X > 640 - Preferences.DeadZoneXbox.X - Cercle.Radius)
+            if (Position.X > 640 - Preferences.DeadZoneXbox.X - Circle.Radius)
             {
-                Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Acceleration.X) * Vitesse * 1.5f;
-                Bouncing.Y = Bouncing.Y + Acceleration.Y * Vitesse * 1.5f;
+                Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Acceleration.X) * Speed * 1.5f;
+                Bouncing.Y = Bouncing.Y + Acceleration.Y * Speed * 1.5f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
             }
 
-            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Cercle.Radius)
+            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Circle.Radius)
             {
-                Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Acceleration.X) * Vitesse * 1.5f;
-                Bouncing.Y = Bouncing.Y + Acceleration.Y * Vitesse * 1.5f;
+                Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Acceleration.X) * Speed * 1.5f;
+                Bouncing.Y = Bouncing.Y + Acceleration.Y * Speed * 1.5f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
             }
 
-            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Cercle.Radius)
+            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Circle.Radius)
             {
-                Bouncing.X = Bouncing.X + Acceleration.X * Vitesse * 1.5f;
-                Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Acceleration.Y) * Vitesse * 1.5f;
+                Bouncing.X = Bouncing.X + Acceleration.X * Speed * 1.5f;
+                Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Acceleration.Y) * Speed * 1.5f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
             }
 
-            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Cercle.Radius)
+            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Circle.Radius)
             {
-                Bouncing.X = Bouncing.X + Acceleration.X * Vitesse * 1.5f;
-                Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Acceleration.Y) * Vitesse * 1.5f;
+                Bouncing.X = Bouncing.X + Acceleration.X * Speed * 1.5f;
+                Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Acceleration.Y) * Speed * 1.5f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;

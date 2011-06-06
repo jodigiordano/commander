@@ -40,12 +40,12 @@
             }
         }
 
-        public string TypeAsset
+        public string AssetType
         {
             get { return "EffetSonore"; }
         }
 
-        public object charger(string nom, string chemin, Dictionary<string, string> parametres, Microsoft.Xna.Framework.Content.ContentManager contenu)
+        public object Load(string nom, string chemin, Dictionary<string, string> parametres, Microsoft.Xna.Framework.Content.ContentManager contenu)
         {
             String banque = parametres["banque"];
 

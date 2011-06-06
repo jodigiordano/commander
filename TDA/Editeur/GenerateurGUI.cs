@@ -122,7 +122,7 @@
         private IVisible ReserveEnnemisRep;
         private HorizontalSlider ReserveEnnemisSlider;
 
-        private Dictionary<EnemyType, IVisible> EnnemisDisponiblesRep;
+        private Dictionary<EnemyType, Image> EnnemisDisponiblesRep;
         private Dictionary<EnemyType, CheckBox> EnnemisDisponiblesCheckBoxes;
 
         private IVisible GenererVaguesRep;
@@ -376,7 +376,7 @@
             DifficulteFinSlider = new HorizontalSlider(Simulation.Scene, curseur, FiltreWaves.Position - new Vector3(-450, 20, 0), 2, 100, 2, 2, Preferences.PrioriteGUIConsoleEditeur + 0.005f);
 
  
-            EnnemisDisponiblesRep = new Dictionary<EnemyType, IVisible>();
+            EnnemisDisponiblesRep = new Dictionary<EnemyType, Image>();
             EnnemisDisponiblesCheckBoxes = new Dictionary<EnemyType, CheckBox>();
 
             Vector3 positionEnnemis = FiltreWaves.Position - new Vector3(190, -30, 0);
@@ -384,7 +384,7 @@
             foreach (var ennemi in Simulation.EnemiesFactory.AvailableEnemies)
             {
                 ennemi.Initialize();
-                IVisible iv = (IVisible)ennemi.RepresentationVivant.Clone();
+                Image iv = (Image)ennemi.Image.Clone();
                 iv.Position = positionEnnemis;
                 iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 

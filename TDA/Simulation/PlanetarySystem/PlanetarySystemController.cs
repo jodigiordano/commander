@@ -178,7 +178,7 @@
         {
             if (Main.Random.Next(0, 100) == 0)
             {
-                ShootingStar ss = ShootingStarsFactory.recuperer();
+                ShootingStar ss = ShootingStarsFactory.Get();
                 ss.Simulation = Simulation;
                 ss.LoadContent();
                 ss.Initialize();

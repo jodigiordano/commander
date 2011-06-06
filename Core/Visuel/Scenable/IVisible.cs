@@ -14,7 +14,7 @@ namespace EphemereGames.Core.Visuel
     using EphemereGames.Core.Physique;
 
     [Serializable]
-    public class IVisible : IScenable, IPhysique, ICloneable
+    public class IVisible : IScenable, IPhysicalObject, ICloneable
     {
         protected enum TypeInterne
         {
@@ -36,7 +36,7 @@ namespace EphemereGames.Core.Visuel
         public Rectangle rectangle;
 
         [ContentSerializer(Optional = true)]
-        public float Vitesse                        { get; set; }
+        public float Speed                        { get; set; }
 
         [ContentSerializer(Optional = true)]
         public TypeBlend Blend                  { get; set; }

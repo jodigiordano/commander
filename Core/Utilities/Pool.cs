@@ -1,77 +1,52 @@
-﻿//=====================================================================
-// 
-// Pool d'objets
-//
-//=====================================================================
-
-namespace EphemereGames.Core.Utilities
+﻿namespace EphemereGames.Core.Utilities
 {
     using System;
     using System.Collections.Generic;
 
-    public class Pool<T> : ICloneable where T : new()
+
+    public class Pool<T> where T : new()
     {
+        private Stack<T> objects;
 
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
-        private Stack<T> pile;
+        
+        public Pool() : this(0) {}
 
 
-        //=====================================================================
-        // Constructeurs
-        //=====================================================================
-
-        public Pool()
+        public Pool(int size)
         {
-            pile = new Stack<T>();
-        }
+            List<T> objs = new List<T>(size);
 
-        public Pool(int taille)
-        {
-            pile = new Stack<T>(taille);
+            for (int i = 0; i < size; i++)
+                objs.Add(new T());
 
-            for (int i = 0; i < taille; i++)
-                pile.Push(new T());
+            Initialize(objs);
         }
 
 
-        /// <summary>
-        /// Initialise le pool avec une liste d'objets
-        /// </summary>
-        /// <param name="objets"></param>
-        public Pool(T[] objets)
+        public Pool(List<T> objs)
         {
-            pile = new Stack<T>(objets.Length);
-
-            for (int i = 0; i < objets.Length; i++)
-                pile.Push(objets[i]);
+            Initialize(objs);
         }
 
 
-        //=====================================================================
-        // Logique
-        //=====================================================================
-
-        public T recuperer()
+        private void Initialize(List<T> objs)
         {
-            return (pile.Count > 0) ? pile.Pop() : new T();
+            objects = new Stack<T>(objs);
         }
 
-        public void retourner(T objet)
+
+        public T Get()
         {
-            pile.Push(objet);
+            if (objects.Count > 0)
+                return objects.Pop();
+
+            return new T();
         }
 
-        public object Clone()
+
+        public void Return(T obj)
         {
-            Pool<T> pool = new Pool<T>();
-
-            foreach (var objet in pile)
-                pool.pile.Push(objet);
-
-            return pool;
+            objects.Push(obj);
         }
     }
 

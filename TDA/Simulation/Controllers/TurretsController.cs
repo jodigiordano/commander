@@ -18,7 +18,7 @@
         public List<Turret> Turrets { get; private set; }
 
         private Simulation Simulation;
-        private Dictionary<Turret, Ennemi> AssociationsThisTick;
+        private Dictionary<Turret, Enemy> AssociationsThisTick;
         private Dictionary<Turret, int> BoostedTurretsThisTick;
         private bool demoMode;
 
@@ -27,7 +27,7 @@
         {
             Simulation = simulation;
             Turrets = new List<Turret>();
-            AssociationsThisTick = new Dictionary<Turret, Ennemi>();
+            AssociationsThisTick = new Dictionary<Turret, Enemy>();
             BoostedTurretsThisTick = new Dictionary<Turret, int>();
             DemoMode = false;
         }
@@ -70,7 +70,7 @@
                 if (t.PlayerControlled)
                     continue;
 
-                Ennemi enemyAttacked;
+                Enemy enemyAttacked;
 
                 if (t.TimeLastBullet <= 0 && AssociationsThisTick.TryGetValue(t, out enemyAttacked))
                 {
@@ -144,7 +144,7 @@
 
         public void DoInRangeTurret(Turret turret, IObjetPhysique obj)
         {
-            Ennemi enemy = obj as Ennemi;
+            Enemy enemy = obj as Enemy;
 
             if (enemy == null)
                 return;

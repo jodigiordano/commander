@@ -10,7 +10,7 @@ namespace EphemereGames.Commander
     class GunnerTurret : Turret
     {
         public Projectile ActiveBullet;
-        private Ennemi EnemyAttacked;
+        private Enemy EnemyAttacked;
 
 
         public GunnerTurret( Simulation simulation )
@@ -41,7 +41,7 @@ namespace EphemereGames.Commander
         }
 
 
-        public override Ennemi EnemyWatched
+        public override Enemy EnemyWatched
         {
             get
             {

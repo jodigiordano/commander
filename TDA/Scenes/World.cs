@@ -168,11 +168,11 @@
                 bool done = Main.SaveGame.Progress.TryGetValue(descriptor.Id, out value) && value > 0;
 
                 kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone",
-                    kvp.Key.Position + new Vector3(kvp.Key.Cercle.Radius, kvp.Key.Cercle.Radius, 0) +
-                    ((kvp.Key.Cercle.Radius < (int) Size.Normal) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0)));
+                    kvp.Key.Position + new Vector3(kvp.Key.Circle.Radius, kvp.Key.Circle.Radius, 0) +
+                    ((kvp.Key.Circle.Radius < (int) Size.Normal) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0)));
 
                 kvp.Value.VisualPriority = kvp.Key.Representation.VisualPriority - 0.0001f;
-                kvp.Value.SizeX = (kvp.Key.Cercle.Radius < (int) Size.Normal) ? 0.5f : 0.80f;
+                kvp.Value.SizeX = (kvp.Key.Circle.Radius < (int) Size.Normal) ? 0.5f : 0.80f;
             }
         }
     }

@@ -6,16 +6,16 @@
     using EphemereGames.Core.Physique;
 
 
-    class HumanBattleship : IObjetPhysique, IPhysique
+    class HumanBattleship : IObjetPhysique, IPhysicalObject
     {
         public Vector3 Position                 { get; set; }
-        public float Vitesse                    { get; set; }
+        public float Speed                    { get; set; }
         public Vector3 Direction                { get; set; }
         public float Rotation                   { get; set; }
-        public Forme Forme                      { get; set; }
-        public Cercle Cercle                    { get; set; }
+        public Shape Shape                      { get; set; }
+        public Cercle Circle                    { get; set; }
         public RectanglePhysique Rectangle      { get; set; }
-        public Ligne Ligne                      { get; set; }
+        public Ligne Line                      { get; set; }
 
         public RailGunTurret RailGun;
         public SniperTurret Sniper;

@@ -13,14 +13,16 @@
         Centaur,
         Trojan,
         Meteoroid,
-        Inconnu
+        Apohele,
+        Damacloid,
+        Vulcanoid
     };
 
 
     class EnemiesFactory
     {
-        public List<Ennemi> AvailableEnemies { get; private set; }
-        private Dictionary<EnemyType, Pool<Ennemi>> PoolsEnemies;
+        public List<Enemy> AvailableEnemies { get; private set; }
+        private Dictionary<EnemyType, Pool<Enemy>> EnemiesPools;
         private Simulation Simulation;
 
 
@@ -31,7 +33,10 @@
             { EnemyType.Plutoid, new Color(7, 143, 255) },
             { EnemyType.Centaur, new Color(92, 198, 11) },
             { EnemyType.Trojan, new Color(255, 66, 217) },
-            { EnemyType.Meteoroid, new Color(239, 0, 0) }
+            { EnemyType.Meteoroid, new Color(239, 0, 0) },
+            { EnemyType.Apohele, new Color(255, 255, 255) },
+            { EnemyType.Damacloid, new Color(255, 0, 170) },
+            { EnemyType.Vulcanoid, new Color(0, 76, 255) }
         };
 
 
@@ -39,49 +44,51 @@
         {
             Simulation = simulation;
 
-            PoolsEnemies = new Dictionary<EnemyType, Pool<Ennemi>>();
-            PoolsEnemies.Add(EnemyType.Asteroid, new Pool<Ennemi>());
-            PoolsEnemies.Add(EnemyType.Centaur, new Pool<Ennemi>());
-            PoolsEnemies.Add(EnemyType.Comet, new Pool<Ennemi>());
-            PoolsEnemies.Add(EnemyType.Meteoroid, new Pool<Ennemi>());
-            PoolsEnemies.Add(EnemyType.Plutoid, new Pool<Ennemi>());
-            PoolsEnemies.Add(EnemyType.Trojan, new Pool<Ennemi>());
+            EnemiesPools = new Dictionary<EnemyType, Pool<Enemy>>();
+            EnemiesPools.Add(EnemyType.Asteroid, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Centaur, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Comet, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Meteoroid, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Plutoid, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Trojan, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Apohele, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Damacloid, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Vulcanoid, new Pool<Enemy>());
 
-            AvailableEnemies = new List<Ennemi>();
+            AvailableEnemies = new List<Enemy>();
             AvailableEnemies.Add(CreateEnemy(EnemyType.Asteroid, 1, 1, 1));
             AvailableEnemies.Add(CreateEnemy(EnemyType.Centaur, 1, 1, 1));
             AvailableEnemies.Add(CreateEnemy(EnemyType.Comet, 1, 1, 1));
             AvailableEnemies.Add(CreateEnemy(EnemyType.Meteoroid, 1, 1, 1));
             AvailableEnemies.Add(CreateEnemy(EnemyType.Plutoid, 1, 1, 1));
             AvailableEnemies.Add(CreateEnemy(EnemyType.Trojan, 1, 1, 1));
+            AvailableEnemies.Add(CreateEnemy(EnemyType.Apohele, 1, 1, 1));
+            AvailableEnemies.Add(CreateEnemy(EnemyType.Damacloid, 1, 1, 1));
+            AvailableEnemies.Add(CreateEnemy(EnemyType.Vulcanoid, 1, 1, 1));
         }
 
 
-        public Ennemi CreateEnemy(EnemyType type, int speedLevel, int livesLevel, int value)
+        public Enemy CreateEnemy(EnemyType type, int speedLevel, int livesLevel, int value)
         {
-            Ennemi e = PoolsEnemies[type].recuperer();
+            Enemy e = EnemiesPools[type].Get();
 
+            e.Name = GetTexture(type);
+            e.Type = type;
             e.Simulation = Simulation;
-            e.Vitesse = GetSpeed(type, speedLevel);
-            e.LifePoints = e.PointsVieDepart = GetLives(type, livesLevel); ;
-            e.ValeurUnites = value;
-            e.ValeurPoints = livesLevel;
-            e.Id = Ennemi.NextID;
-
-            if (e.Type == EnemyType.Inconnu)
-            {
-                e.Type = type;
-                e.Nom = type.ToString("g");
-                e.Couleur = ColorsEnemies[type];
-            }
+            e.Speed = GetSpeed(type, speedLevel);
+            e.LifePoints = e.StartingLifePoints = GetLives(type, livesLevel); ;
+            e.CashValue = value;
+            e.PointsValue = livesLevel;
+            e.Id = Enemy.NextID;
+            e.Color = ColorsEnemies[type];
 
             return e;
         }
 
 
-        public void ReturnEnemy(Ennemi ennemi)
+        public void ReturnEnemy(Enemy enemy)
         {
-            PoolsEnemies[ennemi.Type].retourner(ennemi);
+            EnemiesPools[enemy.Type].Return(enemy);
         }
 
 

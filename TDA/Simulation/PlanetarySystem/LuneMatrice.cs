@@ -14,7 +14,7 @@
         public LuneMatrice(Simulation simulation, CorpsCeleste corpsCeleste)
             : base(simulation, corpsCeleste)
         {
-            PositionRelative = new Vector3(corpsCeleste.Cercle.Radius + Main.Random.Next(10, 30), 0, 0);
+            PositionRelative = new Vector3(corpsCeleste.Circle.Radius + Main.Random.Next(10, 30), 0, 0);
 
             Matrix.CreateRotationZ((float)(MathHelper.TwoPi / TempsRotationActuel), out MatriceRotation);
             Vector3.Transform(ref PositionRelative, ref MatriceRotation, out Position);

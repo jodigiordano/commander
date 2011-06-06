@@ -13,16 +13,16 @@
         public String Nom;
         public List<Turret> Turrets = new List<Turret>();
         public IVisible Representation;
-        public ParticuleEffectWrapper ParticulesRepresentation;
+        public Particle ParticulesRepresentation;
         public int Priorite;
         public Vector3 position;
         public Vector3 Position                                     { get { return position; } set { this.AnciennePosition = position; position = value; } }
-        public float Vitesse                                        { get; set; }
+        public float Speed                                        { get; set; }
         public float Rotation                                       { get; set; }
         public Vector3 Direction                                    { get; set; }
-        public Forme Forme                                          { get; set; }
-        public Cercle Cercle                                        { get; set; }
-        public Ligne Ligne                                          { get; set; }
+        public Shape Shape                                          { get; set; }
+        public Cercle Circle                                        { get; set; }
+        public Ligne Line                                          { get; set; }
         public RectanglePhysique Rectangle                          { get; set; }
         public float LifePoints                                      { get; set; }
         public float AttackPoints                                  { get; set; }
@@ -44,9 +44,9 @@
         protected double TempsRotationActuel;
         protected Vector3 PositionBase;
 
-        private ParticuleEffectWrapper toucherTerre;
-        private ParticuleEffectWrapper bouleMeurt;
-        private ParticuleEffectWrapper anneauMeurt;
+        private Particle toucherTerre;
+        private Particle bouleMeurt;
+        private Particle anneauMeurt;
         private Matrix MatriceRotation;
         private Image TurretsZoneImage;
 
@@ -97,8 +97,8 @@
             if (TempsRotation != 0)
                 deplacer();
 
-            Forme = Forme.Cercle;
-            Cercle = new Cercle(Position, rayon);
+            Shape = Shape.Circle;
+            Circle = new Cercle(Position, rayon);
             TurretsZone = new Cercle(Position, rayon * 2);
 
             initLunes();
@@ -120,7 +120,7 @@
             Vector3 offset,
             float rayon,
             double tempsRotation,
-            ParticuleEffectWrapper representation,
+            Particle representation,
             int pourcDepart,
             float prioriteAffichage,
             bool enBackground,
@@ -171,8 +171,8 @@
             if (TempsRotation != 0)
                 deplacer();
 
-            this.Forme = Forme.Cercle;
-            this.Cercle = new Cercle(Position, rayon);
+            this.Shape = Shape.Circle;
+            this.Circle = new Cercle(Position, rayon);
             TurretsZone = new Cercle(Position, rayon * 2);
 
             this.AttackPoints = 50000;
@@ -248,7 +248,7 @@
                 deplacer();
             }
 
-            Cercle.Position = Position;
+            Circle.Position = Position;
             //ZoneImpactDestruction.Position = Position;
             TurretsZone.Position = Position;
 
@@ -256,8 +256,8 @@
             {
                 Vector3 deplacement;
                 Vector3.Subtract(ref this.position, ref this.AnciennePosition, out deplacement);
-                ParticulesRepresentation.Deplacer(ref deplacement);
-                ParticulesRepresentation.Emettre(ref position);
+                ParticulesRepresentation.Move(ref deplacement);
+                ParticulesRepresentation.Trigger(ref position);
             }
 
             for (int i = 0; i < Lunes.Count; i++)
@@ -290,15 +290,15 @@
 
         public void DoHit(ILivingObject par)
         {
-            toucherTerre = Simulation.Scene.Particules.recuperer("toucherTerre");
+            toucherTerre = Simulation.Scene.Particules.Get("toucherTerre");
 
             if (this.Representation != null)
                 toucherTerre.VisualPriority = this.Representation.VisualPriority - 0.001f;
             else
                 toucherTerre.VisualPriority = this.ParticulesRepresentation.VisualPriority - 0.001f;
 
-            toucherTerre.Emettre(ref this.position);
-            Simulation.Scene.Particules.retourner(toucherTerre);
+            toucherTerre.Trigger(ref this.position);
+            Simulation.Scene.Particules.Return(toucherTerre);
 
             if (Invincible)
                 return;
@@ -314,8 +314,8 @@
 
             this.LifePoints = Math.Min(this.LifePoints, 0);
 
-            bouleMeurt = Simulation.Scene.Particules.recuperer("bouleTerreMeurt");
-            anneauMeurt = Simulation.Scene.Particules.recuperer("anneauTerreMeurt");
+            bouleMeurt = Simulation.Scene.Particules.Get("bouleTerreMeurt");
+            anneauMeurt = Simulation.Scene.Particules.Get("anneauTerreMeurt");
 
             if (this.Representation != null)
             {
@@ -328,10 +328,10 @@
                 anneauMeurt.VisualPriority = this.ParticulesRepresentation.VisualPriority - 0.001f;
             }
 
-            bouleMeurt.Emettre(ref this.position);
-            anneauMeurt.Emettre(ref this.position);
-            Simulation.Scene.Particules.retourner(bouleMeurt);
-            Simulation.Scene.Particules.retourner(anneauMeurt);
+            bouleMeurt.Trigger(ref this.position);
+            anneauMeurt.Trigger(ref this.position);
+            Simulation.Scene.Particules.Return(bouleMeurt);
+            Simulation.Scene.Particules.Return(anneauMeurt);
         }
 
 

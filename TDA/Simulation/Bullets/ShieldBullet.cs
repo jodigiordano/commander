@@ -21,7 +21,7 @@
 
             Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 40, 40);
 
-            MovingEffect = Scene.Particules.recuperer("shieldEffect");
+            MovingEffect = Scene.Particules.Get("shieldEffect");
             ExplodingEffect = null;
         }
 

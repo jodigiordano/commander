@@ -39,13 +39,13 @@
             if (!Space.Includes(obj.Position))
                 return;
 
-            switch (obj.Forme)
+            switch (obj.Shape)
             {
-                case Forme.Rectangle:
+                case Shape.Rectangle:
                     AddRectangle(id, obj.Rectangle.Left, obj.Rectangle.Right, obj.Rectangle.Top, obj.Rectangle.Bottom);
                     break;
-                case Forme.Cercle:
-                    AddRectangle(id, obj.Cercle.Rectangle.Left, obj.Cercle.Rectangle.Right, obj.Cercle.Rectangle.Top, obj.Cercle.Rectangle.Bottom);
+                case Shape.Circle:
+                    AddRectangle(id, obj.Circle.Rectangle.Left, obj.Circle.Rectangle.Right, obj.Circle.Rectangle.Top, obj.Circle.Rectangle.Bottom);
                     break;
             }
         }

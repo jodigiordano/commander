@@ -6,7 +6,7 @@
         float AttackPoints  { get; set; }
         bool  Alive         { get;      }
 
-        void DoHit(ILivingObject par);
+        void DoHit(ILivingObject by);
         void DoDie();
     }
 }

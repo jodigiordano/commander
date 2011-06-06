@@ -39,7 +39,7 @@
 
         private Simulation Simulation;
         private int WavesCounter;
-        private ParticuleEffectWrapper Stars;
+        private Particle Stars;
         private double StarsEmitter;
         private double ElapsedTime;
 
@@ -51,7 +51,7 @@
             Simulation = simulation;
             Scenario = scenario;
 
-            Stars = Simulation.Scene.Particules.recuperer("etoilesScintillantes");
+            Stars = Simulation.Scene.Particules.Get("etoilesScintillantes");
             Stars.VisualPriority = Preferences.PrioriteGUIEtoiles;
             StarsEmitter = 0;
 
@@ -92,7 +92,7 @@
             if (StarsEmitter >= 100)
             {
                 Vector2 v2 = Vector2.Zero;
-                Stars.Emettre(ref v2);
+                Stars.Trigger(ref v2);
                 StarsEmitter = 0;
             }
 
@@ -138,7 +138,7 @@
         }
 
 
-        public void doEnemyReachedEnd(Ennemi enemy, CorpsCeleste celestialBody)
+        public void doEnemyReachedEnd(Enemy enemy, CorpsCeleste celestialBody)
         {
             if (State == GameState.Won)
                 return;

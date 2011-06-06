@@ -8,13 +8,13 @@
     {
         public double StartingTime;
         public Vector3 StartingPosition;
-        public List<Ennemi> Enemies;
+        public List<Enemy> Enemies;
         public Dictionary<EnemyType, EnemyDescriptor> Composition;
-        public int NbEnemies;
+        public int EnemiesCount;
 
         private double TempsDebut;
         private List<EnemyDescriptor> EnemiesToCreate;
-        private Dictionary<int, Ennemi> EnemiesCreated;
+        private Dictionary<int, Enemy> EnemiesCreated;
         private Simulation Simulation;
 
 
@@ -23,8 +23,8 @@
             Simulation = simulation;
 
             EnemiesToCreate = new List<EnemyDescriptor>();
-            EnemiesCreated = new Dictionary<int, Ennemi>();
-            Enemies = new List<Ennemi>();
+            EnemiesCreated = new Dictionary<int, Enemy>();
+            Enemies = new List<Enemy>();
             Composition = new Dictionary<EnemyType, EnemyDescriptor>();
 
             EnemiesToCreate = descriptor.GetEnemiesToCreate();
@@ -50,13 +50,13 @@
                     Composition.Add(enemy.Type, desc);
                 }
 
-            NbEnemies = EnemiesToCreate.Count;
+            EnemiesCount = EnemiesToCreate.Count;
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            TempsDebut += gameTime.ElapsedGameTime.TotalMilliseconds;
+            TempsDebut += 16.66;
 
             Enemies.Clear();
 
@@ -69,7 +69,7 @@
             {
                 var desc = EnemiesToCreate[i];
 
-                Ennemi e = Simulation.EnemiesFactory.CreateEnemy
+                Enemy e = Simulation.EnemiesFactory.CreateEnemy
                 (
                     desc.Type,
                     desc.SpeedLevel,
@@ -97,9 +97,9 @@
         }
 
 
-        public void doEnemyDestroyed(Ennemi ennemi)
+        public void DoEnemyDestroyed(Enemy enemy)
         {
-            EnemiesCreated.Remove(ennemi.GetHashCode());
+            EnemiesCreated.Remove(enemy.GetHashCode());
         }
     }
 }

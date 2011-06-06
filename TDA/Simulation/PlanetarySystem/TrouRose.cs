@@ -17,7 +17,7 @@
             Vector3 offset,
             float rayon,
             double tempsRotation,
-            ParticuleEffectWrapper representation,
+            Particle representation,
             int pourcDepart,
             float prioriteAffichage,
             bool enBackground,

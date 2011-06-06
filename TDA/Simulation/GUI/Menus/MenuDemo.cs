@@ -84,7 +84,7 @@
         {
             get
             {
-                return (CelestialBody == null) ? Vector3.Zero : CelestialBody.Position - new Vector3(0, CelestialBody.Cercle.Radius / 4, 0);
+                return (CelestialBody == null) ? Vector3.Zero : CelestialBody.Position - new Vector3(0, CelestialBody.Circle.Radius / 4, 0);
             }
         }
 
@@ -132,10 +132,10 @@
         private void DrawInfos()
         {
             Title.Data = Scenario.Mission;
-            Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Cercle.Radius - 32, 0);
+            Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 32, 0);
             Title.Origin = Title.Center;
             Difficulty.Data = Scenario.Difficulty;
-            Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Cercle.Radius + 16, 0);
+            Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
             Difficulty.Origin = Difficulty.Center;
 
 
@@ -153,13 +153,13 @@
 
             Highscore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
             Highscore.Origin = Highscore.Center;
-            Highscore.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Cercle.Radius + 40, 0);
+            Highscore.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 40, 0);
 
             int nbStars = (highscores == null) ? 0 : Scenario.NbStars(highscores.Scores[0].Value);
 
             for (int i = 0; i < 3; i++)
             {
-                HighscoreStars[i].Position = new Vector3(CelestialBody.Position.X - 50 + i * 50, CelestialBody.Position.Y + CelestialBody.Cercle.Radius + 70, 0);
+                HighscoreStars[i].Position = new Vector3(CelestialBody.Position.X - 50 + i * 50, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 70, 0);
                 HighscoreStars[i].Color.A = (i < nbStars) ? (byte) 200 : (byte) 50;
             }
 

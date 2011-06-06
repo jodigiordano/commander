@@ -14,7 +14,7 @@
         private List<CorpsCeleste> CelestialBodies;
 
 
-        public AdvancedView(Simulation simulation, List<Ennemi> enemies, List<CorpsCeleste> celestialBodies)
+        public AdvancedView(Simulation simulation, List<Enemy> enemies, List<CorpsCeleste> celestialBodies)
         {
             Simulation = simulation;
             visible = false;

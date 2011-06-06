@@ -14,7 +14,7 @@
 
         public Vector3 Position { get; set; }
         public RectanglePhysique Rectangle { get; set; }
-        public Forme Forme { get; set; }
+        public Shape Shape { get; set; }
 
         private Scene Scene;
         private IVisible Representation;
@@ -113,7 +113,7 @@
 
             Progression = 0;
 
-            Forme = Forme.Rectangle;
+            Shape = Shape.Rectangle;
             Rectangle = new RectanglePhysique(Representation.Rectangle);
         }
 
@@ -188,7 +188,7 @@
 
         #region IObjetPhysique Membres
 
-        public float Vitesse
+        public float Speed
         {
             get
             {
@@ -221,7 +221,7 @@
                 throw new NotImplementedException();
             }
         }
-        public Cercle Cercle
+        public Cercle Circle
         {
             get
             {
@@ -232,7 +232,7 @@
                 throw new NotImplementedException();
             }
         }
-        public Ligne Ligne
+        public Ligne Line
         {
             get
             {

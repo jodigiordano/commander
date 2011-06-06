@@ -41,12 +41,12 @@
             base.jouer(apparitionProgressive, tempsFade, loop);
         }
 
-        public string TypeAsset
+        public string AssetType
         {
             get { return "Musique"; }
         }
 
-        public object charger(string nom, string chemin, Dictionary<string, string> parametres, Microsoft.Xna.Framework.Content.ContentManager contenu)
+        public object Load(string nom, string chemin, Dictionary<string, string> parametres, Microsoft.Xna.Framework.Content.ContentManager contenu)
         {
             SoundEffect son = contenu.Load<SoundEffect>(chemin);
 

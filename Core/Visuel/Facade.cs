@@ -47,7 +47,7 @@
 
             Primitives.Initialize(Preferences.Content.Load<Texture2D>("pixelBlanc"));
 
-            EphemereGames.Core.Persistance.Facade.AddAsset(new ParticuleEffectWrapper());
+            EphemereGames.Core.Persistance.Facade.AddAsset(new Particle());
             EphemereGames.Core.Persistance.Facade.AddAsset(new Sprite());
         }
 

@@ -258,12 +258,12 @@ namespace EphemereGames.Core.Visuel
             }
         }
 
-        public string TypeAsset
+        public string AssetType
         {
             get { return "Sprite"; }
         }
 
-        public object charger(string nom, string chemin, Dictionary<string, string> parametres, ContentManager contenu)
+        public object Load(string nom, string chemin, Dictionary<string, string> parametres, ContentManager contenu)
         {
             Sprite sprite = contenu.Load<Sprite>(chemin);
 

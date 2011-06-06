@@ -39,7 +39,7 @@ namespace EphemereGames.Commander
 
         public override void Update()
         {
-            TravelTime += Bullet.Vitesse;
+            TravelTime += Bullet.Speed;
             
             Path.Position(Path.Length - TravelTime, ref BulletPosition);
 
@@ -54,7 +54,7 @@ namespace EphemereGames.Commander
                 Scene = Simulation.Scene,
                 AttackPoints = 50,
                 LifePoints = float.MaxValue,
-                Vitesse = 10,
+                Speed = 10,
                 PrioriteAffichage = Preferences.PrioriteSimulationEnnemi - 0.0001f
             };
 

@@ -13,9 +13,9 @@
     class ProjectileLaserSimple : Projectile
     {
         private double DureeVie;
-        public Ennemi Cible;
+        public Enemy Cible;
         public Turret TourelleEmettrice;
-        private ParticuleEffectWrapper RepresentationVivantAlt;
+        private Particle RepresentationVivantAlt;
         private LigneVisuel RepresentationVivantAlt2;
 
 
@@ -24,20 +24,20 @@
             base.Initialize();
 
             Position = TourelleEmettrice.Position;
-            Vitesse = 0;
-            Forme = Forme.Ligne;
+            Speed = 0;
+            Shape = Shape.Line;
             RepresentationVivant = null;
 
-            Ligne = new Ligne(this.Position, Cible.Position);
+            Line = new Ligne(this.Position, Cible.Position);
 
-            RepresentationVivantAlt = Scene.Particules.recuperer("projectileLaserSimple");
+            RepresentationVivantAlt = Scene.Particules.Get("projectileLaserSimple");
             RepresentationVivantAlt.VisualPriority = PrioriteAffichage + 0.001f;
             LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
-            emetteur.Length = Ligne.Longueur;
+            emetteur.Length = Line.Longueur;
             emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[1];
-            emetteur.Length = Ligne.Longueur;
+            emetteur.Length = Line.Longueur;
 
-            RepresentationVivantAlt2 = new LigneVisuel(Ligne.Debut, Ligne.Fin, new Color(255, 0, 110), 4);
+            RepresentationVivantAlt2 = new LigneVisuel(Line.Debut, Line.Fin, new Color(255, 0, 110), 4);
             RepresentationVivantAlt2.VisualPriority = PrioriteAffichage + 0.002f;
 
             MovingEffect = null;
@@ -67,8 +67,8 @@
 
             Position = TourelleEmettrice.Position;
 
-            Ligne.Debut = this.Position;
-            Ligne.Fin = Cible.Position;
+            Line.Debut = this.Position;
+            Line.Fin = Cible.Position;
 
             DureeVie -= 16.66;
 
@@ -82,7 +82,7 @@
         public override void Draw()
         {
             if (Alive)
-                RepresentationVivantAlt.Emettre(ref this.position);
+                RepresentationVivantAlt.Trigger(ref this.position);
 
             LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
             LineEmitter emetteur2 = (LineEmitter)RepresentationVivantAlt.ParticleEffect[1];
@@ -93,8 +93,8 @@
             emetteur2.Length = emetteur.Length;
             emetteur2.TriggerOffset = emetteur.TriggerOffset;
 
-            RepresentationVivantAlt2.Debut = Ligne.Debut;
-            RepresentationVivantAlt2.Fin = Ligne.Fin;
+            RepresentationVivantAlt2.Debut = Line.Debut;
+            RepresentationVivantAlt2.Fin = Line.Fin;
 
             Scene.ajouterScenable(RepresentationVivantAlt2);
 
@@ -112,9 +112,9 @@
         {
             base.DoDie();
 
-            Scene.Particules.retourner(RepresentationVivantAlt);
+            Scene.Particules.Return(RepresentationVivantAlt);
 
-            Projectile.PoolProjectilesLaserSimple.retourner(this);
+            Projectile.PoolProjectilesLaserSimple.Return(this);
         }
 
 
@@ -122,9 +122,9 @@
         {
             base.DoDieSilent();
 
-            Scene.Particules.retourner(RepresentationVivantAlt);
+            Scene.Particules.Return(RepresentationVivantAlt);
 
-            Projectile.PoolProjectilesLaserSimple.retourner(this);
+            Projectile.PoolProjectilesLaserSimple.Return(this);
         }
     }
 }

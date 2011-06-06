@@ -112,6 +112,9 @@
     <asset nom="Centaur"                    type="Texture2D" chemin="asteroids/centaur" />
     <asset nom="Trojan"                     type="Texture2D" chemin="asteroids/trojan" />
     <asset nom="Meteoroid"                  type="Texture2D" chemin="asteroids/meteoroid" />
+    <asset nom="Apohele"                    type="Texture2D" chemin="asteroids/apohele" />
+    <asset nom="Damacloid"                  type="Texture2D" chemin="asteroids/damacloid" />
+    <asset nom="Vulcanoid"                  type="Texture2D" chemin="asteroids/vulcanoid" />
     <asset nom="Filtre"                     type="Texture2D" chemin="GUI/filtre" />
 
     <asset nom="etoile13"                   type="Texture2D" chemin="planetes/etoile1" />

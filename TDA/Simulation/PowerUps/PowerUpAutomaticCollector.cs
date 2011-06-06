@@ -42,7 +42,7 @@ namespace EphemereGames.Commander
             Spaceship = new SpaceshipAutomaticCollector(Simulation)
             {
                 ActiveTime = ActiveTime,
-                Vitesse = 8,
+                Speed = 8,
                 StartingObject = HumanBattleship,
                 VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
             };

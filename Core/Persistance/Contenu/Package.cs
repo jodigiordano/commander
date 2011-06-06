@@ -47,7 +47,7 @@
                     ContenuCharge.Add(asset.Nom, Contenu.Load<SpriteFont>(asset.Chemin));
                 else
                 {
-                    var objet = GestionnaireContenu.Instance.getTypeAsset(asset.Type).charger(
+                    var objet = GestionnaireContenu.Instance.getTypeAsset(asset.Type).Load(
                         asset.Nom,
                         asset.Chemin,
                         asset.Parametres,

@@ -9,10 +9,10 @@
     class EnemiesLives
     {
         private List<List<IVisible>> Lives;
-        private List<Ennemi> Enemies;
+        private List<Enemy> Enemies;
         private Simulation Simulation;
 
-        public EnemiesLives(Simulation simulation, List<Ennemi> enemies)
+        public EnemiesLives(Simulation simulation, List<Enemy> enemies)
         {
             Enemies = enemies;
             Simulation = simulation;
@@ -42,13 +42,13 @@
 
             for (int i = 0; i < Enemies.Count; i++)
             {
-                Ennemi enemy = Enemies[i];
+                Enemy enemy = Enemies[i];
 
-                float LivesRatio = enemy.LifePoints / enemy.PointsVieDepart;
+                float LivesRatio = enemy.LifePoints / enemy.StartingLifePoints;
 
                 int index = (int)Math.Round((1 - LivesRatio) * 5);
 
-                Lives[livesIndex][index].Position = enemy.Position - new Vector3(0, enemy.RepresentationVivant.Texture.Height * enemy.RepresentationVivant.TailleVecteur.Y, 0);
+                Lives[livesIndex][index].Position = enemy.Position - new Vector3(0, enemy.Image.AbsoluteSize.Y, 0);
 
                 Simulation.Scene.ajouterScenable(Lives[livesIndex][index]);
                 livesIndex++;

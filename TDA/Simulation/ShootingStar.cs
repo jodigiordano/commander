@@ -16,8 +16,8 @@
         private bool ContentLoaded;
 
         public Vector3 Position         { get { return position; } set { position = value; } }
-        public Forme Forme              { get; set; }
-        public Cercle Cercle            { get; set; }
+        public Shape Shape              { get; set; }
+        public Cercle Circle            { get; set; }
         public float ZoneImpact         { get; set; } 
 
         public float LifePoints         { get; set; }
@@ -28,7 +28,7 @@
         private double Length;
         private double RemainingTime;
         private Matrix RotationMatrix;
-        private ParticuleEffectWrapper Effect;
+        private Particle Effect;
         private Vector3 position;
         private Vector3 TrailDirection;
         private List<Vector3> Positions;
@@ -46,8 +46,8 @@
 
         public ShootingStar()
         {
-            Forme = Forme.Cercle;
-            Cercle = new Cercle(Vector3.Zero, 20);
+            Shape = Shape.Circle;
+            Circle = new Cercle(Vector3.Zero, 20);
             ZoneImpact = 70f;
 
             LifePoints = float.MaxValue / 2;
@@ -72,7 +72,7 @@
         {
             if (!ContentLoaded)
             {
-                Effect = Simulation.Scene.Particules.recuperer("etoileFilante");
+                Effect = Simulation.Scene.Particules.Get("etoileFilante");
                 Effect.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
                 ContentLoaded = true;
@@ -116,7 +116,7 @@
 
             ((ColourInterpolatorModifier) Effect.ParticleEffect[0].Modifiers[1]).InitialColour = Couleurs[Main.Random.Next(0, Couleurs.Length)];
 
-            Cercle.Position = startingPosition;
+            Circle.Position = startingPosition;
         }
 
 
@@ -131,9 +131,9 @@
 
             Path.Position(relativeTime, ref position);
 
-            Cercle.Position = position;
+            Circle.Position = position;
 
-            Effect.Emettre(ref position);
+            Effect.Trigger(ref position);
         }
 
 
@@ -147,10 +147,10 @@
 
 
         #region Useless
-        public float Vitesse { get; set; }
+        public float Speed { get; set; }
         public Vector3 Direction { get; set; }
         public RectanglePhysique Rectangle { get; set; }
-        public Ligne Ligne { get; set; }
+        public Ligne Line { get; set; }
         public float Masse { get; set; }
         public float Rotation { get; set; }
         public float ResistanceRotation { get; set; }

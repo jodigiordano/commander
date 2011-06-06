@@ -14,7 +14,7 @@ namespace EphemereGames.Commander
     {
         private Trajet3D Trajet;
         private Matrix MatriceRotation;
-        private ParticuleEffectWrapper EffetEtoileFilante;
+        private Particle EffetEtoileFilante;
         private Simulation Simulation;
         private Vector3 PositionEmission;
         private Vector3 DirectionTrainee;
@@ -69,7 +69,7 @@ namespace EphemereGames.Commander
                 }
             );
 
-            EffetEtoileFilante = Simulation.Scene.Particules.recuperer("etoileFilante");
+            EffetEtoileFilante = Simulation.Scene.Particules.Get("etoileFilante");
             EffetEtoileFilante.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
             base.Length = temps * 2;
@@ -85,7 +85,7 @@ namespace EphemereGames.Commander
             ((ConeEmitter)EffetEtoileFilante.ParticleEffect[0]).Direction = (float)Math.Atan2(DirectionTrainee.Y, DirectionTrainee.X) - MathHelper.Pi;
 
             Trajet.Position(base.RelativeTime, ref PositionEmission);
-            EffetEtoileFilante.Emettre(ref PositionEmission);
+            EffetEtoileFilante.Trigger(ref PositionEmission);
         }
 
         public override void Draw(SpriteBatch spriteBatch) { }

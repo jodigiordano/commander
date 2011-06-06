@@ -13,8 +13,8 @@
     class ProjectileMissile : Projectile
     {
         public float ZoneImpact;
-        public Ennemi Cible;
-        private ParticuleEffectWrapper Trainee;
+        public Enemy Cible;
+        private Particle Trainee;
         private double CompteurTrainee;
         private bool Orphelin;
 
@@ -22,7 +22,7 @@
         {
             base.Initialize();
 
-            Forme = Forme.Rectangle;
+            Shape = Shape.Rectangle;
 
             if (RepresentationVivant == null)
             {
@@ -43,12 +43,12 @@
             RepresentationVivant.VisualPriority = PrioriteAffichage + 0.001f;
 
             MovingEffect = null;
-            ExplodingEffect = Scene.Particules.recuperer("projectileMissileExplosion");
+            ExplodingEffect = Scene.Particules.Get("projectileMissileExplosion");
             ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
 
             LifePoints = 5;
 
-            Trainee = Scene.Particules.recuperer("traineeMissile");
+            Trainee = Scene.Particules.Get("traineeMissile");
             Trainee.VisualPriority = this.RepresentationVivant.VisualPriority - 0.0001f;
 
             ConeEmitter emetteur = (ConeEmitter)Trainee.ParticleEffect[0];
@@ -76,13 +76,13 @@
             else
                 Orphelin = true;
 
-            Position += Vitesse * Direction;
+            Position += Speed * Direction;
 
             ConeEmitter emetteur = (ConeEmitter)Trainee.ParticleEffect[0];
             emetteur.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
 
             if (CompteurTrainee > 0)
-                Trainee.Emettre(ref this.position);
+                Trainee.Trigger(ref this.position);
 
             base.Update();
         }
@@ -104,9 +104,9 @@
 
             EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMissileExplosion");
 
-            Scene.Particules.retourner(Trainee);
+            Scene.Particules.Return(Trainee);
 
-            Projectile.PoolProjectilesMissile.retourner(this);
+            Projectile.PoolProjectilesMissile.Return(this);
         }
 
 
@@ -114,9 +114,9 @@
         {
             base.DoDieSilent();
 
-            Scene.Particules.retourner(Trainee);
+            Scene.Particules.Return(Trainee);
 
-            Projectile.PoolProjectilesMissile.retourner(this);
+            Projectile.PoolProjectilesMissile.Return(this);
         }
     }
 }

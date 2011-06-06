@@ -40,10 +40,10 @@ namespace EphemereGames.Commander
         public override void Update()
         {
             Bullet.Position = ToProtect.Position;
-            Bullet.Rectangle.Width = (int) (ToProtect.Cercle.Radius * 2 + 10);
-            Bullet.Rectangle.Height = (int) (ToProtect.Cercle.Radius * 2 + 10);
-            ((CircleEmitter) Bullet.MovingEffect.ParticleEffect[0]).Radius = ToProtect.Cercle.Radius;
-            ((RadialGravityModifier) Bullet.MovingEffect.ParticleEffect[0].Modifiers[0]).Radius = ToProtect.Cercle.Radius + 10;
+            Bullet.Rectangle.Width = (int) (ToProtect.Circle.Radius * 2 + 10);
+            Bullet.Rectangle.Height = (int) (ToProtect.Circle.Radius * 2 + 10);
+            ((CircleEmitter) Bullet.MovingEffect.ParticleEffect[0]).Radius = ToProtect.Circle.Radius;
+            ((RadialGravityModifier) Bullet.MovingEffect.ParticleEffect[0].Modifiers[0]).Radius = ToProtect.Circle.Radius + 10;
             ((RadialGravityModifier) Bullet.MovingEffect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(ToProtect.position.X, ToProtect.position.Y);
 
             ActiveTime -= 16.66;
@@ -57,7 +57,7 @@ namespace EphemereGames.Commander
                 Scene = Simulation.Scene,
                 AttackPoints = float.MaxValue,
                 LifePoints = float.MaxValue,
-                Vitesse = 0,
+                Speed = 0,
                 PrioriteAffichage = Preferences.PrioriteSimulationCorpsCeleste - 0.0001f
             };
 

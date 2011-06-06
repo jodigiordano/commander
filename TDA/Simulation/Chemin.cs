@@ -169,6 +169,12 @@
         }
 
 
+        public void Direction(double time, out Vector3 result)
+        {
+            Trajet.Direction(time, out result);
+        }
+
+
         public void Update(GameTime gameTime)
         {
             recalculerTrajet();

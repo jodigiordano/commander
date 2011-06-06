@@ -13,10 +13,10 @@
 
     class GunnerBullet : Projectile
     {
-        public Ennemi Target;
+        public Enemy Target;
         public Turret Turret;
-        private ParticuleEffectWrapper ExplodingEffectAlt;
-        private ParticuleEffectWrapper TurretEffect;
+        private Particle ExplodingEffectAlt;
+        private Particle TurretEffect;
         private Matrix CanonRotation;
 
 
@@ -24,7 +24,7 @@
         {
             base.Initialize();
 
-            Vitesse = 0;
+            Speed = 0;
             RepresentationVivant = null;
 
             Position = Target.Position;
@@ -32,10 +32,10 @@
             Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
             CanonRotation = new Matrix();
 
-            ExplodingEffectAlt = Scene.Particules.recuperer("projectileBaseExplosion");
-            ExplodingEffectAlt.VisualPriority = Target.RepresentationVivant.VisualPriority - 0.0001f;
+            ExplodingEffectAlt = Scene.Particules.Get("projectileBaseExplosion");
+            ExplodingEffectAlt.VisualPriority = Target.Image.VisualPriority - 0.0001f;
 
-            TurretEffect = Scene.Particules.recuperer("gunnerTurret");
+            TurretEffect = Scene.Particules.Get("gunnerTurret");
             TurretEffect.ParticleEffect[0].ReleaseColour = Turret.Color.ToVector3();
             TurretEffect.VisualPriority = Turret.VisualPriority + 0.0001f;
 
@@ -54,7 +54,7 @@
                 return;
             }
 
-            int radius = (int) Target.Cercle.Radius;
+            int radius = (int) Target.Circle.Radius;
 
             Position = Target.Position + new Vector3(
                 Main.Random.Next(radius, radius),
@@ -68,7 +68,7 @@
         public override void Draw()
         {
             // emits explosion at target's position
-            ExplodingEffectAlt.Emettre(ref this.position);
+            ExplodingEffectAlt.Trigger(ref this.position);
 
             // emits canon explosion
             Vector2 canonEdge = new Vector2(0, -Turret.CanonImage.TextureSize.Y * Turret.CanonImage.Size.Y);
@@ -85,7 +85,7 @@
 
             //TurretEffect.Emettre(ref canonEdge);
             Vector2 turretPosition = new Vector2(Turret.Position.X, Turret.Position.Y);
-            TurretEffect.Emettre(ref turretPosition);
+            TurretEffect.Trigger(ref turretPosition);
 
             base.Draw();
         }
@@ -95,9 +95,9 @@
         {
             base.DoDie();
 
-            Scene.Particules.retourner(ExplodingEffectAlt);
+            Scene.Particules.Return(ExplodingEffectAlt);
 
-            Projectile.PoolGunnerBullets.retourner(this);
+            Projectile.PoolGunnerBullets.Return(this);
         }
 
 
@@ -105,9 +105,9 @@
         {
             base.DoDieSilent();
 
-            Scene.Particules.retourner(ExplodingEffectAlt);
+            Scene.Particules.Return(ExplodingEffectAlt);
 
-            Projectile.PoolGunnerBullets.retourner(this);
+            Projectile.PoolGunnerBullets.Return(this);
         }
     }
 }

@@ -178,13 +178,13 @@
 
         public void DoObjetDetruit(IObjetPhysique objet)
         {
-            Ennemi ennemi = objet as Ennemi;
+            Enemy ennemi = objet as Enemy;
 
             if (ennemi != null)
             {
-                CommonStash.Cash += ennemi.ValeurUnites;
-                CommonStash.Score += ennemi.ValeurPoints;
-                CommonStash.TotalScore += ennemi.ValeurPoints;
+                CommonStash.Cash += ennemi.CashValue;
+                CommonStash.Score += ennemi.PointsValue;
+                CommonStash.TotalScore += ennemi.PointsValue;
 
                 Player.UpdateSelection();
                 NotifyCommonStashChanged(CommonStash);
@@ -385,13 +385,13 @@
                 if (celestialBody.TurretsZone.Outside(Player.Position))
                     Player.Position = celestialBody.TurretsZone.pointPlusProcheCirconference(Player.Position);
 
-                turretToPlace.CanPlace = celestialBody.Cercle.Outside(turretToPlace.Position);
+                turretToPlace.CanPlace = celestialBody.Circle.Outside(turretToPlace.Position);
                 
                 if (turretToPlace.CanPlace)
                     foreach (var turret in celestialBody.Turrets)
                     {
                         turretToPlace.CanPlace = !turret.Visible ||
-                            !Core.Physique.Facade.collisionCercleCercle(turret.Cercle, turretToPlace.Cercle);
+                            !Core.Physique.Facade.collisionCercleCercle(turret.Circle, turretToPlace.Circle);
 
                         if (!turretToPlace.CanPlace)
                             break;

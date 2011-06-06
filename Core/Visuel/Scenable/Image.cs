@@ -6,7 +6,7 @@
     using EphemereGames.Core.Physique;
 
 
-    public class Image : IScenable, IPhysique
+    public class Image : IScenable, IPhysicalObject
     {
         public Vector2 Origin;
         public Vector2 Size;
@@ -86,6 +86,6 @@
 
 
         //useless shit
-        public float Vitesse { get; set; }
+        public float Speed { get; set; }
     }
 }
