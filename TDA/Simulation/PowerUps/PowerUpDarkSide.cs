@@ -49,7 +49,7 @@ namespace EphemereGames.Commander
 
         public override void Start()
         {
-            
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxDarkSide");
         }
     }
 }

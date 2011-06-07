@@ -124,21 +124,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
-    <Reference Include="Microsoft.Xna.Framework.Avatar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
-    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Storage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Video, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib">
       <Private>False</Private>
-    </Reference>
-    <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\commander\lib\PowerCollections.dll</HintPath>
     </Reference>
     <Reference Include="ProjectMercury, Version=3.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -149,8 +139,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -175,16 +163,16 @@
     <Compile Include="Simulation\Bullets\RailGunBullet.cs" />
     <Compile Include="Simulation\Bullets\NanobotsBullet.cs" />
     <Compile Include="Simulation\Bullets\GunnerBullet.cs" />
-    <Compile Include="Simulation\Controllers\ControleurCollisions.cs" />
+    <Compile Include="Simulation\Controllers\CollisionsController.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />
-    <Compile Include="Simulation\Controllers\BulletsController.cs" />
+    <Compile Include="Simulation\Bullets\BulletsController.cs" />
     <Compile Include="Simulation\Controllers\ScenarioController.cs" />
     <Compile Include="Simulation\PlanetarySystem\PlanetarySystemController.cs" />
-    <Compile Include="Simulation\Controllers\TurretsController.cs" />
-    <Compile Include="Simulation\Controllers\SpaceshipsController.cs" />
+    <Compile Include="Simulation\Turrets\TurretsController.cs" />
+    <Compile Include="Simulation\Spaceships\SpaceshipsController.cs" />
     <Compile Include="Player\PlayersController.cs" />
     <Compile Include="Simulation\Controllers\ControleurMessages.cs" />
     <Compile Include="Editeur\GenerateurVagues.cs" />
@@ -221,7 +209,6 @@
     <Compile Include="GUI\Cursor.cs" />
     <Compile Include="Simulation\GUI\Annunciations\ScenarioAnnunciation.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\EnemiesLives.cs" />
-    <Compile Include="Simulation\GUI\Menus\MenuTurretSpotOccupied.cs" />
     <Compile Include="Simulation\GUI\Menus\MenuAbstract.cs" />
     <Compile Include="Simulation\GUI\PlayerLives.cs" />
     <Compile Include="GUI\Sablier.cs" />
@@ -235,7 +222,7 @@
     <Compile Include="Simulation\PlanetarySystem\LuneMatrice.cs" />
     <Compile Include="Simulation\PlanetarySystem\LuneTrajet.cs" />
     <Compile Include="Simulation\PlanetarySystem\Lune.cs" />
-    <Compile Include="Simulation\Bullets\ProjectileSlowMotion.cs" />
+    <Compile Include="Simulation\Bullets\SlowMotionBullet.cs" />
     <Compile Include="Simulation\Player\SimPlayer.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpDarkSide.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpAutomaticCollector.cs" />
@@ -276,14 +263,14 @@
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />
     <Compile Include="Simulation\Turrets\LaserTurret.cs" />
-    <Compile Include="Simulation\Bullets\ProjectileLaserSimple.cs" />
-    <Compile Include="Simulation\Bullets\ProjectileLaserMultiple.cs" />
-    <Compile Include="Simulation\Bullets\ProjectileBase.cs" />
+    <Compile Include="Simulation\Bullets\LaserBullet.cs" />
+    <Compile Include="Simulation\Bullets\MultipleLasers.cs" />
+    <Compile Include="Simulation\Bullets\BasicBullet.cs" />
     <Compile Include="Simulation\PlanetarySystem\CorpsCeleste.cs" />
     <Compile Include="Simulation\Bullets\Bullet.cs" />
     <Compile Include="Simulation\Enemies\Enemy.cs" />
     <Compile Include="Simulation\ILivingObject.cs" />
-    <Compile Include="Simulation\Bullets\ProjectileMissile.cs" />
+    <Compile Include="Simulation\Bullets\MissileBullet.cs" />
     <Compile Include="Simulation\Turrets\Turret.cs" />
     <Compile Include="Simulation\Turrets\BasicTurret.cs" />
     <Compile Include="Simulation\Turrets\GravitationalTurret.cs" />
@@ -366,9 +353,9 @@
       <Project>{5270A0B2-E346-4D80-B2E0-2E7548989E2C}</Project>
       <Name>Win Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Z Win Commander\Z Win Commander.contentproj">
-      <Project>{3EA293D4-5658-40E4-848C-26F073A0179E}</Project>
-      <Name>Z Win Commander</Name>
+    <ProjectReference Include="..\Z Win Commander Content\Z Win Commander Content.contentproj">
+      <Project>{9568AC60-0C78-428B-BD19-C3B7C4200C94}</Project>
+      <Name>Z Win Commander Content</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>

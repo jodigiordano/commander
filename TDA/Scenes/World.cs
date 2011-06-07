@@ -132,7 +132,16 @@
 
             if (Main.GameInProgress != null)
             {
-                Simulation.CelestialBodyPausedGame = Simulation.PlanetarySystemController.CelestialBodies.Find(e => e.Nom == Main.GameInProgress.Simulation.DescriptionScenario.Mission);
+                for (int i = 0; i < Simulation.PlanetarySystemController.CelestialBodies.Count; i++)
+                {
+                    CorpsCeleste c = Simulation.PlanetarySystemController.CelestialBodies[i];
+
+                    if (c.Nom == Main.GameInProgress.Simulation.DescriptionScenario.Mission)
+                    {
+                        Simulation.CelestialBodyPausedGame = c;
+                        break;
+                    }
+                }
 
                 if (Main.GameInProgress.State != GameState.Paused || PausedGameSelected)
                     Simulation.MessagesController.StopPausedMessage();

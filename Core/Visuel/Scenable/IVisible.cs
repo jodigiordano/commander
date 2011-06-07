@@ -1,20 +1,14 @@
-﻿//=============================================================================
-//
-// Objet visible de base
-//
-//=============================================================================
-
-namespace EphemereGames.Core.Visuel
+﻿namespace EphemereGames.Core.Visuel
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Content;
     using EphemereGames.Core.Physique;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
 
-    [Serializable]
-    public class IVisible : IScenable, IPhysicalObject, ICloneable
+
+    public class IVisible : IScenable, IPhysicalObject
     {
         protected enum TypeInterne
         {

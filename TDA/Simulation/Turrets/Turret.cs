@@ -29,7 +29,7 @@
         public double FireRate                      { get { return ActualLevel.Value.FireRate * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].FireRateMultiplier; } }
         public int NbCanons                         { get { return ActualLevel.Value.NbCanons; } }
         public double BuildingTime                  { get { return ActualLevel.Value.BuildingTime; } }
-        public BulletType Bullet                    { get { return ActualLevel.Value.Bullet; } }
+        public BulletType BulletType                { get { return ActualLevel.Value.Bullet; } }
         public bool Watcher;
         public Color Color;
         public bool BackActiveThisTick              { get; private set; }
@@ -60,7 +60,7 @@
         private Image DisabledProgressBarImage;
         private Image DisabledBarImage;
         protected float VisualPriorityBackup;
-        private List<Projectile> Bullets = new List<Projectile>();
+        private List<Bullet> Bullets = new List<Bullet>();
         private Image RangeImage;
         private Image FormImage;
         private Particle BoostGlow;
@@ -202,7 +202,7 @@
 
             if (BoostGlow == null)
             {
-                BoostGlow = Simulation.Scene.Particules.Get("boosterTurret");
+                BoostGlow = Simulation.Scene.Particles.Get("boosterTurret");
                 BoostGlow.VisualPriority = this.VisualPriorityBackup + 0.006f;
 
                 CircleEmitter emitter = (CircleEmitter) BoostGlow.ParticleEffect[0];
@@ -242,7 +242,7 @@
         }
 
 
-        public List<Projectile> BulletsThisTick()
+        public List<Bullet> BulletsThisTick()
         {
             Bullets.Clear();
 
@@ -258,7 +258,7 @@
                 directionUnitairePerpendiculaire.Normalize();
                 TurretBoostLevel boostLevel = Simulation.TurretsFactory.BoostLevels[BoostMultiplier];
                 
-                switch (Bullet)
+                switch (BulletType)
                 {
                     case BulletType.Base:
 
@@ -266,7 +266,7 @@
                         {
                             Vector3 translation = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
 
-                            ProjectileBase p = Projectile.PoolProjectilesBase.Get();
+                            BasicBullet p = Bullet.PoolBasicBullets.Get();
 
                             p.Scene = Simulation.Scene;
                             p.Position = this.Position + translation;
@@ -281,45 +281,39 @@
                         break;
 
                     case BulletType.Missile:
-                        ProjectileMissile pm = Projectile.PoolProjectilesMissile.Get();
+                        MissileBullet pm = Bullet.PoolMissileBullets.Get();
                         pm.Scene = Simulation.Scene;
                         pm.Position = this.Position;
                         pm.Direction = EnemyWatched.Position - this.Position;
-                        pm.Cible = EnemyWatched;
+                        pm.Target = EnemyWatched;
                         pm.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         pm.PrioriteAffichage = this.CanonImage.VisualPriority;
                         pm.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         pm.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         pm.Initialize();
-                        pm.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile1");
-                        pm.RepresentationVivant.Taille = 1;
-                        pm.Rectangle.Width = pm.RepresentationVivant.Rectangle.Width;
-                        pm.Rectangle.Height = pm.RepresentationVivant.Rectangle.Height;
+                        pm.Image = pm.Image1;
                         Bullets.Add(pm);
                         break;
 
                     case BulletType.Missile2:
-                        ProjectileMissile p2 = Projectile.PoolProjectilesMissile.Get();
+                        MissileBullet p2 = Bullet.PoolMissileBullets.Get();
                         p2.Scene = Simulation.Scene;
                         p2.Position = this.Position;
                         p2.Direction = EnemyWatched.Position - this.Position;
-                        p2.Cible = EnemyWatched;
+                        p2.Target = EnemyWatched;
                         p2.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         p2.PrioriteAffichage = this.CanonImage.VisualPriority;
                         p2.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         p2.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         p2.Initialize();
-                        p2.RepresentationVivant.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ProjectileMissile2");
-                        p2.RepresentationVivant.Taille = 2;
-                        p2.Rectangle.Width = p2.RepresentationVivant.Rectangle.Width;
-                        p2.Rectangle.Height = p2.RepresentationVivant.Rectangle.Height;
+                        p2.Image = p2.Image2;
                         Bullets.Add(p2);
                         break;
 
                     case BulletType.LaserMultiple:
                         for (int i = 0; i < NbCanons; i++)
                         {
-                            ProjectileLaserMultiple pLM = Projectile.PoolProjectilesLaserMultiple.Get();
+                            MultipleLasersBullet pLM = Bullet.PoolMultipleLasersBullets.Get();
                             pLM.Scene = Simulation.Scene;
                             pLM.TourelleEmettrice = this;
                             pLM.CibleOffset = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
@@ -334,7 +328,7 @@
                         break;
 
                     case BulletType.LaserSimple:
-                        ProjectileLaserSimple pLS = Projectile.PoolProjectilesLaserSimple.Get();
+                        LaserBullet pLS = Bullet.PoolLaserBullets.Get();
                         pLS.Scene = Simulation.Scene;
                         pLS.TourelleEmettrice = this;
                         pLS.Cible = EnemyWatched;
@@ -349,7 +343,7 @@
                         break;
 
                     case BulletType.Gunner:
-                        GunnerBullet gb = Projectile.PoolGunnerBullets.Get();
+                        GunnerBullet gb = Bullet.PoolGunnerBullets.Get();
                         gb.Scene = Simulation.Scene;
                         gb.Turret = this;
                         gb.Target = EnemyWatched;
@@ -364,7 +358,7 @@
                         break;
 
                     case BulletType.SlowMotion:
-                        ProjectileSlowMotion pSM = Projectile.PoolProjectilesSlowMotion.Get();
+                        SlowMotionBullet pSM = Bullet.PoolSlowMotionBullets.Get();
                         pSM.Scene = Simulation.Scene;
                         pSM.Position = this.Position;
                         pSM.Rayon = Range;
@@ -376,7 +370,7 @@
                         break;
 
                     case BulletType.Nanobots:
-                        NanobotsBullet nb = Projectile.PoolNanobotsBullets.Get();
+                        NanobotsBullet nb = Bullet.PoolNanobotsBullets.Get();
                         nb.Scene = Simulation.Scene;
                         nb.Position = this.Position;
                         nb.Direction = direction;
@@ -390,7 +384,7 @@
                         break;
 
                     case BulletType.RailGun:
-                        RailGunBullet rgb = Projectile.PoolRailGunBullet.Get();
+                        RailGunBullet rgb = Bullet.PoolRailGunBullets.Get();
                         rgb.Scene = Simulation.Scene;
                         rgb.Position = this.Position;
                         rgb.Direction = direction;

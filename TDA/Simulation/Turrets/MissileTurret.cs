@@ -41,7 +41,7 @@ namespace EphemereGames.Commander
             {
                 base.VisualPriority = value;
 
-                CanonImage.VisualPriority = BaseImage.VisualPriority - 0.001f;
+                CanonImage.VisualPriority = BaseImage.VisualPriority - 0.00001f;
             }
         }
     }

@@ -69,7 +69,7 @@ namespace EphemereGames.Commander
                 }
             );
 
-            EffetEtoileFilante = Simulation.Scene.Particules.Get("etoileFilante");
+            EffetEtoileFilante = Simulation.Scene.Particles.Get("etoileFilante");
             EffetEtoileFilante.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
             base.Length = temps * 2;

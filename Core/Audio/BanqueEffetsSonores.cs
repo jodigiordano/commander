@@ -75,6 +75,12 @@
                 kvp.Value.arreter(disparitionProgressive, tempsFade);
         }
 
+        public void arreter(string nomEffetSonore, bool disparitionProgressive, int tempsFade)
+        {
+            if (EffetsSonores.ContainsKey(nomEffetSonore))
+                EffetsSonores[nomEffetSonore].arreter(disparitionProgressive, tempsFade);
+        }
+
         public void jouer(String nomEffetSonore)
         {
 #if DEBUG

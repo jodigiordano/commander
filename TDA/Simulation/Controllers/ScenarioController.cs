@@ -51,7 +51,7 @@
             Simulation = simulation;
             Scenario = scenario;
 
-            Stars = Simulation.Scene.Particules.Get("etoilesScintillantes");
+            Stars = Simulation.Scene.Particles.Get("etoilesScintillantes");
             Stars.VisualPriority = Preferences.PrioriteGUIEtoiles;
             StarsEmitter = 0;
 

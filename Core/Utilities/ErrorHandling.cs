@@ -2,13 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
     using System.Diagnostics;
-    using System.Net;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using System.Text;
+
+#if WINDOWS
+    using System.Net;
+    using System.Collections.Specialized;
+#endif
+
 
     public static class ErrorHandling
     {
@@ -45,7 +48,10 @@
             Sent
         }
 
+#if WINDOWS
         private WebClient ClientWeb;
+#endif
+
         private string ScriptUrl = "http://www.ephemeregames.com/utilities/reporterror.php";
 
         private string errorTitle = "Oh man! :(";
@@ -75,7 +81,10 @@
             Content.RootDirectory = "Content";
             Version = version;
 
+#if WINDOWS
             ClientWeb = new WebClient();
+#endif
+
             SendingState = State.NotSend;
             SendingStateMessages = new Dictionary<State, string>();
             SendingStateMessages.Add(State.NotSend, "Press the Left mouse button OR the A button on a gamepad to send the message.\nPress the Right mouse button OR the B button on a gamepad to exit.");
@@ -120,6 +129,7 @@
             {
                 SendingState = State.Sending;
 
+#if WINDOWS
                 NameValueCollection inputs = new NameValueCollection();
                 inputs.Add("source", exception.Source);
                 inputs.Add("version", Version.ToString());
@@ -128,6 +138,7 @@
 
                 ClientWeb.UploadValuesCompleted += new UploadValuesCompletedEventHandler(SendCompleted);
                 ClientWeb.UploadValuesAsync(new Uri(ScriptUrl), inputs);
+#endif
             }
 
             else if (((SendingState == State.NotSend || SendingState == State.Sent) &&
@@ -150,10 +161,12 @@
         }
 
 
+#if WINDOWS
         private void SendCompleted(object sender, UploadValuesCompletedEventArgs e)
         {
             SendingState = State.Sent;
         }
+#endif
 
 
         protected override void Draw(GameTime gameTime)

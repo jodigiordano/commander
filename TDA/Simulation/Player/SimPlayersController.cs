@@ -497,7 +497,7 @@
 
 
             // upgrade or sell a turret
-            if (Player.ActualSelection.Turret != null)
+            if (Player.ActualSelection.Turret != null && !Player.ActualSelection.Turret.Disabled)
             {
                 switch (Player.ActualSelection.TurretOption)
                 {

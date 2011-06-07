@@ -43,8 +43,6 @@ namespace EphemereGames.Commander
             Bullet.Rectangle.Width = (int) (ToProtect.Circle.Radius * 2 + 10);
             Bullet.Rectangle.Height = (int) (ToProtect.Circle.Radius * 2 + 10);
             ((CircleEmitter) Bullet.MovingEffect.ParticleEffect[0]).Radius = ToProtect.Circle.Radius;
-            ((RadialGravityModifier) Bullet.MovingEffect.ParticleEffect[0].Modifiers[0]).Radius = ToProtect.Circle.Radius + 10;
-            ((RadialGravityModifier) Bullet.MovingEffect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(ToProtect.position.X, ToProtect.position.Y);
 
             ActiveTime -= 16.66;
         }
@@ -62,6 +60,14 @@ namespace EphemereGames.Commander
             };
 
             Bullet.Initialize();
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxShieldIn");
+        }
+
+
+        public override void Stop()
+        {
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxShieldOut");
         }
     }
 }

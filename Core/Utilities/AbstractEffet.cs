@@ -1,10 +1,10 @@
 ﻿namespace EphemereGames.Core.Utilities
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    public abstract class AbstractEffect : ICloneable
+
+    public abstract class AbstractEffect
     {
         public enum ProgressType
         {

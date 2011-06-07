@@ -11,17 +11,17 @@
     using ProjectMercury.Emitters;
 
 
-    class ShieldBullet : Projectile
+    class ShieldBullet : Bullet
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            RepresentationVivant = null;
+            Image = null;
 
             Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 40, 40);
 
-            MovingEffect = Scene.Particules.Get("shieldEffect");
+            MovingEffect = Scene.Particles.Get("shieldEffect");
             ExplodingEffect = null;
         }
 

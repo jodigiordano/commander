@@ -212,7 +212,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Trojan</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>16</SpeedLevel>
       <LivesLevel>16</LivesLevel>
@@ -226,10 +226,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Comet</EnemyType>
-        <EnemyType>Trojan</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
       </Enemies>
       <SpeedLevel>22</SpeedLevel>
       <LivesLevel>22</LivesLevel>
@@ -243,7 +240,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
       </Enemies>
       <SpeedLevel>28</SpeedLevel>
       <LivesLevel>28</LivesLevel>

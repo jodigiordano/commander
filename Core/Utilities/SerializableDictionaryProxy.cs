@@ -7,7 +7,6 @@
     using Microsoft.Xna.Framework.Content;
 
 
-    [Serializable]
     public class SerializableDictionaryProxy<K, V>
     {
         private Dictionary<K, V> Original;

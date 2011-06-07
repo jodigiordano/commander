@@ -12,7 +12,7 @@ namespace EphemereGames.Commander
         {
             Type = TurretType.RailGun;
             Name = "RailGun";
-            SfxShooting = "sfxTourelleBase";
+            SfxShooting = "sfxRailGunExplosion1";
             Color = new Color(57, 216, 17);
             BackActiveThisTickOverride = true;
 

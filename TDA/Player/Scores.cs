@@ -7,7 +7,6 @@
     using EphemereGames.Core.Utilities;
 
 
-    [Serializable]
     public class HighScores
     {
         [ContentSerializer(Optional = false)]

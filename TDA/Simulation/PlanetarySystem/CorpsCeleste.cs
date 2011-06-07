@@ -290,7 +290,7 @@
 
         public void DoHit(ILivingObject par)
         {
-            toucherTerre = Simulation.Scene.Particules.Get("toucherTerre");
+            toucherTerre = Simulation.Scene.Particles.Get("toucherTerre");
 
             if (this.Representation != null)
                 toucherTerre.VisualPriority = this.Representation.VisualPriority - 0.001f;
@@ -298,7 +298,7 @@
                 toucherTerre.VisualPriority = this.ParticulesRepresentation.VisualPriority - 0.001f;
 
             toucherTerre.Trigger(ref this.position);
-            Simulation.Scene.Particules.Return(toucherTerre);
+            Simulation.Scene.Particles.Return(toucherTerre);
 
             if (Invincible)
                 return;
@@ -314,8 +314,8 @@
 
             this.LifePoints = Math.Min(this.LifePoints, 0);
 
-            bouleMeurt = Simulation.Scene.Particules.Get("bouleTerreMeurt");
-            anneauMeurt = Simulation.Scene.Particules.Get("anneauTerreMeurt");
+            bouleMeurt = Simulation.Scene.Particles.Get("bouleTerreMeurt");
+            anneauMeurt = Simulation.Scene.Particles.Get("anneauTerreMeurt");
 
             if (this.Representation != null)
             {
@@ -330,8 +330,8 @@
 
             bouleMeurt.Trigger(ref this.position);
             anneauMeurt.Trigger(ref this.position);
-            Simulation.Scene.Particules.Return(bouleMeurt);
-            Simulation.Scene.Particules.Return(anneauMeurt);
+            Simulation.Scene.Particles.Return(bouleMeurt);
+            Simulation.Scene.Particles.Return(anneauMeurt);
         }
 
 

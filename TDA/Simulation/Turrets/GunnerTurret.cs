@@ -9,7 +9,7 @@ namespace EphemereGames.Commander
 
     class GunnerTurret : Turret
     {
-        public Projectile ActiveBullet;
+        public Bullet ActiveBullet;
         private Enemy EnemyAttacked;
 
 

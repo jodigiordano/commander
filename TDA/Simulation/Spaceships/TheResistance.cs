@@ -58,7 +58,7 @@
                 AutomaticMode = true
             });
 
-            SfxGoHome = "sfxPowerUpResistanceOut";
+            SfxOut = "sfxPowerUpResistanceOut";
             SfxIn = "sfxPowerUpResistanceIn";
         }
 
@@ -121,8 +121,8 @@
         }
 
 
-        private List<Projectile> projectilesCeTick = new List<Projectile>();
-        public override List<Projectile> BulletsThisTick()
+        private List<Bullet> projectilesCeTick = new List<Bullet>();
+        public override List<Bullet> BulletsThisTick()
         {
             projectilesCeTick.Clear();
 

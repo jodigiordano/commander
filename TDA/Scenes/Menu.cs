@@ -146,7 +146,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
             Simulation.Update(gameTime);
@@ -181,7 +181,7 @@
 #if WINDOWS
                             Main.Exit();
 #else
-                            EphemereGames.Core.Visuel.Facade.effectuerTransition("MenuToAcheter");
+                            EphemereGames.Core.Visuel.Facade.Transite("MenuToAcheter");
 #endif
                         break;
 
@@ -196,7 +196,7 @@
                         break;
 
                     case "resume game":
-                        if (Main.GameInProgress != null && !Main.GameInProgress.EstTerminee)
+                        if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                         {
                             Main.GameInProgress.State = GameState.Running;
                             EphemereGames.Core.Visuel.Facade.Transite("MenuToPartie");
@@ -226,7 +226,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             if (Simulation.CorpsCelesteSelectionne != null)
             {
@@ -242,7 +242,7 @@
 #endif
                         break;
                     case "resume game":
-                        if (Main.GameInProgress != null && !Main.GameInProgress.EstTerminee)
+                        if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                             ajouterScenable(ReprendrePartie);
                         break;
                 }
@@ -257,9 +257,9 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
-            base.onFocus();
+            base.OnFocus();
 
             Transition = TransitionType.In;
 
@@ -271,11 +271,11 @@
             EphemereGames.Core.Input.Facade.AddListener(Simulation);
         }
 
-        public override void onFocusLost()
+        public override void OnFocusLost()
         {
-            base.onFocusLost();
+            base.OnFocusLost();
 
-            if (Simulation.CorpsCelesteSelectionne != null && Simulation.CorpsCelesteSelectionne.Nom == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.EstTerminee)
+            if (Simulation.CorpsCelesteSelectionne != null && Simulation.CorpsCelesteSelectionne.Nom == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                 EphemereGames.Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
 
             EphemereGames.Core.Input.Facade.RemoveListener(Simulation);
@@ -335,7 +335,7 @@
 
             if ((Simulation.CorpsCelesteSelectionne.Nom == "resume game" &&
                 Main.GameInProgress != null &&
-                !Main.GameInProgress.EstTerminee) ||
+                !Main.GameInProgress.IsFinished) ||
                 
                 (Simulation.CorpsCelesteSelectionne.Nom != "resume game"))
             {

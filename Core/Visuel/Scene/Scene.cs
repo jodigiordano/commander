@@ -7,51 +7,47 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using Wintellect.PowerCollections;
 
 
-    public abstract class Scene : InputListener
+    public abstract class Scene : InputListener, IComparer<IScenable>
     {
         public bool Active { get; set; }
 
-        internal VisualBuffer Tampon { get; private set; }
-        public Camera Camera { get; private set; }
+        internal VisualBuffer Buffer    { get; private set; }
+        public Camera Camera            { get; private set; }
 
-        public Texture2D Texture    { get { return Tampon.Texture; } }
-        public int Largeur          { get { return Tampon.Largeur; } }
-        public int Hauteur          { get { return Tampon.Hauteur; } }
-        public Vector2 Centre       { get { return Tampon.Centre; } }
+        public Texture2D Texture        { get { return Buffer.Texture; } }
+        public int Width                { get { return Buffer.Largeur; } }
+        public int Height               { get { return Buffer.Hauteur; } }
+        public Vector2 Center           { get { return Buffer.Centre; } }
 
-        public virtual bool EstTerminee { get; protected set; }
-        public virtual AnimationsController Animations { get { return animations; } }
-        public virtual ParticlesController Particules { get { return particules; } }
-        public virtual EffectsController Effets { get { return effets; } }
+        public virtual bool IsFinished                      { get; protected set; }
+        public virtual AnimationsController Animations      { get; protected set; }
+        public virtual ParticlesController Particles        { get; protected set; }
+        public virtual EffectsController Effects            { get; protected set; }
 
         private SpriteBatch Batch;
-        private TypeBlend DernierMelange;
-        internal bool EstUpdateCeTick;
-        private AnimationsController animations;
-        private EffectsController effets;
-        private ParticlesController particules;
-        private OrderedBag<IScenable> ElementsAffiches;
-        private String nom;
+        private TypeBlend LastBlend;
+        internal bool UpdatedThisTick;
+        private OrderedSet<IScenable> ToDraw;
+        private String name;
         private TransitionType transition;
 
 
         public Scene(Vector2 position, int hauteur, int largeur)
         {
-            Tampon = Facade.ScenesController.Buffer;
+            Buffer = Facade.ScenesController.Buffer;
             Active = false;
-            ElementsAffiches = new OrderedBag<IScenable>(ComparerIScenables);
+            ToDraw = new OrderedSet<IScenable>(this);
             Batch = new SpriteBatch(Preferences.GraphicsDeviceManager.GraphicsDevice);
-            DernierMelange = TypeBlend.Alpha;
-            EstUpdateCeTick = false;
+            LastBlend = TypeBlend.Alpha;
+            UpdatedThisTick = false;
             Camera = new Camera();
-            Camera.Origin = new Vector2(this.Tampon.Largeur / 2.0f, this.Tampon.Hauteur / 2.0f);
-            Nom = nom;
-            animations = new AnimationsController(this);
-            effets = new EffectsController();
-            particules = new ParticlesController(this);
+            Camera.Origin = new Vector2(this.Buffer.Largeur / 2.0f, this.Buffer.Hauteur / 2.0f);
+            Nom = name;
+            Animations = new AnimationsController(this);
+            Effects = new EffectsController();
+            Particles = new ParticlesController(this);
             EphemereGames.Core.Input.Facade.AddListener(this);
             Transition = TransitionType.None;
         }
@@ -59,10 +55,10 @@
 
         public String Nom
         {
-            get { return nom; }
+            get { return name; }
             set
             {
-                nom = value;
+                name = value;
                 Camera.Name = Nom + ".Camera";
             }
         }
@@ -85,7 +81,7 @@
         {
             set
             {
-                Tampon.GarderContenu = value;
+                Buffer.GarderContenu = value;
             }
         }
 
@@ -94,41 +90,41 @@
         {
             set 
             {
-                Tampon.CouleurDeFond = value;
+                Buffer.CouleurDeFond = value;
             }
         }
 
 
         public void Draw()
         {
-            UpdateVisuel();
+            UpdateVisual();
 
-            ajouterScenable(animations.Components);
-            ajouterScenable(particules.Particles);
+            ajouterScenable(Animations.Components);
+            ajouterScenable(Particles.Particles);
 
-            EstUpdateCeTick = true;
+            UpdatedThisTick = true;
 
-            Tampon.EcrireDebut();
+            Buffer.EcrireDebut();
 
-            BlendState b = changerBlendMode(TypeBlend.Alpha);
+            BlendState b = SwitchBlendMode(TypeBlend.Alpha);
 
             Batch.Begin(SpriteSortMode.Deferred, b, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Camera.Transform); //todo
 
-            for (int i = 0; i < ElementsAffiches.Count; i++)
+            foreach (var scenable in ToDraw)
             {
-                if (ElementsAffiches[i].Blend != DernierMelange)
+                if (scenable.Blend != LastBlend)
                 {
                     this.Batch.End();
-                    Batch.Begin(SpriteSortMode.Deferred, changerBlendMode(ElementsAffiches[i].Blend), SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Camera.Transform); //todo
+                    Batch.Begin(SpriteSortMode.Deferred, SwitchBlendMode(scenable.Blend), SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Camera.Transform); //todo
                 }
 
-                ElementsAffiches[i].Draw(this.Batch);
+                scenable.Draw(this.Batch);
             }
 
             Batch.End();
 
 
-            this.ElementsAffiches.Clear();
+            this.ToDraw.Clear();
         }
 
 
@@ -149,7 +145,7 @@
 
         public void ajouterScenable(IScenable element)
         {
-            ElementsAffiches.Add(element);
+            ToDraw.Add(element);
 
             if (element.Components != null)
                 ajouterScenable(element.Components);
@@ -163,7 +159,7 @@
                 if (elements[i] == null) //ARK ARK ARK
                     continue;
 
-                ElementsAffiches.Add(elements[i]);
+                ToDraw.Add(elements[i]);
 
                 if (elements[i].Components != null)
                     ajouterScenable(elements[i].Components);
@@ -175,7 +171,7 @@
         {
             for (int i = 0; i < elements.Count; i++)
             {
-                ElementsAffiches.Add(elements[i]);
+                ToDraw.Add(elements[i]);
 
                 if (elements[i].Components != null)
                     ajouterScenable(elements[i].Components);
@@ -187,7 +183,7 @@
         {
             for (int i = 0; i < elements.Count; i++)
             {
-                ElementsAffiches.Add(elements[i]);
+                ToDraw.Add(elements[i]);
 
                 if (elements[i].Components != null)
                     ajouterScenable(elements[i].Components);
@@ -198,7 +194,7 @@
         public void ajouterScenable(List<Particle> elements)
         {
             for (int i = 0; i < elements.Count; i++)
-                ElementsAffiches.Add(elements[i]);
+                ToDraw.Add(elements[i]);
         }
 
 
@@ -216,8 +212,8 @@
             if (Transition != TransitionType.None)
                 UpdateTransition(gameTime);
 
-            UpdateLogique(gameTime);
-            effets.Update(gameTime);
+            UpdateLogic(gameTime);
+            Effects.Update(gameTime);
 #if XBOX
             //while (Preferences.ThreadLogique.Travaille()) { }
             while (Preferences.ThreadParticules.Travaille()) { }
@@ -228,8 +224,8 @@
         private GameTime _gameTime;
         private void doUpdateAsynchrone()
         {
-            particules.Update(_gameTime);
-            animations.Update(_gameTime);
+            Particles.Update(_gameTime);
+            Animations.Update(_gameTime);
         }
 
 
@@ -257,45 +253,76 @@
         }
 
 
-        private BlendState changerBlendMode(TypeBlend typeMelange)
+        public int Compare(IScenable e1, IScenable e2)
         {
-            DernierMelange = typeMelange;
+            if (e1.VisualPriority < e2.VisualPriority)
+                return 1;
 
-            switch (typeMelange)
+            if (e1.VisualPriority > e2.VisualPriority)
+                return -1;
+
+            if (e1.GetHashCode() > e2.GetHashCode())
+                return 1;
+
+            if (e1.GetHashCode() < e2.GetHashCode())
+                return -1;
+
+            return 0;
+        }
+
+
+        public bool Equals(IScenable e1, IScenable e2)
+        {
+            return e1.VisualPriority == e2.VisualPriority;
+        }
+
+
+        public int GetHashCode(IScenable obj)
+        {
+            return obj.GetHashCode();
+        }
+
+
+        private BlendState SwitchBlendMode(TypeBlend blend)
+        {
+            LastBlend = blend;
+
+            BlendState newBlend = BlendState.AlphaBlend;
+
+            switch (blend)
             {
                 case TypeBlend.Add:
-                    return BlendState.Additive;
+                    newBlend = BlendState.Additive;
                     break;
 
                 case TypeBlend.Multiply:
-                    return CustomBlends.Multiply;
+                    newBlend = CustomBlends.Multiply;
                     break;
 
                 default:
                 case TypeBlend.Default:
                 case TypeBlend.Alpha:
-                    return CustomBlends.Alpha;
+                    newBlend = CustomBlends.Alpha;
                     break;
 
                 case TypeBlend.Substract:
-                    return CustomBlends.Substract;
-                    break;
-
-                case TypeBlend.None:
+                    newBlend = CustomBlends.Substract;
                     break;
             }
 
-            return CustomBlends.Alpha;
+            return newBlend;
         }
 
 
-        protected abstract void UpdateLogique(GameTime gameTime);
-        protected abstract void UpdateVisuel();
+        protected abstract void UpdateLogic(GameTime gameTime);
+        protected abstract void UpdateVisual();
         protected abstract void InitializeTransition(TransitionType type);
         protected abstract void UpdateTransition(GameTime gameTime);
-        public virtual void onTransitionTowardFocus() { }
-        public virtual void onFocus() { }
-        public virtual void onFocusLost() { }
+
+        public virtual void OnTransitionTowardFocus() { }
+        public virtual void OnFocus() { }
+        public virtual void OnFocusLost() { }
+
         public virtual void doKeyPressedOnce(PlayerIndex inputIndex, Keys key) {}
         public virtual void doKeyReleased(PlayerIndex inputIndex, Keys key) {}
         public virtual void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button) { }

@@ -5,7 +5,6 @@
     using Microsoft.Xna.Framework.Content;
 
 
-    [Serializable]
     public class KeyAndValue<K, V>
     {
         [ContentSerializer(Optional = false)]

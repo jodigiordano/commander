@@ -58,7 +58,13 @@
             InitializeAvailableTurrets();
             InitializeAvailablePowerUps();
 
-            CelestialBodyToProtect = PlanetarySystem.Find(c => c.Priorite == Descriptor.CelestialBodyToProtect);
+            for (int i = 0; i < PlanetarySystem.Count; i++)
+                if (PlanetarySystem[i].Priorite == Descriptor.CelestialBodyToProtect)
+                {
+                    CelestialBodyToProtect = PlanetarySystem[i];
+                    break;
+                }
+
             CelestialBodyToProtect.LifePoints = descriptor.Player.Lives;
 
             CommonStash = new CommonStash();
@@ -106,7 +112,7 @@
                        descriptor.Offset,
                        (int) descriptor.Size,
                        descriptor.Speed,
-                       Simulation.Scene.Particules.Get(descriptor.ParticulesEffect),
+                       Simulation.Scene.Particles.Get(descriptor.ParticulesEffect),
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f,
                        descriptor.InBackground,
@@ -126,7 +132,7 @@
                        descriptor.Offset,
                        (int) descriptor.Size,
                        descriptor.Speed,
-                       Simulation.Scene.Particules.Get(descriptor.ParticulesEffect),
+                       Simulation.Scene.Particles.Get(descriptor.ParticulesEffect),
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f,
                        descriptor.InBackground,
@@ -146,7 +152,7 @@
                         descriptor.Offset,
                         (int) descriptor.Size,
                         descriptor.Speed,
-                        Simulation.Scene.Particules.Get(descriptor.ParticulesEffect),
+                        Simulation.Scene.Particles.Get(descriptor.ParticulesEffect),
                         descriptor.StartingPosition, NextCelestialBodyVisualPriority -= 0.001f,
                         descriptor.InBackground,
                        descriptor.Rotation
@@ -217,8 +223,15 @@
 
             foreach (var descriptor in Descriptor.PlanetarySystem)
             {
-                CorpsCeleste celestialBody = PlanetarySystem.Find(c => c.Priorite == descriptor.PathPriority);
-                Turret t;
+                CorpsCeleste celestialBody = null;
+                Turret t = null;
+
+                for (int i = 0; i < PlanetarySystem.Count; i++)
+                    if (PlanetarySystem[i].Priorite == descriptor.PathPriority)
+                    {
+                        celestialBody = PlanetarySystem[i];
+                        break;
+                    }
 
                 if (descriptor.HasGravitationalTurret)
                 {

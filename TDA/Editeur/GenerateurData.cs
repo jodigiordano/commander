@@ -8,7 +8,6 @@
     using Microsoft.Xna.Framework.Content;
 
 
-    [Serializable]
     public class GenerateurData : Data
     {
         [ContentSerializer(Optional = false)]

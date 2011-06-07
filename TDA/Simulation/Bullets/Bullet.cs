@@ -19,27 +19,28 @@ namespace EphemereGames.Commander
         RailGun
     };
 
-    abstract class Projectile : IObjetPhysique, ILivingObject
+
+    abstract class Bullet : IObjetPhysique, ILivingObject
     {
-        public static Pool<ProjectileBase> PoolProjectilesBase = new Pool<ProjectileBase>();
-        public static Pool<ProjectileLaserMultiple> PoolProjectilesLaserMultiple = new Pool<ProjectileLaserMultiple>();
-        public static Pool<ProjectileLaserSimple> PoolProjectilesLaserSimple = new Pool<ProjectileLaserSimple>();
-        public static Pool<ProjectileMissile> PoolProjectilesMissile = new Pool<ProjectileMissile>();
-        public static Pool<ProjectileSlowMotion> PoolProjectilesSlowMotion = new Pool<ProjectileSlowMotion>();
+        public static Pool<BasicBullet> PoolBasicBullets = new Pool<BasicBullet>();
+        public static Pool<MultipleLasersBullet> PoolMultipleLasersBullets = new Pool<MultipleLasersBullet>();
+        public static Pool<LaserBullet> PoolLaserBullets = new Pool<LaserBullet>();
+        public static Pool<MissileBullet> PoolMissileBullets = new Pool<MissileBullet>();
+        public static Pool<SlowMotionBullet> PoolSlowMotionBullets = new Pool<SlowMotionBullet>();
         public static Pool<GunnerBullet> PoolGunnerBullets = new Pool<GunnerBullet>();
         public static Pool<NanobotsBullet> PoolNanobotsBullets = new Pool<NanobotsBullet>();
-        public static Pool<RailGunBullet> PoolRailGunBullet = new Pool<RailGunBullet>();
+        public static Pool<RailGunBullet> PoolRailGunBullets = new Pool<RailGunBullet>();
 
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
-        public float Speed                                        { get; set; }
+        public float Speed                                          { get; set; }
         public float Masse                                          { get; set; }
         public float Rotation                                       { get; set; }
         public float ResistanceRotation                             { get; set; }
         public Vector3 Direction                                    { get; set; }
         public Shape Shape                                          { get; set; }
         public Cercle Circle                                        { get; set; }
-        public Ligne Line                                          { get; set; }
+        public Ligne Line                                           { get; set; }
 
         public RectanglePhysique Rectangle                          { get; set; }
         public float LifePoints                                     { get; set; }
@@ -48,9 +49,10 @@ namespace EphemereGames.Commander
         public Scene Scene;
         public float PrioriteAffichage;
         public bool Alive                                           { get { return LifePoints > 0; } }
-        public IVisible RepresentationVivant                        { get; set; }
-        public Particle ExplodingEffect               { get; set; }
-        public Particle MovingEffect                  { get; set; }
+        public Image Image                                          { get; set; }
+        public Particle ExplodingEffect                             { get; set; }
+        public Particle MovingEffect                                { get; set; }
+        public float DeflectZone;
 
 
         public virtual void Initialize()
@@ -63,6 +65,8 @@ namespace EphemereGames.Commander
                 direction.Normalize();
                 Direction = direction;
             }
+
+            DeflectZone = 100;
         }
 
 
@@ -91,11 +95,11 @@ namespace EphemereGames.Commander
             if (Alive && MovingEffect != null)
                 MovingEffect.Trigger(ref this.position);
 
-            if (Alive && RepresentationVivant != null)
+            if (Alive && Image != null)
             {
-                RepresentationVivant.Position = this.Position;
+                Image.Position = this.Position;
 
-                Scene.ajouterScenable(RepresentationVivant);
+                Scene.ajouterScenable(Image);
             }
         }
 
@@ -114,10 +118,10 @@ namespace EphemereGames.Commander
                 ExplodingEffect.Trigger(ref this.position);
 
             if (MovingEffect != null)
-                Scene.Particules.Return(MovingEffect);
+                Scene.Particles.Return(MovingEffect);
 
             if (ExplodingEffect != null)
-                Scene.Particules.Return(ExplodingEffect);
+                Scene.Particles.Return(ExplodingEffect);
         }
 
 
@@ -126,10 +130,10 @@ namespace EphemereGames.Commander
             LifePoints = 0;
 
             if (MovingEffect != null)
-                Scene.Particules.Return(MovingEffect);
+                Scene.Particles.Return(MovingEffect);
 
             if (ExplodingEffect != null)
-                Scene.Particules.Return(ExplodingEffect);
+                Scene.Particles.Return(ExplodingEffect);
         }
     }
 }

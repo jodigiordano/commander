@@ -11,7 +11,7 @@
     class Spaceship : IObjetPhysique
     {
         public Vector3 Position                 { get; set; }
-        public float Speed                    { get; set; }
+        public float Speed                      { get; set; }
         public float Masse                      { get; set; }
         public Vector3 Direction                { get; set; }
         public float Rotation                   { get; set; }
@@ -19,7 +19,7 @@
         public Shape Shape                      { get; set; }
         public Cercle Circle                    { get; set; }
         public RectanglePhysique Rectangle      { get; set; }
-        public Ligne Line                      { get; set; }
+        public Ligne Line                       { get; set; }
 
         public IObjetPhysique StartingObject    { get; set; }
         public virtual bool TargetReached       { get; set; }
@@ -33,11 +33,11 @@
         public Image Image;
         public float RotationMaximaleRad;
 
-        private List<Projectile> Bullets;
+        private List<Bullet> Bullets;
         public double ShootingFrequency;
         private double LastFireCounter;
 
-        public string SfxGoHome                 { get; protected set; }
+        public string SfxOut                 { get; protected set; }
         public string SfxIn                     { get; protected set; }
         public virtual bool Active              { get; set; }
         public bool GoBackToStartingObject      { get; set; }
@@ -68,9 +68,9 @@
             ShootingFrequency = 300;
             LastFireCounter = 0;
 
-            Bullets = new List<Projectile>();
+            Bullets = new List<Bullet>();
 
-            SfxGoHome = "";
+            SfxOut = "";
             SfxIn = "";
             Active = true;
             GoBackToStartingObject = false;
@@ -123,7 +123,7 @@
 
             Position += Direction * Speed;
 
-            if ((TargetPosition - Position).LengthSquared() <= 400)
+            if ((TargetPosition - Position).LengthSquared() <= 600)
             {
                 InCombat = false;
                 TargetReached = true;
@@ -131,7 +131,7 @@
         }
 
 
-        public virtual List<Projectile> BulletsThisTick()
+        public virtual List<Bullet> BulletsThisTick()
         {
             Bullets.Clear();
 
@@ -146,7 +146,7 @@
 
                 Vector3 translation = directionUnitairePerpendiculaire * Main.Random.Next(-17, 17);
 
-                ProjectileBase p = Projectile.PoolProjectilesBase.Get();
+                BasicBullet p = Bullet.PoolBasicBullets.Get();
                 p.Scene = Simulation.Scene;
                 p.Position = Position + translation;
                 p.Direction = Direction;
@@ -155,7 +155,7 @@
                 p.Speed = 10;
                 p.Initialize();
 
-                Simulation.Scene.Particules.Return(p.MovingEffect);
+                Simulation.Scene.Particles.Return(p.MovingEffect);
                 p.MovingEffect = null;
 
                 Bullets.Add(p);
@@ -183,7 +183,7 @@
 
             double tempsRequis = (distance / Speed) * 16.33f;
 
-            Simulation.Scene.Effets.Add(Image, Core.Visuel.PredefinedEffects.FadeOutTo0(Image.Color.A, 0, tempsRequis));
+            Simulation.Scene.Effects.Add(Image, Core.Visuel.PredefinedEffects.FadeOutTo0(Image.Color.A, 0, tempsRequis));
         }
 
 

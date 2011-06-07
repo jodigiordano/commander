@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    [Serializable()] 
+
     public class Trajet3D
     {
         public Curve TrajetX;

@@ -18,7 +18,7 @@
         {
             Simulation = simulation;
 
-            Selection = Simulation.Scene.Particules.Get("selectionCorpsCeleste");
+            Selection = Simulation.Scene.Particles.Get("selectionCorpsCeleste");
             Selection.VisualPriority = Preferences.PrioriteGUISelectionCorpsCeleste;
         }
 

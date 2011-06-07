@@ -19,6 +19,8 @@ namespace EphemereGames.Commander
     delegate void PowerUpHandler(PowerUp p);
     delegate void TurretTurretHandler(Turret t1, Turret t2);
     delegate void EnemyCelestialBodyHandler(Enemy e, CorpsCeleste c);
+    delegate void TurretPhysicalObjectHandler(Turret t, IObjetPhysique o);
+    delegate void EnemyBulletHandler(Enemy e, Bullet b);
 
 
     class Simulation : InputListener
@@ -47,7 +49,7 @@ namespace EphemereGames.Commander
         private ScenarioController ScenarioController;
         private EnemiesController EnemiesController;
         private BulletsController BulletsController;
-        private ControleurCollisions CollisionsController;
+        private CollisionsController CollisionsController;
         private SimPlayersController SimPlayersController;
         private TurretsController TurretsController;
         private SpaceshipsController SpaceshipsController;   
@@ -77,7 +79,7 @@ namespace EphemereGames.Commander
 
         public void Initialize()
         {
-            Scene.Particules.Add(
+            Scene.Particles.Add(
                 new List<string>() {
                     "projectileMissileDeplacement",
                     "projectileBaseExplosion",
@@ -124,7 +126,7 @@ namespace EphemereGames.Commander
             Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
             InnerTerrain = new RectanglePhysique(-640, -320, 1280, 720);
 
-            CollisionsController = new ControleurCollisions(this);
+            CollisionsController = new CollisionsController(this);
             BulletsController = new BulletsController(this);
             EnemiesController = new EnemiesController(this);
             SimPlayersController = new SimPlayersController(this);
@@ -186,7 +188,7 @@ namespace EphemereGames.Commander
             SimPlayersController.AchatTourelleDemande += new TurretHandler(TurretsController.DoBuyTurret);
             EnemiesController.WaveEnded += new NoneHandler(ScenarioController.doWaveEnded);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
-            CollisionsController.InTurretRange += new ControleurCollisions.TurretPhysicalObjectHandler(TurretsController.DoInRangeTurret);
+            CollisionsController.InTurretRange += new TurretPhysicalObjectHandler(TurretsController.DoInRangeTurret);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             BulletsController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             EnemiesController.WaveStarted += new NoneHandler(GUIController.doWaveStarted);
@@ -236,11 +238,11 @@ namespace EphemereGames.Commander
             SimPlayersController.PlayerMoved += new SimPlayerHandler(PowerUpsController.DoPlayerMoved);
             ScenarioController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
+            CollisionsController.BulletDeflected += new EnemyBulletHandler(BulletsController.DoBulletDeflected);
 
             EnemiesController.Initialize();
             TurretsController.Initialize();
             PlanetarySystemController.Initialize();
-            CollisionsController.Initialize();
             MessagesController.Initialize();
             GUIController.Initialize();
             PowerUpsController.Initialize();
@@ -297,7 +299,7 @@ namespace EphemereGames.Commander
             if (Etat == GameState.Paused)
                 return;
 
-            CollisionsController.Update(gameTime);
+            CollisionsController.Update();
             BulletsController.Update();
             PlanetarySystemController.Update(gameTime); // must be done before the TurretController because the celestial bodies must move before the turrets
             TurretsController.Update(gameTime); //doit etre fait avant le controleurEnnemi pour les associations ennemis <--> tourelles
@@ -312,7 +314,7 @@ namespace EphemereGames.Commander
 
         public void Draw()
         {
-            CollisionsController.Draw(null);
+            CollisionsController.Draw();
             BulletsController.Draw();
             EnemiesController.Draw();
             TurretsController.Draw();

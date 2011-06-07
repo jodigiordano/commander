@@ -169,7 +169,8 @@
             MenuGeneral.TimeNextWave = double.MaxValue;
             MenuGeneral.RemainingWaves--;
 
-            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxNouvelleVague");
+            if (!Simulation.ModeDemo)
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxNouvelleVague");
 
             if (InfiniteWaves != null || MenuGeneral.RemainingWaves <= 0)
                 return;

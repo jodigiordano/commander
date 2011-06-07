@@ -7,7 +7,7 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    class Enemy : IObjetPhysique, ILivingObject
+    class Enemy : IObjetPhysique, IPhysicalObject, ILivingObject
     {
         public static int NextID { get { return NEXT_ID++; } }
 
@@ -45,6 +45,12 @@ namespace EphemereGames.Commander
         public Vector3 Translation;
         public Vector3 PositionLastHit;
         public Color Color;
+        public int Level;
+        public double FadeInTime;
+
+        public float ImpulseSpeed;
+        public Vector3 ImpulseDirection;
+        public double ImpulseTime;
 
         public float NanobotsInfectionTime;
         public float NanobotsInfectionHitPoints;
@@ -74,6 +80,7 @@ namespace EphemereGames.Commander
             Circle = new Cercle(Vector3.Zero, 1);
             Type = EnemyType.Asteroid;
             Id = NextID;
+            Level = 0;
         }
 
 
@@ -82,12 +89,12 @@ namespace EphemereGames.Commander
             if (Image == null)
                 LoadAssets();
 
-            MultipleLasersEffect = Simulation.Scene.Particules.Get("etincelleLaser");
-            MissileEffect = Simulation.Scene.Particules.Get("etincelleMissile");
-            LaserEffect = Simulation.Scene.Particules.Get("etincelleLaserSimple");
-            SlowMotionEffect = Simulation.Scene.Particules.Get("etincelleSlowMotionTouche");
-            ExplodingEffect = Simulation.Scene.Particules.Get("explosionEnnemi");
-            NanobotsInfectionEffect = Simulation.Scene.Particules.Get("nanobots");
+            MultipleLasersEffect = Simulation.Scene.Particles.Get("etincelleLaser");
+            MissileEffect = Simulation.Scene.Particles.Get("etincelleMissile");
+            LaserEffect = Simulation.Scene.Particles.Get("etincelleLaserSimple");
+            SlowMotionEffect = Simulation.Scene.Particles.Get("etincelleSlowMotionTouche");
+            ExplodingEffect = Simulation.Scene.Particles.Get("explosionEnnemi");
+            NanobotsInfectionEffect = Simulation.Scene.Particles.Get("nanobots");
             NanobotsInfectionEffect.ParticleEffect[0].ReleaseColour = Color.Red.ToVector3();
 
             VisualPriority = EnemiesFactory.GetVisualPriority(Type, 0);
@@ -100,7 +107,8 @@ namespace EphemereGames.Commander
             NanobotsInfectionEffect.VisualPriority = VisualPriority - 0.001f;
 
             Resistance = 0;
-            Displacement = 0;
+
+            Path.Position(Displacement, ref position);
 
             Rectangle.Width = Rectangle.Height = EnemiesFactory.GetSize(Type);
             Circle.Radius = Rectangle.Width / 2 - 3;
@@ -134,6 +142,13 @@ namespace EphemereGames.Commander
 
         public void Update()
         {
+            if (ImpulseTime > 0)
+            {
+                Translation += ImpulseDirection * ImpulseSpeed;
+
+                ImpulseTime -= 16.66;
+            }
+
             Resistance = Math.Max(Resistance - 0.02f, 0);
 
             Displacement += Math.Max(this.Speed - this.Resistance, 0);
@@ -166,7 +181,7 @@ namespace EphemereGames.Commander
 
             float pourcPath = Path.Pourc(Displacement);
 
-            if (pourcPath > 0.95f)
+            if (pourcPath > 0.96f)
                 VisualPriority = EnemiesFactory.GetVisualPriority(Type, pourcPath);
 
             Image.Position = Position;
@@ -195,28 +210,28 @@ namespace EphemereGames.Commander
 
         public void DoHit(ILivingObject by)
         {
-            if (!(by is ProjectileSlowMotion))
+            if (!(by is SlowMotionBullet))
                 this.LifePoints -= by.AttackPoints;
 
-            Projectile p = by as Projectile;
+            Bullet p = by as Bullet;
 
             if (p != null)
             {
                 PositionLastHit = p.Position;
 
-                if (p is ProjectileLaserMultiple)
+                if (p is MultipleLasersBullet)
                 {
                     MultipleLasersEffect.Trigger(ref this.position);
                 }
-                else if (p is ProjectileLaserSimple)
+                else if (p is LaserBullet)
                 {
                     LaserEffect.Trigger(ref this.position);
                 }
-                else if (p is ProjectileMissile)
+                else if (p is MissileBullet)
                 {
                     MissileEffect.Trigger(ref this.position);
                 }
-                else if (p is ProjectileSlowMotion)
+                else if (p is SlowMotionBullet)
                 {
                     float pointsAttaqueEffectif = (this.Type == EnemyType.Comet) ? p.AttackPoints * 3 : p.AttackPoints;
 
@@ -268,16 +283,16 @@ namespace EphemereGames.Commander
                 ExplodingEffect.ParticleEffect[0].ReleaseImpulse = new Vector2(direction.X, direction.Y);
                 ExplodingEffect.Trigger(ref this.position);
 
-                Simulation.Scene.Particules.Return(ExplodingEffect);
+                Simulation.Scene.Particles.Return(ExplodingEffect);
             }
 
             PathEndReached = null;
 
-            Simulation.Scene.Particules.Return(MultipleLasersEffect);
-            Simulation.Scene.Particules.Return(MissileEffect);
-            Simulation.Scene.Particules.Return(LaserEffect);
-            Simulation.Scene.Particules.Return(SlowMotionEffect);
-            Simulation.Scene.Particules.Return(NanobotsInfectionEffect);
+            Simulation.Scene.Particles.Return(MultipleLasersEffect);
+            Simulation.Scene.Particles.Return(MissileEffect);
+            Simulation.Scene.Particles.Return(LaserEffect);
+            Simulation.Scene.Particles.Return(SlowMotionEffect);
+            Simulation.Scene.Particles.Return(NanobotsInfectionEffect);
         }
 
 

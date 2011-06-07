@@ -1,31 +1,13 @@
-﻿//=====================================================================
-//
-// Un trajet qui est défini par un ensemble de points (Vecteur2D)
-// et les temps (un autre ensemble...) où l'on passe par ces points.
-// Habituellement, on passe par le premier point au temps 0.
-//
-// Note : ce qui n'est pas (enEphemereGames.Core) défini : ce qui se passe lorsque
-// l'on demande une position à l'extérieur des bornes du trajet
-// (avant ou après). XNA propose une manière de le définir si
-// nécessaire.
-//
-//=====================================================================
-
-namespace EphemereGames.Core.Utilities
+﻿namespace EphemereGames.Core.Utilities
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
 
-    [Serializable()] 
+
     public class Trajet2D
     {
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
         public Curve TrajetX { get; set; }
         public Curve TrajetY { get; set; }
 
@@ -36,10 +18,6 @@ namespace EphemereGames.Core.Utilities
         private double tempsRecalculerTangeantes = 0;
         private CurveTangent typeRecalculerTangeantes = CurveTangent.Linear;
 
-
-        //=====================================================================
-        // Constructeur
-        //=====================================================================
 
         public Trajet2D()
         {
@@ -67,10 +45,6 @@ namespace EphemereGames.Core.Utilities
         }
 
 
-        //=====================================================================
-        // Getters / Setters
-        //=====================================================================
-
         [ContentSerializerIgnore]
         public KeyValuePair<double[], Vector2[]> PositionsTemps
         {
@@ -96,10 +70,6 @@ namespace EphemereGames.Core.Utilities
         }
 
 
-        //
-        // Pre et Post Loop
-        //
-
         [ContentSerializer(Optional = true)]
         public CurveLoopType PostLoop
         {
@@ -123,10 +93,6 @@ namespace EphemereGames.Core.Utilities
         }
 
 
-        //
-        // Setter des tangentes droites
-        //
-
         [ContentSerializer(Optional = true)]
         public CurveTangent Tangentes
         {
@@ -140,10 +106,6 @@ namespace EphemereGames.Core.Utilities
             }
         }
 
-
-        //
-        // Position de départ sur le trajet
-        //
 
         public Vector2 positionDepart()
         {
@@ -162,10 +124,6 @@ namespace EphemereGames.Core.Utilities
         }
 
 
-        //
-        // Position sur le trajet selon un certain +temps+
-        //
-
         public Vector2 position(double temps)
         {
             if (recalculerTangeantes && temps >= tempsRecalculerTangeantes)
@@ -180,9 +138,6 @@ namespace EphemereGames.Core.Utilities
             );
         }
 
-        //
-        // Position relative sur le trajet (par rapport à l'origine du trajet) selon un certain +temps+
-        //
 
         public Vector2 positionRelative(double temps)
         {
@@ -193,20 +148,12 @@ namespace EphemereGames.Core.Utilities
         }
 
 
-        //
-        // Rotation nécessaire pour pointer en direction du trajet (en radians)
-        //
-
         public float rotation(double temps) {
             Vector2 directionActuelle = direction(temps);
 
             return (MathHelper.PiOver2) + (float)Math.Atan2(directionActuelle.Y, directionActuelle.X);
         }
 
-
-        //
-        // Vecteur qui pointe en direction du trajet
-        //
 
         public Vector2 direction(double temps)
         {
@@ -221,10 +168,6 @@ namespace EphemereGames.Core.Utilities
         }
 
 
-        //
-        // Recalculer les tangeantes plus tard
-        //
-
         public void recalculerTangentes(CurveTangent type, double temps)
         {
             recalculerTangeantes = true;
@@ -233,20 +176,12 @@ namespace EphemereGames.Core.Utilities
         }
 
 
-        //
-        // Calcul d'une tangeante particulière
-        //
-
         public void calculerTangente(int position, CurveTangent tangeante)
         {
             TrajetX.ComputeTangent(position, tangeante);
             TrajetY.ComputeTangent(position, tangeante);
         }
 
-
-        //=====================================================================
-        // Factory
-        //=====================================================================
 
         public enum Type
         {

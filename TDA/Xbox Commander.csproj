@@ -177,8 +177,6 @@
     <Compile Include="Simulation\Controllers\PowerUpsController.cs" />
     <Compile Include="Simulation\Controllers\ScenarioController.cs" />
     <Compile Include="Simulation\Controllers\SimPlayersController.cs" />
-    <Compile Include="Simulation\Controllers\SpaceshipsController.cs" />
-    <Compile Include="Simulation\Controllers\TurretsController.cs" />
     <Compile Include="Simulation\Enemies\Ennemi.cs" />
     <Compile Include="Simulation\Enemies\VaguesInfinies.cs" />
     <Compile Include="Simulation\Enemies\Wave.cs" />
@@ -238,6 +236,7 @@
     <Compile Include="Simulation\Spaceships\HumanBattleship.cs" />
     <Compile Include="Simulation\Spaceships\Spaceship.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipCollector.cs" />
+    <Compile Include="Simulation\Spaceships\SpaceshipsController.cs" />
     <Compile Include="Simulation\Spaceships\TheResistance.cs" />
     <Compile Include="Simulation\Spaceships\VaisseauAlien.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipSpaceship.cs" />
@@ -255,6 +254,7 @@
     <Compile Include="Simulation\Turrets\SlowMotionTurret.cs" />
     <Compile Include="Simulation\Turrets\Turret.cs" />
     <Compile Include="Simulation\Turrets\TurretLevel.cs" />
+    <Compile Include="Simulation\Turrets\TurretsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

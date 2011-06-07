@@ -71,5 +71,28 @@
 
             return eDt;
         }
+
+
+        public static ImpulseEffect RandomImpulse(float impulse, double time)
+        {
+            Vector3 direction = new Vector3(
+                random.Next(-100, 100),
+                random.Next(-100, 100),
+                0
+            );
+
+            direction.Normalize();
+
+            ImpulseEffect e = new ImpulseEffect()
+            {
+                Delay = 0,
+                Direction = direction,
+                Length = time,
+                Speed = (float) (time / impulse),
+                Progress = AbstractEffect.ProgressType.Linear
+            };
+
+            return e;
+        }
     }
 }

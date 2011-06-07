@@ -106,7 +106,7 @@
 
 
             if (Simulation.Main.GameInProgress != null &&
-                !Simulation.Main.GameInProgress.EstTerminee &&
+                !Simulation.Main.GameInProgress.IsFinished &&
                 Simulation.CelestialBodyPausedGame != null && Simulation.CelestialBodyPausedGame.Nom == CelestialBody.Nom)
             {
                 base.Draw();

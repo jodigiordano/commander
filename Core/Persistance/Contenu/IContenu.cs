@@ -5,10 +5,12 @@
     using Microsoft.Xna.Framework.Content;
 
 
-    public interface IContenu : ICloneable
+    public interface IContenu
     {
         String AssetType { get; }
 
         object Load(String name, String path, Dictionary<String, String> parameters, ContentManager manager);
+
+        object Clone();
     }
 }

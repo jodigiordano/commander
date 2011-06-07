@@ -11,7 +11,7 @@
     using ProjectMercury.Emitters;
 
 
-    class GunnerBullet : Projectile
+    class GunnerBullet : Bullet
     {
         public Enemy Target;
         public Turret Turret;
@@ -25,17 +25,17 @@
             base.Initialize();
 
             Speed = 0;
-            RepresentationVivant = null;
+            Image = null;
 
             Position = Target.Position;
 
             Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
             CanonRotation = new Matrix();
 
-            ExplodingEffectAlt = Scene.Particules.Get("projectileBaseExplosion");
+            ExplodingEffectAlt = Scene.Particles.Get("projectileBaseExplosion");
             ExplodingEffectAlt.VisualPriority = Target.Image.VisualPriority - 0.0001f;
 
-            TurretEffect = Scene.Particules.Get("gunnerTurret");
+            TurretEffect = Scene.Particles.Get("gunnerTurret");
             TurretEffect.ParticleEffect[0].ReleaseColour = Turret.Color.ToVector3();
             TurretEffect.VisualPriority = Turret.VisualPriority + 0.0001f;
 
@@ -95,9 +95,9 @@
         {
             base.DoDie();
 
-            Scene.Particules.Return(ExplodingEffectAlt);
+            Scene.Particles.Return(ExplodingEffectAlt);
 
-            Projectile.PoolGunnerBullets.Return(this);
+            Bullet.PoolGunnerBullets.Return(this);
         }
 
 
@@ -105,9 +105,9 @@
         {
             base.DoDieSilent();
 
-            Scene.Particules.Return(ExplodingEffectAlt);
+            Scene.Particles.Return(ExplodingEffectAlt);
 
-            Projectile.PoolGunnerBullets.Return(this);
+            Bullet.PoolGunnerBullets.Return(this);
         }
     }
 }

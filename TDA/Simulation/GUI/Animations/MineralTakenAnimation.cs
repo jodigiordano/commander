@@ -26,8 +26,8 @@
                     break;
             }
 
-            scene.Effets.Add(Value, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 1000));
-            scene.Effets.Add(Value, Core.Physique.PredefinedEffects.Move(position + new Vector3(0, -100, 0), 0, 1000));
+            scene.Effects.Add(Value, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 1000));
+            scene.Effects.Add(Value, Core.Physique.PredefinedEffects.Move(position + new Vector3(0, -100, 0), 0, 1000));
         }
 
 

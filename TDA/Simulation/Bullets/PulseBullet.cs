@@ -11,17 +11,17 @@
     using ProjectMercury.Emitters;
 
 
-    class PulseBullet : Projectile
+    class PulseBullet : Bullet
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            RepresentationVivant = null;
+            Image = null;
 
             Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
 
-            MovingEffect = Scene.Particules.Get("pulseEffect");
+            MovingEffect = Scene.Particles.Get("pulseEffect");
             ExplodingEffect = null;
         }
 

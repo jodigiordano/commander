@@ -32,7 +32,7 @@
             Scene = scene;
             Definition = definition;
             Speed = Main.Random.Next(10, 20);
-            RepresentationParticules = scene.Particules.Get(definition.ParticulesRepresentation);
+            RepresentationParticules = scene.Particles.Get(definition.ParticulesRepresentation);
             RepresentationParticules.VisualPriority = visualPriority - 0.001f;
             TempsExistence = definition.TimeAlive;
             Circle = new Cercle(this, definition.Radius);
@@ -72,12 +72,16 @@
 
         public void DoDie()
         {
-            Scene.Particules.Return(RepresentationParticules);
+            Scene.Particles.Return(RepresentationParticules);
 
-            Particle pris = Scene.Particules.Get("mineralPris");
+            Particle pris = Scene.Particles.Get("mineralPris");
             pris.Trigger(ref this.position);
-            Scene.Particules.Return(pris);
+            Scene.Particles.Return(pris);
             Scene.Animations.Insert(new MineralTakenAnimation(Scene, Definition, Position));
+
+            string sfx = (Type == MineralType.Life1) ? "sfxLifePack" : "sfxMoney" + Main.Random.Next(1, 4);
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", sfx);
         }
 
 

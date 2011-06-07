@@ -158,7 +158,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             if (Transition != TransitionType.None)
                 return;
@@ -182,11 +182,11 @@
                     if (EphemereGames.Core.Persistance.Facade.PackageLoaded("principal") && TraductionChargement.Termine)
                     {
                         EtatScene = Etat.CONNEXION_JOUEUR;
-                        Effets.Add(TraductionChargement.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
-                        Effets.Add(TraductionChargement.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        Effects.Add(TraductionChargement.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        Effects.Add(TraductionChargement.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
                         Sablier.doHide(1000);
-                        Effets.Add(PressStart.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
-                        Effets.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
+                        Effects.Add(PressStart.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
+                        Effects.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
 
                     }
                     break;
@@ -216,13 +216,13 @@
                         if (!ThreadChargementScenesTermine)
                             ThreadChargementScenes.Start();
 
-                        Effets.Add(PressStart.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
-                        Effets.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        Effects.Add(PressStart.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        Effects.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
 
                         initTraductionChargement();
 
-                        Effets.Add(TraductionChargement.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
-                        Effets.Add(TraductionChargement.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
+                        Effects.Add(TraductionChargement.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
+                        Effects.Add(TraductionChargement.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
 
                         Sablier.doShow(1500);
 
@@ -275,7 +275,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             if (Transition != TransitionType.None)
                 AnimationTransition.Draw(null);
@@ -289,13 +289,13 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
-            base.onFocus();
+            base.OnFocus();
 
             Main.PlayersController.Initialize();
-            Effets.Stop();
-            Effets.Clear();
+            Effects.Stop();
+            Effects.Clear();
             ConnectingPlayer = PlayerIndex.One;
             WaitingForPlayerToConnect = true;
             initPressStart();

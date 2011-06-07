@@ -137,6 +137,7 @@
     <Compile Include="Physique\Effets\EffetRotation.cs" />
     <Compile Include="Physique\Effets\EffetSuivre.cs" />
     <Compile Include="Physique\Effets\EffetVitesseTrajet.cs" />
+    <Compile Include="Physique\Effets\ImpulseEffect.cs" />
     <Compile Include="Physique\Effets\MoveEffect.cs" />
     <Compile Include="Physique\Effets\PredefinedEffects.cs" />
     <Compile Include="Physique\Facade.cs" />
@@ -145,7 +146,7 @@
     <Compile Include="Physique\Formes\Rectangle.cs" />
     <Compile Include="Physique\Formes\Triangle.cs" />
     <Compile Include="Physique\IObjetPhysique.cs" />
-    <Compile Include="Physique\IPhysique.cs" />
+    <Compile Include="Physique\IPhysicalObject.cs" />
     <Compile Include="Physique\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AbstractEffet.cs" />
@@ -181,8 +182,8 @@
     <Compile Include="Visuel\Menu\MenuItem.cs" />
     <Compile Include="Visuel\Menu\OptionItem.cs" />
     <Compile Include="Visuel\Menu\SceneMenu.cs" />
-    <Compile Include="Visuel\Particules\GestionnaireParticules.cs" />
-    <Compile Include="Visuel\Particules\ParticuleEffectWrapper.cs" />
+    <Compile Include="Visuel\Particles\ParticlesController.cs" />
+    <Compile Include="Visuel\Particles\Particle.cs" />
     <Compile Include="Visuel\Preferences.cs" />
     <Compile Include="Visuel\Primitives.cs" />
     <Compile Include="Visuel\Scenable\Image.cs" />
@@ -245,9 +246,6 @@
     <Reference Include="Microsoft.Xna.Framework">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Avatar">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game">
       <Private>False</Private>
     </Reference>
@@ -257,27 +255,17 @@
     <Reference Include="Microsoft.Xna.Framework.Graphics">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Input.Touch">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.Xna.Framework.Net">
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Storage">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Video">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Xact">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
-    <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\PowerCollections.dll</HintPath>
+    <Reference Include="ProjectMercury">
+      <HintPath>..\lib\Xbox\ProjectMercury.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>

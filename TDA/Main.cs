@@ -60,9 +60,9 @@ namespace EphemereGames.Commander
             base.Initialize();
 
             Threads = new ManagedThread[3];
-            Threads[0] = new ManagedThread(3);
-            Threads[1] = new ManagedThread(4);
-            Threads[2] = new ManagedThread(5);
+            Threads[0] = new ManagedThread(3, 1000);
+            Threads[1] = new ManagedThread(4, 1000);
+            Threads[2] = new ManagedThread(5, 1000);
 
             EphemereGames.Core.Persistance.Facade.Initialize(
                 "Content",
@@ -77,8 +77,8 @@ namespace EphemereGames.Commander
                 720,
                 Content,
                 new string[] { "Menu", "Partie", "Chargement", "NouvellePartie", "Aide", "Options", "Editeur", "Acheter", "Validation" },
-                Threads[0],
-                Threads[1]);
+                Threads[1],
+                Threads[2]);
 
             EphemereGames.Core.Input.Facade.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
 
@@ -99,8 +99,10 @@ namespace EphemereGames.Commander
             for (int i = 0; i < Threads.Length; i++)
                 Threads[i].KillImmediately();
 
+#if WINDOWS
             if (Preferences.Target == Setting.WindowsDemo)
                 System.Diagnostics.Process.Start("http://commander.ephemeregames.com");
+#endif
 
             base.OnExiting(sender, args);
         }
@@ -119,12 +121,16 @@ namespace EphemereGames.Commander
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserSimple", 3);
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleSlowMotion", 2);
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteTouche", 2);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteExplose", 2);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteExplose", 1);
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxNouvelleVague", 2);
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire1", 1);
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire2", 1);
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire3", 1);
                 EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney1", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney2", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney3", 1);
+                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxLifePack", 2);
 
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Chargement", new Chargement(this));
                 EphemereGames.Core.Visuel.Facade.UpdateScene("Menu", null);
@@ -170,7 +176,11 @@ namespace EphemereGames.Commander
         {
             try
             {
+#if WINDOWS
                 return System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion;
+#else
+                return Assembly.GetExecutingAssembly().GetName().Version;
+#endif
             }
             catch
             {

@@ -55,7 +55,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             MondeSelectionne.Update(gameTime);
             jouerAnimationFinDemo(gameTime);
@@ -97,7 +97,7 @@
                 else
                 {
                     if (Main.GameInProgress != null &&
-                        !Main.GameInProgress.EstTerminee &&
+                        !Main.GameInProgress.IsFinished &&
                         Main.GameInProgress.Simulation.DescriptionScenario.Mission == ChoixTransition &&
                         MondeSelectionne.Simulation.GameAction == GameAction.Resume)
                     {
@@ -110,7 +110,7 @@
                         {
                             EphemereGames.Core.Audio.Facade.arreterMusique(Main.GameInProgress.MusiqueSelectionnee, false, 0);
 
-                            if (!Main.GameInProgress.EstTerminee)
+                            if (!Main.GameInProgress.IsFinished)
                                 Main.MusiquesDisponibles.Add(Main.GameInProgress.MusiqueSelectionnee);
                         }
 
@@ -141,7 +141,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             MondeSelectionne.Draw();
 
@@ -153,9 +153,9 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
- 	        base.onFocus();
+ 	        base.OnFocus();
 
             Menu = (Menu)EphemereGames.Core.Visuel.Facade.GetScene("Menu");
 
@@ -172,9 +172,9 @@
             EphemereGames.Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
         }
 
-        public override void onFocusLost()
+        public override void OnFocusLost()
         {
-            base.onFocusLost();
+            base.OnFocusLost();
 
             if (!ChoixTransition.StartsWith("World") && ChoixTransition != "menu")
                 EphemereGames.Core.Audio.Facade.pauserMusique(Menu.MusiqueSelectionnee, true, 1000);

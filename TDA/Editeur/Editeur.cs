@@ -47,7 +47,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             if (Transition != TransitionType.None)
                 return;
@@ -87,7 +87,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             Cursor.Draw();
             GenerateurGUI.Draw();
@@ -98,9 +98,9 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
-            base.onFocus();
+            base.OnFocus();
 
             Transition = TransitionType.In;
 
@@ -108,9 +108,9 @@
         }
 
 
-        public override void onFocusLost()
+        public override void OnFocusLost()
         {
-            base.onFocusLost();
+            base.OnFocusLost();
 
             //EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
             EphemereGames.Core.Input.Facade.RemoveListener(Simulation);

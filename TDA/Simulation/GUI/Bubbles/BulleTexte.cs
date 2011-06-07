@@ -121,7 +121,7 @@
             base.doShow(temps);
 
             Texte.Couleur.A = 0;
-            Simulation.Scene.Effets.Add(Texte, PredefinedEffects.FadeInFrom0(255, 0, temps));
+            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeInFrom0(255, 0, temps));
         }
 
 
@@ -129,7 +129,7 @@
         {
             base.doHide(temps);
 
-            Simulation.Scene.Effets.Add(Texte, PredefinedEffects.FadeOutTo0(255, 0, temps));
+            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeOutTo0(255, 0, temps));
         }
     }
 }

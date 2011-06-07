@@ -68,5 +68,11 @@ namespace EphemereGames.Commander
         {
             get { return TerminatedOverride || !Spaceship.Active; }
         }
+
+
+        public override void Stop()
+        {
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", Spaceship.SfxOut);
+        }
     }
 }

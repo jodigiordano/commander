@@ -47,5 +47,11 @@ namespace EphemereGames.Commander
 
             EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", Spaceship.SfxIn);
         }
+
+
+        public override void Stop()
+        {
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", Spaceship.SfxOut);
+        }
     }
 }

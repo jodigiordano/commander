@@ -381,20 +381,20 @@
 
             Vector3 positionEnnemis = FiltreWaves.Position - new Vector3(190, -30, 0);
 
-            foreach (var ennemi in Simulation.EnemiesFactory.AvailableEnemies)
-            {
-                ennemi.Initialize();
-                Image iv = (Image)ennemi.Image.Clone();
-                iv.Position = positionEnnemis;
-                iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
+            //foreach (var ennemi in Simulation.EnemiesFactory.AvailableEnemies)
+            //{
+            //    ennemi.Initialize();
+            //    Image iv = (Image)ennemi.Image.Clone();
+            //    iv.Position = positionEnnemis;
+            //    iv.VisualPriority = Preferences.PrioriteGUIConsoleEditeur + 0.005f;
 
-                EnnemisDisponiblesRep.Add(ennemi.Type, iv);
-                EnnemisDisponiblesCheckBoxes.Add(ennemi.Type, new CheckBox(Simulation.Scene, curseur, iv.Position + new Vector3(45, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
+            //    EnnemisDisponiblesRep.Add(ennemi.Type, iv);
+            //    EnnemisDisponiblesCheckBoxes.Add(ennemi.Type, new CheckBox(Simulation.Scene, curseur, iv.Position + new Vector3(45, 0, 0), Preferences.PrioriteGUIConsoleEditeur + 0.005f));
 
-                EnnemisDisponiblesCheckBoxes[ennemi.Type].Checked = true;
+            //    EnnemisDisponiblesCheckBoxes[ennemi.Type].Checked = true;
 
-                positionEnnemis += new Vector3(100, 0, 0);
-            }
+            //    positionEnnemis += new Vector3(100, 0, 0);
+            //}
 
 
             GenererVaguesRep = new IVisible("Generate", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, FiltreWaves.Position - new Vector3(-390, -40, 0));

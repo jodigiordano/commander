@@ -119,7 +119,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             if (Transition != TransitionType.None)
                 return;
@@ -160,7 +160,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             ajouterScenable(TitreMusique);
             ajouterScenable(TitreEffetsSonores);
@@ -179,9 +179,9 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
-            base.onFocus();
+            base.OnFocus();
 
             Musique.Valeur = Main.SaveGame.VolumeMusic;
             EffetsSonores.Valeur = Main.SaveGame.VolumeSfx;
@@ -190,9 +190,9 @@
         }
 
 
-        public override void onFocusLost()
+        public override void OnFocusLost()
         {
-            base.onFocusLost();
+            base.OnFocusLost();
 
             if (Main.PlayersController.MasterPlayer.Connected)
                 EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");

@@ -82,7 +82,7 @@
 #if WINDOWS
             slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpControlsWin"), new Vector3(0, 50, 0));
 #else
-            slide = new IVisible(EphemereGames.Core.Persistance.Facade.recuperer<Texture2D>("HelpControls"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpControls"), new Vector3(0, 50, 0));
 #endif
             
             slide.Origine = slide.Centre;
@@ -109,7 +109,7 @@
 #if WINDOWS
             slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpMercenariesWin"), new Vector3(0, 50, 0));
 #else
-            slide = new IVisible(EphemereGames.Core.Persistance.Facade.recuperer<Texture2D>("HelpMercenaries"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpMercenaries"), new Vector3(0, 50, 0));
 #endif
 
             slide.Origine = slide.Centre;
@@ -125,7 +125,7 @@
 #if WINDOWS
             slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpTheResistanceWin"), new Vector3(0, 50, 0));
 #else
-            slide = new IVisible(EphemereGames.Core.Persistance.Facade.recuperer<Texture2D>("HelpTheResistance"), new Vector3(0, 50, 0));
+            slide = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("HelpTheResistance"), new Vector3(0, 50, 0));
 #endif
 
             slide.Origine = slide.Centre;
@@ -149,7 +149,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             if (Transition != TransitionType.None)
                 return;
@@ -183,7 +183,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             ajouterScenable(FondEcran);
             ajouterScenable(TitresSlides[SlidesSlider.Valeur].Key);
@@ -196,9 +196,9 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
-            base.onFocus();
+            base.OnFocus();
 
             Transition = TransitionType.In;
         }

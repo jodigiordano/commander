@@ -7,7 +7,7 @@
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Content;
 
-    [Serializable]
+
     public class SaveGame : Data
     {
         [ContentSerializer(Optional = false)]

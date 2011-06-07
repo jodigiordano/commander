@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework.Content;
 
 
-    public class VisualEffect : AbstractEffect, ICloneable
+    public class VisualEffect : AbstractEffect
     {
         [ContentSerializerIgnore]
         public IVisible Object

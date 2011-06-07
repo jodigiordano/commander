@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework;
 
 
-    public class DrawPartiallyEffect : VisualEffect, ICloneable
+    public class DrawPartiallyEffect : VisualEffect
     {
         public bool DrawPartially { get; set; }
         public Rectangle VisiblePart { get; set; }
@@ -30,7 +30,7 @@
         }
 
 
-        object ICloneable.Clone()
+        object Clone()
         {
             DrawPartiallyEffect dpe = (DrawPartiallyEffect)base.Clone();
             dpe.DrawPartially = this.DrawPartially;

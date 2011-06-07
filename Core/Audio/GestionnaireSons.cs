@@ -79,6 +79,11 @@ namespace EphemereGames.Core.Audio
             effetsSonores[nomBanque].jouer(nomEffetSonore);
         }
 
+        public void arreterEffetSonore(string nomBanque, string nomEffetSonore)
+        {
+            effetsSonores[nomBanque].arreter(nomEffetSonore, true, 100);
+        }
+
         public BanqueEffetsSonores getEffetsSonores(String nomBanque)
         {
             return effetsSonores[nomBanque];

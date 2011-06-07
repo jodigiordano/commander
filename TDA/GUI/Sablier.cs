@@ -167,23 +167,23 @@
             EffetRotation.Progress = AbstractEffect.ProgressType.Linear;
             EffetRotation.Quantite = MathHelper.Pi;
 
-            Scene.Effets.Add(Representation, EffetRotation);
+            Scene.Effects.Add(Representation, EffetRotation);
         }
 
         public void doHide(double temps)
         {
-            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, temps));
+            Scene.Effects.Add(Representation, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, temps));
 
             foreach (var pixel in Pixels)
-                Scene.Effets.Add(pixel, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, temps));
+                Scene.Effects.Add(pixel, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, temps));
         }
 
         public void doShow(double temps)
         {
-            Scene.Effets.Add(Representation, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, temps));
+            Scene.Effects.Add(Representation, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, temps));
 
             foreach (var pixel in Pixels)
-                Scene.Effets.Add(pixel, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, temps));
+                Scene.Effects.Add(pixel, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, temps));
         }
 
         #region IObjetPhysique Membres

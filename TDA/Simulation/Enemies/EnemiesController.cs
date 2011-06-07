@@ -99,31 +99,46 @@
             for (int i = Enemies.Count - 1; i > -1; i--)
                 if (!Enemies[i].Alive)
                 {
-                    Enemy ennemi = Enemies[i];
+                    Enemy enemy = Enemies[i];
 
-                    ennemi.DoDie();
+                    enemy.DoDie();
 
-                    foreach (var vague in ActiveWaves)
-                        vague.DoEnemyDestroyed(ennemi);
-
-                    List<Mineral> mineraux = ennemi.Minerals;
-
-                    for (int j = 0; j < mineraux.Count; j++)
+                    if (enemy.Type == EnemyType.Damacloid)
                     {
-                        Mineral mineral = mineraux[j];
+                        EnemyDescriptor e = new EnemyDescriptor()
+                        {
+                            Type = EnemyType.Swarm,
+                            CashValue = enemy.CashValue / 10,
+                            LivesLevel = enemy.Level,
+                            SpeedLevel = enemy.Level,
+                            StartingPosition = enemy.Displacement
+                        };
 
-                        mineral.Position = ennemi.Position;
+                        for (int j = 0; j < 10; j++)
+                            ActiveWaves[0].AddEnemy(e);
+                    }
+
+                    foreach (var wave in ActiveWaves)
+                        wave.DoEnemyDestroyed(enemy);
+
+                    List<Mineral> minerals = enemy.Minerals;
+
+                    for (int j = 0; j < minerals.Count; j++)
+                    {
+                        Mineral mineral = minerals[j];
+
+                        mineral.Position = enemy.Position;
 
                         Vector3 direction;
 
-                        Path.Direction(ennemi.Displacement, out direction);
+                        Path.Direction(enemy.Displacement, out direction);
 
                         mineral.Direction = direction;
                     }
 
-                    Minerals.AddRange(mineraux);
+                    Minerals.AddRange(minerals);
 
-                    NotifyObjectDestroyed(ennemi);
+                    NotifyObjectDestroyed(enemy);
 
                     Enemies.RemoveAt(i);
                 }
@@ -172,8 +187,6 @@
                 Minerals.Remove(min);
 
                 NotifyObjectDestroyed(min);
-
-                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleVendue");
 
                 return;
             }
@@ -240,10 +253,6 @@
 
             for (int i = ActiveWaves.Count - 1; i > -1; i--)
             {
-                Vector3 startingPosition = Path.PremierRelais.Position;
-                Vector3 offset = new Vector3((startingPosition.X >= 0) ? 100 : -100, (startingPosition.Y >= 0) ? 100 : -100, 0);
-
-                ActiveWaves[i].StartingPosition = startingPosition + offset;
                 ActiveWaves[i].Update();
 
                 List<Enemy> newEnemies = ActiveWaves[i].Enemies;
@@ -258,17 +267,20 @@
                     e.PathPreview = this.PathPreview;
                     e.PathEndReached += new Enemy.EnemyHandler(this.ListenToEndOfPathReached);
                     e.Translation.Y = Main.Random.Next(-20, 20);
-                    e.Position = this.Path.PremierRelais.Position + e.Translation;
+
                     e.Initialize();
 
-                    while (MineralsDistribution.Count > 0 && MineralsDistribution[MineralsDistribution.Count - 1].Key == EnemiesCreatedCounter)
+                    if (e.Type != EnemyType.Swarm)
                     {
-                        e.Minerals.Add(Simulation.MineralsFactory.CreateMineral(MineralsDistribution[MineralsDistribution.Count - 1].Value, e.Image.VisualPriority + 0.01f));
+                        while (MineralsDistribution.Count > 0 && MineralsDistribution[MineralsDistribution.Count - 1].Key == EnemiesCreatedCounter)
+                        {
+                            e.Minerals.Add(Simulation.MineralsFactory.CreateMineral(MineralsDistribution[MineralsDistribution.Count - 1].Value, e.Image.VisualPriority + 0.01f));
 
-                        MineralsDistribution.RemoveAt(MineralsDistribution.Count - 1);
+                            MineralsDistribution.RemoveAt(MineralsDistribution.Count - 1);
+                        }
                     }
 
-                    Simulation.Scene.Effets.Add(e.Image, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                    Simulation.Scene.Effects.Add(e.Image, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, e.FadeInTime));
 
                     EnemiesCreatedCounter++;
 

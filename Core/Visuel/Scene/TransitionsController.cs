@@ -47,8 +47,8 @@
             ScenesInTransition.Add(CurrentTransition.NameSceneFrom, Facade.ScenesController.GetScene(CurrentTransition.NameSceneFrom));
             ScenesInTransition.Add(CurrentTransition.NameSceneTo, Facade.ScenesController.GetScene(CurrentTransition.NameSceneTo));
 
-            ScenesInTransition[CurrentTransition.NameSceneFrom].onFocusLost();
-            ScenesInTransition[CurrentTransition.NameSceneFrom].onTransitionTowardFocus();
+            ScenesInTransition[CurrentTransition.NameSceneFrom].OnFocusLost();
+            ScenesInTransition[CurrentTransition.NameSceneFrom].OnTransitionTowardFocus();
 
             OnTransitionStarted();
             StartTransition();
@@ -81,7 +81,7 @@
             ScenesInTransition[CurrentTransition.NameSceneFrom].Active = false;
             ScenesInTransition[CurrentTransition.NameSceneTo].Active = true;
 
-            ScenesInTransition[CurrentTransition.NameSceneTo].onFocus();
+            ScenesInTransition[CurrentTransition.NameSceneTo].OnFocus();
         }
 
 

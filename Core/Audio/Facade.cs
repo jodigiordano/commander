@@ -25,6 +25,11 @@
             GestionnaireSons.Instance.jouerEffetSonore(nomBanque, nomEffetSonore);
         }
 
+        public static void arreterEffetSonore(string nomBanque, string nomEffetSonore)
+        {
+            GestionnaireSons.Instance.arreterEffetSonore(nomBanque, nomEffetSonore);
+        }
+
         public static bool banqueEffetsSonoreUtilisee(string nomBanque)
         {
             return GestionnaireSons.Instance.getEffetsSonores(nomBanque).Utilise;

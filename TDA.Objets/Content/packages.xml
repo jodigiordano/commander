@@ -52,6 +52,28 @@
     <asset nom="sfxPowerUpCollecteurOut"              type="EffetSonore" chemin="sfx/sfxCollecteurOut"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxPowerUpDoItYourselfIn"             type="EffetSonore" chemin="sfx/sfxDoItYourselfIn"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxPowerUpDoItYourselfOut"            type="EffetSonore" chemin="sfx/sfxDoItYourselfOut"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxMoney1"                            type="EffetSonore" chemin="sfx/sfxMoney1"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxMoney2"                            type="EffetSonore" chemin="sfx/sfxMoney2"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxMoney3"                            type="EffetSonore" chemin="sfx/sfxMoney3"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxLifePack"                          type="EffetSonore" chemin="sfx/sfxLifePack"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxLastSolutionIn"                    type="EffetSonore" chemin="sfx/sfxLastSolutionIn"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxLastSolutionOut"                   type="EffetSonore" chemin="sfx/sfxLastSolutionOut"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxShootingStars"                     type="EffetSonore" chemin="sfx/sfxShootingStars"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxDarkSide"                          type="EffetSonore" chemin="sfx/sfxDarkSide"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxAutomaticCollectorIn"              type="EffetSonore" chemin="sfx/sfxAutomaticCollectorIn"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxAutomaticCollectorOut"             type="EffetSonore" chemin="sfx/sfxAutomaticCollectorOut"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxMinerIn"                           type="EffetSonore" chemin="sfx/sfxMinerIn"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxMinerOut"                          type="EffetSonore" chemin="sfx/sfxMinerOut"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxRailGunIn"                         type="EffetSonore" chemin="sfx/sfxRailGunIn"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxRailGunOut"                        type="EffetSonore" chemin="sfx/sfxRailGunOut"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxRailGunCharging"                   type="EffetSonore" chemin="sfx/sfxRailGunCharging"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxRailGunExplosion1"                 type="EffetSonore" chemin="sfx/sfxRailGunExplosion1"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxRailGunExplosion2"                 type="EffetSonore" chemin="sfx/sfxRailGunExplosion2"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxShieldIn"                          type="EffetSonore" chemin="sfx/sfxShieldIn"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxShieldOut"                         type="EffetSonore" chemin="sfx/sfxShieldOut"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxPulse1"                            type="EffetSonore" chemin="sfx/sfxPulse1"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxPulse2"                            type="EffetSonore" chemin="sfx/sfxPulse2"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxPulse3"                            type="EffetSonore" chemin="sfx/sfxPulse3"><param nom="banque" valeur="Partie" /></asset>
   </Package>
   
   
@@ -115,6 +137,7 @@
     <asset nom="Apohele"                    type="Texture2D" chemin="asteroids/apohele" />
     <asset nom="Damacloid"                  type="Texture2D" chemin="asteroids/damacloid" />
     <asset nom="Vulcanoid"                  type="Texture2D" chemin="asteroids/vulcanoid" />
+    <asset nom="Swarm"                      type="Texture2D" chemin="asteroids/swarm" />
     <asset nom="Filtre"                     type="Texture2D" chemin="GUI/filtre" />
 
     <asset nom="etoile13"                   type="Texture2D" chemin="planetes/etoile1" />

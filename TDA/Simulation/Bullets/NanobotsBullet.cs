@@ -11,7 +11,7 @@
     using ProjectMercury.Emitters;
 
 
-    class NanobotsBullet : Projectile
+    class NanobotsBullet : Bullet
     {
         public float ZoneImpact;
         public float InfectionTime;
@@ -37,7 +37,7 @@
 
             LastPosition = Position;
 
-            MovingEffect = Scene.Particules.Get("planeteGazeuse");
+            MovingEffect = Scene.Particles.Get("planeteGazeuse");
             CircleEmitter ce = (CircleEmitter) MovingEffect.ParticleEffect[0];
             ce.Radius = Circle.Radius - 5;
 
@@ -83,7 +83,7 @@
         {
             base.DoDie();
 
-            Projectile.PoolNanobotsBullets.Return(this);
+            Bullet.PoolNanobotsBullets.Return(this);
         }
 
 
@@ -91,7 +91,7 @@
         {
             base.DoDieSilent();
 
-            Projectile.PoolNanobotsBullets.Return(this);
+            Bullet.PoolNanobotsBullets.Return(this);
         }
     }
 }

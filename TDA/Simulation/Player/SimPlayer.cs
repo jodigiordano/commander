@@ -250,6 +250,7 @@
         public void DoCelestialBodyDestroyed()
         {
             CelestialBodyController.DoCelestialBodyDestroyed();
+            ActualSelection.TurretToBuy = null;
         }
 
 

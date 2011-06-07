@@ -46,7 +46,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             if (Transition != TransitionType.None)
                 return;
@@ -83,7 +83,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             ajouterScenable((Main.TrialMode.Active) ? FondEcranAchat : FondEcranAchatEffectue);
 
@@ -95,9 +95,9 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
-            base.onFocus();
+            base.OnFocus();
 
             Transition = TransitionType.In;
         }

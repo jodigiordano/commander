@@ -8,7 +8,7 @@
 
     class LaserTurret : Turret
     {
-        public Projectile ActiveBullet;
+        public Bullet ActiveBullet;
         private Enemy EnemyAttacked;
 
 

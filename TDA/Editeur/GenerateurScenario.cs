@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using EphemereGames.Core.Physique;
-    using Wintellect.PowerCollections;
 
     class GenerateurScenario
     {

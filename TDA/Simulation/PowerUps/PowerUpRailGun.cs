@@ -47,6 +47,8 @@ namespace EphemereGames.Commander
             {
                 Turret.StopFire();
                 Firing = false;
+
+                EphemereGames.Core.Audio.Facade.arreterEffetSonore("Partie", "sfxRailGunCharging");
             }
         }
 
@@ -63,6 +65,8 @@ namespace EphemereGames.Commander
         {
             Turret.Fire();
             Firing = true;
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxRailGunCharging");
         }
 
 
@@ -83,6 +87,8 @@ namespace EphemereGames.Commander
             HumanBattleship.RailGun.Wander = false;
             Turret = HumanBattleship.RailGun;
             Firing = false;
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxRailGunIn");
         }
 
 
@@ -91,6 +97,8 @@ namespace EphemereGames.Commander
             Turret.StopFire();
             Firing = false;
             HumanBattleship.RailGun.Wander = true;
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxRailGunOut");
         }
     }
 }

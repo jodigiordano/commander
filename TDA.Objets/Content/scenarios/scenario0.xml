@@ -145,7 +145,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
       </Enemies>
       <SpeedLevel>2</SpeedLevel>
@@ -160,7 +160,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
       </Enemies>
       <SpeedLevel>3</SpeedLevel>
       <LivesLevel>3</LivesLevel>

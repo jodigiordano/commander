@@ -65,6 +65,7 @@
                 p.Name = gamer.Gamertag;
             }
 
+#if WINDOWS
             else
             {
                 string[] names = WindowsIdentity.GetCurrent().Name.Split('\\');
@@ -72,7 +73,7 @@
                 if (names.Length >= 2)
                     p.Name = names[1];
             }
-
+#endif
 
             p.Name = p.Name.Trim();
             

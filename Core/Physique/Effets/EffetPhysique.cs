@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework.Content;
     using EphemereGames.Core.Utilities;
     
-    public class EffetPhysique : AbstractEffect, ICloneable
+    public class EffetPhysique : AbstractEffect
     {
         [ContentSerializerIgnore]
         public IPhysicalObject Objet

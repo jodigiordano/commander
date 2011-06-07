@@ -26,10 +26,12 @@
         public static bool HomeMadeValidation = true;
 #endif
 
-#if TRIAL
+#if WINDOWS && TRIAL
         public static Setting Target = Setting.WindowsDemo;
-#else
+#elif WINDOWS
         public static Setting Target = Setting.WindowsFull;
+#else
+        public static Setting Target = Setting.Xbox360;
 #endif
 
         public static string ProductName = "commander";

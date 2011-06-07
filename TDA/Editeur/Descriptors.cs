@@ -257,7 +257,7 @@
         }
 
 
-        public void AddTurret(TurretType type, int level, Vector3 position, bool visible = true, bool canSell = true, bool canUpgrade = true)
+        public void AddTurret(TurretType type, int level, Vector3 position, bool visible, bool canSell, bool canUpgrade)
         {
             StartingTurrets.Add(new TurretDescriptor()
             {
@@ -268,6 +268,18 @@
                 CanSell = canSell,
                 CanUpgrade = canUpgrade
             });
+        }
+
+
+        public void AddTurret(TurretType type, int level, Vector3 position)
+        {
+            AddTurret(type, level, position, true, true, true);
+        }
+
+
+        public void AddTurret(TurretType type, int level, Vector3 position, bool visible)
+        {
+            AddTurret(type, level, position, visible, true, true);
         }
     }
 
@@ -363,6 +375,9 @@
         public int LivesLevel;
         public int CashValue;
         public double StartingTime;
+
+        [XmlIgnore]
+        public double StartingPosition;
     }
 
 

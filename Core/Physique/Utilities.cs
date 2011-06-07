@@ -24,7 +24,7 @@
         }
 
 
-        public static void AngleToVector(float angle, out Vector2 vector)
+        public static void AngleToVector(float angle, ref Vector2 vector)
         {
             vector.X = (float) Math.Sin(angle);
             vector.Y = -(float) Math.Cos(angle);

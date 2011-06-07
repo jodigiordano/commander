@@ -23,7 +23,7 @@
             ShootingFrequency = double.NaN;
             ActiveTime = double.MaxValue;
             Active = true;
-            SfxGoHome = "sfxPowerUpCollecteurOut";
+            SfxOut = "sfxPowerUpCollecteurOut";
             SfxIn = "sfxPowerUpCollecteurIn";
             Active = true;
         }

@@ -89,25 +89,25 @@
             }
 
 
-            Simulation.Scene.Effets.Add(HumanBattleship, Core.Physique.PredefinedEffects.Arrival(
+            Simulation.Scene.Effects.Add(HumanBattleship, Core.Physique.PredefinedEffects.Arrival(
                 this.Position + new Vector3(50, 25, 0),
                 1000,
                 2000));
 
             foreach (var image in ImagesPowerUpsBuy)
-                Simulation.Scene.Effets.Add(image.Value, Core.Physique.PredefinedEffects.Arrival(
+                Simulation.Scene.Effects.Add(image.Value, Core.Physique.PredefinedEffects.Arrival(
                     image.Value.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
 
             foreach (var image in ImagesPlaceHolders)
-                Simulation.Scene.Effets.Add(image.Value, Core.Physique.PredefinedEffects.Arrival(
+                Simulation.Scene.Effects.Add(image.Value, Core.Physique.PredefinedEffects.Arrival(
                     image.Value.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
 
             foreach (var turret in ImagesTurretsPowerUps.Values)
-                Simulation.Scene.Effets.Add(turret, Core.Physique.PredefinedEffects.Arrival(
+                Simulation.Scene.Effects.Add(turret, Core.Physique.PredefinedEffects.Arrival(
                     turret.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));

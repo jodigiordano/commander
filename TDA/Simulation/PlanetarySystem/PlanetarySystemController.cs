@@ -160,10 +160,10 @@
             if (!p.GoAhead)
                 return;
 
-            p.Selection.CelestialBody.ZoneImpactDestruction = p.ZoneImpactDestruction;
-            p.Selection.CelestialBody.AttackPoints = p.AttackPoints;
+            p.CelestialBody.ZoneImpactDestruction = p.ZoneImpactDestruction;
+            p.CelestialBody.AttackPoints = p.AttackPoints;
 
-            DoDestroyCelestialBody(p.Selection.CelestialBody);
+            DoDestroyCelestialBody(p.CelestialBody);
         }
 
 
@@ -176,7 +176,7 @@
 
         private void UpdateShootingStars()
         {
-            if (Main.Random.Next(0, 100) == 0)
+            if (Main.Random.Next(0, 1000) == 0)
             {
                 ShootingStar ss = ShootingStarsFactory.Get();
                 ss.Simulation = Simulation;

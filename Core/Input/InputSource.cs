@@ -4,6 +4,7 @@
     using Microsoft.Xna.Framework.Input;
     using System.Collections.Generic;
     using System;
+    using EphemereGames.Core.Utilities;
 
 
     class InputSource
@@ -62,7 +63,7 @@
         public void MapKeys(List<Keys> keys)
         {
             MappedKeys.Clear();
-            HashSet<Keys> hash = new HashSet<Keys>(keys);
+            Set<Keys> hash = new Set<Keys>(keys);
             MappedKeys.AddRange(hash);
 
             KeysPressed.Clear();
@@ -81,7 +82,7 @@
         public void MapMouseButtons(List<MouseButton> buttons)
         {
             MappedMouseButtons.Clear();
-            HashSet<MouseButton> hash = new HashSet<MouseButton>(buttons);
+            Set<MouseButton> hash = new Set<MouseButton>(buttons);
             MappedMouseButtons.AddRange(hash);
 
             MouseButtonsPressed.Clear();
@@ -102,7 +103,7 @@
         public void MapGamePadButtons(List<Buttons> buttons)
         {
             MappedGamePadButtons.Clear();
-            HashSet<Buttons> hash = new HashSet<Buttons>(buttons);
+            Set<Buttons> hash = new Set<Buttons>(buttons);
             MappedGamePadButtons.AddRange(hash);
 
             GamePadButtonsPressed.Clear();

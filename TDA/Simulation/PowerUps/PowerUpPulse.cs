@@ -40,6 +40,9 @@ namespace EphemereGames.Commander
         public override void Update()
         {
             TravelTime += Bullet.Speed;
+
+            if (TravelTime % 1000 == 0)
+                EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPulse2");
             
             Path.Position(Path.Length - TravelTime, ref BulletPosition);
 
@@ -59,6 +62,14 @@ namespace EphemereGames.Commander
             };
 
             Bullet.Initialize();
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPulse1");
+        }
+
+
+        public override void Stop()
+        {
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxPulse3");
         }
     }
 }

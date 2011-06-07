@@ -48,7 +48,7 @@
         }
 
 
-        public override bool EstTerminee
+        public override bool IsFinished
         {
             get
             {
@@ -64,7 +64,7 @@
         }
 
 
-        protected override void UpdateLogique(GameTime gameTime)
+        protected override void UpdateLogic(GameTime gameTime)
         {
             if (Transition != TransitionType.None)
                 return;
@@ -100,7 +100,7 @@
         }
 
 
-        protected override void UpdateVisuel()
+        protected override void UpdateVisual()
         {
             Simulation.Draw();
 
@@ -109,9 +109,9 @@
         }
 
 
-        public override void onFocus()
+        public override void OnFocus()
         {
-            base.onFocus();
+            base.OnFocus();
 
             Transition = TransitionType.In;
 
@@ -124,9 +124,9 @@
         }
 
 
-        public override void onFocusLost()
+        public override void OnFocusLost()
         {
-            base.onFocusLost();
+            base.OnFocusLost();
 
             EphemereGames.Core.Audio.Facade.pauserMusique(MusiqueSelectionnee, true, 1000);
 

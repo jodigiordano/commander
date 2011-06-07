@@ -7,7 +7,6 @@
     class Wave
     {
         public double StartingTime;
-        public Vector3 StartingPosition;
         public List<Enemy> Enemies;
         public Dictionary<EnemyType, EnemyDescriptor> Composition;
         public int EnemiesCount;
@@ -77,7 +76,7 @@
                     desc.CashValue
                 );
 
-                e.Position = StartingPosition;
+                e.Displacement = desc.StartingPosition;
 
                 EnemiesToCreate.RemoveAt(i);
                 Enemies.Add(e);
@@ -100,6 +99,15 @@
         public void DoEnemyDestroyed(Enemy enemy)
         {
             EnemiesCreated.Remove(enemy.GetHashCode());
+        }
+
+
+        public void AddEnemy(EnemyDescriptor e)
+        {
+            e.StartingTime = TempsDebut;
+
+            EnemiesToCreate.Add(e);
+            EnemiesCount++;
         }
     }
 }

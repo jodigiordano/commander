@@ -10,7 +10,7 @@
     using EphemereGames.Core.Physique;
 
 
-    class RailGunBullet : Projectile
+    class RailGunBullet : Bullet
     {
         public float ZoneImpact;
 
@@ -24,8 +24,8 @@
             if (Rectangle == null)
                 Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
 
-            MovingEffect = Scene.Particules.Get("railgun");
-            ExplodingEffect = Scene.Particules.Get("railgunExplosion");
+            MovingEffect = Scene.Particles.Get("railgun");
+            ExplodingEffect = Scene.Particles.Get("railgunExplosion");
             MovingEffect.VisualPriority = PrioriteAffichage + 0.001f;
             ExplodingEffect.VisualPriority = 0.35f;
             Rectangle.X = (int)Position.X;
@@ -37,14 +37,16 @@
         {
             base.DoDie();
 
-            Projectile.PoolRailGunBullet.Return(this);
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxRailGunExplosion2");
+
+            Bullet.PoolRailGunBullets.Return(this);
         }
 
         public override void DoDieSilent()
         {
             base.DoDieSilent();
 
-            Projectile.PoolRailGunBullet.Return(this);
+            Bullet.PoolRailGunBullets.Return(this);
         }
 
         public override void Update()

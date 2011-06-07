@@ -23,7 +23,7 @@
             RotationMaximaleRad = 0.2f;
             Acceleration = Vector3.Zero;
             BuyPrice = 50;
-            SfxGoHome = "sfxPowerUpDoItYourselfOut";
+            SfxOut = "sfxPowerUpDoItYourselfOut";
             SfxIn = "sfxPowerUpDoItYourselfIn";
         }
 

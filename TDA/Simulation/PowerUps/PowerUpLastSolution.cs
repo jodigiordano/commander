@@ -12,6 +12,7 @@ namespace EphemereGames.Commander
         public int AttackPoints             { get; private set; }
         public bool GoAhead                 { get; private set; }
         public PlayerSelection Selection;
+        public CorpsCeleste CelestialBody;
 
         private bool terminated;
 
@@ -47,6 +48,8 @@ namespace EphemereGames.Commander
             if (Selection.CelestialBody == null)
                 return;
 
+            CelestialBody = Selection.CelestialBody;
+
             terminated = true;
             GoAhead = true;
         }
@@ -56,12 +59,16 @@ namespace EphemereGames.Commander
         {
             terminated = true;
             GoAhead = false;
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxLastSolutionOut");
         }
 
 
         public override void Start()
         {
             terminated = false;
+
+            EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxLastSolutionIn");
         }
     }
 }

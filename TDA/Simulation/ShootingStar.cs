@@ -72,7 +72,7 @@
         {
             if (!ContentLoaded)
             {
-                Effect = Simulation.Scene.Particules.Get("etoileFilante");
+                Effect = Simulation.Scene.Particles.Get("etoileFilante");
                 Effect.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
 
                 ContentLoaded = true;
