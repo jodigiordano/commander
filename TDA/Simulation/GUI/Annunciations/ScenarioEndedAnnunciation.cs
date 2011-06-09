@@ -2,17 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Physique;
-    using EphemereGames.Core.Utilities;
+
 
     class ScenarioEndedAnnunciation
     {
-        private IVisible Filter;
-        private VaisseauAlien AlienShip;
-        private List<KeyValuePair<IVisible, CorpsCeleste>> Missiles;
+        private Image Filter;
+        private AlienSpaceship AlienShip;
+        private List<KeyValuePair<Vector3, CorpsCeleste>> Missiles;
         private List<Particle> MissilesVisual;
         private List<Particle> Implosions;
         private List<CorpsCeleste> CelestialBodies;
@@ -27,8 +28,8 @@
         private Translator TranslatorTotalScore;
         private Simulation Simulation;
         private bool HighscoreBeaten;
-        private IVisible NewHighscore;
-        private IVisible[] Stars;
+        private Text NewHighscore;
+        private Image[] Stars;
 
 
         //private static string[] QuotesLost = new string[]
@@ -50,7 +51,7 @@
             CelestialBodies = celestialBodies;
             Scenario = scenario;
 
-            Missiles = new List<KeyValuePair<IVisible, CorpsCeleste>>();
+            Missiles = new List<KeyValuePair<Vector3, CorpsCeleste>>();
             MissilesVisual = new List<Particle>(CelestialBodies.Count);
             Implosions = new List<Particle>(CelestialBodies.Count);
 
@@ -67,41 +68,46 @@
                 Implosions.Add(particule);
             }
 
-            AlienShip = new VaisseauAlien(simulation.Scene, Preferences.PrioriteGUIVictoireDefaite + 0.08f);
+            AlienShip = new AlienSpaceship(simulation.Scene, Preferences.PrioriteGUIVictoireDefaite + 0.08f);
 
-            Filter = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero);
-            Filter.VisualPriority = 0.02f;
-            Filter.TailleVecteur = new Vector2(1800, 200);
-            Filter.Couleur = new Color(0, 0, 0, 200);
+            Filter = new Image("PixelBlanc")
+            {
+                Size = new Vector2(1800, 200),
+                Color = new Color(0, 0, 0, 200),
+                VisualPriority = 0.02f,
+                Origin = Vector2.Zero
+            };
 
-            Stars = new IVisible[3];
-            Stars[0] = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Star"), new Vector3(-300, -10, 0));
-            Stars[0].Taille = 0.5f;
-            Stars[0].Origine = Stars[0].Centre;
-            Stars[0].VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
-            Stars[1] = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Star"), new Vector3(-200, -10, 0));
-            Stars[1].Taille = 0.5f;
-            Stars[1].Origine = Stars[0].Centre;
-            Stars[1].VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
-            Stars[2] = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("Star"), new Vector3(-100, -10, 0));
-            Stars[2].Taille = 0.5f;
-            Stars[2].Origine = Stars[0].Centre;
-            Stars[2].VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
+            Stars = new Image[3];
+
+            for (int i = 0; i < 3; i++)
+                Stars[i] = new Image("Star", new Vector3(-300 + i * 100, -10, 0))
+                {
+                    SizeX = 0.5f,
+                    VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f
+                };
 
             HighscoreBeaten = false;
-            NewHighscore = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), new Color(234, 196, 28, 0), new Vector3(0, -30, 0));
-            NewHighscore.Taille = 3;
-            NewHighscore.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f;
+
+            NewHighscore = new Text("", "Pixelite", new Color(234, 196, 28, 0), new Vector3(0, -30, 0))
+            {
+                SizeX = 3,
+                VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.01f
+            };
         }
 
 
-        public void doGameStateChanged(GameState etat)
+        public void DoGameStateChanged(GameState etat)
         {
             GameState = etat;
 
             if (GameState != GameState.Won && GameState != GameState.Lost)
+            {
+                AlienShip.Hide();
                 return;
+            }
 
+            AlienShip.Show();
 
             TranslatorScoreExplanations = new Translator
             (
@@ -147,7 +153,7 @@
             HighscoreBeaten = h == null || h.Scores.Count <= 0 || Scenario.CommonStash.TotalScore > h.Scores[0].Value;
             int diff = (h == null || h.Scores.Count <= 0) ? Scenario.CommonStash.TotalScore : Scenario.CommonStash.TotalScore - h.Scores[0].Value;
 
-            NewHighscore.Texte = ((HighscoreBeaten) ? "new highscore!" : "not your best!") + " (" + (diff > 0 ? "+" : "") + diff + ")";
+            NewHighscore.Data = ((HighscoreBeaten) ? "new highscore!" : "not your best!") + " (" + (diff > 0 ? "+" : "") + diff + ")";
 
 
             if (GameState == GameState.Won)
@@ -255,9 +261,7 @@
                 {
                     for (int i = 0; i < CelestialBodies.Count; i++)
                     {
-                        Missiles.Add(new KeyValuePair<IVisible, CorpsCeleste>(new IVisible(), CelestialBodies[i]));
-
-                        Missiles[i].Key.Position = AlienShip.Representation.Position;
+                        Missiles.Add(new KeyValuePair<Vector3, CorpsCeleste>(AlienShip.Representation.Position, CelestialBodies[i]));
 
                         EffetSuivre deplacement = new EffetSuivre();
                         deplacement.Delay = i * 500;
@@ -275,9 +279,10 @@
                 {
                     for (int i = Missiles.Count - 1; i > -1; i--)
                     {
-                        if (Vector3.DistanceSquared(Missiles[i].Key.Position, Missiles[i].Value.Position) <= 400)
+                        if (Vector3.DistanceSquared(Missiles[i].Key, Missiles[i].Value.Position) <= 400)
                         {
-                            Implosions[ImplosionsIndex].Trigger(ref Missiles[i].Key.position);
+                            Vector3 pos = Missiles[i].Key;
+                            Implosions[ImplosionsIndex].Trigger(ref pos);
                             ImplosionsIndex++;
 
                             Missiles[i].Value.DoDie();
@@ -285,7 +290,10 @@
                             Missiles.RemoveAt(i);
                         }
                         else
-                            MissilesVisual[i].Trigger(ref Missiles[i].Key.position);
+                        {
+                            Vector3 pos = Missiles[i].Key;
+                            MissilesVisual[i].Trigger(ref pos);
+                        }
                     }
                 }
                         
@@ -295,13 +303,49 @@
 
 
             if (GameState == GameState.Won)
-                TranslatorGameWon.Update(gameTime);
+                TranslatorGameWon.Update();
 
             if (GameState == GameState.Won || GameState == GameState.Lost)
             {
-                TranslatorScoreExplanations.Update(gameTime);
-                TranslatorTotalScore.Update(gameTime);
+                TranslatorScoreExplanations.Update();
+                TranslatorTotalScore.Update();
             }
+        }
+
+
+        public void Show()
+        {
+            Simulation.Scene.Add(NewHighscore);
+            Simulation.Scene.Add(Stars[0]);
+            Simulation.Scene.Add(Stars[1]);
+            Simulation.Scene.Add(Stars[2]);
+            Simulation.Scene.Add(Filter);
+
+            AlienShip.Show();
+
+            if (GameState == GameState.Won)
+                TranslatorGameWon.Show();
+
+            TranslatorScoreExplanations.Show();
+            TranslatorTotalScore.Show();
+        }
+
+
+        public void Hide()
+        {
+            Simulation.Scene.Remove(NewHighscore);
+            Simulation.Scene.Remove(Stars[0]);
+            Simulation.Scene.Remove(Stars[1]);
+            Simulation.Scene.Remove(Stars[2]);
+            Simulation.Scene.Remove(Filter);
+
+            AlienShip.Hide();
+
+            if (GameState == GameState.Won)
+                TranslatorGameWon.Hide();
+
+            TranslatorScoreExplanations.Hide();
+            TranslatorTotalScore.Hide();
         }
 
 
@@ -309,21 +353,15 @@
         {
             if (GameState == GameState.Won)
             {
-                AlienShip.Draw(null);
-                TranslatorGameWon.Draw(null);
+                AlienShip.Draw();
+                TranslatorGameWon.Draw();
             }
 
 
             if (GameState == GameState.Won || GameState == GameState.Lost)
             {
-                TranslatorScoreExplanations.Draw(null);
-                TranslatorTotalScore.Draw(null);
-
-                Simulation.Scene.ajouterScenable(NewHighscore);
-                Simulation.Scene.ajouterScenable(Stars[0]);
-                Simulation.Scene.ajouterScenable(Stars[1]);
-                Simulation.Scene.ajouterScenable(Stars[2]);
-                Simulation.Scene.ajouterScenable(Filter);
+                TranslatorScoreExplanations.Draw();
+                TranslatorTotalScore.Draw();
             }
         }
     }

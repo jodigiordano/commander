@@ -65,66 +65,51 @@
                 return;
             }
 
-            Position = TourelleEmettrice.Position;
+            Position = Turret.Position;
 
             Line.Debut = this.Position;
-            Line.Fin = Cible.Position;
+            Line.Fin = Target.Position;
 
-            DureeVie -= 16.66;
+            LifeSpan -= 16.66;
 
-            if (DureeVie <= 0)
+            if (LifeSpan <= 0)
                 LifePoints = 0;
 
             base.Update();
         }
 
 
+        public override void Show()
+        {
+            Scene.Add(MovingEffect2);
+        }
+
+
+        public override void Hide()
+        {
+            Scene.Remove(MovingEffect2);
+        }
+
+
         public override void Draw()
         {
-            if (Alive)
-                RepresentationVivantAlt.Trigger(ref this.position);
+            LineEmitter emitter1 = (LineEmitter)MovingEffect.ParticleEffect[0];
+            emitter1.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
+            emitter1.Length = (Target.Position - Turret.Position).Length();
+            emitter1.TriggerOffset = new Vector2(this.Direction.X * (emitter1.Length / 2), this.Direction.Y * (emitter1.Length / 2));
+            
+            LineEmitter emitter2 = (LineEmitter) MovingEffect.ParticleEffect[1];
+            emitter2.Angle = emitter1.Angle;
+            emitter2.Length = emitter1.Length;
+            emitter2.TriggerOffset = emitter1.TriggerOffset;
 
-            LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
-            LineEmitter emetteur2 = (LineEmitter)RepresentationVivantAlt.ParticleEffect[1];
-            emetteur.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
-            emetteur.Length = (Cible.Position - TourelleEmettrice.Position).Length();
-            emetteur.TriggerOffset = new Vector2(this.Direction.X * (emetteur.Length / 2), this.Direction.Y * (emetteur.Length / 2));
-            emetteur2.Angle = emetteur.Angle;
-            emetteur2.Length = emetteur.Length;
-            emetteur2.TriggerOffset = emetteur.TriggerOffset;
-
-            RepresentationVivantAlt2.Debut = Line.Debut;
-            RepresentationVivantAlt2.Fin = Line.Fin;
-
-            Scene.ajouterScenable(RepresentationVivantAlt2);
+            MovingEffect2.Start = Line.Debut;
+            MovingEffect2.End = Line.Fin;
 
             base.Draw();
         }
 
 
-        public override void DoHit(ILivingObject par)
-        {
-
-        }
-
-
-        public override void DoDie()
-        {
-            base.DoDie();
-
-            Scene.Particles.Return(RepresentationVivantAlt);
-
-            Bullet.PoolLaserBullets.Return(this);
-        }
-
-
-        public override void DoDieSilent()
-        {
-            base.DoDieSilent();
-
-            Scene.Particles.Return(RepresentationVivantAlt);
-
-            Bullet.PoolLaserBullets.Return(this);
-        }
+        public override void DoHit(ILivingObject par) {}
     }
 }

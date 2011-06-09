@@ -63,7 +63,7 @@
             }
 
             Bulle = new Bulle(Simulation, Rectangle.Empty, this.PrioriteAffichage + 0.0001f);
-            Bulle.PositionBla = 1;
+            Bulle.BlaPosition = 1;
 
             Visible = false;
         }
@@ -104,9 +104,9 @@
                 RepresentationsQtes[indiceRepresentations].Origine = RepresentationsQtes[indiceRepresentations].Centre;
                 RepresentationsQtes[indiceRepresentations].Position = new Vector3(this.Position.X + 80, RepresentationsEnnemis[indiceRepresentations].Position.Y, 0);
 
-                Simulation.Scene.ajouterScenable(RepresentationsEnnemis[indiceRepresentations]);
-                Simulation.Scene.ajouterScenable(RepresentationsNiveaux[indiceRepresentations]);
-                Simulation.Scene.ajouterScenable(RepresentationsQtes[indiceRepresentations]);
+                Simulation.Scene.Add(RepresentationsEnnemis[indiceRepresentations]);
+                Simulation.Scene.Add(RepresentationsNiveaux[indiceRepresentations]);
+                Simulation.Scene.Add(RepresentationsQtes[indiceRepresentations]);
 
                 if (indiceRepresentations > NB_REPRESENTATIONS)
                     break;
@@ -114,7 +114,7 @@
                     indiceRepresentations++;
             }
 
-            Bulle.Draw(null);
+            Bulle.Draw();
         }
     }
 }

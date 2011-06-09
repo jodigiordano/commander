@@ -81,9 +81,6 @@
         {
             UpdateVisual();
 
-            ajouterScenable(Animations.Components);
-            ajouterScenable(Particles.Particles);
-
             UpdatedThisTick = true;
 
             Buffer.EcrireDebut();
@@ -104,10 +101,11 @@
             }
 
             Batch.End();
-
-
-            this.ToDraw.Clear();
         }
+
+
+        public virtual void Show() { }
+        public virtual void Hide() { }
 
 
         public void Draw(SpriteBatch spriteBatch)
@@ -125,27 +123,18 @@
         }
 
 
-        public void ajouterScenable(IScenable element)
+        public void Clear()
         {
-            ToDraw.Add(element);
-
-            if (element.Components != null)
-                ajouterScenable(element.Components);
+            ToDraw.Clear();
         }
 
 
         public void Add(IScenable element)
         {
-            for (int i = 0; i < elements.Count; i++)
-            {
-                if (elements[i] == null) //ARK ARK ARK
-                    continue;
+            var notAdded = ToDraw.Add(element);
 
-                ToDraw.Add(elements[i]);
-
-                if (elements[i].Components != null)
-                    ajouterScenable(elements[i].Components);
-            }
+            if (notAdded)
+                throw new Exception("Root of problem!");
         }
 
 
@@ -154,9 +143,6 @@
             for (int i = 0; i < elements.Count; i++)
             {
                 ToDraw.Add(elements[i]);
-
-                if (elements[i].Components != null)
-                    ajouterScenable(elements[i].Components);
             }
         }
 
@@ -166,17 +152,16 @@
             for (int i = 0; i < elements.Count; i++)
             {
                 ToDraw.Add(elements[i]);
-
-                if (elements[i].Components != null)
-                    ajouterScenable(elements[i].Components);
             }
         }
 
 
         public void Remove(IScenable element)
         {
-            for (int i = 0; i < elements.Count; i++)
-                ToDraw.Add(elements[i]);
+            bool removed = ToDraw.Remove(element);
+
+            if (!removed)
+                Console.Write(element.Id + ", ");
         }
 
 

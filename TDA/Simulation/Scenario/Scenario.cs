@@ -157,12 +157,14 @@
                         descriptor.InBackground,
                        descriptor.Rotation
                     );
-                    c.Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(descriptor.Size, descriptor.Image)), Vector3.Zero);
-                    c.Representation.Origine = c.Representation.Centre;
-                    c.Representation.VisualPriority = c.ParticulesRepresentation.VisualPriority + 0.001f;
+
+                    c.Representation = new Image(nomRepresentation(descriptor.Size, descriptor.Image))
+                    {
+                        VisualPriority = c.ParticulesRepresentation.VisualPriority + 0.001f
+                    };
 
                     if (descriptor.InBackground)
-                        c.Representation.Couleur.A = 60;
+                        c.Representation.Color.A = 60;
                 }
 
                 // Normal
@@ -176,7 +178,7 @@
                        descriptor.Offset,
                        (int) descriptor.Size,
                        descriptor.Speed,
-                       new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(nomRepresentation(descriptor.Size, descriptor.Image)), Vector3.Zero),
+                       new Image(nomRepresentation(descriptor.Size, descriptor.Image)),
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f,
                        descriptor.InBackground,
@@ -187,14 +189,10 @@
                 // Asteroids belt
                 else
                 {
-                    List<IVisible> representations = new List<IVisible>();
+                    List<Image> representations = new List<Image>();
 
                     for (int j = 0; j < descriptor.Images.Count; j++)
-                    {
-                        IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(descriptor.Images[j]), Vector3.Zero);
-                        iv.Origine = iv.Centre;
-                        representations.Add(iv);
-                    }
+                        representations.Add(new Image(descriptor.Images[j]));
 
                     c = new AsteroidBelt
                     (

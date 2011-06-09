@@ -35,7 +35,7 @@ namespace EphemereGames.Commander
         }
 
 
-        public override float VisualPriority
+        public override double VisualPriority
         {
             set
             {

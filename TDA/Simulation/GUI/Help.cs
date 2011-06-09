@@ -44,13 +44,13 @@
 
             Simulation.Scene.Effects.Add(Lieutenant, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
             Simulation.Scene.Effects.Add(Bubble, Core.Visuel.PredefinedEffects.FadeInFrom0(150, 0, EffectTimeRemaining));
-            Simulation.Scene.Effects.Add(Directive.Texte, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
+            Simulation.Scene.Effects.Add(Directive.Text, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
         }
 
 
         public bool Active
         {
-            get { return HiddingOverride || (ActiveOverride && (ActiveText != Texts.Count || !Directive.Termine)); }
+            get { return HiddingOverride || (ActiveOverride && (ActiveText != Texts.Count || !Directive.Finished)); }
         }
 
 
@@ -59,7 +59,7 @@
             Directive.Update(gameTime);
 
             if (!Active)
-                Hide();
+                FadeOut();
             
             if (HiddingOverride)
             {
@@ -74,9 +74,9 @@
             if (HiddingOverride)
                 return;
 
-            if (!Directive.Termine)
+            if (!Directive.Finished)
             {
-                Directive.Termine = true;
+                Directive.Finished = true;
                 return;
             }
             
@@ -98,9 +98,9 @@
             if (HiddingOverride)
                 return;
 
-            if (!Directive.Termine)
+            if (!Directive.Finished)
             {
-                Directive.Termine = true;
+                Directive.Finished = true;
                 return;
             }
 
@@ -120,24 +120,34 @@
 
             ActiveOverride = false;
 
-            Hide();
+            FadeOut();
         }
 
 
-        public void Draw()
+        public void Show()
         {
-            Simulation.Scene.ajouterScenable(Lieutenant);
-            Simulation.Scene.ajouterScenable(Bubble);
-            Simulation.Scene.ajouterScenable(Directive.Texte);
+            Simulation.Scene.Add(Lieutenant);
+            Simulation.Scene.Add(Bubble);
+
+            Directive.Show();
         }
 
 
-        private void Hide()
+        public void Hide()
+        {
+            Simulation.Scene.Remove(Lieutenant);
+            Simulation.Scene.Remove(Bubble);
+
+            Directive.Hide();
+        }
+
+
+        private void FadeOut()
         {
             HiddingOverride = true;
             Simulation.Scene.Effects.Add(Lieutenant, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
             Simulation.Scene.Effects.Add(Bubble, Core.Visuel.PredefinedEffects.FadeOutTo0(150, 0, EffectTimeRemaining / 2));
-            Simulation.Scene.Effects.Add(Directive.Texte, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
+            Simulation.Scene.Effects.Add(Directive.Text, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
         }
 
 
@@ -151,7 +161,6 @@
 
 
             Directive = new TextTypeWriter(
-                Simulation.Main,
                 text,
                 Color.Black,
                 new Vector3(-230, -175, 0),
@@ -171,7 +180,7 @@
                 },
                 Simulation.Scene
             );
-            Directive.Texte.VisualPriority = Preferences.PrioriteGUIMenuPrincipal - 0.01f;
+            Directive.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal - 0.01f;
         }
     }
 }

@@ -2,27 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using EphemereGames.Core.Physique;
     using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
-    class ControleurMessages : DrawableGameComponent
+
+    class ControleurMessages
     {
-        public List<Turret> Tourelles;
-        public CorpsCeleste CorpsCelesteAProteger;
-        public Sablier Sablier;
-        public Cursor Curseur;
-        public List<CorpsCeleste> CorpsCelestes;
-        public Path Chemin;
-        public Bulle BulleGUI;
-        public AideNiveau AideNiveau;
+        public List<Turret> Turrets;
 
         private Simulation Simulation;
-        private Dictionary<IObjetPhysique, BulleTexte> ObjetsParlants;
-        private double TempsDerniereQuoteTourelleLancee;
-        private List<KeyValuePair<IObjetPhysique, BulleTexte>> toDelete;
+        private Dictionary<IObjetPhysique, BulleTexte> TalkingTurrets;
+        private double TimeLastQuote;
+        private List<KeyValuePair<IObjetPhysique, BulleTexte>> ToDelete;
+
 
         private static List<String> QuotesEnnui = new List<string>()
         {
@@ -33,6 +27,7 @@
             "Let's dance!",
             "To be, or not to be:\n\nthat is the question"
         };
+
 
         private static List<String> QuotesHistoire = new List<string>()
         {
@@ -264,128 +259,98 @@
 
 
         public ControleurMessages(Simulation simulation)
-            : base(simulation.Main)
         {
-            this.Simulation = simulation;
-            this.ObjetsParlants = new Dictionary<IObjetPhysique, BulleTexte>();
+            Simulation = simulation;
+            TalkingTurrets = new Dictionary<IObjetPhysique, BulleTexte>();
 
-            TempsDerniereQuoteTourelleLancee = 0;
+            TimeLastQuote = 0;
 
-            toDelete = new List<KeyValuePair<IObjetPhysique, BulleTexte>>();
+            ToDelete = new List<KeyValuePair<IObjetPhysique, BulleTexte>>();
         }
 
 
-        public override void Initialize()
+        public void Update(GameTime gameTime)
         {
-            initAideNiveau();
-        }
+            TimeLastQuote += gameTime.ElapsedGameTime.TotalMilliseconds;
 
+            DoQuoteTurret(gameTime);
 
-        public override void Update(GameTime gameTime)
-        {
-            TempsDerniereQuoteTourelleLancee += gameTime.ElapsedGameTime.TotalMilliseconds;
+            
 
-            doQuoteTourelle(gameTime);
-
-            if (AideNiveau != null && Simulation.Etat == GameState.Running)
-            {
-                AideNiveau.Update(gameTime);
-
-                if (AideNiveau.PeutLancerNouvelleQuote)
-                {
-                    KeyValuePair<IObjetPhysique, string> prochaineQuote = AideNiveau.ProchaineQuote;
-
-                    afficherMessage(prochaineQuote.Key, prochaineQuote.Value, 7000, Preferences.PrioriteGUIPanneauCorpsCeleste - 0.0001f);
-                    AideNiveau.incrementerQuoteLancee();
-                }
-            }
-
-            toDelete.Clear();
-
-            foreach (var kvp in ObjetsParlants)
+            foreach (var kvp in TalkingTurrets)
             {
                 kvp.Value.Position = kvp.Key.Position;
                 kvp.Value.Update(gameTime);
 
                 if (kvp.Value.Termine)
-                    toDelete.Add(kvp);
+                    ToDelete.Add(kvp);
             }
 
-            foreach (var kvp in toDelete)
-                ObjetsParlants.Remove(kvp.Key);
-
-            if (AideNiveau != null && AideNiveau.Termine)
-                verifierCollisions();
+            DeleteTalkingTurrets();
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public void Draw()
         {
-            foreach (var bulle in ObjetsParlants.Values)
-                bulle.Draw(gameTime);
+            foreach (var bulle in TalkingTurrets.Values)
+                bulle.Draw();
         }
 
-        public void afficherMessage(IObjetPhysique objet, String message, double temps, float prioriteAffichage)
+
+        public void ShowMessage(IObjetPhysique obj, String message, double time, double visualPriority)
         {
-            if (objet == null || ObjetsParlants.ContainsKey(objet))
+            if (obj == null || TalkingTurrets.ContainsKey(obj))
                 return;
 
             IVisible texteInfos = new IVisible(message, EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
             texteInfos.Taille = 1;
 
-            prioriteAffichage = (prioriteAffichage == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : prioriteAffichage;
+            visualPriority = (visualPriority == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : visualPriority;
 
-            BulleTexte bulle = new BulleTexte(Simulation, texteInfos, objet.Position, 0, prioriteAffichage);
+            BulleTexte bulle = new BulleTexte(Simulation, texteInfos, obj.Position, 0, visualPriority);
 
             bulle.Texte.Texte = message;
-            bulle.TempsAffichage = temps;
+            bulle.TempsAffichage = time;
 
-            toDelete.Clear();
-
-            foreach (var kvp in ObjetsParlants)
+            foreach (var kvp in TalkingTurrets)
                 if (kvp.Value.Dimension.Intersects(bulle.Dimension))
-                    toDelete.Add(kvp);
+                    ToDelete.Add(kvp);
 
-            foreach (var kvp in toDelete)
-                ObjetsParlants.Remove(kvp.Key);
+            DeleteTalkingTurrets();
 
-            bulle.doShow(250);
-            bulle.TempsFadeOut = 250;
-            ObjetsParlants.Add(objet, bulle);
+            AddTalkingTurret(obj, bulle);
         }
 
-        public void arreterMessage(IObjetPhysique objet)
+
+        public void StopMessage(IObjetPhysique objet)
         {
             BulleTexte bulle;
 
-            if (objet != null && ObjetsParlants.TryGetValue(objet, out bulle) && !double.IsNaN(bulle.TempsFadeOut))
+            if (objet != null && TalkingTurrets.TryGetValue(objet, out bulle) && !double.IsNaN(bulle.TempsFadeOut))
             {
-                ObjetsParlants[objet].TempsAffichage = ObjetsParlants[objet].TempsFadeOut;
+                TalkingTurrets[objet].TempsAffichage = TalkingTurrets[objet].TempsFadeOut;
             }
         }
 
 
-        private void doQuoteTourelle(GameTime gameTime)
+        private void DoQuoteTurret(GameTime gameTime)
         {
-            if (!Simulation.ModeDemo)
+            if (!Simulation.DemoMode)
                 return;
 
-            if (Tourelles.Count <= 0)
+            if (Turrets.Count <= 0)
                 return;
 
-            if (AideNiveau != null && !AideNiveau.Termine)
-                return;
-
-            if (TempsDerniereQuoteTourelleLancee > 5000)
+            if (TimeLastQuote > 5000)
             {
-                TempsDerniereQuoteTourelleLancee = 0;
+                TimeLastQuote = 0;
 
                 if (Main.Random.Next(0, 5) == 0)
                 {
 
-                    Turret tourelle = Tourelles[Main.Random.Next(0, Tourelles.Count)];
+                    Turret tourelle = Turrets[Main.Random.Next(0, Turrets.Count)];
 
-                    if (!tourelle.Visible || !tourelle.Watcher || tourelle.Type == TurretType.Alien || ObjetsParlants.ContainsKey(tourelle))
+                    if (!tourelle.Visible || !tourelle.Watcher || tourelle.Type == TurretType.Alien || TalkingTurrets.ContainsKey(tourelle))
                         return;
 
                     IVisible texte = new IVisible("", EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"), Color.White, Vector3.Zero);
@@ -413,88 +378,58 @@
                     BulleTexte bulle = new BulleTexte(Simulation, texte, tourelle.Position, 0, Preferences.PrioriteSimulationTourelle - 0.02f);
                     bulle.TempsAffichage = texte.Texte.Length * 100;
 
-                    foreach (var kvp in ObjetsParlants)
+                    foreach (var kvp in TalkingTurrets)
                         if (kvp.Value.Dimension.Intersects(bulle.Dimension))
                             return;
 
-                    bulle.doShow(250);
-                    bulle.TempsFadeOut = 250;
-                    ObjetsParlants.Add(tourelle, bulle);
+                    AddTalkingTurret(tourelle, bulle);
                 }
             }
         }
 
-        private void verifierCollisions()
+
+        private void VerifyCollisions()
         {
-            if (BulleGUI != null && BulleGUI.Visible)
-            {
-                toDelete.Clear();
+            foreach (var kvp in TalkingTurrets)
+                foreach (var kvp2 in TalkingTurrets)
+                    if (kvp.Key != kvp2.Key && !ToDelete.Contains(kvp) && kvp.Value.Dimension.Intersects(kvp2.Value.Dimension))
+                        ToDelete.Add(kvp2);
 
-                foreach (var kvp in ObjetsParlants)
-                    if (BulleGUI.Dimension.Intersects(kvp.Value.Dimension))
-                        toDelete.Add(kvp);
-
-                foreach (var kvp in toDelete)
-                {
-                    ObjetsParlants.Remove(kvp.Key);
-                }
-            }
-
-            toDelete.Clear();
-
-            foreach (var kvp in ObjetsParlants)
-                foreach (var kvp2 in ObjetsParlants)
-                    if (kvp.Key != kvp2.Key && !toDelete.Contains(kvp) && kvp.Value.Dimension.Intersects(kvp2.Value.Dimension))
-                        toDelete.Add(kvp2);
-
-            foreach (var kvp in toDelete)
-            {
-                ObjetsParlants.Remove(kvp.Key);
-            }
+            DeleteTalkingTurrets();
         }
 
 
         public void DisplayPausedMessage()
         {
-            this.afficherMessage(Simulation.CelestialBodyPausedGame, QuotesPause[Main.Random.Next(0, QuotesPause.Count)], 1000000000, -1);
+            this.ShowMessage(Simulation.CelestialBodyPausedGame, QuotesPause[Main.Random.Next(0, QuotesPause.Count)], 1000000000, -1);
         }
 
 
         public void StopPausedMessage()
         {
-            this.arreterMessage(Simulation.CelestialBodyPausedGame);
+            this.StopMessage(Simulation.CelestialBodyPausedGame);
         }
 
 
-        private void initAideNiveau()
+        private void DeleteTalkingTurrets()
         {
-            if (AideNiveau == null)
-                return;
-
-            foreach (var objet in AideNiveau.TypesObjets)
+            foreach (var kvp in ToDelete)
             {
-                if (AideNiveau.QuotesObjets.ContainsKey(objet))
-                    continue;
-
-                switch (objet)
-                {
-                    case "PAP":
-                        AideNiveau.QuotesObjets.Add(objet, CorpsCelesteAProteger);
-                        break;
-                    case "Sablier":
-                        AideNiveau.QuotesObjets.Add(objet, Sablier);
-                        break;
-                    case "Curseur":
-                        AideNiveau.QuotesObjets.Add(objet, Curseur);
-                        break;
-                    case "Planete":
-                        AideNiveau.QuotesObjets.Add(objet, CorpsCelestes[CorpsCelestes.Count - 2]);
-                        break;
-                    case "Ceinture":
-                        AideNiveau.QuotesObjets.Add(objet, Chemin.PremierRelais);
-                        break;
-                }
+                kvp.Value.Hide();
+                TalkingTurrets.Remove(kvp.Key);
             }
+
+            ToDelete.Clear();
+        }
+
+
+        private void AddTalkingTurret(IObjetPhysique obj, BulleTexte bulle)
+        {
+            TalkingTurrets.Add(obj, bulle);
+
+            bulle.FadeIn(250);
+            bulle.TempsFadeOut = 250;
+            bulle.Show();
         }
     }
 }

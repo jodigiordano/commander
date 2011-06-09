@@ -105,7 +105,7 @@
                         c.Position = p.Position;
                         c.Radius = ((MissileBullet) p).ZoneImpact;
 
-                        Simulation.Scene.ajouterScenable(new RectangleVisuel(c.Rectangle, Color.Cyan));
+                        Simulation.Scene.Add(new RectangleVisuel(c.Rectangle, Color.Cyan));
                     }
                 }
 
@@ -114,7 +114,7 @@
 
                 foreach (var e in Enemies)
                 {
-                    Simulation.Scene.ajouterScenable(new RectangleVisuel(e.Circle.Rectangle, Color.Yellow));
+                    Simulation.Scene.Add(new RectangleVisuel(e.Circle.Rectangle, Color.Yellow));
                     DrawRectangle(e, Color.Orange);
                 }
 
@@ -130,9 +130,9 @@
         private void DrawRectangle(IObjetPhysique objet, Color couleur)
         {
             if (objet.Shape == Shape.Rectangle)
-                Simulation.Scene.ajouterScenable(new RectangleVisuel(objet.Rectangle.RectanglePrimitif, couleur));
+                Simulation.Scene.Add(new RectangleVisuel(objet.Rectangle.RectanglePrimitif, couleur));
             else if (objet.Shape == Shape.Circle)
-                Simulation.Scene.ajouterScenable(new RectangleVisuel(objet.Circle.Rectangle, couleur));
+                Simulation.Scene.Add(new RectangleVisuel(objet.Circle.Rectangle, couleur));
         }
 
 
@@ -141,8 +141,6 @@
         {
             outOfBounds.Clear();
 
-            // Pour des raisons de performance, on enleve le projectile de la liste ici et non dans ControleurProjectiles
-            // (Ca fait mal au coeur mais performance oblige)
             for (int i = Bullets.Count - 1; i > -1; i--)
             {
                 Bullet projectile = Bullets[i];
@@ -151,10 +149,7 @@
                     continue;
 
                 if (!EphemereGames.Core.Physique.Facade.collisionRectangleRectangle(projectile.Rectangle, this.Battlefield))
-                {
-                    Bullets[i].DoDieSilent();
-                    Bullets.RemoveAt(i);
-                }
+                    outOfBounds.Add(projectile);
             }
         }
 
@@ -233,42 +228,34 @@
 
                         CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, bullet));
 
-                        if (!(bullet is MultipleLasersBullet || bullet is SlowMotionBullet))
+                        if (bullet is MultipleLasersBullet || bullet is SlowMotionBullet)
+                            continue;
+
+                        if (bullet is MissileBullet || bullet is NanobotsBullet || bullet is RailGunBullet)
                         {
-                            bullet.DoHit(e);
+                            c.Position = bullet.Position;
+                            c.Radius = bullet is MissileBullet ? ((MissileBullet) bullet).ZoneImpact :
+                                        bullet is NanobotsBullet ? ((NanobotsBullet) bullet).ZoneImpact :
+                                        ((RailGunBullet) bullet).ZoneImpact;
 
-                            if (!bullet.Alive)
+                            TmpObjects.Clear();
+                            IEnumerable<int> candidats2 = EnemiesGrid.GetItems(c.Rectangle);
+
+                            foreach (var indice2 in candidats2)
                             {
-                                bullet.DoDie();
-                                Bullets.RemoveAt(i);
+                                if (TmpObjects.ContainsKey(indice2))
+                                    continue;
+                                else
+                                    TmpObjects.Add(indice2, 0);
 
-                                if (bullet is MissileBullet || bullet is NanobotsBullet || bullet is RailGunBullet)
-                                {
-                                    c.Position = bullet.Position;
-                                    c.Radius = bullet is MissileBullet ? ((MissileBullet) bullet).ZoneImpact :
-                                               bullet is NanobotsBullet ? ((NanobotsBullet) bullet).ZoneImpact :
-                                               ((RailGunBullet) bullet).ZoneImpact;
+                                Enemy ennemi = Enemies[indice2];
 
-                                    TmpObjects.Clear();
-                                    IEnumerable<int> candidats2 = EnemiesGrid.GetItems(c.Rectangle);
-
-                                    foreach (var indice2 in candidats2)
-                                    {
-                                        if (TmpObjects.ContainsKey(indice2))
-                                            continue;
-                                        else
-                                            TmpObjects.Add(indice2, 0);
-
-                                        Enemy ennemi = Enemies[indice2];
-
-                                        if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(c, ennemi.Circle))
-                                            CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(ennemi, bullet));
-                                    }
-                                }
+                                if (EphemereGames.Core.Physique.Facade.collisionCercleCercle(c, ennemi.Circle))
+                                    CollisionsThisTick.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(ennemi, bullet));
                             }
-
-                            break;
                         }
+
+                        break;
                     }
                 }
             }

@@ -23,7 +23,7 @@
         private Simulation Simulation;
         private SelectedCelestialBodyAnimation SelectedCelestialBodyAnimation;
         private MenuGeneral MenuGeneral;
-        private ScenarioAnnunciation ScenarioAnnunciation;
+        private ScenarioStartedAnnunciation ScenarioStartedAnnunciation;
         private ScenarioEndedAnnunciation ScenarioEndedAnnunciation;
         private AdvancedView AdvancedView;
         private PlayerLives PlayerLives;
@@ -43,13 +43,21 @@
         public GUIController(Simulation simulation)
         {
             Simulation = simulation;
-            SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
+
             MenuGeneral = new MenuGeneral(Simulation, new Vector3(400, -260, 0));
+            MenuPowerUps = new MenuPowerUps(Simulation, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
+        }
+
+
+        public void Initialize()
+        {
+            SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
+            
             Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
             Crosshair = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
             MenuTurret = new MenuTurret(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuCelestialBody = new MenuCelestialBody(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
-            MenuPowerUps = new MenuPowerUps(Simulation, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
+            
             MenuDemo = new MenuDemo(Simulation, Preferences.PrioriteGUIPanneauCorpsCeleste - 0.01f);
             FinalSolutionPreview = new FinalSolutionPreview(Simulation);
             PowerUpInputMode = false;
@@ -57,15 +65,10 @@
             GamePausedResistance.Enemies = new List<Enemy>();
             GamePausedResistance.Initialize();
             GamePausedResistance.AlphaChannel = 100;
-        }
-
-
-        public void Initialize()
-        {
-            MenuGeneral.CompositionNextWave = CompositionNextWave;
-            ScenarioAnnunciation = new ScenarioAnnunciation(Simulation, Scenario);
+            
+            ScenarioStartedAnnunciation = new ScenarioStartedAnnunciation(Simulation, Scenario);
             ScenarioEndedAnnunciation = new ScenarioEndedAnnunciation(Simulation, CelestialBodies, Scenario);
-            AdvancedView = new AdvancedView(Simulation, Enemies, CelestialBodies);
+
             PlayerLives = new PlayerLives(Simulation, Scenario.CelestialBodyToProtect, new Color(255, 0, 220));
             PathPreviewing = new PathPreview(PathPreview, Path);
             MenuCelestialBody.Initialize();
@@ -73,14 +76,21 @@
             MenuPowerUps.Turrets = Turrets;
             MenuPowerUps.Initialize();
 
+            MenuGeneral.CompositionNextWave = CompositionNextWave;
             MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             MenuGeneral.TimeNextWave = Waves.First.Value.StartingTime;
+
             PowerUpInputMode = false;
             PowerUpFinalSolution = false;
+
+            if (!Simulation.DemoMode)
+            {
+                AdvancedView = new AdvancedView(Simulation, Enemies, CelestialBodies);
+            }
         }
 
 
-        public Sablier SandGlass
+        public SandGlass SandGlass
         {
             get { return MenuGeneral.SandGlass; }
         }
@@ -100,7 +110,7 @@
 
         public void doNextWave()
         {
-            MenuGeneral.SandGlass.tourner();
+            MenuGeneral.SandGlass.Flip();
         }
 
 
@@ -113,7 +123,7 @@
 
         public void doGameStateChanged(GameState newGameState)
         {
-            ScenarioEndedAnnunciation.doGameStateChanged(newGameState);
+            ScenarioEndedAnnunciation.DoGameStateChanged(newGameState);
         }
 
 
@@ -133,13 +143,13 @@
         {
             if (powerUp.NeedInput)
             {
-                Cursor.DoHide();
+                Cursor.FadeOut();
                 PowerUpInputMode = true;
 
                 if (powerUp.Crosshair != "")
                 {
                     Crosshair.Representation = powerUp.Crosshair;
-                    Crosshair.DoShow();
+                    Crosshair.FadeIn();
                 }
 
                 if (powerUp.Type == PowerUpType.FinalSolution)
@@ -152,11 +162,11 @@
         {
             if (powerUp.NeedInput)
             {
-                Cursor.DoShow();
+                Cursor.FadeIn();
                 PowerUpInputMode = false;
 
                 if (powerUp.Crosshair != "")
-                    Crosshair.DoHide();
+                    Crosshair.FadeOut();
 
                 if (powerUp.Type == PowerUpType.FinalSolution)
                     PowerUpFinalSolution = false;
@@ -169,7 +179,7 @@
             MenuGeneral.TimeNextWave = double.MaxValue;
             MenuGeneral.RemainingWaves--;
 
-            if (!Simulation.ModeDemo)
+            if (!Simulation.DemoMode)
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxNouvelleVague");
 
             if (InfiniteWaves != null || MenuGeneral.RemainingWaves <= 0)
@@ -194,7 +204,7 @@
 
         public void doTurretToPlaceSelected(Turret turret)
         {
-            Cursor.DoHide();
+            Cursor.FadeOut();
             turret.CelestialBody.ShowTurretsZone = true;
             turret.ShowRange = true;
             turret.ShowForm = true;
@@ -206,7 +216,7 @@
 
         public void doTurretToPlaceDeselected(Turret turret)
         {
-            Cursor.DoShow();
+            Cursor.FadeIn();
             turret.CelestialBody.ShowTurretsZone = false;
             turret.ShowRange = false;
         }
@@ -288,7 +298,7 @@
             //todo event-based
             MenuGeneral.MenuNextWave.Visible = Cursor.Active && EphemereGames.Core.Physique.Facade.collisionCercleRectangle(Cursor.Circle, SandGlass.Rectangle);
 
-            if (Simulation.ModeDemo)
+            if (Simulation.DemoMode)
             {
                 GamePausedResistance.StartingObject = null;
 
@@ -303,11 +313,41 @@
 
             else
             {
-                MenuGeneral.Update(gameTime);
-                ScenarioAnnunciation.Update(gameTime);
+                MenuGeneral.Update();
+                ScenarioStartedAnnunciation.Update();
                 ScenarioEndedAnnunciation.Update(gameTime);
                 PlayerLives.Update(gameTime);
                 MenuPowerUps.Update();
+            }
+        }
+
+
+        public void Show()
+        {
+            Cursor.Show();
+            Crosshair.Show();
+
+            if (!Simulation.DemoMode)
+            {
+                MenuGeneral.Show();
+                ScenarioEndedAnnunciation.Show();
+                AdvancedView.Show();
+                PlayerLives.Show();
+            }
+        }
+
+
+        public void Hide()
+        {
+            Cursor.Hide();
+            Crosshair.Hide();
+
+            if (!Simulation.DemoMode)
+            {
+                MenuGeneral.Hide();
+                ScenarioEndedAnnunciation.Hide();
+                AdvancedView.Hide();
+                PlayerLives.Hide();
             }
         }
 
@@ -319,8 +359,7 @@
             Path.Draw();
             SelectedCelestialBodyAnimation.Draw();
 
-
-            if (Simulation.ModeDemo)
+            if (Simulation.DemoMode)
             {
                 if (Simulation.WorldMode)
                 {
@@ -334,7 +373,6 @@
             }
 
             MenuGeneral.Draw();
-            ScenarioAnnunciation.Draw();
             ScenarioEndedAnnunciation.Draw();
             AdvancedView.Draw();
             PlayerLives.Draw();

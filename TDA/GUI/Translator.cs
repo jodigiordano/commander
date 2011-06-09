@@ -31,6 +31,7 @@
             get { return TempsTraduction < TempsTraductionEcoule; }
         }
 
+
         public Translator(
             Main main,
             Scene scene,
@@ -95,6 +96,19 @@
             for (int i = 0; i < TexteATraduire.Length; i++)
                 ProgressionUneRecherche[i] -= 16.66;
         }
+
+
+        public void Show()
+        {
+            Scene.Add(PartieTraduite);
+            Scene.Add(PartieNonTraduite);
+        }
+
+
+        public void Hide()
+        {
+            Scene.Remove(PartieTraduite);
+            Scene.Remove(PartieNonTraduite);
         }
 
 
@@ -136,9 +150,6 @@
                 PartieTraduite.Origine = Vector2.Zero;
                 PartieNonTraduite.origine = Vector2.Zero;
             }
-
-            Scene.ajouterScenable(PartieTraduite);
-            Scene.ajouterScenable(PartieNonTraduite);
         }
     }
 }

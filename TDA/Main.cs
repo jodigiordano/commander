@@ -9,6 +9,7 @@ namespace EphemereGames.Commander
 
     delegate void NoneHandler();
 
+
     class Main : Game
     {
         public ManagedThread[] Threads;
@@ -20,6 +21,9 @@ namespace EphemereGames.Commander
 
         private GraphicsDeviceManager Graphics;
         private bool Initializing = true;
+
+        private static int nextHash = 0;
+        public static int NextHashCode { get { return nextHash++; } }
 
 
         public static List<String> AvailableMusics = new List<string>()

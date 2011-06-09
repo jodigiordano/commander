@@ -10,7 +10,7 @@
         public List<Enemy> Enemies;
         public List<Mineral> Minerals;
         public HumanBattleship HumanBattleship;
-        public event PhysicalObjectHandler ObjetCree;
+        public event PhysicalObjectHandler ObjectCreated;
 
         private Simulation Simulation;
         private List<Spaceship> Spaceships;
@@ -43,7 +43,7 @@
                     List<Bullet> projectiles = spaceship.BulletsThisTick();
 
                     for (int j = 0; j < projectiles.Count; j++)
-                        NotifyObjetCree(projectiles[j]);
+                        NotifyObjectCreated(projectiles[j]);
                 }
 
                 if (spaceship.GoBackToStartingObject && spaceship.TargetReached)
@@ -92,14 +92,14 @@
 
             Spaceships.Add(spaceship);
 
-            NotifyObjetCree(spaceship);
+            NotifyObjectCreated(spaceship);
         }
 
 
-        private void NotifyObjetCree(IObjetPhysique objet)
+        private void NotifyObjectCreated(IObjetPhysique objet)
         {
-            if (ObjetCree != null)
-                ObjetCree(objet);
+            if (ObjectCreated != null)
+                ObjectCreated(objet);
         }
     }
 }

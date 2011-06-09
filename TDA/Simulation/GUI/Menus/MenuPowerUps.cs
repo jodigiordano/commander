@@ -24,7 +24,7 @@
         private Color ColorPowerUpNotAvailable;
 
         private Simulation Simulation;
-        private float VisualPriority;
+        private double VisualPriority;
         private Vector3 Position;
         private float TextSize;
         private float ImageSize;
@@ -34,7 +34,7 @@
         public List<Turret> Turrets;
 
 
-        public MenuPowerUps(Simulation simulation, Vector3 position, float visualPriority)
+        public MenuPowerUps(Simulation simulation, Vector3 position, double visualPriority)
         {
             Simulation = simulation;
             VisualPriority = visualPriority;
@@ -56,9 +56,9 @@
                 VisualPriority = VisualPriority + 0.001f
             };
 
-            PowerUpPriceBubble = new Bulle(Simulation, new Rectangle(0, 0, 100, 30), VisualPriority + 0.002f)
+            PowerUpPriceBubble = new Bulle(Simulation, new Rectangle(0, 0, 100, 30), VisualPriority + 0.002)
             {
-                PositionBla = 3
+                BlaPosition = 3
             };
 
             ColorPowerUpAvailable = Color.White;
@@ -137,8 +137,8 @@
                 {
                     ImagesPlaceHolders[p.Type].Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
 
-                    Simulation.Scene.ajouterScenable(ImagesPowerUpsBuy[p.Type]);
-                    Simulation.Scene.ajouterScenable(ImagesPlaceHolders[p.Type]);
+                    Simulation.Scene.Add(ImagesPowerUpsBuy[p.Type]);
+                    Simulation.Scene.Add(ImagesPlaceHolders[p.Type]);
                 }
             }
 
@@ -163,11 +163,11 @@
                 PowerUpPriceBubble.Dimension.X = (int) position.X;
                 PowerUpPriceBubble.Dimension.Y = (int) position.Y - 60;
 
-                Simulation.Scene.ajouterScenable(PowerUpPriceTitleAndCost);
-                Simulation.Scene.ajouterScenable(PowerUpDescription);
+                Simulation.Scene.Add(PowerUpPriceTitleAndCost);
+                Simulation.Scene.Add(PowerUpDescription);
 
                 PowerUpPriceBubble.Dimension.Width = (int) MathHelper.Max(PowerUpPriceTitleAndCost.TextSize.X, PowerUpDescription.TextSize.X) + 10;
-                PowerUpPriceBubble.Draw(null);
+                PowerUpPriceBubble.Draw();
             }
 
             // draw the battleship

@@ -34,7 +34,7 @@
         }
 
 
-        public float VisualPriority
+        public double VisualPriority
         {
             set { this.Image.VisualPriority = value; }
         }

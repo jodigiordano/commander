@@ -17,10 +17,10 @@
         private Text Highscore;
         private Image Selector;
         private Image[] HighscoreStars;
-        private float VisualPriority;
+        private double VisualPriority;
 
 
-        public MenuDemo(Simulation simulation, float visualPriority)
+        public MenuDemo(Simulation simulation, double visualPriority)
             : base(simulation)
         {
             VisualPriority = visualPriority;
@@ -122,10 +122,10 @@
             Selector.Position = (Action == GameAction.Resume) ? Position + new Vector3(0, 30, 0) : Position;
 
 
-            Simulation.Scene.ajouterScenable(ResumeGame);
-            Simulation.Scene.ajouterScenable(NewGame);
-            Simulation.Scene.ajouterScenable(Selector);
-            Bulle.Draw(null);
+            Simulation.Scene.Add(ResumeGame);
+            Simulation.Scene.Add(NewGame);
+            Simulation.Scene.Add(Selector);
+            Bulle.Draw();
         }
 
 
@@ -139,8 +139,8 @@
             Difficulty.Origin = Difficulty.Center;
 
 
-            Simulation.Scene.ajouterScenable(Title);
-            Simulation.Scene.ajouterScenable(Difficulty);
+            Simulation.Scene.Add(Title);
+            Simulation.Scene.Add(Difficulty);
 
         }
 
@@ -164,10 +164,10 @@
             }
 
 
-            Simulation.Scene.ajouterScenable(Highscore);
-            Simulation.Scene.ajouterScenable(HighscoreStars[0]);
-            Simulation.Scene.ajouterScenable(HighscoreStars[1]);
-            Simulation.Scene.ajouterScenable(HighscoreStars[2]);
+            Simulation.Scene.Add(Highscore);
+            Simulation.Scene.Add(HighscoreStars[0]);
+            Simulation.Scene.Add(HighscoreStars[1]);
+            Simulation.Scene.Add(HighscoreStars[2]);
         }
     }
 }

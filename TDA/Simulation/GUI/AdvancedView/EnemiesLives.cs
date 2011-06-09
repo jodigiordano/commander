@@ -6,28 +6,31 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+
     class EnemiesLives
     {
-        private List<List<IVisible>> Lives;
+        private List<List<Image>> Lives;
         private List<Enemy> Enemies;
         private Simulation Simulation;
+
 
         public EnemiesLives(Simulation simulation, List<Enemy> enemies)
         {
             Enemies = enemies;
             Simulation = simulation;
 
-            Lives = new List<List<IVisible>>();
+            Lives = new List<List<Image>>();
 
             for (int i = 0; i < 100; i++)
             {
-                List<IVisible> visuals = new List<IVisible>();
+                List<Image> visuals = new List<Image>();
 
                 for (int j = 1; j < 7; j++)
                 {
-                    IVisible life = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("ViesEnnemis" + j), Vector3.Zero);
-                    life.VisualPriority = Preferences.PrioriteGUIVUeAvanceePointsVieEnnemis;
-                    life.Origine = life.Centre;
+                    Image life = new Image("ViesEnnemis" + j)
+                    {
+                        VisualPriority = Preferences.PrioriteGUIVUeAvanceePointsVieEnnemis
+                    };
 
                     visuals.Add(life);
                 }
@@ -35,6 +38,7 @@
                 Lives.Add(visuals);
             }
         }
+
 
         public void Draw()
         {
@@ -50,7 +54,7 @@
 
                 Lives[livesIndex][index].Position = enemy.Position - new Vector3(0, enemy.Image.AbsoluteSize.Y, 0);
 
-                Simulation.Scene.ajouterScenable(Lives[livesIndex][index]);
+                Simulation.Scene.Add(Lives[livesIndex][index]);
                 livesIndex++;
 
                 if (livesIndex >= 100)

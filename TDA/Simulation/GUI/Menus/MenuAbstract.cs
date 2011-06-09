@@ -32,25 +32,25 @@
             if (tropADroite && tropBas)
             {
                 this.Position += new Vector3(-this.Taille.X - 50, -this.Taille.Y - 10, 0);
-                Bulle.PositionBla = 2;
+                Bulle.BlaPosition = 2;
             }
 
             else if (tropADroite)
             {
                 this.Position += new Vector3(-this.Taille.X - 50, 0, 0);
-                Bulle.PositionBla = 1;
+                Bulle.BlaPosition = 1;
             }
 
             else if (tropBas)
             {
                 this.Position += new Vector3(0, -this.Taille.Y - 50, 0);
-                Bulle.PositionBla = 3;
+                Bulle.BlaPosition = 3;
             }
 
             else
             {
                 this.Position += new Vector3(50, -10, 0);
-                Bulle.PositionBla = 0;
+                Bulle.BlaPosition = 0;
             }
 
             Bulle.Dimension = new Rectangle((int)Position.X, (int)Position.Y, (int)Taille.X, (int)Taille.Y);

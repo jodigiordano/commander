@@ -24,7 +24,7 @@
         private double TimeBetweenTwoMusicChange;
 
         private AnimationTransition AnimationTransition;
-        private String ChoixTransition;
+        private String TransitionChoice;
 
         private Simulation Simulation;
 
@@ -110,6 +110,8 @@
             TimeBetweenTwoMusicChange = 0;
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
+
+            CurrentChoice = null;
         }
 
         
@@ -143,6 +145,7 @@
                 return;
 
             AnimationTransition.Stop();
+
             if (Transition == TransitionType.Out)
             {
                 switch (TransitionChoice)
@@ -187,12 +190,32 @@
             EphemereGames.Core.Audio.Facade.jouerMusique(SelectedMusic, true, 1000, true);
             TimeBetweenTwoMusicChange = Preferences.TempsEntreDeuxChangementMusique;
         }
+
+
+        public override void Show()
+        {
+            base.Add(Title);
+
+            Simulation.Show();
+        }
+
+
+        public override void Hide()
+        {
+            base.Remove(Title);
+
+            Simulation.Hide();
         }
 
 
         protected override void UpdateVisual()
         {
-            if (Simulation.CorpsCelesteSelectionne != null)
+            if (CurrentChoice != null)
+            {
+                base.Remove(CurrentChoice);
+                CurrentChoice = null;
+            }
+
             if (Simulation.SelectedCelestialBody != null)
             {
                 switch (Simulation.SelectedCelestialBody.Nom)
@@ -206,6 +229,7 @@
                         if (Preferences.Debug)
                         {
                             Add(Editor);
+                            CurrentChoice = Editor;
                         }
 
                         break;
@@ -214,13 +238,12 @@
                         if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                         {
                             Add(ResumeGame);
+                            CurrentChoice = ResumeGame;
                         }
 
                         break;
                 }
             }
-
-            ajouterScenable(TitreMenu);
 
             Simulation.Draw();
 

@@ -79,7 +79,10 @@
         private void EndTransition()
         {
             ScenesInTransition[CurrentTransition.NameSceneFrom].Active = false;
+            ScenesInTransition[CurrentTransition.NameSceneFrom].Hide();
+
             ScenesInTransition[CurrentTransition.NameSceneTo].Active = true;
+            ScenesInTransition[CurrentTransition.NameSceneTo].Show();
 
             ScenesInTransition[CurrentTransition.NameSceneTo].OnFocus();
         }

@@ -15,7 +15,7 @@
         private IVisible FondEcranAchat;
         private IVisible FondEcranAchatEffectue;
         private double TempsAvantQuitter;
-        private Sablier Sablier;
+        private SandGlass Sablier;
 
         private AnimationTransition AnimationTransition;
         private bool enAchat;
@@ -37,8 +37,8 @@
 
             TempsAvantQuitter = 20000;
 
-            Sablier = new Sablier(Main, this, 20000, new Vector3(520, 250, 0), 0);
-            Sablier.TempsRestant = TempsAvantQuitter;
+            Sablier = new SandGlass(Main, this, 20000, new Vector3(520, 250, 0), 0);
+            Sablier.RemainingTime = TempsAvantQuitter;
 
             AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
             {
@@ -57,8 +57,8 @@
             if (!Guide.IsVisible && Main.TrialMode.Active)
                 TempsAvantQuitter -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            Sablier.TempsRestant = TempsAvantQuitter;
-            Sablier.Update(gameTime);
+            Sablier.RemainingTime = TempsAvantQuitter;
+            Sablier.Update();
 
             if (TempsAvantQuitter <= 0)
                 Main.Exit();
@@ -91,7 +91,7 @@
             Add((Main.TrialMode.Active) ? FondEcranAchat : FondEcranAchatEffectue);
 
             if (Main.TrialMode.Active)
-                Sablier.Draw(null);
+                Sablier.Draw();
 
             if (Transition != TransitionType.None)
                 AnimationTransition.Draw();

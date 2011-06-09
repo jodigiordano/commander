@@ -9,23 +9,23 @@
     class HumanBattleship : IObjetPhysique, IPhysicalObject
     {
         public Vector3 Position                 { get; set; }
-        public float Speed                    { get; set; }
+        public float Speed                      { get; set; }
         public Vector3 Direction                { get; set; }
         public float Rotation                   { get; set; }
         public Shape Shape                      { get; set; }
         public Cercle Circle                    { get; set; }
         public RectanglePhysique Rectangle      { get; set; }
-        public Ligne Line                      { get; set; }
+        public Ligne Line                       { get; set; }
 
         public RailGunTurret RailGun;
         public SniperTurret Sniper;
 
         private Simulation Simulation;
-        private float VisualPriority;
+        private double VisualPriority;
         private Image Image;
 
 
-        public HumanBattleship(Simulation simulation, Vector3 position, float visualPriority)
+        public HumanBattleship(Simulation simulation, Vector3 position, double visualPriority)
         {
             Simulation = simulation;
             VisualPriority = visualPriority;
@@ -44,7 +44,7 @@
         {
             Image.Position = this.Position;
 
-            Simulation.Scene.ajouterScenable(Image);
+            Simulation.Scene.Add(Image);
         }
     }
 }

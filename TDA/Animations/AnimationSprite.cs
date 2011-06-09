@@ -31,9 +31,15 @@ namespace EphemereGames.Commander
         }
 
 
-        public override void Draw(SpriteBatch spriteBatch)
+        protected override void Show()
         {
-            Sprite.Draw(spriteBatch);
+            Scene.Add(Sprite);
+        }
+
+
+        protected override void Hide()
+        {
+            Scene.Remove(Sprite);
         }
     }
 }

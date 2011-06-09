@@ -34,13 +34,13 @@
         }
 
 
-        public override float VisualPriority
+        public override double VisualPriority
         {
             set
             {
                 base.VisualPriority = value;
 
-                CanonImage.VisualPriority = BaseImage.VisualPriority - 0.00001f;
+                CanonImage.VisualPriority = BaseImage.VisualPriority - 0.00001;
             }
         }
     }

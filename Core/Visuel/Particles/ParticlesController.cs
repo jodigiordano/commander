@@ -8,11 +8,10 @@ namespace EphemereGames.Core.Visuel
 
     public class ParticlesController
     {
-        public List<Particle> Particles { get; private set; }
-
         private Dictionary<string, Pool<Particle>> ParticlesPools;
         private ProjectMercury.Renderers.SpriteBatchRenderer Renderer;
         private Scene Scene;
+        private List<Particle> Particles;
 
 
         public ParticlesController(Scene scene)
@@ -60,6 +59,7 @@ namespace EphemereGames.Core.Visuel
             particle.Initialize();
 
             Particles.Add(particle);
+            //Scene.Add(particle);
 
             return particle;
         }
@@ -81,6 +81,8 @@ namespace EphemereGames.Core.Visuel
                 //todo: clear the particles
                 p.State = State.Idle;
                 ParticlesPools[p.Name].Return(p);
+
+                Scene.Remove(p);
             }
 
             Particles.Clear();
@@ -102,6 +104,9 @@ namespace EphemereGames.Core.Visuel
                 {
                     Particles[i].State = State.Idle;
                     ParticlesPools[Particles[i].Name].Return(Particles[i]);
+                    
+                    //Scene.Remove(Particles[i]);
+
                     Particles.RemoveAt(i);
                 }
         }

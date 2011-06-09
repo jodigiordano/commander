@@ -83,7 +83,7 @@
             e.LifePoints = e.StartingLifePoints = GetLives(type, livesLevel); ;
             e.CashValue = value;
             e.PointsValue = livesLevel;
-            e.Id = Enemy.NextID;
+            //e.Id = Enemy.NextID;
             e.Color = ColorsEnemies[type];
             e.Level = (speedLevel + livesLevel) / 2;
             e.FadeInTime = (type == EnemyType.Swarm) ? 250 : 1000;

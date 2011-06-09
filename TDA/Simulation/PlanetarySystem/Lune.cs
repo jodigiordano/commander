@@ -1,15 +1,10 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Physique;
-    using EphemereGames.Core.Utilities;
-    using ProjectMercury.Modifiers;
+    using Microsoft.Xna.Framework;
 
-    abstract class Lune : DrawableGameComponent
+
+    abstract class Lune
     {
         protected Simulation Simulation;
         protected CorpsCeleste CorpsCeleste;
@@ -18,27 +13,30 @@
         protected Vector3 PositionRelative;
         protected double TempsRotation;
         protected double TempsRotationActuel;
-        public IVisible Representation;
+        public Image Representation;
         protected bool SensInverse;
 
-        public Lune(Simulation simulation, CorpsCeleste corpsCeleste)
-            : base(simulation.Main)
+
+        public Lune(Simulation simulation, CorpsCeleste corpsCeleste, int alpha)
         {
             Simulation = simulation;
             CorpsCeleste = corpsCeleste;
 
-            Representation = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("lune" + Main.Random.Next(1, 5)), Vector3.Zero);
-            Representation.Taille = Main.Random.Next(2, 4);
-            Representation.Origine = Representation.Centre;
-            Representation.VisualPriority = CorpsCeleste.PrioriteAffichage + 0.000001f;
-            Representation.Couleur.A = 100;
+            Representation = new Image("lune" + Main.Random.Next(1, 5))
+            {
+                SizeX = Main.Random.Next(2, 4),
+                VisualPriority = CorpsCeleste.PrioriteAffichage + 0.000001f,
+            };
+
+            Representation.Color.A = (byte) alpha;
 
             SensInverse = Main.Random.Next(0, 2) == 0;
             TempsRotation = Main.Random.Next(3000, 10000);
             TempsRotationActuel = Main.Random.Next(0, (int)TempsRotation);
         }
 
-        public override void Update(GameTime gameTime)
+
+        public virtual void Update(GameTime gameTime)
         {
             if (SensInverse)
             {
@@ -56,13 +54,21 @@
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public void Show()
         {
-            Representation.Position = this.Position;
-
-            Simulation.Scene.ajouterScenable(Representation);
+            Simulation.Scene.Add(Representation);
         }
 
 
+        public void Hide()
+        {
+            Simulation.Scene.Remove(Representation);
+        }
+
+
+        public void Draw()
+        {
+            Representation.Position = this.Position;
+        }
     }
 }

@@ -104,25 +104,26 @@ namespace EphemereGames.Commander
         }
 
 
-        public override void Draw(SpriteBatch spriteBatch)
+        protected override void Show()
         {
+            for (int i = 0; i < AlienShips.Count; i++)
+                AlienShips[i].Show();
+        }
 
-            if (ShowAliens)
-            {
-                for (int i = 0; i < AlienShips.Count; i++)
-                {
-                    Paths[i].Position(RelativeTime, ref AlienShips[i].Representation.position);
-                    AlienShips[i].Draw(null);
-                }
-            }
 
-            else
+        protected override void Hide()
+        {
+            for (int i = 0; i < AlienShips.Count; i++)
+                AlienShips[i].Hide();
+        }
+
+
+        public override void Draw()
+        {
+            for (int i = 0; i < AlienShips.Count; i++)
             {
-                for (int i = 0; i < Others.Count; i++)
-                {
-                    Paths[i].Position(RelativeTime, ref Others[i].position);
-                    Scene.ajouterScenable(Others[i]);
-                }
+                Paths[i].Position(RelativeTime, ref AlienShips[i].Representation.position);
+                AlienShips[i].Draw();
             }
         }
     }

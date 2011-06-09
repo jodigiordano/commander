@@ -80,7 +80,7 @@
         }
 
 
-        public Mineral CreateMineral(MineralType type, float visualPriority)
+        public Mineral CreateMineral(MineralType type, double visualPriority)
         {
             return new Mineral(Simulation.Scene, Minerals[type], visualPriority);
         }

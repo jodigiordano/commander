@@ -2,11 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Physique;
+    using Microsoft.Xna.Framework;
     using ProjectMercury.Modifiers;
+
 
     class TrouRose : CorpsCeleste
     {
@@ -52,7 +51,7 @@
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
 
         }

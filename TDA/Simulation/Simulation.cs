@@ -36,6 +36,7 @@ namespace EphemereGames.Commander
         public PowerUpsFactory PowerUpsFactory;
         public EnemiesFactory EnemiesFactory;
         public MineralsFactory MineralsFactory;
+        public BulletsFactory BulletsFactory;
         public RectanglePhysique Terrain;
         public RectanglePhysique InnerTerrain;
         public GameState Etat { get { return ScenarioController.State; } set { ScenarioController.State = value; } }
@@ -55,8 +56,8 @@ namespace EphemereGames.Commander
         private SpaceshipsController SpaceshipsController;   
         private GUIController GUIController;
         private PowerUpsController PowerUpsController;
-        private bool modeDemo = false;
-        private bool modeEditeur = false;
+        private bool demoMode = false;
+        private bool editorMode = false;
 
 
         public Simulation(Main main, Scene scene, ScenarioDescriptor scenario)
@@ -68,12 +69,23 @@ namespace EphemereGames.Commander
             PowerUpsFactory = new PowerUpsFactory(this);
             EnemiesFactory = new EnemiesFactory(this);
             MineralsFactory = new MineralsFactory(this);
+            BulletsFactory = new BulletsFactory(this);
 
-#if DEBUG
-            this.Debug = true;
-#else
-            this.Debug = false;
-#endif
+            DemoModeSelectedScenario = new ScenarioDescriptor();
+            Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
+            InnerTerrain = new RectanglePhysique(-640, -320, 1280, 720);
+
+            CollisionsController = new CollisionsController(this);
+            BulletsController = new BulletsController(this);
+            EnemiesController = new EnemiesController(this);
+            SimPlayersController = new SimPlayersController(this);
+            TurretsController = new TurretsController(this);
+            PlanetarySystemController = new PlanetarySystemController(this);
+            SpaceshipsController = new SpaceshipsController(this);
+            MessagesController = new ControleurMessages(this);
+            GUIController = new GUIController(this);
+            PowerUpsController = new PowerUpsController(this);
+            ScenarioController = new ScenarioController(this);
         }
 
 
@@ -120,27 +132,10 @@ namespace EphemereGames.Commander
                     "shieldEffect"
                 }, false);
 
-            DemoModeSelectedScenario = new ScenarioDescriptor();
-            WorldMode = false;
-            GameAction = GameAction.None;
-            Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
-            InnerTerrain = new RectanglePhysique(-640, -320, 1280, 720);
 
-            CollisionsController = new CollisionsController(this);
-            BulletsController = new BulletsController(this);
-            EnemiesController = new EnemiesController(this);
-            SimPlayersController = new SimPlayersController(this);
-            TurretsController = new TurretsController(this);
-            PlanetarySystemController = new PlanetarySystemController(this);
-            ScenarioController = new ScenarioController(this, new Scenario(this, DescriptionScenario));
-            SpaceshipsController = new SpaceshipsController(this);
-            MessagesController = new ControleurMessages(this);
-            GUIController = new GUIController(this);
-            PowerUpsController = new PowerUpsController(this);
-
+            ScenarioController.Scenario = new Scenario(this, DescriptionScenario);
             TurretsFactory.Availables = ScenarioController.AvailableTurrets;
             PowerUpsFactory.Availables = ScenarioController.AvailablePowerUps;
-
             CollisionsController.Bullets = BulletsController.Bullets;
             CollisionsController.Enemies = EnemiesController.Enemies;
             SimPlayersController.CelestialBodies = ScenarioController.CelestialBodies;
@@ -162,11 +157,7 @@ namespace EphemereGames.Commander
             EnemiesController.MineralsPercentages = ScenarioController.Scenario.MineralsPercentages;
             EnemiesController.LifePacksGiven = ScenarioController.Scenario.LifePacks;
             SpaceshipsController.Enemies = EnemiesController.Enemies;
-            MessagesController.Tourelles = TurretsController.Turrets;
-            MessagesController.CorpsCelesteAProteger = ScenarioController.CelestialBodyToProtect;
-            MessagesController.CorpsCelestes = ScenarioController.CelestialBodies;
-            MessagesController.Chemin = PlanetarySystemController.Path;
-            MessagesController.Sablier = GUIController.SandGlass;
+            MessagesController.Turrets = TurretsController.Turrets;
             GUIController.CompositionNextWave = EnemiesController.NextWaveData;
             SimPlayersController.SandGlass = GUIController.SandGlass;
             GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
@@ -185,6 +176,8 @@ namespace EphemereGames.Commander
 
 
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);
+            CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(BulletsController.DoObjectHit);
+            CollisionsController.ObjectOutOfBounds += new PhysicalObjectHandler(BulletsController.DoObjectOutOfBounds);
             SimPlayersController.AchatTourelleDemande += new TurretHandler(TurretsController.DoBuyTurret);
             EnemiesController.WaveEnded += new NoneHandler(ScenarioController.doWaveEnded);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
@@ -201,9 +194,9 @@ namespace EphemereGames.Commander
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
             SimPlayersController.ProchaineVagueDemandee += new NoneHandler(EnemiesController.DoNextWaveAsked);
-            SpaceshipsController.ObjetCree += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
+            SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
-            SpaceshipsController.ObjetCree += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
+            SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(ScenarioController.doObjectDestroyed);
             EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.doEnnemiAtteintFinTrajet);
@@ -240,51 +233,50 @@ namespace EphemereGames.Commander
             TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
             CollisionsController.BulletDeflected += new EnemyBulletHandler(BulletsController.DoBulletDeflected);
 
+            ScenarioController.Initialize();
             EnemiesController.Initialize();
             TurretsController.Initialize();
             PlanetarySystemController.Initialize();
-            MessagesController.Initialize();
             GUIController.Initialize();
             PowerUpsController.Initialize();
             SimPlayersController.Initialize(); // Must be done after the PowerUpsController
 
-            ModeDemo = modeDemo;
-            ModeEditeur = modeEditeur;
+            WorldMode = false;
+            DemoMode = demoMode;
+            EditorMode = editorMode;
+            GameAction = GameAction.None;
         }
 
 
-        public bool ModeDemo
+        public bool DemoMode
         {
-            get { return modeDemo; }
+            get { return demoMode; }
             set
             {
-                modeDemo = value;
+                demoMode = value;
 
-                SimPlayersController.ModeDemo = value;
-                ScenarioController.DemoMode = value;
                 TurretsController.DemoMode = value;
-                PlanetarySystemController.DemoMode = value;
             }
         }
 
 
-        public bool ModeEditeur
+        public bool EditorMode
         {
-            get { return modeEditeur; }
+            get { return editorMode; }
             set
             {
-                modeEditeur = value;
+                editorMode = value;
 
                 ScenarioController.EditorMode = value;
             }
         }
 
 
-        public CorpsCeleste CorpsCelesteSelectionne
+        public CorpsCeleste SelectedCelestialBody
         {
             get
             {
-                return SimPlayersController.CelestialBodySelected;
+                return SimPlayersController.SelectedCelestialBody;
             }
         }
 
@@ -312,6 +304,22 @@ namespace EphemereGames.Commander
         }
 
 
+        public void Show()
+        {
+            ScenarioController.Show();
+            PlanetarySystemController.Show();
+            GUIController.Show();
+        }
+
+
+        public void Hide()
+        {
+            ScenarioController.Hide();
+            PlanetarySystemController.Hide();
+            GUIController.Hide();
+        }
+
+
         public void Draw()
         {
             CollisionsController.Draw();
@@ -319,9 +327,8 @@ namespace EphemereGames.Commander
             EnemiesController.Draw();
             TurretsController.Draw();
             PlanetarySystemController.Draw();
-            ScenarioController.Draw(null);
             SpaceshipsController.Draw();
-            MessagesController.Draw(null);
+            MessagesController.Draw();
             GUIController.Draw();
             SimPlayersController.Draw();
         }
@@ -363,7 +370,7 @@ namespace EphemereGames.Commander
             if (Etat == GameState.Won)
                 return;
 
-            if (!this.ModeDemo && this.Etat != GameState.Lost)
+            if (!this.DemoMode && this.Etat != GameState.Lost)
             {
                 foreach (var joueur in this.Main.Players.Values)
                     EphemereGames.Core.Input.Facade.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
@@ -408,7 +415,7 @@ namespace EphemereGames.Commander
                 return;
             }
 
-            if (!ModeDemo && (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel))
+            if (!DemoMode && (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel))
             {
                 Etat = GameState.Paused;
                 ScenarioController.TriggerNewGameState(Etat);
@@ -458,7 +465,7 @@ namespace EphemereGames.Commander
 
             SimPlayersController.DoMouseButtonPressedOnce(p, button);
 
-            if (!ModeDemo && button == p.MouseConfiguration.AdvancedView)
+            if (!DemoMode && button == p.MouseConfiguration.AdvancedView)
                 GUIController.doShowAdvancedView();
         }
 
@@ -473,7 +480,7 @@ namespace EphemereGames.Commander
             if (ScenarioController.Help.Active)
                 return;
 
-            if (!ModeDemo && button == p.MouseConfiguration.AdvancedView)
+            if (!DemoMode && button == p.MouseConfiguration.AdvancedView)
                 GUIController.doHideAdvancedView();
 
             if (PowerUpsController.InPowerUp && button == p.MouseConfiguration.Select)

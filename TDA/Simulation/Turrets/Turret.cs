@@ -59,7 +59,7 @@
         private float DisabledAnnounciationCounter;
         private Image DisabledProgressBarImage;
         private Image DisabledBarImage;
-        protected float VisualPriorityBackup;
+        protected double VisualPriorityBackup;
         private List<Bullet> Bullets = new List<Bullet>();
         private Image RangeImage;
         private Image FormImage;
@@ -152,7 +152,7 @@
         }
 
 
-        public virtual float VisualPriority
+        public virtual double VisualPriority
         {
             get
             {
@@ -163,13 +163,13 @@
             {
                 this.VisualPriorityBackup = value;
 
-                BaseImage.VisualPriority = value - 0.0002f;
-                CanonImage.VisualPriority = value - 0.0001f;
+                BaseImage.VisualPriority = value;
+                CanonImage.VisualPriority = value + 0.00001;
 
-                DisabledBarImage.VisualPriority = value - 0.0003f;
-                DisabledProgressBarImage.VisualPriority = value - 0.0004f;
+                DisabledBarImage.VisualPriority = value - 0.00001;
+                DisabledProgressBarImage.VisualPriority = value - 0.00002;
 
-                FormImage.VisualPriority = BaseImage.VisualPriority + 0.0005f;
+                FormImage.VisualPriority = BaseImage.VisualPriority + 0.00003;
             }
         }
 
@@ -191,7 +191,7 @@
             if (Type != TurretType.SlowMotion && Type != TurretType.Gravitational && Type != TurretType.Alien)
                 DoWanderRotation();
 
-            if (DisabledAnnounciationCounter < 0 && !Simulation.ModeDemo)
+            if (DisabledAnnounciationCounter < 0 && !Simulation.DemoMode)
             {
                 if (!this.BackActiveThisTickOverride)
                     EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMiseAJour");
@@ -266,23 +266,22 @@
                         {
                             Vector3 translation = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
 
-                            BasicBullet p = Bullet.PoolBasicBullets.Get();
+                            BasicBullet p = (BasicBullet) Simulation.BulletsFactory.Get(BulletType.Base);
 
-                            p.Scene = Simulation.Scene;
                             p.Position = this.Position + translation;
                             p.Direction = direction;
                             p.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                             p.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                             p.PrioriteAffichage = this.CanonImage.VisualPriority;
-                            p.Initialize();
-
+                            
                             Bullets.Add(p);
                         }
                         break;
 
                     case BulletType.Missile:
-                        MissileBullet pm = Bullet.PoolMissileBullets.Get();
-                        pm.Scene = Simulation.Scene;
+                    case BulletType.Missile2:
+                        MissileBullet pm = (MissileBullet) Simulation.BulletsFactory.Get(BulletType.Missile);
+
                         pm.Position = this.Position;
                         pm.Direction = EnemyWatched.Position - this.Position;
                         pm.Target = EnemyWatched;
@@ -290,110 +289,90 @@
                         pm.PrioriteAffichage = this.CanonImage.VisualPriority;
                         pm.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         pm.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
-                        pm.Initialize();
-                        pm.Image = pm.Image1;
-                        Bullets.Add(pm);
-                        break;
+                        pm.Big = BulletType == BulletType.Missile2;
 
-                    case BulletType.Missile2:
-                        MissileBullet p2 = Bullet.PoolMissileBullets.Get();
-                        p2.Scene = Simulation.Scene;
-                        p2.Position = this.Position;
-                        p2.Direction = EnemyWatched.Position - this.Position;
-                        p2.Target = EnemyWatched;
-                        p2.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                        p2.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        p2.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
-                        p2.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
-                        p2.Initialize();
-                        p2.Image = p2.Image2;
-                        Bullets.Add(p2);
+                        Bullets.Add(pm);
+                        
                         break;
 
                     case BulletType.LaserMultiple:
                         for (int i = 0; i < NbCanons; i++)
                         {
-                            MultipleLasersBullet pLM = Bullet.PoolMultipleLasersBullets.Get();
-                            pLM.Scene = Simulation.Scene;
-                            pLM.TourelleEmettrice = this;
-                            pLM.CibleOffset = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
-                            pLM.Cible = EnemyWatched;
+                            MultipleLasersBullet pLM = (MultipleLasersBullet) Simulation.BulletsFactory.Get(BulletType.LaserMultiple);
+
+                            pLM.Turret = this;
+                            pLM.TargetOffset = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
+                            pLM.Target = EnemyWatched;
                             pLM.Direction = EnemyWatched.Position - this.Position;
                             pLM.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                             pLM.PrioriteAffichage = this.CanonImage.VisualPriority;
-                            pLM.Initialize();
-
+                            
                             Bullets.Add(pLM);
                         }
                         break;
 
                     case BulletType.LaserSimple:
-                        LaserBullet pLS = Bullet.PoolLaserBullets.Get();
-                        pLS.Scene = Simulation.Scene;
-                        pLS.TourelleEmettrice = this;
-                        pLS.Cible = EnemyWatched;
+                        LaserBullet pLS = (LaserBullet) Simulation.BulletsFactory.Get(BulletType.LaserSimple);
+
+                        pLS.Turret = this;
+                        pLS.Target = EnemyWatched;
                         pLS.Direction = EnemyWatched.Position - this.Position;
                         pLS.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         pLS.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        pLS.Initialize();
-
+                        
                         ((LaserTurret)this).ActiveBullet = pLS;
 
                         Bullets.Add(pLS);
                         break;
 
                     case BulletType.Gunner:
-                        GunnerBullet gb = Bullet.PoolGunnerBullets.Get();
-                        gb.Scene = Simulation.Scene;
+                        GunnerBullet gb = (GunnerBullet) Simulation.BulletsFactory.Get(BulletType.Gunner);
+
                         gb.Turret = this;
                         gb.Target = EnemyWatched;
                         gb.Direction = EnemyWatched.Position - this.Position;
                         gb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         gb.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        gb.Initialize();
-
+                        
                         ((GunnerTurret) this).ActiveBullet = gb;
 
                         Bullets.Add(gb);
                         break;
 
                     case BulletType.SlowMotion:
-                        SlowMotionBullet pSM = Bullet.PoolSlowMotionBullets.Get();
-                        pSM.Scene = Simulation.Scene;
+                        SlowMotionBullet pSM = (SlowMotionBullet) Simulation.BulletsFactory.Get(BulletType.SlowMotion);
+
                         pSM.Position = this.Position;
-                        pSM.Rayon = Range;
+                        pSM.Radius = Range;
                         pSM.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         pSM.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        pSM.Initialize();
-
+                        
                         Bullets.Add(pSM);
                         break;
 
                     case BulletType.Nanobots:
-                        NanobotsBullet nb = Bullet.PoolNanobotsBullets.Get();
-                        nb.Scene = Simulation.Scene;
+                        NanobotsBullet nb = (NanobotsBullet) Simulation.BulletsFactory.Get(BulletType.Nanobots);
+
                         nb.Position = this.Position;
                         nb.Direction = direction;
                         nb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         nb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         nb.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         nb.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        nb.Initialize();
-
+                        
                         Bullets.Add(nb);
                         break;
 
                     case BulletType.RailGun:
-                        RailGunBullet rgb = Bullet.PoolRailGunBullets.Get();
-                        rgb.Scene = Simulation.Scene;
+                        RailGunBullet rgb = (RailGunBullet) Simulation.BulletsFactory.Get(BulletType.RailGun);
+
                         rgb.Position = this.Position;
                         rgb.Direction = direction;
                         rgb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         rgb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         rgb.ZoneImpact = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         rgb.PrioriteAffichage = this.CanonImage.VisualPriority;
-                        rgb.Initialize();
-
+                        
                         Bullets.Add(rgb);
                         break;
                 }
@@ -405,6 +384,33 @@
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", SfxShooting);
 
             return Bullets;
+        }
+
+
+        public virtual void Show()
+        {
+            Simulation.Scene.Add(CanonImage);
+            Simulation.Scene.Add(BaseImage);
+            Simulation.Scene.Add(DisabledProgressBarImage);
+            Simulation.Scene.Add(DisabledBarImage);
+            Simulation.Scene.Add(RangeImage);
+            Simulation.Scene.Add(FormImage);
+
+            DisabledProgressBarImage.Color.A = 0;
+            DisabledBarImage.Color.A = 0;
+            RangeImage.Color.A = 0;
+            FormImage.Color.A = 0;
+        }
+
+
+        public virtual void Hide()
+        {
+            Simulation.Scene.Remove(CanonImage);
+            Simulation.Scene.Remove(BaseImage);
+            Simulation.Scene.Remove(DisabledProgressBarImage);
+            Simulation.Scene.Remove(DisabledBarImage);
+            Simulation.Scene.Remove(RangeImage);
+            Simulation.Scene.Remove(FormImage);
         }
 
 
@@ -430,11 +436,8 @@
                 CanonImage.Rotation = Rotation;
             }
 
-            Simulation.Scene.ajouterScenable(CanonImage);
-            Simulation.Scene.ajouterScenable(BaseImage);
 
-
-            if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulation.ModeDemo && !ToPlaceMode)
+            if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulation.DemoMode && !ToPlaceMode)
             {
                 DisabledBarImage.Position = this.Position;
 
@@ -444,8 +447,15 @@
 
                 DisabledProgressBarImage.Size = new Vector2(pourcTemps * 30, 8);
                 DisabledProgressBarImage.Position = DisabledBarImage.Position - new Vector3(16, 4, 0);
-                Simulation.Scene.ajouterScenable(DisabledProgressBarImage);
-                Simulation.Scene.ajouterScenable(DisabledBarImage);
+
+                DisabledProgressBarImage.Color.A = 255;
+                DisabledBarImage.Color.A = 255;
+            }
+
+            else
+            {
+                DisabledProgressBarImage.Color.A = 0;
+                DisabledBarImage.Color.A = 0;
             }
 
             if (ShowRange)
@@ -453,15 +463,25 @@
                 RangeImage.Position = this.Position;
                 RangeImage.Color = new Color(Color.R, Color.G, Color.B, 100);
                 RangeImage.SizeX = (Range / 100) * 2;
-                Simulation.Scene.ajouterScenable(RangeImage);
+            }
+
+            else
+            {
+                RangeImage.Color.A = 0;
             }
 
             if (ShowForm)
             {
                 FormImage.Position = this.Position;
                 FormImage.SizeX = (Circle.Radius / 100) * 2;
-                Simulation.Scene.ajouterScenable(FormImage);
+                FormImage.Color.A = 255;
             }
+
+            else
+            {
+                FormImage.Color.A = 0;
+            }
+
 
             if (ToPlaceMode)
             {
@@ -485,12 +505,20 @@
 
             if (ActualLevel.Value.BaseImageName != ActualLevel.Next.Value.BaseImageName)
             {
-                BaseImage = new Image(ActualLevel.Next.Value.BaseImageName, Vector3.Zero);
+                if (BaseImage != null)
+                    Simulation.Scene.Remove(BaseImage);
+                
+                BaseImage = new Image(ActualLevel.Next.Value.BaseImageName);
+                Simulation.Scene.Add(BaseImage);
             }
 
             if (ActualLevel.Value.CanonImageName != ActualLevel.Next.Value.CanonImageName)
             {
-                CanonImage = new Image(ActualLevel.Next.Value.CanonImageName, Vector3.Zero);
+                if (CanonImage != null)
+                    Simulation.Scene.Remove(CanonImage);
+                
+                CanonImage = new Image(ActualLevel.Next.Value.CanonImageName);
+                Simulation.Scene.Add(CanonImage);
             }
 
             VisualPriority = this.VisualPriorityBackup;

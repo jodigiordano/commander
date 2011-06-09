@@ -9,12 +9,9 @@ namespace EphemereGames.Commander
 
     class Enemy : IObjetPhysique, IPhysicalObject, ILivingObject
     {
-        public static int NextID { get { return NEXT_ID++; } }
-
         public delegate void EnemyHandler(Enemy enemy);
         public event EnemyHandler PathEndReached;
 
-        public int Id;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
         public float Speed                                          { get; set; }
         public float Rotation                                       { get; set; }
@@ -63,7 +60,7 @@ namespace EphemereGames.Commander
         private Particle SlowMotionEffect;
         private static int NEXT_ID = 0;
         private Vector3 position;
-        private float VisualPriority;
+        private double VisualPriority;
 
 
         public Enemy()
@@ -79,7 +76,6 @@ namespace EphemereGames.Commander
             Rectangle = new RectanglePhysique(0, 0, 1, 1);
             Circle = new Cercle(Vector3.Zero, 1);
             Type = EnemyType.Asteroid;
-            Id = NextID;
             Level = 0;
         }
 
@@ -140,6 +136,18 @@ namespace EphemereGames.Commander
         }
 
 
+        public void Show()
+        {
+            Simulation.Scene.Add(Image);
+        }
+
+
+        public void Hide()
+        {
+            Simulation.Scene.Remove(Image);
+        }
+
+
         public void Update()
         {
             if (ImpulseTime > 0)
@@ -186,8 +194,6 @@ namespace EphemereGames.Commander
 
             Image.Position = Position;
             Image.VisualPriority = VisualPriority + pourcPath / 1000f;
-
-            Simulation.Scene.ajouterScenable(Image);
 
             if (MovingEffect != null)
                 MovingEffect.Trigger(ref this.position);
@@ -296,28 +302,10 @@ namespace EphemereGames.Commander
         }
 
 
-        public void Destroy()
-        {
-            Simulation.EnemiesFactory.ReturnEnemy(this);
-        }
-
-
-        public void UnloadAssets()
-        {
-
-        }
-
-
         private void NotifyPathEndReached()
         {
             if (PathEndReached != null)
                 PathEndReached(this);
-        }
-
-
-        public override int GetHashCode()
-        {
-            return Id;
         }
     }
 }

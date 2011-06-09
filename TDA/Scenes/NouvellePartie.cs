@@ -149,8 +149,8 @@
             if (Transition != TransitionType.None)
                 AnimationTransition.Draw();
 
-            if (AnimationFinDemo != null && MondeSelectionne.Id == 1)
-                this.ajouterScenable(AnimationFinDemo);
+            //if (AnimationFinDemo != null && MondeSelectionne.Id == 1)
+            //    this.Add(AnimationFinDemo);
         }
 
 

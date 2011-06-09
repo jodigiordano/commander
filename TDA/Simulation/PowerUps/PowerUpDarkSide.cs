@@ -32,7 +32,7 @@ namespace EphemereGames.Commander
                     Vector3.Zero,
                     0,
                     0,
-                    new IVisible(Core.Persistance.Facade.GetAsset<Texture2D>("PixelBlanc"), Vector3.Zero),
+                    new Image("PixelBlanc"),
                     0,
                     0,
                     true,

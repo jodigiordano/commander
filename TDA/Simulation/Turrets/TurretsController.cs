@@ -118,6 +118,7 @@
         public void DoBuyTurret(Turret turret)
         {
             turret.RelativePosition = turret.Position - turret.CelestialBody.position;
+            turret.Show();
 
             PlanetarySystemController.AddTurret(turret);
             Turrets.Add(turret);
@@ -130,6 +131,8 @@
             PlanetarySystemController.RemoveTurret(turret);
 
             turret.DoDie();
+            turret.Hide();
+
             Turrets.Remove(turret);
             NotifyTurretSold(turret);
         }

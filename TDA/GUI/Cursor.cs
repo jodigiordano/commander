@@ -92,11 +92,21 @@
         }
 
 
+        public void Show()
+        {
+            Scene.Add(representation);
+        }
+
+
+        public void Hide()
+        {
+            Scene.Remove(representation);
+        }
+
+
         public void Draw()
         {
             representation.Position = this.Position;
-
-            Scene.ajouterScenable(representation);
         }
 
 

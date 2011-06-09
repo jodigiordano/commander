@@ -1,17 +1,15 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Utilities;
+
 
     class BulleTexte : Bulle
     {
         public IVisible Texte;
         public double TempsAffichage;
         public double TempsFadeOut;
+        public bool Visible;
 
         public Vector3 Position
         {
@@ -22,7 +20,7 @@
             }
         }
 
-        public BulleTexte(Simulation simulation, IVisible texte, Vector3 position, double tempsAffichage, float prioriteAffichage)
+        public BulleTexte(Simulation simulation, IVisible texte, Vector3 position, double tempsAffichage, double prioriteAffichage)
             : base(simulation, new Rectangle(), prioriteAffichage)
         {
             this.Texte = texte;
@@ -31,10 +29,10 @@
             this.TempsAffichage = tempsAffichage;
             this.TempsFadeOut = double.MaxValue;
 
-            determinerTaille();
-            determinerPosition();
+            ComputeSize();
+            ComputePosition();
 
-            this.Visible = false;
+            Visible = false;
         }
 
         public bool Termine
@@ -42,44 +40,72 @@
             get { return TempsAffichage <= 0; }
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-
             TempsAffichage -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (TempsAffichage <= TempsFadeOut)
             {
                 TempsFadeOut = double.NaN;
-                doHide(TempsAffichage);
+                FadeOut(TempsAffichage);
             }
 
             Visible = Texte.Couleur.A != 0; //TempsAffichage > 0;
 
-            determinerTaille();
-            determinerPosition();
+            ComputeSize();
+            ComputePosition();
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public override void Show()
         {
-            if (!Visible)
-               return;
+            base.Show();
 
-            base.Draw(gameTime);
+            Simulation.Scene.Add(Texte);
+        }
+
+
+        public override void Hide()
+        {
+            base.Hide();
+
+            Simulation.Scene.Remove(Texte);
+        }
+
+
+        public override void Draw()
+        {
+            base.Draw();
 
             Texte.Position = new Vector3(Dimension.X, Dimension.Y, 0);
-
-            Simulation.Scene.ajouterScenable(this.Texte);
         }
 
-        private void determinerTaille()
+
+        public override void FadeIn(double temps)
+        {
+            base.FadeIn(temps);
+
+            Texte.Couleur.A = 0;
+            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeInFrom0(255, 0, temps));
+        }
+
+
+        public override void FadeOut(double temps)
+        {
+            base.FadeOut(temps);
+
+            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeOutTo0(255, 0, temps));
+        }
+
+
+        private void ComputeSize()
         {
             this.Dimension.Width = this.Texte.Rectangle.Width + 4;
             this.Dimension.Height = this.Texte.Rectangle.Height + 4;
         }
 
-        private void determinerPosition()
+
+        private void ComputePosition()
         {
             bool tropADroite = Dimension.X + Dimension.Width + 50 > 640 - Preferences.DeadZoneXbox.X;
             bool tropBas = Dimension.Y + Dimension.Height > 370 - Preferences.DeadZoneXbox.Y;
@@ -88,48 +114,30 @@
             {
                 Dimension.X += -Dimension.Width - 50;
                 Dimension.Y += -Dimension.Height - 10;
-                PositionBla = 2;
+                BlaPosition = 2;
             }
 
             else if (tropADroite)
             {
                 Dimension.X += -Dimension.Width - 50;
-                PositionBla = 1;
+                BlaPosition = 1;
             }
 
             else if (tropBas)
             {
                 Dimension.Y += -Dimension.Height - 50;
-                PositionBla = 3;
+                BlaPosition = 3;
             }
 
             else
             {
                 Dimension.X += 50;
                 Dimension.Y += -10;
-                PositionBla = 0;
+                BlaPosition = 0;
             }
 
             Dimension.X = (int) MathHelper.Clamp(Dimension.X, -640 + Preferences.DeadZoneXbox.X, 640 - Preferences.DeadZoneXbox.X - Dimension.Width / 2);
             Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, -370 + Preferences.DeadZoneXbox.Y + Dimension.Height / 2, 370 - Preferences.DeadZoneXbox.Y - Dimension.Height / 2);
-
-        }
-
-
-        public override void doShow(double temps)
-        {
-            base.doShow(temps);
-
-            Texte.Couleur.A = 0;
-            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeInFrom0(255, 0, temps));
-        }
-
-
-        public override void doHide(double temps)
-        {
-            base.doHide(temps);
-
-            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeOutTo0(255, 0, temps));
         }
     }
 }

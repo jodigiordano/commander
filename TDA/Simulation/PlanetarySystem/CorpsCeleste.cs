@@ -2,17 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using Microsoft.Xna.Framework;
     using ProjectMercury.Modifiers;
 
-    class CorpsCeleste : DrawableGameComponent, ILivingObject, IObjetPhysique
+
+    class CorpsCeleste : ILivingObject, IObjetPhysique
     {
         public String Nom;
         public List<Turret> Turrets = new List<Turret>();
-        public IVisible Representation;
+        public Image Representation;
         public Particle ParticulesRepresentation;
         public int Priorite;
         public Vector3 position;
@@ -33,7 +33,7 @@
         public Vector3 Offset;
         public List<Lune> Lunes;
         public bool ContientTourelleGravitationnelleByPass;
-        public float PrioriteAffichageBackup;
+        public double PrioriteAffichageBackup;
         public Cercle TurretsZone;
         public bool ShowTurretsZone;
         public float ZoneImpactDestruction;
@@ -58,12 +58,11 @@
             Vector3 offset,
             float rayon,
             double tempsRotation,
-            IVisible representation,
+            Image representation,
             int pourcDepart,
             float prioriteAffichage,
             bool enBackground,
             int rotation)
-            : base(simulation.Main)
         {
             Simulation = simulation;
             Nom = nom;
@@ -74,13 +73,12 @@
             EstDernierRelais = false;
 
             Representation = representation;
-            Representation.Taille = 6;
-            Representation.Origine = representation.Centre;
+            Representation.SizeX = 6;
 
             if (enBackground)
             {
                 Representation.VisualPriority = Preferences.PrioriteFondEcran - 0.07f;
-                Representation.Couleur.A = 60;
+                Representation.Color.A = 60;
             }
             else
                 Representation.VisualPriority = prioriteAffichage;
@@ -104,8 +102,7 @@
             initLunes();
 
             TurretsZoneImage = new Image("CercleBlanc", Vector3.Zero);
-            TurretsZoneImage.Color = Color.White;
-            TurretsZoneImage.Color.A = 100;
+            TurretsZoneImage.Color = new Color(255, 255, 255, 100);
             TurretsZoneImage.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.002f;
             ShowTurretsZone = false;
 
@@ -125,7 +122,6 @@
             float prioriteAffichage,
             bool enBackground,
             int rotation)
-            : base(simulation.Main)
         {
             this.Simulation = simulation;
             this.Nom = nom;
@@ -183,7 +179,7 @@
         }
 
 
-        public float PrioriteAffichage
+        public double PrioriteAffichage
         {
             get
             {
@@ -239,7 +235,7 @@
         }
 
 
-        public override void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             if (TempsRotation != 0)
             {
@@ -249,7 +245,6 @@
             }
 
             Circle.Position = Position;
-            //ZoneImpactDestruction.Position = Position;
             TurretsZone.Position = Position;
 
             if (ParticulesRepresentation != null)
@@ -265,25 +260,52 @@
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public virtual void Show()
+        {
+            if (Representation != null)
+                Simulation.Scene.Add(Representation);
+
+            foreach (var lune in Lunes)
+                lune.Show();
+
+            Simulation.Scene.Add(TurretsZoneImage);
+        }
+
+
+        public virtual void Hide()
+        {
+
+            if (Representation != null)
+                Simulation.Scene.Remove(Representation);
+
+            foreach (var lune in Lunes)
+                lune.Hide();
+
+            Simulation.Scene.Remove(TurretsZoneImage);
+        }
+
+
+        public virtual void Draw()
         {
             if (this.LifePoints <= 0)
                 return;
 
             if (Representation != null)
-            {
                 Representation.position = this.Position;
-                Simulation.Scene.ajouterScenable(Representation);
-            }
 
             for (int i = 0; i < Lunes.Count; i++)
-                Lunes[i].Draw(gameTime);
+                Lunes[i].Draw();
 
             if (ShowTurretsZone)
             {
                 TurretsZoneImage.Position = TurretsZone.Position;
                 TurretsZoneImage.SizeX = (TurretsZone.Radius / 100) * 2;
-                Simulation.Scene.ajouterScenable(TurretsZoneImage);
+                TurretsZoneImage.Color.A = 100;
+            }
+
+            else
+            {
+                TurretsZoneImage.Color.A = 0;
             }
         }
 
@@ -345,11 +367,9 @@
                 Lune lune;
 
                 if ((Main.Random.Next(0, 2) == 0))
-                    lune = new LuneMatrice(Simulation, this);
+                    lune = new LuneMatrice(Simulation, this, 50);
                 else
-                    lune = new LuneTrajet(Simulation, this);
-
-                lune.Representation.Couleur.A = 50;
+                    lune = new LuneTrajet(Simulation, this, 50);
 
                 Lunes.Add(lune);
             }
@@ -360,8 +380,8 @@
         {
             this.AnciennePosition = position;
 
-            this.position.X = this.PositionBase.X * (float)Math.Cos((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
-            this.position.Y = this.PositionBase.Y * (float)Math.Sin((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
+            this.position.X = this.PositionBase.X * (float) Math.Cos((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
+            this.position.Y = this.PositionBase.Y * (float) Math.Sin((MathHelper.TwoPi / TempsRotation) * TempsRotationActuel);
 
             Vector3.Transform(ref position, ref MatriceRotation, out position);
             Vector3.Add(ref this.position, ref this.Offset, out this.position);
@@ -371,8 +391,8 @@
         public static void Deplacer(double tempsRotation, double tempsRotationActuel, ref Vector3 positionBase, ref Vector3 offset, ref Vector3 resultat)
         {
 
-            resultat.X = positionBase.X * (float)Math.Cos((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
-            resultat.Y = positionBase.Y * (float)Math.Sin((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
+            resultat.X = positionBase.X * (float) Math.Cos((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
+            resultat.Y = positionBase.Y * (float) Math.Sin((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
             resultat.Z = 0;
 
             Vector3.Add(ref resultat, ref offset, out resultat);

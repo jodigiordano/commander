@@ -13,13 +13,12 @@
         public List<CorpsCeleste> CelestialBodies;
         public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
-        public Sablier SandGlass;
-        public bool ModeDemo;
+        public SandGlass SandGlass;
         public Vector3 InitialPlayerPosition;
 
 
         //todo
-        public CorpsCeleste CelestialBodySelected { get { return Player.ActualSelection.CelestialBody; } }
+        public CorpsCeleste SelectedCelestialBody { get { return Player.ActualSelection.CelestialBody; } }
 
 
         private Simulation Simulation;
@@ -225,7 +224,7 @@
 
         public void DoMouseMoved(Player player, ref Vector3 delta)
         {
-            if (ModeDemo)
+            if (Simulation.DemoMode)
             {
                 Player.Move(ref delta, player.MouseConfiguration.Speed);
                 Player.UpdateDemoSelection();
@@ -252,7 +251,7 @@
             if (button != player.GamePadConfiguration.MoveCursor)
                 return;
 
-            if (ModeDemo)
+            if (Simulation.DemoMode)
             {
                 Player.Move(ref delta, player.GamePadConfiguration.Speed);
                 Player.UpdateDemoSelection();
@@ -274,7 +273,7 @@
 
         public void DoMouseScrolled(Player player, int delta)
         {
-            if (ModeDemo)
+            if (Simulation.DemoMode)
             {
                 if (Player.ActualSelection.CelestialBody == null)
                     return;
@@ -294,7 +293,7 @@
 
         public void DoGamePadButtonPressedOnce(Player player, Buttons button)
         {
-            if ( ModeDemo )
+            if (Simulation.DemoMode)
             {
                 if ( Player.ActualSelection.CelestialBody == null )
                     return;
@@ -320,7 +319,7 @@
 
         public void DoMouseButtonPressedOnce(Player player, MouseButton button)
         {
-            if (ModeDemo)
+            if (Simulation.DemoMode)
                 return;
 
             if (button == player.MouseConfiguration.Select)
@@ -337,7 +336,7 @@
 
             Player.UpdateSelection();
 
-            if (tourelle.Type == TurretType.Gravitational && !Simulation.ModeDemo)
+            if (tourelle.Type == TurretType.Gravitational && !Simulation.DemoMode)
                 EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
         }
 

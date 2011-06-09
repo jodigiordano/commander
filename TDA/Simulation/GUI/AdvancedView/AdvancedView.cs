@@ -1,9 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Visuel;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     class AdvancedView
@@ -34,6 +31,18 @@
                     foreach (var turret in celestialBody.Turrets)
                         turret.ShowRange = value;
             }
+        }
+
+
+        public void Show()
+        {
+
+        }
+
+
+        public void Hide()
+        {
+
         }
 
 

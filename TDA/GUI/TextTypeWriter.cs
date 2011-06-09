@@ -105,6 +105,18 @@
         }
 
 
+        public void Show()
+        {
+            Scene.Add(Text);
+        }
+
+
+        public void Hide()
+        {
+            Scene.Remove(Text);
+        }
+
+
         public void Update(GameTime gameTime)
         {
             Counter -= gameTime.ElapsedGameTime.TotalMilliseconds;

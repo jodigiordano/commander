@@ -111,7 +111,7 @@
 
             DrawTurretsToBuy();
 
-            Bulle.Draw(null);
+            Bulle.Draw();
         }
 
 
@@ -128,13 +128,13 @@
                 PrixTourellesAchat[t.Type].Data = t.BuyPrice + "M$";
 
 
-                Simulation.Scene.ajouterScenable(LogosTourellesAchat[t.Type]);
-                Simulation.Scene.ajouterScenable(PrixTourellesAchat[t.Type]);
+                Simulation.Scene.Add(LogosTourellesAchat[t.Type]);
+                Simulation.Scene.Add(PrixTourellesAchat[t.Type]);
 
                 if (TurretToBuy != null && TurretToBuy.Type == t.Type)
                 {
                     WidgetSelection.Position = this.Position + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices, 0);
-                    Simulation.Scene.ajouterScenable(WidgetSelection);
+                    Simulation.Scene.Add(WidgetSelection);
                 }
 
                 PrixTourellesAchat[t.Type].Color = (kvp.Value) ? Color.White : Color.Red;

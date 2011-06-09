@@ -2,8 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
+
 
     class PlayerLives
     {
@@ -33,13 +34,21 @@
             if (difference < 0)
             {
                 for (int i = 0; i < Math.Abs(difference); i++)
-                    Moons.Add(CreateMoon());
+                {
+                    Lune m = CreateMoon();
+                    m.Show();
+                    Moons.Add(m);
+                }
             }
 
             else if (difference > 0)
             {
                 for (int i = 0; i < difference && Moons.Count > 0; i++)
+                {
+                    Lune m = Moons[Moons.Count - 1];
+                    m.Hide();
                     Moons.RemoveAt(Moons.Count - 1);
+                }
             }
 
             foreach (var lune in Moons)
@@ -47,13 +56,25 @@
         }
 
 
+        public void Show()
+        {
+            foreach (var moon in Moons)
+                moon.Show();
+        }
+
+
+        public void Hide()
+        {
+            foreach (var moon in Moons)
+                moon.Hide();
+        }
+
+
         public void Draw()
         {
             if (CelestialBody.Alive)
-            {
                 foreach (var lune in Moons)
-                    lune.Draw(null);
-            }
+                    lune.Draw();
         }
 
 
@@ -62,14 +83,14 @@
             Lune lune;
 
             if (Main.Random.Next(0, 2) == 0)
-                lune = new LuneMatrice(Simulation, CelestialBody);
+                lune = new LuneMatrice(Simulation, CelestialBody, 255);
             else
-                lune = new LuneTrajet(Simulation, CelestialBody);
+                lune = new LuneTrajet(Simulation, CelestialBody, 255);
 
-            lune.Representation.Texture = EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>("luneVies");
-            lune.Representation.Couleur.A = 255;
-            lune.Representation.Taille = 3;
-            lune.Representation.Origine = lune.Representation.Centre;
+            lune.Representation = new Image("luneVies")
+            {
+                SizeX = 3
+            };
 
             return lune;
         }

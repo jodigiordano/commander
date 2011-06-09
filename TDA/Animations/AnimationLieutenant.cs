@@ -116,11 +116,21 @@ namespace EphemereGames.Commander
         }
 
 
-        public override void Draw(SpriteBatch spriteBatch)
+        protected override void Show()
         {
-            TheLieutenant.Draw(spriteBatch);
-            Bubble.Draw(spriteBatch);
-            TypeWriter.Texte.Draw(spriteBatch);
+            Scene.Add(Bubble);
+            Scene.Add(TheLieutenant);
+
+            TypeWriter.Show();
+        }
+
+
+        protected override void Hide()
+        {
+            Scene.Remove(Bubble);
+            Scene.Remove(TheLieutenant);
+
+            TypeWriter.Hide();
         }
     }
 }

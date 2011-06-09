@@ -1,13 +1,9 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Utilities;
-    using EphemereGames.Core.Persistance;
     using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
 
 
@@ -19,18 +15,18 @@
         private Vector3 LastPosition;
 
 
+        public NanobotsBullet()
+            : base()
+        {
+            Shape = Shape.Circle;
+            Circle = new Core.Physique.Cercle(Vector3.Zero, 0);
+            Rectangle = new RectanglePhysique();
+        }
+
+
         public override void Initialize()
         {
             base.Initialize();
-
-            Shape = Shape.Circle;
-
-            if (Circle == null)
-            {
-                Circle = new Core.Physique.Cercle(Vector3.Zero, ZoneImpact);
-                Rectangle = new RectanglePhysique();
-            }
-
 
             Circle.Radius = ZoneImpact;
             Circle.Position = Position;
@@ -77,21 +73,5 @@
 
 
         public override void DoHit(ILivingObject by) {}
-
-
-        public override void DoDie()
-        {
-            base.DoDie();
-
-            Bullet.PoolNanobotsBullets.Return(this);
-        }
-
-
-        public override void DoDieSilent()
-        {
-            base.DoDieSilent();
-
-            Bullet.PoolNanobotsBullets.Return(this);
-        }
     }
 }

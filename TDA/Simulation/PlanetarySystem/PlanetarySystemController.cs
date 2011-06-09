@@ -15,8 +15,6 @@
         public Path Path;
         public Path PathPreview;
 
-        private bool demoMode;
-
         private Simulation Simulation;
         private Pool<ShootingStar> ShootingStarsFactory;
 
@@ -29,28 +27,16 @@
             ShootingStarsFactory = new Pool<ShootingStar>();
             Path = new Path(simulation, new Color(255, 255, 255, 100), TypeBlend.Add);
             PathPreview = new Path(simulation, new Color(255, 255, 255, 25), TypeBlend.Add);
-            DemoMode = false;
         }
 
 
         public void Initialize()
         {
-            Path.CorpsCelestes = CelestialBodies;
+            Path.CelestialBodies = CelestialBodies;
             Path.Initialize();
 
-            PathPreview.CorpsCelestes = CelestialBodies;
+            PathPreview.CelestialBodies = CelestialBodies;
             PathPreview.Initialize();
-        }
-
-
-
-        public bool DemoMode
-        {
-            get { return demoMode; }
-            set
-            {
-                demoMode = value;
-            }
         }
 
 
@@ -81,10 +67,24 @@
         }
 
 
+        public void Show()
+        {
+            for (int i = 0; i < CelestialBodies.Count; i++)
+                CelestialBodies[i].Show();
+        }
+
+
+        public void Hide()
+        {
+            for (int i = 0; i < CelestialBodies.Count; i++)
+                CelestialBodies[i].Hide();
+        }
+
+
         public void Draw()
         {
             for (int i = 0; i < CelestialBodies.Count; i++)
-                CelestialBodies[i].Draw(null);
+                CelestialBodies[i].Draw();
         }
 
 
@@ -133,6 +133,7 @@
             var celestialBody = (CorpsCeleste) physicalObject;
 
             celestialBody.DoDie();
+            celestialBody.Hide();
 
             Path.enleverCorpsCeleste(celestialBody);
             PathPreview.enleverCorpsCeleste(celestialBody);

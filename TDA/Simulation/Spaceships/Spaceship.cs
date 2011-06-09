@@ -146,17 +146,13 @@
 
                 Vector3 translation = directionUnitairePerpendiculaire * Main.Random.Next(-17, 17);
 
-                BasicBullet p = Bullet.PoolBasicBullets.Get();
-                p.Scene = Simulation.Scene;
+                BasicBullet p = (BasicBullet) Simulation.BulletsFactory.Get(BulletType.Base);
+
                 p.Position = Position + translation;
                 p.Direction = Direction;
                 p.AttackPoints = BulletHitPoints;
-                p.PrioriteAffichage = Image.VisualPriority + 0.001f;
+                p.PrioriteAffichage = Image.VisualPriority + 0.001;
                 p.Speed = 10;
-                p.Initialize();
-
-                Simulation.Scene.Particles.Return(p.MovingEffect);
-                p.MovingEffect = null;
 
                 Bullets.Add(p);
             }
@@ -173,7 +169,7 @@
             Image.Position = Position;
             Image.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
 
-            Simulation.Scene.ajouterScenable(Image);
+            Simulation.Scene.Add(Image);
         }
 
 

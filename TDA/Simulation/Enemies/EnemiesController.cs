@@ -102,6 +102,9 @@
                     Enemy enemy = Enemies[i];
 
                     enemy.DoDie();
+                    enemy.Hide();
+                    Simulation.EnemiesFactory.ReturnEnemy(enemy);
+                    
 
                     if (enemy.Type == EnemyType.Damacloid)
                     {
@@ -270,11 +273,13 @@
 
                     e.Initialize();
 
+                    e.Show();
+
                     if (e.Type != EnemyType.Swarm)
                     {
                         while (MineralsDistribution.Count > 0 && MineralsDistribution[MineralsDistribution.Count - 1].Key == EnemiesCreatedCounter)
                         {
-                            e.Minerals.Add(Simulation.MineralsFactory.CreateMineral(MineralsDistribution[MineralsDistribution.Count - 1].Value, e.Image.VisualPriority + 0.01f));
+                            e.Minerals.Add(Simulation.MineralsFactory.CreateMineral(MineralsDistribution[MineralsDistribution.Count - 1].Value, e.Image.VisualPriority + 0.01));
 
                             MineralsDistribution.RemoveAt(MineralsDistribution.Count - 1);
                         }

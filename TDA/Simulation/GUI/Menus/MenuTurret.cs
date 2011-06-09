@@ -112,13 +112,13 @@
                 if (SelectedOption == 0)
                 {
                     WidgetSelection.Position = this.Position + (Turret.CanUpdate ? new Vector3(0, DistanceBetweenTwoChoices, 0) : new Vector3(0, 0, 0));
-                    Simulation.Scene.ajouterScenable(WidgetSelection);
+                    Simulation.Scene.Add(WidgetSelection);
                 }
 
                 PrixVente.Couleur = (AvailableTurretOptions[0]) ? Color.White : Color.Red;
 
-                Simulation.Scene.ajouterScenable(LogoPrixVente);
-                Simulation.Scene.ajouterScenable(PrixVente);
+                Simulation.Scene.Add(LogoPrixVente);
+                Simulation.Scene.Add(PrixVente);
             }
 
             // Afficher le prix de mise a jour
@@ -133,19 +133,19 @@
                 if (SelectedOption == TurretAction.Update)
                 {
                     WidgetSelection.Position = this.Position;
-                    Simulation.Scene.ajouterScenable(WidgetSelection);
+                    Simulation.Scene.Add(WidgetSelection);
                 }
 
                 PrixMiseAJour.Couleur = (AvailableTurretOptions[TurretAction.Update]) ? Color.White : Color.Red;
                 NiveauTourelle.Couleur = (AvailableTurretOptions[TurretAction.Update]) ? Color.White : Color.Red;
 
-                Simulation.Scene.ajouterScenable(LogoPrixMiseAJour);
-                Simulation.Scene.ajouterScenable(NiveauTourelle);
-                Simulation.Scene.ajouterScenable(PrixMiseAJour);
+                Simulation.Scene.Add(LogoPrixMiseAJour);
+                Simulation.Scene.Add(NiveauTourelle);
+                Simulation.Scene.Add(PrixMiseAJour);
             }
 
             if (Turret.CanSell || Turret.CanUpdate)
-                Bulle.Draw(null);
+                Bulle.Draw();
         }
     }
 }

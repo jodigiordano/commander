@@ -67,15 +67,20 @@
         {
             RemainingTime = Length;
 
+            Show();
         }
 
 
         public virtual void Stop()
         {
             RemainingTime = 0;
+
+            Hide();
         }
 
 
+        protected abstract void Show();
+        protected abstract void Hide();
 
 
         public virtual void Draw() { }

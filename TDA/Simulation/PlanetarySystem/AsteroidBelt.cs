@@ -10,7 +10,7 @@
     {
         private class Asteroid
         {
-            public IVisible Image;
+            public Image Image;
             public float RotationSpeed;
             public int MovingSpeed;
             public Vector3 Offset;
@@ -27,7 +27,7 @@
             Vector3 basePosition,
             float radius,
             double rotationTime,
-            List<IVisible> images,
+            List<Image> images,
             int startingPourcentage)
             : base(
                 simulation,
@@ -46,30 +46,46 @@
  
             for (int i = 0; i < NbAsteroids; i++)
             {
-                Asteroid asteroid = new Asteroid();
-                asteroid.Image = (IVisible) images[Main.Random.Next(0, images.Count)].Clone();
+                Asteroid asteroid = new Asteroid()
+                {
+                    Image = images[Main.Random.Next(0, images.Count)].Clone(),
+                    TimeOffset = Main.Random.Next((int)(-rotationTime/2), (int)(rotationTime/2)),
+                    Offset = new Vector3(Main.Random.Next(-50,50),Main.Random.Next(-50,50 ),0),
+                    RotationSpeed = Main.Random.Next(-100, 100) / 10000.0f,
+                    MovingSpeed = Main.Random.Next(1, 10)
+                };
+
                 asteroid.Image.VisualPriority = Preferences.PrioriteSimulationCeintureAsteroides;
-                asteroid.TimeOffset = Main.Random.Next((int)(-rotationTime/2), (int)(rotationTime/2));
-                asteroid.Offset = new Vector3(Main.Random.Next(-50,50),Main.Random.Next(-50,50 ),0);
+                asteroid.Image.Color.A = 60;
+                asteroid.Image.SizeX = (Main.Random.Next(10, 70) / 30.0f) * 3;
+
                 CorpsCeleste.Deplacer(this.TempsRotation, (this.TempsRotationActuel + asteroid.TimeOffset) % this.TempsRotation, ref this.PositionBase, ref asteroid.Offset, ref asteroid.Image.position);
-                asteroid.Image.Couleur.A = 60;
-                asteroid.RotationSpeed = Main.Random.Next(-100, 100) / 10000.0f;
-                asteroid.MovingSpeed = Main.Random.Next(1, 10);
-                asteroid.Image.Taille = (Main.Random.Next(10, 70) / 30.0f) * 3;
 
                 Asteroids[i] = asteroid;
             }
         }
 
 
-        public override void Draw(GameTime gameTime)
+        public override void Show()
+        {
+            for (int i = 0; i < NbAsteroids; i++)
+                Simulation.Scene.Add(Asteroids[i].Image);
+        }
+
+
+        public override void Hide()
+        {
+            for (int i = 0; i < NbAsteroids; i++)
+                Simulation.Scene.Remove(Asteroids[i].Image);
+        }
+
+
+        public override void Draw()
         {
             for (int i = 0; i < NbAsteroids; i++)
             {
                 CorpsCeleste.Deplacer(this.TempsRotation, (this.TempsRotationActuel + Asteroids[i].TimeOffset) % TempsRotation, ref this.PositionBase, ref Asteroids[i].Offset, ref Asteroids[i].Image.position);
                 Asteroids[i].Image.Rotation += Asteroids[i].RotationSpeed;
-
-                Simulation.Scene.ajouterScenable(Asteroids[i].Image);
             }
         }
     }

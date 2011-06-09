@@ -27,7 +27,7 @@
         private Particle RepresentationParticules;
 
 
-        public Mineral(Scene scene, MineralDefinition definition, float visualPriority)
+        public Mineral(Scene scene, MineralDefinition definition, double visualPriority)
         {
             Scene = scene;
             Definition = definition;
@@ -77,7 +77,7 @@
             Particle pris = Scene.Particles.Get("mineralPris");
             pris.Trigger(ref this.position);
             Scene.Particles.Return(pris);
-            Scene.Animations.Insert(new MineralTakenAnimation(Scene, Definition, Position));
+            Scene.Animations.Add(new MineralTakenAnimation(Scene, Definition, Position));
 
             string sfx = (Type == MineralType.Life1) ? "sfxLifePack" : "sfxMoney" + Main.Random.Next(1, 4);
 

@@ -2,27 +2,25 @@
 {
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     class MineralTakenAnimation : Animation
     {
-        IVisible Value;
+        private Image Value;
 
 
         public MineralTakenAnimation(Scene scene, MineralDefinition definition, Vector3 position)
             : base(1000)
         {
-            Value = new IVisible(Core.Persistance.Facade.GetAsset<Texture2D>(definition.Texture), position);
-            Value.Origine = Value.Centre;
+            Value = new Image(definition.Texture, position);
 
             switch (definition.Type)
             {
                 case MineralType.Cash150:
-                    Value.Taille = 2;
+                    Value.SizeX = 2;
                     break;
                 case MineralType.Life1:
-                    Value.Taille = 2;
+                    Value.SizeX = 2;
                     break;
             }
 
@@ -31,9 +29,15 @@
         }
 
 
-        public override void Draw(SpriteBatch spriteBatch)
+        protected override void Show()
         {
-            Value.Draw(spriteBatch);
+            Scene.Add(Value);
+        }
+
+
+        protected override void Hide()
+        {
+            Scene.Remove(Value);
         }
     }
 }

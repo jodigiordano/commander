@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+
     class MenuGeneral
     {
         public int Score;
@@ -18,8 +19,9 @@
         private IVisible WidgetRemainingWaves;
         private Vector3 Position;
         public MenuProchaineVague MenuNextWave;
-        public Sablier SandGlass;
+        public SandGlass SandGlass;
         public Cursor Cursor;
+
 
         public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave
         {
@@ -29,12 +31,13 @@
             }
         }
 
+
         public MenuGeneral(Simulation simulation, Vector3 position)
         {
             this.Simulation = simulation;
             this.Position = position;
 
-            this.SandGlass = new Sablier(simulation.Main, simulation.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
+            this.SandGlass = new SandGlass(simulation.Main, simulation.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
             this.Cash = 0;
 
 
@@ -70,10 +73,30 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            this.SandGlass.TempsRestant = this.TimeNextWave;
-            this.SandGlass.Update(gameTime);
+            this.SandGlass.RemainingTime = this.TimeNextWave;
+            this.SandGlass.Update();
+        }
+
+
+        public void Show()
+        {
+            Simulation.Scene.Add(WidgetCash);
+            Simulation.Scene.Add(WidgetRemainingWaves);
+            Simulation.Scene.Add(WidgetScore);
+
+            SandGlass.Show();
+        }
+
+
+        public void Hide()
+        {
+            Simulation.Scene.Remove(WidgetCash);
+            Simulation.Scene.Remove(WidgetRemainingWaves);
+            Simulation.Scene.Remove(WidgetScore);
+
+            SandGlass.Hide();
         }
 
 
@@ -84,12 +107,8 @@
             WidgetRemainingWaves.Texte = (RemainingWaves == -1) ? "Inf." : RemainingWaves.ToString();
             WidgetScore.Texte = Score.ToString();
 
-            Simulation.Scene.ajouterScenable(WidgetCash);
-            Simulation.Scene.ajouterScenable(WidgetRemainingWaves);
-            Simulation.Scene.ajouterScenable(WidgetScore);
-
-            this.SandGlass.Draw(null);
-            this.MenuNextWave.Draw(null);
+            SandGlass.Draw();
+            MenuNextWave.Draw(null);
         }
     }
 }

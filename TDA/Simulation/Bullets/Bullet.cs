@@ -82,17 +82,27 @@ namespace EphemereGames.Commander
         }
 
 
+        public virtual void Show()
+        {
+            if (Image != null)
+                Scene.Add(Image);
+        }
+
+
+        public virtual void Hide()
+        {
+            if (Image != null)
+                Scene.Remove(Image);
+        }
+
+
         public virtual void Draw()
         {
             if (Alive && MovingEffect != null)
                 MovingEffect.Trigger(ref this.position);
 
             if (Alive && Image != null)
-            {
                 Image.Position = this.Position;
-
-                Scene.ajouterScenable(Image);
-            }
         }
 
 

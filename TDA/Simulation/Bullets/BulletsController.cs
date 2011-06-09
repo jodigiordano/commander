@@ -37,6 +37,7 @@ namespace EphemereGames.Commander
                     else
                         b.DoDie();
                     
+                    b.Hide();
 
                     Simulation.BulletsFactory.Return(b);
 
@@ -63,6 +64,7 @@ namespace EphemereGames.Commander
                 return;
 
             b.Initialize();
+            b.Show();
 
             Bullets.Add(b);
         }
