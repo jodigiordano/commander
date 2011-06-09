@@ -2,9 +2,8 @@ namespace EphemereGames.Commander
 {
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
-    
+
     class AnimationSprite : Animation
     {
         private Sprite Sprite;
@@ -12,10 +11,9 @@ namespace EphemereGames.Commander
 
 
         public AnimationSprite(Sprite sprite)
-            : base (sprite.TempsDefilement)
+            : base(sprite.TempsDefilement, sprite.VisualPriority)
         {
             this.Sprite = sprite;
-            this.Blend = sprite.Blend;
         }
 
 

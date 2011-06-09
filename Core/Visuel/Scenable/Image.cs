@@ -17,14 +17,15 @@
         public Vector3 Position { get { return position; } set { position = value; } }
         public float Rotation { get; set; }
         public TypeBlend Blend { get; set; }
-        public float VisualPriority { get; set; }
-        public virtual List<IScenable> Components { get; set; }
+        public double VisualPriority { get; set; }
+        public int Id { get; private set; }
 
         public Rectangle VisiblePart;
         public SpriteEffects Effect;
         public Color Color;
 
         private Texture2D Texture;
+        private string TextureName;
 
 
         public Image(string imageName) : this(imageName, Vector3.Zero) {}
@@ -32,6 +33,7 @@
 
         public Image(string imageName, Vector3 position)
         {
+            TextureName = imageName;
             Texture = Persistance.Facade.GetAsset<Texture2D>(imageName);
             TextureSize = new Vector2(Texture.Width, Texture.Height);
             Center = TextureSize / 2f;
@@ -41,10 +43,10 @@
             Rotation = 0f;
             Blend = TypeBlend.Alpha;
             Color = Color.White;
-            Components = null;
             Effect = SpriteEffects.None;
             VisiblePart = new Rectangle(0, 0, (int) TextureSize.X, (int) TextureSize.Y);
             VisualPriority = 0;
+            Id = Facade.NextHashCode;
         }
 
 
@@ -81,7 +83,10 @@
 
         public Image Clone()
         {
-            return (Image) this.MemberwiseClone();
+            Image i = (Image) this.MemberwiseClone();
+            i.Id = Facade.NextHashCode;
+
+            return i;
         }
 
 

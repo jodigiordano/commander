@@ -8,34 +8,34 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+
     class AnimationLieutenant : Animation
     {
-        private Main Main;
         private Image Bubble;
         private Image TheLieutenant;
         private TextTypeWriter TypeWriter;
         private EffectsController GE;
 
 
-        public AnimationLieutenant(Main main, Scene scene, String texte, double temps)
-            : base(temps)
+        public AnimationLieutenant(String text, double time, double visualPriority)
+            : base(time, visualPriority)
         {
-            Scene = scene;
-            Main = main;
+            TheLieutenant = new Image("lieutenant", new Vector3(-300, 500, 0))
+            {
+                SizeX = 6,
+                VisualPriority = Preferences.PrioriteGUIMenuPrincipal
+            };
 
-            TheLieutenant = new Image("lieutenant", new Vector3(-300, 500, 0));
-            TheLieutenant.SizeX = 6;
-            TheLieutenant.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
-
-            Bubble = new Image("bulle", new Vector3(-100, 300, 0));
-            Bubble.SizeX = 8;
-            Bubble.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
-            Bubble.Origin = Vector2.Zero;
+            Bubble = new Image("bulle", new Vector3(-100, 300, 0))
+            {
+                SizeX = 8,
+                VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f,
+                Origin = Vector2.Zero
+            };
 
             TypeWriter = new TextTypeWriter
             (
-                Main,
-                texte,
+                text,
                 Color.Black,
                 new Vector3(20, 280, 0),
                 EphemereGames.Core.Persistance.Facade.GetAsset<SpriteFont>("Pixelite"),
@@ -54,7 +54,7 @@ namespace EphemereGames.Commander
                 },
                 Scene
             );
-            TypeWriter.Texte.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
+            TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
             GE = new EffectsController();
 
@@ -86,7 +86,7 @@ namespace EphemereGames.Commander
             (new Vector2[] { new Vector2(-75, 325), new Vector2(-75, -75), new Vector2(-75, -75), new Vector2(-75, 500) },
              new double[] { 0, 1000, this.Length - 1000, this.Length });
 
-            GE.Add(TypeWriter.Texte, edt);
+            GE.Add(TypeWriter.Text, edt);
         }
 
 
@@ -100,19 +100,19 @@ namespace EphemereGames.Commander
         }
 
 
-        public void doShow()
+        public void FadeIn()
         {
             GE.Add(Bubble, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
             GE.Add(TheLieutenant, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
-            GE.Add(TypeWriter.Texte, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
+            GE.Add(TypeWriter.Text, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
         }
 
 
-        public void doHide()
+        public void FadeOut()
         {
             GE.Add(Bubble, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
             GE.Add(TheLieutenant, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
-            GE.Add(TypeWriter.Texte, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
+            GE.Add(TypeWriter.Text, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
         }
 
 

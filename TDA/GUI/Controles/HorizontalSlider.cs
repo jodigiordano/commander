@@ -63,9 +63,9 @@
         {
             ValeurRep.Texte = Valeur.ToString();
 
-            Scene.ajouterScenable(Gauche);
-            Scene.ajouterScenable(Droite);
-            Scene.ajouterScenable(ValeurRep);
+            Scene.Add(Gauche);
+            Scene.Add(Droite);
+            Scene.Add(ValeurRep);
         }
     }
 }

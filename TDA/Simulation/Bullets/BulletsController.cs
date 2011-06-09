@@ -30,7 +30,16 @@ namespace EphemereGames.Commander
             for (int i = Bullets.Count - 1; i > -1; i--)
                 if (!Bullets[i].Alive)
                 {
-                    Bullets[i].DoDie();
+                    Bullet b = Bullets[i];
+
+                    if (b.OutOfBounds)
+                        b.DoDieSilent();
+                    else
+                        b.DoDie();
+                    
+
+                    Simulation.BulletsFactory.Return(b);
+
                     Bullets.RemoveAt(i);
                 }
 
@@ -48,10 +57,36 @@ namespace EphemereGames.Commander
 
         public void DoObjectCreated(IObjetPhysique objet)
         {
-            if (!(objet is Bullet))
+            Bullet b = objet as Bullet;
+
+            if (b == null)
                 return;
 
-            Bullets.Add((Bullet) objet);
+            b.Initialize();
+
+            Bullets.Add(b);
+        }
+
+
+        public void DoObjectHit(IObjetPhysique obj, IObjetPhysique by)
+        {
+            Bullet b = by as Bullet;
+
+            if (b == null)
+                return;
+
+            b.DoHit((ILivingObject) obj);
+        }
+
+
+        public void DoObjectOutOfBounds(IObjetPhysique obj)
+        {
+            Bullet b = obj as Bullet;
+
+            if (b == null)
+                return;
+
+            b.OutOfBounds = true;
         }
 
 

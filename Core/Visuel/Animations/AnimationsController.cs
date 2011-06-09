@@ -7,13 +7,15 @@
 
     public class AnimationsController
     {
+        public List<Animation> Animations { get; private set; }
+
         private Scene Scene;
-        private List<Animation> Animations = new List<Animation>();
 
 
         public AnimationsController(Scene scene)
         {
             Scene = scene;
+            Animations = new List<Animation>();
         }
 
 
@@ -30,25 +32,20 @@
         }
 
 
-        public List<Animation> Components
-        {
-            get { return Animations; }
-        }
-
-
-        public void Insert(Animation animation)
+        public void Add(Animation animation)
         {
             animation.Scene = Scene;
             animation.Initialize();
+            animation.Start();
 
             Animations.Add(animation);
         }
 
 
-        public void Insert(List<Animation> animations)
+        public void Add(List<Animation> animations)
         {
             foreach (var animation in animations)
-                Insert(animation);
+                Add(animation);
         }
 
 
@@ -56,7 +53,10 @@
         {
             for (int i = 0; i < Animations.Count; i++)
             {
-                if (Animations[i].Paused) { continue; }
+                if (Animations[i].Paused)
+                {
+                    continue;
+                }
 
                 if (Animations[i].Finished(gameTime))
                 {
@@ -66,7 +66,10 @@
                     continue;
                 }
 
-                Animations[i].Update(gameTime);
+                else
+                {
+                    Animations[i].Update(gameTime);
+                }
             }
         }
 
@@ -74,7 +77,7 @@
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < Animations.Count; i++)
-                Animations[i].Draw(spriteBatch);
+                Animations[i].Draw();
         }
 
 
@@ -87,6 +90,9 @@
 
         public void Clear()
         {
+            foreach (var animation in Animations)
+                animation.Stop();
+
             Animations.Clear();
         }
     }

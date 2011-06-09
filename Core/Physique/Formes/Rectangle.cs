@@ -92,6 +92,15 @@
         }
 
 
+        public void set(int x, int y, int width, int height)
+        {
+            RectanglePrimitif.X = x;
+            RectanglePrimitif.Y = y;
+            RectanglePrimitif.Width = width;
+            RectanglePrimitif.Height = height;
+        }
+
+
         public Vector2 pointIntersection(Ligne ligne)
         {
             Vector2 pointA, pointB, pointC, pointD;

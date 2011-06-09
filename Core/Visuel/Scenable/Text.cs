@@ -15,8 +15,8 @@
 
         public Vector3 Position { get; set; }
         public TypeBlend Blend { get; set; }
-        public float VisualPriority { get; set; }
-        public virtual List<IScenable> Components { get; set; }
+        public double VisualPriority { get; set; }
+        public int Id { get; private set; }
         public Color Color;
 
         private SpriteFont Font;
@@ -33,6 +33,7 @@
             Position = position;
             Size = new Vector2(1);
             TextSizeComputed = false;
+            Id = Facade.NextHashCode;
         }
 
 

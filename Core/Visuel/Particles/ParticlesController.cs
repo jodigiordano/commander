@@ -89,13 +89,13 @@ namespace EphemereGames.Core.Visuel
 
         public void Update(GameTime gameTime)
         {
-            DoAsyncUpdate(0, Particles.Count / 2, (float) gameTime.ElapsedGameTime.TotalSeconds);
-            DoAsyncUpdate(Particles.Count / 2, Particles.Count, (float) gameTime.ElapsedGameTime.TotalSeconds);
-            DoKillActiveParticles();
+            AsyncUpdate(0, Particles.Count / 2, (float) gameTime.ElapsedGameTime.TotalSeconds);
+            AsyncUpdate(Particles.Count / 2, Particles.Count, (float) gameTime.ElapsedGameTime.TotalSeconds);
+            RemoveDeadParticles();
         }
 
 
-        private void DoKillActiveParticles()
+        private void RemoveDeadParticles()
         {
             for (int i = 0; i < Particles.Count; i++)
                 if (Particles[i].State == State.Dead)
@@ -107,7 +107,7 @@ namespace EphemereGames.Core.Visuel
         }
 
 
-        private void DoAsyncUpdate(int i, int j, float elapsedSeconds)
+        private void AsyncUpdate(int i, int j, float elapsedSeconds)
         {
             for (int k = i; k < j; k++)
             {

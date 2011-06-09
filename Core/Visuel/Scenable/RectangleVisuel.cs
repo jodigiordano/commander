@@ -9,10 +9,10 @@ namespace EphemereGames.Core.Visuel
     public class RectangleVisuel : IScenable
     {
         public Vector3 Position                 { get; set; }
-        public float VisualPriority          { get; set; }
+        public double VisualPriority            { get; set; }
         public Scene Scene                      { get; set; }
-        public TypeBlend Blend              { get; set; }
-        public List<IScenable> Components       { get; set; }
+        public TypeBlend Blend                  { get; set; }
+        public int Id                           { get; private set; }
 
         private Color Couleur                   { get; set; }
         private Rectangle Rectangle             { get; set; }
@@ -23,6 +23,7 @@ namespace EphemereGames.Core.Visuel
             Blend = TypeBlend.Default;
             Couleur = couleur;
             Rectangle = rectangle;
+            Id = Facade.NextHashCode;
         }
 
         public void Draw(SpriteBatch spriteBatch)

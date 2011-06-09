@@ -14,6 +14,9 @@
         internal static ScenesController ScenesController;
         private static TransitionsController TransitionsController;
 
+        private static int nextHashCode = 0;
+        public static int NextHashCode { get { return nextHashCode++; } }
+
 
         public static void Initialize(
             GraphicsDeviceManager graphicsDeviceManager,
@@ -28,7 +31,7 @@
             Preferences.WindowWidth = windowWidth;
             Preferences.WindowHeight = windowHeight;
             Preferences.Content = content;
-            Preferences.ThreadParticules = thread1;
+            Preferences.ThreadParticles = thread1;
             Preferences.ThreadLogic = thread2;
 
             ScenesController = new ScenesController();

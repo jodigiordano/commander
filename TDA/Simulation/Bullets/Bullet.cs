@@ -5,32 +5,9 @@ namespace EphemereGames.Commander
     using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
 
-    enum BulletType
+
+    class Bullet : IObjetPhysique, ILivingObject
     {
-        Base,
-        Missile,
-        Missile2,
-        LaserMultiple,
-        LaserSimple,
-        Aucun,
-        SlowMotion,
-        Gunner,
-        Nanobots,
-        RailGun
-    };
-
-
-    abstract class Bullet : IObjetPhysique, ILivingObject
-    {
-        public static Pool<BasicBullet> PoolBasicBullets = new Pool<BasicBullet>();
-        public static Pool<MultipleLasersBullet> PoolMultipleLasersBullets = new Pool<MultipleLasersBullet>();
-        public static Pool<LaserBullet> PoolLaserBullets = new Pool<LaserBullet>();
-        public static Pool<MissileBullet> PoolMissileBullets = new Pool<MissileBullet>();
-        public static Pool<SlowMotionBullet> PoolSlowMotionBullets = new Pool<SlowMotionBullet>();
-        public static Pool<GunnerBullet> PoolGunnerBullets = new Pool<GunnerBullet>();
-        public static Pool<NanobotsBullet> PoolNanobotsBullets = new Pool<NanobotsBullet>();
-        public static Pool<RailGunBullet> PoolRailGunBullets = new Pool<RailGunBullet>();
-
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
         public float Speed                                          { get; set; }
@@ -47,18 +24,27 @@ namespace EphemereGames.Commander
         public float AttackPoints                                   { get; set; }
 
         public Scene Scene;
-        public float PrioriteAffichage;
-        public bool Alive                                           { get { return LifePoints > 0; } }
-        public Image Image                                          { get; set; }
-        public Particle ExplodingEffect                             { get; set; }
-        public Particle MovingEffect                                { get; set; }
+        public double PrioriteAffichage;
+        public bool Alive                                           { get { return !OutOfBounds && LifePoints > 0; } }
+        public bool OutOfBounds;
+        public Image Image;
+        public Particle ExplodingEffect;
+        public Particle MovingEffect;
         public float DeflectZone;
+        public BulletType Type;
+        public bool AssetsLoaded;
+
+
+        public Bullet()
+        {
+            Shape = Shape.Rectangle;
+            DeflectZone = 100;
+            AssetsLoaded = false;
+        }
 
 
         public virtual void Initialize()
         {
-            Shape = Shape.Rectangle;
-
             if (Direction != Vector3.Zero)
             {
                 Vector3 direction = Direction;
@@ -66,7 +52,13 @@ namespace EphemereGames.Commander
                 Direction = direction;
             }
 
-            DeflectZone = 100;
+            OutOfBounds = false;
+        }
+
+
+        public virtual void LoadAssets()
+        {
+            AssetsLoaded = true;
         }
 
 

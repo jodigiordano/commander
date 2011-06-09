@@ -274,10 +274,16 @@ namespace EphemereGames.Core.Visuel
 
         public object Clone()
         {
+            Sprite s = null;
+
             if (this.Rectangles != null)
-                return new Sprite(this.SpriteSheet, this.Rectangles, this.Cyclique, this.VitesseDefilement);
+                s = new Sprite(this.SpriteSheet, this.Rectangles, this.Cyclique, this.VitesseDefilement);
             else
-                return new Sprite(this.SpriteSheet, this.NbLignes, this.NbColonnes, this.Cyclique, this.VitesseDefilement);
+                s = new Sprite(this.SpriteSheet, this.NbLignes, this.NbColonnes, this.Cyclique, this.VitesseDefilement);
+
+            s.Id = Facade.NextHashCode;
+
+            return s;
         }
     }
 }

@@ -1,59 +1,59 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Utilities;
-    using EphemereGames.Core.Persistance;
     using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
+
 
     class LaserBullet : Bullet
     {
-        private double DureeVie;
-        public Enemy Cible;
-        public Turret TourelleEmettrice;
-        private Particle RepresentationVivantAlt;
-        private LigneVisuel RepresentationVivantAlt2;
+        public Enemy Target;
+        public Turret Turret;
+        private LigneVisuel MovingEffect2;
+        private double LifeSpan;
+
+
+        public LaserBullet()
+            : base()
+        {
+            Speed = 0;
+            Shape = Shape.Line;
+            Line = new Ligne(Vector2.Zero, Vector2.Zero);
+        }
 
 
         public override void Initialize()
         {
             base.Initialize();
 
-            Position = TourelleEmettrice.Position;
-            Speed = 0;
-            Shape = Shape.Line;
-            Image = null;
+            Position = Turret.Position;
 
-            Line = new Ligne(this.Position, Cible.Position);
+            MovingEffect = Scene.Particles.Get("projectileLaserSimple");
+            MovingEffect.VisualPriority = PrioriteAffichage + 0.001f;
 
-            RepresentationVivantAlt = Scene.Particles.Get("projectileLaserSimple");
-            RepresentationVivantAlt.VisualPriority = PrioriteAffichage + 0.001f;
-            LineEmitter emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[0];
-            emetteur.Length = Line.Longueur;
-            emetteur = (LineEmitter)RepresentationVivantAlt.ParticleEffect[1];
-            emetteur.Length = Line.Longueur;
+            Line.Debut = Turret.Position;
+            Line.Fin = Target.Position;
 
-            RepresentationVivantAlt2 = new LigneVisuel(Line.Debut, Line.Fin, new Color(255, 0, 110), 4);
-            RepresentationVivantAlt2.VisualPriority = PrioriteAffichage + 0.002f;
+            LineEmitter emitter = (LineEmitter)MovingEffect.ParticleEffect[0];
+            emitter.Length = Line.Longueur;
+            emitter = (LineEmitter)MovingEffect.ParticleEffect[1];
+            emitter.Length = Line.Longueur;
 
-            MovingEffect = null;
-            ExplodingEffect = null;
+            MovingEffect2 = new LigneVisuel(Line.Debut, Line.Fin, new Color(255, 0, 110), 4);
+            MovingEffect2.VisualPriority = PrioriteAffichage + 0.002f;
 
             LifePoints = Int16.MaxValue;
-
-            DureeVie = 800;
+            LifeSpan = 800;
         }
 
 
         public override void Update()
         {
-            if (Cible.Alive)
+            if (Target.Alive)
             {
-                Vector3 nouvelleDirection = Cible.Position - this.Position;
+                Vector3 nouvelleDirection = Target.Position - this.Position;
                 nouvelleDirection.Normalize();
 
                 this.Direction = nouvelleDirection;

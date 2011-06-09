@@ -2,114 +2,123 @@
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Visuel;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Input;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Utilities;
 
-    class TextTypeWriter : DrawableGameComponent
+
+    class TextTypeWriter
     {
         private String Raw;
-        private double Cadence;
-        private bool ArretFinPhrase;
-        private Vector2 Canevas;
-        private SpriteFont Police;
+        private double Frequency;
+        private bool StopAtEndOfSentence;
+        private Vector2 CanvasSize;
+        private SpriteFont Font;
         private Scene Scene;
-        private Main Main;
-        private Vector3 PositionDepart;
-        private float Taille;
-        private double TempsArret;
+        private Vector3 StartingPosition;
+        private float Size;
+        private double PauseTime;
 
-        private int LongueurCaracterePixel;
-        private int NbCaracteresLigne;
-        private int NbCaracteresTraites;
-        private int NbCaracteresTraitesLigne;
-        private double Compteur;
-        private bool JouerSons;
-        private List<String> Sons;
+        private int CharWidth;
+        private int NbCharPerLine;
+        private int NbCharWritten;
+        private int NbCharWrittenLine;
+        private double Counter;
+        private bool PlaySfx;
+        private List<string> Sfxs;
 
-        public IVisible Texte;
+        public IVisible Text { get; private set; }
 
-        public TextTypeWriter(Main main, String raw, Color couleur, Vector3 positionDepart, SpriteFont police, float taille, Vector2 canevas, double cadence, bool arretFinPhrase, double tempsArret, bool jouerSons, List<String> sons, Scene scene)
-            : base(main)
+
+        public TextTypeWriter(
+            string text,
+            Color color,
+            Vector3 startingPosition,
+            SpriteFont police,
+            float size,
+            Vector2 canvasSize,
+            double frequency,
+            bool StopAtEndOfSentence,
+            double pauseTime,
+            bool playSfx,
+            List<string> sfxs,
+            Scene scene)
         {
-            this.Main = main;
-            this.Police = police;
-            this.Canevas = canevas;
-            this.Cadence = cadence;
-            this.ArretFinPhrase = arretFinPhrase;
+            this.Font = police;
+            this.CanvasSize = canvasSize;
+            this.Frequency = frequency;
+            this.StopAtEndOfSentence = StopAtEndOfSentence;
             this.Scene = scene;
-            this.PositionDepart = positionDepart;
-            this.TempsArret = tempsArret;
-            this.Taille = taille;
-            this.JouerSons = jouerSons;
-            this.Sons = sons;
+            this.StartingPosition = startingPosition;
+            this.PauseTime = pauseTime;
+            this.Size = size;
+            this.PlaySfx = playSfx;
+            this.Sfxs = sfxs;
 
             IVisible iv = new IVisible("a", police, Color.White, Vector3.Zero);
-            iv.Taille = this.Taille;
-            LongueurCaracterePixel = iv.Rectangle.Width;
+            iv.Taille = this.Size;
+            CharWidth = iv.Rectangle.Width;
 
-            NbCaracteresLigne = (int) (canevas.X / LongueurCaracterePixel);
+            NbCharPerLine = (int) (canvasSize.X / CharWidth);
 
             Raw = "";
 
-            string[] sentences = raw.Split(new string[] { "\n\n\n" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] sentences = text.Split(new string[] { "\n\n\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var sentence in sentences)
             {
                 string[] words = sentence.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-                NbCaracteresTraitesLigne = 0;
+                NbCharWrittenLine = 0;
 
                 foreach (var word in words)
                 {
-                    if (word.Length > NbCaracteresLigne - NbCaracteresTraitesLigne)
+                    if (word.Length > NbCharPerLine - NbCharWrittenLine)
                     {
                         Raw += "\n\n";
-                        NbCaracteresTraitesLigne = 0;
+                        NbCharWrittenLine = 0;
                     }
 
                     Raw += word + " ";
-                    NbCaracteresTraitesLigne += word.Length + 1;
+                    NbCharWrittenLine += word.Length + 1;
                 }
 
                 Raw += "\n\n\n";
             }
 
 
-            Compteur = 0;
+            Counter = 0;
 
-            Texte = new IVisible("", police, couleur, PositionDepart);
-            Texte.Taille = this.Taille;
+            Text = new IVisible("", police, color, StartingPosition);
+            Text.Taille = this.Size;
         }
 
 
-        public bool Termine
+        public bool Finished
         {
-            get { return NbCaracteresTraites >= Raw.Length; }
+            get { return NbCharWritten >= Raw.Length; }
             set
             {
-                NbCaracteresTraites = Raw.Length;
-                Texte.Texte = Raw;
+                NbCharWritten = Raw.Length;
+                Text.Texte = Raw;
             }
         }
 
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            Compteur -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            Counter -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (Compteur <= 0 && NbCaracteresTraites < Raw.Length)
+            if (Counter <= 0 && NbCharWritten < Raw.Length)
             {
-                Compteur = (ArretFinPhrase && Raw[NbCaracteresTraites] == '.') ? this.TempsArret : Cadence;
+                Counter = (StopAtEndOfSentence && Raw[NbCharWritten] == '.') ? this.PauseTime : Frequency;
 
-                Texte.Texte += Raw[NbCaracteresTraites];
+                Text.Texte += Raw[NbCharWritten];
 
-                NbCaracteresTraites++;
+                NbCharWritten++;
 
-                if (JouerSons)
-                    EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", Sons[Main.Random.Next(0, Sons.Count)]);
+                if (PlaySfx)
+                    EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", Sfxs[Main.Random.Next(0, Sfxs.Count)]);
             }
         }
     }

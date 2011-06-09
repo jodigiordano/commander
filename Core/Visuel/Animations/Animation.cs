@@ -7,38 +7,24 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    public abstract class Animation : IScenable
+    public abstract class Animation
     {
         public bool Paused                  { get; set; }
-        public float VisualPriority         { get; set; }
+        public double VisualPriority        { get; set; }
         public Scene Scene                  { protected get; set; }
-        public Vector3 Position             { get; set; }
-        public TypeBlend Blend              { get; set; }
-        public List<IScenable> Components   { get; set; }
         public double RemainingTime         { get; private set; }
 
         private double length = 0;
-					
-
-        public Animation()
-        {
-            Length = 0;
-            this.Paused = false;
-            this.Position = Vector3.Zero;
-            this.Blend = TypeBlend.Alpha;
-            this.Components = null;
-            this.VisualPriority = 0;
-        }
 
 
-        public Animation(double length)
+        public Animation(double visualPriority) : this(0, visualPriority) { }
+
+
+        public Animation(double length, double visualPriority)
         {
             Length = length;
             this.Paused = false;
-            this.Position = Vector3.Zero;
-            this.Blend = TypeBlend.Alpha;
-            this.Components = null;
-            this.VisualPriority = 0;
+            this.VisualPriority = visualPriority;
         }
 
 
@@ -77,12 +63,21 @@
         }
 
 
+        public virtual void Start()
+        {
+            RemainingTime = Length;
+
+        }
+
+
         public virtual void Stop()
         {
             RemainingTime = 0;
         }
 
 
-        public virtual void Draw(SpriteBatch spriteBatch) {}
+
+
+        public virtual void Draw() { }
     }
 }

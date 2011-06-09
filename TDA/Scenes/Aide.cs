@@ -46,7 +46,6 @@
 
             TypeWriter = new TextTypeWriter
             (
-                Main,
                 "",
                 Color.Black,
                 new Vector3(170, -130, 0),
@@ -66,7 +65,7 @@
                 },
                 this
             );
-            TypeWriter.Texte.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
+            TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
             Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
 
@@ -135,7 +134,10 @@
 
             SlidesSlider = new HorizontalSlider(this, Curseur, new Vector3(0, -250, 0), 0, 3, 0, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
-            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
+            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
+            {
+                Scene = this
+            };
 
             TempsEntreDeuxChangementMusique = 0;
 
@@ -185,14 +187,14 @@
 
         protected override void UpdateVisual()
         {
-            ajouterScenable(FondEcran);
-            ajouterScenable(TitresSlides[SlidesSlider.Valeur].Key);
-            ajouterScenable(TitresSlides[SlidesSlider.Valeur].Value);
+            Add(FondEcran);
+            Add(TitresSlides[SlidesSlider.Valeur].Key);
+            Add(TitresSlides[SlidesSlider.Valeur].Value);
             SlidesSlider.Draw();
             Curseur.Draw();
 
             if (Transition != TransitionType.None)
-                AnimationTransition.Draw(null);
+                AnimationTransition.Draw();
         }
 
 

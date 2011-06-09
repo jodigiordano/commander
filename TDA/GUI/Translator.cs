@@ -7,7 +7,7 @@
     using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Utilities;
 
-    class Translator : DrawableGameComponent
+    class Translator
     {
         private String TexteATraduire;
         public IVisible PartieNonTraduite;
@@ -44,8 +44,7 @@
             bool showRecherche,
             int tempsTraduction,
             int tempsChaqueRecherche,
-            float visualPriority)
-            : base(main)
+            double visualPriority)
         {
             this.Scene = scene;
             this.Position = position;
@@ -88,15 +87,18 @@
 
         }
 
-        public override void Update(GameTime gameTime)
+
+        public void Update()
         {
-            TempsTraductionEcoule += gameTime.ElapsedGameTime.TotalMilliseconds;
+            TempsTraductionEcoule += 16.66;
 
             for (int i = 0; i < TexteATraduire.Length; i++)
-                ProgressionUneRecherche[i] -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                ProgressionUneRecherche[i] -= 16.66;
+        }
         }
 
-        public override void Draw(GameTime gameTime)
+
+        public void Draw()
         {
             for (int i = 0; i < TexteATraduire.Length; i++)
             {

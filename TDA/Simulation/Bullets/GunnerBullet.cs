@@ -1,13 +1,9 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
-    using EphemereGames.Core.Utilities;
-    using EphemereGames.Core.Persistance;
     using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
 
 
@@ -15,32 +11,33 @@
     {
         public Enemy Target;
         public Turret Turret;
-        private Particle ExplodingEffectAlt;
         private Particle TurretEffect;
         private Matrix CanonRotation;
+
+
+        public GunnerBullet()
+            : base()
+        {
+            Speed = 0;
+            Rectangle = new RectanglePhysique();
+            CanonRotation = new Matrix();
+        }
 
 
         public override void Initialize()
         {
             base.Initialize();
 
-            Speed = 0;
-            Image = null;
-
             Position = Target.Position;
 
-            Rectangle = new RectanglePhysique((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
-            CanonRotation = new Matrix();
-
-            ExplodingEffectAlt = Scene.Particles.Get("projectileBaseExplosion");
-            ExplodingEffectAlt.VisualPriority = Target.Image.VisualPriority - 0.0001f;
+            Rectangle.set((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
+            
+            ExplodingEffect = Scene.Particles.Get("projectileBaseExplosion");
+            ExplodingEffect.VisualPriority = Target.Image.VisualPriority - 0.0001f;
 
             TurretEffect = Scene.Particles.Get("gunnerTurret");
             TurretEffect.ParticleEffect[0].ReleaseColour = Turret.Color.ToVector3();
             TurretEffect.VisualPriority = Turret.VisualPriority + 0.0001f;
-
-            MovingEffect = null;
-            ExplodingEffect = null;
 
             LifePoints = Int16.MaxValue;
         }
@@ -67,9 +64,6 @@
 
         public override void Draw()
         {
-            // emits explosion at target's position
-            ExplodingEffectAlt.Trigger(ref this.position);
-
             // emits canon explosion
             Vector2 canonEdge = new Vector2(0, -Turret.CanonImage.TextureSize.Y * Turret.CanonImage.Size.Y);
             Matrix.CreateRotationZ(Turret.CanonImage.Rotation, out CanonRotation);
@@ -93,21 +87,17 @@
 
         public override void DoDie()
         {
+            Scene.Particles.Return(TurretEffect);
+
             base.DoDie();
-
-            Scene.Particles.Return(ExplodingEffectAlt);
-
-            Bullet.PoolGunnerBullets.Return(this);
         }
 
 
         public override void DoDieSilent()
         {
+            Scene.Particles.Return(TurretEffect);
+
             base.DoDieSilent();
-
-            Scene.Particles.Return(ExplodingEffectAlt);
-
-            Bullet.PoolGunnerBullets.Return(this);
         }
     }
 }

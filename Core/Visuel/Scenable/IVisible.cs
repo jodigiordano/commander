@@ -36,7 +36,7 @@
         public TypeBlend Blend                  { get; set; }
 
         [ContentSerializer(Optional = true)]
-        public float VisualPriority              { get; set; }
+        public double VisualPriority              { get; set; }
 
         [ContentSerializer(Optional = true)]
         public virtual List<IScenable> Components   { get; set; }
@@ -82,6 +82,8 @@
         protected bool centreDeprecated = true;
         protected bool rectangleDeprecated = true;
 
+        public int Id { get; protected set; }
+
 
         //=============================================================================
         // Constructeurs
@@ -96,6 +98,8 @@
             this.position.X = position.X;
             this.position.Y = position.Y;
             this.position.Z = position.Z;
+
+            Id = Facade.NextHashCode;
         }
 
 
@@ -111,6 +115,8 @@
             this.position.Z = position.Z;
 
             this.Couleur = couleur;
+
+            Id = Facade.NextHashCode;
         }
 
 
@@ -134,6 +140,8 @@
             this.Effets = SpriteEffects.None;
             this.DessinerPartie = false;
             this.VisualPriority = 0;
+
+            Id = Facade.NextHashCode;
         }
 
 
@@ -392,9 +400,12 @@
         }
 
 
-        public object Clone()
+        public IVisible Clone()
         {
-            return this.MemberwiseClone();
+            IVisible i = (IVisible) this.MemberwiseClone();
+            i.Id = Facade.NextHashCode;
+
+            return i;
         }
 
 

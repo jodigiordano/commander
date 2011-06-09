@@ -18,10 +18,10 @@
 
     public interface IScenable
     {
+        int Id                      { get; }
         Vector3 Position            { get; set; }
-        float VisualPriority        { get; set; }
+        double VisualPriority       { get; set; }
         TypeBlend Blend             { get; set; }
-        List<IScenable> Components  { get; set; }
 
         void Draw(SpriteBatch spriteBatch);
     }

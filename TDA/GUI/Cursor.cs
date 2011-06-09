@@ -1,9 +1,8 @@
 ﻿namespace EphemereGames.Commander
 {
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Physique;
+    using EphemereGames.Core.Visuel;
+    using Microsoft.Xna.Framework;
 
 
     class Cursor : IObjetPhysique
@@ -18,18 +17,18 @@
         private Main Main;
         private Image representation;
         private Vector2 Size;
-        private float VisualPriority;
+        private double VisualPriority;
         private Color Color;
 
 
-        public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, float visualPriority)
+        public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, double visualPriority)
             : this(main, scene, initialPosition, speed, visualPriority, "Curseur", true)
         {
 
         }
 
 
-        public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, float visualPriority, string imageName, bool visible)
+        public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, double visualPriority, string imageName, bool visible)
         {
             Main = main;
             Scene = scene;
@@ -42,7 +41,7 @@
             Position = initialPosition;
 
             if (visible)
-                DoShow();
+                FadeIn();
         }
 
 
@@ -79,14 +78,14 @@
         }
 
 
-        public void DoShow()
+        public void FadeIn()
         {
             Scene.Effects.Add(representation, Core.Visuel.PredefinedEffects.FadeInFrom0(255, 0, 250));
             Active = true;
         }
 
 
-        public void DoHide()
+        public void FadeOut()
         {
             Scene.Effects.Add(representation, Core.Visuel.PredefinedEffects.FadeOutTo0(255, 0, 250));
             Active = false;

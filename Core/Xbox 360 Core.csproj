@@ -153,15 +153,11 @@
     <Compile Include="Visuel\Effects\SizeEffect.cs" />
     <Compile Include="Visuel\Effects\VisualEffect.cs" />
     <Compile Include="Visuel\Facade.cs" />
-    <Compile Include="Visuel\Menu\BarreDefilement.cs" />
-    <Compile Include="Visuel\Menu\BarreSensibilite.cs" />
-    <Compile Include="Visuel\Menu\MenuItem.cs" />
-    <Compile Include="Visuel\Menu\OptionItem.cs" />
-    <Compile Include="Visuel\Menu\SceneMenu.cs" />
     <Compile Include="Visuel\Particles\ParticlesController.cs" />
     <Compile Include="Visuel\Particles\Particle.cs" />
     <Compile Include="Visuel\Preferences.cs" />
     <Compile Include="Visuel\Primitives.cs" />
+    <Compile Include="Visuel\Scenable\IScenableComparer.cs" />
     <Compile Include="Visuel\Scenable\Text.cs" />
     <Compile Include="Visuel\Scenable\Image.cs" />
     <Compile Include="Visuel\Scenable\IScenable.cs" />

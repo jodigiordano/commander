@@ -10,7 +10,7 @@
     using Microsoft.Xna.Framework.Content;
 
 
-    public enum State
+    enum State
     {
         Idle,
         Active,
@@ -22,13 +22,13 @@
     public class Particle : IScenable, IContenu
     {
         public string Name;
-        public List<IScenable> Components       { get; set; }
-        public float VisualPriority             { get; set; }
+        public double VisualPriority            { get; set; }
         public Vector3 Position                 { get; set; }
         public Scene Scene                      { get; set; }
+        public int Id                           { get; private set; }
         public ParticleEffect ParticleEffect;
         public SpriteBatchRenderer Renderer;
-        public State State;
+        internal State State;
 
         private TypeBlend blend;
 
@@ -36,11 +36,11 @@
         public Particle()
         {
             Name = "";
-            Components = null;
             Position = Vector3.Zero;
             Blend = TypeBlend.Add;
             VisualPriority = 0;
             State = State.Idle;
+            Id = Facade.NextHashCode;
         }
 
 

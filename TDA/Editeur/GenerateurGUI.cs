@@ -583,14 +583,14 @@
                 updateDonneesGameplay();
                 updateDonneesVagues();
 
-                if ( LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Simulation.Main.GenerateurData.Scenarios.Count )
+                if ( LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Simulation.Main.GeneratorData.Scenarios.Count )
                 {
-                    Simulation.Main.GenerateurData.Scenarios.Add( DescriptionScenario );
+                    Simulation.Main.GeneratorData.Scenarios.Add( DescriptionScenario );
                 }
 
                 else
                 {
-                    Simulation.Main.GenerateurData.Scenarios[LoadSlider.Valeur] = DescriptionScenario;
+                    Simulation.Main.GeneratorData.Scenarios[LoadSlider.Valeur] = DescriptionScenario;
                 }
 
                 EphemereGames.Core.Persistance.Facade.SaveData( "generateurData" );
@@ -661,64 +661,64 @@
             if (!Visible)
                 return;
 
-            Simulation.Scene.ajouterScenable(FiltreSystemePlanetaire);
-            Simulation.Scene.ajouterScenable(SystemePlanetaire);
-            Simulation.Scene.ajouterScenable(NbPlanetesRep);
-            Simulation.Scene.ajouterScenable(NbEmplacementsRep);
-            Simulation.Scene.ajouterScenable(NbPlanetesFixesRep);
+            Simulation.Scene.Add(FiltreSystemePlanetaire);
+            Simulation.Scene.Add(SystemePlanetaire);
+            Simulation.Scene.Add(NbPlanetesRep);
+            Simulation.Scene.Add(NbEmplacementsRep);
+            Simulation.Scene.Add(NbPlanetesFixesRep);
 
-            Simulation.Scene.ajouterScenable(NbPlanetesCheminDepartRep);
-            Simulation.Scene.ajouterScenable(NbViesRep);
-            Simulation.Scene.ajouterScenable(ValeurMinerauxRep);
-            Simulation.Scene.ajouterScenable(NbPacksVieRep);
+            Simulation.Scene.Add(NbPlanetesCheminDepartRep);
+            Simulation.Scene.Add(NbViesRep);
+            Simulation.Scene.Add(ValeurMinerauxRep);
+            Simulation.Scene.Add(NbPacksVieRep);
 
-            Simulation.Scene.ajouterScenable(EtoileRep);
-            Simulation.Scene.ajouterScenable(ReserveDepartRep);
+            Simulation.Scene.Add(EtoileRep);
+            Simulation.Scene.Add(ReserveDepartRep);
 
-            Simulation.Scene.ajouterScenable(FiltreGameplay);
-            Simulation.Scene.ajouterScenable(Gameplay);
+            Simulation.Scene.Add(FiltreGameplay);
+            Simulation.Scene.Add(Gameplay);
 
-            Simulation.Scene.ajouterScenable(GenererSystemePlanetaireRep);
-            Simulation.Scene.ajouterScenable(GenererVaguesRep);
-            Simulation.Scene.ajouterScenable(GenererGameplayRep);
+            Simulation.Scene.Add(GenererSystemePlanetaireRep);
+            Simulation.Scene.Add(GenererVaguesRep);
+            Simulation.Scene.Add(GenererGameplayRep);
 
             foreach (var tourelle in TourellesRep)
-                Simulation.Scene.ajouterScenable(tourelle.Value);
+                Simulation.Scene.Add(tourelle.Value);
             
             foreach (var tourelle in TourellesCheckBoxes)
                 tourelle.Value.Draw();
 
             foreach (var powerUp in PowerUpsRep)
-                Simulation.Scene.ajouterScenable(powerUp.Value);
+                Simulation.Scene.Add(powerUp.Value);
 
             foreach (var powerUp in PowerUpsCheckBoxes)
                 powerUp.Value.Draw();
 
             foreach (var ennemi in EnnemisDisponiblesRep)
-                Simulation.Scene.ajouterScenable(ennemi.Value);
+                Simulation.Scene.Add(ennemi.Value);
 
             foreach (var ennemi in EnnemisDisponiblesCheckBoxes)
                 ennemi.Value.Draw();
 
 
-            Simulation.Scene.ajouterScenable(FiltreEditeur);
-            Simulation.Scene.ajouterScenable(Editeur);
+            Simulation.Scene.Add(FiltreEditeur);
+            Simulation.Scene.Add(Editeur);
 
-            Simulation.Scene.ajouterScenable(LoadRep);
-            Simulation.Scene.ajouterScenable(RestartRep);
-            Simulation.Scene.ajouterScenable(SaveRep);
-            Simulation.Scene.ajouterScenable(GenererRep);
+            Simulation.Scene.Add(LoadRep);
+            Simulation.Scene.Add(RestartRep);
+            Simulation.Scene.Add(SaveRep);
+            Simulation.Scene.Add(GenererRep);
 
-            Simulation.Scene.ajouterScenable(FiltreWaves);
-            Simulation.Scene.ajouterScenable(Waves);
-            Simulation.Scene.ajouterScenable(NbVaguesRep);
-            Simulation.Scene.ajouterScenable(QteEnnemisRep);
-            Simulation.Scene.ajouterScenable(DifficulteDebutRep);
-            Simulation.Scene.ajouterScenable(DifficulteFinRep);
-            Simulation.Scene.ajouterScenable(ReserveEnnemisRep);
-            Simulation.Scene.ajouterScenable(DeleteRep);
+            Simulation.Scene.Add(FiltreWaves);
+            Simulation.Scene.Add(Waves);
+            Simulation.Scene.Add(NbVaguesRep);
+            Simulation.Scene.Add(QteEnnemisRep);
+            Simulation.Scene.Add(DifficulteDebutRep);
+            Simulation.Scene.Add(DifficulteFinRep);
+            Simulation.Scene.Add(ReserveEnnemisRep);
+            Simulation.Scene.Add(DeleteRep);
 
-            Simulation.Scene.ajouterScenable(SystemeCentreRep);
+            Simulation.Scene.Add(SystemeCentreRep);
 
             SystemeCentreCheckBox.Draw();
             LoadSlider.Draw();

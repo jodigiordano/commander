@@ -8,55 +8,39 @@ namespace EphemereGames.Core.Visuel
     public class LigneVisuel : IScenable
     {
         public Vector3 Position             { get; set; }
-        public float VisualPriority      { get; set; }
+        public double VisualPriority        { get; set; }
         public Scene Scene                  { get; set; }
-        public TypeBlend Blend          { get; set; }
-        public List<IScenable> Components   { get; set; }
+        public TypeBlend Blend              { get; set; }
+        public int Id                       { get; private set; }
 
-        public Color Couleur                { get; set; }
-        public Vector3 Debut                { get; set; }
-        public Vector3 Fin                  { get; set; }
-
+        public Color Color                  { get; set; }
+        public Vector3 Start                { get; set; }
+        public Vector3 End                  { get; set; }
         public int Tickness                 { get; set; }
 
         private static Matrix MatriceRotation = Matrix.CreateRotationZ(MathHelper.PiOver2);
 
 
-        public LigneVisuel(Vector2 debut, Vector2 fin, Color couleur)
+        public LigneVisuel(Vector2 start, Vector2 end, Color color) :
+            this(new Vector3(start, 0), new Vector3(end, 0), color, 1) {}
+
+
+        public LigneVisuel(Vector3 start, Vector3 end, Color color) :
+            this(start, end, color, 1) { }
+
+
+        public LigneVisuel(Vector3 start, Vector3 end, Color color, int tickness)
         {
             VisualPriority = 0;
             Blend = TypeBlend.Default;
-            Couleur = couleur;
+            Color = color;
 
-            Debut = new Vector3(debut, 0);
-            Fin = new Vector3(fin, 0);
-
-            Tickness = 1;
-        }
-
-
-        public LigneVisuel(Vector3 debut, Vector3 fin, Color couleur)
-        {
-            VisualPriority = 0;
-            Blend = TypeBlend.Default;
-            Couleur = couleur;
-
-            Debut = debut;
-            Fin = fin;
-
-            Tickness = 1;
-        }
-
-        public LigneVisuel(Vector3 debut, Vector3 fin, Color couleur, int tickness)
-        {
-            VisualPriority = 0;
-            Blend = TypeBlend.Default;
-            Couleur = couleur;
-
-            Debut = debut;
-            Fin = fin;
+            Start = start;
+            End = end;
 
             Tickness = tickness;
+
+            Id = Facade.NextHashCode;
         }
 
 
@@ -64,7 +48,7 @@ namespace EphemereGames.Core.Visuel
         {
             int offsetDebut = -Tickness / 2;
 
-            Vector3 direction = Fin - Debut;
+            Vector3 direction = End - Start;
             Vector3 directionUnitairePerpendiculaire = Vector3.Transform(direction, MatriceRotation);
             directionUnitairePerpendiculaire.Normalize();
 
@@ -74,7 +58,7 @@ namespace EphemereGames.Core.Visuel
             {
                 Vector2 translation = directionUnitairePerpendiculaire2 * (offsetDebut + i);
 
-                Primitives.DrawLine(spriteBatch, new Vector2(Debut.X, Debut.Y) + translation, new Vector2(Fin.X, Fin.Y) + translation, Couleur);
+                Primitives.DrawLine(spriteBatch, new Vector2(Start.X, Start.Y) + translation, new Vector2(End.X, End.Y) + translation, Color);
 
             }
         }

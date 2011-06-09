@@ -29,7 +29,7 @@
             Simulation = new Simulation(main, scene, descriptor.SimulationDescription);
             Simulation.Players = Main.Players;
             Simulation.Initialize();
-            Simulation.ModeDemo = true;
+            Simulation.DemoMode = true;
             Simulation.WorldMode = true;
 
             LevelsDescriptors = new Dictionary<string, ScenarioDescriptor>();
@@ -89,7 +89,7 @@
         {
             get
             {
-                return Simulation.CorpsCelesteSelectionne != null ? LevelsDescriptors[Simulation.CorpsCelesteSelectionne.Nom] : null;
+                return Simulation.SelectedCelestialBody != null ? LevelsDescriptors[Simulation.SelectedCelestialBody.Nom] : null;
             }
         }
 
@@ -98,7 +98,7 @@
         {
             get
             {
-                return (Simulation.CorpsCelesteSelectionne != null && Simulation.CorpsCelesteSelectionne is TrouRose) ? Warps[Simulation.CorpsCelesteSelectionne.Nom] : -1;
+                return (Simulation.SelectedCelestialBody != null && Simulation.SelectedCelestialBody is TrouRose) ? Warps[Simulation.SelectedCelestialBody.Nom] : -1;
             }
         }
 
@@ -114,7 +114,7 @@
 
         public void ShowWarpBlockedMessage()
         {
-            Simulation.MessagesController.afficherMessage(Simulation.CorpsCelesteSelectionne, Descriptor.WarpBlockedMessage, 5000, -1);
+            Simulation.MessagesController.ShowMessage(Simulation.SelectedCelestialBody, Descriptor.WarpBlockedMessage, 5000, -1);
         }
 
 
@@ -163,7 +163,7 @@
             Simulation.Draw();
 
             foreach (var kvp in LevelsStates)
-                Scene.ajouterScenable(kvp.Value);
+                Scene.Add(kvp.Value);
         }
 
 

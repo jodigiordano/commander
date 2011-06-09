@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    class NouvellePartie : SceneMenu
+    class NouvellePartie : Scene
     {
         private Main Main;
         private Dictionary<int, World> Mondes;
@@ -29,7 +29,10 @@
 
             Nom = "NouvellePartie";
 
-            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
+            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
+            {
+                Scene = this
+            };
 
             Mondes = new Dictionary<int, World>();
             Mondes.Add(1, new World(main, this, ScenariosFactory.GetWorldDescriptor(1)));
@@ -45,7 +48,7 @@
         private void doJoueurPrincipalDeconnecte()
         {
             Transition = TransitionType.Out;
-            AnimationTransition.Initialize();
+            ChoixTransition = "chargement";
         }
 
 
@@ -70,6 +73,7 @@
         {
             AnimationTransition.In = (type == TransitionType.In) ? true : false;
             AnimationTransition.Initialize();
+            AnimationTransition.Start();
         }
 
 
@@ -79,6 +83,8 @@
 
             if (!AnimationTransition.Finished(gameTime))
                 return;
+
+            AnimationTransition.Stop();
 
             if (Transition == TransitionType.Out)
                 if (ChoixTransition.StartsWith("World"))
@@ -111,17 +117,12 @@
                             EphemereGames.Core.Audio.Facade.arreterMusique(Main.GameInProgress.MusiqueSelectionnee, false, 0);
 
                             if (!Main.GameInProgress.IsFinished)
-                                Main.MusiquesDisponibles.Add(Main.GameInProgress.MusiqueSelectionnee);
+                                Main.AvailableMusics.Add(Main.GameInProgress.MusiqueSelectionnee);
                         }
 
                         Main.GameInProgress = new Partie(Main, ChoixScenario);
                         Main.GameInProgress.Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
                         MondeSelectionne.Simulation.MessagesController.StopPausedMessage();
-
-                        if (ChoixScenario.Id <= 3)
-                        {
-                            Main.GameInProgress.Simulation.MessagesController.Initialize();
-                        }
 
                         EphemereGames.Core.Visuel.Facade.UpdateScene("Partie", Main.GameInProgress);
                         EphemereGames.Core.Visuel.Facade.Transite("NouvellePartieToPartie");
@@ -146,7 +147,7 @@
             MondeSelectionne.Draw();
 
             if (Transition != TransitionType.None)
-                AnimationTransition.Draw(null);
+                AnimationTransition.Draw();
 
             if (AnimationFinDemo != null && MondeSelectionne.Id == 1)
                 this.ajouterScenable(AnimationFinDemo);
@@ -162,12 +163,12 @@
             Transition = TransitionType.In;
 
             if (AnimationFinDemo != null)
-                AnimationFinDemo.doShow();
+                AnimationFinDemo.FadeIn();
 
-            if (!EphemereGames.Core.Audio.Facade.musiqueJoue(Menu.MusiqueSelectionnee))
-                EphemereGames.Core.Audio.Facade.jouerMusique(Menu.MusiqueSelectionnee, true, 1000, true);
+            if (!EphemereGames.Core.Audio.Facade.musiqueJoue(Menu.SelectedMusic))
+                EphemereGames.Core.Audio.Facade.jouerMusique(Menu.SelectedMusic, true, 1000, true);
             else
-                EphemereGames.Core.Audio.Facade.reprendreMusique(Menu.MusiqueSelectionnee, true, 1000);
+                EphemereGames.Core.Audio.Facade.reprendreMusique(Menu.SelectedMusic, true, 1000);
 
             EphemereGames.Core.Input.Facade.AddListener(MondeSelectionne.Simulation);
         }
@@ -177,7 +178,7 @@
             base.OnFocusLost();
 
             if (!ChoixTransition.StartsWith("World") && ChoixTransition != "menu")
-                EphemereGames.Core.Audio.Facade.pauserMusique(Menu.MusiqueSelectionnee, true, 1000);
+                EphemereGames.Core.Audio.Facade.pauserMusique(Menu.SelectedMusic, true, 1000);
 
             EphemereGames.Core.Input.Facade.RemoveListener(MondeSelectionne.Simulation);
         }
@@ -247,7 +248,7 @@
             ChoixTransition = choice;
 
             if (AnimationFinDemo != null)
-                AnimationFinDemo.doHide();
+                AnimationFinDemo.FadeOut();
         }
 
 
@@ -282,9 +283,7 @@
             {
                 if (AnimationFinDemo == null)
                 AnimationFinDemo = new AnimationLieutenant(
-                    Main,
-                    this,
-                    "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000 );
+                    "Only the levels 1-1, 1-2 and 1-3 are available in this demo, Commander! If you want to finish the fight and save humanity, visit ephemeregames.com to buy all the levels for only 5$! By unlocking the 9 levels, you will be able to take the warp to World 2 ! Keep my website in your bookmarks if you want more infos on me, my games and my future projects.", 25000, Preferences.PrioriteGUIPanneauGeneral );
             }
 
             else if ( MondeSelectionne.LevelSelected != null )

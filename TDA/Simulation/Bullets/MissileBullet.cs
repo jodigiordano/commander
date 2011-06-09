@@ -19,46 +19,68 @@
         private double TrailEffectCounter;
 
 
+        public MissileBullet()
+            : base()
+        {
+            Shape = Shape.Rectangle;
+            Rectangle = new RectanglePhysique();
+        }
+
+
+        public override void LoadAssets()
+        {
+            Image1 = new Image("ProjectileMissile1", Position);
+            Image2 = new Image("ProjectileMissile2", Position)
+            {
+                SizeX = 2
+            };
+
+            Image = Image1;
+
+            Vector2 imageSize = Image.AbsoluteSize;
+
+            Rectangle.Width = (int) (imageSize.X);
+            Rectangle.Height = (int) (imageSize.Y);
+
+            base.LoadAssets();
+        }
+
+
+        public bool Big
+        {
+            set
+            {
+                Image = value ? Image2 : Image;
+
+                Vector2 imageSize = Image.AbsoluteSize;
+
+                Rectangle.Width = (int) (imageSize.X);
+                Rectangle.Height = (int) (imageSize.Y);
+            }
+        }
+
+
         public override void Initialize()
         {
             base.Initialize();
 
-            Shape = Shape.Rectangle;
+            Rectangle.X = (int) Position.X - Rectangle.Width;
+            Rectangle.Y = (int) Position.Y - Rectangle.Height;
 
-            if (Image == null)
-            {
-                Image1 = new Image("ProjectileMissile1", Position);
-                Image2 = new Image("ProjectileMissile2", Position)
-                {
-                    SizeX = 2
-                };
-                Image = Image1;
-
-                Rectangle = new RectanglePhysique(
-                    (int) (Image.Position.X - Image.AbsoluteSize.X),
-                    (int) (Image.Position.Y - Image.AbsoluteSize.Y),
-                    (int) (Image.AbsoluteSize.X * 2),
-                    (int) (Image.AbsoluteSize.X * 2));
-            }
-
-            Rectangle.X = (int) Position.X;
-            Rectangle.Y = (int) Position.Y;
             Image.Position = Position;
             Image.Rotation = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
             Image.VisualPriority = PrioriteAffichage + 0.001f;
 
-            MovingEffect = null;
             ExplodingEffect = Scene.Particles.Get("projectileMissileExplosion");
             ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
-
-            LifePoints = 5;
 
             TrailEffect = Scene.Particles.Get("traineeMissile");
             TrailEffect.VisualPriority = this.Image.VisualPriority - 0.0001f;
 
-            ConeEmitter emetteur = (ConeEmitter)TrailEffect.ParticleEffect[0];
-            emetteur.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
+            ConeEmitter emitter = (ConeEmitter)TrailEffect.ParticleEffect[0];
+            emitter.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
 
+            LifePoints = 5;
             TrailEffectCounter = 400;
             Wander = false;
         }
@@ -84,9 +106,6 @@
             ConeEmitter emitter = (ConeEmitter)TrailEffect.ParticleEffect[0];
             emitter.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
 
-            if (TrailEffectCounter > 0)
-                TrailEffect.Trigger(ref this.position);
-
             base.Update();
         }
 
@@ -96,6 +115,9 @@
             if (Target.Alive)
                 Image.Rotation = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
 
+            if (TrailEffectCounter > 0)
+                TrailEffect.Trigger(ref this.position);
+
             base.Draw();
         }
 
@@ -103,23 +125,19 @@
         {
             ((CircleEmitter)ExplodingEffect.ParticleEffect[1]).Radius = ZoneImpact;
 
-            base.DoDie();
-
             EphemereGames.Core.Audio.Facade.jouerEffetSonore("Partie", "sfxTourelleMissileExplosion");
 
             Scene.Particles.Return(TrailEffect);
 
-            Bullet.PoolMissileBullets.Return(this);
+            base.DoDie();
         }
 
 
         public override void DoDieSilent()
         {
-            base.DoDieSilent();
-
             Scene.Particles.Return(TrailEffect);
 
-            Bullet.PoolMissileBullets.Return(this);
+            base.DoDieSilent();
         }
     }
 }

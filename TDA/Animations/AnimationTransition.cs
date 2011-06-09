@@ -2,19 +2,18 @@ namespace EphemereGames.Commander
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Visuel;
     using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Visuel;
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+
 
     public class AnimationTransition : Animation
     {
         public bool In;
 
-        private List<VaisseauAlien> AlienShips;
-        private List<IVisible> Others;
+        private List<AlienSpaceship> AlienShips;
         private List<Trajet3D> Paths;
-        private bool ShowAliens;
 
         private static int LastTimeChoice = 0;
         private static String LastTimeChoiceAutre = "";
@@ -58,13 +57,10 @@ namespace EphemereGames.Commander
         };
 
 
-        public AnimationTransition(Scene scene, double length, float visualPriority)
-            : base(length)
+        public AnimationTransition(double length, double visualPriority)
+            : base(length, visualPriority)
         {
             In = false;
-            ShowAliens = true;
-            Scene = scene;
-            VisualPriority = visualPriority;
         }
 
 
@@ -72,8 +68,7 @@ namespace EphemereGames.Commander
         {
             base.Initialize();
 
-            AlienShips = new List<VaisseauAlien>();
-            Others = new List<IVisible>();
+            AlienShips = new List<AlienSpaceship>();
             Paths = new List<Trajet3D>();
 
             if (!In)
@@ -82,46 +77,23 @@ namespace EphemereGames.Commander
                 LastTimeChoiceAutre = NamesOthers[Random.Next(0, NamesOthers.Count)];
             }
 
-            //ShowAliens = (LastTimeChoice == 0);
-            ShowAliens = true;
 
-            if (ShowAliens)
+            for (int i = 0; i < 5; i++)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    VaisseauAlien v = new VaisseauAlien(Scene, this.VisualPriority);
-                    v.Representation.Taille = 16;
-                    v.Representation.Rotation = MathHelper.PiOver2;
-                    v.Tentacules.Taille = 16;
-                    v.Tentacules.Rotation = MathHelper.PiOver2;
-                    v.Representation.Blend = TypeBlend.Substract;
-                    v.Tentacules.Blend = TypeBlend.Substract;
+                AlienSpaceship v = new AlienSpaceship(Scene, this.VisualPriority);
+                v.Representation.SizeX = 16;
+                v.Representation.Rotation = MathHelper.PiOver2;
+                v.Tentacules.Taille = 16;
+                v.Tentacules.Rotation = MathHelper.PiOver2;
+                v.Representation.Blend = TypeBlend.Substract;
+                v.Tentacules.Blend = TypeBlend.Substract;
 
-                    AlienShips.Add(v);
+                AlienShips.Add(v);
 
-                    if (In)
-                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
-                    else
-                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
-                }
-            }
-
-            else
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    IVisible iv = new IVisible(EphemereGames.Core.Persistance.Facade.GetAsset<Texture2D>(LastTimeChoiceAutre), Vector3.Zero);
-                    iv.Taille = 16;
-                    iv.Blend = TypeBlend.Substract;
-                    iv.Origine = iv.Centre;
-
-                    Others.Add(iv);
-
-                    if (In)
-                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
-                    else
-                        Paths.Add(new Trajet3D(new List<Vector3>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
-                }
+                if (In)
+                    Paths.Add(new Trajet3D(new List<Vector3>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
+                else
+                    Paths.Add(new Trajet3D(new List<Vector3>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
             }
         }
 

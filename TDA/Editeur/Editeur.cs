@@ -27,14 +27,17 @@
             Simulation = new Simulation(main, this, ScenariosFactory.getDescripteurBidon());
             Simulation.Players = Main.Players;
             Simulation.Initialize();
-            Simulation.ModeEditeur = true;
+            Simulation.EditorMode = true;
             Simulation.Etat = GameState.Paused;
 
             Cursor = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIConsoleEditeur);
             GenerateurGUI = new GenerateurGUI(Simulation, Cursor, new Vector3(-300, 80, 0));
             GenerateurGUI.Visible = true;
 
-            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
+            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
+            {
+                Scene = this
+            };
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
         }
@@ -94,7 +97,7 @@
             Simulation.Draw();
 
             if (Transition != TransitionType.None)
-                AnimationTransition.Draw(null);
+                AnimationTransition.Draw();
         }
 
 
@@ -217,9 +220,9 @@
             GenerateurGUI.Visible = !GenerateurGUI.Visible;
 
             if (GenerateurGUI.Visible)
-                Cursor.DoShow();
+                Cursor.FadeIn();
             else
-                Cursor.DoHide();
+                Cursor.FadeOut();
         }
     }
 }

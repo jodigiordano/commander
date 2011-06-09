@@ -13,7 +13,7 @@ namespace EphemereGames.Commander
     {
         public ManagedThread[] Threads;
         public SaveGame SaveGame;
-        public GenerateurData GenerateurData;
+        public GenerateurData GeneratorData;
         public PlayersController PlayersController;
         public TrialMode TrialMode;
         public Partie GameInProgress;
@@ -22,7 +22,7 @@ namespace EphemereGames.Commander
         private bool Initializing = true;
 
 
-        public static List<String> MusiquesDisponibles = new List<string>()
+        public static List<String> AvailableMusics = new List<string>()
         {
             "ingame1", "ingame2", "ingame3", "ingame4", "ingame5", "ingame6", "ingame7", "ingame8"
         };
@@ -40,7 +40,7 @@ namespace EphemereGames.Commander
             Graphics.IsFullScreen = Preferences.FullScreen;
             Content.RootDirectory = "Content";
             SaveGame = new SaveGame();
-            GenerateurData = new GenerateurData();
+            GeneratorData = new GenerateurData();
             Window.AllowUserResizing = false;
             PlayersController = new PlayersController();
 
@@ -64,14 +64,14 @@ namespace EphemereGames.Commander
             Threads[1] = new ManagedThread(4, 1000);
             Threads[2] = new ManagedThread(5, 1000);
 
-            EphemereGames.Core.Persistance.Facade.Initialize(
+            Core.Persistance.Facade.Initialize(
                 "Content",
                 "packages.xml",
                 Services,
                 Threads[0],
                 Threads[0]);
 
-            EphemereGames.Core.Visuel.Facade.Initialize(
+            Core.Visuel.Facade.Initialize(
                 Graphics,
                 1280,
                 720,
@@ -80,15 +80,15 @@ namespace EphemereGames.Commander
                 Threads[1],
                 Threads[2]);
 
-            EphemereGames.Core.Input.Facade.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
+            Core.Input.Facade.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
 
-            EphemereGames.Core.Physique.Facade.Initialize();
-            EphemereGames.Core.Audio.Facade.Initialize(0, 0);
+            Core.Physique.Facade.Initialize();
+            Core.Audio.Facade.Initialize(0, 0);
 
-            EphemereGames.Core.Persistance.Facade.AddData( SaveGame );
-            EphemereGames.Core.Persistance.Facade.AddData( GenerateurData );
+            Core.Persistance.Facade.AddData( SaveGame );
+            Core.Persistance.Facade.AddData( GeneratorData );
 
-            EphemereGames.Core.Persistance.Facade.LoadPackage("chargement");
+            Core.Persistance.Facade.LoadPackage("chargement");
 
             PlayersController.Initialize();
         }
@@ -112,54 +112,54 @@ namespace EphemereGames.Commander
         {
             base.Update(gameTime);
 
-            if (Initializing && EphemereGames.Core.Persistance.Facade.PackageLoaded("chargement"))
+            if (Initializing && Core.Persistance.Facade.PackageLoaded("chargement"))
             {
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleBase", 2);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissile", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserMultiple", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissileExplosion", 2);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserSimple", 3);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleSlowMotion", 2);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteTouche", 2);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteExplose", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxNouvelleVague", 2);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire1", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire2", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire3", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney1", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney2", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney3", 1);
-                EphemereGames.Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxLifePack", 2);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleBase", 2);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissile", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserMultiple", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleMissileExplosion", 2);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleLaserSimple", 3);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleSlowMotion", 2);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteTouche", 2);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteExplose", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxNouvelleVague", 2);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire1", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire2", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire3", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney1", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney2", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxMoney3", 1);
+                Core.Audio.Facade.setMaxInstancesActivesEffetSonore("sfxLifePack", 2);
 
-                EphemereGames.Core.Visuel.Facade.UpdateScene("Chargement", new Chargement(this));
-                EphemereGames.Core.Visuel.Facade.UpdateScene("Menu", null);
-                EphemereGames.Core.Visuel.Facade.UpdateScene("Partie", null);
-                EphemereGames.Core.Visuel.Facade.UpdateScene("NouvellePartie", null);
-                EphemereGames.Core.Visuel.Facade.UpdateScene("Aide", null);
-                EphemereGames.Core.Visuel.Facade.UpdateScene("Options", null);
-                EphemereGames.Core.Visuel.Facade.UpdateScene("Editeur", null);
+                Core.Visuel.Facade.UpdateScene("Chargement", new LoadingScene(this));
+                Core.Visuel.Facade.UpdateScene("Menu", null);
+                Core.Visuel.Facade.UpdateScene("Partie", null);
+                Core.Visuel.Facade.UpdateScene("NouvellePartie", null);
+                Core.Visuel.Facade.UpdateScene("Aide", null);
+                Core.Visuel.Facade.UpdateScene("Options", null);
+                Core.Visuel.Facade.UpdateScene("Editeur", null);
                         
                 Initializing = false;
             }
 
-            EphemereGames.Core.Input.Facade.Active = this.IsActive;
+            Core.Input.Facade.Active = this.IsActive;
 
-            EphemereGames.Core.Persistance.Facade.Update(gameTime);
-            EphemereGames.Core.Visuel.Facade.Update(gameTime);
-            EphemereGames.Core.Input.Facade.Update(gameTime);
+            Core.Persistance.Facade.Update(gameTime);
+            Core.Visuel.Facade.Update(gameTime);
+            Core.Input.Facade.Update(gameTime);
 
             if (!Initializing)
-                EphemereGames.Core.Audio.Facade.Update(gameTime);
+                Core.Audio.Facade.Update(gameTime);
 
-            if (EphemereGames.Core.Persistance.Facade.DataLoaded("savePlayer"))
+            if (Core.Persistance.Facade.DataLoaded("savePlayer"))
                 TrialMode.Update(gameTime);
         }
 
 
         protected override void Draw(GameTime gameTime)
         {
-            EphemereGames.Core.Visuel.Facade.Draw();
+            Core.Visuel.Facade.Draw();
         }
     }
 
@@ -168,7 +168,7 @@ namespace EphemereGames.Commander
     {
         static void Main(string[] args)
         {
-            EphemereGames.Core.Utilities.ErrorHandling.Run<Main>(1280, 720, Preferences.FullScreen, GetRunningVersion());
+            Core.Utilities.ErrorHandling.Run<Main>(1280, 720, Preferences.FullScreen, GetRunningVersion());
         }
 
 

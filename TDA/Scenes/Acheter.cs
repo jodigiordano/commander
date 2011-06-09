@@ -40,7 +40,10 @@
             Sablier = new Sablier(Main, this, 20000, new Vector3(520, 250, 0), 0);
             Sablier.TempsRestant = TempsAvantQuitter;
 
-            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
+            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
+            {
+                Scene = this
+            };
 
             enAchat = false;
         }
@@ -85,13 +88,13 @@
 
         protected override void UpdateVisual()
         {
-            ajouterScenable((Main.TrialMode.Active) ? FondEcranAchat : FondEcranAchatEffectue);
+            Add((Main.TrialMode.Active) ? FondEcranAchat : FondEcranAchatEffectue);
 
             if (Main.TrialMode.Active)
                 Sablier.Draw(null);
 
             if (Transition != TransitionType.None)
-                AnimationTransition.Draw(null);
+                AnimationTransition.Draw();
         }
 
 

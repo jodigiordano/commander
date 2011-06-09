@@ -45,10 +45,10 @@
 
         public void Draw()
         {
-            Scene.ajouterScenable(Box);
+            Scene.Add(Box);
 
             if (Checked)
-                Scene.ajouterScenable(CheckedRep);
+                Scene.Add(CheckedRep);
         }
     }
 }

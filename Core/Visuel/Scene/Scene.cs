@@ -9,9 +9,9 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    public abstract class Scene : InputListener, IComparer<IScenable>
+    public abstract class Scene : InputListener
     {
-        public bool Active { get; set; }
+        public bool Active              { get; set; }
 
         internal VisualBuffer Buffer    { get; private set; }
         public Camera Camera            { get; private set; }
@@ -38,7 +38,7 @@
         {
             Buffer = Facade.ScenesController.Buffer;
             Active = false;
-            ToDraw = new OrderedSet<IScenable>(this);
+            ToDraw = new OrderedSet<IScenable>(new IScenableComparer());
             Batch = new SpriteBatch(Preferences.GraphicsDeviceManager.GraphicsDevice);
             LastBlend = TypeBlend.Alpha;
             UpdatedThisTick = false;
@@ -77,24 +77,6 @@
         }
 
 
-        public bool GarderContenu
-        {
-            set
-            {
-                Buffer.GarderContenu = value;
-            }
-        }
-
-
-        public Color CouleurDeFond
-        {
-            set 
-            {
-                Buffer.CouleurDeFond = value;
-            }
-        }
-
-
         public void Draw()
         {
             UpdateVisual();
@@ -118,7 +100,7 @@
                     Batch.Begin(SpriteSortMode.Deferred, SwitchBlendMode(scenable.Blend), SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Camera.Transform); //todo
                 }
 
-                scenable.Draw(this.Batch);
+                scenable.Draw(Batch);
             }
 
             Batch.End();
@@ -152,7 +134,7 @@
         }
 
 
-        public void ajouterScenable(List<IScenable> elements)
+        public void Add(IScenable element)
         {
             for (int i = 0; i < elements.Count; i++)
             {
@@ -167,7 +149,7 @@
         }
 
 
-        public void ajouterScenable(List<IVisible> elements)
+        public void Add(List<IScenable> elements)
         {
             for (int i = 0; i < elements.Count; i++)
             {
@@ -179,7 +161,7 @@
         }
 
 
-        public void ajouterScenable(List<Animation> elements)
+        public void Add(List<IVisible> elements)
         {
             for (int i = 0; i < elements.Count; i++)
             {
@@ -191,7 +173,7 @@
         }
 
 
-        public void ajouterScenable(List<Particle> elements)
+        public void Remove(IScenable element)
         {
             for (int i = 0; i < elements.Count; i++)
                 ToDraw.Add(elements[i]);
@@ -200,86 +182,22 @@
 
         public void Update(GameTime gameTime)
         {
-            this.Camera.Update(gameTime);
+            Camera.Update(gameTime);
 
-            _gameTime = gameTime;
+            Particles.Update(gameTime);
+            Animations.Update(gameTime);
 
-#if XBOX
-            Preferences.ThreadParticules.AddTask(new ThreadTask(doUpdateAsynchrone));
-#else
-            doUpdateAsynchrone();
-#endif
             if (Transition != TransitionType.None)
                 UpdateTransition(gameTime);
 
             UpdateLogic(gameTime);
             Effects.Update(gameTime);
-#if XBOX
-            //while (Preferences.ThreadLogique.Travaille()) { }
-            while (Preferences.ThreadParticules.Travaille()) { }
-#endif
-        }
-
-
-        private GameTime _gameTime;
-        private void doUpdateAsynchrone()
-        {
-            Particles.Update(_gameTime);
-            Animations.Update(_gameTime);
         }
 
 
         public void Dispose()
         {
             EphemereGames.Core.Input.Facade.RemoveListener(this);
-        }
-
-
-        private int ComparerIScenables(IScenable e1, IScenable e2)
-        {
-            if (e1.VisualPriority < e2.VisualPriority)
-                return 1;
-
-            if (e1.VisualPriority > e2.VisualPriority)
-                return -1;
-
-            if (e1.GetHashCode() > e2.GetHashCode())
-                return 1;
-
-            if (e1.GetHashCode() < e2.GetHashCode())
-                return -1;
-
-            return 0;
-        }
-
-
-        public int Compare(IScenable e1, IScenable e2)
-        {
-            if (e1.VisualPriority < e2.VisualPriority)
-                return 1;
-
-            if (e1.VisualPriority > e2.VisualPriority)
-                return -1;
-
-            if (e1.GetHashCode() > e2.GetHashCode())
-                return 1;
-
-            if (e1.GetHashCode() < e2.GetHashCode())
-                return -1;
-
-            return 0;
-        }
-
-
-        public bool Equals(IScenable e1, IScenable e2)
-        {
-            return e1.VisualPriority == e2.VisualPriority;
-        }
-
-
-        public int GetHashCode(IScenable obj)
-        {
-            return obj.GetHashCode();
         }
 
 

@@ -48,7 +48,7 @@
 
         public void Draw()
         {
-            Scene.ajouterScenable(Bouton);
+            Scene.Add(Bouton);
         }
     }
 }

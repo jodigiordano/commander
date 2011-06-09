@@ -27,15 +27,18 @@
 
             Nom = "Partie";
 
-            MusiqueSelectionnee = Main.MusiquesDisponibles[Main.Random.Next(0, Main.MusiquesDisponibles.Count)];
-            Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
+            MusiqueSelectionnee = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
+            Main.AvailableMusics.Remove(MusiqueSelectionnee);
 
             Simulation = new Simulation(Main, this, scenario);
             Simulation.Players = Main.Players;
             Simulation.Initialize();
             Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
 
-            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
+            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
+            {
+                Scene = this
+            };
 
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
         }
@@ -105,7 +108,7 @@
             Simulation.Draw();
 
             if (Transition != TransitionType.None)
-                AnimationTransition.Draw(null);
+                AnimationTransition.Draw();
         }
 
 
@@ -139,7 +142,7 @@
             if (nouvelEtat == GameState.Won || nouvelEtat == GameState.Lost)
             {
                 EphemereGames.Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, 500);
-                Main.MusiquesDisponibles.Add(MusiqueSelectionnee);
+                Main.AvailableMusics.Add(MusiqueSelectionnee);
                 MusiqueSelectionnee = ((nouvelEtat == GameState.Won) ? "win" : "gameover") + Main.Random.Next(1, 3);
                 EphemereGames.Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
             }
@@ -213,9 +216,9 @@
 
             EphemereGames.Core.Audio.Facade.arreterMusique(MusiqueSelectionnee, true, Preferences.TempsEntreDeuxChangementMusique - 50);
             String ancienneMusique = MusiqueSelectionnee;
-            MusiqueSelectionnee = Main.MusiquesDisponibles[Main.Random.Next(0, Main.MusiquesDisponibles.Count)];
-            Main.MusiquesDisponibles.Remove(MusiqueSelectionnee);
-            Main.MusiquesDisponibles.Add(ancienneMusique);
+            MusiqueSelectionnee = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
+            Main.AvailableMusics.Remove(MusiqueSelectionnee);
+            Main.AvailableMusics.Add(ancienneMusique);
             EphemereGames.Core.Audio.Facade.jouerMusique(MusiqueSelectionnee, true, 1000, true);
 
             TempsEntreDeuxChangementMusique = Preferences.TempsEntreDeuxChangementMusique;

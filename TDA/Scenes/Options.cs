@@ -82,7 +82,6 @@
 
             TypeWriter = new TextTypeWriter
             (
-                Main,
                 Credits,
                 Color.Black,
                 new Vector3(170, -130, 0),
@@ -102,9 +101,12 @@
                 },
                 this
             );
-            TypeWriter.Texte.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            AnimationTransition = new AnimationTransition(this, 500, Preferences.PrioriteTransitionScene);
+            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
+            {
+                Scene = this
+            };
 
             TempsEntreDeuxChangementMusique = 0;
 
@@ -139,6 +141,7 @@
         {
             AnimationTransition.In = (type == TransitionType.In) ? true : false;
             AnimationTransition.Initialize();
+            AnimationTransition.Start();
         }
 
 
@@ -148,6 +151,8 @@
 
             if (!AnimationTransition.Finished(gameTime))
                 return;
+
+            AnimationTransition.Stop();
 
             if (Transition == TransitionType.Out)
                 switch (ChoixTransition)
@@ -162,16 +167,16 @@
 
         protected override void UpdateVisual()
         {
-            ajouterScenable(TitreMusique);
-            ajouterScenable(TitreEffetsSonores);
-            ajouterScenable(Titre);
-            ajouterScenable(Lieutenant);
-            ajouterScenable(Bulle);
-            ajouterScenable(FondEcran);
-            ajouterScenable(TypeWriter.Texte);
+            Add(TitreMusique);
+            Add(TitreEffetsSonores);
+            Add(Titre);
+            Add(Lieutenant);
+            Add(Bulle);
+            Add(FondEcran);
+            Add(TypeWriter.Text);
 
             if (Transition != TransitionType.None)
-                AnimationTransition.Draw(null);
+                AnimationTransition.Draw();
 
             Curseur.Draw();
             Musique.Draw();
