@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
 
 
     class Spaceship : IObjetPhysique
@@ -169,7 +169,7 @@
             }
 
             if (Bullets.Count != 0)
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
+                Audio.PlaySfx(@"Partie", @"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
 
             return Bullets;
         }
@@ -196,7 +196,7 @@
 
             double tempsRequis = (distance / Speed) * 16.33f;
 
-            Simulation.Scene.Effects.Add(Image, Core.Visual.PredefinedEffects.FadeOutTo0(Image.Color.A, 0, tempsRequis));
+            Simulation.Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.FadeOutTo0(Image.Color.A, 0, tempsRequis));
         }
 
 

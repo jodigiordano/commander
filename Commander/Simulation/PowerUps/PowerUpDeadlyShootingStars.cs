@@ -3,6 +3,7 @@ namespace EphemereGames.Commander
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -36,7 +37,7 @@ namespace EphemereGames.Commander
 
         public override void Start()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxShootingStars");
+            Audio.PlaySfx(@"Partie", @"sfxShootingStars");
         }
     }
 }

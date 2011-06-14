@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
 
 
     enum GameState
@@ -152,7 +152,7 @@
 
             if (!Simulation.DemoMode && Simulation.Etat != GameState.Lost)
             {
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxCorpsCelesteTouche");
+                Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteTouche");
             }
 
             if (celestialBody == CelestialBodyToProtect)
@@ -161,7 +161,7 @@
             if (CommonStash.Lives <= 0 && State == GameState.Running && !Simulation.DemoMode && !EditorMode)
             {
                 CelestialBodyToProtect.DoDie();
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
+                Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
                 if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Id))
@@ -187,7 +187,7 @@
             if (celestialBody == null)
                 return;
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxCorpsCelesteExplose");
+            Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
 
             if (celestialBody == CelestialBodyToProtect && !Simulation.DemoMode && !EditorMode)
             {

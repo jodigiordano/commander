@@ -1,12 +1,13 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Persistence;
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+
 
     class OptionsScene : Scene
     {
@@ -129,8 +130,8 @@
             Main.SaveGame.VolumeMusic = Musique.Valeur;
             Main.SaveGame.VolumeSfx = EffetsSonores.Valeur;
 
-            EphemereGames.Core.Audio.Audio.VolumeMusique = Musique.Valeur / 10f;
-            EphemereGames.Core.Audio.Audio.VolumeEffetsSonores = EffetsSonores.Valeur / 10f;
+            Audio.MusicVolume = Musique.Valeur / 10f;
+            Audio.SfxVolume = EffetsSonores.Valeur / 10f;
 
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
             TypeWriter.Update(gameTime);
@@ -157,8 +158,8 @@
             if (Transition == TransitionType.Out)
                 switch (ChoixTransition)
                 {
-                    case "menu": EphemereGames.Core.Visual.Visuals.Transite("OptionsToMenu"); break;
-                    case "chargement": EphemereGames.Core.Visual.Visuals.Transite("OptionsToChargement"); break;
+                    case "menu": Visuals.Transite("OptionsToMenu"); break;
+                    case "chargement": Visuals.Transite("OptionsToChargement"); break;
                 }
 
             Transition = TransitionType.None;
@@ -200,7 +201,7 @@
             base.OnFocusLost();
 
             if (Main.PlayersController.MasterPlayer.Connected)
-                EphemereGames.Core.Persistence.Persistence.SaveData("savePlayer");
+                Persistence.SaveData("savePlayer");
         }
 
 
@@ -300,7 +301,7 @@
             if (TempsEntreDeuxChangementMusique > 0)
                 return;
 
-            MainMenuScene menu = (MainMenuScene)EphemereGames.Core.Visual.Visuals.GetScene("Menu");
+            MainMenuScene menu = (MainMenuScene)Visuals.GetScene("Menu");
             menu.ChangeMusic();
             TempsEntreDeuxChangementMusique = Preferences.TimeBetweenTwoMusics;
         }

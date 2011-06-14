@@ -1,20 +1,23 @@
 ﻿namespace EphemereGames.Core.Physics
 {
-    using Microsoft.Xna.Framework;
     using System;
+    using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework;
 
 
-    public class MoveEffect : PhysicalEffect
+    public class MoveEffect : Effect<IPhysicalObject>
     {
-        public Vector3 PositionEnd { get; set; }
-        private Vector3 PositionStart { get; set; }
+        public Vector3 PositionEnd      { get; set; }
+        private Vector3 PositionStart   { get; set; }
 
         private Vector3 Displacement = Vector3.Zero;
+
+        public static Pool<MoveEffect> Pool = new Pool<MoveEffect>();
 
 
         protected override void InitializeLogic()
         {
-            PositionStart = Objet.Position;
+            PositionStart = Obj.Position;
 
             Displacement = PositionEnd - PositionStart;
         }
@@ -22,7 +25,7 @@
 
         protected override void LogicLinear()
         {
-            Objet.Position =
+            Obj.Position =
                 new Vector3(
                     (float)(PositionStart.X + (Displacement.X * (ElaspedTime / Length))),
                     (float)(PositionStart.Y + (Displacement.Y * (ElaspedTime / Length))),
@@ -32,7 +35,7 @@
 
         protected override void LogicLogarithmic()
         {
-            Objet.Position =
+            Obj.Position =
                 new Vector3(
                     (float) (PositionStart.X + (Displacement.X * (Math.Log(ElaspedTime) / Math.Log(Length)))),
                     (float) (PositionStart.Y + (Displacement.Y * (Math.Log(ElaspedTime) / Math.Log(Length)))),
@@ -42,13 +45,19 @@
 
         protected override void LogicAfter()
         {
-            Objet.Position = PositionEnd;
+            Obj.Position = PositionEnd;
         }
 
 
         protected override void LogicNow()
         {
-            Objet.Position = PositionEnd;
+            Obj.Position = PositionEnd;
+        }
+
+
+        internal override void Return()
+        {
+            Pool.Return((MoveEffect) this);
         }
     }
 }

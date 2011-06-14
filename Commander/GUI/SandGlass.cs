@@ -131,14 +131,14 @@
         {
             get
             {
-                return (RotationEffect != null && !RotationEffect.Finished);
+                return (RotationEffect != null && !RotationEffect.Terminated);
             }
         }
 
 
         public void Update()
         {
-            if (RotationEffect != null && RotationEffect.Finished)
+            if (RotationEffect != null && RotationEffect.Terminated)
             {
                 Image.Rotation = 0;
                 Progress = 0;
@@ -221,33 +221,33 @@
 
         public void Flip()
         {
-            if (RotationEffect != null && !RotationEffect.Finished)
+            if (RotationEffect != null && !RotationEffect.Terminated)
                 return;
 
             RotationEffect = new RotationEffect();
             RotationEffect.Length = 500;
-            RotationEffect.Progress = AbstractEffect.ProgressType.Linear;
-            RotationEffect.Quantite = MathHelper.Pi;
+            RotationEffect.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            RotationEffect.Quantity = MathHelper.Pi;
 
-            Scene.Effects.Add(Image, RotationEffect);
+            Scene.PhysicalEffects.Add(Image, RotationEffect);
         }
 
 
         public void FadeOut(double time)
         {
-            Scene.Effects.Add(Image, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, time));
+            Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.FadeOutTo0(255, 0, time));
 
             foreach (var pixel in Pixels)
-                Scene.Effects.Add(pixel, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, time));
+                Scene.VisualEffects.Add(pixel, Core.Visual.VisualEffects.FadeOutTo0(255, 0, time));
         }
 
 
         public void FadeIn(double time)
         {
-            Scene.Effects.Add(Image, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, time));
+            Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.FadeInFrom0(255, 0, time));
 
             foreach (var pixel in Pixels)
-                Scene.Effects.Add(pixel, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, time));
+                Scene.VisualEffects.Add(pixel, Core.Visual.VisualEffects.FadeInFrom0(255, 0, time));
         }
 
 

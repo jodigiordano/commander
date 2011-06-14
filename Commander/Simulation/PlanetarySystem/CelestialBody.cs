@@ -9,7 +9,7 @@
     using ProjectMercury.Emitters;
 
 
-    class CelestialBody : ILivingObject, IObjetPhysique
+    class CelestialBody : ILivingObject, IObjetPhysique, IComparable<CelestialBody>
     {
         public string Nom;
         public List<Turret> Turrets = new List<Turret>();
@@ -36,7 +36,8 @@
         public List<Moon> Lunes;
         public bool ContientTourelleGravitationnelleByPass;
         public double PrioriteAffichageBackup;
-        public Circle TurretsZone;
+        public Circle InnerTurretZone;
+        public Circle OuterTurretZone;
         public bool ShowTurretsZone;
         public float ZoneImpactDestruction;
         public bool DarkSide;
@@ -98,13 +99,32 @@
             Matrix.CreateRotationZ(MathHelper.ToRadians(rotation), out RotationMatrix);
 
             if (RotationTime != 0)
-                deplacer();
+                Move();
 
             Shape = Shape.Circle;
             Circle = new Circle(Position, rayon);
-            TurretsZone = new Circle(Position, rayon * 2);
+            InnerTurretZone = new Circle(Position, 0);
+            OuterTurretZone = new Circle(Position, 0);
 
-            initLunes();
+            if (rayon <= (int) Size.Small)
+            {
+                InnerTurretZone.Radius = rayon;
+                OuterTurretZone.Radius = rayon * 1.4f;
+            }
+
+            else if (rayon <= (int) Size.Normal)
+            {
+                InnerTurretZone.Radius = rayon * 0.8f;
+                OuterTurretZone.Radius = rayon * 1.2f;
+            }
+
+            else
+            {
+                InnerTurretZone.Radius = rayon * 0.5f;
+                OuterTurretZone.Radius = rayon * 1.0f;
+            }
+
+            InitMoons();
 
             TurretsZoneImage = new Image("CercleBlanc", Vector3.Zero);
             TurretsZoneImage.Color = new Color(255, 255, 255, 100);
@@ -176,11 +196,12 @@
             Matrix.CreateRotationZ(MathHelper.ToRadians(rotation), out RotationMatrix);
 
             if (RotationTime != 0)
-                deplacer();
+                Move();
 
             this.Shape = Shape.Circle;
             this.Circle = new Circle(Position, rayon);
-            TurretsZone = new Circle(Position, rayon * 2);
+            InnerTurretZone = new Circle(Position, rayon * (rayon < (int) Size.Normal ? 1.0f : 0.8f));
+            OuterTurretZone = new Circle(Position, rayon * 1.3f);
 
             this.AttackPoints = 50000;
 
@@ -252,11 +273,12 @@
             {
                 ActualRotationTime = (ActualRotationTime + Preferences.TargetElapsedTimeMs) % RotationTime;
 
-                deplacer();
+                Move();
             }
 
             Circle.Position = Position;
-            TurretsZone.Position = Position;
+            InnerTurretZone.Position = Position;
+            OuterTurretZone.Position = Position;
 
             if (ParticulesRepresentation != null)
             {
@@ -312,8 +334,8 @@
 
             if (ShowTurretsZone)
             {
-                TurretsZoneImage.Position = TurretsZone.Position;
-                TurretsZoneImage.SizeX = (TurretsZone.Radius / 100) * 2;
+                TurretsZoneImage.Position = OuterTurretZone.Position;
+                TurretsZoneImage.SizeX = (OuterTurretZone.Radius / 100) * 2;
 
                 Simulation.Scene.Add(TurretsZoneImage);
             }
@@ -376,7 +398,19 @@
         }
 
 
-        private void initLunes()
+        public int CompareTo(CelestialBody other)
+        {
+            if (Priorite > other.Priorite)
+                return 1;
+
+            if (Priorite < other.Priorite)
+                return -1;
+
+            return 0;
+        }
+
+
+        private void InitMoons()
         {
             Lunes = new List<Moon>();
             int nbLunes = Main.Random.Next(0, 3);
@@ -395,7 +429,7 @@
         }
 
 
-        private void deplacer()
+        private void Move()
         {
             this.AnciennePosition = position;
 
@@ -409,7 +443,6 @@
 
         public static void Move(double tempsRotation, double tempsRotationActuel, ref Vector3 positionBase, ref Vector3 offset, ref Vector3 resultat)
         {
-
             resultat.X = positionBase.X * (float) Math.Cos((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
             resultat.Y = positionBase.Y * (float) Math.Sin((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
             resultat.Z = 0;

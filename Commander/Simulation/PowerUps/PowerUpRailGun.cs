@@ -1,8 +1,7 @@
 namespace EphemereGames.Commander
 {
     using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -48,7 +47,7 @@ namespace EphemereGames.Commander
                 Turret.StopFire();
                 Firing = false;
 
-                EphemereGames.Core.Audio.Audio.arreterEffetSonore("Partie", "sfxRailGunCharging");
+                Audio.StopSfx("Partie", "sfxRailGunCharging");
             }
         }
 
@@ -66,7 +65,7 @@ namespace EphemereGames.Commander
             Turret.Fire();
             Firing = true;
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxRailGunCharging");
+            Audio.PlaySfx(@"Partie", @"sfxRailGunCharging");
         }
 
 
@@ -88,7 +87,7 @@ namespace EphemereGames.Commander
             Turret = HumanBattleship.RailGun;
             Firing = false;
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxRailGunIn");
+            Audio.PlaySfx(@"Partie", @"sfxRailGunIn");
         }
 
 
@@ -98,7 +97,7 @@ namespace EphemereGames.Commander
             Firing = false;
             HumanBattleship.RailGun.Wander = true;
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxRailGunOut");
+            Audio.PlaySfx(@"Partie", @"sfxRailGunOut");
         }
     }
 }

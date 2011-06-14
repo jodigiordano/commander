@@ -1,11 +1,8 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
-    using Microsoft.Xna.Framework;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Visual;
-    using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework;
 
 
     class PowerUpDarkSide : PowerUp
@@ -49,7 +46,7 @@ namespace EphemereGames.Commander
 
         public override void Start()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxDarkSide");
+            Audio.PlaySfx(@"Partie", @"sfxDarkSide");
         }
     }
 }

@@ -1,8 +1,6 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -48,13 +46,13 @@ namespace EphemereGames.Commander
                 VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
             };
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", AutomaticCollector.SfxIn);
+            Audio.PlaySfx(@"Partie", AutomaticCollector.SfxIn);
         }
 
 
         public override void Stop()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", AutomaticCollector.SfxOut);
+            Audio.PlaySfx(@"Partie", AutomaticCollector.SfxOut);
         }
     }
 }

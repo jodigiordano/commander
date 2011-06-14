@@ -3,6 +3,10 @@ namespace EphemereGames.Commander
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using EphemereGames.Core.Audio;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
@@ -64,27 +68,27 @@ namespace EphemereGames.Commander
         {
             base.Initialize();
 
-            Core.Persistence.Persistence.Initialize(
+            Persistence.Initialize(
                 "Content",
                 "packages.xml",
                 Services);
 
-            Core.Visual.Visuals.Initialize(
+            Visuals.Initialize(
                 Graphics,
                 1280,
                 720,
                 Content,
                 new string[] { "Menu", "Partie", "Chargement", "NouvellePartie", "Aide", "Options", "Editeur", "Acheter", "Validation" });
 
-            Core.Input.Input.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
+            Input.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
 
-            Core.Physics.Physics.Initialize();
-            Core.Audio.Audio.Initialize(0, 0);
+            Physics.Initialize();
+            Audio.Initialize(0, 0);
 
-            Core.Persistence.Persistence.AddData( SaveGame );
-            Core.Persistence.Persistence.AddData( GeneratorData );
+            Persistence.AddData( SaveGame );
+            Persistence.AddData( GeneratorData );
 
-            Core.Persistence.Persistence.LoadPackage("chargement");
+            Persistence.LoadPackage("chargement");
 
             PlayersController.Initialize();
         }
@@ -105,62 +109,63 @@ namespace EphemereGames.Commander
         {
             base.Update(gameTime);
 
-            if (Initializing && Core.Persistence.Persistence.IsPackageLoaded("chargement"))
+            if (Initializing && Persistence.IsPackageLoaded("chargement"))
             {
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxTourelleBase", 2);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxTourelleMissile", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxTourelleLaserMultiple", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxTourelleMissileExplosion", 2);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxTourelleLaserSimple", 3);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxTourelleSlowMotion", 2);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteTouche", 2);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxCorpsCelesteExplose", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxNouvelleVague", 2);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire1", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire2", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxPowerUpResistanceTire3", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxTourelleVendue", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxMoney1", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxMoney2", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxMoney3", 1);
-                Core.Audio.Audio.setMaxInstancesActivesEffetSonore("sfxLifePack", 2);
+                Audio.SetMaxInstancesSfx("sfxTourelleBase", 2);
+                Audio.SetMaxInstancesSfx("sfxTourelleMissile", 1);
+                Audio.SetMaxInstancesSfx("sfxTourelleLaserMultiple", 1);
+                Audio.SetMaxInstancesSfx("sfxTourelleMissileExplosion", 2);
+                Audio.SetMaxInstancesSfx("sfxTourelleLaserSimple", 3);
+                Audio.SetMaxInstancesSfx("sfxTourelleSlowMotion", 2);
+                Audio.SetMaxInstancesSfx("sfxCorpsCelesteTouche", 2);
+                Audio.SetMaxInstancesSfx("sfxCorpsCelesteExplose", 1);
+                Audio.SetMaxInstancesSfx("sfxNouvelleVague", 2);
+                Audio.SetMaxInstancesSfx("sfxPowerUpResistanceTire1", 1);
+                Audio.SetMaxInstancesSfx("sfxPowerUpResistanceTire2", 1);
+                Audio.SetMaxInstancesSfx("sfxPowerUpResistanceTire3", 1);
+                Audio.SetMaxInstancesSfx("sfxTourelleVendue", 1);
+                Audio.SetMaxInstancesSfx("sfxMoney1", 1);
+                Audio.SetMaxInstancesSfx("sfxMoney2", 1);
+                Audio.SetMaxInstancesSfx("sfxMoney3", 1);
+                Audio.SetMaxInstancesSfx("sfxLifePack", 2);
+                Audio.SetMaxInstancesSfx("sfxMineGround", 1);
 
-                Core.Visual.Visuals.UpdateScene("Chargement", new LoadingScene(this));
-                Core.Visual.Visuals.UpdateScene("Menu", null);
-                Core.Visual.Visuals.UpdateScene("Partie", null);
-                Core.Visual.Visuals.UpdateScene("NouvellePartie", null);
-                Core.Visual.Visuals.UpdateScene("Aide", null);
-                Core.Visual.Visuals.UpdateScene("Options", null);
-                Core.Visual.Visuals.UpdateScene("Editeur", null);
+                Visuals.UpdateScene("Chargement", new LoadingScene(this));
+                Visuals.UpdateScene("Menu", null);
+                Visuals.UpdateScene("Partie", null);
+                Visuals.UpdateScene("NouvellePartie", null);
+                Visuals.UpdateScene("Aide", null);
+                Visuals.UpdateScene("Options", null);
+                Visuals.UpdateScene("Editeur", null);
                         
                 Initializing = false;
             }
 
-            Core.Input.Input.Active = this.IsActive;
+            Input.Active = this.IsActive;
 
-            Core.Persistence.Persistence.Update(gameTime);
-            Core.Visual.Visuals.Update(gameTime);
-            Core.Input.Input.Update(gameTime);
+            Persistence.Update(gameTime);
+            Visuals.Update(gameTime);
+            Input.Update(gameTime);
 
             if (!Initializing)
-                Core.Audio.Audio.Update(gameTime);
+                Audio.Update(gameTime);
 
-            if (Core.Persistence.Persistence.DataLoaded("savePlayer"))
+            if (Persistence.DataLoaded("savePlayer"))
                 TrialMode.Update(gameTime);
         }
 
 
         protected override void Draw(GameTime gameTime)
         {
-            Scene s = Core.Visual.Visuals.GetScene("NouvellePartie");
+            Scene s = Visuals.GetScene("NouvellePartie");
 
-            if (s != null)
+            if (s != null && s.Active)
             {
-                s.Add(new Text("framerate: " + 1000 / gameTime.ElapsedGameTime.TotalMilliseconds, "Pixelite", Color.White, new Vector3(-550, -250, 0)) { SizeX = 2 });
-                s.Add(new Text("slow?: " + gameTime.IsRunningSlowly, "Pixelite", Color.White, new Vector3(-550, -225, 0)) { SizeX = 2 });
+                s.Add(new Text("Dream. Build. Play. 2011 Special Build.", "Pixelite", Color.DarkRed, Visuals.ClampToXbox360SafeZone(s, new Vector3(-550, 250, 0))) { SizeX = 2,VisualPriority = 0.1f });
+                s.Add(new Text("Every feature is represented in these 9 levels; w/o balancing.", "Pixelite", Color.DarkRed, Visuals.ClampToXbox360SafeZone(s, new Vector3(-550, 270, 0))) { SizeX = 2, VisualPriority = 0.1f });
             }
 
-            Core.Visual.Visuals.Draw();
+            Visuals.Draw();
         }
     }
 

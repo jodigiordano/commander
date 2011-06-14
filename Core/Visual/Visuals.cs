@@ -5,8 +5,6 @@
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
-    public delegate void NoneHandler();
-
 
     public static class Visuals
     {
@@ -99,6 +97,17 @@
         public static void Draw()
         {
             ScenesController.Draw();
+        }
+
+
+        public static Vector3 ClampToXbox360SafeZone(Scene s, Vector3 v)
+        {
+            Rectangle r = ScreenSafeZone.GetXbox360();
+
+            v.X = MathHelper.Clamp(v.X, -r.Width / 2, r.Width / 2);
+            v.Y = MathHelper.Clamp(v.Y, -r.Height / 2, r.Height / 2);
+
+            return v;
         }
     }
 }

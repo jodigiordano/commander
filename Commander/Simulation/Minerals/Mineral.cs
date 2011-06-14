@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -85,13 +86,13 @@
 
             string sfx = (Type == MineralType.Life1) ? "sfxLifePack" : "sfxMoney" + Main.Random.Next(1, 4);
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", sfx);
+            Audio.PlaySfx(@"Partie", sfx);
         }
 
 
         private void doBouncing()
         {
-            if (Position.X > 640 - Preferences.DeadZoneXbox.X - 20)
+            if (Position.X > 640 - Preferences.Xbox360DeadZoneV2.X - 20)
             {
                 Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -99,7 +100,7 @@
                 Speed = 0;
             }
 
-            if (Position.X < -640 + Preferences.DeadZoneXbox.X + Circle.Radius)
+            if (Position.X < -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius)
             {
                 Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -107,7 +108,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y > 370 - Preferences.DeadZoneXbox.Y - Circle.Radius)
+            if (Position.Y > 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Speed);
@@ -115,7 +116,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y < -370 + Preferences.DeadZoneXbox.Y + Circle.Radius)
+            if (Position.Y < -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Speed);

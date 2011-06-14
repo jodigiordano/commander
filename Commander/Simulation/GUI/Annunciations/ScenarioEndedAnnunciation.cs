@@ -179,8 +179,8 @@
                 MovePathEffect e = new MovePathEffect();
                 e.Delay = 2000;
                 e.Length = 15000;
-                e.Progress = AbstractEffect.ProgressType.Linear;
-                e.Trajet = new Path2D(new List<Vector2>
+                e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+                e.InnerPath = new Path2D(new List<Vector2>
                 {
                     new Vector2(-1200, 100),
                     new Vector2(-500, 100),
@@ -194,48 +194,48 @@
                     15000
                 });
 
-                this.Simulation.Scene.Effects.Add(AlienShip.Representation, e);
+                this.Simulation.Scene.PhysicalEffects.Add(AlienShip.Representation, e);
 
-                this.Simulation.Scene.Effects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.PredefinedEffects.FadeOutTo0(255, 5000, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.PredefinedEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
 
-                this.Simulation.Scene.Effects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
 
                 int nbStars = Scenario.NbStars(Scenario.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
-                    this.Simulation.Scene.Effects.Add(Stars[i], Core.Visual.PredefinedEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 5000, 1000));
+                    this.Simulation.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 5000, 1000));
 
-                 Simulation.Scene.Effects.Add(NewHighscore, Core.Visual.PredefinedEffects.FadeInFrom0(255, 5000, 1000));
+                 Simulation.Scene.VisualEffects.Add(NewHighscore, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
             }
 
             else if (GameState == GameState.Lost)
             {
-                this.Simulation.Scene.Effects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.Effects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
 
                 int nbStars = Scenario.NbStars(Scenario.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
-                    this.Simulation.Scene.Effects.Add(Stars[i], Core.Visual.PredefinedEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 0, 1000));
+                    this.Simulation.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 0, 1000));
 
-                Simulation.Scene.Effects.Add(NewHighscore, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 1000));
+                Simulation.Scene.VisualEffects.Add(NewHighscore, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
             }
 
-            this.Simulation.Scene.Effects.Add(Filter, Core.Visual.PredefinedEffects.FadeInFrom0(200, 0, 1000));
+            this.Simulation.Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeInFrom0(200, 0, 1000));
 
             MovePathEffect effet = new MovePathEffect();
             effet.Delay = 0;
             effet.Length = 10000;
-            effet.Progress = AbstractEffect.ProgressType.Linear;
-            effet.Trajet = new Path2D(new List<Vector2>
+            effet.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            effet.InnerPath = new Path2D(new List<Vector2>
                 {
                     new Vector2(-1920, -155),
                     new Vector2(-1000, -155),
@@ -247,7 +247,7 @@
                     1200
                 });
 
-            this.Simulation.Scene.Effects.Add(Filter, effet);
+            this.Simulation.Scene.PhysicalEffects.Add(Filter, effet);
         }
 
 
@@ -269,7 +269,7 @@
                         deplacement.ObjetSuivi = CelestialBodies[i];
                         deplacement.Vitesse = 20f;
 
-                        this.Simulation.Scene.Effects.Add(Missiles[i].Key, deplacement);
+                        this.Simulation.Scene.PhysicalEffects.Add(Missiles[i].Key, deplacement);
                     }
 
                     TimeLostState = Double.NegativeInfinity;

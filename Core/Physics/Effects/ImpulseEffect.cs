@@ -1,13 +1,15 @@
 ﻿namespace EphemereGames.Core.Physics
 {
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
-    using System;
 
 
-    public class ImpulseEffect : PhysicalEffect
+    public class ImpulseEffect : Effect<IPhysicalObject>
     {
         public Vector3 Direction;
         public float Speed;
+
+        public static Pool<ImpulseEffect> Pool = new Pool<ImpulseEffect>();
 
 
         protected override void InitializeLogic()
@@ -18,7 +20,7 @@
 
         protected override void LogicLinear()
         {
-            Objet.Position += Direction * Speed;
+            Obj.Position += Direction * Speed;
         }
 
 
@@ -37,6 +39,12 @@
         protected override void LogicNow()
         {
             //todo
+        }
+
+
+        internal override void Return()
+        {
+            Pool.Return((ImpulseEffect) this);
         }
     }
 }

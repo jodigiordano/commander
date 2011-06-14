@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Input;
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -21,15 +22,15 @@
         public int Height               { get { return Buffer.Hauteur; } }
         public Vector2 Center           { get { return Buffer.Centre; } }
 
-        public virtual bool IsFinished                      { get; protected set; }
-        public virtual AnimationsController Animations      { get; protected set; }
-        public virtual ParticlesController Particles        { get; protected set; }
-        public virtual EffectsController Effects            { get; protected set; }
+        public virtual bool IsFinished                                      { get; protected set; }
+        public virtual AnimationsController Animations                      { get; protected set; }
+        public virtual ParticlesController Particles                        { get; protected set; }
+        public virtual EffectsController<IPhysicalObject> PhysicalEffects   { get; protected set; }
+        public virtual EffectsController<IVisual> VisualEffects             { get; protected set; }
 
         private SpriteBatch Batch;
         private TypeBlend LastBlend;
         internal bool UpdatedThisTick;
-        //private OrderedSet<IScenable> ToDraw;
         private List<IScenable> ToDraw;
         private string name;
         private TransitionType transition;
@@ -39,7 +40,6 @@
         {
             Buffer = Visuals.ScenesController.Buffer;
             Active = false;
-            //ToDraw = new OrderedSet<IScenable>(new IScenableComparer());
             ToDraw = new List<IScenable>();
             Batch = new SpriteBatch(Preferences.GraphicsDeviceManager.GraphicsDevice);
             LastBlend = TypeBlend.Alpha;
@@ -48,7 +48,8 @@
             Camera.Origin = new Vector2(this.Buffer.Largeur / 2.0f, this.Buffer.Hauteur / 2.0f);
             Nom = name;
             Animations = new AnimationsController(this);
-            Effects = new EffectsController();
+            PhysicalEffects = new EffectsController<IPhysicalObject>();
+            VisualEffects = new EffectsController<IVisual>();
             Particles = new ParticlesController(this);
             EphemereGames.Core.Input.Input.AddListener(this);
             Transition = TransitionType.None;
@@ -182,13 +183,31 @@
                 UpdateTransition(gameTime);
 
             UpdateLogic(gameTime);
-            Effects.Update(gameTime);
+            PhysicalEffects.Update(gameTime);
+            VisualEffects.Update(gameTime);
         }
 
 
         public void Dispose()
         {
             EphemereGames.Core.Input.Input.RemoveListener(this);
+        }
+
+
+
+        public void Clamp(ref Vector3 v)
+        {
+            v.X = MathHelper.Clamp(v.X, -Width / 2, Width / 2);
+            v.Y = MathHelper.Clamp(v.Y, -Height / 2, Height / 2);
+        }
+
+
+        public Vector3 Clamp(Vector3 v)
+        {
+            v.X = MathHelper.Clamp(v.X, -Width / 2, Width / 2);
+            v.Y = MathHelper.Clamp(v.Y, -Height / 2, Height / 2);
+
+            return v;
         }
 
 

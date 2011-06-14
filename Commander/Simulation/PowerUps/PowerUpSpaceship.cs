@@ -1,8 +1,6 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -60,7 +58,7 @@ namespace EphemereGames.Commander
                 AutomaticMode = false
             };
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", SpaceshipSpaceship.SfxIn);
+            Audio.PlaySfx(@"Partie", SpaceshipSpaceship.SfxIn);
         }
 
 
@@ -72,7 +70,7 @@ namespace EphemereGames.Commander
 
         public override void Stop()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", SpaceshipSpaceship.SfxOut);
+            Audio.PlaySfx(@"Partie", SpaceshipSpaceship.SfxOut);
         }
     }
 }

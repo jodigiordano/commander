@@ -26,8 +26,8 @@
             this.Position = BasePosition;
             this.Taille = MenuSize;
 
-            bool tropADroite = Position.X + this.Taille.X + 50 > 640 - Preferences.DeadZoneXbox.X;
-            bool tropBas = Position.Y + this.Taille.Y > 370 - Preferences.DeadZoneXbox.Y;
+            bool tropADroite = Position.X + this.Taille.X + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
+            bool tropBas = Position.Y + this.Taille.Y > 370 - Preferences.Xbox360DeadZoneV2.Y;
 
             if (tropADroite && tropBas)
             {

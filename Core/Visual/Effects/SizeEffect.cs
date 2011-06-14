@@ -4,9 +4,11 @@
     using EphemereGames.Core.Utilities;
 
 
-    public class SizeEffect : VisualEffect
+    public class SizeEffect : Effect<IVisual>
     {
         public Path2D Path { get; set; }
+
+        public static Pool<SizeEffect> Pool = new Pool<SizeEffect>();
 
 
         protected override void InitializeLogic() {}
@@ -14,19 +16,25 @@
 
         protected override void LogicLinear()
         {
-            Object.TailleVecteur = Path.position(ElaspedTime);
+            Obj.Size = Path.position(ElaspedTime);
         }
 
 
         protected override void LogicAfter()
         {
-            Object.TailleVecteur = Path.position(ElaspedTime);
+            Obj.Size = Path.position(ElaspedTime);
         }
 
 
         protected override void LogicNow()
         {
-            Object.TailleVecteur = Path.position(Length);
+            Obj.Size = Path.position(Length);
+        }
+
+
+        internal override void Return()
+        {
+            Pool.Return((SizeEffect) this);
         }
     }
 }

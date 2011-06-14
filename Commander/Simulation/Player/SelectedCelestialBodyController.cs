@@ -1,10 +1,9 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Visual;
     using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
+
 
     class SelectedCelestialBodyController
     {
@@ -71,7 +70,7 @@
 
                 for (int j = 0; j < CelestialBodies[i].Turrets.Count; j++)
                     if (CelestialBodies[i].Turrets[j].Visible &&
-                        EphemereGames.Core.Physics.Physics.collisionCercleCercle(Cercle, CelestialBodies[i].Turrets[j].Circle))
+                        Physics.collisionCercleCercle(Cercle, CelestialBodies[i].Turrets[j].Circle))
                     {
                         SelectedCelestialBodyIndex = -1;
                         SelectedTurretCelestialBodyIndex = i;
@@ -101,7 +100,7 @@
                 if (!CelestialBodies[i].Alive || !CelestialBodies[i].Selectionnable)
                     continue;
 
-                if (EphemereGames.Core.Physics.Physics.collisionCercleCercle(Cercle, CelestialBodies[i].Circle))
+                if (Physics.collisionCercleCercle(Cercle, CelestialBodies[i].Circle))
                 {
                     SelectedCelestialBodyIndex = i;
                     break;

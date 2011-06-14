@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
+    using EphemereGames.Core.Audio;
+    using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -24,7 +25,7 @@
 
         public override void LoadAssets()
         {
-            ImageAlt = EphemereGames.Core.Persistence.Persistence.GetAssetCopy<Sprite>("mine");
+            ImageAlt = Persistence.GetAssetCopy<Sprite>("mine");
             ImageAlt.Taille = 2;
             ImageAlt.Origine = ImageAlt.Centre;
             Circle.Radius = 15;
@@ -60,6 +61,8 @@
         public override void DoDie()
         {
             ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
+
+            Audio.PlaySfx(@"Partie", @"sfxMineExplose");
             
             base.DoDie();
         }

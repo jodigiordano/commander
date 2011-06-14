@@ -98,7 +98,7 @@
 
                 if (PowerUpInUse == PowerUpType.FinalSolution)
                 {
-                    ActualSelection.PowerUpToBuy = PowerUpType.FinalSolution;
+                    //ActualSelection.PowerUpToBuy = PowerUpType.FinalSolution;
                     CelestialBodyController.UpdateSelection();
                     ActualSelection.CelestialBody = CelestialBodyController.CelestialBody;
                 }
@@ -278,8 +278,8 @@
 
         private void VerifyFrame()
         {
-            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.DeadZoneXbox.X + Cercle.Radius, 640 - Preferences.DeadZoneXbox.X - Cercle.Radius);
-            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.DeadZoneXbox.Y + Cercle.Radius, 370 - Preferences.DeadZoneXbox.Y - Cercle.Radius);
+            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Cercle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Cercle.Radius);
+            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Cercle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Cercle.Radius);
         }
 
 

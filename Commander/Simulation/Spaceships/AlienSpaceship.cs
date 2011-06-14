@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
 
 
@@ -21,7 +22,7 @@
                 VisualPriority = prioriteAffichage
             };
             
-            Tentacules = EphemereGames.Core.Persistence.Persistence.GetAssetCopy<Sprite>("tentacules");
+            Tentacules = Persistence.GetAssetCopy<Sprite>("tentacules");
             Tentacules.Taille = 8;
             Tentacules.Origine = Tentacules.Centre;
             Tentacules.VisualPriority = Representation.VisualPriority + 0.01f;

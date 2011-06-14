@@ -1,8 +1,6 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -60,7 +58,7 @@ namespace EphemereGames.Commander
             terminated = true;
             GoAhead = false;
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxLastSolutionOut");
+            Audio.PlaySfx(@"Partie", @"sfxLastSolutionOut");
         }
 
 
@@ -68,7 +66,7 @@ namespace EphemereGames.Commander
         {
             terminated = false;
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxLastSolutionIn");
+            Audio.PlaySfx(@"Partie", @"sfxLastSolutionIn");
         }
     }
 }

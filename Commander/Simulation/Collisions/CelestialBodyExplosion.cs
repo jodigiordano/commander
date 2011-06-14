@@ -45,7 +45,7 @@
             if (Output.ContainsKey(hash))
                 return true;
 
-            if (EphemereGames.Core.Physics.Physics.collisionCercleCercle(CelestiablBodyRange, e.Circle))
+            if (Physics.collisionCercleCercle(CelestiablBodyRange, e.Circle))
                 Output.Add(hash, e);
 
             return true;

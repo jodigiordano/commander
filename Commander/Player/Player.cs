@@ -43,7 +43,7 @@
             Master = false;
             Profile = null;
 
-            EphemereGames.Core.Input.Input.UpdateInputSource(
+            Input.UpdateInputSource(
                 Index,
                 MouseConfiguration.ToList,
                 GamePadConfiguration.ToList,
@@ -71,8 +71,8 @@
 
         private void VerifyFrame()
         {
-            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.DeadZoneXbox.X + Cercle.Radius, 640 - Preferences.DeadZoneXbox.X - Cercle.Radius);
-            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.DeadZoneXbox.Y + Cercle.Radius, 370 - Preferences.DeadZoneXbox.Y - Cercle.Radius);
+            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Cercle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Cercle.Radius);
+            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Cercle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Cercle.Radius);
         }
     }
 }

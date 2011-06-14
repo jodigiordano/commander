@@ -27,6 +27,8 @@
         private Particle Stars;
         private double StarsEmitter;
 
+        private bool FinalSolution;
+
 
         public PlanetarySystemController(Simulation simulation)
         {
@@ -35,7 +37,7 @@
             ShootingStars = new List<ShootingStar>();
             ShootingStarsFactory = new Core.Utilities.Pool<ShootingStar>();
             Path = new Path(simulation, new Color(255, 255, 255, 100), TypeBlend.Add);
-            PathPreview = new Path(simulation, new Color(255, 255, 255, 25), TypeBlend.Add);
+            PathPreview = new Path(simulation, new Color(255, 255, 255, 0), TypeBlend.Add);
         }
 
 
@@ -47,8 +49,6 @@
             PathPreview.CelestialBodies = CelestialBodies;
             PathPreview.Initialize();
 
-            PathPreview.Active = false;
-
             SyncUpdateShootingStars = new Action(UpdateShootingStars);
             SyncPathPreview = new Action(PathPreview.Update);
 
@@ -56,6 +56,7 @@
             Stars.VisualPriority = Preferences.PrioriteGUIEtoiles;
             StarsEmitter = 0;
             DeadlyShootingStars = false;
+            FinalSolution = false;
         }
 
 
@@ -165,31 +166,6 @@
         }
 
 
-        public void DoPlayerSelectionChanged(SimPlayer player)
-        {
-            var selection = player.ActualSelection;
-
-            if (selection.Turret != null &&
-                selection.Turret.Type == TurretType.Gravitational &&
-                selection.Turret.CanSell &&
-                !selection.Turret.Disabled &&
-                selection.TurretOption == TurretAction.Sell)
-                PathPreview.Active = true;
-            else if (selection.CelestialBody != null &&
-                selection.PowerUpToBuy == PowerUpType.FinalSolution &&
-                selection.CelestialBody.ContientTourelleGravitationnelle)
-                PathPreview.Active = true;
-            else if (selection.TurretToBuy != null &&
-                selection.TurretToBuy.Type == TurretType.Gravitational)
-                PathPreview.Active = true;
-            else if (selection.TurretToPlace != null &&
-                selection.TurretToPlace.Type == TurretType.Gravitational)
-                PathPreview.Active = true;
-            else
-                PathPreview.Active = false;
-        }
-
-
         public void DoPowerUpStarted(PowerUp powerUp)
         {
             if (powerUp.Type == PowerUpType.Pulse)
@@ -206,11 +182,26 @@
                 Vector3 newColor = Color.Red.ToVector3();
                 Vector4 newColor2 = Color.Red.ToVector4();
 
-                Stars.ParticleEffect[0].ReleaseColour = newColor;
+                var stars = Stars.ParticleEffect[0];
 
-                for (int i = 0; i < Stars.ParticleEffect[0].ActiveParticlesCount; i++)
-                    Stars.ParticleEffect[0].Particles[i].Colour = newColor2;
+                stars.ReleaseColour = newColor;
+
+                for (int i = 0; i < stars.ActiveParticlesCount; i++)
+                {
+                    var star = stars.Particles[i];
+
+                    star.Colour = newColor2;
+
+                    var effect = Simulation.Scene.Particles.Get(@"starExplosion");
+                    effect.ParticleEffect[0].ReleaseColour = newColor;
+                    effect.Trigger(ref star.Position);
+                    effect.VisualPriority = Preferences.PrioriteFondEcran - 0.00001f;
+                    Simulation.Scene.Particles.Return(effect);
+                }
             }
+
+            if (powerUp.Type == PowerUpType.FinalSolution)
+                FinalSolution = true;
         }
 
 
@@ -218,6 +209,8 @@
         {
             if (powerUp.Type != PowerUpType.FinalSolution)
                 return;
+
+            FinalSolution = false;
 
             PowerUpLastSolution p = (PowerUpLastSolution) powerUp;
 

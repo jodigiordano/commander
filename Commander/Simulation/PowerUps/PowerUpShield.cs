@@ -1,11 +1,8 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
-    using ProjectMercury.Modifiers;
 
 
     class PowerUpShield : PowerUp
@@ -59,13 +56,13 @@ namespace EphemereGames.Commander
 
             Bullet.Initialize();
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxShieldIn");
+            Audio.PlaySfx(@"Partie", @"sfxShieldIn");
         }
 
 
         public override void Stop()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxShieldOut");
+            Audio.PlaySfx(@"Partie", @"sfxShieldOut");
         }
     }
 }

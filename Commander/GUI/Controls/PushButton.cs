@@ -36,7 +36,7 @@
 
         public void doClick()
         {
-            Pressed = EphemereGames.Core.Physics.Physics.collisionCercleCercle(Curseur.Circle, BoutonCercle);
+            Pressed = Physics.collisionCercleCercle(Curseur.Circle, BoutonCercle);
         }
 
 

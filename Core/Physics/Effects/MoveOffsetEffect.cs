@@ -1,65 +1,61 @@
-﻿//=====================================================================
-//
-// Déplacement linéairement un objet de sa position actuelle à la
-// position de fin.
-//
-//=====================================================================
-
-namespace EphemereGames.Core.Physics
+﻿namespace EphemereGames.Core.Physics
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
     using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework;
 
-    public class MoveOffsetEffect : PhysicalEffect
+
+    public class MoveOffsetEffect : Effect<IPhysicalObject>
     {
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
         public Vector3 Offset { get; set; }
 
-        private Vector3 dernierDeplacement;
+        private Vector3 LastDisplacement;
 
+        public static Pool<MoveOffsetEffect> Pool = new Pool<MoveOffsetEffect>();
 
-        //=====================================================================
-        // Logique
-        //=====================================================================
 
         protected override void InitializeLogic()
         {
-            dernierDeplacement = Vector3.Zero;
+            LastDisplacement = Vector3.Zero;
         }
+
 
         protected override void LogicLinear()
         {
 
-            Vector3 nouveauDeplacement = Offset * (float)(ElaspedTime / Length);
+            Vector3 NewDisplacement = Offset * (float)(ElaspedTime / Length);
 
-            Objet.Position -= dernierDeplacement;
-            Objet.Position += nouveauDeplacement;
-            dernierDeplacement = nouveauDeplacement;
+            Obj.Position -= LastDisplacement;
+            Obj.Position += NewDisplacement;
+
+            LastDisplacement = NewDisplacement;
         }
+
 
         protected override void LogicAfter()
         {
-            Objet.Position += Offset;
+            Obj.Position += Offset;
         }
+
 
         protected override void LogicNow()
         {
-            Objet.Position += Offset;
+            Obj.Position += Offset;
         }
+
 
         protected override void LogicEnd()
         {
             base.LogicEnd();
 
-            Objet.Position -= dernierDeplacement;
-            Objet.Position += Offset;
-            dernierDeplacement = Offset;
+            Obj.Position -= LastDisplacement;
+            Obj.Position += Offset;
+            LastDisplacement = Offset;
+        }
+
+
+        internal override void Return()
+        {
+            Pool.Return((MoveOffsetEffect) this);
         }
     }
 }

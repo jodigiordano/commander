@@ -4,6 +4,7 @@ namespace EphemereGames.Commander
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -131,7 +132,8 @@ namespace EphemereGames.Commander
                     @"pulseEffect",
                     @"shieldEffect",
                     @"spaceshipTrail",
-                    @"darkSideEffect"
+                    @"darkSideEffect",
+                    @"starExplosion"
                 }, false);
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
@@ -236,7 +238,6 @@ namespace EphemereGames.Commander
             ScenarioController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
             CollisionsController.BulletDeflected += new EnemyBulletHandler(BulletsController.DoBulletDeflected);
-            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(PlanetarySystemController.DoPlayerSelectionChanged);
 
             ScenarioController.Initialize();
             EnemiesController.Initialize();
@@ -367,7 +368,7 @@ namespace EphemereGames.Commander
 
                 Main.SaveGame.HighScores[scenario].Add(Main.PlayersController.MasterPlayer.Name, score);
 
-                EphemereGames.Core.Persistence.Persistence.SaveData("savePlayer");
+                Persistence.SaveData("savePlayer");
             }
         }
 
@@ -380,7 +381,7 @@ namespace EphemereGames.Commander
             if (!this.DemoMode && this.Etat != GameState.Lost)
             {
                 foreach (var joueur in this.Main.Players.Values)
-                    EphemereGames.Core.Input.Input.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+                    Input.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
             }
         }
 
@@ -388,7 +389,7 @@ namespace EphemereGames.Commander
         private void doCorpsCelesteDetruit(IObjetPhysique objet)
         {
             foreach (var joueur in this.Main.Players.Values)
-                EphemereGames.Core.Input.Input.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+                Input.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
         }
 
 

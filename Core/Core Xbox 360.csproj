@@ -69,6 +69,7 @@
     <Compile Include="Audio\SoundEffect.cs" />
     <Compile Include="Audio\SoundEffectsBank.cs" />
     <Compile Include="Audio\SoundEffectsController.cs" />
+    <Compile Include="Handlers.cs" />
     <Compile Include="Input\EqualityComparers.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\PlayerConnection.cs" />
@@ -91,8 +92,7 @@
     <Compile Include="Physics\Effects\MoveEffect.cs" />
     <Compile Include="Physics\Effects\MoveOffsetEffect.cs" />
     <Compile Include="Physics\Effects\MovePathEffect.cs" />
-    <Compile Include="Physics\Effects\PhysicalEffect.cs" />
-    <Compile Include="Physics\Effects\PredefinedEffects.cs" />
+    <Compile Include="Physics\Effects\PhysicalEffects.cs" />
     <Compile Include="Physics\Effects\RotationEffect.cs" />
     <Compile Include="Physics\Effects\SpeedPathEffect.cs" />
     <Compile Include="Physics\IObjetPhysique.cs" />
@@ -117,7 +117,6 @@
     <Compile Include="Utilities\Collections\ReadOnlyListBase.cs" />
     <Compile Include="Utilities\Collections\RedBlack.cs" />
     <Compile Include="Utilities\Collections\Set.cs" />
-    <Compile Include="Utilities\AbstractEffet.cs" />
     <Compile Include="Utilities\Collections\Strings.cs" />
     <Compile Include="Utilities\Collections\Util.cs" />
     <Compile Include="Utilities\Curve\Curve.cs">
@@ -130,6 +129,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\CustomBlends.cs" />
+    <Compile Include="Utilities\Effect.cs" />
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\EffectsController.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />
@@ -147,10 +147,9 @@
     <Compile Include="Visual\Camera\PathFollowingCamera.cs" />
     <Compile Include="Visual\Effects\DrawPartiallyEffect.cs" />
     <Compile Include="Visual\Effects\FadeColorEffect.cs" />
-    <Compile Include="Visual\Effects\PredefinedEffects.cs" />
     <Compile Include="Visual\Effects\RecenterEffect.cs" />
     <Compile Include="Visual\Effects\SizeEffect.cs" />
-    <Compile Include="Visual\Effects\VisualEffect.cs" />
+    <Compile Include="Visual\Effects\VisualEffects.cs" />
     <Compile Include="Visual\Particles\Particle.cs" />
     <Compile Include="Visual\Particles\ParticlesController.cs" />
     <Compile Include="Visual\Preferences.cs" />
@@ -159,6 +158,7 @@
     <Compile Include="Visual\Scenable\IScenable.cs" />
     <Compile Include="Visual\Scenable\IScenableComparer.cs" />
     <Compile Include="Visual\Scenable\IVisible.cs" />
+    <Compile Include="Visual\Scenable\IVisual.cs" />
     <Compile Include="Visual\Scenable\Sprite.cs" />
     <Compile Include="Visual\Scenable\Text.cs" />
     <Compile Include="Visual\Scenable\VisualLine.cs" />
@@ -168,6 +168,7 @@
     <Compile Include="Visual\Scene\Transition.cs" />
     <Compile Include="Visual\Scene\TransitionsController.cs" />
     <Compile Include="Visual\Scene\VisualBuffer.cs" />
+    <Compile Include="Visual\ScreenSafeZone.cs" />
     <Compile Include="Visual\Visuals.cs" />
   </ItemGroup>
   <ItemGroup>

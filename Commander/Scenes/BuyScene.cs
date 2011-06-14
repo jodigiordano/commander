@@ -77,7 +77,7 @@
             if (AnimationTransition.Finished(gameTime))
             {
                 if (Transition == TransitionType.Out)
-                    EphemereGames.Core.Visual.Visuals.Transite("AcheterToMenu");
+                    Visuals.Transite("AcheterToMenu");
 
                 Transition = TransitionType.None;
             }

@@ -81,8 +81,8 @@
                 if (Transition == TransitionType.Out)
                     switch (ChoixTransition)
                     {
-                        case "menu": EphemereGames.Core.Visual.Visuals.Transite("EditeurToMenu"); break;
-                        case "chargement": EphemereGames.Core.Visual.Visuals.Transite("EditeurToChargement"); break;
+                        case "menu": Visuals.Transite("EditeurToMenu"); break;
+                        case "chargement": Visuals.Transite("EditeurToChargement"); break;
                     }
 
                 Transition = TransitionType.None;
@@ -107,7 +107,7 @@
 
             Transition = TransitionType.In;
 
-            EphemereGames.Core.Input.Input.AddListener(Simulation);
+            Input.AddListener(Simulation);
         }
 
 
@@ -116,7 +116,7 @@
             base.OnFocusLost();
 
             //EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
-            EphemereGames.Core.Input.Input.RemoveListener(Simulation);
+            Input.RemoveListener(Simulation);
         }
 
 

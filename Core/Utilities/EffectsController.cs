@@ -4,18 +4,22 @@
     using Microsoft.Xna.Framework;
 
 
-    public class EffectsController
+    public class EffectsController<T>
     {
-        protected List<AbstractEffect> Effects { get; set; }
+        private Dictionary<Effect<T>, List<T>> Effects;
+        private List<KeyValuePair<Effect<T>, List<T>>> ToDelete;
+        private Pool<List<T>> PoolOfLists;
 
 
         public EffectsController()
         {
-            Effects = new List<AbstractEffect>();
+            Effects = new Dictionary<Effect<T>, List<T>>();
+            ToDelete = new List<KeyValuePair<Effect<T>,List<T>>>();
+            PoolOfLists = new Pool<List<T>>();
         }
 
         
-        public int NbEffetsActifs
+        public int ActiveEffectsCount
         {
             get
             {
@@ -26,57 +30,82 @@
         
         public virtual void Update(GameTime gameTime)
         {
-            for (int i = Effects.Count - 1; i > -1; i--)
-            {
-                AbstractEffect effect = Effects[i];
+            ToDelete.Clear();
 
-                if (!effect.Finished)
-                    Effects[i].Update(gameTime);
-                else
-                    Effects.RemoveAt(i);
+            foreach (var kvp in Effects)
+            {
+                Effect<T> effect = kvp.Key;
+
+                effect.Update(gameTime);
+
+                foreach (var obj in kvp.Value)
+                {
+                    effect.Obj = obj;
+                    effect.UpdateObj(gameTime);
+                }
+
+                if (effect.Terminated)
+                    ToDelete.Add(kvp);
+            }
+
+            foreach (var kvp in ToDelete)
+            {
+                Effect<T> effect = kvp.Key;
+
+                if (effect.TerminatedCallback != null)
+                    effect.TerminatedCallback();
+
+                effect.Return();
+                PoolOfLists.Return(kvp.Value);
+
+                Effects.Remove(effect);
             }
         }
 
 
-        public void Add(object obj, AbstractEffect effect)
+        public void Add(T obj, Effect<T> effect, NoneHandler callback)
         {
-            effect.Obj = obj;
+            if (Effects.ContainsKey(effect))
+                Effects[effect].Add(obj);
+            else
+            {
+                var l = PoolOfLists.Get();
+                l.Clear();
+                l.Add(obj);
+                Effects.Add(effect, l);
 
-            Effects.Add(effect);
+                effect.TerminatedCallback = callback;
+                effect.Initialize();
+            }
         }
 
-        
-        public void Add(object obj, List<AbstractEffect> effects)
+
+        public void Add(T obj, Effect<T> effect)
+        {
+            Add(obj, effect, null);
+        }
+
+
+        public void Add(T obj, List<Effect<T>> effects)
         {
             for (int i = 0; i < effects.Count; i++)
-                Add(obj, effects[i]);
-        }
-
-
-        public void Stop()
-        {
-            for (int i = 0; i < Effects.Count; i++)
-            {
-                Effects[i].Finished = true;
-                Effects[i].Update(null);
-                Effects[i].Initialize();                
-            }
+                Add(obj, effects[i], null);
         }
 
 
         public void Clear()
         {
+            foreach (var kvp in Effects)
+            {
+                if (kvp.Key.TerminatedCallback != null)
+                    kvp.Key.TerminatedCallback();
+
+                kvp.Key.Return();
+                PoolOfLists.Return(kvp.Value);
+            }
+
             Effects.Clear();
-        }
-
-
-        public bool AllFinished(List<AbstractEffect> effects)
-        {
-            foreach (var effet in effects)
-                if (!effet.Finished)
-                    return false;
-
-            return true;
+            ToDelete.Clear();
         }
     }
 }

@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     class TextTypeWriter
@@ -128,7 +128,7 @@
                 NbCharWritten++;
 
                 if (PlaySfx)
-                    EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", Sfxs[Main.Random.Next(0, Sfxs.Count)]);
+                    Audio.PlaySfx(@"Partie", Sfxs[Main.Random.Next(0, Sfxs.Count)]);
             }
         }
 

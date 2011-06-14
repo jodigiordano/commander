@@ -1,8 +1,6 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -66,13 +64,13 @@ namespace EphemereGames.Commander
                 AutomaticMode = false
             };
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", Collector.SfxIn);
+            Audio.PlaySfx(@"Partie", Collector.SfxIn);
         }
 
 
         public override void Stop()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", Collector.SfxOut);
+            Audio.PlaySfx(@"Partie", Collector.SfxOut);
         }
     }
 }

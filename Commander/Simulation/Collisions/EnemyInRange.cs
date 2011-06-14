@@ -55,7 +55,7 @@
             if (HiddenEnemies.Output.ContainsKey(e))
                 return true;
 
-            if (EphemereGames.Core.Physics.Physics.collisionCercleCercle(CurrentTurretRange, e.Circle))
+            if (Physics.collisionCercleCercle(CurrentTurretRange, e.Circle))
             {
                 Output.Add(new KeyValuePair<Turret, Enemy>(CurrentTurret, e));
 

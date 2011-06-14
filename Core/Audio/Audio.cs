@@ -3,12 +3,12 @@
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
+    using EphemereGames.Core.Persistence;
     
+
     public static class Audio
     {
-        public static void Initialize(
-            float volumeMusique,
-            float volumeEffetsSonores)
+        public static void Initialize(float volumeMusique, float volumeEffetsSonores)
         {
             Preferences.VolumeMusique = volumeMusique;
             Preferences.VolumeEffetsSonores = volumeEffetsSonores;
@@ -16,68 +16,79 @@
             SoundEffectsController.Instance.VolumeMusique = volumeMusique;
             SoundEffectsController.Instance.VolumeEffetsSonores = volumeEffetsSonores;
 
-            EphemereGames.Core.Persistence.Persistence.AddAssetType(new SoundEffect());
-            EphemereGames.Core.Persistence.Persistence.AddAssetType(new Music());
+            Persistence.AddAssetType(new SoundEffect());
+            Persistence.AddAssetType(new Music());
         }
 
-        public static void jouerEffetSonore(string nomBanque, string nomEffetSonore)
+
+        public static void PlaySfx(string bankName, string sfxName)
         {
-            SoundEffectsController.Instance.jouerEffetSonore(nomBanque, nomEffetSonore);
+            SoundEffectsController.Instance.jouerEffetSonore(bankName, sfxName);
         }
 
-        public static void arreterEffetSonore(string nomBanque, string nomEffetSonore)
+
+        public static void StopSfx(string bankName, string sfxName)
         {
-            SoundEffectsController.Instance.arreterEffetSonore(nomBanque, nomEffetSonore);
+            SoundEffectsController.Instance.arreterEffetSonore(bankName, sfxName);
         }
 
-        public static bool banqueEffetsSonoreUtilisee(string nomBanque)
+        public static bool IsSfxBankInUse(string bankName)
         {
-            return SoundEffectsController.Instance.getEffetsSonores(nomBanque).Utilise;
+            return SoundEffectsController.Instance.getEffetsSonores(bankName).Utilise;
         }
 
-        public static void jouerMusique(string nomMusique, bool apparitionProgressive, int tempsFade, bool loop)
+
+        public static void PlayMusic(string musicName, bool progressive, int fadeTime, bool loop)
         {
-            SoundEffectsController.Instance.getMusique(nomMusique).jouer(apparitionProgressive, tempsFade, loop);
+            SoundEffectsController.Instance.getMusique(musicName).jouer(progressive, fadeTime, loop);
         }
+
 
         public static void Update(GameTime gameTime)
         {
             SoundEffectsController.Instance.Update(gameTime);
         }
 
-        public static void setMaxEffetsSonoresEnMemeTemps(int max)
+
+        public static void SetMaxSimultaneousSfx(int max)
         {
             SoundEffectsController.Instance.MaxEffetsSonoresEnMemeTemps = max;
         }
 
-        public static void setMaxInstancesActivesEffetSonore(string effetSonore, int maxInstances)
+
+        public static void SetMaxInstancesSfx(string sfxName, int maxInstances)
         {
-            SoundEffectsController.Instance.setMaxInstancesActivesEffetSonore(effetSonore, maxInstances);
+            SoundEffectsController.Instance.setMaxInstancesActivesEffetSonore(sfxName, maxInstances);
         }
+
 
         //todo: pas le bon comportement
-        public static void reprendreEffetsSonores(string nomScene, bool apparitionProgressive, int tempsFade)
+        public static void UnpauseSfx(string sceneName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getEffetsSonores(nomScene).reprendre(apparitionProgressive, tempsFade);
+            SoundEffectsController.Instance.getEffetsSonores(sceneName).reprendre(progressive, fadeTime);
         }
+
 
         //todo: pas le bon comportement
-        public static void pauserEffetsSonores(string nomScene, bool disparitionProgressive, int tempsFade)
+        public static void PauseSfx(string sceneName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getEffetsSonores(nomScene).pauser(disparitionProgressive, tempsFade);
+            SoundEffectsController.Instance.getEffetsSonores(sceneName).pauser(progressive, fadeTime);
         }
 
-        public static void arreterMusique(string nomMusique, bool disparitionProgressive, int tempsFade)
+
+        public static void StopMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getMusique(nomMusique).arreter(disparitionProgressive, tempsFade);
+            SoundEffectsController.Instance.getMusique(musicName).arreter(progressive, fadeTime);
         }
 
-        public static void pauserMusique(string nomMusique, bool disparitionProgessive, int tempsFade)
+
+        public static void PauseMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getMusique(nomMusique).pauser(disparitionProgessive, tempsFade);
+            SoundEffectsController.Instance.getMusique(musicName).pauser(progressive, fadeTime);
         }
 
-        public static float VolumeMusique
+
+        public static float MusicVolume
         {
             set
             {
@@ -86,7 +97,8 @@
             }
         }
 
-        public static float VolumeEffetsSonores
+
+        public static float SfxVolume
         {
             set
             {
@@ -95,14 +107,16 @@
             }
         }
 
-        public static bool musiqueJoue(string nomMusique)
+
+        public static bool IsMusicPlaying(string musicName)
         {
-            return SoundEffectsController.Instance.getMusique(nomMusique).Etat == SoundState.Playing;
+            return SoundEffectsController.Instance.getMusique(musicName).Etat == SoundState.Playing;
         }
 
-        public static void reprendreMusique(string nomMusique, bool apparitionProgressive, int tempsFade)
+
+        public static void UnpauseMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getMusique(nomMusique).reprendre(apparitionProgressive, tempsFade);
+            SoundEffectsController.Instance.getMusique(musicName).reprendre(progressive, fadeTime);
         }
     }
 }

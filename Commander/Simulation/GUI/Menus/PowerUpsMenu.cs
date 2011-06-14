@@ -30,6 +30,7 @@
         private float ImageSize;
         private Vector3 DistanceBetweenTwoChoices;
         private Vector3 PowerUpsLayout;
+        private bool HumanBattleshipHasArrived;
 
         public List<Turret> Turrets;
 
@@ -69,6 +70,7 @@
             ImagesTurretsPowerUps = new Dictionary<PowerUpType, Turret>(PowerUpTypeComparer.Default);
 
             HumanBattleship = new HumanBattleship(Simulation, this.Position - new Vector3(300, 75, 0), this.VisualPriority + 0.005f);
+            HumanBattleshipHasArrived = false;
         }
 
 
@@ -89,25 +91,25 @@
             }
 
 
-            Simulation.Scene.Effects.Add(HumanBattleship, Core.Physics.PredefinedEffects.Arrival(
+            Simulation.Scene.PhysicalEffects.Add(HumanBattleship, Core.Physics.PhysicalEffects.Arrival(
                 this.Position + new Vector3(50, 25, 0),
                 1000,
-                2000));
+                2000), HumanBattleshipArrived);
 
             foreach (var image in ImagesPowerUpsBuy)
-                Simulation.Scene.Effects.Add(image.Value, Core.Physics.PredefinedEffects.Arrival(
+                Simulation.Scene.PhysicalEffects.Add(image.Value, Core.Physics.PhysicalEffects.Arrival(
                     image.Value.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
 
             foreach (var image in ImagesPlaceHolders)
-                Simulation.Scene.Effects.Add(image.Value, Core.Physics.PredefinedEffects.Arrival(
+                Simulation.Scene.PhysicalEffects.Add(image.Value, Core.Physics.PhysicalEffects.Arrival(
                     image.Value.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
 
             foreach (var turret in ImagesTurretsPowerUps.Values)
-                Simulation.Scene.Effects.Add(turret, Core.Physics.PredefinedEffects.Arrival(
+                Simulation.Scene.PhysicalEffects.Add(turret, Core.Physics.PhysicalEffects.Arrival(
                     turret.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
@@ -144,7 +146,7 @@
 
             
             // draw the description / price of the power-up
-            if (PowerUpToBuy != PowerUpType.None)
+            if (HumanBattleshipHasArrived && PowerUpToBuy != PowerUpType.None)
             {
                 PowerUp p = Simulation.PowerUpsFactory.Availables[PowerUpToBuy];
 
@@ -239,6 +241,12 @@
 
                 ImagesTurretsPowerUps.Add(p.Type, st);
             }
+        }
+
+
+        private void HumanBattleshipArrived()
+        {
+            HumanBattleshipHasArrived = true;
         }
     }
 }

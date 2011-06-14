@@ -7,10 +7,10 @@
     using Microsoft.Xna.Framework;
 
 
-    class Path : IComparer<CelestialBody>
+    class Path
     {
-        private const int MaxVisibleLines = 300;
-        private const int MaxCurvePoints = 300;
+        private const int MaxVisibleLines = 200;
+        private const int MaxCurvePoints = 200;
         private const int CelestialBodyDistance = 70;
 
         public List<CelestialBody> CelestialBodies;
@@ -21,7 +21,7 @@
         private List<double> Times;
         private List<Vector3> Points;
         private OrderedBag<CelestialBody> CelestialBodiesPath;
-        private int DistanceTwoPoints = 40;
+        private int DistanceTwoPoints = 45;
         private Image[] Lines;
         private Scene Scene;
         private int NbPoints;
@@ -65,7 +65,7 @@
 
         public void Initialize()
         {
-            CelestialBodiesPath = new OrderedBag<CelestialBody>(this);
+            CelestialBodiesPath = new OrderedBag<CelestialBody>();
 
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
@@ -85,11 +85,16 @@
         }
 
 
-        public byte AlphaChannel
+        public byte Alpha
         {
+            get
+            {
+                return Lines[0].Color.A;
+            }
+
             set
             {
-                for (int i = 0; i < MaxVisibleLines; i++)
+                for (int i = 0; i < MaxVisibleLines; i++) //todo: only actually visible
                     Lines[i].Color.A = value;
             }
         }
@@ -221,7 +226,7 @@
             {
                 InnerPath.GetPosition(j * DistanceTwoPoints, ref Lines[j].position);
                 
-                Lines[j].Rotation = MathHelper.Pi + InnerPath.GetRotation(j * DistanceTwoPoints);
+                Lines[j].Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
                 Lines[j].Color.G = Lines[j].Color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
                 Lines[j].VisualPriority = Preferences.PrioriteSimulationChemin + InnerPath.GetPercentage(j * DistanceTwoPoints) / 1000f;
                 Scene.Add(Lines[j]);
@@ -232,9 +237,18 @@
         }
 
 
+        public void Fade(int start, int end, EffectsController<IVisual> ec, Core.NoneHandler callback)
+        {
+            var effect = VisualEffects.Fade(start, end, 0, 500);
+
+            for (int i = 0; i < MaxVisibleLines; i++)
+                ec.Add(Lines[i], effect, callback);
+        }
+
+
         private void RecalculatePath()
         {
-            mettreAJourSousPoints();
+            UpdateInnerPoints();
 
             Length = 0;
             Times[0] = Length;
@@ -252,8 +266,7 @@
 
         private Vector3 _vecteur1, _vecteur2;
         private Matrix _matrice1;
-
-        private void mettreAJourSousPoints()
+        private void UpdateInnerPoints()
         {
             NbPoints = 0;
 
@@ -279,7 +292,7 @@
 
                 //Radius
                 //float radius = CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance;
-                float radius = MathHelper.Min(_vecteur1.Length(), CelestialBodiesPath[i].TurretsZone.Radius + CelestialBodyDistance);
+                float radius = MathHelper.Min(_vecteur1.Length(), CelestialBodiesPath[i].OuterTurretZone.Radius + CelestialBodyDistance);
 
                 //Entry point
                 Vector3 vecPO = CelestialBodiesPath[i].position - CelestialBodiesPath[i - 1].position;
@@ -337,18 +350,6 @@
                     Points[NbPoints++] = exitVec;
                 }
             }
-        }
-
-
-        public int Compare(CelestialBody c1, CelestialBody c2)
-        {
-            if (c1.Priorite > c2.Priorite)
-                return 1;
-
-            if (c1.Priorite < c2.Priorite)
-                return -1;
-
-            return 0;
         }
     }
 }

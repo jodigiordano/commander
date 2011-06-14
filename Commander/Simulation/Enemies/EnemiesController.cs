@@ -323,7 +323,7 @@
                 EnemiesCreatedCounter++;
             }
 
-            Simulation.Scene.Effects.Add(e.Image, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, e.FadeInTime));
+            Simulation.Scene.VisualEffects.Add(e.Image, Core.Visual.VisualEffects.FadeInFrom0(255, 0, e.FadeInTime));
 
             Enemies.Add(e);
 

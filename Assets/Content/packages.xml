@@ -71,6 +71,8 @@
     <asset nom="sfxAutomaticCollectorOut"             type="EffetSonore" chemin="sfx/sfxAutomaticCollectorOut"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxMinerIn"                           type="EffetSonore" chemin="sfx/sfxMinerIn"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxMinerOut"                          type="EffetSonore" chemin="sfx/sfxMinerOut"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxMineExplose"                       type="EffetSonore" chemin="sfx/sfxMineExplose"><param nom="banque" valeur="Partie" /></asset>
+    <asset nom="sfxMineGround"                        type="EffetSonore" chemin="sfx/sfxMineGround"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxRailGunIn"                         type="EffetSonore" chemin="sfx/sfxRailGunIn"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxRailGunOut"                        type="EffetSonore" chemin="sfx/sfxRailGunOut"><param nom="banque" valeur="Partie" /></asset>
     <asset nom="sfxRailGunCharging"                   type="EffetSonore" chemin="sfx/sfxRailGunCharging"><param nom="banque" valeur="Partie" /></asset>
@@ -131,6 +133,7 @@
     <asset nom="shieldEffect"                 type="Particules" chemin="particules/shield"/>
     <asset nom="darkSideEffect"               type="Particules" chemin="particules/darkside"/>
     <asset nom="spaceshipTrail"               type="Particules" chemin="particules/spaceshipTrail"/>
+    <asset nom="starExplosion"                type="Particules" chemin="particules/starExplosion"/>
 
     
     <!-- Textures -->

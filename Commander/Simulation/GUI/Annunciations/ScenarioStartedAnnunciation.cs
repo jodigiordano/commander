@@ -3,6 +3,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Core.Utilities;
+    using EphemereGames.Core.Visual;
 
 
     class ScenarioStartedAnnunciation
@@ -10,7 +11,7 @@
         private Translator TranslatorMission;
         private Simulation Simulation;
         private double Term = 23000;
-        private EffectsController EffectsController; // needed to be controller by this object because of the Tutorial system
+        private EffectsController<IVisual> EffectsController; // needed to be controller by this object because of the Tutorial system
 
 
         public ScenarioStartedAnnunciation(Simulation simulation, Scenario scenario)
@@ -34,13 +35,13 @@
                 Preferences.PrioriteGUIHistoire
             );
 
-            EffectsController = new EffectsController();
+            EffectsController = new EffectsController<IVisual>();
 
-            EffectsController.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visual.PredefinedEffects.FadeInFrom0(255, 1000, 500));
-            EffectsController.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visual.PredefinedEffects.FadeInFrom0(255, 1000, 500));
+            EffectsController.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 1000, 500));
+            EffectsController.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 1000, 500));
 
-            EffectsController.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visual.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
-            EffectsController.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visual.PredefinedEffects.FadeOutTo0(255, 10000, 2000));
+            EffectsController.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 10000, 2000));
+            EffectsController.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 10000, 2000));
         }
 
         public void Update(GameTime gameTime)

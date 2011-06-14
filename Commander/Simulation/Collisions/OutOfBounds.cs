@@ -29,7 +29,7 @@
                 if (bullet.Shape == Shape.Line || bullet.Shape == Shape.Circle)
                     continue;
 
-                if (!EphemereGames.Core.Physics.Physics.collisionRectangleRectangle(bullet.Rectangle, this.Battlefield))
+                if (!Physics.collisionRectangleRectangle(bullet.Rectangle, this.Battlefield))
                     Output.Add(bullet);
             }
         }

@@ -1,8 +1,6 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -64,6 +62,9 @@ namespace EphemereGames.Commander
             if (Firing)
             {
                 Miner.Fire();
+
+                Audio.PlaySfx(@"Partie", @"sfxMineGround");
+
                 Firing = false;
             }
         }
@@ -86,7 +87,7 @@ namespace EphemereGames.Commander
                 AutomaticMode = false
             };
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", Miner.SfxIn);
+            Audio.PlaySfx(@"Partie", Miner.SfxIn);
 
             Firing = false;
         }
@@ -94,7 +95,7 @@ namespace EphemereGames.Commander
 
         public override void Stop()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", Miner.SfxOut);
+            Audio.PlaySfx(@"Partie", Miner.SfxOut);
 
             Firing = false;
         }

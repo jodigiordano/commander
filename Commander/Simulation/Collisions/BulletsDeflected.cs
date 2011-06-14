@@ -54,7 +54,7 @@
             if (e.Type != EnemyType.Vulcanoid)
                 return true;
 
-            if (EphemereGames.Core.Physics.Physics.collisionCercleCercle(CurrentBulletDeflectRange, e.Circle))
+            if (Physics.collisionCercleCercle(CurrentBulletDeflectRange, e.Circle))
             {
                 Output.Add(new KeyValuePair<Enemy, Bullet>(e, CurrentBullet));
                 return false;

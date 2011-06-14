@@ -3,20 +3,21 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using EphemereGames.Core.Physics;
 
 
-    public class Text : IScenable
+    public class Text : IScenable, IPhysicalObject, IVisual
     {
-        public Vector2 Origin;
-        public Vector2 Size;
-        public Vector2 Center { get { return RelativeTextSize / 2f; } }
+        public Vector2 Origin           { get; set; }
+        public Vector2 Size             { get; set; }
+        public Vector2 Center           { get { return RelativeTextSize / 2f; } }
         public Vector2 TextureSize;
-        public float Rotation;
+        public float Rotation           { get; set; }
 
-        public Vector3 Position { get; set; }
-        public TypeBlend Blend { get; set; }
-        public double VisualPriority { get; set; }
-        public int Id { get; private set; }
+        public Vector3 Position         { get; set; }
+        public TypeBlend Blend          { get; set; }
+        public double VisualPriority    { get; set; }
+        public int Id                   { get; private set; }
         public Color Color;
 
         private SpriteFont Font;
@@ -43,6 +44,13 @@
         public Vector2 TextSize
         {
             get { return Vector2.Multiply(RelativeTextSize, Size); }
+        }
+
+
+        public byte Alpha
+        {
+            get { return Color.A; }
+            set { Color.A = value; }
         }
 
 
@@ -96,5 +104,9 @@
                 return textSize;
             }
         }
+
+        //useless
+        public Rectangle VisiblePart { get; set; }
+        public float Speed { get; set; }
     }
 }

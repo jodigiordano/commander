@@ -48,7 +48,7 @@
         {
             this.Scenarios = new List<ScenarioDescriptor>();
 
-            EphemereGames.Core.Persistence.Persistence.SaveData(this.Name);
+            Persistence.SaveData(this.Name);
             Loaded = true;
         }
     }

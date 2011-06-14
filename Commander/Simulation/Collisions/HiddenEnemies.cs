@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Physics;
 
 
     class HiddenEnemies
@@ -41,7 +42,7 @@
             Enemy e = Enemies[index];
 
             if (!Output.ContainsKey(e) &&
-                EphemereGames.Core.Physics.Physics.collisionCercleCercle(CurrentCelestialBody.Circle, e.Circle))
+                Physics.collisionCercleCercle(CurrentCelestialBody.Circle, e.Circle))
             {
                 Output.Add(e, CurrentCelestialBody);
             }

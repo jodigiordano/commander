@@ -87,7 +87,7 @@
             base.FadeIn(temps);
 
             Texte.Color.A = 0;
-            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeInFrom0(255, 0, temps));
+            Simulation.Scene.VisualEffects.Add(Texte, VisualEffects.FadeInFrom0(255, 0, temps));
         }
 
 
@@ -95,7 +95,7 @@
         {
             base.FadeOut(temps);
 
-            Simulation.Scene.Effects.Add(Texte, PredefinedEffects.FadeOutTo0(255, 0, temps));
+            Simulation.Scene.VisualEffects.Add(Texte, VisualEffects.FadeOutTo0(255, 0, temps));
         }
 
 
@@ -110,8 +110,8 @@
 
         private void ComputePosition()
         {
-            bool tropADroite = Dimension.X + Dimension.Width + 50 > 640 - Preferences.DeadZoneXbox.X;
-            bool tropBas = Dimension.Y + Dimension.Height > 370 - Preferences.DeadZoneXbox.Y;
+            bool tropADroite = Dimension.X + Dimension.Width + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
+            bool tropBas = Dimension.Y + Dimension.Height > 370 - Preferences.Xbox360DeadZoneV2.Y;
 
             if (tropADroite && tropBas)
             {
@@ -139,8 +139,8 @@
                 BlaPosition = 0;
             }
 
-            Dimension.X = (int) MathHelper.Clamp(Dimension.X, -640 + Preferences.DeadZoneXbox.X, 640 - Preferences.DeadZoneXbox.X - Dimension.Width / 2);
-            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, -370 + Preferences.DeadZoneXbox.Y + Dimension.Height / 2, 370 - Preferences.DeadZoneXbox.Y - Dimension.Height / 2);
+            Dimension.X = (int) MathHelper.Clamp(Dimension.X, -640 + Preferences.Xbox360DeadZoneV2.X, 640 - Preferences.Xbox360DeadZoneV2.X - Dimension.Width / 2);
+            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Dimension.Height / 2, 370 - Preferences.Xbox360DeadZoneV2.Y - Dimension.Height / 2);
         }
     }
 }

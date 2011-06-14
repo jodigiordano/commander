@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -592,7 +593,7 @@
                     Simulation.Main.GeneratorData.Scenarios[LoadSlider.Valeur] = DescriptionScenario;
                 }
 
-                EphemereGames.Core.Persistence.Persistence.SaveData( "generateurData" );
+                Persistence.SaveData( "generateurData" );
             }
 
             //if (DeletePushButton.Pressed && DeleteSlider.Valeur != -1 && DeleteSlider.Valeur < Simulation.Main.SaveGame.DescriptionsScenarios.Count)

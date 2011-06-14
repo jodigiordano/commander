@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -44,7 +45,7 @@
 
         public override void DoDie()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxRailGunExplosion2");
+            Audio.PlaySfx(@"Partie", @"sfxRailGunExplosion2");
             
             base.DoDie();
         }

@@ -49,9 +49,9 @@
 
         public void doClick()
         {
-            if (EphemereGames.Core.Physics.Physics.collisionCercleCercle(Curseur.Circle, GaucheCercle) && Valeur > Min)
+            if (Physics.collisionCercleCercle(Curseur.Circle, GaucheCercle) && Valeur > Min)
                 Valeur = Math.Max(Min, Valeur - Increment);
-            else if (EphemereGames.Core.Physics.Physics.collisionCercleCercle(Curseur.Circle, DroiteCercle) && Valeur < Max)
+            else if (Physics.collisionCercleCercle(Curseur.Circle, DroiteCercle) && Valeur < Max)
                 Valeur = Math.Min(Max, Valeur + Increment);
         }
 

@@ -14,7 +14,8 @@ namespace EphemereGames.Commander
         private Image Bubble;
         private Image TheLieutenant;
         private TextTypeWriter TypeWriter;
-        private EffectsController GE;
+        private EffectsController<IPhysicalObject> GPE;
+        private EffectsController<IVisual> GVE;
 
 
         public AnimationCommodore(string text, double time, double visualPriority)
@@ -56,37 +57,38 @@ namespace EphemereGames.Commander
             );
             TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
-            GE = new EffectsController();
+            GPE = new EffectsController<IPhysicalObject>();
+            GVE = new EffectsController<IVisual>();
 
             MovePathEffect edt = new MovePathEffect();
             edt.Delay = 0;
             edt.Length = this.Length;
-            edt.Progress = AbstractEffect.ProgressType.Linear;
-            edt.Trajet = new Path2D
+            edt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-300, 500), new Vector2(-300, 275), new Vector2(-300, 275), new Vector2(-300, 700) },
              new List<double> { 0, 1000, this.Length - 1000, this.Length });
 
-            GE.Add(TheLieutenant, edt);
+            GPE.Add(TheLieutenant, edt);
 
             edt = new MovePathEffect();
             edt.Delay = 0;
             edt.Length = this.Length;
-            edt.Progress = AbstractEffect.ProgressType.Linear;
-            edt.Trajet = new Path2D
+            edt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-100, 300), new Vector2(-100, -100), new Vector2(-100, -100), new Vector2(-100, 500) },
              new List<double> { 0, 1000, this.Length - 1000, this.Length });
 
-            GE.Add(Bubble, edt);
+            GPE.Add(Bubble, edt);
 
             edt = new MovePathEffect();
             edt.Delay = 0;
             edt.Length = this.Length;
-            edt.Progress = AbstractEffect.ProgressType.Linear;
-            edt.Trajet = new Path2D
+            edt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-75, 325), new Vector2(-75, -75), new Vector2(-75, -75), new Vector2(-75, 500) },
              new List<double> { 0, 1000, this.Length - 1000, this.Length });
 
-            GE.Add(TypeWriter.Text, edt);
+            GPE.Add(TypeWriter.Text, edt);
         }
 
 
@@ -96,23 +98,24 @@ namespace EphemereGames.Commander
 
             TypeWriter.Update(gameTime);
 
-            GE.Update(gameTime);
+            GPE.Update(gameTime);
+            GVE.Update(gameTime);
         }
 
 
         public void FadeIn()
         {
-            GE.Add(Bubble, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 250));
-            GE.Add(TheLieutenant, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 250));
-            GE.Add(TypeWriter.Text, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 250));
+            GVE.Add(Bubble, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 250));
+            GVE.Add(TheLieutenant, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 250));
+            GVE.Add(TypeWriter.Text, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 250));
         }
 
 
         public void FadeOut()
         {
-            GE.Add(Bubble, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, 250));
-            GE.Add(TheLieutenant, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, 250));
-            GE.Add(TypeWriter.Text, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, 250));
+            GVE.Add(Bubble, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
+            GVE.Add(TheLieutenant, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
+            GVE.Add(TypeWriter.Text, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
         }
 
 

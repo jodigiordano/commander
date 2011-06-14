@@ -42,9 +42,9 @@
 
             InitDirective(Texts.Count == 0 ? "" : Texts[ActiveText]);
 
-            Simulation.Scene.Effects.Add(Lieutenant, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
-            Simulation.Scene.Effects.Add(Bubble, Core.Visual.PredefinedEffects.FadeInFrom0(150, 0, EffectTimeRemaining));
-            Simulation.Scene.Effects.Add(Directive.Text, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
+            Simulation.Scene.VisualEffects.Add(Lieutenant, Core.Visual.VisualEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
+            Simulation.Scene.VisualEffects.Add(Bubble, Core.Visual.VisualEffects.FadeInFrom0(150, 0, EffectTimeRemaining));
+            Simulation.Scene.VisualEffects.Add(Directive.Text, Core.Visual.VisualEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
         }
 
 
@@ -154,9 +154,9 @@
         private void FadeOut()
         {
             HiddingOverride = true;
-            Simulation.Scene.Effects.Add(Lieutenant, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
-            Simulation.Scene.Effects.Add(Bubble, Core.Visual.PredefinedEffects.FadeOutTo0(150, 0, EffectTimeRemaining / 2));
-            Simulation.Scene.Effects.Add(Directive.Text, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
+            Simulation.Scene.VisualEffects.Add(Lieutenant, Core.Visual.VisualEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
+            Simulation.Scene.VisualEffects.Add(Bubble, Core.Visual.VisualEffects.FadeOutTo0(150, 0, EffectTimeRemaining / 2));
+            Simulation.Scene.VisualEffects.Add(Directive.Text, Core.Visual.VisualEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
         }
 
 

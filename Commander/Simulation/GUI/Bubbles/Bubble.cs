@@ -157,33 +157,33 @@
             foreach (var coin in Corners)
             {
                 coin.Color.A = 0;
-                Simulation.Scene.Effects.Add(coin, PredefinedEffects.FadeInFrom0(255, 0, time));
+                Simulation.Scene.VisualEffects.Add(coin, VisualEffects.FadeInFrom0(255, 0, time));
             }
 
             foreach (var contour in Edges)
             {
                 contour.Color.A = 0;
-                Simulation.Scene.Effects.Add(contour, PredefinedEffects.FadeInFrom0(255, 0, time));
+                Simulation.Scene.VisualEffects.Add(contour, VisualEffects.FadeInFrom0(255, 0, time));
             }
 
             Filter.Color.A = 0;
             Bla.Color.A = 0;
 
-            Simulation.Scene.Effects.Add(Filter, PredefinedEffects.FadeInFrom0(128, 0, time));
-            Simulation.Scene.Effects.Add(Bla, PredefinedEffects.FadeInFrom0(255, 0, time));
+            Simulation.Scene.VisualEffects.Add(Filter, VisualEffects.FadeInFrom0(128, 0, time));
+            Simulation.Scene.VisualEffects.Add(Bla, VisualEffects.FadeInFrom0(255, 0, time));
         }
 
 
         public virtual void FadeOut(double time)
         {
             foreach (var coin in Corners)
-                Simulation.Scene.Effects.Add(coin, PredefinedEffects.FadeOutTo0(255, 0, time));
+                Simulation.Scene.VisualEffects.Add(coin, VisualEffects.FadeOutTo0(255, 0, time));
 
             foreach (var contour in Edges)
-                Simulation.Scene.Effects.Add(contour, PredefinedEffects.FadeOutTo0(255, 0, time));
+                Simulation.Scene.VisualEffects.Add(contour, VisualEffects.FadeOutTo0(255, 0, time));
 
-            Simulation.Scene.Effects.Add(Filter, PredefinedEffects.FadeOutTo0(128, 0, time));
-            Simulation.Scene.Effects.Add(Bla, PredefinedEffects.FadeOutTo0(255, 0, time));
+            Simulation.Scene.VisualEffects.Add(Filter, VisualEffects.FadeOutTo0(128, 0, time));
+            Simulation.Scene.VisualEffects.Add(Bla, VisualEffects.FadeOutTo0(255, 0, time));
         }
     }
 }

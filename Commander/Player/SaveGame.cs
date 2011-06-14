@@ -6,6 +6,7 @@
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Content;
+    using EphemereGames.Core.Audio;
 
 
     public class SaveGame : Data
@@ -81,8 +82,8 @@
         {
             base.DoLoadEnded();
 
-            EphemereGames.Core.Audio.Audio.VolumeMusique = this.VolumeMusic / 10f;
-            EphemereGames.Core.Audio.Audio.VolumeEffetsSonores = this.VolumeSfx / 10f;
+            Audio.MusicVolume = this.VolumeMusic / 10f;
+            Audio.SfxVolume = this.VolumeSfx / 10f;
         }
 
 
@@ -96,10 +97,10 @@
             this.Progress = new SerializableDictionaryProxy<int, int>();
             this.Tutorials = new SerializableDictionaryProxy<int, int>();
 
-            EphemereGames.Core.Audio.Audio.VolumeMusique = this.VolumeMusic / 10f;
-            EphemereGames.Core.Audio.Audio.VolumeEffetsSonores = this.VolumeSfx / 10f;
+            Audio.MusicVolume = this.VolumeMusic / 10f;
+            Audio.SfxVolume = this.VolumeSfx / 10f;
 
-            EphemereGames.Core.Persistence.Persistence.SaveData(this.Name);
+            Persistence.SaveData(this.Name);
             Loaded = true;
         }
     }

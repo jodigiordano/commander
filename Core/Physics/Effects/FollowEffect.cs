@@ -1,53 +1,48 @@
-﻿//=====================================================================
-//
-// Déplacement linéairement un objet de sa position actuelle à la
-// position de fin.
-//
-//=====================================================================
-
-namespace EphemereGames.Core.Physics
+﻿namespace EphemereGames.Core.Physics
 {
     using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
     using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework;
 
-    public class FollowEffect : PhysicalEffect
+
+    public class FollowEffect : Effect<IPhysicalObject>
     {
-
-        //=====================================================================
-        // Attributs
-        //=====================================================================
-
         public IObjetPhysique ObjetSuivi    { get; set; }
         public float Vitesse                { get; set; }
 
+        public static Pool<FollowEffect> Pool = new Pool<FollowEffect>();
 
-        //=====================================================================
-        // Logique
-        //=====================================================================
 
         protected override void InitializeLogic()
         {
 
         }
 
+
         protected override void LogicLinear()
         {
-            Vector3 direction = ObjetSuivi.Position - Objet.Position;
+            Vector3 direction = ObjetSuivi.Position - Obj.Position;
             direction.Normalize();
 
-            Objet.Position += direction * Vitesse;
+            Obj.Position += direction * Vitesse;
         }
+
 
         protected override void LogicAfter()
         {
             throw new Exception("TODO");
         }
 
+
         protected override void LogicNow()
         {
             throw new Exception("TODO");
+        }
+
+
+        internal override void Return()
+        {
+            Pool.Return((FollowEffect) this);
         }
     }
 }

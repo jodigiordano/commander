@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -125,7 +126,7 @@
         {
             ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxTourelleMissileExplosion");
+            Audio.PlaySfx(@"Partie", @"sfxTourelleMissileExplosion");
 
             Scene.Particles.Return(TrailEffect);
 

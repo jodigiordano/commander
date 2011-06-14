@@ -78,14 +78,14 @@
 
         public void FadeIn()
         {
-            Scene.Effects.Add(representation, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 250));
+            Scene.VisualEffects.Add(representation, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 250));
             Active = true;
         }
 
 
         public void FadeOut()
         {
-            Scene.Effects.Add(representation, Core.Visual.PredefinedEffects.FadeOutTo0(255, 0, 250));
+            Scene.VisualEffects.Add(representation, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
             Active = false;
         }
 

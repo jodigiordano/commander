@@ -12,7 +12,7 @@
     class Preferences
     {
         public const int TimeBetweenTwoMusics = 300;
-        public static Vector2 DeadZoneXbox = new Vector2(20, 30);
+        public static Vector2 Xbox360DeadZoneV2 = new Vector2(20, 30);
         public static float TargetElapsedTimeMs = 16;
 
 

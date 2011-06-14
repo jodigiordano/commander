@@ -1,10 +1,11 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
+    using System.Security.Principal;
+    using EphemereGames.Core.Input;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
-    using System.Security.Principal;
+
 
     class PlayersController
     {
@@ -32,14 +33,14 @@
 
             MasterPlayer = null;
 
-            EphemereGames.Core.Input.Input.PlayerConnection.PlayerConnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerConnected);
-            EphemereGames.Core.Input.Input.PlayerConnection.PlayerDisconnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerDisconnected);
+            Input.PlayerConnection.PlayerConnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerConnected);
+            Input.PlayerConnection.PlayerDisconnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerDisconnected);
         }
 
 
         public void Connect(PlayerIndex index)
         {
-            EphemereGames.Core.Input.Input.ConnectPlayer(index);
+            Input.ConnectPlayer(index);
         }
 
 

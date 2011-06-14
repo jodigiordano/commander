@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
 
 
@@ -194,7 +194,7 @@
             if (DisabledAnnounciationCounter < 0 && !Simulation.DemoMode)
             {
                 if (!this.BackActiveThisTickOverride)
-                    EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxTourelleMiseAJour");
+                    Audio.PlaySfx(@"Partie", @"sfxTourelleMiseAJour");
 
                 DisabledAnnounciationCounter = float.NaN;
                 BackActiveThisTick = true;
@@ -381,7 +381,7 @@
             }
 
             if (Bullets.Count != 0)
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", SfxShooting);
+                Audio.PlaySfx(@"Partie", SfxShooting);
 
             return Bullets;
         }

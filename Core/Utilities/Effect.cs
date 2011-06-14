@@ -1,10 +1,10 @@
 ﻿namespace EphemereGames.Core.Utilities
 {
+    using System;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
 
 
-    public abstract class AbstractEffect
+    public abstract class Effect<T> : IEquatable<Effect<T>>
     {
         public enum ProgressType
         {
@@ -15,20 +15,14 @@
         }
 
 
-        [ContentSerializer(Optional = true)]
-        public double Length { get; set; }
+        public double Length;
+        public ProgressType Progress;
+        public double Delay;
+        public bool Terminated;
+        public T Obj                        { get; set; }
+        public int Id;
 
-        [ContentSerializer(Optional = true)]
-        public ProgressType Progress { get; set; }
-
-        [ContentSerializer(Optional = true)]
-        public double Delay { get; set; }
-
-        [ContentSerializerIgnore]
-        public bool Finished { get; set; }
-
-        [ContentSerializerIgnore]
-        public object Obj { get; set; }
+        public NoneHandler TerminatedCallback;
 
         private double RemainingBeforeStart;
         private double RemainingBeforeEnd;
@@ -36,28 +30,36 @@
         protected double TimeOneTick;
         private bool Initialized;
 
+        private static int NextId = 0;
 
-        public AbstractEffect()
+
+        public Effect()
         {
             Progress = ProgressType.Linear;
             Delay = 0;
             Length = 0;
+            Id = NextId++;
 
             Initialize();
         }
 
 
-        public void Update(GameTime gameTime)
+        internal void Initialize()
+        {
+            ElaspedTime = 0;
+            RemainingBeforeEnd = Length;
+            RemainingBeforeStart = Delay;
+            Terminated = false;
+            Initialized = false;
+        }
+
+
+        internal void Update(GameTime gameTime)
         {
             if (!Initialized)
-            {
-                Initialize();
-                InitializeLogic();
+                return;
 
-                Initialized = true;
-            }
-
-            Finished = (RemainingBeforeEnd <= 0 || gameTime == null);
+            Terminated = (RemainingBeforeEnd <= 0 || gameTime == null);
 
             if (gameTime != null)
             {
@@ -74,22 +76,39 @@
 
                 TimeOneTick = gameTime.ElapsedGameTime.TotalMilliseconds;
             }
+        }
 
 
-            if (!Finished && Progress == ProgressType.Now)
+        internal void UpdateObj(GameTime gameTime)
+        {
+            if (!Initialized)
+            {
+                InitializeLogic();
+                Initialized = true;
+
+                return;
+            }
+
+            if (!Terminated && Progress == ProgressType.Now)
                 LogicNow();
 
-            else if (!Finished && Progress == ProgressType.Linear)
+            else if (!Terminated && Progress == ProgressType.Linear)
                 LogicLinear();
 
-            else if (!Finished && Progress == ProgressType.Logarithmic)
+            else if (!Terminated && Progress == ProgressType.Logarithmic)
                 LogicLogarithmic();
 
-            else if (Finished && Progress == ProgressType.After)
+            else if (Terminated && Progress == ProgressType.After)
                 LogicAfter();
 
-            if (Finished)
+            if (Terminated)
                 LogicEnd();
+        }
+
+
+        public bool Equals(Effect<T> other)
+        {
+            return Id == other.Id;
         }
 
 
@@ -101,19 +120,7 @@
         protected virtual void LogicEnd() { }
 
 
-        public void Initialize()
-        {
-            RemainingBeforeEnd = Length;
-            RemainingBeforeStart = Delay;
-            Finished = false;
-            Initialized = false;
-        }
-
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
+        internal abstract void Return();
     }
 }
 

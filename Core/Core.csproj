@@ -129,6 +129,7 @@
     <Compile Include="Audio\AbstractMusical.cs" />
     <Compile Include="Audio\Music.cs" />
     <Compile Include="Audio\Preferences.cs" />
+    <Compile Include="Handlers.cs" />
     <Compile Include="Input\PlayerConnection.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\InputListener.cs" />
@@ -150,9 +151,8 @@
     <Compile Include="Physics\Effects\MoveEffect.cs" />
     <Compile Include="Physics\Effects\MoveOffsetEffect.cs" />
     <Compile Include="Physics\Effects\MovePathEffect.cs" />
-    <Compile Include="Physics\Effects\PhysicalEffect.cs" />
     <Compile Include="Physics\Effects\RotationEffect.cs" />
-    <Compile Include="Physics\Effects\PredefinedEffects.cs" />
+    <Compile Include="Physics\Effects\PhysicalEffects.cs" />
     <Compile Include="Physics\Effects\FollowEffect.cs" />
     <Compile Include="Physics\Effects\SpeedPathEffect.cs" />
     <Compile Include="Physics\Physics.cs" />
@@ -164,7 +164,7 @@
     <Compile Include="Physics\IPhysicalObject.cs" />
     <Compile Include="Physics\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\AbstractEffet.cs" />
+    <Compile Include="Utilities\Effect.cs" />
     <Compile Include="Utilities\Collections\Algorithms.cs" />
     <Compile Include="Utilities\Collections\Bag.cs" />
     <Compile Include="Utilities\Collections\CollectionBase.cs" />
@@ -193,6 +193,8 @@
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
     <Compile Include="Utilities\Path2D.cs" />
     <Compile Include="Utilities\Path3D.cs" />
+    <Compile Include="Visual\Scenable\IVisual.cs" />
+    <Compile Include="Visual\ScreenSafeZone.cs" />
     <Compile Include="Visual\Animations\Animation.cs" />
     <Compile Include="Visual\Animations\AnimationsController.cs" />
     <Compile Include="Visual\Camera\Camera.cs" />
@@ -202,9 +204,8 @@
     <Compile Include="Visual\Effects\DrawPartiallyEffect.cs" />
     <Compile Include="Visual\Effects\FadeColorEffect.cs" />
     <Compile Include="Visual\Effects\RecenterEffect.cs" />
-    <Compile Include="Visual\Effects\PredefinedEffects.cs" />
+    <Compile Include="Visual\Effects\VisualEffects.cs" />
     <Compile Include="Visual\Effects\SizeEffect.cs" />
-    <Compile Include="Visual\Effects\VisualEffect.cs" />
     <Compile Include="Visual\Visuals.cs" />
     <Compile Include="Visual\Particles\ParticlesController.cs" />
     <Compile Include="Visual\Particles\Particle.cs" />

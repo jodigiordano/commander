@@ -4,6 +4,7 @@ namespace EphemereGames.Commander
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
+    using EphemereGames.Core.Audio;
 
 
     class PowerUpPulse : PowerUp
@@ -42,7 +43,7 @@ namespace EphemereGames.Commander
             TravelTime += Bullet.Speed;
 
             if (TravelTime % 1000 == 0)
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxPulse2");
+                Audio.PlaySfx(@"Partie", @"sfxPulse2");
             
             Path.Position(Path.Length - TravelTime, ref BulletPosition);
 
@@ -61,13 +62,13 @@ namespace EphemereGames.Commander
 
             Bullet.Initialize();
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxPulse1");
+            Audio.PlaySfx(@"Partie", @"sfxPulse1");
         }
 
 
         public override void Stop()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxPulse3");
+            Audio.PlaySfx(@"Partie", @"sfxPulse3");
         }
     }
 }

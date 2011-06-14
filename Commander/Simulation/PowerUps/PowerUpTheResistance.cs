@@ -1,8 +1,6 @@
 namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -45,13 +43,13 @@ namespace EphemereGames.Commander
                 StartingObject = HumanBattleship
             };
 
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", TheResistance.SfxIn);
+            Audio.PlaySfx(@"Partie", TheResistance.SfxIn);
         }
 
 
         public override void Stop()
         {
-            EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", TheResistance.SfxOut);
+            Audio.PlaySfx(@"Partie", TheResistance.SfxOut);
         }
     }
 }

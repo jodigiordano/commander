@@ -1,10 +1,8 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Visual;
     using EphemereGames.Core.Physics;
+
 
     class SelectedPowerUpController
     {
@@ -36,7 +34,7 @@
             {
                 powerUp.Value.Position = PowerUps[powerUp.Key].BuyPosition;
 
-                if (Core.Physics.Physics.collisionCercleCercle(powerUp.Value, CursorCircle))
+                if (Physics.collisionCercleCercle(powerUp.Value, CursorCircle))
                     PowerUpToBuy = powerUp.Key;
             }
         }

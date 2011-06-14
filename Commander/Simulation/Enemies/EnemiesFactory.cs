@@ -182,7 +182,7 @@
 
         public static float GetVisualPriority(EnemyType type, float pourcPath)
         {
-            float vp = (pourcPath > 0.95f) ? Preferences.PrioriteSimulationCorpsCeleste - 0.1f : Preferences.PrioriteSimulationEnnemi;
+            float vp = (pourcPath >= 0.95f) ? Preferences.PrioriteSimulationCorpsCeleste - 0.1f : Preferences.PrioriteSimulationEnnemi;
 
             switch (type)
             {

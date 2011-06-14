@@ -53,7 +53,7 @@
             if (boostedTurret.Type == TurretType.Booster)
                 return true;
 
-            if (Core.Physics.Physics.collisionCercleCercle(boostedTurret.Circle, CurrentTurretRange))
+            if (Physics.collisionCercleCercle(boostedTurret.Circle, CurrentTurretRange))
                 Output.Add(new KeyValuePair<Turret, Turret>(CurrentTurret, boostedTurret));
 
             return true;

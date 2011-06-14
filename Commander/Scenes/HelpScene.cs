@@ -158,8 +158,8 @@
                 if (Transition == TransitionType.Out)
                     switch (ChoixTransition)
                     {
-                        case "menu": EphemereGames.Core.Visual.Visuals.Transite("AideToMenu"); break;
-                        case "chargement": EphemereGames.Core.Visual.Visuals.Transite("AideToChargement"); break;
+                        case "menu": Visuals.Transite("AideToMenu"); break;
+                        case "chargement": Visuals.Transite("AideToChargement"); break;
                     }
 
                 Transition = TransitionType.None;
@@ -278,7 +278,7 @@
             if (TempsEntreDeuxChangementMusique > 0)
                 return;
 
-            MainMenuScene menu = (MainMenuScene)EphemereGames.Core.Visual.Visuals.GetScene("Menu");
+            MainMenuScene menu = (MainMenuScene)Visuals.GetScene("Menu");
             menu.ChangeMusic();
             TempsEntreDeuxChangementMusique = Preferences.TimeBetweenTwoMusics;
         }

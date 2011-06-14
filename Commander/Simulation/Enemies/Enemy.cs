@@ -198,7 +198,7 @@ namespace EphemereGames.Commander
 
             float pourcPath = Path.Pourc(Displacement);
 
-            if (pourcPath > 0.96f)
+            if (pourcPath > 0.95f)
                 VisualPriority = EnemiesFactory.GetVisualPriority(Type, pourcPath);
 
             Image.Position = Position;

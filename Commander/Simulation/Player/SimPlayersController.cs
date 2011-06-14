@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework.Input;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Input;
+    using EphemereGames.Core.Audio;
 
 
     class SimPlayersController
@@ -236,8 +237,8 @@
             Player.Move(ref delta, player.MouseConfiguration.Speed);
 
             if (Player.ActualSelection.TurretToPlace != null &&
-                Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.Outside(Player.Position))
-                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.pointPlusProcheCirconference(Player.Position);
+                Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(Player.Position))
+                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
 
 
             Player.UpdateSelection();
@@ -262,8 +263,8 @@
             Player.Move(ref delta, player.GamePadConfiguration.Speed);
 
             if (Player.ActualSelection.TurretToPlace != null &&
-                Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.Outside(Player.Position))
-                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.TurretsZone.pointPlusProcheCirconference(Player.Position);
+                Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(Player.Position))
+                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
 
 
             Player.UpdateSelection();
@@ -337,7 +338,7 @@
             Player.UpdateSelection();
 
             if (tourelle.Type == TurretType.Gravitational && !Simulation.DemoMode)
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
+                Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
         }
 
 
@@ -349,9 +350,9 @@
             Player.UpdateSelection();
 
             if (tourelle.Type == TurretType.Gravitational)
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxTourelleGravitationnelleAchetee");
+                Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
             else
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxTourelleVendue");
+                Audio.PlaySfx(@"Partie", @"sfxTourelleVendue");
         }
 
 
@@ -381,16 +382,19 @@
                 CelestialBody celestialBody = turretToPlace.CelestialBody;
                 turretToPlace.Position = Player.Position;
 
-                if (celestialBody.TurretsZone.Outside(Player.Position))
-                    Player.Position = celestialBody.TurretsZone.pointPlusProcheCirconference(Player.Position);
+                if (celestialBody.OuterTurretZone.Outside(Player.Position))
+                    Player.Position = celestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
 
-                turretToPlace.CanPlace = celestialBody.Circle.Outside(turretToPlace.Position);
+                //if (!celestialBody.InnerTurretZone.Outside(Player.Position))
+                //    Player.Position = celestialBody.InnerTurretZone.NearestPointToCircumference(Player.Position);
+
+                turretToPlace.CanPlace = celestialBody.InnerTurretZone.Outside(turretToPlace.Position);
                 
                 if (turretToPlace.CanPlace)
                     foreach (var turret in celestialBody.Turrets)
                     {
                         turretToPlace.CanPlace = !turret.Visible ||
-                            !Core.Physics.Physics.collisionCercleCercle(turret.Circle, turretToPlace.Circle);
+                            !Physics.collisionCercleCercle(turret.Circle, turretToPlace.Circle);
 
                         if (!turretToPlace.CanPlace)
                             break;
@@ -515,7 +519,7 @@
 
 
             // call next wave
-            if (Player.PowerUpInUse == PowerUpType.None && EphemereGames.Core.Physics.Physics.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
+            if (Player.PowerUpInUse == PowerUpType.None && Physics.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
             {
                 NotifyProchaineVagueDemandee();
                 return;

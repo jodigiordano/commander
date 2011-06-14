@@ -1,10 +1,11 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Physics;
     using System;
+    using System.Collections.Generic;
+    using EphemereGames.Core.Audio;
+    using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
+
 
     class GUIController
     {
@@ -169,7 +170,14 @@
                     Crosshair.FadeOut();
 
                 if (powerUp.Type == PowerUpType.FinalSolution)
+                {
+                    PowerUpLastSolution p = (PowerUpLastSolution) powerUp;
+
+                    if (p.GoAhead)
+                        PathPreviewing.Commit();
+
                     PowerUpFinalSolution = false;
+                }
             }
         }
 
@@ -180,7 +188,7 @@
             MenuGeneral.RemainingWaves--;
 
             if (!Simulation.DemoMode)
-                EphemereGames.Core.Audio.Audio.jouerEffetSonore("Partie", "sfxNouvelleVague");
+                Audio.PlaySfx(@"Partie", @"sfxNouvelleVague");
 
             if (InfiniteWaves != null || MenuGeneral.RemainingWaves <= 0)
                 return;
@@ -274,7 +282,7 @@
                 PathPreviewing.RemoveCelestialObject(selection.Turret.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.CelestialBody != null &&
-                selection.PowerUpToBuy == PowerUpType.FinalSolution &&
+                PowerUpFinalSolution &&
                 selection.CelestialBody.ContientTourelleGravitationnelle)
                 PathPreviewing.RemoveCelestialObject(selection.CelestialBody);
             else if (PathPreviewing != null &&
@@ -296,7 +304,7 @@
                 MenuGeneral.TimeNextWave = Math.Max(0, MenuGeneral.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
 
             //todo event-based
-            MenuGeneral.MenuNextWave.Visible = Cursor.Active && EphemereGames.Core.Physics.Physics.collisionCercleRectangle(Cursor.Circle, SandGlass.Rectangle);
+            MenuGeneral.MenuNextWave.Visible = Cursor.Active && Physics.collisionCercleRectangle(Cursor.Circle, SandGlass.Rectangle);
 
             if (Simulation.DemoMode)
             {
@@ -318,6 +326,7 @@
                 ScenarioEndedAnnunciation.Update(gameTime);
                 PlayerLives.Update(gameTime);
                 MenuPowerUps.Update();
+                PathPreviewing.Update(gameTime);
             }
         }
 

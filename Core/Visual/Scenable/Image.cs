@@ -6,21 +6,21 @@
     using EphemereGames.Core.Physics;
 
 
-    public class Image : IScenable, IPhysicalObject
+    public class Image : IScenable, IPhysicalObject, IVisual
     {
-        public Vector2 Origin;
-        public Vector2 Size;
+        public Vector2 Origin           { get; set; }
+        public Vector2 Size             { get; set; }
         public Vector2 Center;
         public Vector2 TextureSize;
 
         public Vector3 position;
-        public Vector3 Position { get { return position; } set { position = value; } }
-        public float Rotation { get; set; }
-        public TypeBlend Blend { get; set; }
-        public double VisualPriority { get; set; }
-        public int Id { get; private set; }
+        public Vector3 Position         { get { return position; } set { position = value; } }
+        public float Rotation           { get; set; }
+        public TypeBlend Blend          { get; set; }
+        public double VisualPriority    { get; set; }
+        public int Id                   { get; private set; }
 
-        public Rectangle VisiblePart;
+        public Rectangle VisiblePart    { get; set; }
         public SpriteEffects Effect;
         public Color Color;
 
@@ -63,6 +63,13 @@
             {
                 return Size * TextureSize;
             }
+        }
+
+
+        public byte Alpha
+        {
+            get { return Color.A; }
+            set { Color.A = value; }
         }
 
 

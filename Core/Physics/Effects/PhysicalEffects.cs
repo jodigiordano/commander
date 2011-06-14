@@ -1,23 +1,24 @@
 ﻿namespace EphemereGames.Core.Physics
 {
     using System;
+    using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
-    using System.Collections.Generic;
 
 
-    public static class PredefinedEffects
+    public static class PhysicalEffects
     {
         private static Random random = new Random();
 
 
         public static MoveEffect Move(Vector3 positionEnd, double delay, double length)
         {
-            var e = new MoveEffect();
+            var e = MoveEffect.Pool.Get();
+
             e.Delay = delay;
             e.Length = length;
             e.PositionEnd = positionEnd;
-            e.Progress = AbstractEffect.ProgressType.Linear;
+            e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
 
             return e;
         }
@@ -25,11 +26,12 @@
 
         public static MoveEffect Arrival(Vector3 positionEnd, double delay, double length)
         {
-            var e = new MoveEffect();
+            var e = MoveEffect.Pool.Get();
+
             e.Delay = delay;
             e.Length = length;
             e.PositionEnd = positionEnd;
-            e.Progress = AbstractEffect.ProgressType.Logarithmic;
+            e.Progress = Effect<IPhysicalObject>.ProgressType.Logarithmic;
 
             return e;
         }
@@ -37,10 +39,11 @@
 
         public static MoveEffect MoveNow(Vector3 position)
         {
-            var e = new MoveEffect();
+            var e = MoveEffect.Pool.Get();
 
+            e.Delay = 0;
             e.PositionEnd = position;
-            e.Progress = AbstractEffect.ProgressType.Now;
+            e.Progress = Effect<IPhysicalObject>.ProgressType.Now;
             e.Length = 500;
 
             return e;
@@ -49,7 +52,7 @@
 
         public static MovePathEffect MoveTextFromUpToBottom(Vector2 startingPosition, Vector2 endPosition, double timeStart, double length)
         {
-            var eDt = new MovePathEffect();
+            var eDt = MovePathEffect.Pool.Get();
 
             var temps = new List<double> {
                 0,
@@ -65,8 +68,8 @@
 
             var t = new Path2D(positions, temps);
 
-            eDt.Trajet = t;
-            eDt.Progress = AbstractEffect.ProgressType.Linear;
+            eDt.InnerPath = t;
+            eDt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
             eDt.Delay = timeStart;
             eDt.Length = length;
 
@@ -84,14 +87,13 @@
 
             direction.Normalize();
 
-            ImpulseEffect e = new ImpulseEffect()
-            {
-                Delay = 0,
-                Direction = direction,
-                Length = time,
-                Speed = (float) (time / impulse),
-                Progress = AbstractEffect.ProgressType.Linear
-            };
+            ImpulseEffect e = ImpulseEffect.Pool.Get();
+
+            e.Delay = 0;
+            e.Direction = direction;
+            e.Length = time;
+            e.Speed = (float) (time / impulse);
+            e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
 
             return e;
         }

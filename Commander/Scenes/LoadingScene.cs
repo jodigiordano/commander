@@ -5,6 +5,7 @@
     using System.Threading;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     using ParallelTasks;
@@ -85,7 +86,7 @@
                 VisualPriority = 0.3f
             };
 
-            EphemereGames.Core.Persistence.Persistence.LoadPackage("principal");
+            Persistence.LoadPackage("principal");
 
             SceneState = State.LoadingAssets;
 
@@ -99,10 +100,10 @@
                 Scene = this
             };
 
-            this.Effects.Add(Background, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 3000));
-            this.Effects.Add(Logo, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 3000));
-            this.Effects.Add(LoadingTranslation.PartieNonTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 3000));
-            this.Effects.Add(LoadingTranslation.PartieTraduite, Core.Visual.PredefinedEffects.FadeInFrom0(255, 0, 3000));
+            this.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
+            this.VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
+            this.VisualEffects.Add(LoadingTranslation.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
+            this.VisualEffects.Add(LoadingTranslation.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
             SandGlass.FadeIn(3000);
 
             //Show();
@@ -140,7 +141,7 @@
             if (Transition == TransitionType.In)
                 SceneState = State.ConnectPlayer;
             else
-                EphemereGames.Core.Visual.Visuals.Transite("ChargementToMenu");
+                Visuals.Transite("ChargementToMenu");
 
             Transition = TransitionType.None;
         }
@@ -169,14 +170,14 @@
                     UpdateSandGlass(gameTime);
                     LoadingTranslation.Update();
 
-                    if (EphemereGames.Core.Persistence.Persistence.IsPackageLoaded("principal") && LoadingTranslation.Termine)
+                    if (Persistence.IsPackageLoaded("principal") && LoadingTranslation.Termine)
                     {
                         SceneState = State.ConnectPlayer;
-                        Effects.Add(LoadingTranslation.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
-                        Effects.Add(LoadingTranslation.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        VisualEffects.Add(LoadingTranslation.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
+                        VisualEffects.Add(LoadingTranslation.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
                         SandGlass.FadeOut(1000);
-                        Effects.Add(PressStart.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
-                        Effects.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
+                        VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
+                        VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
 
                     }
                     break;
@@ -189,10 +190,10 @@
 
                     if (!WaitingForPlayerToConnect)
                     {
-                        if ( !EphemereGames.Core.Persistence.Persistence.DataLoaded( "savePlayer" ) )
+                        if ( !Persistence.DataLoaded( "savePlayer" ) )
                         {
-                            EphemereGames.Core.Persistence.Persistence.LoadData( "savePlayer" );
-                            EphemereGames.Core.Persistence.Persistence.LoadData( "generateurData" );
+                            Persistence.LoadData( "savePlayer" );
+                            Persistence.LoadData( "generateurData" );
                         }
 
                         SceneState = State.LoadSaveGame;
@@ -201,12 +202,12 @@
 
 
                 case State.LoadSaveGame:
-                    if (EphemereGames.Core.Persistence.Persistence.DataLoaded("savePlayer"))
+                    if (Persistence.DataLoaded("savePlayer"))
                     {
                         ThreadLoadScenes.Start();
 
-                        Effects.Add(PressStart.PartieTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
-                        Effects.Add(PressStart.PartieNonTraduite, PredefinedEffects.FadeOutTo0(255, 0, 1000));
+                        VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
+                        VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
 
                         //InitLoadingTranslation();
 
@@ -227,7 +228,7 @@
                     if (ScenesAreLoaded)
                     {
                         foreach (var kvp in ScenesLoaded)
-                            EphemereGames.Core.Visual.Visuals.UpdateScene(kvp.Key, kvp.Value);
+                            Visuals.UpdateScene(kvp.Key, kvp.Value);
 
                         SceneState = State.Finished;
                         Transition = TransitionType.Out;
@@ -308,8 +309,7 @@
             base.OnFocus();
 
             Main.PlayersController.Initialize();
-            Effects.Stop();
-            Effects.Clear();
+            VisualEffects.Clear();
             ConnectingPlayer = PlayerIndex.One;
             WaitingForPlayerToConnect = true;
             InitPressStart();

@@ -1,53 +1,46 @@
-﻿//=====================================================================
-//
-// Déplacement linéairement un objet de sa position actuelle à la
-// position de fin.
-//
-//=====================================================================
-
-namespace EphemereGames.Core.Physics
+﻿namespace EphemereGames.Core.Physics
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
     using EphemereGames.Core.Utilities;
 
-    public class RotationEffect : PhysicalEffect
+
+    public class RotationEffect : Effect<IPhysicalObject>
     {
+        public float Quantity;
 
-        //=====================================================================
-        // Attributs
-        //=====================================================================
+        private float QuantityApplied;
+        private float QuantityPerTick;
 
-        public float Quantite;
+        public static Pool<RotationEffect> Pool = new Pool<RotationEffect>();
 
-        private float QuantiteEmise;
-        private float QuantiteParTick;
-
-
-        //=====================================================================
-        // Logique
-        //=====================================================================
 
         protected override void InitializeLogic()
         {
-            QuantiteParTick = (float)(Quantite / Length);
+            QuantityPerTick = (float)(Quantity / Length);
         }
+
 
         protected override void LogicLinear()
         {
-            Objet.Rotation += (float)(TimeOneTick * QuantiteParTick);
-            QuantiteEmise -= (float)(TimeOneTick * QuantiteParTick);
+            Obj.Rotation += (float) (TimeOneTick * QuantityPerTick);
+            QuantityApplied -= (float)(TimeOneTick * QuantityPerTick);
         }
+
 
         protected override void LogicAfter()
         {
-            Objet.Rotation += (Quantite - QuantiteEmise);
+            Obj.Rotation += (Quantity - QuantityApplied);
         }
+
 
         protected override void LogicNow()
         {
-            Objet.Rotation += Quantite;
+            Obj.Rotation += Quantity;
+        }
+
+
+        internal override void Return()
+        {
+            Pool.Return((RotationEffect) this);
         }
     }
 }

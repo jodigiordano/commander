@@ -33,7 +33,7 @@
             : base(simulation)
         {
             MenuWidth = 140;
-            DistanceBetweenTwoChoices = 30;
+            DistanceBetweenTwoChoices = 35;
             PositionChoice = new Vector3(20, 15, 0);
             PositionChoicePrice = new Vector3(40, 2, 0);
             TextSize = 2;
@@ -123,8 +123,8 @@
             {
                 Turret t = Simulation.TurretsFactory.Availables[kvp.Key];
 
-                LogosTourellesAchat[t.Type].Position = this.Position + PositionChoice + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices, 0);
-                PrixTourellesAchat[t.Type].Position = this.Position + PositionChoicePrice + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices, 0);
+                LogosTourellesAchat[t.Type].Position = this.Position + PositionChoice + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices + 2, 0);
+                PrixTourellesAchat[t.Type].Position = this.Position + PositionChoicePrice + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices + 2, 0);
                 PrixTourellesAchat[t.Type].Data = t.BuyPrice + "M$";
 
 

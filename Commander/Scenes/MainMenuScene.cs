@@ -1,10 +1,9 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     
 
@@ -150,15 +149,15 @@
             {
                 switch (TransitionChoice)
                 {
-                    case "save the\nworld": EphemereGames.Core.Visual.Visuals.Transite("MenuToNouvellePartie"); break;
-                    case "help": EphemereGames.Core.Visual.Visuals.Transite("MenuToAide"); break;
-                    case "options": EphemereGames.Core.Visual.Visuals.Transite("MenuToOptions"); break;
-                    case "editor": EphemereGames.Core.Visual.Visuals.Transite("MenuToEditeur"); break;
-                    case "chargement": EphemereGames.Core.Visual.Visuals.Transite("MenuToChargement"); break;
+                    case "save the\nworld": Visuals.Transite("MenuToNouvellePartie"); break;
+                    case "help": Visuals.Transite("MenuToAide"); break;
+                    case "options": Visuals.Transite("MenuToOptions"); break;
+                    case "editor": Visuals.Transite("MenuToEditeur"); break;
+                    case "chargement": Visuals.Transite("MenuToChargement"); break;
 
                     case "quit":
                         if (Preferences.Target == Setting.Xbox360 && Main.TrialMode.Active)
-                            Core.Visual.Visuals.Transite("MenuToAcheter");
+                            Visuals.Transite("MenuToAcheter");
                         else
                             Main.Exit();
                         break;
@@ -167,7 +166,7 @@
                         if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                         {
                             Main.GameInProgress.State = GameState.Running;
-                            EphemereGames.Core.Visual.Visuals.Transite("MenuToPartie");
+                            Visuals.Transite("MenuToPartie");
                         }
                         break;
                 }
@@ -182,12 +181,12 @@
             if (TimeBetweenTwoMusicChange > 0)
                 return;
 
-            EphemereGames.Core.Audio.Audio.arreterMusique(SelectedMusic, true, Preferences.TimeBetweenTwoMusics - 50);
+            Audio.StopMusic(SelectedMusic, true, Preferences.TimeBetweenTwoMusics - 50);
             string ancienneMusique = SelectedMusic;
             SelectedMusic = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
             Main.AvailableMusics.Remove(SelectedMusic);
             Main.AvailableMusics.Add(ancienneMusique);
-            EphemereGames.Core.Audio.Audio.jouerMusique(SelectedMusic, true, 1000, true);
+            Audio.PlayMusic(SelectedMusic, true, 1000, true);
             TimeBetweenTwoMusicChange = Preferences.TimeBetweenTwoMusics;
         }
 
@@ -259,12 +258,12 @@
 
             Transition = TransitionType.In;
 
-            if (!EphemereGames.Core.Audio.Audio.musiqueJoue(SelectedMusic))
-                EphemereGames.Core.Audio.Audio.jouerMusique(SelectedMusic, true, 1000, true);
+            if (!Audio.IsMusicPlaying(SelectedMusic))
+                Audio.PlayMusic(SelectedMusic, true, 1000, true);
             else
-                EphemereGames.Core.Audio.Audio.reprendreMusique(SelectedMusic, true, 1000);
+                Audio.UnpauseMusic(SelectedMusic, true, 1000);
 
-            EphemereGames.Core.Input.Input.AddListener(Simulation);
+            Input.AddListener(Simulation);
         }
 
         public override void OnFocusLost()
@@ -272,9 +271,9 @@
             base.OnFocusLost();
 
             if (Simulation.SelectedCelestialBody != null && Simulation.SelectedCelestialBody.Nom == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                EphemereGames.Core.Audio.Audio.pauserMusique(SelectedMusic, true, 1000);
+                Audio.PauseMusic(SelectedMusic, true, 1000);
 
-            EphemereGames.Core.Input.Input.RemoveListener(Simulation);
+            Input.RemoveListener(Simulation);
         }
 
 

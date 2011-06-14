@@ -119,7 +119,7 @@
             GetPosition(time, ref v1);
             GetPosition(time + 1, ref v2);
 
-            Vector3.Subtract(ref v1, ref v2, out result);
+            Vector3.Subtract(ref v2, ref v1, out result);
 
             result.Normalize();
         }

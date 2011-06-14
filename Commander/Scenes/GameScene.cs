@@ -3,6 +3,7 @@
     using System;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -95,8 +96,8 @@
             if (Transition == TransitionType.Out)
                 switch (ChoixTransition)
                 {
-                    case "menu": EphemereGames.Core.Visual.Visuals.Transite("PartieToNouvellePartie"); break;
-                    case "chargement": EphemereGames.Core.Visual.Visuals.Transite("PartieToChargement"); break;
+                    case "menu": Visuals.Transite("PartieToNouvellePartie"); break;
+                    case "chargement": Visuals.Transite("PartieToChargement"); break;
                 }
 
             Transition = TransitionType.None;
@@ -118,12 +119,12 @@
 
             Transition = TransitionType.In;
 
-            if (!EphemereGames.Core.Audio.Audio.musiqueJoue(MusiqueSelectionnee))
-                EphemereGames.Core.Audio.Audio.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+            if (!Audio.IsMusicPlaying(MusiqueSelectionnee))
+                Audio.PlayMusic(MusiqueSelectionnee, true, 1000, true);
             else
-                EphemereGames.Core.Audio.Audio.reprendreMusique(MusiqueSelectionnee, true, 1000);
+                Audio.UnpauseMusic(MusiqueSelectionnee, true, 1000);
 
-            EphemereGames.Core.Input.Input.AddListener(Simulation);
+            Input.AddListener(Simulation);
         }
 
 
@@ -131,9 +132,9 @@
         {
             base.OnFocusLost();
 
-            EphemereGames.Core.Audio.Audio.pauserMusique(MusiqueSelectionnee, true, 1000);
+            Audio.PauseMusic(MusiqueSelectionnee, true, 1000);
 
-            EphemereGames.Core.Input.Input.RemoveListener(Simulation);
+            Input.RemoveListener(Simulation);
         }
 
 
@@ -141,10 +142,10 @@
         {
             if (nouvelEtat == GameState.Won || nouvelEtat == GameState.Lost)
             {
-                EphemereGames.Core.Audio.Audio.arreterMusique(MusiqueSelectionnee, true, 500);
+                Audio.StopMusic(MusiqueSelectionnee, true, 500);
                 Main.AvailableMusics.Add(MusiqueSelectionnee);
                 MusiqueSelectionnee = ((nouvelEtat == GameState.Won) ? "win" : "gameover") + Main.Random.Next(1, 3);
-                EphemereGames.Core.Audio.Audio.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+                Audio.PlayMusic(MusiqueSelectionnee, true, 1000, true);
             }
         }
 
@@ -214,12 +215,12 @@
             if (TempsEntreDeuxChangementMusique > 0)
                 return;
 
-            EphemereGames.Core.Audio.Audio.arreterMusique(MusiqueSelectionnee, true, Preferences.TimeBetweenTwoMusics - 50);
+            Audio.StopMusic(MusiqueSelectionnee, true, Preferences.TimeBetweenTwoMusics - 50);
             string ancienneMusique = MusiqueSelectionnee;
             MusiqueSelectionnee = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
             Main.AvailableMusics.Remove(MusiqueSelectionnee);
             Main.AvailableMusics.Add(ancienneMusique);
-            EphemereGames.Core.Audio.Audio.jouerMusique(MusiqueSelectionnee, true, 1000, true);
+            Audio.PlayMusic(MusiqueSelectionnee, true, 1000, true);
 
             TempsEntreDeuxChangementMusique = Preferences.TimeBetweenTwoMusics;
         }
