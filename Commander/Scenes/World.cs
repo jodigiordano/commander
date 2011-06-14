@@ -26,11 +26,13 @@
             Scene = scene;
             Descriptor = descriptor;
 
-            Simulation = new Simulation(main, scene, descriptor.SimulationDescription);
-            Simulation.Players = Main.Players;
+            Simulation = new Simulation(main, scene, descriptor.SimulationDescription)
+            {
+                Players = Main.Players,
+                DemoMode = true,
+                WorldMode = true
+            };
             Simulation.Initialize();
-            Simulation.DemoMode = true;
-            Simulation.WorldMode = true;
 
             LevelsDescriptors = new Dictionary<string, ScenarioDescriptor>();
             Warps = new Dictionary<string, int>();

@@ -30,7 +30,11 @@ namespace EphemereGames.Commander
         public Main Main;
         public ScenarioDescriptor DemoModeSelectedScenario;
         public ScenarioDescriptor DescriptionScenario;
-        public bool Debug;
+        public bool DebugMode;
+        public bool WorldMode;
+        public bool DemoMode;
+        public bool EditorMode;
+        public bool HelpMode { get { return ScenarioController.Help.Active; } }
         public Dictionary<PlayerIndex, Player> Players;
         public GameAction GameAction;
         public TurretsFactory TurretsFactory;
@@ -41,9 +45,8 @@ namespace EphemereGames.Commander
         public RectanglePhysique Terrain;
         public RectanglePhysique InnerTerrain;
         public GameState Etat { get { return ScenarioController.State; } set { ScenarioController.State = value; } }
-        public bool HelpMode { get { return ScenarioController.Help.Active; } }
         public CelestialBody CelestialBodyPausedGame;
-        public bool WorldMode;
+        
         public Vector3 PositionCurseur; 
 
         public PlanetarySystemController PlanetarySystemController;
@@ -57,8 +60,6 @@ namespace EphemereGames.Commander
         private SpaceshipsController SpaceshipsController;   
         private GUIController GUIController;
         private PowerUpsController PowerUpsController;
-        private bool demoMode = false;
-        private bool editorMode = false;
 
 
         public Simulation(Main main, Scene scene, ScenarioDescriptor scenario)
@@ -87,6 +88,12 @@ namespace EphemereGames.Commander
             GUIController = new GUIController(this);
             PowerUpsController = new PowerUpsController(this);
             ScenarioController = new ScenariosController(this);
+
+            WorldMode = false;
+            DemoMode = false;
+            EditorMode = false;
+            DebugMode = false;
+            GameAction = GameAction.None;
         }
 
 
@@ -238,6 +245,7 @@ namespace EphemereGames.Commander
             ScenarioController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
             CollisionsController.BulletDeflected += new EnemyBulletHandler(BulletsController.DoBulletDeflected);
+            BulletsController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
 
             ScenarioController.Initialize();
             EnemiesController.Initialize();
@@ -247,35 +255,6 @@ namespace EphemereGames.Commander
             PowerUpsController.Initialize();
             SimPlayersController.Initialize(); // Must be done after the PowerUpsController
             CollisionsController.Initialize();
-
-            WorldMode = false;
-            DemoMode = demoMode;
-            EditorMode = editorMode;
-            GameAction = GameAction.None;
-        }
-
-
-        public bool DemoMode
-        {
-            get { return demoMode; }
-            set
-            {
-                demoMode = value;
-
-                TurretsController.DemoMode = value;
-            }
-        }
-
-
-        public bool EditorMode
-        {
-            get { return editorMode; }
-            set
-            {
-                editorMode = value;
-
-                ScenarioController.EditorMode = value;
-            }
         }
 
 
@@ -408,7 +387,7 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
-            if (Debug && key == p.KeyboardConfiguration.Debug)
+            if (DebugMode && key == p.KeyboardConfiguration.Debug)
                 CollisionsController.Debug = true;
 
             if (ScenarioController.Help.Active)
@@ -438,7 +417,7 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
-            if (this.Debug && key == p.KeyboardConfiguration.Debug)
+            if (this.DebugMode && key == p.KeyboardConfiguration.Debug)
                 CollisionsController.Debug = false;
 
             if (ScenarioController.Help.Active)
@@ -534,7 +513,7 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
-            if (Debug && button == p.GamePadConfiguration.Debug)
+            if (DebugMode && button == p.GamePadConfiguration.Debug)
                 CollisionsController.Debug = true;
 
             if (ScenarioController.Help.Active)
@@ -571,7 +550,7 @@ namespace EphemereGames.Commander
             if (!p.Master)
                 return;
 
-            if (Debug && button == p.GamePadConfiguration.Debug)
+            if (DebugMode && button == p.GamePadConfiguration.Debug)
                 CollisionsController.Debug = false;
 
             if (ScenarioController.Help.Active)

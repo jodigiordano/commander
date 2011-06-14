@@ -20,7 +20,6 @@
         private Simulation Simulation;
         private Dictionary<Turret, Enemy> AssociationsThisTick;
         private Dictionary<Turret, int> BoostedTurretsThisTick;
-        private bool demoMode;
 
 
         public TurretsController(Simulation simulation)
@@ -29,7 +28,6 @@
             Turrets = new List<Turret>();
             AssociationsThisTick = new Dictionary<Turret, Enemy>();
             BoostedTurretsThisTick = new Dictionary<Turret, int>();
-            DemoMode = false;
         }
 
 
@@ -37,19 +35,10 @@
         {
             for (int i = 0; i < StartingTurrets.Count; i++)
                 Turrets.Add(StartingTurrets[i]);
-        }
 
-
-        public bool DemoMode
-        {
-            get { return demoMode; }
-            set
-            {
-                demoMode = value;
-
+            if (Simulation.DemoMode)
                 foreach (var turret in Turrets)
                     turret.ShowForm = false;
-            }
         }
 
 
@@ -175,11 +164,22 @@
         {
             CelestialBody corpsCeleste = obj as CelestialBody;
 
-            if (corpsCeleste == null)
-                return;
+            if (corpsCeleste != null)
+            {
 
-            foreach (var turret in corpsCeleste.Turrets)
+                foreach (var turret in corpsCeleste.Turrets)
                     Turrets.Remove(turret);
+
+                return;
+            }
+
+            LaserBullet bullet = obj as LaserBullet;
+
+            if (bullet != null)
+            {
+                bullet.Turret.EnemyWatched = null;
+                bullet.Turret.Watcher = true;
+            }
         }
 
 

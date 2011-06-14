@@ -31,7 +31,7 @@
       <StartingPosition>29</StartingPosition>
     </CelestialBody>
     <CelestialBody>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
       <Image>planete6</Image>
       <Size>Small</Size>
       <Speed>900000</Speed>
@@ -97,7 +97,7 @@
       <StartingPosition>72</StartingPosition>
     </CelestialBody>
     <CelestialBody>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
       <Image>planete7</Image>
       <Size>Small</Size>
       <Speed>1200000</Speed>

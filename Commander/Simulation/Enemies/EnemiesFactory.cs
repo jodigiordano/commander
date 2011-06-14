@@ -27,6 +27,21 @@
         private Simulation Simulation;
 
 
+        public Dictionary<EnemyType, string> ImagesEnemies = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
+        {
+            { EnemyType.Asteroid, @"Asteroid" },
+            { EnemyType.Comet, @"Comet" },
+            { EnemyType.Plutoid, @"Plutoid" },
+            { EnemyType.Centaur, @"Centaur" },
+            { EnemyType.Trojan, @"Trojan" },
+            { EnemyType.Meteoroid, @"Meteoroid" },
+            { EnemyType.Apohele, @"Apohele" },
+            { EnemyType.Damacloid, @"Damacloid" },
+            { EnemyType.Swarm, @"Swarm" },
+            { EnemyType.Vulcanoid, @"Vulcanoid" }
+        };
+
+
         private Dictionary<EnemyType, Color> ColorsEnemies = new Dictionary<EnemyType, Color>(EnemyTypeComparer.Default)
         {
             { EnemyType.Asteroid, new Color(255, 178, 12) },
@@ -87,7 +102,7 @@
             e.Color = ColorsEnemies[type];
             e.Level = (speedLevel + livesLevel) / 2;
             e.FadeInTime = (type == EnemyType.Swarm) ? 250 : 1000;
-            e.ImpulseSpeed = (type == EnemyType.Swarm) ? 0.2f : 0;
+            e.ImpulseSpeed = (type == EnemyType.Swarm) ? 1f : 0;
             e.ImpulseTime = (type == EnemyType.Swarm) ? 250 : 0;
 
             if (type == EnemyType.Swarm)

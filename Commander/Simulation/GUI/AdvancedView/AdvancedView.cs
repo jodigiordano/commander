@@ -29,7 +29,13 @@
 
                 foreach (var celestialBody in CelestialBodies)
                     foreach (var turret in celestialBody.Turrets)
+                    {
+                        if (turret.RangeEffect != null)
+                            turret.RangeEffect.TerminatedOverride = true;
+
                         turret.ShowRange = value;
+                        turret.RangeImage.Alpha = turret.RangeAlpha;
+                    }
             }
         }
 

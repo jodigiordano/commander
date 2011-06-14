@@ -14,9 +14,7 @@
             ObjectAdded,
             ObjectRemoved,
             RollbackingObjectAdded,
-            RollbackingObjectRemoved,
-            CommitingObjectAdded,
-            CommitingObjectRemoved
+            RollbackingObjectRemoved
         }
 
         private Path Path;

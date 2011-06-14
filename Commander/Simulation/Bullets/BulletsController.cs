@@ -38,6 +38,7 @@ namespace EphemereGames.Commander
                         b.DoDie();
                     
                     //b.Hide();
+                    NotifyObjectDestroyed(b);
 
                     Simulation.BulletsFactory.Return(b);
 

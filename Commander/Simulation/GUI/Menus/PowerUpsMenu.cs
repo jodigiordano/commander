@@ -213,7 +213,10 @@
                     PlayerControlled = true,
                     UpdatePosition = false,
                     Watcher = false,
-                    TimeLastBullet = double.MaxValue
+                    TimeLastBullet = double.MaxValue,
+                    RangeAlpha = 0,
+                    ShowRange = false,
+                    ShowForm = false
                 };
 
                 p.BuyPosition = rgt.Position + new Vector3(300, 75, 0);
@@ -232,7 +235,10 @@
                     PlayerControlled = true,
                     UpdatePosition = false,
                     Watcher = false,
-                    TimeLastBullet = double.MaxValue
+                    TimeLastBullet = double.MaxValue,
+                    RangeAlpha = 0,
+                    ShowRange = false,
+                    ShowForm = false
                 };
 
                 p.BuyPosition = st.Position + new Vector3(300, 75, 0);

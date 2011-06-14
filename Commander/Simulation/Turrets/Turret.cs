@@ -61,7 +61,9 @@
         private Image DisabledBarImage;
         protected double VisualPriorityBackup;
         private List<Bullet> Bullets = new List<Bullet>();
-        private Image RangeImage;
+        public Image RangeImage;
+        public byte RangeAlpha;
+        public FadeColorEffect RangeEffect;
         private Image FormImage;
         private Particle BoostGlow;
 
@@ -98,9 +100,10 @@
             Circle = new Circle(this, 30);
             ToPlaceMode = false;
             CelestialBody = null;
+            RangeAlpha = 100;
             RangeImage = new Image("CercleBlanc", Vector3.Zero)
             {
-                Color = new Color(Color.R, Color.G, Color.B, 100),
+                Color = new Color(Color.R, Color.G, Color.B, RangeAlpha),
                 VisualPriority = Preferences.PrioriteGUIEtoiles - 0.001f
             };
             ShowRange = false;
@@ -471,7 +474,7 @@
             {
                 CanonImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
                 BaseImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
-                RangeImage.Color = (CanPlace) ? new Color(Color.R, Color.G, Color.B, 100) : new Color(255, 0, 0, 100);
+                RangeImage.Color = (CanPlace) ? new Color(Color.R, Color.G, Color.B, RangeAlpha) : new Color(255, 0, 0, RangeAlpha);
             }
 
 
@@ -518,7 +521,21 @@
             BaseImage.SizeX = 3;
             CanonImage.Origin = new Vector2(6, 8);
 
+            if (!Simulation.DemoMode && !Simulation.WorldMode && ActualLevel.Value.Level != 1)
+            {
+                RangeEffect = (FadeColorEffect) Simulation.Scene.VisualEffects.Add(RangeImage, VisualEffects.FadeOutTo0(RangeImage.Alpha, 300, 500), UpgradeFadeCompleted);
+                ShowRange = true;
+            }
+
             return true;
+        }
+
+
+        private void UpgradeFadeCompleted()
+        {
+            RangeEffect = null;
+            RangeImage.Alpha = RangeAlpha;
+            ShowRange = false;
         }
 
 

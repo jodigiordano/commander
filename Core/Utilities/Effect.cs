@@ -19,6 +19,7 @@
         public ProgressType Progress;
         public double Delay;
         public bool Terminated;
+        public bool TerminatedOverride;
         public T Obj                        { get; set; }
         public int Id;
 
@@ -50,6 +51,7 @@
             RemainingBeforeEnd = Length;
             RemainingBeforeStart = Delay;
             Terminated = false;
+            TerminatedOverride = false;
             Initialized = false;
         }
 
@@ -57,6 +59,9 @@
         internal void Update(GameTime gameTime)
         {
             if (!Initialized)
+                return;
+
+            if (TerminatedOverride)
                 return;
 
             Terminated = (RemainingBeforeEnd <= 0 || gameTime == null);
@@ -88,6 +93,9 @@
 
                 return;
             }
+
+            if (TerminatedOverride)
+                return;
 
             if (!Terminated && Progress == ProgressType.Now)
                 LogicNow();

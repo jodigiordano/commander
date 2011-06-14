@@ -52,7 +52,7 @@
             {
                 Effect<T> effect = kvp.Key;
 
-                if (effect.TerminatedCallback != null)
+                if (effect.TerminatedCallback != null && !effect.TerminatedOverride)
                     effect.TerminatedCallback();
 
                 effect.Return();
@@ -63,7 +63,7 @@
         }
 
 
-        public void Add(T obj, Effect<T> effect, NoneHandler callback)
+        public Effect<T> Add(T obj, Effect<T> effect, NoneHandler callback)
         {
             if (Effects.ContainsKey(effect))
                 Effects[effect].Add(obj);
@@ -77,12 +77,14 @@
                 effect.TerminatedCallback = callback;
                 effect.Initialize();
             }
+
+            return effect;
         }
 
 
-        public void Add(T obj, Effect<T> effect)
+        public Effect<T> Add(T obj, Effect<T> effect)
         {
-            Add(obj, effect, null);
+            return Add(obj, effect, null);
         }
 
 
@@ -97,7 +99,7 @@
         {
             foreach (var kvp in Effects)
             {
-                if (kvp.Key.TerminatedCallback != null)
+                if (kvp.Key.TerminatedCallback != null && !kvp.Key.TerminatedOverride)
                     kvp.Key.TerminatedCallback();
 
                 kvp.Key.Return();

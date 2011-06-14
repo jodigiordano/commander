@@ -5,12 +5,13 @@
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using System;
 
 
     class Path
     {
-        private const int MaxVisibleLines = 200;
-        private const int MaxCurvePoints = 200;
+        private const int MaxVisibleLines = 300;
+        private const int MaxCurvePoints = 300;
         private const int CelestialBodyDistance = 70;
 
         public List<CelestialBody> CelestialBodies;
@@ -220,7 +221,7 @@
             //        break;
             //}
 
-            int nbLines = (int) (Length / DistanceTwoPoints) + 1;
+            int nbLines = Math.Min((int) (Length / DistanceTwoPoints) + 1, MaxVisibleLines);
             
             for (int j = 0; j < nbLines; j++)
             {
@@ -230,9 +231,6 @@
                 Lines[j].Color.G = Lines[j].Color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
                 Lines[j].VisualPriority = Preferences.PrioriteSimulationChemin + InnerPath.GetPercentage(j * DistanceTwoPoints) / 1000f;
                 Scene.Add(Lines[j]);
-
-                if (j >= MaxVisibleLines)
-                    break;
             }
         }
 

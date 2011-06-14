@@ -21,7 +21,6 @@
         public event NewGameStateHandler NewGameState;
         public event CommonStashHandler CommonStashChanged;
 
-        public bool EditorMode = false;
         public Help Help;
 
         public List<CelestialBody> CelestialBodies                   { get { return Scenario.PlanetarySystem; } }
@@ -123,7 +122,7 @@
         {
             WavesCounter++;
 
-            if (WavesCounter == Waves.Count && State == GameState.Running && !Simulation.DemoMode && !EditorMode)
+            if (WavesCounter == Waves.Count && State == GameState.Running && !Simulation.DemoMode && !Simulation.EditorMode)
             {
                 State = GameState.Won;
 
@@ -158,7 +157,7 @@
             if (celestialBody == CelestialBodyToProtect)
                 CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints; //correct de caster?
 
-            if (CommonStash.Lives <= 0 && State == GameState.Running && !Simulation.DemoMode && !EditorMode)
+            if (CommonStash.Lives <= 0 && State == GameState.Running && !Simulation.DemoMode && !Simulation.EditorMode)
             {
                 CelestialBodyToProtect.DoDie();
                 Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
@@ -189,7 +188,7 @@
 
             Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
 
-            if (celestialBody == CelestialBodyToProtect && !Simulation.DemoMode && !EditorMode)
+            if (celestialBody == CelestialBodyToProtect && !Simulation.DemoMode && !Simulation.EditorMode)
             {
                 State = GameState.Lost;
 

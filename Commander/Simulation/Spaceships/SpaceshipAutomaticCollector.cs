@@ -29,24 +29,42 @@
             SfxOut = "sfxAutomaticCollectorOut";
             SfxIn = "sfxAutomaticCollectorIn";
             Active = true;
-            AutomaticMode = true;
+            AutomaticMode = false;
         }
 
 
         public override void Update()
         {
+            if (float.IsNaN(Position.X))
+                Position = Vector3.Zero;
+
+            if (float.IsNaN(TargetPosition.X))
+                InCombat = false;
+
             if (!InCombat)
             {
                 if (Minerals.Count == 0)
                     TargetPosition = new Vector3(
-                        Main.Random.Next(Simulation.InnerTerrain.Left, Simulation.InnerTerrain.Right),
-                        Main.Random.Next(Simulation.InnerTerrain.Top, Simulation.InnerTerrain.Bottom),
+                        Main.Random.Next(Simulation.InnerTerrain.Left + 50, Simulation.InnerTerrain.Right - 50),
+                        Main.Random.Next(Simulation.InnerTerrain.Top + 50, Simulation.InnerTerrain.Bottom - 50),
                         0);
                 else
                     TargetPosition = Minerals[0].Position;
             }
 
+            NextInput = TargetPosition - Position;
+            NextInput.Normalize();
+            NextInput *= 3;
+
+            if ((TargetPosition - Position).LengthSquared() <= 600)
+            {
+                InCombat = false;
+                TargetReached = true;
+            }
+
             base.Update();
+
+            Direction = NextInput;
         }
     }
 }

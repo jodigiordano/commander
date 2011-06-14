@@ -267,7 +267,8 @@
                         deplacement.Delay = i * 500;
                         deplacement.Length = 10000;
                         deplacement.ObjetSuivi = CelestialBodies[i];
-                        deplacement.Vitesse = 20f;
+                        deplacement.Vitesse = 10f;
+                        deplacement.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
 
                         this.Simulation.Scene.PhysicalEffects.Add(Missiles[i].Key, deplacement);
                     }
