@@ -72,7 +72,7 @@ namespace EphemereGames.Core.Utilities
                     return (int) (hash_collision & 0x7FFFFFFF);
                 }
                 set {
-                    Debug.Assert((value & 0x80000000) == 0);  // make sure sign bit isn't set.
+                    //Debug.Assert((value & 0x80000000) == 0);  // make sure sign bit isn't set.
                     hash_collision = (uint)value | (hash_collision & 0x80000000);
                 }
             }
@@ -292,7 +292,7 @@ namespace EphemereGames.Core.Utilities
         {
             Slot[] oldTable = table;        // Move all the items from this table to the new table.
 
-            Debug.Assert((newSize & (newSize - 1)) == 0);            // Check newSize is a power of two.
+            //Debug.Assert((newSize & (newSize - 1)) == 0);            // Check newSize is a power of two.
             totalSlots = newSize;
             thresholdGrow = (int)(totalSlots * loadFactor);
             thresholdShrink = thresholdGrow / 3;

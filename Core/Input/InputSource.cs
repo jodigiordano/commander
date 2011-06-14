@@ -43,20 +43,20 @@
             MappedMouseButtons = new List<MouseButton>();
             MappedGamePadButtons = new List<Buttons>();
 
-            KeysPressed = new Dictionary<Keys, bool>();
-            KeysPressedOnce = new Dictionary<Keys, bool>();
-            KeysReleased = new Dictionary<Keys, bool>();
+            KeysPressed = new Dictionary<Keys, bool>(KeysComparer.Default);
+            KeysPressedOnce = new Dictionary<Keys, bool>(KeysComparer.Default);
+            KeysReleased = new Dictionary<Keys, bool>(KeysComparer.Default);
 
-            MouseButtonsPressed = new Dictionary<MouseButton, bool>();
-            MouseButtonsPressedOnce = new Dictionary<MouseButton, bool>();
-            MouseButtonsReleased = new Dictionary<MouseButton, bool>();
+            MouseButtonsPressed = new Dictionary<MouseButton, bool>(MouseButtonComparer.Default);
+            MouseButtonsPressedOnce = new Dictionary<MouseButton, bool>(MouseButtonComparer.Default);
+            MouseButtonsReleased = new Dictionary<MouseButton, bool>(MouseButtonComparer.Default);
             MouseScrolled = 0;
             MouseMoved = Vector3.Zero;
 
-            GamePadButtonsPressed = new Dictionary<Buttons, bool>();
-            GamePadButtonsPressedOnce = new Dictionary<Buttons, bool>();
-            GamePadButtonsReleased = new Dictionary<Buttons, bool>();
-            GamePadJoystickMoved = new Dictionary<Buttons, Vector3>();
+            GamePadButtonsPressed = new Dictionary<Buttons, bool>(ButtonsComparer.Default);
+            GamePadButtonsPressedOnce = new Dictionary<Buttons, bool>(ButtonsComparer.Default);
+            GamePadButtonsReleased = new Dictionary<Buttons, bool>(ButtonsComparer.Default);
+            GamePadJoystickMoved = new Dictionary<Buttons, Vector3>(ButtonsComparer.Default);
         }
 
 

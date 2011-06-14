@@ -18,7 +18,7 @@
             Active = true;
             MouseBasePosition = mouseBasePosition;
 
-            Sources = new Dictionary<PlayerIndex, InputSource>();
+            Sources = new Dictionary<PlayerIndex, InputSource>(PlayerIndexComparer.Default);
             Listeners = new List<InputListener>();
 
             for (PlayerIndex player = PlayerIndex.One; player <= PlayerIndex.Four; player++)
@@ -39,7 +39,7 @@
 
             Mouse.SetPosition((int) MouseBasePosition.X, (int) MouseBasePosition.Y);
 
-            Visuel.Facade.GetNotifiedTransition(DoTransitionStarted, DoTransitionStopped);
+            Visual.Visuals.GetNotifiedTransition(DoTransitionStarted, DoTransitionStopped);
         }
 
 

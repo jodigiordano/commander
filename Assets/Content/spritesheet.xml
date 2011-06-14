@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.Collections.Generic.Dictionary[System.String, System.String]">
+    <!-- Asteroids -->
+    <Item><Key>Apohele</Key><Value>asteroids/apohele.png</Value></Item>
+    <Item><Key>Asteroid</Key><Value>asteroids/asteroid.png</Value></Item>
+    <Item><Key>Centaur</Key><Value>asteroids/centaur.png</Value></Item>
+    <Item><Key>Comet</Key><Value>asteroids/comet.png</Value></Item>
+    <Item><Key>Damacloid</Key><Value>asteroids/damacloid.png</Value></Item>
+    <Item><Key>Meteoroid</Key><Value>asteroids/meteoroid.png</Value></Item>
+    <Item><Key>Plutoid</Key><Value>asteroids/plutoid.png</Value></Item>
+    <Item><Key>Swarm</Key><Value>asteroids/swarm.png</Value></Item>
+    <Item><Key>Trojan</Key><Value>asteroids/trojan.png</Value></Item>
+    <Item><Key>Vulcanoid</Key><Value>asteroids/vulcanoid.png</Value></Item>
+    
+    <!-- Minerals -->
+    <Item><Key>1up</Key><Value>minerals/1up.png</Value></Item>
+    <Item><Key>cash10</Key><Value>minerals/cash10.png</Value></Item>
+    <Item><Key>cash150</Key><Value>minerals/cash150.png</Value></Item>
+    <Item><Key>cash25</Key><Value>minerals/cash25.png</Value></Item>
+    
+    <!-- Planets -->
+    <Item><Key>etoile13</Key><Value>planetes/etoile1.png</Value></Item>
+    <Item><Key>planete11</Key><Value>planetes/planete11.png</Value></Item>
+    <Item><Key>planete12</Key><Value>planetes/planete12.png</Value></Item>
+    <Item><Key>planete13</Key><Value>planetes/planete13.png</Value></Item>
+    <Item><Key>planete21</Key><Value>planetes/planete21.png</Value></Item>
+    <Item><Key>planete22</Key><Value>planetes/planete22.png</Value></Item>
+    <Item><Key>planete23</Key><Value>planetes/planete23.png</Value></Item>
+    <Item><Key>planete31</Key><Value>planetes/planete31.png</Value></Item>
+    <Item><Key>planete32</Key><Value>planetes/planete32.png</Value></Item>
+    <Item><Key>planete33</Key><Value>planetes/planete33.png</Value></Item>
+    <Item><Key>planete41</Key><Value>planetes/planete41.png</Value></Item>
+    <Item><Key>planete42</Key><Value>planetes/planete42.png</Value></Item>
+    <Item><Key>planete43</Key><Value>planetes/planete43.png</Value></Item>
+    <Item><Key>planete51</Key><Value>planetes/planete51.png</Value></Item>
+    <Item><Key>planete52</Key><Value>planetes/planete52.png</Value></Item>
+    <Item><Key>planete53</Key><Value>planetes/planete53.png</Value></Item>
+    <Item><Key>planete61</Key><Value>planetes/planete61.png</Value></Item>
+    <Item><Key>planete62</Key><Value>planetes/planete62.png</Value></Item>
+    <Item><Key>planete63</Key><Value>planetes/planete63.png</Value></Item>
+    <Item><Key>planete71</Key><Value>planetes/planete71.png</Value></Item>
+    <Item><Key>planete72</Key><Value>planetes/planete72.png</Value></Item>
+    <Item><Key>planete73</Key><Value>planetes/planete73.png</Value></Item>
+    <Item><Key>stationSpatiale11</Key><Value>planetes/stationSpatiale11.png</Value></Item>
+    <Item><Key>stationSpatiale12</Key><Value>planetes/stationSpatiale12.png</Value></Item>
+    <Item><Key>stationSpatiale13</Key><Value>planetes/stationSpatiale13.png</Value></Item>
+    <Item><Key>stationSpatiale21</Key><Value>planetes/stationSpatiale21.png</Value></Item>
+    <Item><Key>stationSpatiale22</Key><Value>planetes/stationSpatiale22.png</Value></Item>
+    <Item><Key>stationSpatiale23</Key><Value>planetes/stationSpatiale23.png</Value></Item>
+    <Item><Key>lune1</Key><Value>planetes/lune1.png</Value></Item>
+    <Item><Key>lune2</Key><Value>planetes/lune2.png</Value></Item>   
+    <Item><Key>lune3</Key><Value>planetes/lune3.png</Value></Item>   
+    <Item><Key>lune4</Key><Value>planetes/lune4.png</Value></Item>   
+    <Item><Key>luneVies</Key><Value>planetes/luneVies.png</Value></Item>   
+    <Item><Key>luneWin</Key><Value>planetes/luneWin.png</Value></Item>   
+    <Item><Key>luneLoose</Key><Value>planetes/luneFail.png</Value></Item>
+    
+    <!-- Power-Ups -->
+    <Item><Key>powerUpPlaceHolder</Key><Value>powerups/placeHolder.png</Value></Item>
+    <Item><Key>Destruction</Key><Value>powerups/destruction.png</Value></Item>
+    <Item><Key>automaticCollector</Key><Value>powerups/acollector.png</Value></Item>
+    <Item><Key>darkside</Key><Value>powerups/darkside.png</Value></Item>
+    <Item><Key>pulse</Key><Value>powerups/pulse.png</Value></Item>
+    <Item><Key>shield</Key><Value>powerups/shield.png</Value></Item>
+    <Item><Key>shootingStars</Key><Value>powerups/shootingstars.png</Value></Item>
+    
+    <!-- Projectiles -->
+    <Item><Key>ProjectileMissile1</Key><Value>projectiles/missile1.png</Value></Item>
+    <Item><Key>ProjectileMissile2</Key><Value>projectiles/missile2.png</Value></Item>
+    <Item><Key>ProjectileBase</Key><Value>projectiles/projectileBase.png</Value></Item>
+    
+    <!-- Spaceships -->
+    <Item><Key>Collecteur</Key><Value>spaceships/collecteur.png</Value></Item>
+    <Item><Key>Resistance1</Key><Value>spaceships/resistance1.png</Value></Item>
+    <Item><Key>Resistance2</Key><Value>spaceships/resistance2.png</Value></Item>
+    <Item><Key>Resistance3</Key><Value>spaceships/resistance3.png</Value></Item>
+    <Item><Key>TheResistance</Key><Value>spaceships/TheResistance.png</Value></Item>
+    <Item><Key>Vaisseau</Key><Value>spaceships/Vaisseau.png</Value></Item>
+    
+    
+    <!-- Turrets -->
+    <Item><Key>BarreInactivite</Key><Value>tourelles/barreInactivite.png</Value></Item>
+    <Item><Key>tourelleBase1</Key><Value>tourelles/tourelleBase1.png</Value></Item>
+    <Item><Key>tourelleBase2</Key><Value>tourelles/tourelleBase2.png</Value></Item>
+    <Item><Key>tourelleBase3</Key><Value>tourelles/tourelleBase3.png</Value></Item>
+    <Item><Key>tourelleBaseBase</Key><Value>tourelles/tourelleBaseBase.png</Value></Item>
+    <Item><Key>tourelleGravitationnelleAntenne</Key><Value>tourelles/tourelleGravitationnelleAntenne.png</Value></Item>
+    <Item><Key>tourelleGravitationnelleBase</Key><Value>tourelles/tourelleGravitationnelleBase.png</Value></Item>
+    <Item><Key>tourelleLaserBase</Key><Value>tourelles/tourelleLaserBase.png</Value></Item>
+    <Item><Key>tourelleLaserCanon1</Key><Value>tourelles/tourelleLaserCanon1.png</Value></Item>
+    <Item><Key>tourelleLaserCanon2</Key><Value>tourelles/tourelleLaserCanon2.png</Value></Item>
+    <Item><Key>tourelleLaserCanon3</Key><Value>tourelles/tourelleLaserCanon3.png</Value></Item>
+    <Item><Key>tourelleLaserMultipleBase</Key><Value>tourelles/tourelleLaserMultipleBase.png</Value></Item>
+    <Item><Key>tourelleLaserMultiple1</Key><Value>tourelles/tourelleLaserMultipleCanon1.png</Value></Item>
+    <Item><Key>tourelleLaserMultiple2</Key><Value>tourelles/tourelleLaserMultipleCanon2.png</Value></Item>
+    <Item><Key>tourelleLaserMultiple3</Key><Value>tourelles/tourelleLaserMultipleCanon3.png</Value></Item>
+    <Item><Key>tourelleMissileBase</Key><Value>tourelles/tourelleMissileBase.png</Value></Item>
+    <Item><Key>tourelleMissileCanon1</Key><Value>tourelles/tourelleMissileCanon1.png</Value></Item>
+    <Item><Key>tourelleMissileCanon2</Key><Value>tourelles/tourelleMissileCanon2.png</Value></Item>
+    <Item><Key>tourelleMissileCanon3</Key><Value>tourelles/tourelleMissileCanon3.png</Value></Item>
+    <Item><Key>tourelleSlowMotionBase</Key><Value>tourelles/tourelleSlowMotionBase.png</Value></Item>
+    <Item><Key>tourelleSlowMotionCanon1</Key><Value>tourelles/tourelleSlowMotionCanon1.png</Value></Item>
+    <Item><Key>tourelleSlowMotionCanon2</Key><Value>tourelles/tourelleSlowMotionCanon2.png</Value></Item>
+    <Item><Key>tourelleSlowMotionCanon3</Key><Value>tourelles/tourelleSlowMotionCanon3.png</Value></Item>
+    <Item><Key>tourelleAlienBase</Key><Value>tourelles/tourelleAlienBase.png</Value></Item>
+    <Item><Key>tourelleAlien</Key><Value>tourelles/tourelleAlien.png</Value></Item>
+    <Item><Key>tourelleBooster</Key><Value>tourelles/tourelleBoosterBase.png</Value></Item>
+    <Item><Key>tourelleGunner1</Key><Value>tourelles/tourelleGunnerCanon1.png</Value></Item>
+    <Item><Key>tourelleGunner2</Key><Value>tourelles/tourelleGunnerCanon2.png</Value></Item>
+    <Item><Key>tourelleGunner3</Key><Value>tourelles/tourelleGunnerCanon3.png</Value></Item>
+    <Item><Key>tourelleGunnerBase</Key><Value>tourelles/tourelleGunnerBase.png</Value></Item>
+    <Item><Key>tourelleMortar1</Key><Value>tourelles/tourelleMortarCanon1.png</Value></Item>
+    <Item><Key>tourelleMortar2</Key><Value>tourelles/tourelleMortarCanon2.png</Value></Item>
+    <Item><Key>tourelleMortar3</Key><Value>tourelles/tourelleMortarCanon3.png</Value></Item>
+    <Item><Key>tourelleMortarBase</Key><Value>tourelles/tourelleMortarBase.png</Value></Item>
+    <Item><Key>tourelleNanobots1</Key><Value>tourelles/tourelleNanobotsCanon1.png</Value></Item>
+    <Item><Key>tourelleNanobots2</Key><Value>tourelles/tourelleNanobotsCanon2.png</Value></Item>
+    <Item><Key>tourelleNanobots3</Key><Value>tourelles/tourelleNanobotsCanon3.png</Value></Item>
+    <Item><Key>tourelleNanobotsBase</Key><Value>tourelles/tourelleNanobotsBase.png</Value></Item>
+    <Item><Key>railGunTurretBase</Key><Value>tourelles/tourelleRailGunBase.png</Value></Item>
+    <Item><Key>railGunTurretCanon</Key><Value>tourelles/tourelleRailGunCanon.png</Value></Item>
+    <Item><Key>sniperTurretBase</Key><Value>tourelles/tourelleSniperBase.png</Value></Item>
+    <Item><Key>sniperTurretCanon</Key><Value>tourelles/tourelleSniperCanon.png</Value></Item> 
+    
+    <!-- GUI -->
+    <Item><Key>LigneTrajet</Key><Value>GUI/ligne_trajet.png</Value></Item>
+    <Item><Key>Star</Key><Value>GUI/star.png</Value></Item>
+    <Item><Key>crosshairRailGun</Key><Value>GUI/crosshair.png</Value></Item>
+    <Item><Key>crosshairDestruction</Key><Value>GUI/nuclearTarget.png</Value></Item>
+    <Item><Key>crosshairSniper</Key><Value>GUI/sniperTarget.png</Value></Item>
+    <Item><Key>Gauche</Key><Value>GUI/gauche.png</Value></Item>
+    <Item><Key>Droite</Key><Value>GUI/droite.png</Value></Item>
+    <Item><Key>LevelDone</Key><Value>GUI/done.png</Value></Item>
+    <Item><Key>LevelNotDone</Key><Value>GUI/notdone.png</Value></Item>
+    <Item><Key>bulleBlabla</Key><Value>GUI/bulleBlabla.png</Value></Item>
+    <Item><Key>bulleCoin</Key><Value>GUI/bulleCoin.png</Value></Item>
+    <Item><Key>sell</Key><Value>GUI/sell.png</Value></Item>
+    <Item><Key>upgrade</Key><Value>GUI/upgrade.png</Value></Item>
+    <Item><Key>CercleBlanc</Key><Value>GUI/cercleBlanc.png</Value></Item>
+    <Item><Key>options</Key><Value>GUI/options.png</Value></Item>
+    <Item><Key>ViesEnnemis1</Key><Value>GUI/viesEnnemis01.png</Value></Item>
+    <Item><Key>ViesEnnemis2</Key><Value>GUI/viesEnnemis02.png</Value></Item>
+    <Item><Key>ViesEnnemis3</Key><Value>GUI/viesEnnemis03.png</Value></Item>
+    <Item><Key>ViesEnnemis4</Key><Value>GUI/viesEnnemis04.png</Value></Item>
+    <Item><Key>ViesEnnemis5</Key><Value>GUI/viesEnnemis05.png</Value></Item>
+    <Item><Key>ViesEnnemis6</Key><Value>GUI/viesEnnemis06.png</Value></Item>
+    <Item><Key>Logo</Key><Value>GUI/EphemereLogo.png</Value></Item>
+    <Item><Key>sablier</Key><Value>GUI/sablier.png</Value></Item>
+    <Item><Key>Curseur</Key><Value>GUI/Curseur.png</Value></Item>
+    <Item><Key>checkbox</Key><Value>GUI/checkbox.png</Value></Item>
+    
+    
+    <!-- Particles -->
+    <Item><Key>Cercle</Key><Value>particules/cercle.png</Value></Item>
+  </Asset>
+</XnaContent>

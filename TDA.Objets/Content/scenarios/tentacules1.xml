@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<XnaContent>
-  <Asset Type="EphemereGames.Core.Visuel.Sprite">
-    <NomSpriteSheet>scenarios/tentacules</NomSpriteSheet>
-    <Cyclique>true</Cyclique>
-    <VitesseDefilement>300</VitesseDefilement>
-    <Rectangles>0 0 57 40 57 0 57 40 114 0 57 40 57 0 57 40 0 0 57 40 57 0 57 40 0 0 57 40 57 0 57 40 114 0 57 40 114 0 57 40 57 0 57 40 114 0 57 40 57 0 57 40</Rectangles>
-  </Asset>
-</XnaContent>

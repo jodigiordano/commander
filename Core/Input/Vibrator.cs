@@ -8,7 +8,7 @@
 
     class Vibrator
     {
-        private Dictionary<PlayerIndex, double> timeToVibrate = new Dictionary<PlayerIndex, double>();
+        private Dictionary<PlayerIndex, double> timeToVibrate = new Dictionary<PlayerIndex, double>(PlayerIndexComparer.Default);
 
 
         public Vibrator()

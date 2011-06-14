@@ -6,7 +6,10 @@
 
     public class Pool<T> where T : new()
     {
-        private Stack<T> objects;
+        public int MaxInstances { get; set; }
+        public int LiveInstances { get; private set; }
+
+        private Stack<T> Objects;
 
         
         public Pool() : this(0) {}
@@ -29,16 +32,15 @@
         }
 
 
-        private void Initialize(List<T> objs)
-        {
-            objects = new Stack<T>(objs);
-        }
-
-
         public T Get()
         {
-            if (objects.Count > 0)
-                return objects.Pop();
+            if (LiveInstances >= MaxInstances)
+                return default(T);
+
+            LiveInstances++;
+
+            if (Objects.Count > 0)
+                return Objects.Pop();
 
             return new T();
         }
@@ -46,7 +48,17 @@
 
         public void Return(T obj)
         {
-            objects.Push(obj);
+            Objects.Push(obj);
+
+            LiveInstances--;
+        }
+
+
+        private void Initialize(List<T> objs)
+        {
+            Objects = new Stack<T>(objs);
+            MaxInstances = Int16.MaxValue;
+            LiveInstances = 0;
         }
     }
 

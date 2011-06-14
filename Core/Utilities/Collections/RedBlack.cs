@@ -118,7 +118,7 @@ namespace EphemereGames.Core.Utilities
             /// </summary>
             public void DecrementCount()
             {
-                Debug.Assert(Count != 0);
+                //Debug.Assert(Count != 0);
                 --count;
             }
 
@@ -225,7 +225,7 @@ namespace EphemereGames.Core.Utilities
 				}
 				else {
 					// Go left/right on equality to find first/last of elements with this key.
-					Debug.Assert(compare == 0);
+					//Debug.Assert(compare == 0);
 					found = current;
 					if (findFirst)
 						current = current.left;
@@ -356,14 +356,14 @@ namespace EphemereGames.Core.Utilities
 						compare = -1;
 					}
 					else {
-						Debug.Assert(dupPolicy == DuplicatePolicy.InsertLast || dupPolicy == DuplicatePolicy.ReplaceLast);
+						//Debug.Assert(dupPolicy == DuplicatePolicy.InsertLast || dupPolicy == DuplicatePolicy.ReplaceLast);
 						// Insert last by treating the key as greater than nodes in the tree.
 						duplicateFound = node;
 						compare = 1;
 					}
 				}
 
-				Debug.Assert(compare != 0);
+				//Debug.Assert(compare != 0);
 
                 node.IncrementCount();
                 if (needStack)
@@ -409,7 +409,7 @@ namespace EphemereGames.Core.Utilities
 			else if (wentRight)
 				parent.right = node;
 			else {
-				Debug.Assert(root == null);
+				//Debug.Assert(root == null);
 				root = node;
 			}
 
@@ -443,7 +443,7 @@ namespace EphemereGames.Core.Utilities
 			if (parent != null && parent.IsRed) {
 				// Since parent is red, gparent can't be null (root is always black). ggparent
 				// might be null, however.
-				Debug.Assert(gparent != null);
+				//Debug.Assert(gparent != null);
 
 				// if links from gparent and parent are opposite (left/right or right/left),
 				// then rotate.
@@ -481,7 +481,7 @@ namespace EphemereGames.Core.Utilities
 				gchild.right = child;
 			}
 			else {
-				Debug.Assert(gchild == child.right);
+				//Debug.Assert(gchild == child.right);
 				child.right = gchild.left;
 				gchild.left = child;
 			}
@@ -491,14 +491,14 @@ namespace EphemereGames.Core.Utilities
             gchild.Count = (gchild.left != null ? gchild.left.Count : 0) + (gchild.right != null ? gchild.right.Count : 0) + 1;
 
 			if (node == null) {
-				Debug.Assert(child == root);
+				//Debug.Assert(child == root);
 				root = gchild;
 			}
 			else if (child == node.left) {
 				node.left = gchild;
 			}
 			else {
-				Debug.Assert(child == node.right);
+				//Debug.Assert(child == node.right);
 				node.right = gchild;
 			}
 		}
@@ -820,15 +820,15 @@ namespace EphemereGames.Core.Utilities
 
             // Proceed down the tree, making the current node red so it can be removed.
             for (; ; ) {
-                Debug.Assert(parent == null || parent.IsRed);
-                Debug.Assert(sib == null || !sib.IsRed);
-                Debug.Assert(!node.IsRed);
+                //Debug.Assert(parent == null || parent.IsRed);
+                //Debug.Assert(sib == null || !sib.IsRed);
+                //Debug.Assert(!node.IsRed);
 
                 if ((node.left == null || !node.left.IsRed) && (node.right == null || !node.right.IsRed)) {
                     // node has two black children (null children are considered black).
                     if (parent == null) {
                         // Special case for the root.
-                        Debug.Assert(node == root);
+                        //Debug.Assert(node == root);
                         node.IsRed = true;
                     }
                     else if ((sib.left == null || !sib.left.IsRed) && (sib.right == null || !sib.right.IsRed)) {
@@ -907,7 +907,7 @@ namespace EphemereGames.Core.Utilities
                 } while (!parent.IsRed && node.IsRed);
 
                 if (!parent.IsRed) {
-                    Debug.Assert(!node.IsRed);
+                    //Debug.Assert(!node.IsRed);
                     // moved to a black child.
                     Rotate(gparent, parent, sib);
 
@@ -954,25 +954,25 @@ namespace EphemereGames.Core.Utilities
             Node replacement;
             if (node.left != null) {
                 replacement = node.left;
-                Debug.Assert(!node.IsRed && replacement.IsRed);
+                //Debug.Assert(!node.IsRed && replacement.IsRed);
                 replacement.IsRed = false;
             }
             else if (node.right != null) {
                 replacement = node.right;
-                Debug.Assert(!node.IsRed && replacement.IsRed);
+                //Debug.Assert(!node.IsRed && replacement.IsRed);
                 replacement.IsRed = false;
             }
             else
                 replacement = null;
 
             if (parent == null) {
-                Debug.Assert(root == node);
+                //Debug.Assert(root == node);
                 root = replacement;
             }
             else if (parent.left == node)
                 parent.left = replacement;
             else {
-                Debug.Assert(parent.right == node);
+                //Debug.Assert(parent.right == node);
                 parent.right = replacement;
             }
 
@@ -1204,18 +1204,18 @@ namespace EphemereGames.Core.Utilities
 			}
 
 			// Check that this node is sorted with respect to any children.
-			if (node.left != null)
-                Debug.Assert(comparer.Compare(node.left.item, node.item) <= 0, "Left child is not less than or equal to node");
-            if (node.right != null)
-                Debug.Assert(comparer.Compare(node.right.item, node.item) >= 0, "Right child is not greater than or equal to node");
+			//if (node.left != null)
+            //    Debug.Assert(comparer.Compare(node.left.item, node.item) <= 0, "Left child is not less than or equal to node");
+            //if (node.right != null)
+            //    Debug.Assert(comparer.Compare(node.right.item, node.item) >= 0, "Right child is not greater than or equal to node");
 
             // Check that the two-red rule is not violated.
-			if (node.IsRed) {
-				if (node.left != null)
-					Debug.Assert(! node.left.IsRed, "Node and left child both red");
-				if (node.right != null) 
-					Debug.Assert(! node.right.IsRed, "Node and right child both red");
-			}
+            //if (node.IsRed) {
+            //    if (node.left != null)
+            //        Debug.Assert(! node.left.IsRed, "Node and left child both red");
+            //    if (node.right != null) 
+            //        Debug.Assert(! node.right.IsRed, "Node and right child both red");
+            //}
 
 			// Validate sub-trees and get their size and heights.
 			int leftCount, leftBlackHeight;
@@ -1226,10 +1226,10 @@ namespace EphemereGames.Core.Utilities
 			rightCount = ValidateSubTree(node.right, out rightBlackHeight);
             ourCount = leftCount + rightCount + 1;
 
-            Debug.Assert(ourCount == node.Count);
+            //Debug.Assert(ourCount == node.Count);
 
 			// Validate the equal black-height rule.
-			Debug.Assert(leftBlackHeight == rightBlackHeight, "Black heights are not equal");
+			//Debug.Assert(leftBlackHeight == rightBlackHeight, "Black heights are not equal");
 
 			// Calculate our black height and return the count
 			blackHeight = leftBlackHeight;

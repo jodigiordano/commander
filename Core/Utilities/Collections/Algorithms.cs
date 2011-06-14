@@ -2826,7 +2826,7 @@ namespace EphemereGames.Core.Utilities
 
         #endregion Set operations 
 
-        #region String representations (not yet coded)
+        #region string representations (not yet coded)
 
         /// <summary>
         /// Gets a string representation of the elements in the collection.
@@ -2945,7 +2945,7 @@ namespace EphemereGames.Core.Utilities
             return builder.ToString();
         }
 
-        #endregion String representations
+        #endregion string representations
 
         #region Shuffles and Permutations
 
@@ -4101,7 +4101,7 @@ namespace EphemereGames.Core.Utilities
                             r = m;
                         }
                     }
-                    System.Diagnostics.Debug.Assert(l == r, "Left and Right were not equal");
+                    //System.Diagnostics.Debug.Assert(l == r, "Left and Right were not equal");
                     index = l;
 
                     // Find the end of the run.
@@ -4119,13 +4119,13 @@ namespace EphemereGames.Core.Utilities
                             r = m;
                         }
                     }
-                    System.Diagnostics.Debug.Assert(l == r, "Left and Right were not equal");
+                    //System.Diagnostics.Debug.Assert(l == r, "Left and Right were not equal");
                     return l - index;
                 }
             }
 
             // We did not find the item. l and r must be equal. 
-            System.Diagnostics.Debug.Assert(l == r);
+            //System.Diagnostics.Debug.Assert(l == r);
             index = l;
             return 0;
         }

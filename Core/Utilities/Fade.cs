@@ -7,34 +7,6 @@
 
     public class Fade
     {
-
-        //
-        // Générer des fades
-        //
-
-        public static List<Color> generateFades(FadeCouleur fade)
-        {
-            GameTime gameTime = new GameTime();
-
-            List<Color> fades = new List<Color>();
-
-            int unSur60 = (int) ((1.0f/60.0f) * 1000);
-
-            while (!fade.Termine)
-            {
-                fades.Add(fade.suivant(gameTime));
-
-                gameTime = new GameTime(
-                    gameTime.TotalGameTime + new TimeSpan(0, 0, 0, 0, unSur60),
-                    new TimeSpan(0, 0, 0, 0, unSur60));
-            }
-
-            fades.Add(fade.Final);
-
-            return fades;
-        }
-
-
         public static List<int> generateFades(Fade fade)
         {
             GameTime gameTime = new GameTime();
