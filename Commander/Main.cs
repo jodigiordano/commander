@@ -85,7 +85,7 @@ namespace EphemereGames.Commander
 
             Visuals.TransitionAnimation = new AnimationTransition(500, Preferences.PrioriteTransitionScene);
 
-            Input.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
+            Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
 
             Physics.Initialize();
             Audio.Initialize(0, 0);
@@ -146,11 +146,11 @@ namespace EphemereGames.Commander
                 Initializing = false;
             }
 
-            Input.Active = this.IsActive;
+            Inputs.Active = this.IsActive;
 
             Persistence.Update(gameTime);
             Visuals.Update(gameTime);
-            Input.Update(gameTime);
+            Inputs.Update(gameTime);
 
             if (!Initializing)
                 Audio.Update(gameTime);

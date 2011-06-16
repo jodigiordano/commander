@@ -92,7 +92,7 @@
             else
                 Audio.UnpauseMusic(Menu.SelectedMusic, true, 1000);
 
-            Input.AddListener(MondeSelectionne.Simulation);
+            Inputs.AddListener(MondeSelectionne.Simulation);
         }
 
         public override void OnFocusLost()
@@ -103,7 +103,7 @@
 
             Audio.PauseMusic(Menu.SelectedMusic, true, 1000);
 
-            Input.RemoveListener(MondeSelectionne.Simulation);
+            Inputs.RemoveListener(MondeSelectionne.Simulation);
         }
 
 

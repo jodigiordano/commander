@@ -54,7 +54,7 @@
             PhysicalEffects = new EffectsController<IPhysicalObject>();
             VisualEffects = new EffectsController<IVisual>();
             Particles = new ParticlesController(this);
-            EphemereGames.Core.Input.Input.AddListener(this);
+            EphemereGames.Core.Input.Inputs.AddListener(this);
         }
 
 
@@ -176,7 +176,7 @@
 
         public void Dispose()
         {
-            EphemereGames.Core.Input.Input.RemoveListener(this);
+            EphemereGames.Core.Input.Inputs.RemoveListener(this);
         }
 
 

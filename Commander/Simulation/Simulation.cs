@@ -208,6 +208,7 @@ namespace EphemereGames.Commander
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
             SimPlayersController.ProchaineVagueDemandee += new NoneHandler(EnemiesController.DoNextWaveAsked);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
+            SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
@@ -246,6 +247,7 @@ namespace EphemereGames.Commander
             TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
             CollisionsController.BulletDeflected += new EnemyBulletHandler(BulletsController.DoBulletDeflected);
             BulletsController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
+            SimPlayersController.DesactivatePowerUpAsked += new PowerUpTypeHandler(PowerUpsController.DoDesactivatePowerUpAsked);
 
             ScenarioController.Initialize();
             EnemiesController.Initialize();
@@ -344,7 +346,7 @@ namespace EphemereGames.Commander
             if (!this.DemoMode && this.Etat != GameState.Lost)
             {
                 foreach (var joueur in this.Main.Players.Values)
-                    Input.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+                    Inputs.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
             }
         }
 
@@ -352,7 +354,7 @@ namespace EphemereGames.Commander
         private void doCorpsCelesteDetruit(IObjetPhysique objet)
         {
             foreach (var joueur in this.Main.Players.Values)
-                Input.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+                Inputs.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
         }
 
 

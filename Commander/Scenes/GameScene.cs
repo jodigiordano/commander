@@ -85,7 +85,7 @@
             else
                 Audio.UnpauseMusic(MusiqueSelectionnee, true, 1000);
 
-            Input.AddListener(Simulation);
+            Inputs.AddListener(Simulation);
         }
 
 
@@ -97,7 +97,7 @@
 
             Audio.PauseMusic(MusiqueSelectionnee, true, 1000);
 
-            Input.RemoveListener(Simulation);
+            Inputs.RemoveListener(Simulation);
         }
 
 

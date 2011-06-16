@@ -203,7 +203,7 @@
             ScenesLoaded.Add("NouvellePartie", new WorldsScene(Main));
             ScenesLoaded.Add("Aide", new HelpScene(Main));
             ScenesLoaded.Add("Options", new OptionsScene(Main));
-            ScenesLoaded.Add("Editeur", new Editor(Main));
+            ScenesLoaded.Add("Editeur", new EditorScene(Main));
             ScenesLoaded.Add("Acheter", new BuyScene());
 
             ScenesAreLoaded = true;

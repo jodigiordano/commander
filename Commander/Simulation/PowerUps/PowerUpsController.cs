@@ -75,6 +75,23 @@
         }
 
 
+        public void DoDesactivatePowerUpAsked(PowerUpType type)
+        {
+            PowerUp p = PowerUps.Find(e => e.Type == type);
+
+            p.Stop();
+
+            ActivesPowerUps[p.Type] = true;
+
+            PowerUps.Remove(p);
+
+            if (p.NeedInput)
+                InPowerUp = false;
+
+            NotifyPowerUpStopped(p);
+        }
+
+
         public void DoPlayerMoved(SimPlayer player)
         {
             foreach (var powerUp in PowerUps)

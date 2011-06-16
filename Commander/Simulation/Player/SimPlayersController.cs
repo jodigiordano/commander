@@ -1,11 +1,11 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Audio;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using EphemereGames.Core.Physics;
-    using EphemereGames.Core.Input;
-    using EphemereGames.Core.Audio;
 
 
     class SimPlayersController
@@ -66,6 +66,7 @@
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
         public event PowerUpTypeHandler ActivatePowerUpAsked;
+        public event PowerUpTypeHandler DesactivatePowerUpAsked;
 
 
         private void NotifyTurretToPlaceSelected(Turret turret)
@@ -86,6 +87,13 @@
         {
             if (ActivatePowerUpAsked != null)
                 ActivatePowerUpAsked(type);
+        }
+
+
+        private void NotifyDesactivatePowerUpAsked(PowerUpType type)
+        {
+            if (DesactivatePowerUpAsked != null)
+                DesactivatePowerUpAsked(type);
         }
 
 
@@ -171,7 +179,7 @@
 
         public void DoObjectCreated(IObjetPhysique obj)
         {
-            if (obj is RailGunBullet)
+            if (obj is RailGunBullet || obj is MineBullet)
                 DoPowerUpUse();
         }
 
@@ -553,6 +561,9 @@
 
             Player.CheckAvailablePowerUps();
             Player.UpdateSelection();
+
+            if (CommonStash.Cash < p.UsePrice)
+                NotifyDesactivatePowerUpAsked(Player.PowerUpInUse);
         }
     }
 }

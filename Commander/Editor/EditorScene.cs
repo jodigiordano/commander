@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    class Editor : Scene
+    class EditorScene : Scene
     {
         private Main Main;
         private string ChoixTransition;
@@ -16,7 +16,7 @@
         private Cursor Cursor;
 
 
-        public Editor(Main main)
+        public EditorScene(Main main)
             : base(Vector2.Zero, 720, 1280)
         {
             Main = main;
@@ -67,7 +67,7 @@
         {
             base.OnFocus();
 
-            Input.AddListener(Simulation);
+            Inputs.AddListener(Simulation);
         }
 
 
@@ -76,7 +76,7 @@
             base.OnFocusLost();
 
             //EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
-            Input.RemoveListener(Simulation);
+            Inputs.RemoveListener(Simulation);
         }
 
 

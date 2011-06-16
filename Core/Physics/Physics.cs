@@ -1,10 +1,4 @@
-﻿//=============================================================================
-//
-// Point d'entrée dans la librairie
-//
-//=============================================================================
-
-namespace EphemereGames.Core.Physics
+﻿namespace EphemereGames.Core.Physics
 {
     using System;
     using System.Collections.Generic;

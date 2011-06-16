@@ -179,7 +179,7 @@
             else
                 Audio.UnpauseMusic(SelectedMusic, true, 1000);
 
-            Input.AddListener(Simulation);
+            Inputs.AddListener(Simulation);
         }
 
         public override void OnFocusLost()
@@ -189,7 +189,7 @@
             if (Simulation.SelectedCelestialBody != null && Simulation.SelectedCelestialBody.Nom == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                 Audio.PauseMusic(SelectedMusic, true, 1000);
 
-            Input.RemoveListener(Simulation);
+            Inputs.RemoveListener(Simulation);
         }
 
 

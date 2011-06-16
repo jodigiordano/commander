@@ -89,6 +89,8 @@
 
         public void UpdateSelection()
         {
+            CheckAvailablePowerUps();
+
             if (PowerUpInUse != PowerUpType.None)
             {
                 ActualSelection.TurretToBuy = null;
@@ -127,8 +129,6 @@
 
             if (ActualSelection.PowerUpToBuy != PowerUpType.None)
             {
-                CheckAvailablePowerUps();
-
                 ActualSelection.CelestialBody = null;
                 ActualSelection.Turret = null;
                 ActualSelection.TurretToBuy = null;
@@ -258,6 +258,7 @@
             foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Values)
                 ActualSelection.AvailablePowerUpsToBuy[powerUp.Type] =
                     powerUp.BuyPrice <= CommonStash.Cash &&
+                    powerUp.UsePrice <= CommonStash.Cash &&
                     ActivesPowerUps[powerUp.Type];
         }
 

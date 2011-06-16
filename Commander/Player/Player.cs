@@ -43,7 +43,7 @@
             Master = false;
             Profile = null;
 
-            Input.UpdateInputSource(
+            Inputs.UpdateInputSource(
                 Index,
                 MouseConfiguration.ToList,
                 GamePadConfiguration.ToList,

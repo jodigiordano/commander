@@ -33,14 +33,14 @@
 
             MasterPlayer = null;
 
-            Input.PlayerConnection.PlayerConnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerConnected);
-            Input.PlayerConnection.PlayerDisconnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerDisconnected);
+            Inputs.PlayerConnection.PlayerConnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerConnected);
+            Inputs.PlayerConnection.PlayerDisconnected += new EphemereGames.Core.Input.ConnectHandler(doPlayerDisconnected);
         }
 
 
         public void Connect(PlayerIndex index)
         {
-            Input.ConnectPlayer(index);
+            Inputs.ConnectPlayer(index);
         }
 
 

@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework.GamerServices;
     using Microsoft.Xna.Framework.Input;
     
-    public static class Input
+    public static class Inputs
     {
         private static InputController InputController;
         private static Vibrator Vibrator;
