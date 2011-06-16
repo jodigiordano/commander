@@ -119,15 +119,8 @@
     <Compile Include="Utilities\Collections\Set.cs" />
     <Compile Include="Utilities\Collections\Strings.cs" />
     <Compile Include="Utilities\Collections\Util.cs" />
-    <Compile Include="Utilities\Curve\Curve.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Utilities\Curve\CurveKey.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Utilities\Curve\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Utilities\Curve\Curve.cs" />
+    <Compile Include="Utilities\Curve\CurveKey.cs" />
     <Compile Include="Utilities\CustomBlends.cs" />
     <Compile Include="Utilities\Effect.cs" />
     <Compile Include="Utilities\Fade.cs" />
@@ -163,6 +156,7 @@
     <Compile Include="Visual\Scenable\Text.cs" />
     <Compile Include="Visual\Scenable\VisualLine.cs" />
     <Compile Include="Visual\Scenable\VisualRectangle.cs" />
+    <Compile Include="Visual\Scene\ITransitionAnimation.cs" />
     <Compile Include="Visual\Scene\Scene.cs" />
     <Compile Include="Visual\Scene\ScenesController.cs" />
     <Compile Include="Visual\Scene\Transition.cs" />

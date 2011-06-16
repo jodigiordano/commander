@@ -82,7 +82,7 @@
         };
 
 
-        public SandGlass(Main main, Scene scene, double minimumTime, Vector3 position, double visualPriority)
+        public SandGlass(Scene scene, double minimumTime, Vector3 position, double visualPriority)
         {
             this.Scene = scene;
             this.MinimumTime = minimumTime;

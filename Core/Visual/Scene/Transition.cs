@@ -8,23 +8,27 @@
     }
 
 
-    public class Transition
+    class Transition
     {
-        public float Length;
-        public string NameSceneFrom;
-        public string NameSceneTo;
+        public Scene From { get { return Visuals.ScenesController.GetScene(FromName); } }
+        public Scene To { get { return Visuals.ScenesController.GetScene(ToName); } }
+        public Scene ActiveTransition;
+        public TransitionType CurrentType;
 
-        public Transition(string nameSceneFrom, string nameSceneTo)
+        private string FromName;
+        private string ToName;
+
+
+        public Transition(string from, string to)
         {
-            NameSceneFrom = nameSceneFrom;
-            NameSceneTo = nameSceneTo;
-            Length = 0;
+            FromName = from;
+            ToName = to;
         }
 
 
         public string Name
         {
-            get { return NameSceneFrom + "To" + NameSceneTo; }
+            get { return FromName + "To" + ToName; }
         }
     }
 }

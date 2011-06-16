@@ -212,7 +212,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Trojan</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
       </Enemies>
       <SpeedLevel>2</SpeedLevel>
       <LivesLevel>2</LivesLevel>
@@ -226,7 +226,7 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Comet</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>5</SpeedLevel>
       <LivesLevel>5</LivesLevel>
@@ -240,7 +240,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
       </Enemies>
       <SpeedLevel>9</SpeedLevel>
       <LivesLevel>9</LivesLevel>
@@ -254,7 +254,7 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>12</SpeedLevel>
       <LivesLevel>12</LivesLevel>
@@ -268,7 +268,7 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Trojan</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
       </Enemies>
       <SpeedLevel>16</SpeedLevel>
       <LivesLevel>16</LivesLevel>
@@ -285,11 +285,15 @@
     <Lives>3</Lives>
   </Player>
   <AvailableTurrets>
+    <TurretType>MultipleLasers</TurretType>
     <TurretType>Laser</TurretType>
     <TurretType>Missile</TurretType>
     <TurretType>SlowMotion</TurretType>
+    <TurretType>Basic</TurretType>
   </AvailableTurrets>
-  <AvailablePowerUps />
+  <AvailablePowerUps>
+    <PowerUpType>Shield</PowerUpType>
+  </AvailablePowerUps>
   <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
   <MineralsValue>0</MineralsValue>
   <MineralsPercentages>

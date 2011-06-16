@@ -16,11 +16,12 @@ namespace EphemereGames.Commander
 
     class Main : Game
     {
-        public SaveGame SaveGame;
-        public GeneratorData GeneratorData;
-        public PlayersController PlayersController;
-        public TrialMode TrialMode;
-        public GameScene GameInProgress;
+        public static SaveGame SaveGame;
+        public static GeneratorData GeneratorData;
+        public static PlayersController PlayersController;
+        public static TrialMode TrialMode;
+        public static GameScene GameInProgress;
+        public static Main Instance;
 
         private GraphicsDeviceManager Graphics;
         private bool Initializing = true;
@@ -55,6 +56,8 @@ namespace EphemereGames.Commander
 
             if (Preferences.Target == Setting.Xbox360)
                 Components.Add(new GamerServicesComponent(this));
+
+            Instance = this;
         }
 
 
@@ -79,6 +82,8 @@ namespace EphemereGames.Commander
                 720,
                 Content,
                 new string[] { "Menu", "Partie", "Chargement", "NouvellePartie", "Aide", "Options", "Editeur", "Acheter", "Validation" });
+
+            Visuals.TransitionAnimation = new AnimationTransition(500, Preferences.PrioriteTransitionScene);
 
             Input.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
 
@@ -157,14 +162,6 @@ namespace EphemereGames.Commander
 
         protected override void Draw(GameTime gameTime)
         {
-            Scene s = Visuals.GetScene("NouvellePartie");
-
-            if (s != null && s.Active)
-            {
-                s.Add(new Text("Dream. Build. Play. 2011 Special Build.", "Pixelite", Color.DarkRed, Visuals.ClampToXbox360SafeZone(s, new Vector3(-550, 250, 0))) { SizeX = 2,VisualPriority = 0.1f });
-                s.Add(new Text("Every feature is represented in these 9 levels; w/o balancing.", "Pixelite", Color.DarkRed, Visuals.ClampToXbox360SafeZone(s, new Vector3(-550, 270, 0))) { SizeX = 2, VisualPriority = 0.1f });
-            }
-
             Visuals.Draw();
         }
     }

@@ -38,13 +38,6 @@
         }
 
 
-        public void UpdateSceneActive(string sceneName, bool focus)
-        {
-            if (Scenes[sceneName] != null)
-                Scenes[sceneName].Active = focus;
-        }
-
-
         public void AddScene(string sceneName, Scene scene)
         {
             Scenes[sceneName] = scene;
@@ -68,7 +61,7 @@
             {
                 Scene scene = Scenes[wCles[i]];
 
-                if (scene != null && scene.Active)
+                if (scene != null && scene.EnableUpdate)
                     scene.Update(gameTime);
             }
         }
@@ -77,19 +70,19 @@
         public void Draw()
         {
             foreach (var scene in Scenes.Values)
-                if (scene != null && scene.Active)
+                if (scene != null && scene.EnableVisuals)
                     scene.Draw();
 
             Preferences.GraphicsDeviceManager.GraphicsDevice.SetRenderTarget(null);
             Preferences.GraphicsDeviceManager.GraphicsDevice.Clear(Color.Black);
 
             foreach (var scene in Scenes.Values)
-                if (scene != null && scene.Active)
+                if (scene != null && scene.EnableVisuals)
                 {
                     SpriteBatch.Begin(
                         SpriteSortMode.Immediate,
                         BlendState.AlphaBlend,
-                        SamplerState.PointClamp,
+                        SamplerState.LinearClamp,
                         DepthStencilState.None,
                         RasterizerState.CullNone,
                         null,

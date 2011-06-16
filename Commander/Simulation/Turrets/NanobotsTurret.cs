@@ -15,21 +15,21 @@ namespace EphemereGames.Commander
             Type = TurretType.Nanobots;
             Name = "Nanobots";
             SfxShooting = "sfxTourelleBase";
-            Color = new Color( 57, 216, 17 );
+            Color = new Color( 182, 147, 26 );
 
             Levels = new LinkedListWithInit<TurretLevel>()
             {
-                new TurretLevel(0, 0, 0, 0, 10000, 1, 0, BulletType.Nanobots, "", "", 0, 0, 0),
-                new TurretLevel(1, 30, 15, 75, 4650, 1, 1000, BulletType.Nanobots, "tourelleMortar1", "tourelleMortarBase", 1f, 30, 1f),
-                new TurretLevel(2, 60, 45, 100, 4600, 1, 1000, BulletType.Nanobots, "tourelleMortar1", "tourelleMortarBase", 1.5f, 30, 1f),
-                new TurretLevel(3, 90, 90, 125, 4550, 1, 1000, BulletType.Nanobots, "tourelleMortar1", "tourelleMortarBase", 2.0f, 30, 1f),
-                new TurretLevel(4, 120, 150, 150, 4500, 1, 1000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 2.5f, 30, 1f),
-                new TurretLevel(5, 150, 225, 175, 4450, 1, 1000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 3.0f, 30, 1f),
-                new TurretLevel(6, 180, 315, 200, 4400, 1, 1000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 3.5f, 30, 1f),
-                new TurretLevel(7, 210, 420, 225, 4350, 1, 1000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 4.0f, 30, 1f),
-                new TurretLevel(8, 240, 540, 250, 4300, 1, 1000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 4.5f, 30, 1f),
-                new TurretLevel(9, 270, 675, 275, 4250, 1, 1000, BulletType.Nanobots, "tourelleMortar3", "tourelleMortarBase", 5.0f, 30, 1f),
-                new TurretLevel(10, 300, 825, 300, 4200, 1, 1000, BulletType.Nanobots, "tourelleMortar3", "tourelleMortarBase", 5.5f, 30, 1f)
+                new TurretLevel(0, 0, 0, 120, 2000, 1, 0, BulletType.Nanobots, "", "", 0, 0, 0),
+                new TurretLevel(1, 300, 100, 120, 2000, 1, 4000, BulletType.Nanobots, "tourelleMortar1", "tourelleMortarBase", 0.2f, 30, 1f),
+                new TurretLevel(2, 200, 300, 140, 1900, 1, 6000, BulletType.Nanobots, "tourelleMortar1", "tourelleMortarBase", 0.4f, 30, 1f),
+                new TurretLevel(3, 300, 600, 160, 1800, 2, 10000, BulletType.Nanobots, "tourelleMortar1", "tourelleMortarBase", 0.6f, 30, 1f),
+                new TurretLevel(4, 400, 1000, 180, 1700, 2, 15000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 0.8f, 30, 1f),
+                new TurretLevel(5, 500, 1500, 200, 1600, 2, 20000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 1.0f, 30, 1f),
+                new TurretLevel(6, 600, 2100, 220, 1500, 2, 25000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 1.2f, 30, 1f),
+                new TurretLevel(7, 700, 2750, 240, 1400, 3, 30000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 1.4f, 30, 1f),
+                new TurretLevel(8, 800, 3600, 280, 1300, 3, 35000, BulletType.Nanobots, "tourelleMortar2", "tourelleMortarBase", 1.6f, 30, 1f),
+                new TurretLevel(9, 900, 4500, 300, 1200, 3, 40000, BulletType.Nanobots, "tourelleMortar3", "tourelleMortarBase", 1.8f, 30, 1f),
+                new TurretLevel(10, 1000, 5500, 320, 1100, 3, 45000, BulletType.Nanobots, "tourelleMortar3", "tourelleMortarBase", 2.0f, 30, 1f)
             };
 
             ActualLevel = Levels.First;

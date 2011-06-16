@@ -3,7 +3,7 @@
   <Asset Type="ProjectMercury.ParticleEffect">
     <Item Type="ProjectMercury.Emitters.CircleEmitter">
       <Name>Emitter03</Name>
-      <Budget>1000</Budget>
+      <Budget>50</Budget>
       <Term>0.5</Term>
       <ReleaseQuantity>1</ReleaseQuantity>
       <Enabled>true</Enabled>

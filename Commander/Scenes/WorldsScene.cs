@@ -1,12 +1,11 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using EphemereGames.Core.Audio;
 
 
     class WorldsScene : Scene
@@ -14,8 +13,6 @@
         private Main Main;
         private Dictionary<int, World> Mondes;
         private int IndiceMondeSelectionne;
-        private AnimationTransition AnimationTransition;
-        private string ChoixTransition;
         private ScenarioDescriptor ChoixScenario;
         private double TempsEntreDeuxChangementMusique;
         private MainMenuScene Menu;
@@ -28,12 +25,7 @@
         {
             Main = main;
 
-            Nom = "NouvellePartie";
-
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
+            Name = "NouvellePartie";
 
             Mondes = new Dictionary<int, World>();
             Mondes.Add(1, new World(main, this, ScenariosFactory.GetWorldDescriptor(1)));
@@ -42,14 +34,13 @@
 
             IndiceMondeSelectionne = 1;
 
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
         }
 
 
-        private void doJoueurPrincipalDeconnecte()
+        private void DoPlayerDisconnected()
         {
-            Transition = TransitionType.Out;
-            ChoixTransition = "chargement";
+            Visuals.Transite("NouvellePartieToChargement");
         }
 
 
@@ -70,73 +61,9 @@
         }
 
 
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-            AnimationTransition.Start();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (!AnimationTransition.Finished(gameTime))
-                return;
-
-            AnimationTransition.Stop();
-
-            if (Transition == TransitionType.Out)
-                if (ChoixTransition.StartsWith("World"))
-                {
-                    Transition = TransitionType.In;
-                    AnimationTransition.Initialize();
-                    Input.RemoveListener(MondeSelectionne.Simulation);
-                    Int32.TryParse(ChoixTransition.Remove(0, 5), out IndiceMondeSelectionne);
-                    Input.AddListener(MondeSelectionne.Simulation);
-                }
-
-                else if (ChoixTransition == "menu")
-                    Visuals.Transite("NouvellePartieToMenu");
-                else if (ChoixTransition == "chargement")
-                    Visuals.Transite("NouvellePartieToChargement");
-                else
-                {
-                    if (Main.GameInProgress != null &&
-                        !Main.GameInProgress.IsFinished &&
-                        Main.GameInProgress.Simulation.DescriptionScenario.Mission == ChoixTransition &&
-                        MondeSelectionne.Simulation.GameAction == GameAction.Resume)
-                    {
-                        Main.GameInProgress.State = GameState.Running;
-                        Visuals.Transite("NouvellePartieToPartie");
-                    }
-                    else
-                    {
-                        if (Main.GameInProgress != null)
-                        {
-                            Audio.StopMusic(Main.GameInProgress.MusiqueSelectionnee, false, 0);
-
-                            if (!Main.GameInProgress.IsFinished)
-                                Main.AvailableMusics.Add(Main.GameInProgress.MusiqueSelectionnee);
-                        }
-
-                        Main.GameInProgress = new GameScene(Main, ChoixScenario);
-                        Main.GameInProgress.Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
-                        MondeSelectionne.Simulation.MessagesController.StopPausedMessage();
-
-                        Visuals.UpdateScene("Partie", Main.GameInProgress);
-                        Visuals.Transite("NouvellePartieToPartie");
-                    }
-                }
-            else
-                Transition = TransitionType.None;
-        }
-
-
         private void jouerAnimationFinDemo(GameTime gameTime)
         {
-            if (AnimationFinDemo != null && AnimationFinDemo.Finished(gameTime))
+            if (AnimationFinDemo != null && AnimationFinDemo.IsFinished)
                 AnimationFinDemo = null;
             else if (AnimationFinDemo != null && MondeSelectionne.Id == 1)
                 AnimationFinDemo.Update(gameTime);
@@ -146,12 +73,6 @@
         protected override void UpdateVisual()
         {
             MondeSelectionne.Draw();
-
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
-
-            //if (AnimationFinDemo != null && MondeSelectionne.Id == 1)
-            //    this.Add(AnimationFinDemo);
         }
 
 
@@ -159,9 +80,9 @@
         {
  	        base.OnFocus();
 
-            Menu = (MainMenuScene)Visuals.GetScene("Menu");
+            EnableUpdate = true;
 
-            Transition = TransitionType.In;
+            Menu = (MainMenuScene)Visuals.GetScene("Menu");
 
             if (AnimationFinDemo != null)
                 AnimationFinDemo.FadeIn();
@@ -178,8 +99,9 @@
         {
             base.OnFocusLost();
 
-            if (!ChoixTransition.StartsWith("World") && ChoixTransition != "menu")
-                Audio.PauseMusic(Menu.SelectedMusic, true, 1000);
+            EnableUpdate = false;
+
+            Audio.PauseMusic(Menu.SelectedMusic, true, 1000);
 
             Input.RemoveListener(MondeSelectionne.Simulation);
         }
@@ -200,7 +122,7 @@
                 return;
 
             if (button == p.MouseConfiguration.Cancel)
-                beginTransition("menu");
+                BeginTransition("menu");
 
             if (button == p.MouseConfiguration.Select)
                 doSelectAction();
@@ -215,7 +137,7 @@
                 return;
 
             if (key == p.KeyboardConfiguration.Cancel)
-                beginTransition("menu");
+                BeginTransition("menu");
 
             if (key == p.KeyboardConfiguration.ChangeMusic)
                 changeMusic();
@@ -230,7 +152,7 @@
                 return;
 
             if (button == p.GamePadConfiguration.Cancel)
-                beginTransition("menu");
+                BeginTransition("menu");
 
             if (button == p.GamePadConfiguration.ChangeMusic)
                 changeMusic();
@@ -240,13 +162,45 @@
         }
 
 
-        private void beginTransition(string choice)
+        private void BeginTransition(string choice)
         {
-            if (Transition != TransitionType.None)
-                return;
+            //if (ChoixTransition.StartsWith("World"))
+            //{
+            //    Input.RemoveListener(MondeSelectionne.Simulation);
+            //    Int32.TryParse(ChoixTransition.Remove(0, 5), out IndiceMondeSelectionne);
+            //    Input.AddListener(MondeSelectionne.Simulation);
+            //}
 
-            Transition = TransitionType.Out;
-            ChoixTransition = choice;
+            if (choice == "menu")
+                Visuals.Transite("NouvellePartieToMenu");
+            else
+            {
+                if (Main.GameInProgress != null &&
+                    !Main.GameInProgress.IsFinished &&
+                    Main.GameInProgress.Simulation.DescriptionScenario.Mission == choice &&
+                    MondeSelectionne.Simulation.GameAction == GameAction.Resume)
+                {
+                    Main.GameInProgress.State = GameState.Running;
+                    Visuals.Transite("NouvellePartieToPartie");
+                }
+                else
+                {
+                    if (Main.GameInProgress != null)
+                    {
+                        Audio.StopMusic(Main.GameInProgress.MusiqueSelectionnee, false, 0);
+
+                        if (!Main.GameInProgress.IsFinished)
+                            Main.AvailableMusics.Add(Main.GameInProgress.MusiqueSelectionnee);
+                    }
+
+                    Main.GameInProgress = new GameScene(Main, ChoixScenario);
+                    Main.GameInProgress.Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
+                    MondeSelectionne.Simulation.MessagesController.StopPausedMessage();
+
+                    Visuals.UpdateScene("Partie", Main.GameInProgress);
+                    Visuals.Transite("NouvellePartieToPartie");
+                }
+            }
 
             if (AnimationFinDemo != null)
                 AnimationFinDemo.FadeOut();
@@ -270,8 +224,8 @@
             {
                 if (Mondes[MondeSelectionne.WorldSelected].Unlocked)
                 {
-                    Transition = TransitionType.Out;
-                    ChoixTransition = "World" + MondeSelectionne.WorldSelected;
+                    //Transition = TransitionType.Out;
+                    //ChoixTransition = "World" + MondeSelectionne.WorldSelected;
                 }
 
                 else
@@ -291,7 +245,7 @@
             {
                 ChoixScenario = MondeSelectionne.LevelSelected;
 
-                beginTransition( MondeSelectionne.LevelSelected.Mission );
+                BeginTransition(MondeSelectionne.LevelSelected.Mission);
             }
 
 

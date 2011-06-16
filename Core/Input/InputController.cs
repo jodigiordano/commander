@@ -119,7 +119,7 @@
             // Spread the word
             for (int i = 0; i < Listeners.Count; i++) //because Scenes can be created in another thread
             {
-                if (!Listeners[i].Active)
+                if (!Listeners[i].EnableInputs)
                     continue;
 
                 foreach (var source in Sources.Values)

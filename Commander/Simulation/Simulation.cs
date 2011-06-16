@@ -290,22 +290,6 @@ namespace EphemereGames.Commander
         }
 
 
-        //public void Show()
-        //{
-        //    ScenarioController.Show();
-        //    PlanetarySystemController.Show();
-        //    GUIController.Show();
-        //}
-
-
-        //public void Hide()
-        //{
-        //    ScenarioController.Hide();
-        //    PlanetarySystemController.Hide();
-        //    GUIController.Hide();
-        //}
-
-
         public void Draw()
         {
             CollisionsController.Draw();
@@ -374,7 +358,7 @@ namespace EphemereGames.Commander
 
         #region InputListener Membres
 
-        bool InputListener.Active
+        bool InputListener.EnableInputs
         {
             get { return Etat == GameState.Running; }
         }

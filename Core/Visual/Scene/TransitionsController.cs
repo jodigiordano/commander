@@ -10,19 +10,17 @@
         public virtual event NoneHandler TransitionStarted;
         public virtual event NoneHandler TransitionTerminated;
 
-        public bool InTransition { get; private set; }
+        public bool InTransition                        { get; private set; }
+        public ITransitionAnimation TransitionAnimation { private get; set; }
 
         private Dictionary<string, Transition> Transitions;
         private Transition CurrentTransition;
-        private Dictionary<string, Scene> ScenesInTransition;
-        private double RemainingTime;
 
 
         public TransitionsController()
         {
             InTransition = false;
             Transitions = new Dictionary<string, Transition>();
-            ScenesInTransition = new Dictionary<string, Scene>();
         }
 
 
@@ -34,68 +32,103 @@
 
         public void Transite(string transitionName)
         {
-            #if DEBUG
-            if (InTransition)
-                throw new Exception("Already in transition.");
-            #endif
-
             CurrentTransition = Transitions[transitionName];
-            InTransition = true;
-            RemainingTime = CurrentTransition.Length;
-            ScenesInTransition.Clear();
 
-            ScenesInTransition.Add(CurrentTransition.NameSceneFrom, Visuals.ScenesController.GetScene(CurrentTransition.NameSceneFrom));
-            ScenesInTransition.Add(CurrentTransition.NameSceneTo, Visuals.ScenesController.GetScene(CurrentTransition.NameSceneTo));
-
-            ScenesInTransition[CurrentTransition.NameSceneFrom].OnFocusLost();
-            ScenesInTransition[CurrentTransition.NameSceneFrom].OnTransitionTowardFocus();
-
-            OnTransitionStarted();
-            StartTransition();
+            StartFromToTransition();
         }
 
 
         public void Update(GameTime gameTime)
         {
-            RemainingTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (RemainingTime <= 0)
+            if (TransitionAnimation == null)
             {
-                InTransition = false;
-                EndTransition();
+                StartToFromTransition();
+                EndToFromTransition();
+                return;
+            }
 
-                OnTransitionTerminee();
+            TransitionAnimation.Update(gameTime);
+
+            if (TransitionAnimation.IsFinished && CurrentTransition.CurrentType == TransitionType.Out)
+                StartToFromTransition();
+            else if (TransitionAnimation.IsFinished && CurrentTransition.CurrentType == TransitionType.In)
+                EndToFromTransition();
+        }
+
+
+        public void Draw()
+        {
+            if (InTransition && TransitionAnimation != null)
+                TransitionAnimation.Draw();
+        }
+
+
+        private void StartFromToTransition()
+        {
+            InTransition = true;
+
+            CurrentTransition.From.EnableVisuals = true;
+            CurrentTransition.To.EnableVisuals = false;
+            CurrentTransition.From.EnableInputs = false;
+            CurrentTransition.To.EnableInputs = false;
+            CurrentTransition.From.EnableUpdate = true;
+            CurrentTransition.To.EnableUpdate = true;
+
+            CurrentTransition.From.OnFocusLost();
+
+            NotifyTransitionStarted();
+
+            if (TransitionAnimation != null)
+            {
+                CurrentTransition.ActiveTransition = CurrentTransition.From;
+                CurrentTransition.CurrentType = TransitionType.Out;
+                TransitionAnimation.Scene = CurrentTransition.ActiveTransition;
+                TransitionAnimation.Initialize(CurrentTransition.CurrentType);
             }
         }
 
 
-        private void StartTransition()
+        private void StartToFromTransition()
         {
-            ScenesInTransition[CurrentTransition.NameSceneFrom].Active = true;
-            ScenesInTransition[CurrentTransition.NameSceneTo].Active = false;
+            CurrentTransition.From.EnableVisuals = false;
+            CurrentTransition.To.EnableVisuals = true;
+            CurrentTransition.From.EnableInputs = false;
+            CurrentTransition.To.EnableInputs = false;
+            CurrentTransition.From.EnableUpdate = true;
+            CurrentTransition.To.EnableUpdate = true;
+
+            CurrentTransition.To.OnFocus();
+
+            if (TransitionAnimation != null)
+            {
+                CurrentTransition.ActiveTransition = CurrentTransition.To;
+                CurrentTransition.CurrentType = TransitionType.In;
+                TransitionAnimation.Scene = CurrentTransition.ActiveTransition;
+                TransitionAnimation.Initialize(CurrentTransition.CurrentType);
+            }
         }
 
 
-        private void EndTransition()
+        private void EndToFromTransition()
         {
-            ScenesInTransition[CurrentTransition.NameSceneFrom].Active = false;
-            //ScenesInTransition[CurrentTransition.NameSceneFrom].Hide();
+            InTransition = false;
+            CurrentTransition.From.EnableInputs = false;
+            CurrentTransition.To.EnableInputs = true;
+            CurrentTransition.From.EnableUpdate = false;
+            CurrentTransition.To.EnableUpdate = true;
 
-            ScenesInTransition[CurrentTransition.NameSceneTo].Active = true;
-            //ScenesInTransition[CurrentTransition.NameSceneTo].Show();
-
-            ScenesInTransition[CurrentTransition.NameSceneTo].OnFocus();
+            NotifyTransitionTerminated();
         }
 
 
-        private void OnTransitionStarted()
+        private void NotifyTransitionStarted()
         {
             if (TransitionStarted != null)
                 TransitionStarted();
         }
 
 
-        private void OnTransitionTerminee()
+        private void NotifyTransitionTerminated()
         {
             if (TransitionTerminated != null)
                 TransitionTerminated();

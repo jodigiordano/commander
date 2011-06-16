@@ -1,6 +1,7 @@
 namespace EphemereGames.Core.Utilities
 {
     using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
 
 
     public class Curve

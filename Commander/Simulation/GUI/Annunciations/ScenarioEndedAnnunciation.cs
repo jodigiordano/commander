@@ -110,46 +110,18 @@
             //AlienShip.Show();
 
             TranslatorScoreExplanations = new Translator
-            (
-                Simulation.Main,
-                Simulation.Scene,
-                new Vector3(-600, -130, 0),
-                "Alien",
-                Color.White,
-                "Pixelite",
-                new Color(234, 196, 28, 0),
-                Scenario.CommonStash.Score + " (base) + " +
+            (Simulation.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Scenario.CommonStash.Score + " (base) + " +
                 Scenario.CommonStash.Cash + " (cash) +\n\n" +
                 (Scenario.CommonStash.Lives * 50) + " (lives) + " +
-                Scenario.CommonStash.TimeLeft + " (time) =",
-                3,
-                true,
-                2000,
-                200,
-                Preferences.PrioriteGUIVictoireDefaite + 0.01f
-            );
+                Scenario.CommonStash.TimeLeft + " (time) =", 3, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
             TranslatorTotalScore = new Translator
-            (
-                Simulation.Main,
-                Simulation.Scene,
-                new Vector3(-600, -40, 0),
-                "Alien",
-                Color.White,
-                "Pixelite",
-                new Color(234, 196, 28, 0),
-                Scenario.CommonStash.TotalScore.ToString(),
-                5,
-                true,
-                2000,
-                200,
-                Preferences.PrioriteGUIVictoireDefaite + 0.01f
-            );
+            (Simulation.Scene, new Vector3(-600, -40, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Scenario.CommonStash.TotalScore.ToString(), 5, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
             HighScores h;
-            Simulation.Main.SaveGame.HighScores.TryGetValue(Scenario.Id, out h);
+            Main.SaveGame.HighScores.TryGetValue(Scenario.Id, out h);
             HighscoreBeaten = h == null || h.Scores.Count <= 0 || Scenario.CommonStash.TotalScore > h.Scores[0].Value;
             int diff = (h == null || h.Scores.Count <= 0) ? Scenario.CommonStash.TotalScore : Scenario.CommonStash.TotalScore - h.Scores[0].Value;
 
@@ -159,21 +131,7 @@
             if (GameState == GameState.Won)
             {
                 TranslatorGameWon = new Translator
-                (
-                    Simulation.Main,
-                    Simulation.Scene,
-                    new Vector3(-600, -130, 0),
-                    "Alien",
-                    Color.White,
-                    "Pixelite",
-                    new Color(234, 196, 28, 0),
-                    "Thank you Commander!\n\nBut our enemy destroyed the colony anyway!",
-                    3,
-                    true,
-                    2000,
-                    200,
-                    Preferences.PrioriteGUIVictoireDefaite + 0.01f
-                );
+                (Simulation.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), "Thank you Commander!\n\nBut our enemy destroyed the colony anyway!", 3, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
                 MovePathEffect e = new MovePathEffect();

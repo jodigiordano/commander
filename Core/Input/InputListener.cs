@@ -6,7 +6,7 @@
 
     public interface InputListener
     {
-        bool Active { get; }
+        bool EnableInputs { get; }
 
         void doKeyPressedOnce(PlayerIndex inputIndex, Keys key);
         void doKeyReleased(PlayerIndex inputIndex, Keys key);

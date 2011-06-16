@@ -15,10 +15,8 @@
         protected ScenarioDescriptor Scenario;
         protected GameTime GameTime = new GameTime();
 
-        private AnimationTransition AnimationTransition;
         public string MusiqueSelectionnee;
         private double TempsEntreDeuxChangementMusique;
-        private string ChoixTransition;
 
         public GameScene(Main main, ScenarioDescriptor scenario)
             : base(Vector2.Zero, 720, 1280)
@@ -26,7 +24,7 @@
             Main = main;
             Scenario = scenario;
 
-            Nom = "Partie";
+            Name = "Partie";
 
             MusiqueSelectionnee = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
             Main.AvailableMusics.Remove(MusiqueSelectionnee);
@@ -36,19 +34,13 @@
             Simulation.Initialize();
             Simulation.EtreNotifierNouvelEtatPartie(doNouvelEtatPartie);
 
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
-
             Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
         }
 
 
         private void doJoueurPrincipalDeconnecte()
         {
-            Transition = TransitionType.Out;
-            ChoixTransition = "chargement";
+            Visuals.Transite("PartieToChargement");
         }
 
 
@@ -70,46 +62,15 @@
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            if (Transition != TransitionType.None)
-                return;
-
             Simulation.Update(gameTime);
             this.GameTime = gameTime;
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
 
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (!AnimationTransition.Finished(gameTime))
-                return;
-
-            if (Transition == TransitionType.Out)
-                switch (ChoixTransition)
-                {
-                    case "menu": Visuals.Transite("PartieToNouvellePartie"); break;
-                    case "chargement": Visuals.Transite("PartieToChargement"); break;
-                }
-
-            Transition = TransitionType.None;
-        }
-
-
         protected override void UpdateVisual()
         {
             Simulation.Draw();
-
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
         }
 
 
@@ -117,7 +78,7 @@
         {
             base.OnFocus();
 
-            Transition = TransitionType.In;
+            EnableUpdate = true;
 
             if (!Audio.IsMusicPlaying(MusiqueSelectionnee))
                 Audio.PlayMusic(MusiqueSelectionnee, true, 1000, true);
@@ -131,6 +92,8 @@
         public override void OnFocusLost()
         {
             base.OnFocusLost();
+
+            EnableUpdate = false;
 
             Audio.PauseMusic(MusiqueSelectionnee, true, 1000);
 
@@ -159,7 +122,7 @@
 
             if ((Simulation.Etat == GameState.Won || Simulation.Etat == GameState.Lost) &&
                 (button == p.MouseConfiguration.Select || button == p.MouseConfiguration.Back))
-                beginTransition();
+                BeginTransition();
         }
 
 
@@ -174,10 +137,10 @@
                 return;
 
             if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)
-                beginTransition();
+                BeginTransition();
 
             if (key == p.KeyboardConfiguration.ChangeMusic)
-                beginChangeMusic();
+                BeginChangeMusic();
         }
 
 
@@ -189,28 +152,24 @@
                 return;
 
             if (button == p.GamePadConfiguration.Back || button == p.GamePadConfiguration.Back2)
-                beginTransition();
+                BeginTransition();
 
             if ((Simulation.Etat == GameState.Won || Simulation.Etat == GameState.Lost) &&
                 (button == p.GamePadConfiguration.Select || button == p.GamePadConfiguration.Cancel))
-                beginTransition();
+                BeginTransition();
 
             if (button == p.GamePadConfiguration.ChangeMusic)
-                beginChangeMusic();
+                BeginChangeMusic();
         }
 
 
-        private void beginTransition()
+        private void BeginTransition()
         {
-            if (Transition != TransitionType.None)
-                return;
-
-            Transition = TransitionType.Out;
-            ChoixTransition = "menu";
+            Visuals.Transite("PartieToNouvellePartie");
         }
 
 
-        private void beginChangeMusic()
+        private void BeginChangeMusic()
         {
             if (TempsEntreDeuxChangementMusique > 0)
                 return;

@@ -269,7 +269,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>11</SpeedLevel>
       <LivesLevel>11</LivesLevel>
@@ -297,7 +297,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Plutoid</EnemyType>
         <EnemyType>Centaur</EnemyType>
       </Enemies>
@@ -327,7 +327,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Plutoid</EnemyType>
         <EnemyType>Centaur</EnemyType>
       </Enemies>
@@ -378,8 +378,13 @@
     <TurretType>Gravitational</TurretType>
     <TurretType>MultipleLasers</TurretType>
     <TurretType>Missile</TurretType>
+    <TurretType>Nanobots</TurretType>
   </AvailableTurrets>
-  <AvailablePowerUps />
+  <AvailablePowerUps>
+    <PowerUpType>DeadlyShootingStars</PowerUpType>
+    <PowerUpType>Pulse</PowerUpType>
+    <PowerUpType>DarkSide</PowerUpType>
+  </AvailablePowerUps>
   <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
   <MineralsValue>0</MineralsValue>
   <MineralsPercentages>

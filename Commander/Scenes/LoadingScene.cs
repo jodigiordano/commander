@@ -1,14 +1,12 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Visual;
     using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using ParallelTasks;
 
 
     class LoadingScene : Scene
@@ -28,7 +26,6 @@
         private Image Background;
         private Translator LoadingTranslation;
         private Translator PressStart;
-        private AnimationTransition AnimationTransition;
 
         private SandGlass SandGlass;
         private State SceneState;
@@ -69,13 +66,15 @@
         {
             Main = main;
 
-            Nom = "Chargement";
-            Active = true;
+            Name = "Chargement";
+            EnableVisuals = true;
+            EnableInputs = true;
+            EnableUpdate = true;
 
             InitLoadingTranslation();
             InitPressStart();
 
-            SandGlass = new SandGlass(Main, this, 5000, new Vector3(0, 250, 0), 0.3f)
+            SandGlass = new SandGlass(this, 5000, new Vector3(0, 250, 0), 0.3f)
             {
                 RemainingTime = 5000
             };
@@ -95,18 +94,11 @@
                 VisualPriority = 1
             };
 
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
-
             this.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
             this.VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
             this.VisualEffects.Add(LoadingTranslation.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
             this.VisualEffects.Add(LoadingTranslation.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
             SandGlass.FadeIn(3000);
-
-            //Show();
 
             ThreadLoadScenes = new Thread(LoadScenes);
             ScenesAreLoaded = false;
@@ -121,32 +113,6 @@
         }
 
 
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-            AnimationTransition.Start();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (!AnimationTransition.Finished(gameTime))
-                return;
-
-            AnimationTransition.Stop();
-
-            if (Transition == TransitionType.In)
-                SceneState = State.ConnectPlayer;
-            else
-                Visuals.Transite("ChargementToMenu");
-
-            Transition = TransitionType.None;
-        }
-
-
         protected override void UpdateLogic(GameTime gameTime)
         {
             StarsEmitter += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -158,10 +124,6 @@
             }
 
             UpdateShootingStars();
-
-
-            if (Transition != TransitionType.None)
-                return;
 
             switch (SceneState)
             {
@@ -209,11 +171,6 @@
                         VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
                         VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
 
-                        //InitLoadingTranslation();
-
-                        //Effects.Add(LoadingTranslation.PartieTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
-                        //Effects.Add(LoadingTranslation.PartieNonTraduite, PredefinedEffects.FadeInFrom0(255, 500, 1000));
-
                         SandGlass.FadeIn(1500);
 
                         SceneState = State.LoadScenes;
@@ -231,7 +188,7 @@
                             Visuals.UpdateScene(kvp.Key, kvp.Value);
 
                         SceneState = State.Finished;
-                        Transition = TransitionType.Out;
+                        Visuals.Transite("ChargementToMenu");
                     }
 
                     break;
@@ -247,7 +204,7 @@
             ScenesLoaded.Add("Aide", new HelpScene(Main));
             ScenesLoaded.Add("Options", new OptionsScene(Main));
             ScenesLoaded.Add("Editeur", new Editor(Main));
-            ScenesLoaded.Add("Acheter", new BuyScene(Main));
+            ScenesLoaded.Add("Acheter", new BuyScene());
 
             ScenesAreLoaded = true;
         }
@@ -268,33 +225,8 @@
         }
 
 
-        //public override void Show()
-        //{
-        //    LoadingTranslation.Show();
-        //    SandGlass.Show();
-        //    PressStart.Show();
-
-        //    base.Add(Background);
-        //    base.Add(Logo);
-        //}
-
-
-        //public override void Hide()
-        //{
-        //    LoadingTranslation.Hide();
-        //    SandGlass.Hide();
-        //    PressStart.Hide();
-
-        //    base.Remove(Background);
-        //    base.Remove(Logo);
-        //}
-
-
         protected override void UpdateVisual()
         {
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
-
             Add(Background);
             Add(Logo);
 
@@ -315,8 +247,7 @@
             InitPressStart();
             LoadingTranslation.PartieTraduite.Color.A = 0;
             LoadingTranslation.PartieNonTraduite.Color.A = 0;
-
-            Transition = TransitionType.In;
+            SceneState = State.ConnectPlayer;
         }
 
 
@@ -346,21 +277,7 @@
         private void InitLoadingTranslation()
         {
             LoadingTranslation = new Translator
-            (
-                Main,
-                this,
-                new Vector3(0, 150, 0),
-                "Alien",
-                new Color(234, 196, 28, 0),
-                "Pixelite",
-                new Color(255, 255, 255, 0),
-                LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)],
-                3,
-                true,
-                3000,
-                250,
-                0.3f
-            );
+            (this, new Vector3(0, 150, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], 3, true, 3000, 250, 0.3f);
             LoadingTranslation.Centre = true;
         }
 
@@ -368,21 +285,7 @@
         private void InitPressStart()
         {
             PressStart = new Translator
-            (
-                Main,
-                this,
-                new Vector3(0, 150, 0),
-                "Alien",
-                new Color(234, 196, 28, 0),
-                "Pixelite",
-                new Color(255, 255, 255, 0),
-                (Preferences.Target == Setting.Xbox360) ? "Press a button, Commander" : "Click a button, Commander",
-                3,
-                true,
-                3000,
-                250,
-                0.3f
-            );
+            (this, new Vector3(0, 150, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Setting.Xbox360) ? "Press a button, Commander" : "Click a button, Commander", 3, true, 3000, 250, 0.3f);
             PressStart.Centre = true;
         }
 

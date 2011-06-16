@@ -118,6 +118,17 @@
             Wander = true;
             PlayerControlled = false;
             UpdatePosition = true;
+
+            BoostGlow = Simulation.Scene.Particles.Get(@"boosterTurret");
+            BoostGlow.VisualPriority = this.VisualPriorityBackup + 0.006f;
+
+            CircleEmitter emitter = (CircleEmitter) BoostGlow.ParticleEffect[0];
+
+            emitter.Radius = this.Circle.Radius;
+            emitter.ReleaseScale.Value = 50;
+            emitter.ReleaseScale.Variation = 10;
+            emitter.Term = this.Circle.Radius / 300f;
+            emitter.ReleaseColour = this.Color.ToVector3();
         }
 
 
@@ -201,20 +212,6 @@
 
                 DisabledAnnounciationCounter = float.NaN;
                 BackActiveThisTick = true;
-            }
-
-            if (BoostGlow == null)
-            {
-                BoostGlow = Simulation.Scene.Particles.Get(@"boosterTurret");
-                BoostGlow.VisualPriority = this.VisualPriorityBackup + 0.006f;
-
-                CircleEmitter emitter = (CircleEmitter) BoostGlow.ParticleEffect[0];
-
-                emitter.Radius = this.Circle.Radius;
-                emitter.ReleaseScale.Value = 50;
-                emitter.ReleaseScale.Variation = 10;
-                emitter.Term = this.Circle.Radius / 300f;
-                emitter.ReleaseColour = this.Color.ToVector3();
             }
         }
 

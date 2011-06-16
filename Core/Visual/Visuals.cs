@@ -48,10 +48,10 @@
         }
 
 
-        public static void AddTransition(Transition transition)
-        {
-            TransitionsController.AddTransition(transition);
-        }
+        //public static void AddTransition(Transition transition)
+        //{
+        //    TransitionsController.AddTransition(transition);
+        //}
 
 
         public static void Transite(string transitionName)
@@ -96,6 +96,7 @@
 
         public static void Draw()
         {
+            TransitionsController.Draw();
             ScenesController.Draw();
         }
 
@@ -108,6 +109,15 @@
             v.Y = MathHelper.Clamp(v.Y, -r.Height / 2, r.Height / 2);
 
             return v;
+        }
+
+
+        public static ITransitionAnimation TransitionAnimation
+        {
+            set
+            {
+                TransitionsController.TransitionAnimation = value;
+            }
         }
     }
 }

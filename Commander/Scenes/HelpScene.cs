@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
@@ -19,7 +18,6 @@
         private HorizontalSlider SlidesSlider;
         private Cursor Curseur;
 
-        private AnimationTransition AnimationTransition;
         private string ChoixTransition;
         private double TempsEntreDeuxChangementMusique;
 
@@ -28,7 +26,7 @@
         {
             Main = main;
 
-            Nom = "Aide";
+            Name = "Aide";
 
             Lieutenant = new Image("lieutenant", new Vector3(120, -420, 0));
             Lieutenant.SizeX = 8;
@@ -116,54 +114,20 @@
 
             SlidesSlider = new HorizontalSlider(this, Curseur, new Vector3(0, -250, 0), 0, 3, 0, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
-
             TempsEntreDeuxChangementMusique = 0;
 
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
         }
 
-        private void doJoueurPrincipalDeconnecte()
+        private void DoPlayerDisconnected()
         {
-            ChoixTransition = "chargement";
-            Transition = TransitionType.Out;
+            Visuals.Transite("AideToChargement");
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            if (Transition != TransitionType.None)
-                return;
-
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
-        }
-
-
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (AnimationTransition.Finished(gameTime))
-            {
-                if (Transition == TransitionType.Out)
-                    switch (ChoixTransition)
-                    {
-                        case "menu": Visuals.Transite("AideToMenu"); break;
-                        case "chargement": Visuals.Transite("AideToChargement"); break;
-                    }
-
-                Transition = TransitionType.None;
-            }
         }
 
 
@@ -174,17 +138,6 @@
             Add(TitresSlides[SlidesSlider.Valeur].Value);
             SlidesSlider.Draw();
             Curseur.Draw();
-
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
-        }
-
-
-        public override void OnFocus()
-        {
-            base.OnFocus();
-
-            Transition = TransitionType.In;
         }
 
 
@@ -199,7 +152,7 @@
                 SlidesSlider.doClick();
 
             if (button == p.MouseConfiguration.Back)
-                beginTransition();
+                BeginTransition();
         }
 
 
@@ -238,10 +191,10 @@
                 return;
 
             if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)
-                beginTransition();
+                BeginTransition();
 
             if (key == p.KeyboardConfiguration.ChangeMusic)
-                beginChangeMusic();
+                BeginChangeMusic();
         }
 
 
@@ -256,24 +209,20 @@
                 SlidesSlider.doClick();
 
             if (button == p.GamePadConfiguration.Cancel)
-                beginTransition();
+                BeginTransition();
 
             if (button == p.GamePadConfiguration.ChangeMusic)
-                beginChangeMusic();
+                BeginChangeMusic();
         }
 
 
-        private void beginTransition()
+        private void BeginTransition()
         {
-            if (Transition != TransitionType.None)
-                return;
-
-            Transition = TransitionType.Out;
-            ChoixTransition = "menu";
+            Visuals.Transite("AideToMenu");
         }
 
 
-        private void beginChangeMusic()
+        private void BeginChangeMusic()
         {
             if (TempsEntreDeuxChangementMusique > 0)
                 return;

@@ -12,7 +12,9 @@
 
     public abstract class Scene : InputListener
     {
-        public bool Active              { get; set; }
+        public bool EnableVisuals              { get; set; }
+        public bool EnableInputs               { get; set; }
+        public bool EnableUpdate               { get; set; }
 
         internal VisualBuffer Buffer    { get; private set; }
         public Camera Camera            { get; private set; }
@@ -33,49 +35,36 @@
         internal bool UpdatedThisTick;
         private List<IScenable> ToDraw;
         private string name;
-        private TransitionType transition;
 
 
         public Scene(Vector2 position, int hauteur, int largeur)
         {
             Buffer = Visuals.ScenesController.Buffer;
-            Active = false;
+            EnableVisuals = false;
+            EnableInputs = false;
+            EnableUpdate = false;
             ToDraw = new List<IScenable>();
             Batch = new SpriteBatch(Preferences.GraphicsDeviceManager.GraphicsDevice);
             LastBlend = TypeBlend.Alpha;
             UpdatedThisTick = false;
             Camera = new Camera();
             Camera.Origin = new Vector2(this.Buffer.Largeur / 2.0f, this.Buffer.Hauteur / 2.0f);
-            Nom = name;
+            Name = name;
             Animations = new AnimationsController(this);
             PhysicalEffects = new EffectsController<IPhysicalObject>();
             VisualEffects = new EffectsController<IVisual>();
             Particles = new ParticlesController(this);
             EphemereGames.Core.Input.Input.AddListener(this);
-            Transition = TransitionType.None;
         }
 
 
-        public string Nom
+        public string Name
         {
             get { return name; }
             set
             {
                 name = value;
-                Camera.Name = Nom + ".Camera";
-            }
-        }
-
-
-        public TransitionType Transition
-        {
-            get { return transition; }
-            set
-            {
-                transition = value;
-
-                if (value != TransitionType.None)
-                    InitializeTransition(value);
+                Camera.Name = Name + ".Camera";
             }
         }
 
@@ -179,9 +168,6 @@
             Particles.Update(gameTime);
             Animations.Update(gameTime);
 
-            if (Transition != TransitionType.None)
-                UpdateTransition(gameTime);
-
             UpdateLogic(gameTime);
             PhysicalEffects.Update(gameTime);
             VisualEffects.Update(gameTime);
@@ -244,10 +230,7 @@
 
         protected abstract void UpdateLogic(GameTime gameTime);
         protected abstract void UpdateVisual();
-        protected abstract void InitializeTransition(TransitionType type);
-        protected abstract void UpdateTransition(GameTime gameTime);
 
-        public virtual void OnTransitionTowardFocus() { }
         public virtual void OnFocus() { }
         public virtual void OnFocusLost() { }
 

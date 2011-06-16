@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Visual;
     using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -27,8 +27,6 @@
         private static string Credits = "Hello, my name is Jodi Giordano. I glued all this stuff together. Special thanks to my supporting friends and my family, the LATECE laboratory crew, UQAM, Mercury Project and SFXR. If you want more info about me and my games, please visit ephemeregames.com... Now get back to work, commander!";
         private TextTypeWriter TypeWriter;
 
-        private AnimationTransition AnimationTransition;
-        private string ChoixTransition;
         private double TempsEntreDeuxChangementMusique;
 
 
@@ -37,7 +35,7 @@
         {
             Main = main;
 
-            Nom = "Options";
+            Name = "Options";
 
             Titre = new Image("options", new Vector3(-550, -150, 0));
             Titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
@@ -104,29 +102,20 @@
             );
             TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
-
             TempsEntreDeuxChangementMusique = 0;
 
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
         }
 
 
-        private void doJoueurPrincipalDeconnecte()
+        private void DoPlayerDisconnected()
         {
-            Transition = TransitionType.Out;
-            ChoixTransition = "chargement";
+            Visuals.Transite("OptionsToChargement");
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            if (Transition != TransitionType.None)
-                return;
-
             Main.SaveGame.VolumeMusic = Musique.Valeur;
             Main.SaveGame.VolumeSfx = EffetsSonores.Valeur;
 
@@ -135,34 +124,6 @@
 
             TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
             TypeWriter.Update(gameTime);
-        }
-
-
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-            AnimationTransition.Start();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (!AnimationTransition.Finished(gameTime))
-                return;
-
-            AnimationTransition.Stop();
-
-            if (Transition == TransitionType.Out)
-                switch (ChoixTransition)
-                {
-                    case "menu": Visuals.Transite("OptionsToMenu"); break;
-                    case "chargement": Visuals.Transite("OptionsToChargement"); break;
-                }
-
-            Transition = TransitionType.None;
         }
 
 
@@ -176,9 +137,6 @@
             Add(FondEcran);
             Add(TypeWriter.Text);
 
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
-
             Curseur.Draw();
             Musique.Draw();
             EffetsSonores.Draw();
@@ -191,8 +149,6 @@
 
             Musique.Valeur = Main.SaveGame.VolumeMusic;
             EffetsSonores.Valeur = Main.SaveGame.VolumeSfx;
-
-            Transition = TransitionType.In;
         }
 
 
@@ -219,7 +175,7 @@
             }
 
             if (button == p.MouseConfiguration.Back)
-                beginTransition();
+                BeginTransition();
         }
 
 
@@ -258,7 +214,7 @@
                 return;
 
             if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)
-                beginTransition();
+                BeginTransition();
 
             if (key == p.KeyboardConfiguration.ChangeMusic)
                 beginChangeMusic();
@@ -279,20 +235,16 @@
             }
 
             if (button == p.GamePadConfiguration.Cancel)
-                beginTransition();
+                BeginTransition();
 
             if (button == p.GamePadConfiguration.ChangeMusic)
                 beginChangeMusic();
         }
 
 
-        private void beginTransition()
+        private void BeginTransition()
         {
-            if (Transition != TransitionType.None)
-                return;
-
-            Transition = TransitionType.Out;
-            ChoixTransition = "menu";
+            Visuals.Transite("OptionsToMenu");
         }
 
 

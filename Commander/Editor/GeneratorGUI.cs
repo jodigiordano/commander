@@ -469,8 +469,8 @@
             NbPlanetesFixesSlider.Valeur = (int)MathHelper.Clamp(NbPlanetesFixesSlider.Valeur, NbPlanetesFixesSlider.Min, NbPlanetesSlider.Valeur);
             NbPlanetesCheminDepartSlider.Valeur = (int)MathHelper.Clamp(NbPlanetesCheminDepartSlider.Valeur, 0, NbPlanetesSlider.Valeur);
             DifficulteFinSlider.Valeur = (int)MathHelper.Clamp(DifficulteFinSlider.Valeur, DifficulteDebutSlider.Valeur, DifficulteFinSlider.Max);
-            //LoadSlider.Valeur = (int)MathHelper.Clamp(LoadSlider.Valeur, -1, Simulation.Main.SaveGame.DescriptionsScenarios.Count);
-            //DeleteSlider.Valeur = (int)MathHelper.Clamp(DeleteSlider.Valeur, -1, Simulation.Main.SaveGame.DescriptionsScenarios.Count);
+            //LoadSlider.Valeur = (int)MathHelper.Clamp(LoadSlider.Valeur, -1, Main.SaveGame.DescriptionsScenarios.Count);
+            //DeleteSlider.Valeur = (int)MathHelper.Clamp(DeleteSlider.Valeur, -1, Main.SaveGame.DescriptionsScenarios.Count);
 
             if (GenererPushButton.Pressed)
             {
@@ -563,10 +563,10 @@
                 Simulation.Initialize();
             }
 
-            //if (LoadPushButton.Pressed && LoadSlider.Valeur != -1 && LoadSlider.Valeur < Simulation.Main.SaveGame.DescriptionsScenarios.Count)
+            //if (LoadPushButton.Pressed && LoadSlider.Valeur != -1 && LoadSlider.Valeur < Main.SaveGame.DescriptionsScenarios.Count)
             //{
-            //    DescriptionScenario = Simulation.Main.SaveGame.DescriptionsScenarios[LoadSlider.Valeur];
-            //    DonneesGenerateur = Simulation.Main.SaveGame.DonneesGenerateur[LoadSlider.Valeur];
+            //    DescriptionScenario = Main.SaveGame.DescriptionsScenarios[LoadSlider.Valeur];
+            //    DonneesGenerateur = Main.SaveGame.DonneesGenerateur[LoadSlider.Valeur];
 
             //    GenerateurScenario.DescripteurScenario = DescriptionScenario;
             //    GenerateurVagues.Vagues = DescriptionScenario.Vagues;
@@ -583,23 +583,23 @@
                 updateDonneesGameplay();
                 updateDonneesVagues();
 
-                if ( LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Simulation.Main.GeneratorData.Scenarios.Count )
+                if ( LoadSlider.Valeur == -1 || LoadSlider.Valeur >= Main.GeneratorData.Scenarios.Count )
                 {
-                    Simulation.Main.GeneratorData.Scenarios.Add( DescriptionScenario );
+                    Main.GeneratorData.Scenarios.Add( DescriptionScenario );
                 }
 
                 else
                 {
-                    Simulation.Main.GeneratorData.Scenarios[LoadSlider.Valeur] = DescriptionScenario;
+                    Main.GeneratorData.Scenarios[LoadSlider.Valeur] = DescriptionScenario;
                 }
 
                 Persistence.SaveData( "generateurData" );
             }
 
-            //if (DeletePushButton.Pressed && DeleteSlider.Valeur != -1 && DeleteSlider.Valeur < Simulation.Main.SaveGame.DescriptionsScenarios.Count)
+            //if (DeletePushButton.Pressed && DeleteSlider.Valeur != -1 && DeleteSlider.Valeur < Main.SaveGame.DescriptionsScenarios.Count)
             //{
-            //    Simulation.Main.SaveGame.DescriptionsScenarios.RemoveAt(DeleteSlider.Valeur);
-            //    Simulation.Main.SaveGame.DonneesGenerateur.RemoveAt(DeleteSlider.Valeur);
+            //    Main.SaveGame.DescriptionsScenarios.RemoveAt(DeleteSlider.Valeur);
+            //    Main.SaveGame.DonneesGenerateur.RemoveAt(DeleteSlider.Valeur);
 
             //    DeleteSlider.Valeur = -1;
 

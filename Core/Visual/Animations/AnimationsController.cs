@@ -58,7 +58,7 @@
                     continue;
                 }
 
-                if (Animations[i].Finished(gameTime))
+                if (Animations[i].IsFinished)
                 {
                     Animations[i].Stop();
                     Animations.RemoveAt(i);

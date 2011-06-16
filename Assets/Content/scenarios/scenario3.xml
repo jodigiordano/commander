@@ -215,7 +215,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Meteoroid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>4</SpeedLevel>
       <LivesLevel>4</LivesLevel>
@@ -243,7 +243,7 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
       </Enemies>
       <SpeedLevel>12</SpeedLevel>
       <LivesLevel>12</LivesLevel>
@@ -257,7 +257,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>16</SpeedLevel>
       <LivesLevel>16</LivesLevel>
@@ -301,9 +301,9 @@
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
         <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Comet</EnemyType>
-        <EnemyType>Trojan</EnemyType>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Apohele</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
         <EnemyType>Meteoroid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
       </Enemies>
@@ -322,7 +322,7 @@
         <EnemyType>Centaur</EnemyType>
         <EnemyType>Comet</EnemyType>
         <EnemyType>Meteoroid</EnemyType>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
         <EnemyType>Trojan</EnemyType>
       </Enemies>
@@ -338,7 +338,7 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
       </Enemies>
       <SpeedLevel>36</SpeedLevel>
       <LivesLevel>36</LivesLevel>
@@ -352,12 +352,12 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Asteroid</EnemyType>
         <EnemyType>Meteoroid</EnemyType>
         <EnemyType>Centaur</EnemyType>
         <EnemyType>Comet</EnemyType>
-        <EnemyType>Trojan</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Plutoid</EnemyType>
       </Enemies>
       <SpeedLevel>40</SpeedLevel>
@@ -379,9 +379,12 @@
     <TurretType>MultipleLasers</TurretType>
     <TurretType>Laser</TurretType>
     <TurretType>SlowMotion</TurretType>
+    <TurretType>Booster</TurretType>
   </AvailableTurrets>
   <AvailablePowerUps>
     <PowerUpType>Collector</PowerUpType>
+    <PowerUpType>DeadlyShootingStars</PowerUpType>
+    <PowerUpType>Miner</PowerUpType>
   </AvailablePowerUps>
   <CelestialBodyToProtect>9</CelestialBodyToProtect>
   <MineralsValue>5000</MineralsValue>

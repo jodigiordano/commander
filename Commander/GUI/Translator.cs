@@ -32,20 +32,7 @@
         }
 
 
-        public Translator(
-            Main main,
-            Scene scene,
-            Vector3 position,
-            string policeLangueEtrangere,
-            Color couleurLangueEtrangere,
-            string policeLangueConnue,
-            Color couleurLangueConnue,
-            string texteATraduire,
-            float taille,
-            bool showRecherche,
-            int tempsTraduction,
-            int tempsChaqueRecherche,
-            double visualPriority)
+        public Translator(Scene scene, Vector3 position, string policeLangueEtrangere, Color couleurLangueEtrangere, string policeLangueConnue, Color couleurLangueConnue, string texteATraduire, float taille, bool showRecherche, int tempsTraduction, int tempsChaqueRecherche, double visualPriority)
         {
             this.Scene = scene;
             this.Position = position;

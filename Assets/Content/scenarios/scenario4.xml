@@ -390,8 +390,12 @@
   <AvailableTurrets>
     <TurretType>Basic</TurretType>
     <TurretType>MultipleLasers</TurretType>
+    <TurretType>Gunner</TurretType>
   </AvailableTurrets>
-  <AvailablePowerUps />
+  <AvailablePowerUps>
+    <PowerUpType>Pulse</PowerUpType>
+    <PowerUpType>Shield</PowerUpType>
+  </AvailablePowerUps>
   <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
   <MineralsValue>0</MineralsValue>
   <MineralsPercentages>

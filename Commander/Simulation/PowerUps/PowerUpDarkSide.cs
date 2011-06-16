@@ -34,7 +34,7 @@ namespace EphemereGames.Commander
                     0,
                     true,
                     0);
-            CorpsCeleste.AttackPoints = 5f;
+            CorpsCeleste.AttackPoints = 0.5f;
         }
 
 

@@ -53,7 +53,7 @@
             WavesCounter = 0;
             ElapsedTime = 0;
 
-            if (Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Id) && Simulation.Main.SaveGame.Tutorials[Scenario.Id] > 2)
+            if (Main.SaveGame.Tutorials.ContainsKey(Scenario.Id) && Main.SaveGame.Tutorials[Scenario.Id] > 2)
             {
                 Help = new Help(Simulation, new List<string>());
                 HelpSaved = true;
@@ -73,10 +73,10 @@
                 Help.Update(gameTime);
             else if (!HelpSaved)
             {
-                if (!Simulation.Main.SaveGame.Tutorials.ContainsKey(Scenario.Id))
-                    Simulation.Main.SaveGame.Tutorials.Add(new KeyValuePair<int,int>(Scenario.Id, 0));
+                if (!Main.SaveGame.Tutorials.ContainsKey(Scenario.Id))
+                    Main.SaveGame.Tutorials.Add(new KeyValuePair<int,int>(Scenario.Id, 0));
 
-                Simulation.Main.SaveGame.Tutorials[Scenario.Id]++;
+                Main.SaveGame.Tutorials[Scenario.Id]++;
 
                 HelpSaved = true;
             }
@@ -126,13 +126,13 @@
             {
                 State = GameState.Won;
 
-                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Id))
-                    Simulation.Main.SaveGame.Progress.Add(Scenario.Id, 0);
+                if (!Main.SaveGame.Progress.ContainsKey(Scenario.Id))
+                    Main.SaveGame.Progress.Add(Scenario.Id, 0);
 
-                if (Simulation.Main.SaveGame.Progress[Scenario.Id] < 0)
-                    Simulation.Main.SaveGame.Progress[Scenario.Id] = Math.Abs(Simulation.Main.SaveGame.Progress[Scenario.Id]);
-                else if (Simulation.Main.SaveGame.Progress[Scenario.Id] == 0)
-                    Simulation.Main.SaveGame.Progress[Scenario.Id] = 1;
+                if (Main.SaveGame.Progress[Scenario.Id] < 0)
+                    Main.SaveGame.Progress[Scenario.Id] = Math.Abs(Main.SaveGame.Progress[Scenario.Id]);
+                else if (Main.SaveGame.Progress[Scenario.Id] == 0)
+                    Main.SaveGame.Progress[Scenario.Id] = 1;
 
                 computeFinalScore();
 
@@ -163,11 +163,11 @@
                 Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
-                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Id))
-                    Simulation.Main.SaveGame.Progress.Add(Scenario.Id, 0);
+                if (!Main.SaveGame.Progress.ContainsKey(Scenario.Id))
+                    Main.SaveGame.Progress.Add(Scenario.Id, 0);
 
-                if ((Simulation.Main.SaveGame.Progress[Scenario.Id] <= 0))
-                    Simulation.Main.SaveGame.Progress[Scenario.Id] -= 1;
+                if ((Main.SaveGame.Progress[Scenario.Id] <= 0))
+                    Main.SaveGame.Progress[Scenario.Id] -= 1;
 
                 computeFinalScore();
 
@@ -192,11 +192,11 @@
             {
                 State = GameState.Lost;
 
-                if (!Simulation.Main.SaveGame.Progress.ContainsKey(Scenario.Id))
-                    Simulation.Main.SaveGame.Progress.Add(Scenario.Id, 0);
+                if (!Main.SaveGame.Progress.ContainsKey(Scenario.Id))
+                    Main.SaveGame.Progress.Add(Scenario.Id, 0);
 
-                if ((Simulation.Main.SaveGame.Progress[Scenario.Id] <= 0))
-                    Simulation.Main.SaveGame.Progress[Scenario.Id] -= 1;
+                if ((Main.SaveGame.Progress[Scenario.Id] <= 0))
+                    Main.SaveGame.Progress[Scenario.Id] -= 1;
 
                 computeFinalScore();
 

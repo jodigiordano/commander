@@ -5,10 +5,9 @@ namespace EphemereGames.Commander
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
-    public class AnimationTransition : Animation
+    public class AnimationTransition : Animation, ITransitionAnimation
     {
         public bool In;
 
@@ -64,9 +63,12 @@ namespace EphemereGames.Commander
         }
 
 
-        public override void Initialize()
+
+        public void Initialize(TransitionType type)
         {
             base.Initialize();
+
+            In = type == TransitionType.In;
 
             AlienShips = new List<AlienSpaceship>();
             Paths = new List<Path2D>();
@@ -102,20 +104,6 @@ namespace EphemereGames.Commander
         {
             base.Update(gameTime);
         }
-
-
-        //protected override void Show()
-        //{
-        //    for (int i = 0; i < AlienShips.Count; i++)
-        //        AlienShips[i].Show();
-        //}
-
-
-        //protected override void Hide()
-        //{
-        //    for (int i = 0; i < AlienShips.Count; i++)
-        //        AlienShips[i].Hide();
-        //}
 
 
         public override void Draw()

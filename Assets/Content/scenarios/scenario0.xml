@@ -145,11 +145,11 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Vulcanoid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Asteroid</EnemyType>
       </Enemies>
-      <SpeedLevel>20</SpeedLevel>
-      <LivesLevel>20</LivesLevel>
+      <SpeedLevel>3</SpeedLevel>
+      <LivesLevel>3</LivesLevel>
       <CashValue>14</CashValue>
       <Quantity>25</Quantity>
       <Distance>Far</Distance>
@@ -160,7 +160,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Vulcanoid</EnemyType>
+        <EnemyType>Plutoid</EnemyType>
       </Enemies>
       <SpeedLevel>3</SpeedLevel>
       <LivesLevel>3</LivesLevel>
@@ -174,7 +174,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Plutoid</EnemyType>
       </Enemies>
       <SpeedLevel>4</SpeedLevel>
@@ -189,11 +189,11 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
       </Enemies>
-      <SpeedLevel>5</SpeedLevel>
-      <LivesLevel>5</LivesLevel>
+      <SpeedLevel>7</SpeedLevel>
+      <LivesLevel>7</LivesLevel>
       <CashValue>30</CashValue>
       <Quantity>50</Quantity>
       <Distance>Far</Distance>
@@ -206,8 +206,8 @@
       <Enemies>
         <EnemyType>Plutoid</EnemyType>
       </Enemies>
-      <SpeedLevel>6</SpeedLevel>
-      <LivesLevel>6</LivesLevel>
+      <SpeedLevel>7</SpeedLevel>
+      <LivesLevel>7</LivesLevel>
       <CashValue>35</CashValue>
       <Quantity>50</Quantity>
       <Distance>Far</Distance>
@@ -223,7 +223,11 @@
   <AvailableTurrets>
     <TurretType>Basic</TurretType>
   </AvailableTurrets>
-  <AvailablePowerUps />
+  <AvailablePowerUps>
+    <PowerUpType>DeadlyShootingStars</PowerUpType>
+    <PowerUpType>Shield</PowerUpType>
+    <PowerUpType>RailGun</PowerUpType>
+  </AvailablePowerUps>
   <CelestialBodyToProtect>5</CelestialBodyToProtect>
   <MineralsValue>0</MineralsValue>
   <MineralsPercentages>

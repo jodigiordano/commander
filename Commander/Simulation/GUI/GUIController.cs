@@ -310,7 +310,7 @@
             {
                 GamePausedResistance.StartingObject = null;
 
-                if (Simulation.Main.GameInProgress != null && Simulation.Main.GameInProgress.State == GameState.Paused)
+                if (Main.GameInProgress != null && Main.GameInProgress.State == GameState.Paused)
                 {
                     GamePausedResistance.StartingObject = Simulation.CelestialBodyPausedGame;
 

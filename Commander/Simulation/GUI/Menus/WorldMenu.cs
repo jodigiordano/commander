@@ -105,8 +105,8 @@
             DrawHighScore();
 
 
-            if (Simulation.Main.GameInProgress != null &&
-                !Simulation.Main.GameInProgress.IsFinished &&
+            if (Main.GameInProgress != null &&
+                !Main.GameInProgress.IsFinished &&
                 Simulation.CelestialBodyPausedGame != null && Simulation.CelestialBodyPausedGame.Nom == CelestialBody.Nom)
             {
                 base.Draw();
@@ -149,7 +149,7 @@
         {
             HighScores highscores = null;
 
-            Simulation.Main.SaveGame.HighScores.TryGetValue(Scenario.Id, out highscores);
+            Main.SaveGame.HighScores.TryGetValue(Scenario.Id, out highscores);
 
             Highscore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
             Highscore.Origin = Highscore.Center;

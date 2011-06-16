@@ -11,102 +11,58 @@
 
     class BuyScene : Scene
     {
-        private Main Main;
-        private Image FondEcranAchat;
-        private Image FondEcranAchatEffectue;
-        private double TempsAvantQuitter;
-        private SandGlass Sablier;
+        private Image PleaseBuyBackground;
+        private Image BoughtBackground;
+        private double TimeBeforeQuitting;
+        private SandGlass SandGlass;
+        private bool BuyingMode;
 
-        private AnimationTransition AnimationTransition;
-        private bool enAchat;
 
-        public BuyScene(Main main)
+        public BuyScene()
             : base(Vector2.Zero, 720, 1280)
         {
-            Main = main;
+            Name = "Acheter";
 
-            Nom = "Acheter";
+            PleaseBuyBackground = new Image("buy");
+            PleaseBuyBackground.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
-            FondEcranAchat = new Image("buy");
-            FondEcranAchat.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
+            BoughtBackground = new Image("buy2");
+            BoughtBackground.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
-            FondEcranAchatEffectue = new Image("buy2");
-            FondEcranAchatEffectue.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
+            TimeBeforeQuitting = 20000;
 
-            TempsAvantQuitter = 20000;
+            SandGlass = new SandGlass(this, 20000, new Vector3(520, 250, 0), 0);
+            SandGlass.RemainingTime = TimeBeforeQuitting;
 
-            Sablier = new SandGlass(Main, this, 20000, new Vector3(520, 250, 0), 0);
-            Sablier.RemainingTime = TempsAvantQuitter;
-
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
-
-            enAchat = false;
+            BuyingMode = false;
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            if (Transition != TransitionType.None)
-                return;
-
             if (!Guide.IsVisible && Main.TrialMode.Active)
-                TempsAvantQuitter -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                TimeBeforeQuitting -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            Sablier.RemainingTime = TempsAvantQuitter;
-            Sablier.Update();
+            SandGlass.RemainingTime = TimeBeforeQuitting;
+            SandGlass.Update();
 
-            if (TempsAvantQuitter <= 0)
-                Main.Exit();
-        }
-
-
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (AnimationTransition.Finished(gameTime))
-            {
-                if (Transition == TransitionType.Out)
-                    Visuals.Transite("AcheterToMenu");
-
-                Transition = TransitionType.None;
-            }
+            if (TimeBeforeQuitting <= 0)
+                Main.Instance.Exit();
         }
 
 
         protected override void UpdateVisual()
         {
-            Add((Main.TrialMode.Active) ? FondEcranAchat : FondEcranAchatEffectue);
+            Add((Main.TrialMode.Active) ? PleaseBuyBackground : BoughtBackground);
 
             if (Main.TrialMode.Active)
-                Sablier.Draw();
-
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
-        }
-
-
-        public override void OnFocus()
-        {
-            base.OnFocus();
-
-            Transition = TransitionType.In;
+                SandGlass.Draw();
         }
 
 
         private void AsyncExit(IAsyncResult result)
         {
-            Main.Exit();
+            Main.Instance.Exit();
         }
 
 
@@ -123,7 +79,7 @@
                 {
                     try
                     {
-                        enAchat = true;
+                        BuyingMode = true;
                         Guide.ShowMarketplace(inputIndex);
                     }
 
@@ -142,13 +98,13 @@
                 }
 
                 else
-                    enAchat = true;
+                    BuyingMode = true;
             }
 
 
             else
             {
-                Transition = TransitionType.Out;
+                Visuals.Transite("AcheterToMenu");
             }
         }
     }

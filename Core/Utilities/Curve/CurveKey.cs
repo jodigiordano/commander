@@ -1,5 +1,8 @@
 namespace EphemereGames.Core.Utilities
 {
+    using Microsoft.Xna.Framework;
+
+
     public class CurveKey
     {
         public CurveContinuity Continuity;

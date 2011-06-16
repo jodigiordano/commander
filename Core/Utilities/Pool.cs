@@ -57,7 +57,7 @@
         private void Initialize(List<T> objs)
         {
             Objects = new Stack<T>(objs);
-            MaxInstances = Int16.MaxValue;
+            MaxInstances = Int32.MaxValue;
             LiveInstances = 0;
         }
     }

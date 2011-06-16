@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
 
 
     public class Path3D
@@ -52,7 +51,7 @@
 
                 for (int j = 0; j < toDelete; j++)
                 {
-                    CurveKeysPool.Return(c.Keys[c.Keys.Count - 1]);
+                    CurveKeysPool.Return((CurveKey) c.Keys[c.Keys.Count - 1]);
                     c.Keys.RemoveAt(c.Keys.Count - 1);
                 }
                 

@@ -10,7 +10,6 @@
     class Editor : Scene
     {
         private Main Main;
-        private AnimationTransition AnimationTransition;
         private string ChoixTransition;
         private Simulation Simulation;
         private GenerateurGUI GenerateurGUI;
@@ -22,7 +21,7 @@
         {
             Main = main;
 
-            Nom = "Editeur";
+            Name = "Editeur";
 
             Simulation = new Simulation(main, this, ScenariosFactory.getDescripteurBidon());
             Simulation.Players = Main.Players;
@@ -34,27 +33,18 @@
             GenerateurGUI = new GenerateurGUI(Simulation, Cursor, new Vector3(-300, 80, 0));
             GenerateurGUI.Visible = true;
 
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
-
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
         }
 
 
-        private void doJoueurPrincipalDeconnecte()
+        private void DoPlayerDisconnected()
         {
-            Transition = TransitionType.Out;
-            ChoixTransition = "chargement";
+            Visuals.Transite("EditeurToChargement");
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            if (Transition != TransitionType.None)
-                return;
-
             if (GenerateurGUI.Visible)
                 Simulation.Etat = GameState.Paused;
             else
@@ -65,47 +55,17 @@
         }
 
 
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (AnimationTransition.Finished(gameTime))
-            {
-                if (Transition == TransitionType.Out)
-                    switch (ChoixTransition)
-                    {
-                        case "menu": Visuals.Transite("EditeurToMenu"); break;
-                        case "chargement": Visuals.Transite("EditeurToChargement"); break;
-                    }
-
-                Transition = TransitionType.None;
-            }
-        }
-
-
         protected override void UpdateVisual()
         {
             Cursor.Draw();
             GenerateurGUI.Draw();
             Simulation.Draw();
-
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
         }
 
 
         public override void OnFocus()
         {
             base.OnFocus();
-
-            Transition = TransitionType.In;
 
             Input.AddListener(Simulation);
         }
@@ -166,7 +126,7 @@
                 return;
 
             if (button == p.MouseConfiguration.Cancel)
-                beginTransition();
+                BeginTransition();
 
             if (button == p.MouseConfiguration.Select)
                 GenerateurGUI.DoClick();
@@ -181,10 +141,10 @@
                 return;
 
             if (button == p.GamePadConfiguration.Cancel)
-                beginTransition();
+                BeginTransition();
 
             if (button == p.GamePadConfiguration.Editor)
-                doToggleEditor();
+                DoToggleEditor();
 
             if (button == p.GamePadConfiguration.Select)
                 GenerateurGUI.DoClick();
@@ -199,23 +159,19 @@
                 return;
 
             if (key == p.KeyboardConfiguration.Editor)
-                doToggleEditor();
+                DoToggleEditor();
         }
 
         #endregion
 
 
-        private void beginTransition()
+        private void BeginTransition()
         {
-            if (Transition != TransitionType.None)
-                return;
-
-            Transition = TransitionType.Out;
-            ChoixTransition = "menu";
+            Visuals.Transite("EditeurToMenu");
         }
 
 
-        private void doToggleEditor()
+        private void DoToggleEditor()
         {
             GenerateurGUI.Visible = !GenerateurGUI.Visible;
 

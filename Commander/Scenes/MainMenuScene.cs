@@ -22,9 +22,6 @@
         public string SelectedMusic;
         private double TimeBetweenTwoMusicChange;
 
-        private AnimationTransition AnimationTransition;
-        private string TransitionChoice;
-
         private Simulation Simulation;
 
 
@@ -33,7 +30,7 @@
         {
             Main = main;
 
-            Nom = "Menu";
+            Name = "Menu";
 
             NewGame = new Text("save the\nworld", "Pixelite", Color.White, new Vector3(-220, -170, 0))
             {
@@ -99,25 +96,19 @@
             };
             Simulation.Initialize();
 
-            AnimationTransition = new AnimationTransition(500, Preferences.PrioriteTransitionScene)
-            {
-                Scene = this
-            };
-
             SelectedMusic = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
             Main.AvailableMusics.Remove(SelectedMusic);
             TimeBetweenTwoMusicChange = 0;
 
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(doJoueurPrincipalDeconnecte);
+            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
 
             CurrentChoice = null;
         }
 
         
-        private void doJoueurPrincipalDeconnecte()
+        private void DoPlayerDisconnected()
         {
-            Transition = TransitionType.Out;
-            TransitionChoice = "chargement";
+            Visuals.Transite("MenuToChargement");
         }
 
 
@@ -125,54 +116,6 @@
         {
             TimeBetweenTwoMusicChange -= gameTime.ElapsedGameTime.TotalMilliseconds;
             Simulation.Update(gameTime);
-        }
-
-
-        protected override void InitializeTransition(TransitionType type)
-        {
-            AnimationTransition.In = (type == TransitionType.In) ? true : false;
-            AnimationTransition.Initialize();
-            AnimationTransition.Start();
-        }
-
-
-        protected override void UpdateTransition(GameTime gameTime)
-        {
-            AnimationTransition.Update(gameTime);
-
-            if (!AnimationTransition.Finished(gameTime))
-                return;
-
-            AnimationTransition.Stop();
-
-            if (Transition == TransitionType.Out)
-            {
-                switch (TransitionChoice)
-                {
-                    case "save the\nworld": Visuals.Transite("MenuToNouvellePartie"); break;
-                    case "help": Visuals.Transite("MenuToAide"); break;
-                    case "options": Visuals.Transite("MenuToOptions"); break;
-                    case "editor": Visuals.Transite("MenuToEditeur"); break;
-                    case "chargement": Visuals.Transite("MenuToChargement"); break;
-
-                    case "quit":
-                        if (Preferences.Target == Setting.Xbox360 && Main.TrialMode.Active)
-                            Visuals.Transite("MenuToAcheter");
-                        else
-                            Main.Exit();
-                        break;
-
-                    case "resume game":
-                        if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                        {
-                            Main.GameInProgress.State = GameState.Running;
-                            Visuals.Transite("MenuToPartie");
-                        }
-                        break;
-                }
-            }
-
-            Transition = TransitionType.None;
         }
 
 
@@ -191,30 +134,8 @@
         }
 
 
-        //public override void Show()
-        //{
-        //    base.Add(Title);
-
-        //    Simulation.Show();
-        //}
-
-
-        //public override void Hide()
-        //{
-        //    base.Remove(Title);
-
-        //    Simulation.Hide();
-        //}
-
-
         protected override void UpdateVisual()
         {
-            //if (CurrentChoice != null)
-            //{
-            //    base.Remove(CurrentChoice);
-            //    CurrentChoice = null;
-            //}
-
             if (Simulation.SelectedCelestialBody != null)
             {
                 switch (Simulation.SelectedCelestialBody.Nom)
@@ -246,17 +167,12 @@
 
             Add(Title);
             Simulation.Draw();
-
-            if (Transition != TransitionType.None)
-                AnimationTransition.Draw();
         }
 
 
         public override void OnFocus()
         {
             base.OnFocus();
-
-            Transition = TransitionType.In;
 
             if (!Audio.IsMusicPlaying(SelectedMusic))
                 Audio.PlayMusic(SelectedMusic, true, 1000, true);
@@ -317,9 +233,6 @@
 
         private void beginTransition()
         {
-            if (Transition != TransitionType.None)
-                return;
-
             if (Simulation.SelectedCelestialBody == null)
                 return;
 
@@ -334,8 +247,28 @@
                 
                 (Simulation.SelectedCelestialBody.Nom != "resume game"))
             {
-                Transition = TransitionType.Out;
-                TransitionChoice = Simulation.SelectedCelestialBody.Nom;
+                switch (Simulation.SelectedCelestialBody.Nom)
+                {
+                    case "save the\nworld": Visuals.Transite("MenuToNouvellePartie"); break;
+                    case "help": Visuals.Transite("MenuToAide"); break;
+                    case "options": Visuals.Transite("MenuToOptions"); break;
+                    case "editor": Visuals.Transite("MenuToEditeur"); break;
+
+                    case "quit":
+                        if (Preferences.Target == Setting.Xbox360 && Main.TrialMode.Active)
+                            Visuals.Transite("MenuToAcheter");
+                        else
+                            Main.Exit();
+                        break;
+
+                    case "resume game":
+                        if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
+                        {
+                            Main.GameInProgress.State = GameState.Running;
+                            Visuals.Transite("MenuToPartie");
+                        }
+                        break;
+                }
             }
         }
 

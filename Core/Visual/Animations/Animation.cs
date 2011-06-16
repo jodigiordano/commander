@@ -54,9 +54,9 @@
         }
 
 
-        public virtual bool Finished(GameTime gameTime)
+        public virtual bool IsFinished
         {
-            return RemainingTime <= 0;
+            get { return RemainingTime <= 0; }
         }
 
 

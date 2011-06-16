@@ -37,7 +37,7 @@
             this.Simulation = simulation;
             this.Position = position;
 
-            this.SandGlass = new SandGlass(simulation.Main, simulation.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
+            this.SandGlass = new SandGlass(simulation.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
             this.Cash = 0;
 
 

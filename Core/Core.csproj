@@ -180,9 +180,6 @@
     <Compile Include="Utilities\Collections\Set.cs" />
     <Compile Include="Utilities\Collections\Strings.cs" />
     <Compile Include="Utilities\Collections\Util.cs" />
-    <Compile Include="Utilities\Curve\Curve.cs" />
-    <Compile Include="Utilities\Curve\CurveKey.cs" />
-    <Compile Include="Utilities\Curve\Enums.cs" />
     <Compile Include="Utilities\CustomBlends.cs" />
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\EffectsController.cs" />
@@ -190,10 +187,13 @@
     <Compile Include="Utilities\KeyAndValue.cs" />
     <Compile Include="Utilities\LinkedListWithInit.cs" />
     <Compile Include="Utilities\Pool.cs" />
+    <Compile Include="Utilities\Curve\Curve.cs" />
+    <Compile Include="Utilities\Curve\CurveKey.cs" />
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
     <Compile Include="Utilities\Path2D.cs" />
     <Compile Include="Utilities\Path3D.cs" />
     <Compile Include="Visual\Scenable\IVisual.cs" />
+    <Compile Include="Visual\Scene\ITransitionAnimation.cs" />
     <Compile Include="Visual\ScreenSafeZone.cs" />
     <Compile Include="Visual\Animations\Animation.cs" />
     <Compile Include="Visual\Animations\AnimationsController.cs" />

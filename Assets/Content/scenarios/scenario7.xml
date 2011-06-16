@@ -425,7 +425,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Comet</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
       </Enemies>
       <SpeedLevel>42</SpeedLevel>
       <LivesLevel>42</LivesLevel>
@@ -442,7 +442,7 @@
         <EnemyType>Plutoid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
         <EnemyType>Meteoroid</EnemyType>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
         <EnemyType>Comet</EnemyType>
         <EnemyType>Trojan</EnemyType>
       </Enemies>
@@ -486,7 +486,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Meteoroid</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
       </Enemies>
       <SpeedLevel>65</SpeedLevel>
       <LivesLevel>65</LivesLevel>
@@ -500,7 +500,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
       </Enemies>
       <SpeedLevel>71</SpeedLevel>
       <LivesLevel>71</LivesLevel>
@@ -529,8 +529,8 @@
       <StartingTime>30000</StartingTime>
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Centaur</EnemyType>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Trojan</EnemyType>
         <EnemyType>Comet</EnemyType>
         <EnemyType>Meteoroid</EnemyType>
@@ -550,8 +550,8 @@
         <EnemyType>Asteroid</EnemyType>
         <EnemyType>Trojan</EnemyType>
         <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Centaur</EnemyType>
-        <EnemyType>Comet</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
         <EnemyType>Meteoroid</EnemyType>
       </Enemies>
       <SpeedLevel>88</SpeedLevel>
@@ -581,9 +581,9 @@
       <StartingTime>80000</StartingTime>
       <Enemies>
         <EnemyType>Centaur</EnemyType>
-        <EnemyType>Trojan</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Meteoroid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Plutoid</EnemyType>
       </Enemies>
       <SpeedLevel>100</SpeedLevel>
@@ -607,12 +607,19 @@
     <TurretType>Laser</TurretType>
     <TurretType>Missile</TurretType>
     <TurretType>SlowMotion</TurretType>
+    <TurretType>Booster</TurretType>
+    <TurretType>Gunner</TurretType>
+    <TurretType>Nanobots</TurretType>
   </AvailableTurrets>
   <AvailablePowerUps>
     <PowerUpType>Collector</PowerUpType>
     <PowerUpType>FinalSolution</PowerUpType>
     <PowerUpType>Spaceship</PowerUpType>
     <PowerUpType>TheResistance</PowerUpType>
+    <PowerUpType>AutomaticCollector</PowerUpType>
+    <PowerUpType>DarkSide</PowerUpType>
+    <PowerUpType>RailGun</PowerUpType>
+    <PowerUpType>DeadlyShootingStars</PowerUpType>
   </AvailablePowerUps>
   <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
   <MineralsValue>5000</MineralsValue>

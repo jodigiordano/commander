@@ -317,7 +317,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Comet</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>17</SpeedLevel>
       <LivesLevel>17</LivesLevel>
@@ -331,7 +331,7 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Asteroid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
       </Enemies>
       <SpeedLevel>25</SpeedLevel>
       <LivesLevel>25</LivesLevel>
@@ -346,10 +346,10 @@
       <StartingTime>80000</StartingTime>
       <Enemies>
         <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Meteoroid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Trojan</EnemyType>
-        <EnemyType>Comet</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Centaur</EnemyType>
       </Enemies>
       <SpeedLevel>33</SpeedLevel>
@@ -365,10 +365,10 @@
       <StartingTime>60000</StartingTime>
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Comet</EnemyType>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Damacloid</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Meteoroid</EnemyType>
-        <EnemyType>Trojan</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Centaur</EnemyType>
       </Enemies>
       <SpeedLevel>41</SpeedLevel>
@@ -411,9 +411,9 @@
     <Wave>
       <StartingTime>80000</StartingTime>
       <Enemies>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Apohele</EnemyType>
         <EnemyType>Trojan</EnemyType>
-        <EnemyType>Meteoroid</EnemyType>
+        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Comet</EnemyType>
         <EnemyType>Plutoid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
@@ -430,7 +430,7 @@
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Centaur</EnemyType>
+        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>72</SpeedLevel>
       <LivesLevel>72</LivesLevel>
@@ -467,12 +467,18 @@
     <TurretType>Laser</TurretType>
     <TurretType>Missile</TurretType>
     <TurretType>SlowMotion</TurretType>
+    <TurretType>Booster</TurretType>
+    <TurretType>Gunner</TurretType>
+    <TurretType>Nanobots</TurretType>
   </AvailableTurrets>
   <AvailablePowerUps>
     <PowerUpType>Collector</PowerUpType>
     <PowerUpType>FinalSolution</PowerUpType>
     <PowerUpType>Spaceship</PowerUpType>
     <PowerUpType>TheResistance</PowerUpType>
+    <PowerUpType>AutomaticCollector</PowerUpType>
+    <PowerUpType>DarkSide</PowerUpType>
+    <PowerUpType>RailGun</PowerUpType>
   </AvailablePowerUps>
   <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
   <MineralsValue>5000</MineralsValue>
