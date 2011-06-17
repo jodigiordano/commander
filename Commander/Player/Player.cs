@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander
 {
-    using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 

@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
 
     class SelectedTurretToBuyController
     {

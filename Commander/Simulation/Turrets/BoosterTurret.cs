@@ -1,11 +1,9 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using Microsoft.Xna.Framework;
-    using System.Collections.Generic;
-    using EphemereGames.Core.Utilities;
-    using EphemereGames.Core.Physics;
     using System;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
 
 

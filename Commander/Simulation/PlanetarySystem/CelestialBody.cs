@@ -5,8 +5,8 @@
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using ProjectMercury.Modifiers;
     using ProjectMercury.Emitters;
+    using ProjectMercury.Modifiers;
 
 
     class CelestialBody : ILivingObject, IObjetPhysique, IComparable<CelestialBody>

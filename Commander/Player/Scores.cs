@@ -1,10 +1,9 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
-    using System.Xml.Serialization;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework.Content;
+    using System.Xml.Serialization;
     using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework.Content;
 
 
     public class HighScores

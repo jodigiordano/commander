@@ -1,10 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     class Level

@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using Microsoft.Xna.Framework;
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
 
 
     class SimPlayer

@@ -1,12 +1,9 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
-    using System.Xml.Serialization;
-    using System.Collections.Generic;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Content;
-    using EphemereGames.Core.Audio;
 
 
     public class SaveGame : Data

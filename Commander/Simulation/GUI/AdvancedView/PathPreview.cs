@@ -1,9 +1,9 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using Microsoft.Xna.Framework;
+    using System;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
-    using System;
+    using Microsoft.Xna.Framework;
 
 
     class PathPreview

@@ -1,7 +1,6 @@
 namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Physics;
-    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -17,7 +16,7 @@ namespace EphemereGames.Commander.Simulation
         public Vector3 Direction                                    { get; set; }
         public Shape Shape                                          { get; set; }
         public Circle Circle                                        { get; set; }
-        public Line Line                                           { get; set; }
+        public Line Line                                            { get; set; }
 
         public RectanglePhysique Rectangle                          { get; set; }
         public float LifePoints                                     { get; set; }
@@ -85,20 +84,6 @@ namespace EphemereGames.Commander.Simulation
                     break;
             }
         }
-
-
-        //public virtual void Show()
-        //{
-        //    if (Image != null)
-        //        Scene.Add(Image);
-        //}
-
-
-        //public virtual void Hide()
-        //{
-        //    if (Image != null)
-        //        Scene.Remove(Image);
-        //}
 
 
         public virtual void Draw()

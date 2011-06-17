@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     class EnemiesLives

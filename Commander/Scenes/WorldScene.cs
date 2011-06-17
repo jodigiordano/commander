@@ -2,12 +2,12 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
+    using EphemereGames.Core.Audio;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Input;
     using Microsoft.Xna.Framework.Input;
-    using EphemereGames.Core.Utilities;
-    using EphemereGames.Core.Audio;
 
 
     class WorldScene : Scene

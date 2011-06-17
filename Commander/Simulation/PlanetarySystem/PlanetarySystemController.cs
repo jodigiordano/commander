@@ -1,12 +1,11 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Utilities;
     using ParallelTasks;
-    using System;
 
 
     class PlanetarySystemController

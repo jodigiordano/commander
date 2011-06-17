@@ -1,13 +1,9 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Visual;
     using EphemereGames.Core.Physics;
-    using EphemereGames.Core.Utilities;
-    
+    using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
+
 
     class PushButton
     {

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
-    using Microsoft.Xna.Framework;
 
 
     enum BulletType

@@ -1,8 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System;
-    using EphemereGames.Core.Physics;
-    using Microsoft.Xna.Framework;
 
     class TurretLevel
     {

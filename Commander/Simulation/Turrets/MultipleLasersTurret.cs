@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
 

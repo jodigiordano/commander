@@ -3,7 +3,6 @@
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     class CheckBox

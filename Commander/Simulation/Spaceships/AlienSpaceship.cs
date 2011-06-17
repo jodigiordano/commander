@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
-    using EphemereGames.Core.Visual;
     using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 

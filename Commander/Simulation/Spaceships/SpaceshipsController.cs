@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
     using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
 
 
     class SpaceshipsController

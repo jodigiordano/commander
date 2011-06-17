@@ -35,17 +35,17 @@
 
             Rectangle.X = (int) (Position.X - Rectangle.Width);
             Rectangle.Y = (int) (Position.Y - Rectangle.Height);
-            
+
             Image.Position = Position;
-            Image.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
-            
+            Image.Rotation = (MathHelper.PiOver2) + (float) Math.Atan2(Direction.Y, Direction.X);
+
             MovingEffect = Scene.Particles.Get(@"projectileMissileDeplacement");
             ExplodingEffect = Scene.Particles.Get(@"projectileBaseExplosion");
 
             Image.VisualPriority = VisualPriority + 0.001f;
             MovingEffect.VisualPriority = VisualPriority + 0.001f;
             ExplodingEffect.VisualPriority = 0.35f;
-            
+
             LifePoints = 5;
         }
 

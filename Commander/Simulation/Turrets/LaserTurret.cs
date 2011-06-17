@@ -1,9 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using Microsoft.Xna.Framework;
-    using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
-    using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
 
 
     class LaserTurret : Turret

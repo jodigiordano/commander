@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
     using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
 
     class LiteSimulation
     {

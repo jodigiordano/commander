@@ -1,9 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Core.Utilities;
     using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
 
 
     class LevelStartedAnnunciation
