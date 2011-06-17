@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
@@ -6,7 +6,7 @@
 
     class MultipleLasersTurret : Turret
     {
-        public MultipleLasersTurret(Simulation simulation)
+        public MultipleLasersTurret(Simulator simulation)
             : base(simulation)
         {
             Type = TurretType.MultipleLasers;

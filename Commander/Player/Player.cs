@@ -1,53 +1,24 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System.Collections.Generic;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.GamerServices;
-    using Microsoft.Xna.Framework.Input;
 
 
-    class Player
+    class Player : Core.Input.Player
     {
-        public SignedInGamer Profile;
-        public PlayerIndex Index;
-        public bool Connected;
-        public bool Master;
-        public KeyboardConfiguration KeyboardConfiguration;
-        public MouseConfiguration MouseConfiguration;
-        public GamePadConfiguration GamePadConfiguration;
-        public string Name;
+        public Circle Circle;
 
         private Vector3 position;
-        private Circle Cercle;
 
 
-        public Player(PlayerIndex index)
+        public Player(PlayerIndex playerIndex) : base(playerIndex)
         {
-            Index = index;
-            Connected = false;
-            Master = false;
-            Cercle = new Circle(Position, 8);
-            Name = "Unknown";
+            Circle = new Circle(Position, 8);
 
-            KeyboardConfiguration = new KeyboardConfiguration();
-            MouseConfiguration = new MouseConfiguration();
-            GamePadConfiguration = new GamePadConfiguration();
-        }
-
-
-        public void Initialize()
-        {
-            Connected = false;
-            Master = false;
-            Profile = null;
-
-            Inputs.UpdateInputSource(
-                Index,
-                MouseConfiguration.ToList,
-                GamePadConfiguration.ToList,
-                KeyboardConfiguration.ToList);
+            KeysToListenTo = KeyboardConfiguration.ToList;
+            MouseButtonsToListenTo = MouseConfiguration.ToList;
+            GamePadButtonsToListenTo = GamePadConfiguration.ToList;
         }
 
 
@@ -58,7 +29,7 @@
             {
                 position = value;
                 VerifyFrame();
-                Cercle.Position = position;
+                Circle.Position = position;
             }
         }
 
@@ -71,8 +42,8 @@
 
         private void VerifyFrame()
         {
-            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Cercle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Cercle.Radius);
-            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Cercle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Cercle.Radius);
+            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius);
+            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius);
         }
     }
 }

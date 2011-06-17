@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Physics;
+    using Microsoft.Xna.Framework;
 
-    class ScenarioGenerator
+
+    class LevelGenerator
     {
         private static int[] TempsRotationPossible = new int[]
         {
@@ -58,13 +60,13 @@
         public int NbEmplacements;
         public int ArgentDepart;
         public List<EnemyType> EnnemisPresents;
-        public ScenarioDescriptor DescripteurScenario;
+        public LevelDescriptor LevelDescriptor;
         public bool SystemeCentre;
 
         private LiteSimulation SimulationLite;
         private List<CelestialBodyDescriptor> CorpsCelestes;
 
-        public ScenarioGenerator()
+        public LevelGenerator()
         {
             SimulationLite = new LiteSimulation();
             CorpsCelestes = new List<CelestialBodyDescriptor>();
@@ -72,16 +74,16 @@
 
         public void genererGameplay()
         {
-            DescripteurScenario.Background = "fondecran" + Main.Random.Next(1, 23);
-            DescripteurScenario.Player.Lives = ViesPlaneteAProteger;
-            DescripteurScenario.Player.Money = ArgentDepart;
-            DescripteurScenario.MineralsValue = ArgentExtra;
-            DescripteurScenario.LifePacks = NbPacksVie;
+            LevelDescriptor.Background = "fondecran" + Main.Random.Next(1, 23);
+            LevelDescriptor.Player.Lives = ViesPlaneteAProteger;
+            LevelDescriptor.Player.Money = ArgentDepart;
+            LevelDescriptor.MineralsValue = ArgentExtra;
+            LevelDescriptor.LifePacks = NbPacksVie;
         }
 
         public void genererSystemePlanetaire()
         {
-            DescripteurScenario = ScenariosFactory.getDescripteurBidon();
+            LevelDescriptor = LevelsFactory.GetEmptyDescriptor();
 
             CorpsCelestes.Clear();
 
@@ -103,13 +105,13 @@
 
                 CorpsCelestes.Add(dcc);
 
-                DescripteurScenario.PlanetarySystem.Add(dcc);
+                LevelDescriptor.PlanetarySystem.Add(dcc);
             }
         }
 
         public void genererCeintureAsteroides()
         {
-            CelestialBodyDescriptor ceinture = DescripteurScenario.PlanetarySystem[0];
+            CelestialBodyDescriptor ceinture = LevelDescriptor.PlanetarySystem[0];
 
             ceinture.Position = new Vector3((Main.Random.Next(0, 2) == 0) ? 700 : -700, -400, 0);
             ceinture.PathPriority = 0;
@@ -135,18 +137,18 @@
             c.CanSelect = false;
             c.Speed = 0;
 
-            DescripteurScenario.PlanetarySystem.Add(c);
+            LevelDescriptor.PlanetarySystem.Add(c);
         }
 
         private void genererPlaneteAProteger()
         {
-            CelestialBodyDescriptor aProteger = DescripteurScenario.PlanetarySystem[DescripteurScenario.PlanetarySystem.Count - 1];
+            CelestialBodyDescriptor aProteger = LevelDescriptor.PlanetarySystem[LevelDescriptor.PlanetarySystem.Count - 1];
 
             aProteger.PathPriority = int.MaxValue;
 
             aProteger.HasGravitationalTurret = true;
 
-            DescripteurScenario.CelestialBodyToProtect = aProteger.PathPriority;
+            LevelDescriptor.CelestialBodyToProtect = aProteger.PathPriority;
         }
 
         public List<Vector3> pointsConsideres()

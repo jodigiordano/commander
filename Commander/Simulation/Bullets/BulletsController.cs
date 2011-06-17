@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
@@ -11,11 +11,11 @@ namespace EphemereGames.Commander
         public event PhysicalObjectHandler ObjectDestroyed;
         public List<Bullet> Bullets { get; private set; }
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Matrix RotationMatrix;
 
 
-        public BulletsController(Simulation simulation)
+        public BulletsController(Simulator simulation)
         {
             Simulation = simulation;
 

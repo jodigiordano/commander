@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -28,10 +28,10 @@
     {
         public Dictionary<TurretType, Turret> Availables;
         public Dictionary<int, TurretBoostLevel> BoostLevels;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public TurretsFactory(Simulation simulation)
+        public TurretsFactory(Simulator simulation)
         {
             Simulation = simulation;
 

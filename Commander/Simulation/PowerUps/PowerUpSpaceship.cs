@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
@@ -12,7 +12,7 @@ namespace EphemereGames.Commander
         private float ActiveTime;
 
 
-        public PowerUpSpaceship(Simulation simulation, HumanBattleship humanBattleship)
+        public PowerUpSpaceship(Simulator simulation, HumanBattleship humanBattleship)
             : base(simulation)
         {
             HumanBattleship = humanBattleship;

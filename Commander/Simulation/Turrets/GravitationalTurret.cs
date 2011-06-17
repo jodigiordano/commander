@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace EphemereGames.Commander
         public float AntennaRotationBase;
 
 
-        public GravitationalTurret(Simulation simulation)
+        public GravitationalTurret(Simulator simulation)
             : base(simulation)
         {
             Type = TurretType.Gravitational;

@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
@@ -29,7 +29,7 @@
         private float ImageSize;
 
 
-        public CelestialBodyMenu(Simulation simulation, float prioriteAffichage)
+        public CelestialBodyMenu(Simulator simulation, float prioriteAffichage)
             : base(simulation)
         {
             MenuWidth = 140;

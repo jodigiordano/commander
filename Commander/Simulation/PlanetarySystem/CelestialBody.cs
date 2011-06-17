@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@
 
     class CelestialBody : ILivingObject, IObjetPhysique, IComparable<CelestialBody>
     {
-        public string Nom;
+        public string Name;
         public List<Turret> Turrets = new List<Turret>();
         public Image Representation;
         public Particle ParticulesRepresentation;
@@ -42,7 +42,7 @@
         public float ZoneImpactDestruction;
         public bool DarkSide;
 
-        protected Simulation Simulation;
+        protected Simulator Simulation;
         protected Vector3 AnciennePosition;
         protected double RotationTime;
         protected double ActualRotationTime;
@@ -56,7 +56,7 @@
 
 
         public CelestialBody(
-            Simulation simulation,
+            Simulator simulation,
             string nom,
             Vector3 positionBase,
             Vector3 offset,
@@ -69,7 +69,7 @@
             int rotation)
         {
             Simulation = simulation;
-            Nom = nom;
+            Name = nom;
             LifePoints = float.MaxValue;
             Priorite = 0;
             Selectionnable = true;
@@ -140,7 +140,7 @@
 
 
         public CelestialBody(
-            Simulation simulation,
+            Simulator simulation,
             string nom,
             Vector3 positionBase,
             Vector3 offset,
@@ -153,7 +153,7 @@
             int rotation)
         {
             this.Simulation = simulation;
-            this.Nom = nom;
+            this.Name = nom;
             this.LifePoints = float.MaxValue;
             this.Priorite = 0;
             this.Selectionnable = true;

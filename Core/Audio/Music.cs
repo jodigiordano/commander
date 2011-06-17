@@ -2,17 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
-    using EphemereGames.Core.Persistence;
     
+
     class Music : AbstractMusical, IAsset
     {
         public Music()
             : base()
         {
-            Volume = SoundEffectsController.Instance.VolumeMusique;
+            Volume = Audio.SoundEffectsController.MusicVolume;
         }
+
 
         public override void Update(GameTime gameTime)
         {
@@ -22,41 +24,45 @@
                 throw new Exception("Ne devrait pas arriver.");
 
             if (Fade == null && Instances.Count != 0 && !Instances[0].IsDisposed)
-                Etat = Instances[0].State;
+                State = Instances[0].State;
         }
+
 
         public override void jouer(bool apparitionProgressive, int tempsFade, bool loop)
         {
-            if (Instances.Count != 0 && Etat == SoundState.Paused)
+            if (Instances.Count != 0 && State == SoundState.Paused)
             {
-                reprendre(apparitionProgressive, tempsFade);
+                Unpause(apparitionProgressive, tempsFade);
                 return;
             }
 
-            else if (Instances.Count != 0 && Etat == SoundState.Stopped)
+            else if (Instances.Count != 0 && State == SoundState.Stopped)
                 Instances.Clear();
-            else if (Instances.Count != 0 && Etat == SoundState.Playing)
+            else if (Instances.Count != 0 && State == SoundState.Playing)
                 return;
 
             base.jouer(apparitionProgressive, tempsFade, loop);
         }
+
 
         public string AssetType
         {
             get { return "Musique"; }
         }
 
-        public object Load(string nom, string chemin, Dictionary<string, string> parametres, Microsoft.Xna.Framework.Content.ContentManager contenu)
+
+        public object Load(string musicName, string chemin, Dictionary<string, string> parametres, Microsoft.Xna.Framework.Content.ContentManager contenu)
         {
             Microsoft.Xna.Framework.Audio.SoundEffect son = contenu.Load<Microsoft.Xna.Framework.Audio.SoundEffect>(chemin);
 
-            Music musique = new Music();
-            musique.Son = son;
+            Music music = new Music();
+            music.Sound = son;
 
-            SoundEffectsController.Instance.setMusique(nom, musique);
+            Audio.SoundEffectsController.SetMusic(musicName, music);
 
-            return musique;
+            return music;
         }
+
 
         public object Clone()
         {

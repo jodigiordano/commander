@@ -10,18 +10,18 @@
 
     abstract class AbstractMusical
     {
-        public Microsoft.Xna.Framework.Audio.SoundEffect Son { get; set; }
+        public Microsoft.Xna.Framework.Audio.SoundEffect Sound { get; set; }
         protected List<SoundEffectInstance> Instances { get; set; }
         protected Fade Fade { get; set; }
-        public SoundState Etat { get; protected set; }
+        public SoundState State { get; protected set; }
         public SoundState ProchainEtat { protected get; set; }
 
         public AbstractMusical()
         {
-            Son = null;
+            Sound = null;
             Fade = null;
             Instances = new List<SoundEffectInstance>();
-            Etat = SoundState.Stopped;
+            State = SoundState.Stopped;
             ProchainEtat = SoundState.Stopped;
         }
 
@@ -58,12 +58,12 @@
                     {
                         if (ProchainEtat == SoundState.Stopped)
                         {
-                            Etat = SoundState.Stopped;
+                            State = SoundState.Stopped;
                             instance.Stop();
                         }
                         else
                         {
-                            Etat = SoundState.Paused;
+                            State = SoundState.Paused;
                             instance.Pause();
                         }
                     }
@@ -73,9 +73,9 @@
             }
         }
 
-        public virtual void reprendre(bool apparitionProgressive, int tempsFade)
+        public virtual void Unpause(bool apparitionProgressive, int tempsFade)
         {
-            if (Instances.Count == 0 || Etat != SoundState.Paused)
+            if (Instances.Count == 0 || State != SoundState.Paused)
                 return;
 
             if (apparitionProgressive)
@@ -90,20 +90,20 @@
             foreach (var instance in Instances)
                 instance.Resume();
 
-            Etat = SoundState.Playing;
+            State = SoundState.Playing;
             ProchainEtat = SoundState.Playing;
         }
 
-        public virtual void pauser(bool disparitionProgressive, int tempsFade)
+        public virtual void Pause(bool disparitionProgressive, int tempsFade)
         {
-            if (Instances.Count == 0 || Etat != SoundState.Playing)
+            if (Instances.Count == 0 || State != SoundState.Playing)
                 return;
 
             if (disparitionProgressive)
             {
                 Fade = new Fade((int)(Volume * 100), Fade.Type.OUT, 0, tempsFade);
 
-                Etat = SoundState.Playing;
+                State = SoundState.Playing;
                 ProchainEtat = SoundState.Paused;
             }
 
@@ -112,14 +112,14 @@
                 foreach (var instance in Instances)
                     instance.Pause();
 
-                Etat = SoundState.Paused;
+                State = SoundState.Paused;
                 ProchainEtat = SoundState.Paused;
             }
         }
 
-        public virtual void arreter(bool disparitionProgressive, int tempsFade)
+        public virtual void Stop(bool disparitionProgressive, int tempsFade)
         {
-            if (Instances.Count == 0 || Etat == SoundState.Stopped)
+            if (Instances.Count == 0 || State == SoundState.Stopped)
                 return;
 
             if (disparitionProgressive)
@@ -133,14 +133,14 @@
                 foreach (var instance in Instances)
                     instance.Stop();
 
-                Etat = SoundState.Stopped;
+                State = SoundState.Stopped;
                 ProchainEtat = SoundState.Stopped;
             }
         }
 
         public virtual void jouer(bool apparitionProgressive, int tempsFade, bool loop)
         {
-            SoundEffectInstance instance = Son.CreateInstance();
+            SoundEffectInstance instance = Sound.CreateInstance();
 
             instance.IsLooped = loop;
 
@@ -158,7 +158,7 @@
 
             Instances.Add(instance);
 
-            Etat = SoundState.Playing;
+            State = SoundState.Playing;
             ProchainEtat = SoundState.Playing;
         }
     }

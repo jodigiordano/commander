@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using Microsoft.Xna.Framework;
     using System.Collections.Generic;
@@ -26,10 +26,10 @@
         public Circle Cercle;
         public PowerUpType PowerUpInUse;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public SimPlayer(Simulation simulation)
+        public SimPlayer(Simulator simulation)
         {
             Simulation = simulation;
             Cercle = new Circle(Position, 8);

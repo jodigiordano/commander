@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -8,10 +8,10 @@
     {
         public CelestialBody CelestialBody;
         private Image BlowUpZoneVisual;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public FinalSolutionPreview(Simulation simulation)
+        public FinalSolutionPreview(Simulator simulation)
         {
             Simulation = simulation;
 

@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
 
     class Bubble
     {
-        protected Simulation Simulation;
+        protected Simulator Simulation;
 
         private List<Image> Corners;
         private List<Image> Edges;
@@ -20,7 +20,7 @@
         public int BlaPosition;
 
 
-        public Bubble(Simulation simulation, Rectangle dimension, double prioriteAffichage)
+        public Bubble(Simulator simulation, Rectangle dimension, double prioriteAffichage)
         {
             this.Simulation = simulation;
             this.Dimension = dimension;
@@ -29,10 +29,12 @@
             Bla.VisualPriority = prioriteAffichage;
             Bla.Origin = Vector2.Zero;
 
-            Filter = new Image("PixelBlanc");
-            Filter.Color = new Color(0, 0, 0, 200);
-            Filter.VisualPriority = prioriteAffichage + 0.00002f;
-            Filter.Origin = Vector2.Zero;
+            Filter = new Image("PixelBlanc")
+            {
+                Color = new Color(0, 0, 0, 200),
+                VisualPriority = prioriteAffichage + 0.00002f,
+                Origin = Vector2.Zero
+            };
 
             Corners = new List<Image>();
             Edges = new List<Image>();

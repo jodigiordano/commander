@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
@@ -17,7 +17,7 @@
         public Path Path;
         public Path PathPreview;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Core.Utilities.Pool<ShootingStar> ShootingStarsFactory;
         private bool DeadlyShootingStars;
 
@@ -30,7 +30,7 @@
         private bool FinalSolution;
 
 
-        public PlanetarySystemController(Simulation simulation)
+        public PlanetarySystemController(Simulator simulation)
         {
             Simulation = simulation;
             CelestialBodies = new List<CelestialBody>();

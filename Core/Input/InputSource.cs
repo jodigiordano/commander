@@ -13,7 +13,7 @@
         public List<MouseButton> MappedMouseButtons;
         public List<Buttons> MappedGamePadButtons;
 
-        private PlayerIndex Index;
+        private Player Player;
         private Vector2 MouseBasePosition;
         private int PreviousMouseWheelValue;
 
@@ -33,9 +33,9 @@
         private Dictionary<Buttons, Vector3> GamePadJoystickMoved;
 
 
-        public InputSource(PlayerIndex index, Vector2 mouseBasePosition)
+        public InputSource(Player player, Vector2 mouseBasePosition)
         {
-            Index = index;
+            Player = player;
             MouseBasePosition = mouseBasePosition;
             PreviousMouseWheelValue = 0;
 
@@ -141,10 +141,10 @@
         }
 
 
-        public void doGamePadInput()
+        public void DoGamePadInput()
         {
             // Receive raw input
-            GamePadState gamePadState = GamePad.GetState(Index, GamePadDeadZone.Circular);
+            GamePadState gamePadState = GamePad.GetState(Player.Index, GamePadDeadZone.Circular);
 
             foreach (var button in MappedGamePadButtons)
             {
@@ -161,7 +161,7 @@
         }
 
 
-        public void doMouseInput()
+        public void DoMouseInput()
         {
             MouseState mouseState = Mouse.GetState();
             int currentMouseWheelValue = MouseWheelValue(mouseState.ScrollWheelValue);
@@ -191,7 +191,7 @@
         }
 
 
-        public void doKeyboardInput()
+        public void DoKeyboardInput()
         {
             // Receive raw input
             KeyboardState keyboardState = Keyboard.GetState();
@@ -210,51 +210,99 @@
 
         public void TellListener(InputListener listener)
         {
-            foreach (var button in MappedGamePadButtons)
+            if (!Player.Connected)
             {
-                if (GamePadButtonsPressedOnce[button])
-                    listener.doGamePadButtonPressedOnce(Index, button);
-
-                if (GamePadButtonsReleased[button])
-                    listener.doGamePadButtonReleased(Index, button);
+                TellIfWantsToConnect(listener);
+                return;
             }
 
 
-            if (GamePadJoystickMoved[Buttons.LeftStick] != Vector3.Zero)
-                listener.doGamePadJoystickMoved(Index, Buttons.LeftStick, GamePadJoystickMoved[Buttons.LeftStick]);
+            if (Player.InputType == InputType.Gamepad)
+            {
+                TellGamePad(listener);
+                return;
+            }
+
+            TellMouse(listener);
+        }
 
 
-            if (GamePadJoystickMoved[Buttons.RightStick] != Vector3.Zero)
-                listener.doGamePadJoystickMoved(Index, Buttons.RightStick, GamePadJoystickMoved[Buttons.RightStick]);
-
-
+        private void TellMouse(InputListener listener)
+        {
             foreach (var button in MappedMouseButtons)
             {
                 if (MouseButtonsPressedOnce[button])
-                    listener.doMouseButtonPressedOnce(Index, button);
+                    listener.DoMouseButtonPressedOnce(Player, button);
 
                 if (MouseButtonsReleased[button])
-                    listener.doMouseButtonReleased(Index, button);
+                    listener.DoMouseButtonReleased(Player, button);
             }
 
 
             if (MouseScrolled != 0)
-                listener.doMouseScrolled(Index, MouseScrolled);
+                listener.DoMouseScrolled(Player, MouseScrolled);
 
 
             if (MouseMoved != Vector3.Zero)
-            {
-                listener.doMouseMoved(Index, MouseMoved);
-            }
+                listener.DoMouseMoved(Player, MouseMoved);
 
 
             foreach (var keyboardkey in MappedKeys)
             {
                 if (KeysPressedOnce[keyboardkey])
-                    listener.doKeyPressedOnce(Index, keyboardkey);
+                    listener.DoKeyPressedOnce(Player, keyboardkey);
 
                 if (KeysReleased[keyboardkey])
-                    listener.doKeyReleased(Index, keyboardkey);
+                    listener.DoKeyReleased(Player, keyboardkey);
+            }
+        }
+
+
+        private void TellGamePad(InputListener listener)
+        {
+            foreach (var button in MappedGamePadButtons)
+            {
+                if (GamePadButtonsPressedOnce[button])
+                    listener.DoGamePadButtonPressedOnce(Player, button);
+
+                if (GamePadButtonsReleased[button])
+                    listener.DoGamePadButtonReleased(Player, button);
+            }
+
+
+            if (GamePadJoystickMoved[Buttons.LeftStick] != Vector3.Zero)
+                listener.DoGamePadJoystickMoved(Player, Buttons.LeftStick, GamePadJoystickMoved[Buttons.LeftStick]);
+
+
+            if (GamePadJoystickMoved[Buttons.RightStick] != Vector3.Zero)
+                listener.DoGamePadJoystickMoved(Player, Buttons.RightStick, GamePadJoystickMoved[Buttons.RightStick]);
+        }
+
+
+        private void TellIfWantsToConnect(InputListener listener)
+        {
+            foreach (var button in MappedGamePadButtons)
+            {
+                if (GamePadButtonsPressedOnce[button])
+                {
+                    Player.InputType = InputType.Gamepad;
+                    listener.PlayerConnectionRequested(Player);
+                    return;
+                }
+            }
+
+
+            if (Inputs.PlayersController.MouseInUse)
+                return;
+
+            foreach (var button in MappedMouseButtons)
+            {
+                if (MouseButtonsPressedOnce[button])
+                {
+                    Player.InputType = InputType.Mouse;
+                    listener.PlayerConnectionRequested(Player);
+                    return;
+                }
             }
         }
 

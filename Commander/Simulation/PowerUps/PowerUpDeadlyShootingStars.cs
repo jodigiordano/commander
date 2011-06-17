@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace EphemereGames.Commander
         public int AttackPoints                 { get; private set; }
 
 
-        public PowerUpDeadlyShootingStars(Simulation simulation)
+        public PowerUpDeadlyShootingStars(Simulator simulation)
             : base(simulation)
         {
             DestructionRange = new Circle(new Vector3(), 100);

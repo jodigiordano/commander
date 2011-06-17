@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Audio;
@@ -22,11 +22,11 @@
         public CelestialBody SelectedCelestialBody { get { return Player.ActualSelection.CelestialBody; } }
 
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private SimPlayer Player;
 
 
-        public SimPlayersController(Simulation simulation)
+        public SimPlayersController(Simulator simulation)
         {
             Simulation = simulation;
         }
@@ -231,18 +231,18 @@
         }
 
 
-        public void DoMouseMoved(Player player, ref Vector3 delta)
+        public void DoMouseMoved(Core.Input.Player p, ref Vector3 delta)
         {
             if (Simulation.DemoMode)
             {
-                Player.Move(ref delta, player.MouseConfiguration.Speed);
+                Player.Move(ref delta, MouseConfiguration.Speed);
                 Player.UpdateDemoSelection();
                 NotifyPlayerMoved(Player);
                 return;
             }
 
 
-            Player.Move(ref delta, player.MouseConfiguration.Speed);
+            Player.Move(ref delta, MouseConfiguration.Speed);
 
             if (Player.ActualSelection.TurretToPlace != null &&
                 Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(Player.Position))
@@ -255,20 +255,20 @@
         }
 
 
-        public void DoGamePadJoystickMoved(Player player, Buttons button, ref Vector3 delta)
+        public void DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, ref Vector3 delta)
         {
-            if (button != player.GamePadConfiguration.MoveCursor)
+            if (button != GamePadConfiguration.MoveCursor)
                 return;
 
             if (Simulation.DemoMode)
             {
-                Player.Move(ref delta, player.GamePadConfiguration.Speed);
+                Player.Move(ref delta, GamePadConfiguration.Speed);
                 Player.UpdateDemoSelection();
                 NotifyPlayerMoved(Player);
                 return;
             }
 
-            Player.Move(ref delta, player.GamePadConfiguration.Speed);
+            Player.Move(ref delta, GamePadConfiguration.Speed);
 
             if (Player.ActualSelection.TurretToPlace != null &&
                 Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(Player.Position))
@@ -280,7 +280,7 @@
         }
 
 
-        public void DoMouseScrolled(Player player, int delta)
+        public void DoMouseScrolled(Core.Input.Player p, int delta)
         {
             if (Simulation.DemoMode)
             {
@@ -300,40 +300,40 @@
         }
 
 
-        public void DoGamePadButtonPressedOnce(Player player, Buttons button)
+        public void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
             if (Simulation.DemoMode)
             {
                 if ( Player.ActualSelection.CelestialBody == null )
                     return;
 
-                if ( button == player.GamePadConfiguration.SelectionNext )
+                if ( button == GamePadConfiguration.SelectionNext )
                     Player.NextGameAction();
-                else if ( button == player.GamePadConfiguration.SelectionPrevious )
+                else if ( button == GamePadConfiguration.SelectionPrevious )
                     Player.PreviousGameAction();
 
                 return;
             }
 
-            if (button == player.GamePadConfiguration.Select)
+            if (button == GamePadConfiguration.Select)
                 DoSelectAction();
-            else if (button == player.GamePadConfiguration.Cancel)
+            else if (button == GamePadConfiguration.Cancel)
                 DoCancelAction();
-            else if (button == player.GamePadConfiguration.SelectionNext)
+            else if (button == GamePadConfiguration.SelectionNext)
                 DoNextorPreviousAction(1);
-            else if (button == player.GamePadConfiguration.SelectionPrevious)
+            else if (button == GamePadConfiguration.SelectionPrevious)
                 DoNextorPreviousAction(-1);
         }
 
 
-        public void DoMouseButtonPressedOnce(Player player, MouseButton button)
+        public void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
             if (Simulation.DemoMode)
                 return;
 
-            if (button == player.MouseConfiguration.Select)
+            if (button == MouseConfiguration.Select)
                 DoSelectAction();
-            else if (button == player.MouseConfiguration.Cancel)
+            else if (button == MouseConfiguration.Cancel)
                 DoCancelAction();
         }
 

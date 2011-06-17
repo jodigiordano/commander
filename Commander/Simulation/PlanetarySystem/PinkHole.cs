@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@
     class PinkHole : CelestialBody
     {
         public PinkHole(
-            Simulation simulation,
+            Simulator simulation,
             string nom,
             Vector3 positionBase,
             Vector3 offset,

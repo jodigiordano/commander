@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
@@ -13,11 +13,11 @@
 
         private double TempsDebut;
         private List<EnemyDescriptor> EnemiesToCreate;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private int EnemiesAlive;
 
 
-        public Wave(Simulation simulation, WaveDescriptor descriptor)
+        public Wave(Simulator simulation, WaveDescriptor descriptor)
         {
             Simulation = simulation;
 

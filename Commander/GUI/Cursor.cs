@@ -14,23 +14,21 @@
  
         private Vector3 position;
         private Scene Scene;
-        private Main Main;
         private Image representation;
         private Vector2 Size;
         private double VisualPriority;
         private Color Color;
 
 
-        public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, double visualPriority)
-            : this(main, scene, initialPosition, speed, visualPriority, "Curseur", true)
+        public Cursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority)
+            : this(scene, initialPosition, speed, visualPriority, "Curseur", true)
         {
 
         }
 
 
-        public Cursor(Main main, Scene scene, Vector3 initialPosition, float speed, double visualPriority, string imageName, bool visible)
+        public Cursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority, string imageName, bool visible)
         {
-            Main = main;
             Scene = scene;
             Speed = speed;
             VisualPriority = visualPriority;
@@ -88,18 +86,6 @@
             Scene.VisualEffects.Add(representation, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
             Active = false;
         }
-
-
-        //public void Show()
-        //{
-        //    Scene.Add(representation);
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Scene.Remove(representation);
-        //}
 
 
         public void Draw()

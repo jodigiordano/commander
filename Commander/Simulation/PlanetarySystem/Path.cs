@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
@@ -29,7 +29,7 @@
         private int PreviousNbLinesToDraw;
 
 
-        public Path(Simulation simulation, Color couleur, TypeBlend melange)
+        public Path(Simulator simulation, Color couleur, TypeBlend melange)
         {
             Scene = simulation.Scene;
             

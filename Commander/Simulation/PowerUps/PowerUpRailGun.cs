@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System;
     using EphemereGames.Core.Audio;
@@ -14,7 +14,7 @@ namespace EphemereGames.Commander
         private bool Firing;
 
 
-        public PowerUpRailGun(Simulation simulation, HumanBattleship humanBattleship)
+        public PowerUpRailGun(Simulator simulation, HumanBattleship humanBattleship)
             : base(simulation)
         {
             HumanBattleship = humanBattleship;

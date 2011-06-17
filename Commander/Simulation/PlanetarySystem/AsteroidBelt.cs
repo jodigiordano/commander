@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -29,7 +29,7 @@
 
 
         public AsteroidBelt(
-            Simulation simulation,
+            Simulator simulation,
             string name,
             Vector3 basePosition,
             float radius,

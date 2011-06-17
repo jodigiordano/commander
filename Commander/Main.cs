@@ -18,10 +18,10 @@ namespace EphemereGames.Commander
     {
         public static SaveGame SaveGame;
         public static GeneratorData GeneratorData;
-        public static PlayersController PlayersController;
         public static TrialMode TrialMode;
         public static GameScene GameInProgress;
         public static Main Instance;
+        public static string SelectedWorld;
 
         private GraphicsDeviceManager Graphics;
         private bool Initializing = true;
@@ -32,8 +32,16 @@ namespace EphemereGames.Commander
 
         public static List<string> AvailableMusics = new List<string>()
         {
-            "ingame1", "ingame2", "ingame3", "ingame4", "ingame5", "ingame6", "ingame7"
+            "ingame1",
+            "ingame2",
+            "ingame3",
+            "ingame4",
+            "ingame5",
+            "ingame6",
+            "ingame7"
         };
+        public static string SelectedMusic;
+        private static double TimeBetweenTwoMusicChange = 0;
 
         public static Random Random = new Random();
 
@@ -52,7 +60,6 @@ namespace EphemereGames.Commander
             SaveGame = new SaveGame();
             GeneratorData = new GeneratorData();
             Window.AllowUserResizing = false;
-            PlayersController = new PlayersController();
 
             if (Preferences.Target == Setting.Xbox360)
                 Components.Add(new GamerServicesComponent(this));
@@ -61,41 +68,31 @@ namespace EphemereGames.Commander
         }
 
 
-        public Dictionary<PlayerIndex, Player> Players
-        {
-            get { return PlayersController.Players; }
-        }
-
-
         protected override void Initialize()
         {
             base.Initialize();
 
-            Persistence.Initialize(
-                "Content",
-                "packages.xml",
-                Services);
-
-            Visuals.Initialize(
-                Graphics,
-                1280,
-                720,
-                Content,
-                new string[] { "Menu", "Partie", "Chargement", "NouvellePartie", "Aide", "Options", "Editeur", "Acheter", "Validation" });
+            Persistence.Initialize("Content", "packages.xml", Services);
+            Visuals.Initialize(Graphics, 1280, 720, Content);
 
             Visuals.TransitionAnimation = new AnimationTransition(500, Preferences.PrioriteTransitionScene);
 
             Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
+            Inputs.AddPlayer(new Player(PlayerIndex.One));
+            Inputs.AddPlayer(new Player(PlayerIndex.Two));
+            Inputs.AddPlayer(new Player(PlayerIndex.Three));
+            Inputs.AddPlayer(new Player(PlayerIndex.Four));
 
             Physics.Initialize();
             Audio.Initialize(0, 0);
 
-            Persistence.AddData( SaveGame );
-            Persistence.AddData( GeneratorData );
+            Persistence.AddData(SaveGame);
+            Persistence.AddData(GeneratorData);
 
             Persistence.LoadPackage("chargement");
 
-            PlayersController.Initialize();
+            SelectedMusic = AvailableMusics[Random.Next(0, AvailableMusics.Count)];
+            AvailableMusics.Remove(SelectedMusic);
         }
 
 
@@ -135,13 +132,7 @@ namespace EphemereGames.Commander
                 Audio.SetMaxInstancesSfx("sfxLifePack", 2);
                 Audio.SetMaxInstancesSfx("sfxMineGround", 1);
 
-                Visuals.UpdateScene("Chargement", new LoadingScene(this));
-                Visuals.UpdateScene("Menu", null);
-                Visuals.UpdateScene("Partie", null);
-                Visuals.UpdateScene("NouvellePartie", null);
-                Visuals.UpdateScene("Aide", null);
-                Visuals.UpdateScene("Options", null);
-                Visuals.UpdateScene("Editeur", null);
+                Visuals.AddScene(new LoadingScene());
                         
                 Initializing = false;
             }
@@ -157,12 +148,29 @@ namespace EphemereGames.Commander
 
             if (Persistence.DataLoaded("savePlayer"))
                 TrialMode.Update(gameTime);
+
+            TimeBetweenTwoMusicChange -= gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
 
         protected override void Draw(GameTime gameTime)
         {
             Visuals.Draw();
+        }
+
+
+        public static void ChangeMusic()
+        {
+            if (TimeBetweenTwoMusicChange > 0)
+                return;
+
+            Audio.StopMusic(Main.SelectedMusic, true, Preferences.TimeBetweenTwoMusics - 50);
+            string ancienneMusique = Main.SelectedMusic;
+            Main.SelectedMusic = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
+            Main.AvailableMusics.Remove(Main.SelectedMusic);
+            Main.AvailableMusics.Add(ancienneMusique);
+            Audio.PlayMusic(Main.SelectedMusic, true, 1000, true);
+            TimeBetweenTwoMusicChange = Preferences.TimeBetweenTwoMusics;
         }
     }
 

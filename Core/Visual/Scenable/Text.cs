@@ -39,6 +39,8 @@
 
 
         public Text(string fontName) : this("", fontName, Color.White, Vector3.Zero) {}
+        public Text(string text, string fontName) : this(text, fontName, Color.White, Vector3.Zero) { }
+        public Text(string text, string fontName, Vector3 position) : this(text, fontName, Color.White, position) { }
 
 
         public Vector2 TextSize
@@ -73,6 +75,14 @@
                 Size = new Vector2(value);
                 TextSizeComputed = false;
             }
+        }
+
+
+        public Text CenterIt()
+        {
+            Origin = Center;
+
+            return this;
         }
 
 

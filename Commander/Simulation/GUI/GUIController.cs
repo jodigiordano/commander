@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +12,8 @@
         public List<CelestialBody> CelestialBodies;
         public List<Turret> Turrets;
         public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave;
-        public Scenario Scenario;
-        public ScenarioDescriptor DemoModeSelectedScenario;
+        public Level Level;
+        public LevelDescriptor LevelSelectedDemoMode;
         public List<Enemy> Enemies;
         public InfiniteWave InfiniteWaves;
         public LinkedList<Wave> Waves;
@@ -21,11 +21,11 @@
         public Path PathPreview;
         public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private SelectedCelestialBodyAnimation SelectedCelestialBodyAnimation;
         private GameMenu MenuGeneral;
-        private ScenarioStartedAnnunciation ScenarioStartedAnnunciation;
-        private ScenarioEndedAnnunciation ScenarioEndedAnnunciation;
+        private LevelStartedAnnunciation LevelStartedAnnunciation;
+        private LevelEndedAnnunciation LevelEndedAnnunciation;
         private AdvancedView AdvancedView;
         private PlayerLives PlayerLives;
         private CelestialBodyMenu MenuCelestialBody;
@@ -41,7 +41,7 @@
         private TheResistance GamePausedResistance;
 
 
-        public GUIController(Simulation simulation)
+        public GUIController(Simulator simulation)
         {
             Simulation = simulation;
 
@@ -53,9 +53,9 @@
         public void Initialize()
         {
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulation);
-            
-            Cursor = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
-            Crosshair = new Cursor(Simulation.Main, Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
+
+            Cursor = new Cursor(Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
+            Crosshair = new Cursor(Simulation.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
             MenuTurret = new TurretMenu(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             MenuCelestialBody = new CelestialBodyMenu(Simulation, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             
@@ -67,10 +67,10 @@
             GamePausedResistance.Initialize();
             GamePausedResistance.AlphaChannel = 100;
             
-            ScenarioStartedAnnunciation = new ScenarioStartedAnnunciation(Simulation, Scenario);
-            ScenarioEndedAnnunciation = new ScenarioEndedAnnunciation(Simulation, CelestialBodies, Scenario);
+            LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulation, Level);
+            LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulation, CelestialBodies, Level);
 
-            PlayerLives = new PlayerLives(Simulation, Scenario.CelestialBodyToProtect, new Color(255, 0, 220));
+            PlayerLives = new PlayerLives(Simulation, Level.CelestialBodyToProtect, new Color(255, 0, 220));
             PathPreviewing = new PathPreview(PathPreview, Path);
             MenuCelestialBody.Initialize();
 
@@ -124,7 +124,7 @@
 
         public void doGameStateChanged(GameState newGameState)
         {
-            ScenarioEndedAnnunciation.DoGameStateChanged(newGameState);
+            LevelEndedAnnunciation.DoGameStateChanged(newGameState);
         }
 
 
@@ -203,7 +203,7 @@
         }
 
 
-        public void doPlayerMoved(SimPlayer player)
+        public void DoPlayerMoved(SimPlayer player)
         {
             Cursor.Position = player.Position;
             Crosshair.Position = player.Position;
@@ -263,9 +263,9 @@
             MenuTurret.SelectedOption = selection.TurretOption;
 
             MenuDemo.CelestialBody = selection.CelestialBody;
-            MenuDemo.Scenario =
+            MenuDemo.Level =
                 (selection.CelestialBody != null &&
-                DemoModeSelectedScenario != null) ? DemoModeSelectedScenario : null;
+                LevelSelectedDemoMode != null) ? LevelSelectedDemoMode : null;
             MenuDemo.Action = selection.GameAction;
 
             SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
@@ -322,43 +322,13 @@
             else
             {
                 MenuGeneral.Update();
-                ScenarioStartedAnnunciation.Update(gameTime);
-                ScenarioEndedAnnunciation.Update(gameTime);
+                LevelStartedAnnunciation.Update(gameTime);
+                LevelEndedAnnunciation.Update(gameTime);
                 PlayerLives.Update(gameTime);
                 MenuPowerUps.Update();
                 PathPreviewing.Update(gameTime);
             }
         }
-
-
-        //public void Show()
-        //{
-        //    Cursor.Show();
-        //    Crosshair.Show();
-
-        //    if (!Simulation.DemoMode)
-        //    {
-        //        MenuGeneral.Show();
-        //        ScenarioEndedAnnunciation.Show();
-        //        AdvancedView.Show();
-        //        PlayerLives.Show();
-        //    }
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Cursor.Hide();
-        //    Crosshair.Hide();
-
-        //    if (!Simulation.DemoMode)
-        //    {
-        //        MenuGeneral.Hide();
-        //        ScenarioEndedAnnunciation.Hide();
-        //        AdvancedView.Hide();
-        //        PlayerLives.Hide();
-        //    }
-        //}
 
 
         public void Draw()
@@ -382,8 +352,8 @@
             }
 
             MenuGeneral.Draw();
-            ScenarioStartedAnnunciation.Draw();
-            ScenarioEndedAnnunciation.Draw();
+            LevelStartedAnnunciation.Draw();
+            LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();
             PlayerLives.Draw();
             MenuPowerUps.Draw();

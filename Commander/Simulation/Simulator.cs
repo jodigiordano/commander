@@ -1,10 +1,10 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Input;
+    using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
-    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -24,18 +24,16 @@ namespace EphemereGames.Commander
     delegate void EnemyBulletHandler(Enemy e, Bullet b);
 
 
-    class Simulation : InputListener
+    class Simulator : InputListener
     {
         public Scene Scene;
-        public Main Main;
-        public ScenarioDescriptor DemoModeSelectedScenario;
-        public ScenarioDescriptor DescriptionScenario;
+        public LevelDescriptor SelectedLevelDemoMode;
+        public LevelDescriptor LevelDescriptor;
         public bool DebugMode;
         public bool WorldMode;
         public bool DemoMode;
         public bool EditorMode;
-        public bool HelpMode { get { return ScenarioController.Help.Active; } }
-        public Dictionary<PlayerIndex, Player> Players;
+        public bool HelpMode { get { return LevelsController.Help.Active; } }
         public GameAction GameAction;
         public TurretsFactory TurretsFactory;
         public PowerUpsFactory PowerUpsFactory;
@@ -44,14 +42,14 @@ namespace EphemereGames.Commander
         public BulletsFactory BulletsFactory;
         public RectanglePhysique Terrain;
         public RectanglePhysique InnerTerrain;
-        public GameState Etat { get { return ScenarioController.State; } set { ScenarioController.State = value; } }
+        public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
         public CelestialBody CelestialBodyPausedGame;
         
         public Vector3 PositionCurseur; 
 
         public PlanetarySystemController PlanetarySystemController;
         public MessagesController MessagesController;
-        private ScenariosController ScenarioController;
+        private LevelsController LevelsController;
         private EnemiesController EnemiesController;
         private BulletsController BulletsController;
         private CollisionsController CollisionsController;
@@ -62,18 +60,17 @@ namespace EphemereGames.Commander
         private PowerUpsController PowerUpsController;
 
 
-        public Simulation(Main main, Scene scene, ScenarioDescriptor scenario)
+        public Simulator(Scene scene, LevelDescriptor descriptor)
         {
             Scene = scene;
-            Main = main;
-            DescriptionScenario = scenario;
+            LevelDescriptor = descriptor;
             TurretsFactory = new TurretsFactory(this);
             PowerUpsFactory = new PowerUpsFactory(this);
             EnemiesFactory = new EnemiesFactory(this);
             MineralsFactory = new MineralsFactory(this);
             BulletsFactory = new BulletsFactory(this);
 
-            DemoModeSelectedScenario = new ScenarioDescriptor();
+            SelectedLevelDemoMode = new LevelDescriptor();
             Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
             InnerTerrain = new RectanglePhysique(-640, -320, 1280, 720);
 
@@ -87,7 +84,7 @@ namespace EphemereGames.Commander
             MessagesController = new MessagesController(this);
             GUIController = new GUIController(this);
             PowerUpsController = new PowerUpsController(this);
-            ScenarioController = new ScenariosController(this);
+            LevelsController = new LevelsController(this);
 
             WorldMode = false;
             DemoMode = false;
@@ -146,40 +143,40 @@ namespace EphemereGames.Commander
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
 
 
-            ScenarioController.Scenario = new Scenario(this, DescriptionScenario);
-            TurretsFactory.Availables = ScenarioController.AvailableTurrets;
-            PowerUpsFactory.Availables = ScenarioController.AvailablePowerUps;
+            LevelsController.Level = new Level(this, LevelDescriptor);
+            TurretsFactory.Availables = LevelsController.AvailableTurrets;
+            PowerUpsFactory.Availables = LevelsController.AvailablePowerUps;
             CollisionsController.Bullets = BulletsController.Bullets;
             CollisionsController.Enemies = EnemiesController.Enemies;
-            SimPlayersController.CelestialBodies = ScenarioController.CelestialBodies;
-            PlanetarySystemController.CelestialBodies = ScenarioController.CelestialBodies;
+            SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
+            PlanetarySystemController.CelestialBodies = LevelsController.CelestialBodies;
             TurretsController.PlanetarySystemController = PlanetarySystemController;
-            EnemiesController.InfiniteWaves = ScenarioController.InfiniteWaves;
-            EnemiesController.Waves = ScenarioController.Waves;
+            EnemiesController.InfiniteWaves = LevelsController.InfiniteWaves;
+            EnemiesController.Waves = LevelsController.Waves;
             CollisionsController.Turrets = TurretsController.Turrets;
-            SimPlayersController.CommonStash = ScenarioController.CommonStash;
-            SimPlayersController.CelestialBodyToProtect = ScenarioController.CelestialBodyToProtect;
+            SimPlayersController.CommonStash = LevelsController.CommonStash;
+            SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
             GUIController.Path = PlanetarySystemController.Path;
             GUIController.PathPreview = PlanetarySystemController.PathPreview;
             EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
-            TurretsController.StartingTurrets = ScenarioController.StartingTurrets;
+            TurretsController.StartingTurrets = LevelsController.StartingTurrets;
             EnemiesController.Path = PlanetarySystemController.Path;
-            CollisionsController.CelestialBodies = ScenarioController.CelestialBodies;
+            CollisionsController.CelestialBodies = LevelsController.CelestialBodies;
             CollisionsController.Minerals = EnemiesController.Minerals;
-            EnemiesController.MineralsValue = ScenarioController.Scenario.MineralsValue;
-            EnemiesController.MineralsPercentages = ScenarioController.Scenario.MineralsPercentages;
-            EnemiesController.LifePacksGiven = ScenarioController.Scenario.LifePacks;
+            EnemiesController.MineralsValue = LevelsController.Level.MineralsValue;
+            EnemiesController.MineralsPercentages = LevelsController.Level.MineralsPercentages;
+            EnemiesController.LifePacksGiven = LevelsController.Level.LifePacks;
             SpaceshipsController.Enemies = EnemiesController.Enemies;
             MessagesController.Turrets = TurretsController.Turrets;
             GUIController.CompositionNextWave = EnemiesController.NextWaveData;
             SimPlayersController.SandGlass = GUIController.SandGlass;
             GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
-            GUIController.Scenario = ScenarioController.Scenario;
+            GUIController.Level = LevelsController.Level;
             GUIController.Enemies = EnemiesController.Enemies;
             SimPlayersController.InitialPlayerPosition = PositionCurseur;
-            GUIController.InfiniteWaves = ScenarioController.InfiniteWaves;
-            GUIController.Waves = ScenarioController.Waves;
-            GUIController.DemoModeSelectedScenario = this.DemoModeSelectedScenario;
+            GUIController.InfiniteWaves = LevelsController.InfiniteWaves;
+            GUIController.Waves = LevelsController.Waves;
+            GUIController.LevelSelectedDemoMode = SelectedLevelDemoMode;
             SpaceshipsController.HumanBattleship = GUIController.HumanBattleship;
             PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
             SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
@@ -192,7 +189,7 @@ namespace EphemereGames.Commander
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(BulletsController.DoObjectHit);
             CollisionsController.ObjectOutOfBounds += new PhysicalObjectHandler(BulletsController.DoObjectOutOfBounds);
             SimPlayersController.AchatTourelleDemande += new TurretHandler(TurretsController.DoBuyTurret);
-            EnemiesController.WaveEnded += new NoneHandler(ScenarioController.doWaveEnded);
+            EnemiesController.WaveEnded += new NoneHandler(LevelsController.doWaveEnded);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDetruit);
             CollisionsController.InTurretRange += new TurretPhysicalObjectHandler(TurretsController.DoInRangeTurret);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
@@ -201,7 +198,7 @@ namespace EphemereGames.Commander
             SimPlayersController.VenteTourelleDemande += new TurretHandler(TurretsController.DoSellTurret);
             TurretsController.TurretSold += new TurretHandler(SimPlayersController.DoTourelleVendue);
             TurretsController.TurretBought += new TurretHandler(SimPlayersController.DoTourelleAchetee);
-            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(ScenarioController.doEnemyReachedEnd);
+            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(LevelsController.doEnemyReachedEnd);
             TurretsController.TurretUpdated += new TurretHandler(SimPlayersController.DoTourelleMiseAJour);
             SimPlayersController.MiseAJourTourelleDemande += new TurretHandler(TurretsController.DoUpgradeTurret);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
@@ -212,18 +209,18 @@ namespace EphemereGames.Commander
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
-            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(ScenarioController.doObjectDestroyed);
-            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.doEnnemiAtteintFinTrajet);
-            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.doCorpsCelesteDetruit);
+            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(LevelsController.doObjectDestroyed);
+            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.DoEnemyReachedEndOfPath);
+            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.DoCelestialBodyDestroyed);
             EnemiesController.WaveStarted += new NoneHandler(GUIController.doNextWave);
             SimPlayersController.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
-            ScenarioController.NewGameState += new NewGameStateHandler(GUIController.doGameStateChanged);
+            LevelsController.NewGameState += new NewGameStateHandler(GUIController.doGameStateChanged);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.doPlayerSelectionChanged);
-            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(this.doPlayerSelectionChanged);
+            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(this.DoPlayerSelectionChanged);
             TurretsController.TurretReactivated += new TurretHandler(SimPlayersController.DoTurretReactivated);
-            SimPlayersController.PlayerMoved += new SimPlayerHandler(GUIController.doPlayerMoved);
-            ScenarioController.NewGameState += new NewGameStateHandler(this.doNewGameState); //must come after GUIController.doGameStateChanged
-            ScenarioController.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
+            SimPlayersController.PlayerMoved += new SimPlayerHandler(GUIController.DoPlayerMoved);
+            LevelsController.NewGameState += new NewGameStateHandler(this.DoNewGameState); //must come after GUIController.doGameStateChanged
+            LevelsController.CommonStashChanged += new CommonStashHandler(GUIController.doCommonStashChanged);
             SimPlayersController.TurretToPlaceSelected += new TurretHandler(GUIController.doTurretToPlaceSelected);
             SimPlayersController.TurretToPlaceDeselected += new TurretHandler(GUIController.doTurretToPlaceDeselected);
             SimPlayersController.AchatTourelleDemande += new TurretHandler(GUIController.doTurretBought);
@@ -240,16 +237,16 @@ namespace EphemereGames.Commander
             PowerUpsController.PowerUpStopped += new PowerUpHandler(BulletsController.DoPowerUpStopped);
             PowerUpsController.PowerUpStarted += new PowerUpHandler(PlanetarySystemController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpHandler(PlanetarySystemController.DoPowerUpStopped);
-            PowerUpsController.PowerUpStarted += new PowerUpHandler(ScenarioController.DoPowerUpStarted);
+            PowerUpsController.PowerUpStarted += new PowerUpHandler(LevelsController.DoPowerUpStarted);
             CollisionsController.TurretBoosted += new TurretTurretHandler(TurretsController.DoTurretBoosted);
             SimPlayersController.PlayerMoved += new SimPlayerHandler(PowerUpsController.DoPlayerMoved);
-            ScenarioController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
+            LevelsController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
             CollisionsController.BulletDeflected += new EnemyBulletHandler(BulletsController.DoBulletDeflected);
             BulletsController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
             SimPlayersController.DesactivatePowerUpAsked += new PowerUpTypeHandler(PowerUpsController.DoDesactivatePowerUpAsked);
 
-            ScenarioController.Initialize();
+            LevelsController.Initialize();
             EnemiesController.Initialize();
             TurretsController.Initialize();
             PlanetarySystemController.Initialize();
@@ -271,12 +268,12 @@ namespace EphemereGames.Commander
 
         public void Update(GameTime gameTime)
         {
-            ScenarioController.Update(gameTime);
+            LevelsController.Update(gameTime);
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
                 return;
 
-            if (Etat == GameState.Paused)
+            if (State == GameState.Paused)
                 return;
 
             CollisionsController.Update();
@@ -303,58 +300,58 @@ namespace EphemereGames.Commander
             MessagesController.Draw();
             GUIController.Draw();
             SimPlayersController.Draw();
-            ScenarioController.Draw();
+            LevelsController.Draw();
         }
 
 
-        public void EtreNotifierNouvelEtatPartie(NewGameStateHandler handler)
+        public void AddNewGameStateListener(NewGameStateHandler handler)
         {
-            ScenarioController.NewGameState += handler;
+            LevelsController.NewGameState += handler;
         }
 
 
-        private void doPlayerSelectionChanged(SimPlayer player)
+        private void DoPlayerSelectionChanged(SimPlayer player)
         {
             GameAction = player.ActualSelection.GameAction;
         }
 
 
-        private void doNewGameState(GameState state)
+        private void DoNewGameState(GameState state)
         {
             if (state == GameState.Won || state == GameState.Lost)
             {
                 EnemiesController.ObjectDestroyed -= SimPlayersController.DoObjetDetruit;
 
-                int scenario = ScenarioController.Scenario.Id;
-                int score = ScenarioController.Scenario.CommonStash.TotalScore;
+                int levelId = LevelsController.Level.Id;
+                int score = LevelsController.Level.CommonStash.TotalScore;
 
-                if (!Main.SaveGame.HighScores.ContainsKey(scenario))
-                    Main.SaveGame.HighScores.Add(scenario, new HighScores(scenario));
+                if (!Main.SaveGame.HighScores.ContainsKey(levelId))
+                    Main.SaveGame.HighScores.Add(levelId, new HighScores(levelId));
 
-                Main.SaveGame.HighScores[scenario].Add(Main.PlayersController.MasterPlayer.Name, score);
+                Main.SaveGame.HighScores[levelId].Add(Inputs.MasterPlayer.Name, score);
 
                 Persistence.SaveData("savePlayer");
             }
         }
 
 
-        private void doEnnemiAtteintFinTrajet(Enemy ennemi, CelestialBody corpsCeleste)
+        private void DoEnemyReachedEndOfPath(Enemy enemy, CelestialBody celestialBody)
         {
-            if (Etat == GameState.Won)
+            if (State == GameState.Won)
                 return;
 
-            if (!this.DemoMode && this.Etat != GameState.Lost)
+            if (!this.DemoMode && this.State != GameState.Lost)
             {
-                foreach (var joueur in this.Main.Players.Values)
-                    Inputs.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+                foreach (var player in Inputs.Players)
+                    Inputs.VibrateController(player, 300, 0.5f, 0.5f);
             }
         }
 
 
-        private void doCorpsCelesteDetruit(IObjetPhysique objet)
+        private void DoCelestialBodyDestroyed(IObjetPhysique obj)
         {
-            foreach (var joueur in this.Main.Players.Values)
-                Inputs.VibrateController(joueur.Index, 300, 0.5f, 0.5f);
+            foreach (var player in Inputs.Players)
+                Inputs.VibrateController(player, 300, 0.5f, 0.5f);
         }
 
 
@@ -362,127 +359,115 @@ namespace EphemereGames.Commander
 
         bool InputListener.EnableInputs
         {
-            get { return Etat == GameState.Running; }
+            get { return State == GameState.Running; }
         }
 
 
-        void InputListener.doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        void InputListener.DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (DebugMode && key == p.KeyboardConfiguration.Debug)
+            if (DebugMode && key == KeyboardConfiguration.Debug)
                 CollisionsController.Debug = true;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
             {
-                if (key == p.KeyboardConfiguration.Cancel)
-                    ScenarioController.Help.Skip();
-                if (key == p.KeyboardConfiguration.Next)
-                    ScenarioController.Help.NextDirective();
-                if (key == p.KeyboardConfiguration.Back)
-                    ScenarioController.Help.PreviousDirective();
+                if (key == KeyboardConfiguration.Cancel)
+                    LevelsController.Help.Skip();
+                if (key == KeyboardConfiguration.Next)
+                    LevelsController.Help.NextDirective();
+                if (key == KeyboardConfiguration.Back)
+                    LevelsController.Help.PreviousDirective();
 
                 return;
             }
 
-            if (!DemoMode && (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel))
+            if (!DemoMode && (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel))
             {
-                Etat = GameState.Paused;
-                ScenarioController.TriggerNewGameState(Etat);
+                State = GameState.Paused;
+                LevelsController.TriggerNewGameState(State);
             }
         }
 
 
-        void InputListener.doKeyReleased(PlayerIndex inputIndex, Keys key)
+        void InputListener.DoKeyReleased(Core.Input.Player p, Keys key)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (this.DebugMode && key == p.KeyboardConfiguration.Debug)
+            if (this.DebugMode && key == KeyboardConfiguration.Debug)
                 CollisionsController.Debug = false;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
                 return;
         }
 
 
-        void InputListener.doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        void InputListener.DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
             {
-                if (button == p.MouseConfiguration.Select)
-                    ScenarioController.Help.NextDirective();
-                else if (button == p.MouseConfiguration.Back)
-                    ScenarioController.Help.PreviousDirective();
+                if (button == MouseConfiguration.Select)
+                    LevelsController.Help.NextDirective();
+                else if (button == MouseConfiguration.Back)
+                    LevelsController.Help.PreviousDirective();
 
                 return;
             }
 
             if (PowerUpsController.InPowerUp)
             {
-                if (button == p.MouseConfiguration.Cancel)
+                if (button == MouseConfiguration.Cancel)
                     PowerUpsController.DoInputCanceled();
-                else if (button == p.MouseConfiguration.Select)
+                else if (button == MouseConfiguration.Select)
                     PowerUpsController.DoInputPressed();
             }
 
             SimPlayersController.DoMouseButtonPressedOnce(p, button);
 
-            if (!DemoMode && button == p.MouseConfiguration.AdvancedView)
+            if (!DemoMode && button == MouseConfiguration.AdvancedView && !DemoMode)
                 GUIController.doShowAdvancedView();
         }
 
 
-        void InputListener.doMouseButtonReleased(PlayerIndex inputIndex, MouseButton button)
+        void InputListener.DoMouseButtonReleased(Core.Input.Player p, MouseButton button)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
                 return;
 
-            if (!DemoMode && button == p.MouseConfiguration.AdvancedView)
+            if (!DemoMode && button == MouseConfiguration.AdvancedView && !DemoMode)
                 GUIController.doHideAdvancedView();
 
-            if (PowerUpsController.InPowerUp && button == p.MouseConfiguration.Select)
+            if (PowerUpsController.InPowerUp && button == MouseConfiguration.Select)
                 PowerUpsController.DoInputReleased();
         }
 
 
-        void InputListener.doMouseScrolled(PlayerIndex inputIndex, int delta)
+        void InputListener.DoMouseScrolled(Core.Input.Player p, int delta)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
                 return;
 
             SimPlayersController.DoMouseScrolled(p, delta);
         }
 
 
-        void InputListener.doMouseMoved(PlayerIndex inputIndex, Vector3 delta)
+        void InputListener.DoMouseMoved(Core.Input.Player p, Vector3 delta)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
                 return;
 
             if (PowerUpsController.InPowerUp)
@@ -492,78 +477,90 @@ namespace EphemereGames.Commander
         }
 
 
-        void InputListener.doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        void InputListener.DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (DebugMode && button == p.GamePadConfiguration.Debug)
+            if (DebugMode && button == GamePadConfiguration.Debug)
                 CollisionsController.Debug = true;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
             {
-                if (button == p.GamePadConfiguration.SelectionNext)
-                    ScenarioController.Help.NextDirective();
-                else if (button == p.GamePadConfiguration.SelectionPrevious)
-                    ScenarioController.Help.PreviousDirective();
-                else if (button == p.GamePadConfiguration.Cancel)
-                    ScenarioController.Help.Skip();
+                if (button == GamePadConfiguration.SelectionNext)
+                    LevelsController.Help.NextDirective();
+                else if (button == GamePadConfiguration.SelectionPrevious)
+                    LevelsController.Help.PreviousDirective();
+                else if (button == GamePadConfiguration.Cancel)
+                    LevelsController.Help.Skip();
 
                 return;
             }
 
             if (PowerUpsController.InPowerUp)
             {
-                if (button == p.GamePadConfiguration.Cancel)
+                if (button == GamePadConfiguration.Cancel)
                     PowerUpsController.DoInputCanceled();
-                else if (button == p.GamePadConfiguration.Select || button == p.GamePadConfiguration.SelectionNext)
+                else if (button == GamePadConfiguration.Select || button == GamePadConfiguration.SelectionNext)
                     PowerUpsController.DoInputPressed();
             }
 
             SimPlayersController.DoGamePadButtonPressedOnce(p, button);
 
-            if (button == p.GamePadConfiguration.AdvancedView)
+            if (button == GamePadConfiguration.AdvancedView && !DemoMode)
                 GUIController.doShowAdvancedView();
         }
 
 
-        void InputListener.doGamePadButtonReleased(PlayerIndex inputIndex, Buttons button)
+        void InputListener.DoGamePadButtonReleased(Core.Input.Player p, Buttons button)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (DebugMode && button == p.GamePadConfiguration.Debug)
+            if (DebugMode && button == GamePadConfiguration.Debug)
                 CollisionsController.Debug = false;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
                 return;
 
-            if (button == p.GamePadConfiguration.AdvancedView)
+            if (button == GamePadConfiguration.AdvancedView && !DemoMode)
                 GUIController.doHideAdvancedView();
 
-            if (PowerUpsController.InPowerUp && button == p.GamePadConfiguration.Select || button == p.GamePadConfiguration.SelectionNext)
+            if (PowerUpsController.InPowerUp && button == GamePadConfiguration.Select || button == GamePadConfiguration.SelectionNext)
                 PowerUpsController.DoInputReleased();
         }
 
 
-        void InputListener.doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta)
+        void InputListener.DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, Vector3 delta)
         {
-            Player p = Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (ScenarioController.Help.Active)
+            if (LevelsController.Help.Active)
                 return;
 
             if (PowerUpsController.InPowerUp)
                 PowerUpsController.DoInputMovedDelta(delta * 10);
 
             SimPlayersController.DoGamePadJoystickMoved(p, button, ref delta);
+        }
+
+
+        public void PlayerConnectionRequested(Player Player)
+        {
+            
+        }
+
+
+        public void DoPlayerConnected(Player player)
+        {
+            
+        }
+
+
+        public void DoPlayerDisconnected(Player player)
+        {
+            
         }
 
         #endregion

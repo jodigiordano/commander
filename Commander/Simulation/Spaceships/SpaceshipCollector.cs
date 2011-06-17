@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@
 
     class SpaceshipCollector : SpaceshipSpaceship
     {
-        public SpaceshipCollector(Simulation simulation)
+        public SpaceshipCollector(Simulator simulation)
             : base(simulation)
         {
             Image = new Image("Collecteur")

@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
@@ -9,7 +9,7 @@
     {
         public List<KeyValuePair<IObjetPhysique, IObjetPhysique>> Output;
 
-        public Simulation Simulation;
+        public Simulator Simulation;
         public HiddenEnemies HiddenEnemies;
         public bool DarkSide;
         public bool DeadlyShootingStars;

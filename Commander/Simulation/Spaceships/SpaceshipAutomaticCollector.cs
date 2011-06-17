@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@
         public List<Mineral> Minerals;
 
 
-        public SpaceshipAutomaticCollector(Simulation simulation)
+        public SpaceshipAutomaticCollector(Simulator simulation)
             : base(simulation)
         {
             Image = new Image("Collecteur")

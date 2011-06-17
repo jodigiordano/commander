@@ -13,26 +13,18 @@
         public bool InTransition                        { get; private set; }
         public ITransitionAnimation TransitionAnimation { private get; set; }
 
-        private Dictionary<string, Transition> Transitions;
         private Transition CurrentTransition;
 
 
         public TransitionsController()
         {
             InTransition = false;
-            Transitions = new Dictionary<string, Transition>();
         }
 
 
-        public void AddTransition(Transition transition)
+        public void Transite(string from, string to)
         {
-            Transitions[transition.Name] = transition;
-        }
-
-
-        public void Transite(string transitionName)
-        {
-            CurrentTransition = Transitions[transitionName];
+            CurrentTransition = new Transition(from, to);
 
             StartFromToTransition();
         }
@@ -92,10 +84,6 @@
         {
             CurrentTransition.From.EnableVisuals = false;
             CurrentTransition.To.EnableVisuals = true;
-            CurrentTransition.From.EnableInputs = false;
-            CurrentTransition.To.EnableInputs = false;
-            CurrentTransition.From.EnableUpdate = true;
-            CurrentTransition.To.EnableUpdate = true;
 
             CurrentTransition.To.OnFocus();
 

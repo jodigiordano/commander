@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using Microsoft.Xna.Framework;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace EphemereGames.Commander
 
     class NanobotsTurret : Turret
     {
-        public NanobotsTurret( Simulation simulation )
+        public NanobotsTurret( Simulator simulation )
             : base( simulation )
         {
             Type = TurretType.Nanobots;

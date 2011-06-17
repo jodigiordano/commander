@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
@@ -11,7 +11,7 @@ namespace EphemereGames.Commander
         private float LastRotation;
 
 
-        public SlowMotionTurret(Simulation simulation)
+        public SlowMotionTurret(Simulator simulation)
             : base(simulation)
         {
             Type = TurretType.SlowMotion;

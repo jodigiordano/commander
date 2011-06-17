@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
@@ -25,7 +25,7 @@
         private float TextSize;
 
 
-        public TurretMenu(Simulation simulation, float prioriteAffichage)
+        public TurretMenu(Simulator simulation, float prioriteAffichage)
             : base(simulation)
         {
             MenuWidth = 140;

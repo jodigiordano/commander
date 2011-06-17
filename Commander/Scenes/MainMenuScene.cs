@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
@@ -9,7 +10,6 @@
 
     class MainMenuScene : Scene
     {
-        private Main Main;
         private Text NewGame;
         private Text Quit;
         private Text ResumeGame;
@@ -17,19 +17,13 @@
         private Text Options;
         private Text Editor;
         private Text Title;
-        private Text CurrentChoice;
 
-        public string SelectedMusic;
-        private double TimeBetweenTwoMusicChange;
-
-        private Simulation Simulation;
+        private Simulator Simulator;
 
 
-        public MainMenuScene(Main main)
-            : base(Vector2.Zero, 720, 1280)
+        public MainMenuScene()
+            : base(Vector2.Zero, 1280, 720)
         {
-            Main = main;
-
             Name = "Menu";
 
             NewGame = new Text("save the\nworld", "Pixelite", Color.White, new Vector3(-220, -170, 0))
@@ -81,75 +75,43 @@
             };
             Title.Origin = Title.Center;
 
-            ScenarioDescriptor descripteurScenario = ScenariosFactory.getDescripteurMenu();
+            LevelDescriptor levelDescriptor = LevelsFactory.GetMenuDescriptor();
 
 #if !DEBUG
-            descripteurScenario.PlanetarySystem[5].CanSelect = false;
+            levelDescriptor.PlanetarySystem[5].CanSelect = false;
 #endif
 
             //Simulation = new Simulation(Main, this, ScenariosFactory.getDescripteurTestsPerformance())
-            Simulation = new Simulation(Main, this, descripteurScenario)
+            Simulator = new Simulator(this, levelDescriptor)
             {
                 PositionCurseur = new Vector3(400, 20, 0),
-                Players = Main.Players,
                 DemoMode = true
             };
-            Simulation.Initialize();
-
-            SelectedMusic = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
-            Main.AvailableMusics.Remove(SelectedMusic);
-            TimeBetweenTwoMusicChange = 0;
-
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
-
-            CurrentChoice = null;
-        }
-
-        
-        private void DoPlayerDisconnected()
-        {
-            Visuals.Transite("MenuToChargement");
+            Simulator.Initialize();
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            TimeBetweenTwoMusicChange -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            Simulation.Update(gameTime);
-        }
-
-
-        public void ChangeMusic()
-        {
-            if (TimeBetweenTwoMusicChange > 0)
-                return;
-
-            Audio.StopMusic(SelectedMusic, true, Preferences.TimeBetweenTwoMusics - 50);
-            string ancienneMusique = SelectedMusic;
-            SelectedMusic = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
-            Main.AvailableMusics.Remove(SelectedMusic);
-            Main.AvailableMusics.Add(ancienneMusique);
-            Audio.PlayMusic(SelectedMusic, true, 1000, true);
-            TimeBetweenTwoMusicChange = Preferences.TimeBetweenTwoMusics;
+            Simulator.Update(gameTime);
         }
 
 
         protected override void UpdateVisual()
         {
-            if (Simulation.SelectedCelestialBody != null)
+            if (Simulator.SelectedCelestialBody != null)
             {
-                switch (Simulation.SelectedCelestialBody.Nom)
+                switch (Simulator.SelectedCelestialBody.Name)
                 {
-                    case "save the\nworld": Add(NewGame); CurrentChoice = NewGame; break;
-                    case "quit": Add(Quit); CurrentChoice = Quit; break;
-                    case "help": Add(Help); CurrentChoice = Help; break;
-                    case "options": Add(Options); CurrentChoice = Options; break;
+                    case "save the\nworld": Add(NewGame); break;
+                    case "quit": Add(Quit); break;
+                    case "help": Add(Help); break;
+                    case "options": Add(Options); break;
                     case "editor":
 
                         if (Preferences.Debug)
                         {
                             Add(Editor);
-                            CurrentChoice = Editor;
                         }
 
                         break;
@@ -158,7 +120,6 @@
                         if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                         {
                             Add(ResumeGame);
-                            CurrentChoice = ResumeGame;
                         }
 
                         break;
@@ -166,7 +127,7 @@
             }
 
             Add(Title);
-            Simulation.Draw();
+            Simulator.Draw();
         }
 
 
@@ -174,98 +135,102 @@
         {
             base.OnFocus();
 
-            if (!Audio.IsMusicPlaying(SelectedMusic))
-                Audio.PlayMusic(SelectedMusic, true, 1000, true);
+            if (!Audio.IsMusicPlaying(Main.SelectedMusic))
+                Audio.PlayMusic(Main.SelectedMusic, true, 1000, true);
             else
-                Audio.UnpauseMusic(SelectedMusic, true, 1000);
+                Audio.ResumeMusic(Main.SelectedMusic, true, 1000);
 
-            Inputs.AddListener(Simulation);
+            Inputs.AddListener(Simulator);
         }
 
         public override void OnFocusLost()
         {
             base.OnFocusLost();
 
-            if (Simulation.SelectedCelestialBody != null && Simulation.SelectedCelestialBody.Nom == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                Audio.PauseMusic(SelectedMusic, true, 1000);
+            if (Simulator.SelectedCelestialBody != null && Simulator.SelectedCelestialBody.Name == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
+                Audio.PauseMusic(Main.SelectedMusic, true, 1000);
 
-            Inputs.RemoveListener(Simulation);
+            Inputs.RemoveListener(Simulator);
         }
 
 
         #region Input Handling
 
-        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (button == p.MouseConfiguration.Select)
+            if (button == MouseConfiguration.Select)
                 beginTransition();
         }
 
 
-        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (button == p.GamePadConfiguration.Select)
+            if (button == GamePadConfiguration.Select)
                 beginTransition();
+
+            if (button == GamePadConfiguration.ChangeMusic)
+                Main.ChangeMusic();
         }
 
 
-        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (key == p.KeyboardConfiguration.ChangeMusic)
-                ChangeMusic();
+            if (key == KeyboardConfiguration.ChangeMusic)
+                Main.ChangeMusic();
+        }
+
+
+        public override void DoPlayerDisconnected(Core.Input.Player player)
+        {
+            if (player.Master)
+                TransiteTo("Chargement");
         }
 
 
         private void beginTransition()
         {
-            if (Simulation.SelectedCelestialBody == null)
+            if (Simulator.SelectedCelestialBody == null)
                 return;
 
 #if !DEBUG
-            if (Simulation.SelectedCelestialBody.Nom == "editor")
+            if (Simulator.SelectedCelestialBody.Name == "editor")
                 return;
 #endif
 
-            if ((Simulation.SelectedCelestialBody.Nom == "resume game" &&
+            if ((Simulator.SelectedCelestialBody.Name == "resume game" &&
                 Main.GameInProgress != null &&
                 !Main.GameInProgress.IsFinished) ||
                 
-                (Simulation.SelectedCelestialBody.Nom != "resume game"))
+                (Simulator.SelectedCelestialBody.Name != "resume game"))
             {
-                switch (Simulation.SelectedCelestialBody.Nom)
+                switch (Simulator.SelectedCelestialBody.Name)
                 {
-                    case "save the\nworld": Visuals.Transite("MenuToNouvellePartie"); break;
-                    case "help": Visuals.Transite("MenuToAide"); break;
-                    case "options": Visuals.Transite("MenuToOptions"); break;
-                    case "editor": Visuals.Transite("MenuToEditeur"); break;
+                    case "save the\nworld": Visuals.Transite("Menu", "Intro"); break;
+                    case "help": Visuals.Transite("Menu", "Aide"); break;
+                    case "options": Visuals.Transite("Menu", "Options"); break;
+                    case "editor": Visuals.Transite("Menu", "Editeur"); break;
 
                     case "quit":
                         if (Preferences.Target == Setting.Xbox360 && Main.TrialMode.Active)
-                            Visuals.Transite("MenuToAcheter");
+                            Visuals.Transite("Menu", "Acheter");
                         else
-                            Main.Exit();
+                            Main.Instance.Exit();
                         break;
 
                     case "resume game":
                         if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                         {
                             Main.GameInProgress.State = GameState.Running;
-                            Visuals.Transite("MenuToPartie");
+                            Visuals.Transite("Menu", "Partie");
                         }
                         break;
                 }

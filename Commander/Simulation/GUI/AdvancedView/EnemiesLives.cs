@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -11,10 +11,10 @@
     {
         private List<List<Image>> Lives;
         private List<Enemy> Enemies;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public EnemiesLives(Simulation simulation, List<Enemy> enemies)
+        public EnemiesLives(Simulator simulation, List<Enemy> enemies)
         {
             Enemies = enemies;
             Simulation = simulation;

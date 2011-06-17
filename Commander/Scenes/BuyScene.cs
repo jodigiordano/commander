@@ -19,7 +19,7 @@
 
 
         public BuyScene()
-            : base(Vector2.Zero, 720, 1280)
+            : base(Vector2.Zero, 1280, 720)
         {
             Name = "Acheter";
 
@@ -66,12 +66,12 @@
         }
 
 
-        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
         }
 
 
-        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
             if (Main.TrialMode.Active && button == Buttons.A)
             {
@@ -80,7 +80,7 @@
                     try
                     {
                         BuyingMode = true;
-                        Guide.ShowMarketplace(inputIndex);
+                        Guide.ShowMarketplace(p.Index);
                     }
 
                     catch (GamerPrivilegeException)
@@ -104,7 +104,7 @@
 
             else
             {
-                Visuals.Transite("AcheterToMenu");
+                Visuals.Transite("Acheter", "Menu");
             }
         }
     }

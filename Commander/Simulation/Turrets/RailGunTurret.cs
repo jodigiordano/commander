@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
@@ -7,7 +7,7 @@ namespace EphemereGames.Commander
 
     class RailGunTurret : Turret
     {
-        public RailGunTurret(Simulation simulation)
+        public RailGunTurret(Simulator simulation)
             : base(simulation)
         {
             Type = TurretType.RailGun;

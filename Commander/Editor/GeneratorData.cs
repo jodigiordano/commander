@@ -11,7 +11,7 @@
     public class GeneratorData : Data
     {
         [ContentSerializer(Optional = false)]
-        public List<ScenarioDescriptor> Scenarios { get; set; }
+        public List<LevelDescriptor> Levels { get; set; }
 
 
         public GeneratorData()
@@ -26,7 +26,7 @@
         {
             GeneratorData d = donnee as GeneratorData;
 
-            this.Scenarios = d.Scenarios;
+            this.Levels = d.Levels;
         }
 
 
@@ -46,7 +46,7 @@
 
         private void premierChargement()
         {
-            this.Scenarios = new List<ScenarioDescriptor>();
+            this.Levels = new List<LevelDescriptor>();
 
             Persistence.SaveData(this.Name);
             Loaded = true;

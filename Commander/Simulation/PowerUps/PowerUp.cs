@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -25,10 +25,10 @@
         public abstract bool Terminated     { get; }
         public bool TerminatedOverride      { protected get; set; }
 
-        protected Simulation Simulation;
+        protected Simulator Simulation;
 
 
-        public PowerUp(Simulation simulation)
+        public PowerUp(Simulator simulation)
         {
             Simulation = simulation;
             Type = PowerUpType.None;

@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -9,12 +9,12 @@
     class SelectedCelestialBodyAnimation
     {
         private CelestialBody celestialBody;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Particle Selection;
         private Vector3 PositionLastEmission;
 
 
-        public SelectedCelestialBodyAnimation(Simulation simulation)
+        public SelectedCelestialBodyAnimation(Simulator simulation)
         {
             Simulation = simulation;
 

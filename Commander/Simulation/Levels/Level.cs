@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    class Scenario
+    class Level
     {
         public int Id;
         public string Mission;
@@ -33,13 +33,13 @@
 
         public List<string> HelpTexts;
 
-        private Simulation Simulation;
-        private ScenarioDescriptor Descriptor;
+        private Simulator Simulation;
+        private LevelDescriptor Descriptor;
 
         private float NextCelestialBodyVisualPriority = Preferences.PrioriteSimulationCorpsCeleste;
 
 
-        public Scenario(Simulation simulation, ScenarioDescriptor descriptor)
+        public Level(Simulator simulation, LevelDescriptor descriptor)
         {
             Simulation = simulation;
             Descriptor = descriptor;

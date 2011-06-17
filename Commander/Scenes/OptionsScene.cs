@@ -11,73 +11,72 @@
 
     class OptionsScene : Scene
     {
-        private Main Main;
+        private Text MusicTitle;
+        private HorizontalSlider Music;
+        private Text SoundEffectsTitle;
+        private HorizontalSlider SoundEffects;
+        private Dictionary<Player, Cursor> Cursors;
 
-        private Text TitreMusique;
-        private HorizontalSlider Musique;
-        private Text TitreEffetsSonores;
-        private HorizontalSlider EffetsSonores;
-        private Cursor Curseur;
-
-        private Image Titre;
-        private Image FondEcran;
-        private Image Bulle;
-        private Image Lieutenant;
+        private Image Title;
+        private Image Background;
+        private Image Bubble;
+        private Image Commodore;
 
         private static string Credits = "Hello, my name is Jodi Giordano. I glued all this stuff together. Special thanks to my supporting friends and my family, the LATECE laboratory crew, UQAM, Mercury Project and SFXR. If you want more info about me and my games, please visit ephemeregames.com... Now get back to work, commander!";
         private TextTypeWriter TypeWriter;
 
-        private double TempsEntreDeuxChangementMusique;
+        private double TimeBetweenTwoMusics;
 
 
-        public OptionsScene(Main main)
-            : base(Vector2.Zero, 720, 1280)
+        public OptionsScene()
+            : base(Vector2.Zero, 1280, 720)
         {
-            Main = main;
-
             Name = "Options";
 
-            Titre = new Image("options", new Vector3(-550, -150, 0));
-            Titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
-            Titre.Origin = Vector2.Zero;
+            Title = new Image("options", new Vector3(-550, -150, 0));
+            Title.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            Title.Origin = Vector2.Zero;
 
-            TitreMusique = new Text
+            MusicTitle = new Text
                     (
                         "Music",
                         "Pixelite",
                         Color.White,
                         new Vector3(-420, 130, 0)
                     );
-            TitreMusique.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
-            TitreMusique.SizeX = 2f;
+            MusicTitle.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            MusicTitle.SizeX = 2f;
 
-            TitreEffetsSonores = new Text
+            SoundEffectsTitle = new Text
                     (
                         "Sound Effects",
                         "Pixelite",
                         Color.White,
                         new Vector3(-420, 200, 0)
                     );
-            TitreEffetsSonores.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
-            TitreEffetsSonores.SizeX = 2f;
+            SoundEffectsTitle.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            SoundEffectsTitle.SizeX = 2f;
 
-            Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
+            Cursors = new Dictionary<Player, Cursor>();
 
-            Musique = new HorizontalSlider(this, Curseur, new Vector3(-120, 140, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
-            EffetsSonores = new HorizontalSlider(this, Curseur, new Vector3(-120, 210, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
+            foreach (var player in Inputs.ConnectedPlayers)
+                Cursors.Add((Player) player, new Cursor(this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal));
 
-            Lieutenant = new Image("lieutenant", new Vector3(-75, -220, 0));
-            Lieutenant.SizeX = 8;
-            Lieutenant.Rotation = MathHelper.Pi;
-            Lieutenant.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
+            Music = new HorizontalSlider(this, new Vector3(-120, 140, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
+            SoundEffects = new HorizontalSlider(this, new Vector3(-120, 210, 0), 0, 10, 5, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
 
-            Bulle = new Image("bulleRenversee", new Vector3(80, -150, 0));
-            Bulle.SizeX = 8;
-            Bulle.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
-            Bulle.Origin = Vector2.Zero;
+            Commodore = new Image("lieutenant", new Vector3(-75, -220, 0));
+            Commodore.SizeX = 8;
+            Commodore.Rotation = MathHelper.Pi;
+            Commodore.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            FondEcran = new Image("fondecran12", Vector3.Zero);
-            FondEcran.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
+            Bubble = new Image("bulleRenversee", new Vector3(80, -150, 0));
+            Bubble.SizeX = 8;
+            Bubble.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
+            Bubble.Origin = Vector2.Zero;
+
+            Background = new Image("fondecran12", Vector3.Zero);
+            Background.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
             TypeWriter = new TextTypeWriter
             (
@@ -102,44 +101,38 @@
             );
             TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            TempsEntreDeuxChangementMusique = 0;
-
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
-        }
-
-
-        private void DoPlayerDisconnected()
-        {
-            Visuals.Transite("OptionsToChargement");
+            TimeBetweenTwoMusics = 0;
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            Main.SaveGame.VolumeMusic = Musique.Valeur;
-            Main.SaveGame.VolumeSfx = EffetsSonores.Valeur;
+            Main.SaveGame.VolumeMusic = Music.Valeur;
+            Main.SaveGame.VolumeSfx = SoundEffects.Valeur;
 
-            Audio.MusicVolume = Musique.Valeur / 10f;
-            Audio.SfxVolume = EffetsSonores.Valeur / 10f;
+            Audio.MusicVolume = Music.Valeur / 10f;
+            Audio.SfxVolume = SoundEffects.Valeur / 10f;
 
-            TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            TimeBetweenTwoMusics -= gameTime.ElapsedGameTime.TotalMilliseconds;
             TypeWriter.Update(gameTime);
         }
 
 
         protected override void UpdateVisual()
         {
-            Add(TitreMusique);
-            Add(TitreEffetsSonores);
-            Add(Titre);
-            Add(Lieutenant);
-            Add(Bulle);
-            Add(FondEcran);
+            Add(MusicTitle);
+            Add(SoundEffectsTitle);
+            Add(Title);
+            Add(Commodore);
+            Add(Bubble);
+            Add(Background);
             Add(TypeWriter.Text);
 
-            Curseur.Draw();
-            Musique.Draw();
-            EffetsSonores.Draw();
+            foreach (var c in Cursors.Values)
+                c.Draw();
+            
+            Music.Draw();
+            SoundEffects.Draw();
         }
 
 
@@ -147,8 +140,8 @@
         {
             base.OnFocus();
 
-            Musique.Valeur = Main.SaveGame.VolumeMusic;
-            EffetsSonores.Valeur = Main.SaveGame.VolumeSfx;
+            Music.Valeur = Main.SaveGame.VolumeMusic;
+            SoundEffects.Valeur = Main.SaveGame.VolumeSfx;
         }
 
 
@@ -156,106 +149,98 @@
         {
             base.OnFocusLost();
 
-            if (Main.PlayersController.MasterPlayer.Connected)
-                Persistence.SaveData("savePlayer");
+            Persistence.SaveData("savePlayer");
         }
 
 
-        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            Player p = Main.Players[inputIndex];
-
-            if (!p.Master)
-                return;
-
-            if (button == p.MouseConfiguration.Select)
+            if (button == MouseConfiguration.Select)
             {
-                Musique.doClick();
-                EffetsSonores.doClick();
+                Player player = (Player) p;
+
+                Music.DoClick(player.Circle);
+                SoundEffects.DoClick(player.Circle);
             }
 
-            if (button == p.MouseConfiguration.Back)
+            if (button == MouseConfiguration.Back)
                 BeginTransition();
         }
 
 
-        public override void doMouseMoved(PlayerIndex inputIndex, Vector3 delta)
+        public override void DoMouseMoved(Core.Input.Player p, Vector3 delta)
         {
-            Player p = Main.Players[inputIndex];
+            Player player = (Player) p;
 
-            if (!p.Master)
-                return;
-
-            p.Move(ref delta, p.MouseConfiguration.Speed);
-            Curseur.Position = p.Position;
+            player.Move(ref delta, MouseConfiguration.Speed);
+            Cursors[player].Position = player.Position;
         }
 
 
-        public override void doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta)
+        public override void DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, Vector3 delta)
         {
-            Player p = Main.Players[inputIndex];
+            Player player = (Player) p;
 
-            if (!p.Master)
-                return;
-
-            if (button == p.GamePadConfiguration.MoveCursor)
+            if (button == GamePadConfiguration.MoveCursor)
             {
-                p.Move(ref delta, p.GamePadConfiguration.Speed);
-                Curseur.Position = p.Position;
+                player.Move(ref delta, GamePadConfiguration.Speed);
+                Cursors[player].Position = player.Position;
             }
         }
 
 
-        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            Player p = Main.Players[inputIndex];
-
-            if (!p.Master)
-                return;
-
-            if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)
+            if (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel)
                 BeginTransition();
 
-            if (key == p.KeyboardConfiguration.ChangeMusic)
-                beginChangeMusic();
+            if (key == KeyboardConfiguration.ChangeMusic)
+                Main.ChangeMusic();
         }
 
 
-        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            Player p = Main.Players[inputIndex];
-
-            if (!p.Master)
-                return;
-
-            if (button == p.GamePadConfiguration.Select)
+            if (button == GamePadConfiguration.Select)
             {
-                Musique.doClick();
-                EffetsSonores.doClick();
+                Player player = (Player) p;
+
+                Music.DoClick(player.Circle);
+                SoundEffects.DoClick(player.Circle);
             }
 
-            if (button == p.GamePadConfiguration.Cancel)
+            if (button == GamePadConfiguration.Cancel)
                 BeginTransition();
 
-            if (button == p.GamePadConfiguration.ChangeMusic)
-                beginChangeMusic();
+            if (button == GamePadConfiguration.ChangeMusic)
+                Main.ChangeMusic();
+        }
+
+
+        public override void DoPlayerDisconnected(Core.Input.Player player)
+        {
+            Cursors.Remove((Player) player);
+
+            if (player.Master)
+                TransiteTo("Chargement");
+        }
+
+
+        public override void PlayerConnectionRequested(Core.Input.Player player)
+        {
+            player.Connect();
+        }
+
+
+        public override void DoPlayerConnected(Core.Input.Player player)
+        {
+            Cursors.Add((Player) player, new Cursor(this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal));
         }
 
 
         private void BeginTransition()
         {
-            Visuals.Transite("OptionsToMenu");
-        }
-
-
-        private void beginChangeMusic()
-        {
-            if (TempsEntreDeuxChangementMusique > 0)
-                return;
-
-            MainMenuScene menu = (MainMenuScene)Visuals.GetScene("Menu");
-            menu.ChangeMusic();
-            TempsEntreDeuxChangementMusique = Preferences.TimeBetweenTwoMusics;
+            TransiteTo("Menu");
         }
     }
 }

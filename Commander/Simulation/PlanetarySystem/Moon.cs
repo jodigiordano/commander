@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -6,7 +6,7 @@
 
     abstract class Moon
     {
-        protected Simulation Simulation;
+        protected Simulator Simulation;
         protected CelestialBody CelestialBody;
         protected Matrix RotationMatrix;
         protected Vector3 Position;
@@ -17,7 +17,7 @@
         protected bool Inversed;
 
 
-        public Moon(Simulation simulation, CelestialBody celestialBody, int alpha, string imageName, int size)
+        public Moon(Simulator simulation, CelestialBody celestialBody, int alpha, string imageName, int size)
         {
             Simulation = simulation;
             CelestialBody = celestialBody;

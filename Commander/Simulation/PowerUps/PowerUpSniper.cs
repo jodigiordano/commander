@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace EphemereGames.Commander
         private bool terminated;
 
 
-        public PowerUpSniper(Simulation simulation, HumanBattleship humanBattleship)
+        public PowerUpSniper(Simulator simulation, HumanBattleship humanBattleship)
             : base(simulation)
         {
             HumanBattleship = humanBattleship;

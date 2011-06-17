@@ -8,179 +8,173 @@ namespace EphemereGames.Core.Audio
 
     class SoundEffectsController
     {
-        private static SoundEffectsController instance = new SoundEffectsController();
+        private Dictionary<string, SoundEffectsBank> SoundEffects = new Dictionary<string, SoundEffectsBank>();
+        private Dictionary<string, Music> Musics = new Dictionary<string, Music>();
 
-        private Dictionary<string, SoundEffectsBank> effetsSonores = new Dictionary<string, SoundEffectsBank>();
-        private Dictionary<string, Music> musiques = new Dictionary<string, Music>();
-
-        public int MaxEffetsSonoresEnMemeTemps;
-        private int EffetsSonoresInstancesActives;
-        private Dictionary<string, int> EffetSonoreMaxInstances;
+        public int MaxSimultaneousSfx;
+        private int MaxActivesSfxInstances;
+        private Dictionary<string, int> MaxSfxInstances;
 
 
-        public static SoundEffectsController Instance
+        public SoundEffectsController()
         {
-            get
+            foreach (var kvp in Musics)
+                kvp.Value.Stop(false, 0);
+
+
+            foreach (var kvp in SoundEffects)
             {
-                return instance;
-            }
-        }
-
-        private float volumeMusique;
-        public float VolumeMusique
-        {
-            get { return volumeMusique; }
-
-            set
-            {
-                volumeMusique = value;
-
-                foreach (var kvp in musiques)
-                    kvp.Value.Volume = value;
-            }
-        }
-
-        private float volumeEffetsSonores;
-        public float VolumeEffetsSonores
-        {
-            get { return volumeEffetsSonores; }
-
-            set
-            {
-                volumeEffetsSonores = value;
-
-                foreach (var kvp in effetsSonores)
-                    kvp.Value.Volume = value;
-            }
-        }
-
-        public Music getMusique(string nomMusique)
-        {
-            return musiques[nomMusique];
-        }
-
-        public void jouerEffetSonore(string nomBanque, string nomEffetSonore)
-        {
-            int maxInstancesActives = 0;
-
-            if (EffetsSonoresInstancesActives >= MaxEffetsSonoresEnMemeTemps ||
-                (EffetSonoreMaxInstances.TryGetValue(nomEffetSonore, out maxInstancesActives) && effetsSonores[nomBanque].EffetsSonores[nomEffetSonore].InstancesActives >= maxInstancesActives))
-                return;
-
-            effetsSonores[nomBanque].jouer(nomEffetSonore);
-        }
-
-        public void arreterEffetSonore(string nomBanque, string nomEffetSonore)
-        {
-            effetsSonores[nomBanque].arreter(nomEffetSonore, true, 100);
-        }
-
-        public SoundEffectsBank getEffetsSonores(string nomBanque)
-        {
-            return effetsSonores[nomBanque];
-        }
-
-
-        //=============================================================================
-        // Ajouter des musiques et des effets sonores
-        //=============================================================================
-
-        public void setEffetSonoreMaxInstances(string effetSonore, int maxInstances)
-        {
-
-        }
-
-        public void setMusique(string nomMusique, Music musique)
-        {
-            musiques[nomMusique] = musique;
-
-            musique.Son.Name = nomMusique;
-        }
-
-        public void setMusique(string musiqueAffectee, string musiqueExistante)
-        {
-            musiques[musiqueAffectee].arreter(false, 0);
-
-            musiques[musiqueExistante].Son.Name = musiqueAffectee;
-
-            Microsoft.Xna.Framework.Audio.SoundEffect se = musiques[musiqueAffectee].Son;
-            
-            musiques[musiqueAffectee] = new Music();
-            musiques[musiqueAffectee].Son = se;
-        }
-
-
-        public void setEffetSonore(string banque, SoundEffect effetSonore)
-        {
-            if (!effetsSonores.ContainsKey(banque))
-                effetsSonores[banque] = new SoundEffectsBank();
-
-            effetsSonores[banque].ajouter(effetSonore.Son.Name, effetSonore);
-        }
-
-
-        //=============================================================================
-        // Initialisation
-        //=============================================================================
-
-        private SoundEffectsController()
-        {
-            // arrêter les musiques
-            foreach (var kvp in musiques)
-                kvp.Value.arreter(false, 0);
-
-            // arrêter les effets sonores
-            // appeler l'update des banques pour disposer des effets sonores
-            foreach (var kvp in effetsSonores)
-            {
-                kvp.Value.arreter(false, 0);
+                kvp.Value.Stop(false, 0);
                 kvp.Value.Update(null);
             }
 
-            effetsSonores.Clear();
-            EffetsSonoresInstancesActives = 0;
-            MaxEffetsSonoresEnMemeTemps = int.MaxValue;
-            EffetSonoreMaxInstances = new Dictionary<string, int>();
 
-            VolumeMusique = 0.5f;
-            VolumeEffetsSonores = 0.5f;
+            SoundEffects.Clear();
+            MaxActivesSfxInstances = 0;
+            MaxSimultaneousSfx = int.MaxValue;
+            MaxSfxInstances = new Dictionary<string, int>();
+
+            MusicVolume = 0.5f;
+            SfxVolume = 0.5f;
         }
 
 
-        //=============================================================================
-        // Mise-à-jour de la logique
-        //=============================================================================
- 
-        public void Update(GameTime gameTime)
+        private float musicVolume;
+        public float MusicVolume
         {
-            string[] wCles;
-            
-            wCles = musiques.Keys.ToArray();
+            get { return musicVolume; }
 
-            for (int i = 0; i < wCles.Length; i++)
-                musiques[wCles[i]].Update(gameTime);
-
-
-            // gestion des effets sonores
-
-            wCles = effetsSonores.Keys.ToArray();
-
-            EffetsSonoresInstancesActives = 0;
-
-            for (int i = 0; i < wCles.Length; i++)
+            set
             {
-                effetsSonores[wCles[i]].Update(gameTime);
-                EffetsSonoresInstancesActives += effetsSonores[wCles[i]].InstancesActives;
+                musicVolume = value;
+
+                foreach (var kvp in Musics)
+                    kvp.Value.Volume = value;
             }
         }
 
 
-        public void setMaxInstancesActivesEffetSonore(string effetSonore, int maxInstances)
+        private float sfxVolume;
+        public float SfxVolume
         {
-            if (!EffetSonoreMaxInstances.ContainsKey(effetSonore))
-                EffetSonoreMaxInstances.Add(effetSonore, maxInstances);
+            get { return sfxVolume; }
+
+            set
+            {
+                sfxVolume = value;
+
+                foreach (var kvp in SoundEffects)
+                    kvp.Value.Volume = value;
+            }
+        }
+
+
+        public Music GetMusic(string musicName)
+        {
+            return Musics[musicName];
+        }
+
+
+        public void PlaySfx(string bankName, string sfxName)
+        {
+            int maxInstancesActives = 0;
+
+            if (MaxActivesSfxInstances >= MaxSimultaneousSfx ||
+                (MaxSfxInstances.TryGetValue(sfxName, out maxInstancesActives) && SoundEffects[bankName].EffetsSonores[sfxName].InstancesActives >= maxInstancesActives))
+                return;
+
+            SoundEffects[bankName].Play(sfxName);
+        }
+
+
+        public void StopSfx(string bankName, string sfxName)
+        {
+            SoundEffects[bankName].Stop(sfxName, true, 100);
+        }
+
+        public SoundEffectsBank GetSfxBank(string bankName)
+        {
+            return SoundEffects[bankName];
+        }
+
+
+        public void SetSfxMaxInstances(string sfxName, int maxInstances)
+        {
+
+        }
+
+
+        public void SetMusic(string musicName, Music music)
+        {
+            Musics[musicName] = music;
+
+            music.Sound.Name = musicName;
+        }
+
+
+        public void ReplaceMusic(string oldMusic, string newMusic)
+        {
+            Musics[oldMusic].Stop(false, 0);
+
+            Musics[newMusic].Sound.Name = oldMusic;
+
+            Microsoft.Xna.Framework.Audio.SoundEffect se = Musics[oldMusic].Sound;
+
+            Musics[oldMusic] = new Music();
+            Musics[oldMusic].Sound = se;
+        }
+
+
+        public void SetSfx(string bankName, SoundEffect sfx)
+        {
+            if (!SoundEffects.ContainsKey(bankName))
+                SoundEffects[bankName] = new SoundEffectsBank();
+
+            SoundEffects[bankName].Add(sfx.Sound.Name, sfx);
+        }
+
+
+        public void Update(GameTime gameTime)
+        {
+            foreach (var m in Musics.Values)
+                m.Update(gameTime);
+
+            MaxActivesSfxInstances = 0;
+
+            foreach (var sfx in SoundEffects)
+            {
+                sfx.Value.Update(gameTime);
+                MaxActivesSfxInstances += SoundEffects[sfx.Key].ActiveInstances;
+            }
+
+            //string[] wCles;
+            
+            //wCles = Musics.Keys.ToArray();
+
+            //for (int i = 0; i < wCles.Length; i++)
+            //    Musics[wCles[i]].Update(gameTime);
+
+
+            //// gestion des effets sonores
+
+            //wCles = SoundEffects.Keys.ToArray();
+
+            //MaxActivesSfxInstances = 0;
+
+            //for (int i = 0; i < wCles.Length; i++)
+            //{
+            //    SoundEffects[wCles[i]].Update(gameTime);
+            //    MaxActivesSfxInstances += SoundEffects[wCles[i]].ActiveInstances;
+            //}
+        }
+
+
+        public void SetMaxActivesSfxInstances(string sfxName, int maxInstances)
+        {
+            if (!MaxSfxInstances.ContainsKey(sfxName))
+                MaxSfxInstances.Add(sfxName, maxInstances);
             else
-                EffetSonoreMaxInstances[effetSonore] = maxInstances;
+                MaxSfxInstances[sfxName] = maxInstances;
         }
     }
 }

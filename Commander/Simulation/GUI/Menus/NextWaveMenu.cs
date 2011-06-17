@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
@@ -12,7 +12,7 @@
         public bool Visible;
 
         private Dictionary<EnemyType, EnemyDescriptor> EnnemisQtes;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Bubble Bulle;
         private Dictionary<EnemyType, Image> RepresentationsEnnemis;
         private Dictionary<EnemyType, Text> RepresentationsQtes;
@@ -21,7 +21,7 @@
 
 
         public NextWaveMenu(
-            Simulation simulation,
+            Simulator simulation,
             Dictionary<EnemyType, EnemyDescriptor> ennemisQtes,
             Vector3 positionInitiale,
             float prioriteAffichage)

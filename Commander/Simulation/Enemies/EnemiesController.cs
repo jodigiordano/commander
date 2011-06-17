@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
@@ -26,7 +26,7 @@
         public event EnemyCelestialBodyHandler EnemyReachedEndOfPath;
 
         private List<KeyValuePair<int, MineralType>> MineralsDistribution;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private LinkedListNode<Wave> NextWave { get; set; }
         private List<Wave> ActiveWaves { get; set; }
         private double WaveCounter { get; set; }
@@ -40,7 +40,7 @@
         private int EnemiesCreatedCounter;
 
 
-        public EnemiesController(Simulation simulation)
+        public EnemiesController(Simulator simulation)
         {
             Simulation = simulation;
 

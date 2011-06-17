@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -32,7 +32,7 @@
         public Vector3 TargetPosition           { get { return targetPosition; } set { targetPosition = value; InCombat = true; TargetReached = false; } }
         public float BulletHitPoints;
 
-        protected Simulation Simulation;
+        protected Simulator Simulation;
         public Image Image;
         public float RotationMaximaleRad;
 
@@ -53,7 +53,7 @@
         protected bool ShowTrail;
 
 
-        public Spaceship(Simulation simulation)
+        public Spaceship(Simulator simulation)
         {
             Simulation = simulation;
             Image = new Image("Vaisseau", Position)

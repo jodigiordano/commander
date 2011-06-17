@@ -1,11 +1,11 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
+    using System.Xml.Serialization;
+    using EphemereGames.Commander.Simulation;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
-    using System.Xml.Serialization;
-    using EphemereGames.Core.Utilities;
 
 
     public enum Distance
@@ -28,28 +28,32 @@
     [XmlRoot(ElementName = "World")]
     public class WorldDescriptor
     {
-        public int Id;
+        public string Name;
         public List<int> Levels;
-        public List<KeyValuePair<int, int>> Warps;
-        public ScenarioDescriptor SimulationDescription;
+        public List<KeyValuePair<int, string>> Warps;
+        public int Layout;
         public List<int> UnlockedCondition;
         public string WarpBlockedMessage;
+        public string CutsceneBefore;
+        public string CutsceneAfter;
 
 
         public WorldDescriptor()
         {
-            Id = -1;
+            Name = "";
             Levels = new List<int>();
-            Warps = new List<KeyValuePair<int, int>>();
-            SimulationDescription = new ScenarioDescriptor();
+            Warps = new List<KeyValuePair<int, string>>();
+            Layout = -1;
             UnlockedCondition = new List<int>();
             WarpBlockedMessage = "";
+            CutsceneBefore = "";
+            CutsceneAfter = "";
         }
     }
 
 
     [XmlRoot(ElementName = "Scenario")]
-    public class ScenarioDescriptor
+    public class LevelDescriptor
     {
         public int Id;
         public string Mission;
@@ -83,7 +87,7 @@
         public List<string> HelpTexts;
 
 
-        public ScenarioDescriptor()
+        public LevelDescriptor()
         {
             Id = -1;
             Mission = "test";

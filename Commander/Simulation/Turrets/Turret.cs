@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -50,7 +50,7 @@
         protected LinkedList<TurretLevel> Levels;
         protected string SfxShooting;
 
-        protected Simulation Simulation;
+        protected Simulator Simulation;
         private bool DisabledOverride;
         private bool CanUpdateOverride;
         private float RotationWander = 0;
@@ -70,7 +70,7 @@
         private Matrix rotationMatrix;
 
         
-        public Turret(Simulation simulation)
+        public Turret(Simulator simulation)
         {
             Simulation = simulation;
             TimeLastBullet = 0;

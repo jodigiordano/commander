@@ -17,7 +17,7 @@
 
         public ScenesController()
         {
-            Buffer = new VisualBuffer(Preferences.WindowHeight, Preferences.WindowWidth);
+            Buffer = new VisualBuffer(Preferences.WindowWidth, Preferences.WindowHeight);
             Camera.Origin = new Vector2(Preferences.WindowWidth / 2.0f, Preferences.WindowHeight / 2.0f);
             Scenes.Clear();
 
@@ -38,9 +38,9 @@
         }
 
 
-        public void AddScene(string sceneName, Scene scene)
+        public void AddScene(Scene scene)
         {
-            Scenes[sceneName] = scene;
+            Scenes[scene.Name] = scene;
         }
 
 

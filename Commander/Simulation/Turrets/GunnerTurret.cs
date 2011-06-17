@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using Microsoft.Xna.Framework;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace EphemereGames.Commander
         private Enemy EnemyAttacked;
 
 
-        public GunnerTurret( Simulation simulation )
+        public GunnerTurret( Simulator simulation )
             : base( simulation )
         {
             Type = TurretType.Gunner;

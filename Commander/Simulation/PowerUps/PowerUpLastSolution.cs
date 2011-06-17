@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
@@ -15,7 +15,7 @@ namespace EphemereGames.Commander
         private bool terminated;
 
 
-        public PowerUpLastSolution(Simulation simulation)
+        public PowerUpLastSolution(Simulator simulation)
             : base(simulation)
         {
             ZoneImpactDestruction = 200;

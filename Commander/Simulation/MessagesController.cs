@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@
     {
         public List<Turret> Turrets;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Dictionary<IObjetPhysique, TextBubble> TalkingTurrets;
         private double TimeLastQuote;
         private List<KeyValuePair<IObjetPhysique, TextBubble>> ToDelete;
@@ -258,7 +258,7 @@
         };
 
 
-        public MessagesController(Simulation simulation)
+        public MessagesController(Simulator simulation)
         {
             Simulation = simulation;
             TalkingTurrets = new Dictionary<IObjetPhysique, TextBubble>();

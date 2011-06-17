@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
@@ -11,7 +11,7 @@ namespace EphemereGames.Commander
         private bool Firing;
 
 
-        public PowerUpMiner(Simulation simulation, HumanBattleship humanBattleship)
+        public PowerUpMiner(Simulator simulation, HumanBattleship humanBattleship)
             : base(simulation)
         {
             HumanBattleship = humanBattleship;

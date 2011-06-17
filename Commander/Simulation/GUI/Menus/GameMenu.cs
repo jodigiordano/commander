@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
@@ -13,7 +13,7 @@
         public int RemainingWaves;
         public double TimeNextWave;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Text WidgetScore;
         private Text WidgetCash;
         private Text WidgetRemainingWaves;
@@ -32,7 +32,7 @@
         }
 
 
-        public GameMenu(Simulation simulation, Vector3 position)
+        public GameMenu(Simulator simulation, Vector3 position)
         {
             this.Simulation = simulation;
             this.Position = position;

@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
@@ -26,10 +26,10 @@
     class BulletsFactory
     {
         private Dictionary<BulletType, object> BulletsPools;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public BulletsFactory(Simulation simulation)
+        public BulletsFactory(Simulator simulation)
         {
             Simulation = simulation;
 

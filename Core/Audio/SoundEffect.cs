@@ -14,7 +14,7 @@
         public SoundEffect()
             : base()
         {
-            Volume = SoundEffectsController.Instance.VolumeEffetsSonores;
+            Volume = Audio.SoundEffectsController.SfxVolume;
             InstancesActives = 0;
         }
 
@@ -54,9 +54,9 @@
             son.Name = nom;
 
             SoundEffect effetSonore = new SoundEffect();
-            effetSonore.Son = son;
+            effetSonore.Sound = son;
 
-            SoundEffectsController.Instance.setEffetSonore(banque, effetSonore);
+            Audio.SoundEffectsController.SetSfx(banque, effetSonore);
 
             return effetSonore;
         }

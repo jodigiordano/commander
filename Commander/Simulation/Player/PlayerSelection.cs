@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
 
@@ -37,7 +37,7 @@
         public GameAction GameAction;
 
 
-        public PlayerSelection(Simulation simulation)
+        public PlayerSelection(Simulator simulation)
         {
             AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
 

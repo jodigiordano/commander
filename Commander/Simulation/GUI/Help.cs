@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
@@ -11,7 +11,7 @@
         private Image Lieutenant;
         private Image Bubble;
         private TextTypeWriter Directive;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private List<string> Texts;
         private int ActiveText;
         private bool ActiveOverride;
@@ -19,7 +19,7 @@
         private double EffectTimeRemaining;
 
 
-        public Help(Simulation simulation, List<string> texts)
+        public Help(Simulator simulation, List<string> texts)
         {
             Simulation = simulation;
             Texts = texts;

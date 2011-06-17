@@ -7,7 +7,7 @@
 
     class LiteSimulation
     {
-        public ScenarioDescriptor Descripteur;
+        public LevelDescriptor Descripteur;
 
         private class CorpsCelesteLite
         {

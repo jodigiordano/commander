@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using Microsoft.Xna.Framework;
 
@@ -6,12 +6,12 @@
     {
         public Vector3 Position;
         private Vector2 Taille;
-        protected Simulation Simulation;
+        protected Simulator Simulation;
 
         public Bubble Bulle;
 
 
-        public AbstractMenu(Simulation simulation)
+        public AbstractMenu(Simulator simulation)
         {
             this.Simulation = simulation;
 

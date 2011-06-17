@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -6,20 +6,20 @@
     using EphemereGames.Core.Visual;
 
 
-    class ScenarioStartedAnnunciation
+    class LevelStartedAnnunciation
     {
         private Translator TranslatorMission;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private double Term = 23000;
         private EffectsController<IVisual> EffectsController; // needed to be controller by this object because of the Tutorial system
 
 
-        public ScenarioStartedAnnunciation(Simulation simulation, Scenario scenario)
+        public LevelStartedAnnunciation(Simulator simulation, Level level)
         {
             Simulation = simulation;
 
             TranslatorMission = new Translator
-            (Simulation.Scene, new Vector3(-600, -330, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), scenario.Mission, 4, true, 4000, 250, Preferences.PrioriteGUIHistoire);
+            (Simulation.Scene, new Vector3(-600, -330, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), level.Mission, 4, true, 4000, 250, Preferences.PrioriteGUIHistoire);
 
             EffectsController = new EffectsController<IVisual>();
 

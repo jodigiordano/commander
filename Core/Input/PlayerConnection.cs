@@ -5,59 +5,63 @@
     using System;
     
 
-    public delegate void ConnectHandler(PlayerIndex index, SignedInGamer gamer);
+    internal delegate void PlayerHandler(Player p);
 
-    public class PlayerConnection
+
+    class PlayerConnection
     {
-        public event ConnectHandler PlayerConnected;
-        public event ConnectHandler PlayerDisconnected;
+        public event PlayerHandler PlayerConnected;
+        public event PlayerHandler PlayerDisconnected;
 
 
         public PlayerConnection()
         {
-            SignedInGamer.SignedIn += new EventHandler<SignedInEventArgs>(playerConnected);
-            SignedInGamer.SignedOut += new EventHandler<SignedOutEventArgs>(playerDisconnected);
+            SignedInGamer.SignedIn += new EventHandler<SignedInEventArgs>(DoPlayerConnected);
+            SignedInGamer.SignedOut += new EventHandler<SignedOutEventArgs>(DoPlayerDisconnected);
         }
 
 
-        public void Connect(PlayerIndex player)
+        public void Connect(Player player)
         {
 #if WINDOWS
-            notifyPlayerConnected(player, null);
+            NotifyPlayerConnected(player);
             return;
 #endif
 
             if (Guide.IsVisible)
                 return;
 
-            if (SignedInGamer.SignedInGamers[player] == null)
+            if (SignedInGamer.SignedInGamers[player.Index] == null)
                 Guide.ShowSignIn(1, false);
         }
 
 
-        private void playerConnected(object sender, SignedInEventArgs e)
+        private void DoPlayerConnected(object sender, SignedInEventArgs e)
         {
-            notifyPlayerConnected(e.Gamer.PlayerIndex, e.Gamer);
+            Player player = Inputs.PlayersController.GetPlayer(e.Gamer.PlayerIndex);
+            player.Profile = e.Gamer;
+
+            NotifyPlayerConnected(Inputs.PlayersController.GetPlayer(e.Gamer.PlayerIndex));
         }
 
 
-        private void playerDisconnected(object sender, SignedOutEventArgs e)
+        private void DoPlayerDisconnected(object sender, SignedOutEventArgs e)
         {
-            notifyPlayerDisconnected(e.Gamer.PlayerIndex, e.Gamer);
+            NotifyPlayerDisconnected(Inputs.PlayersController.GetPlayer(e.Gamer.PlayerIndex));
         }
 
 
-        private void notifyPlayerConnected(PlayerIndex index, SignedInGamer gamer)
+        private void NotifyPlayerConnected(Player player)
         {
             if (PlayerConnected != null)
-                PlayerConnected(index, gamer);
+                PlayerConnected(player);
         }
 
 
-        private void notifyPlayerDisconnected(PlayerIndex index, SignedInGamer gamer)
+        private void NotifyPlayerDisconnected(Player player)
         {
             if (PlayerDisconnected != null)
-                PlayerDisconnected(index, gamer);
+                PlayerDisconnected(player);
         }
     }
 }

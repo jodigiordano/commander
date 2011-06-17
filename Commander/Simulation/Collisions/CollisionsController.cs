@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
@@ -16,7 +16,7 @@
         public event TurretPhysicalObjectHandler InTurretRange;
         public event EnemyBulletHandler BulletDeflected;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private RectanglePhysique Battlefield;
         private GridWorld EnemiesGrid;
         private GridWorld TurretsGrid;
@@ -43,7 +43,7 @@
         public bool Debug;
 
 
-        public CollisionsController(Simulation simulation)
+        public CollisionsController(Simulator simulation)
         {
             Simulation = simulation;
             Battlefield = Simulation.Terrain;

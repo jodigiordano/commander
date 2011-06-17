@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -8,12 +8,12 @@
 
     class PlayerLives
     {
-        private Simulation Simulation;
+        private Simulator Simulation;
         private CelestialBody CelestialBody;
         private List<Moon> Moons;
 
 
-        public PlayerLives(Simulation simulation, CelestialBody celestialBody, Color color)
+        public PlayerLives(Simulator simulation, CelestialBody celestialBody, Color color)
         {
             Simulation = simulation;
             CelestialBody = celestialBody;

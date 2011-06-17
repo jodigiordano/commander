@@ -19,10 +19,10 @@
         internal VisualBuffer Buffer    { get; private set; }
         public Camera Camera            { get; private set; }
 
-        public Texture2D Texture        { get { return Buffer.Texture; } }
-        public int Width                { get { return Buffer.Largeur; } }
-        public int Height               { get { return Buffer.Hauteur; } }
-        public Vector2 Center           { get { return Buffer.Centre; } }
+        internal Texture2D Texture      { get { return Buffer.Texture; } }
+        public int Width                { get { return Buffer.Width; } }
+        public int Height               { get { return Buffer.Height; } }
+        public Vector2 Center           { get { return Buffer.Center; } }
 
         public virtual bool IsFinished                                      { get; protected set; }
         public virtual AnimationsController Animations                      { get; protected set; }
@@ -37,7 +37,7 @@
         private string name;
 
 
-        public Scene(Vector2 position, int hauteur, int largeur)
+        public Scene(Vector2 position, int width, int height)
         {
             Buffer = Visuals.ScenesController.Buffer;
             EnableVisuals = false;
@@ -48,7 +48,7 @@
             LastBlend = TypeBlend.Alpha;
             UpdatedThisTick = false;
             Camera = new Camera();
-            Camera.Origin = new Vector2(this.Buffer.Largeur / 2.0f, this.Buffer.Hauteur / 2.0f);
+            Camera.Origin = new Vector2(this.Buffer.Width / 2.0f, this.Buffer.Height / 2.0f);
             Name = name;
             Animations = new AnimationsController(this);
             PhysicalEffects = new EffectsController<IPhysicalObject>();
@@ -69,7 +69,13 @@
         }
 
 
-        public void Draw()
+        public Color ClearColor
+        {
+            set { Buffer.ClearColor = value; }
+        }
+
+
+        internal void Draw()
         {
             UpdateVisual();
 
@@ -80,7 +86,7 @@
 
             ToDraw.Sort(IScenableComparer.Default);
 
-            Buffer.EcrireDebut();
+            Buffer.BeginWriting();
 
             BlendState b = SwitchBlendMode(TypeBlend.Alpha);
 
@@ -103,11 +109,7 @@
         }
 
 
-        //public virtual void Show() { }
-        //public virtual void Hide() { }
-
-
-        public void Draw(SpriteBatch spriteBatch)
+        internal void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(
                 Texture,
@@ -122,10 +124,10 @@
         }
 
 
-        //public void Clear()
-        //{
-        //    ToDraw.Clear();
-        //}
+        public void TransiteTo(string to)
+        {
+            Visuals.Transite(Name, to);
+        }
 
 
         public void Add(IScenable element)
@@ -155,12 +157,6 @@
         }
 
 
-        //public void Remove(IScenable element)
-        //{
-        //    ToDraw.Remove(element);
-        //}
-
-
         public void Update(GameTime gameTime)
         {
             Camera.Update(gameTime);
@@ -174,7 +170,7 @@
         }
 
 
-        public void Dispose()
+        internal void Dispose()
         {
             EphemereGames.Core.Input.Inputs.RemoveListener(this);
         }
@@ -234,14 +230,17 @@
         public virtual void OnFocus() { }
         public virtual void OnFocusLost() { }
 
-        public virtual void doKeyPressedOnce(PlayerIndex inputIndex, Keys key) {}
-        public virtual void doKeyReleased(PlayerIndex inputIndex, Keys key) {}
-        public virtual void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button) { }
-        public virtual void doMouseButtonReleased(PlayerIndex inputIndex, MouseButton button) { }
-        public virtual void doMouseScrolled(PlayerIndex inputIndex, int delta) { }
-        public virtual void doMouseMoved(PlayerIndex inputIndex, Vector3 delta) { }
-        public virtual void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button) { }
-        public virtual void doGamePadButtonReleased(PlayerIndex inputIndex, Buttons button) { }
-        public virtual void doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta) { }
+        public virtual void DoKeyPressedOnce(Player player, Keys key) {}
+        public virtual void DoKeyReleased(Player player, Keys key) {}
+        public virtual void DoMouseButtonPressedOnce(Player player, MouseButton button) { }
+        public virtual void DoMouseButtonReleased(Player player, MouseButton button) { }
+        public virtual void DoMouseScrolled(Player player, int delta) { }
+        public virtual void DoMouseMoved(Player player, Vector3 delta) { }
+        public virtual void DoGamePadButtonPressedOnce(Player player, Buttons button) { }
+        public virtual void DoGamePadButtonReleased(Player player, Buttons button) { }
+        public virtual void DoGamePadJoystickMoved(Player player, Buttons button, Vector3 delta) { }
+        public virtual void DoPlayerConnected(Player player) { }
+        public virtual void DoPlayerDisconnected(Player player) { }
+        public virtual void PlayerConnectionRequested(Player Player) { }
     }
 }

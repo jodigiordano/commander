@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
@@ -24,7 +24,7 @@
     {
         public List<Enemy> AvailableEnemies { get; private set; }
         private Dictionary<EnemyType, Pool<Enemy>> EnemiesPools;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
         public Dictionary<EnemyType, string> ImagesEnemies = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
@@ -57,7 +57,7 @@
         };
 
 
-        public EnemiesFactory(Simulation simulation)
+        public EnemiesFactory(Simulator simulation)
         {
             Simulation = simulation;
 

@@ -19,8 +19,7 @@
             GraphicsDeviceManager graphicsDeviceManager,
             int windowWidth,
             int windowHeight,
-            ContentManager content,
-            string[] scenesNames)
+            ContentManager content)
         {
             Preferences.GraphicsDeviceManager = graphicsDeviceManager;
             Preferences.WindowWidth = windowWidth;
@@ -32,14 +31,6 @@
 
             graphicsDeviceManager.PreferMultiSampling = true;
 
-            foreach (var sceneName in scenesNames)
-                ScenesController.AddScene(sceneName, null);
-
-            for (int i = 0; i < scenesNames.Length; i++)
-                for (int j = 0; j < scenesNames.Length; j++)
-                    if (i != j)
-                        TransitionsController.AddTransition(new Transition(scenesNames[i], scenesNames[j]));
-
 
             Primitives.Initialize(Preferences.Content.Load<Texture2D>("pixelBlanc"));
 
@@ -48,19 +39,19 @@
         }
 
 
-        //public static void AddTransition(Transition transition)
-        //{
-        //    TransitionsController.AddTransition(transition);
-        //}
-
-
-        public static void Transite(string transitionName)
+        public static void AddScene(Scene scene)
         {
-            TransitionsController.Transite(transitionName);
+            ScenesController.AddScene(scene);
         }
 
 
-        public static void GetNotifiedTransition(NoneHandler handlerStarted, NoneHandler handlerStopped)
+        public static void Transite(string from, string to)
+        {
+            TransitionsController.Transite(from, to);
+        }
+
+
+        public static void AddTransitionListener(NoneHandler handlerStarted, NoneHandler handlerStopped)
         {
             TransitionsController.TransitionStarted += handlerStarted;
             TransitionsController.TransitionTerminated += handlerStopped;

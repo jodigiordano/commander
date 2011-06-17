@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using Microsoft.Xna.Framework;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace EphemereGames.Commander
     {
         private Particle Glow;
 
-        public BoosterTurret( Simulation simulation )
+        public BoosterTurret( Simulator simulation )
             : base( simulation )
         {
             Type = TurretType.Booster;

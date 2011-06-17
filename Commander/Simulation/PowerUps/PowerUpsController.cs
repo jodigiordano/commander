@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -13,10 +13,10 @@
         public bool InPowerUp;
 
         private List<PowerUp> PowerUps;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public PowerUpsController(Simulation simulation)
+        public PowerUpsController(Simulator simulation)
         {
             Simulation = simulation;
 

@@ -9,7 +9,6 @@
 
     class HelpScene : Scene
     {
-        private Main Main;
         private Image FondEcran;
         private Image Bulle;
         private Image Lieutenant;
@@ -17,15 +16,12 @@
         private List<KeyValuePair<Text,Image>> TitresSlides;
         private HorizontalSlider SlidesSlider;
         private Cursor Curseur;
-
         private string ChoixTransition;
-        private double TempsEntreDeuxChangementMusique;
 
-        public HelpScene(Main main)
-            : base(Vector2.Zero, 720, 1280)
+
+        public HelpScene()
+            : base(Vector2.Zero, 1280, 720)
         {
-            Main = main;
-
             Name = "Aide";
 
             Lieutenant = new Image("lieutenant", new Vector3(120, -420, 0));
@@ -65,7 +61,7 @@
             );
             TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
-            Curseur = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
+            Curseur = new Cursor(this, Vector3.Zero, 10, Preferences.PrioriteGUIMenuPrincipal);
 
             TitresSlides = new List<KeyValuePair<Text, Image>>();
 
@@ -112,23 +108,11 @@
 
             TitresSlides.Add(new KeyValuePair<Text, Image>(titre, slide));
 
-            SlidesSlider = new HorizontalSlider(this, Curseur, new Vector3(0, -250, 0), 0, 3, 0, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
-
-            TempsEntreDeuxChangementMusique = 0;
-
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
-        }
-
-        private void DoPlayerDisconnected()
-        {
-            Visuals.Transite("AideToChargement");
+            SlidesSlider = new HorizontalSlider(this, new Vector3(0, -250, 0), 0, 3, 0, 1, Preferences.PrioriteGUIMenuPrincipal + 0.01f);
         }
 
 
-        protected override void UpdateLogic(GameTime gameTime)
-        {
-            TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
-        }
+        protected override void UpdateLogic(GameTime gameTime) { }
 
 
         protected override void UpdateVisual()
@@ -141,95 +125,85 @@
         }
 
 
-        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (button == p.MouseConfiguration.Select)
-                SlidesSlider.doClick();
+            if (button == MouseConfiguration.Select)
+                SlidesSlider.DoClick(((Player) p).Circle);
 
-            if (button == p.MouseConfiguration.Back)
+            if (button == MouseConfiguration.Back)
                 BeginTransition();
         }
 
 
-        public override void doMouseMoved(PlayerIndex inputIndex, Vector3 delta)
+        public override void DoMouseMoved(Core.Input.Player p, Vector3 delta)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            p.Move(ref delta, p.MouseConfiguration.Speed);
-            Curseur.Position = p.Position;
+            Player player = (Player) p;
+
+            player.Move(ref delta, MouseConfiguration.Speed);
+            Curseur.Position = player.Position;
         }
 
 
-        public override void doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta)
+        public override void DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, Vector3 delta)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (button == p.GamePadConfiguration.MoveCursor)
+            Player player = (Player) p;
+
+            if (button == GamePadConfiguration.MoveCursor)
             {
-                p.Move(ref delta, p.GamePadConfiguration.Speed);
-                Curseur.Position = p.Position;
+                player.Move(ref delta, GamePadConfiguration.Speed);
+                Curseur.Position = player.Position;
             }
         }
 
 
-        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (key == p.KeyboardConfiguration.Back || key == p.KeyboardConfiguration.Cancel)
+            if (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel)
                 BeginTransition();
 
-            if (key == p.KeyboardConfiguration.ChangeMusic)
-                BeginChangeMusic();
+            if (key == KeyboardConfiguration.ChangeMusic)
+                Main.ChangeMusic();
         }
 
 
-        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (button == p.GamePadConfiguration.Select)
-                SlidesSlider.doClick();
+            if (button == GamePadConfiguration.Select)
+                SlidesSlider.DoClick(((Player) p).Circle);
 
-            if (button == p.GamePadConfiguration.Cancel)
+            if (button == GamePadConfiguration.Cancel)
                 BeginTransition();
 
-            if (button == p.GamePadConfiguration.ChangeMusic)
-                BeginChangeMusic();
+            if (button == GamePadConfiguration.ChangeMusic)
+                Main.ChangeMusic();
+        }
+
+
+        public override void DoPlayerDisconnected(Core.Input.Player player)
+        {
+            if (player.Master)
+                TransiteTo("Chargement");
         }
 
 
         private void BeginTransition()
         {
-            Visuals.Transite("AideToMenu");
-        }
-
-
-        private void BeginChangeMusic()
-        {
-            if (TempsEntreDeuxChangementMusique > 0)
-                return;
-
-            MainMenuScene menu = (MainMenuScene)Visuals.GetScene("Menu");
-            menu.ChangeMusic();
-            TempsEntreDeuxChangementMusique = Preferences.TimeBetweenTwoMusics;
+            TransiteTo("Menu");
         }
     }
 }

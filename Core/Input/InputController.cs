@@ -1,15 +1,15 @@
 ﻿namespace EphemereGames.Core.Input
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+
 
     class InputController
     {
         public bool Active;
         private Vector2 MouseBasePosition;
-        private Dictionary<PlayerIndex, InputSource> Sources;
+        private Dictionary<Player, InputSource> Sources;
         private List<InputListener> Listeners;
 
 
@@ -18,11 +18,8 @@
             Active = true;
             MouseBasePosition = mouseBasePosition;
 
-            Sources = new Dictionary<PlayerIndex, InputSource>(PlayerIndexComparer.Default);
+            Sources = new Dictionary<Player, InputSource>();
             Listeners = new List<InputListener>();
-
-            for (PlayerIndex player = PlayerIndex.One; player <= PlayerIndex.Four; player++)
-                Sources.Add(player, new InputSource(player, MouseBasePosition));
         }
 
 
@@ -30,32 +27,35 @@
         {
             Active = true;
 
-            for (PlayerIndex player = PlayerIndex.One; player <= PlayerIndex.Four; player++)
-            {
-                this.MapKeys(player, new List<Keys>());
-                this.MapMouseButtons(player, new List<MouseButton>());
-                this.MapGamePadButtons(player, new List<Buttons>());
-            }
-
             Mouse.SetPosition((int) MouseBasePosition.X, (int) MouseBasePosition.Y);
 
-            Visual.Visuals.GetNotifiedTransition(DoTransitionStarted, DoTransitionStopped);
+            Visual.Visuals.AddTransitionListener(DoTransitionStarted, DoTransitionStopped);
         }
 
 
-        public void MapKeys(PlayerIndex player, List<Keys> keys)
+        public void AddPlayer(Player player)
+        {
+            Sources.Add(player, new InputSource(player, MouseBasePosition));
+
+            MapKeys(player, player.KeysToListenTo);
+            MapMouseButtons(player, player.MouseButtonsToListenTo);
+            MapGamePadButtons(player, player.GamePadButtonsToListenTo);
+        }
+
+
+        public void MapKeys(Player player, List<Keys> keys)
         {
             Sources[player].MapKeys(keys);
         }
 
 
-        public void MapMouseButtons(PlayerIndex player, List<MouseButton> buttons)
+        public void MapMouseButtons(Player player, List<MouseButton> buttons)
         {
             Sources[player].MapMouseButtons(buttons);
         }
 
 
-        public void MapGamePadButtons(PlayerIndex player, List<Buttons> buttons)
+        public void MapGamePadButtons(Player player, List<Buttons> buttons)
         {
             Sources[player].MapGamePadButtons(buttons);
         }
@@ -73,20 +73,29 @@
         }
 
 
-        public bool IsKeyPressed(PlayerIndex player, Keys key)
+        public bool IsKeyPressed(Player player, Keys key)
         {
+            if (player.InputType != InputType.Mouse)
+                return false;
+
             return Sources[player].IsKeyPressed(key);
         }
 
 
-        public bool IsMouseButtonPressed(PlayerIndex player, MouseButton button)
+        public bool IsMouseButtonPressed(Player player, MouseButton button)
         {
+            if (player.InputType != InputType.Mouse)
+                return false;
+
             return Sources[player].IsMouseButtonPressed(button);
         }
 
 
-        public bool IsGamePadButtonPressed(PlayerIndex player, Buttons button)
+        public bool IsGamePadButtonPressed(Player player, Buttons button)
         {
+            if (player.InputType != InputType.Gamepad)
+                return false;
+
             return Sources[player].IsGamePadButtonPressed(button);
         }
 
@@ -111,9 +120,9 @@
             // Receive raw input
             foreach (var source in Sources.Values)
             {
-                source.doKeyboardInput();
-                source.doMouseInput();
-                source.doGamePadInput();
+                source.DoKeyboardInput();
+                source.DoMouseInput();
+                source.DoGamePadInput();
             }
 
             // Spread the word

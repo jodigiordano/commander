@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System;
     using EphemereGames.Core.Physics;
@@ -8,7 +8,7 @@ namespace EphemereGames.Commander
 
     class AlienTurret : GravitationalTurret
     {
-        public AlienTurret(Simulation simulation)
+        public AlienTurret(Simulator simulation)
             : base(simulation)
         {
             Name = "Alien";

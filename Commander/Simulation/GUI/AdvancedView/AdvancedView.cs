@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
 
@@ -6,12 +6,12 @@
     class AdvancedView
     {
         private bool visible;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private EnemiesLives EnemiesLives;
         private List<CelestialBody> CelestialBodies;
 
 
-        public AdvancedView(Simulation simulation, List<Enemy> enemies, List<CelestialBody> celestialBodies)
+        public AdvancedView(Simulator simulation, List<Enemy> enemies, List<CelestialBody> celestialBodies)
         {
             Simulation = simulation;
             visible = false;

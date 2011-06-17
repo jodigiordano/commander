@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@
         public int BuyPrice;
 
 
-        public SpaceshipSpaceship(Simulation simulation)
+        public SpaceshipSpaceship(Simulator simulation)
             : base(simulation)
         {
             RotationMaximaleRad = 0.2f;

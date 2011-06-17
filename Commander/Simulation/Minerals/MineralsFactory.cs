@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
@@ -16,12 +16,12 @@
 
     class MineralsFactory
     {
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Dictionary<MineralType, MineralDefinition> Minerals;
         private Pool<Mineral> Pool;
 
 
-        public MineralsFactory(Simulation simulation)
+        public MineralsFactory(Simulator simulation)
         {
             Simulation = simulation;
 

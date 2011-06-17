@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
@@ -12,11 +12,11 @@
         public HumanBattleship HumanBattleship;
         public event PhysicalObjectHandler ObjectCreated;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private List<Spaceship> Spaceships;
 
 
-        public SpaceshipsController(Simulation simulation)
+        public SpaceshipsController(Simulator simulation)
         {
             this.Simulation = simulation;
             this.Spaceships = new List<Spaceship>();

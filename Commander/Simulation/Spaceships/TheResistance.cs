@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
@@ -14,7 +14,7 @@
         private List<Spaceship> Spaceships;
 
 
-        public TheResistance(Simulation simulation)
+        public TheResistance(Simulator simulation)
             : base(simulation)
         {
             Spaceships = new List<Spaceship>();

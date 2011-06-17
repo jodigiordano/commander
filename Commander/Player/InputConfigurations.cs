@@ -5,17 +5,17 @@
     using Microsoft.Xna.Framework.Input;
     
 
-    class KeyboardConfiguration
+    static class KeyboardConfiguration
     {
-        public Keys Next = Keys.Enter;
-        public Keys Back = Keys.Back;
-        public Keys Cancel = Keys.Escape;
-        public Keys ChangeMusic = Keys.RightShift;
-        public Keys NextWave = Keys.RightControl;
-        public Keys Debug = Keys.F1;
-        public Keys Editor = Keys.F2;
+        public static Keys Next = Keys.Enter;
+        public static Keys Back = Keys.Back;
+        public static Keys Cancel = Keys.Escape;
+        public static Keys ChangeMusic = Keys.RightShift;
+        public static Keys NextWave = Keys.RightControl;
+        public static Keys Debug = Keys.F1;
+        public static Keys Editor = Keys.F2;
 
-        public List<Keys> ToList
+        public static List<Keys> ToList
         {
             get
             {
@@ -55,18 +55,18 @@
     }
 
 
-    class MouseConfiguration
+    static class MouseConfiguration
     {
-        public MouseButton Select = MouseButton.Left;
-        public MouseButton Back = MouseButton.Right;
-        public MouseButton Cancel = MouseButton.Right;
-        public MouseButton AdvancedView = MouseButton.Middle;
-        public MouseButton SelectionNext = MouseButton.MiddleDown;
-        public MouseButton SelectionPrevious = MouseButton.MiddleUp;
-        public float Speed = 2;
+        public static MouseButton Select = MouseButton.Left;
+        public static MouseButton Back = MouseButton.Right;
+        public static MouseButton Cancel = MouseButton.Right;
+        public static MouseButton AdvancedView = MouseButton.Middle;
+        public static MouseButton SelectionNext = MouseButton.MiddleDown;
+        public static MouseButton SelectionPrevious = MouseButton.MiddleUp;
+        public static float Speed = 2;
 
 
-        public List<MouseButton> ToList
+        public static List<MouseButton> ToList
         {
             get
             {
@@ -84,24 +84,24 @@
     }
 
 
-    class GamePadConfiguration
+    static class GamePadConfiguration
     {
-        public Buttons Back = Buttons.Start;
-        public Buttons Back2 = Buttons.Back;
-        public Buttons Cancel = Buttons.B;
-        public Buttons ChangeMusic = Buttons.DPadUp;
-        public Buttons NextWave = Buttons.Y;
-        public Buttons Debug = Buttons.Back;
-        public Buttons Editor = Buttons.LeftShoulder;
-        public Buttons Select = Buttons.A;
-        public Buttons AdvancedView = Buttons.X;
-        public Buttons SelectionNext = Buttons.RightTrigger;
-        public Buttons SelectionPrevious = Buttons.LeftTrigger;
-        public Buttons MoveCursor = Buttons.LeftStick;
-        public float Speed = 15;
+        public static Buttons Back = Buttons.Start;
+        public static Buttons Back2 = Buttons.Back;
+        public static Buttons Cancel = Buttons.B;
+        public static Buttons ChangeMusic = Buttons.DPadUp;
+        public static Buttons NextWave = Buttons.Y;
+        public static Buttons Debug = Buttons.Back;
+        public static Buttons Editor = Buttons.LeftShoulder;
+        public static Buttons Select = Buttons.A;
+        public static Buttons AdvancedView = Buttons.X;
+        public static Buttons SelectionNext = Buttons.RightTrigger;
+        public static Buttons SelectionPrevious = Buttons.LeftTrigger;
+        public static Buttons MoveCursor = Buttons.LeftStick;
+        public static float Speed = 15;
 
 
-        public List<Buttons> ToList
+        public static List<Buttons> ToList
         {
             get
             {

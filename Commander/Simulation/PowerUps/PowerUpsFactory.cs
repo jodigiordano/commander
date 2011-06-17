@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -36,10 +36,10 @@
     {
         public Dictionary<PowerUpType, PowerUp> Availables;
         public HumanBattleship HumanBattleship;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public PowerUpsFactory(Simulation simulation)
+        public PowerUpsFactory(Simulator simulation)
         {
             Simulation = simulation;
 

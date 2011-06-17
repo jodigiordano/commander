@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    class ScenarioEndedAnnunciation
+    class LevelEndedAnnunciation
     {
         private Image Filter;
         private AlienSpaceship AlienShip;
@@ -17,7 +17,7 @@
         private List<Particle> MissilesVisual;
         private List<Particle> Implosions;
         private List<CelestialBody> CelestialBodies;
-        private Scenario Scenario;
+        private Level Level;
 
         private GameState GameState;
         private Double TimeLostState = 0;
@@ -26,7 +26,7 @@
         private Translator TranslatorGameWon;
         private Translator TranslatorScoreExplanations;
         private Translator TranslatorTotalScore;
-        private Simulation Simulation;
+        private Simulator Simulation;
         private bool HighscoreBeaten;
         private Text NewHighscore;
         private Image[] Stars;
@@ -45,11 +45,11 @@
         //};
 
 
-        public ScenarioEndedAnnunciation(Simulation simulation, List<CelestialBody> celestialBodies, Scenario scenario)
+        public LevelEndedAnnunciation(Simulator simulation, List<CelestialBody> celestialBodies, Level level)
         {
             Simulation = simulation;
             CelestialBodies = celestialBodies;
-            Scenario = scenario;
+            Level = level;
 
             Missiles = new List<KeyValuePair<Image, CelestialBody>>();
             MissilesVisual = new List<Particle>(CelestialBodies.Count);
@@ -110,20 +110,20 @@
             //AlienShip.Show();
 
             TranslatorScoreExplanations = new Translator
-            (Simulation.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Scenario.CommonStash.Score + " (base) + " +
-                Scenario.CommonStash.Cash + " (cash) +\n\n" +
-                (Scenario.CommonStash.Lives * 50) + " (lives) + " +
-                Scenario.CommonStash.TimeLeft + " (time) =", 3, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
+            (Simulation.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Level.CommonStash.Score + " (base) + " +
+                Level.CommonStash.Cash + " (cash) +\n\n" +
+                (Level.CommonStash.Lives * 50) + " (lives) + " +
+                Level.CommonStash.TimeLeft + " (time) =", 3, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
             TranslatorTotalScore = new Translator
-            (Simulation.Scene, new Vector3(-600, -40, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Scenario.CommonStash.TotalScore.ToString(), 5, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
+            (Simulation.Scene, new Vector3(-600, -40, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Level.CommonStash.TotalScore.ToString(), 5, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
             HighScores h;
-            Main.SaveGame.HighScores.TryGetValue(Scenario.Id, out h);
-            HighscoreBeaten = h == null || h.Scores.Count <= 0 || Scenario.CommonStash.TotalScore > h.Scores[0].Value;
-            int diff = (h == null || h.Scores.Count <= 0) ? Scenario.CommonStash.TotalScore : Scenario.CommonStash.TotalScore - h.Scores[0].Value;
+            Main.SaveGame.HighScores.TryGetValue(Level.Id, out h);
+            HighscoreBeaten = h == null || h.Scores.Count <= 0 || Level.CommonStash.TotalScore > h.Scores[0].Value;
+            int diff = (h == null || h.Scores.Count <= 0) ? Level.CommonStash.TotalScore : Level.CommonStash.TotalScore - h.Scores[0].Value;
 
             NewHighscore.Data = ((HighscoreBeaten) ? "new highscore!" : "not your best!") + " (" + (diff > 0 ? "+" : "") + diff + ")";
 
@@ -164,7 +164,7 @@
                 this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
                 this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
 
-                int nbStars = Scenario.NbStars(Scenario.CommonStash.TotalScore);
+                int nbStars = Level.NbStars(Level.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
                     this.Simulation.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 5000, 1000));
@@ -179,7 +179,7 @@
                 this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
                 this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
 
-                int nbStars = Scenario.NbStars(Scenario.CommonStash.TotalScore);
+                int nbStars = Level.NbStars(Level.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
                     this.Simulation.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 0, 1000));

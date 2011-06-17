@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
@@ -23,7 +23,7 @@
         private Color ColorPowerUpAvailable;
         private Color ColorPowerUpNotAvailable;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private double VisualPriority;
         private Vector3 Position;
         private float TextSize;
@@ -35,7 +35,7 @@
         public List<Turret> Turrets;
 
 
-        public PowerUpsMenu(Simulation simulation, Vector3 position, double visualPriority)
+        public PowerUpsMenu(Simulator simulation, Vector3 position, double visualPriority)
         {
             Simulation = simulation;
             VisualPriority = visualPriority;

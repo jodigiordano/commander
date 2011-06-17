@@ -1,28 +1,27 @@
 ﻿namespace EphemereGames.Core.Visual
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Content;
-    
+
+
     internal class VisualBuffer
     {
-        public bool GarderContenu;          // Lors d'un appel a Update, est-ce qu'on clear le buffer
-        public Color CouleurDeFond;         // Couleur utilisée pour clearer le buffer
+        public bool KeepContent;
+        public Color ClearColor;
+
         internal RenderTarget2D Buffer;
 
-        
-        public VisualBuffer(int hauteur, int largeur)
+
+        public VisualBuffer(int width, int height)
         {
-            GarderContenu = false;
-            CouleurDeFond = Color.Transparent;
+            KeepContent = false;
+            ClearColor = Color.Transparent;
 
             Buffer = new RenderTarget2D(
                 Preferences.GraphicsDeviceManager.GraphicsDevice,
-                largeur,
-                hauteur,
+                width,
+                height,
                 false,
                 Preferences.GraphicsDeviceManager.GraphicsDevice.PresentationParameters.BackBufferFormat,
                 Preferences.GraphicsDeviceManager.GraphicsDevice.PresentationParameters.DepthStencilFormat,
@@ -38,40 +37,40 @@
         }
 
 
-        public int Largeur
+        public int Width
         {
             get { return Buffer.Width; }
         }
 
 
-        public int Hauteur
+        public int Height
         {
             get { return Buffer.Height; }
         }
 
 
-        public Vector2 Centre
+        public Vector2 Center
         {
-            get { return new Vector2(Largeur, Hauteur) / 2.0f; }
+            get { return new Vector2(Width, Height) / 2.0f; }
         }
 
 
-        public void EcrireDebut()
+        public void BeginWriting()
         {
             // fait basculer le Render Target sur ce buffer, ce qui indique que
             // tout spriteBatch.Draw se fait dans ce buffer
             Preferences.GraphicsDeviceManager.GraphicsDevice.SetRenderTarget(Buffer);
 
             // effacer ce qu'il y avait dans le buffer
-            if (!GarderContenu)
-                Preferences.GraphicsDeviceManager.GraphicsDevice.Clear(CouleurDeFond);
+            if (!KeepContent)
+                Preferences.GraphicsDeviceManager.GraphicsDevice.Clear(ClearColor);
         }
 
 
-        public void viderBuffer()
+        public void Clear()
         {
             Preferences.GraphicsDeviceManager.GraphicsDevice.SetRenderTarget(Buffer);
-            Preferences.GraphicsDeviceManager.GraphicsDevice.Clear(CouleurDeFond);
+            Preferences.GraphicsDeviceManager.GraphicsDevice.Clear(ClearColor);
         }
     }
 }

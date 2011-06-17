@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -20,7 +20,7 @@
             }
         }
 
-        public TextBubble(Simulation simulation, Text texte, Vector3 position, double tempsAffichage, double prioriteAffichage)
+        public TextBubble(Simulator simulation, Text texte, Vector3 position, double tempsAffichage, double prioriteAffichage)
             : base(simulation, new Rectangle(), prioriteAffichage)
         {
             this.Texte = texte;

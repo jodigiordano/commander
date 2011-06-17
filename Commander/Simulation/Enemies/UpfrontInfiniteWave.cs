@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
 
@@ -9,7 +9,7 @@
         private int MaxWaves;
 
 
-        public UpfrontInfiniteWave(Simulation simulation, DescriptorInfiniteWaves descriptor, int nbWaves)
+        public UpfrontInfiniteWave(Simulator simulation, DescriptorInfiniteWaves descriptor, int nbWaves)
             : base(simulation, descriptor)
         {
             Waves = new List<Wave>();

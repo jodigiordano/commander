@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
@@ -17,12 +17,12 @@
         public PlanetarySystemController PlanetarySystemController;
         public List<Turret> Turrets { get; private set; }
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private Dictionary<Turret, Enemy> AssociationsThisTick;
         private Dictionary<Turret, int> BoostedTurretsThisTick;
 
 
-        public TurretsController(Simulation simulation)
+        public TurretsController(Simulator simulation)
         {
             Simulation = simulation;
             Turrets = new List<Turret>();

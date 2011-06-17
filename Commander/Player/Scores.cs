@@ -10,7 +10,7 @@
     public class HighScores
     {
         [ContentSerializer(Optional = false)]
-        public int Scenario { get; set; }
+        public int Level { get; set; }
 
         [ContentSerializer(Optional = false)]
         [XmlArrayItem("Scores")]
@@ -21,7 +21,7 @@
 
         public HighScores()
         {
-            Scenario = -1;
+            Level = -1;
             Scores = new List<KeyAndValue<string, int>>();
             Comparer = new ComparerKeyValuePairs();
         }
@@ -29,7 +29,7 @@
 
         public HighScores(int id)
         {
-            Scenario = id;
+            Level = id;
             Scores = new List<KeyAndValue<string, int>>();
             Comparer = new ComparerKeyValuePairs();
         }

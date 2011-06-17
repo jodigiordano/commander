@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
@@ -16,10 +16,10 @@
         private LinkedListNode<Turret> SelectedTurret;
         private LinkedList<Turret> AvailableTurretsToBuy;
         private CommonStash CommonStash;
-        private Simulation Simulation;
+        private Simulator Simulation;
 
 
-        public SelectedTurretToBuyController(Simulation simulation, CommonStash commonStash)
+        public SelectedTurretToBuyController(Simulator simulation, CommonStash commonStash)
         {
             Simulation = simulation;
             CommonStash = commonStash;

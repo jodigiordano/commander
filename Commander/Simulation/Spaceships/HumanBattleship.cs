@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -20,12 +20,12 @@
         public RailGunTurret RailGun;
         public SniperTurret Sniper;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private double VisualPriority;
         private Image Image;
 
 
-        public HumanBattleship(Simulation simulation, Vector3 position, double visualPriority)
+        public HumanBattleship(Simulator simulation, Vector3 position, double visualPriority)
         {
             Simulation = simulation;
             VisualPriority = visualPriority;

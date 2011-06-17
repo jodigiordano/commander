@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace EphemereGames.Commander
         public Path Path;
         public Path PathPreview;
         public double Displacement;
-        public Simulation Simulation;
+        public Simulator Simulation;
         public string Name;
         public EnemyType Type;
         public List<Mineral> Minerals;

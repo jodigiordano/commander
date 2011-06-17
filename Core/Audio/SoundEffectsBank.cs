@@ -10,20 +10,20 @@
     {
         public Dictionary<string, SoundEffect> EffetsSonores { get; set; }
 
-        public int InstancesActives;
+        public int ActiveInstances;
 
         public SoundEffectsBank()
         {
             EffetsSonores = new Dictionary<string, SoundEffect>();
-            InstancesActives = 0;
+            ActiveInstances = 0;
         }
 
-        public bool Utilise
+        public bool InUse
         {
             get
             {
                 foreach (var kvp in EffetsSonores)
-                    if (kvp.Value.Etat == SoundState.Playing)
+                    if (kvp.Value.State == SoundState.Playing)
                         return true;
 
                 return false;
@@ -49,40 +49,40 @@
 
         public void Update(GameTime gameTime)
         {
-            InstancesActives = 0;
+            ActiveInstances = 0;
 
             foreach (var kvp in EffetsSonores)
             {
                 kvp.Value.Update(gameTime);
-                InstancesActives += kvp.Value.InstancesActives;
+                ActiveInstances += kvp.Value.InstancesActives;
             }
         }
 
         public void reprendre(bool apparitionProgressive, int tempsFade)
         {
             foreach (var kvp in EffetsSonores)
-                kvp.Value.reprendre(apparitionProgressive, tempsFade);
+                kvp.Value.Unpause(apparitionProgressive, tempsFade);
         }
 
-        public void pauser(bool disparitionProgressive, int tempsFade)
+        public void Pause(bool disparitionProgressive, int tempsFade)
         {
             foreach (var kvp in EffetsSonores)
-                kvp.Value.pauser(disparitionProgressive, tempsFade);
+                kvp.Value.Pause(disparitionProgressive, tempsFade);
         }
 
-        public void arreter(bool disparitionProgressive, int tempsFade)
+        public void Stop(bool disparitionProgressive, int tempsFade)
         {
             foreach (var kvp in EffetsSonores)
-                kvp.Value.arreter(disparitionProgressive, tempsFade);
+                kvp.Value.Stop(disparitionProgressive, tempsFade);
         }
 
-        public void arreter(string nomEffetSonore, bool disparitionProgressive, int tempsFade)
+        public void Stop(string nomEffetSonore, bool disparitionProgressive, int tempsFade)
         {
             if (EffetsSonores.ContainsKey(nomEffetSonore))
-                EffetsSonores[nomEffetSonore].arreter(disparitionProgressive, tempsFade);
+                EffetsSonores[nomEffetSonore].Stop(disparitionProgressive, tempsFade);
         }
 
-        public void jouer(string nomEffetSonore)
+        public void Play(string nomEffetSonore)
         {
 #if DEBUG
                 if (!EffetsSonores.ContainsKey(nomEffetSonore))
@@ -92,7 +92,7 @@
             EffetsSonores[nomEffetSonore].jouer(false, 0, false);
         }
 
-        public void ajouter(string nomEffetSonore, SoundEffect effetSonore)
+        public void Add(string nomEffetSonore, SoundEffect effetSonore)
         {
             EffetsSonores[nomEffetSonore] = effetSonore;
         }

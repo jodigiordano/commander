@@ -2,11 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Threading;
-    using EphemereGames.Core.Input;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
 
 
     class LoadingScene : Scene
@@ -20,8 +19,6 @@
             LoadScenes
         }
 
-        public Main Main;
-
         private Image Logo;
         private Image Background;
         private Translator LoadingTranslation;
@@ -30,8 +27,7 @@
         private SandGlass SandGlass;
         private State SceneState;
 
-        private PlayerIndex ConnectingPlayer = PlayerIndex.One;
-        private bool WaitingForPlayerToConnect = true;
+        //private PlayerIndex ConnectingPlayer = PlayerIndex.One;
         private Thread ThreadLoadScenes;
         private bool ScenesAreLoaded;
 
@@ -61,11 +57,9 @@
         };
 
 
-        public LoadingScene(Main main)
-            : base(Vector2.Zero, 720, 1280)
+        public LoadingScene()
+            : base(Vector2.Zero, 1280, 720)
         {
-            Main = main;
-
             Name = "Chargement";
             EnableVisuals = true;
             EnableInputs = true;
@@ -147,19 +141,6 @@
 
                 case State.ConnectPlayer:
                     PressStart.Update();
-
-                    WaitingForPlayerToConnect = !(WaitingForPlayerToConnect && Main.PlayersController.IsConnected(ConnectingPlayer));
-
-                    if (!WaitingForPlayerToConnect)
-                    {
-                        if ( !Persistence.DataLoaded( "savePlayer" ) )
-                        {
-                            Persistence.LoadData( "savePlayer" );
-                            Persistence.LoadData( "generateurData" );
-                        }
-
-                        SceneState = State.LoadSaveGame;
-                    }
                     break;
 
 
@@ -184,11 +165,11 @@
 
                     if (ScenesAreLoaded)
                     {
-                        foreach (var kvp in ScenesLoaded)
-                            Visuals.UpdateScene(kvp.Key, kvp.Value);
+                        foreach (var scene in ScenesLoaded)
+                            Visuals.AddScene(scene);
 
                         SceneState = State.Finished;
-                        Visuals.Transite("ChargementToMenu");
+                        Visuals.Transite("Chargement", "Menu");
                     }
 
                     break;
@@ -196,15 +177,27 @@
         }
 
 
-        Dictionary<string, Scene> ScenesLoaded = new Dictionary<string,Scene>();
+        List<Scene> ScenesLoaded = new List<Scene>();
         private void LoadScenes()
         {
-            ScenesLoaded.Add("Menu", new MainMenuScene(Main));
-            ScenesLoaded.Add("NouvellePartie", new WorldsScene(Main));
-            ScenesLoaded.Add("Aide", new HelpScene(Main));
-            ScenesLoaded.Add("Options", new OptionsScene(Main));
-            ScenesLoaded.Add("Editeur", new EditorScene(Main));
-            ScenesLoaded.Add("Acheter", new BuyScene());
+            ScenesLoaded.Add(new MainMenuScene());
+            ScenesLoaded.Add(new HelpScene());
+            ScenesLoaded.Add(new OptionsScene());
+            ScenesLoaded.Add(new EditorScene());
+            ScenesLoaded.Add(new BuyScene());
+            ScenesLoaded.Add(new StoryScene("Intro", "World1", new IntroAnimation()));
+
+            WorldScene w1 = new WorldScene(LevelsFactory.GetWorldDescriptor("World1"));
+            WorldScene w2 = new WorldScene(LevelsFactory.GetWorldDescriptor("World2"));
+            WorldScene w3 = new WorldScene(LevelsFactory.GetWorldDescriptor("World3"));
+            
+            ScenesLoaded.Add(w1);
+            ScenesLoaded.Add(w2);
+            ScenesLoaded.Add(w3);
+
+            w1.Initialize();
+            w2.Initialize();
+            w3.Initialize();
 
             ScenesAreLoaded = true;
         }
@@ -240,10 +233,7 @@
         {
             base.OnFocus();
 
-            Main.PlayersController.Initialize();
             VisualEffects.Clear();
-            ConnectingPlayer = PlayerIndex.One;
-            WaitingForPlayerToConnect = true;
             InitPressStart();
             LoadingTranslation.PartieTraduite.Color.A = 0;
             LoadingTranslation.PartieNonTraduite.Color.A = 0;
@@ -251,26 +241,24 @@
         }
 
 
-        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
-        {
-            doConnectPlayer(inputIndex);
-        }
-
-
-        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
-        {
-            doConnectPlayer(inputIndex);
-        }
-
-
-        private void doConnectPlayer(PlayerIndex inputIndex)
+        public override void PlayerConnectionRequested(Core.Input.Player p)
         {
             if (SceneState != State.ConnectPlayer)
                 return;
 
-            ConnectingPlayer = inputIndex;
-            Main.PlayersController.Connect(inputIndex);
-            WaitingForPlayerToConnect = true;
+            p.Connect();
+        }
+
+
+        public override void DoPlayerConnected(Core.Input.Player p)
+        {
+            if (!Persistence.DataLoaded("savePlayer"))
+            {
+                Persistence.LoadData("savePlayer");
+                Persistence.LoadData("generateurData");
+            }
+
+            SceneState = State.LoadSaveGame;
         }
 
 

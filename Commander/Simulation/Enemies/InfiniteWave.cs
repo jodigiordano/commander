@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     class InfiniteWave
     {
@@ -6,11 +6,11 @@
         protected int NbWavesAsked;
         protected DescriptorInfiniteWaves Descriptor;
 
-        private Simulation Simulation;
+        private Simulator Simulation;
         private int ActualDifficulty;
 
 
-        public InfiniteWave(Simulation simulation, DescriptorInfiniteWaves descriptor)
+        public InfiniteWave(Simulator simulation, DescriptorInfiniteWaves descriptor)
         {
             Simulation = simulation;
             Descriptor = descriptor;

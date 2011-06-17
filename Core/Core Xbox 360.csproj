@@ -71,12 +71,15 @@
     <Compile Include="Audio\SoundEffectsController.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="Input\EqualityComparers.cs" />
+    <Compile Include="Input\InputConfigurations.cs" />
     <Compile Include="Input\Inputs.cs" />
+    <Compile Include="Input\Player.cs" />
     <Compile Include="Input\PlayerConnection.cs" />
     <Compile Include="Input\InputListener.cs" />
     <Compile Include="Input\InputController.cs" />
     <Compile Include="Input\InputSource.cs" />
     <Compile Include="Input\MouseButton.cs" />
+    <Compile Include="Input\PlayersController.cs" />
     <Compile Include="Input\Vibrator.cs" />
     <Compile Include="Persistence\Assets\AssetDescriptor.cs" />
     <Compile Include="Persistence\Assets\AssetsController.cs" />

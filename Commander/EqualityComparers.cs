@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
+    using EphemereGames.Commander.Simulation;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -246,29 +247,4 @@
             return (int) obj;
         }
     }
-    //class MouseButtonComparer : IEqualityComparer<MouseButton>
-    //{
-    //    private static MouseButtonComparer instance;
-    //    public static MouseButtonComparer Default
-    //    {
-    //        get
-    //        {
-    //            if (instance == null)
-    //                instance = new MouseButtonComparer();
-    //            return instance;
-    //        }
-    //    }
-
-
-    //    public bool Equals(MouseButton x, MouseButton y)
-    //    {
-    //        return x == y;
-    //    }
-
-
-    //    public int GetHashCode(MouseButton obj)
-    //    {
-    //        return (int) obj;
-    //    }
-    //}
 }

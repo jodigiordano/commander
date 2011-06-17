@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@
         private List<Bullet> ToAdd;
 
 
-        public SpaceshipMiner(Simulation simulation)
+        public SpaceshipMiner(Simulator simulation)
             : base(simulation)
         {
             Image = new Image("Resistance3")

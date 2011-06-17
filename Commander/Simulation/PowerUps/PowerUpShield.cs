@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
@@ -13,7 +13,7 @@ namespace EphemereGames.Commander
         private double ActiveTime;
 
 
-        public PowerUpShield(Simulation simulation)
+        public PowerUpShield(Simulator simulation)
             : base(simulation)
         {
             Type = PowerUpType.Shield;

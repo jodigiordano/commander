@@ -1,4 +1,4 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using System.IO;
@@ -6,48 +6,48 @@
     using Microsoft.Xna.Framework;
 
 
-    static class ScenariosFactory
+    static class LevelsFactory
     {
-        public static WorldDescriptor GetWorldDescriptor(int id)
+        public static WorldDescriptor GetWorldDescriptor(string name)
         {
             WorldDescriptor wd;
 
-            switch (id)
+            switch (name)
             {
-                case 1:
+                case "World1":
                 default:
                     wd = new WorldDescriptor()
                     {
-                        Id = 1,
+                        Name = name,
                         Levels = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
-                        Warps = new List<KeyValuePair<int,int>>() { new KeyValuePair<int, int>(9, 2) },
-                        SimulationDescription = ScenariosFactory.getDescripteurMonde1(),
+                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(9, "World2") },
+                        Layout = 101,
                         UnlockedCondition = new List<int>(),
                         WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level."
                     };
                     break;
 
-                case 2:
+                case "World2":
                     wd = new WorldDescriptor()
                     {
-                        Id = 2,
+                        Name = name,
                         //Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
                         Levels = new List<int>() { 0 },
-                        Warps = new List<KeyValuePair<int, int>>() { new KeyValuePair<int, int>(19, 3), new KeyValuePair<int, int>(20, 1) },
-                        SimulationDescription = ScenariosFactory.getDescripteurMonde2(),
+                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(19, "World3"), new KeyValuePair<int, string>(20, "World1") },
+                        Layout = 102,
                         UnlockedCondition = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
                         WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world."
                     };
                     break;
 
-                case 3:
+                case "World3":
                     wd = new WorldDescriptor()
                     {
-                        Id = 3,
+                        Name = name,
                         //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
                         Levels = new List<int>() { 0 },
-                        Warps = new List<KeyValuePair<int, int>>() { new KeyValuePair<int, int>(31, 2) },
-                        SimulationDescription = ScenariosFactory.getDescripteurMonde3(),
+                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(31, "World2") },
+                        Layout = 103,
                         UnlockedCondition = new List<int>() { -1 },
                         WarpBlockedMessage = ""
                     };
@@ -59,15 +59,15 @@
         }
 
 
-        public static ScenarioDescriptor GetLevelScenario(int id)
+        public static LevelDescriptor GetDescriptor(int id)
         {
-            ScenarioDescriptor d;
+            LevelDescriptor d;
 
             if (id == 9)
             {
-                d = new ScenarioDescriptor();
+                d = new LevelDescriptor();
                 d.Id = 9;
-                d.Mission = "Go to World 2!";
+                d.Mission = "World2";
                 d.Difficulty = "";
 
                 return d;
@@ -75,9 +75,9 @@
 
             else if (id == 19)
             {
-                d = new ScenarioDescriptor();
+                d = new LevelDescriptor();
                 d.Id = 19;
-                d.Mission = "Go to World 3!";
+                d.Mission = "World3";
                 d.Difficulty = "";
 
                 return d;
@@ -85,9 +85,9 @@
 
             else if (id == 20)
             {
-                d = new ScenarioDescriptor();
+                d = new LevelDescriptor();
                 d.Id = 20;
-                d.Mission = "Go back\nto World 1!";
+                d.Mission = "World1";
                 d.Difficulty = "";
 
                 return d;
@@ -95,9 +95,9 @@
 
             else if (id == 31)
             {
-                d = new ScenarioDescriptor();
+                d = new LevelDescriptor();
                 d.Id = id;
-                d.Mission = "Go back\nto World\n2!";
+                d.Mission = "World2";
                 d.Difficulty = "";
 
                 return d;
@@ -105,7 +105,7 @@
 
             else if (id >= 21 && id <= 30)
             {
-                d = new ScenarioDescriptor();
+                d = new LevelDescriptor();
                 d.Id = id;
                 d.Mission = "3-" + (id - 20);
                 d.Difficulty = (id == 10 || id == 17) ? "Easy" : (id == 11 || id == 12 || id == 13 || id == 14) ? "Normal" : "Hard";
@@ -113,12 +113,22 @@
                 return d;
             }
 
+            else if (id >= 100 && id <= 200)
+            {
+                switch (id)
+                {
+                    case 101: return GetWorld1Descriptor(); break;
+                    case 102: return GetWorld2Descriptor(); break;
+                    case 103: return GetWorld3Descriptor(); break;
+                }
+            }
+
             else
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(ScenarioDescriptor));
+                XmlSerializer serializer = new XmlSerializer(typeof(LevelDescriptor));
 
                 using (StreamReader reader = new StreamReader(".\\Content\\scenarios\\scenario" + id + ".xml"))
-                    d = (ScenarioDescriptor) serializer.Deserialize(reader.BaseStream);
+                    d = (LevelDescriptor) serializer.Deserialize(reader.BaseStream);
 
                 return d;
             }
@@ -127,9 +137,9 @@
         }
 
 
-        public static ScenarioDescriptor getDescripteurMenu()
+        public static LevelDescriptor GetMenuDescriptor()
         {
-            ScenarioDescriptor d = new ScenarioDescriptor();
+            LevelDescriptor d = new LevelDescriptor();
 
             CelestialBodyDescriptor c;
 
@@ -197,9 +207,9 @@
         }
 
 
-        public static ScenarioDescriptor getDescripteurTestsPerformance()
+        public static LevelDescriptor GetPerformanceTestDescriptor()
         {
-            ScenarioDescriptor d = new ScenarioDescriptor();
+            LevelDescriptor d = new LevelDescriptor();
 
             CelestialBodyDescriptor c;
             WaveDescriptor v;
@@ -307,9 +317,9 @@
         }
 
 
-        public static ScenarioDescriptor getDescripteurBidon()
+        public static LevelDescriptor GetEmptyDescriptor()
         {
-            ScenarioDescriptor d = new ScenarioDescriptor();
+            LevelDescriptor d = new LevelDescriptor();
 
             CelestialBodyDescriptor c;
             WaveDescriptor v;
@@ -342,9 +352,9 @@
         }
 
 
-        public static ScenarioDescriptor getDescripteurMonde1()
+        public static LevelDescriptor GetWorld1Descriptor()
         {
-            ScenarioDescriptor d = new ScenarioDescriptor();
+            LevelDescriptor d = new LevelDescriptor();
 
             CelestialBodyDescriptor c;
 
@@ -391,7 +401,7 @@
             d.PlanetarySystem[8].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             d.PlanetarySystem[8].AddTurret(TurretType.SlowMotion, 4, new Vector3(12, 2, 0), true);
 
-            d.AddPinkHole(new Vector3(-50, -220, 0), "Go to World 2!", 0, 10);
+            d.AddPinkHole(new Vector3(-50, -220, 0), "World2", 0, 10);
             d.PlanetarySystem[9].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.CelestialBodyToProtect = d.PlanetarySystem[9].PathPriority;
@@ -430,9 +440,9 @@
         }
 
 
-        public static ScenarioDescriptor getDescripteurMonde2()
+        public static LevelDescriptor GetWorld2Descriptor()
         {
-            ScenarioDescriptor d = new ScenarioDescriptor();
+            LevelDescriptor d = new LevelDescriptor();
 
             CelestialBodyDescriptor c;
 
@@ -441,7 +451,7 @@
 
             d.Background = "fondecran5";
 
-            d.AddPinkHole(new Vector3(0, 300, 0), "Go back\nto World 1!", 0, 1);
+            d.AddPinkHole(new Vector3(0, 300, 0), "World1", 0, 1);
             d.PlanetarySystem[0].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.AddCelestialBody(Size.Small, new Vector3(-150, 200, 0), "2-1", "planete6", 0, 2);
@@ -484,7 +494,7 @@
             d.AddCelestialBody(Size.Big, new Vector3(-300, -100, 0), "2-9", "planete7", 0, 10);
             d.PlanetarySystem[9].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
-            d.AddPinkHole(new Vector3(-125, -200, 0), "Go to World 3!", 0, 11);
+            d.AddPinkHole(new Vector3(-125, -200, 0), "World3", 0, 11);
             d.PlanetarySystem[10].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.CelestialBodyToProtect = d.PlanetarySystem[10].PathPriority;
@@ -516,9 +526,9 @@
         }
 
 
-        public static ScenarioDescriptor getDescripteurMonde3()
+        public static LevelDescriptor GetWorld3Descriptor()
         {
-            ScenarioDescriptor d = new ScenarioDescriptor();
+            LevelDescriptor d = new LevelDescriptor();
 
             CelestialBodyDescriptor c;
 
@@ -527,7 +537,7 @@
 
             d.Background = "fondecran6";
 
-            d.AddPinkHole(new Vector3(500, 0, 0), "Go back\nto World\n2!", 0, 1);
+            d.AddPinkHole(new Vector3(500, 0, 0), "World2", 0, 1);
             d.PlanetarySystem[0].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
             d.AddCelestialBody(Size.Big, new Vector3(450, -200, 0), "3-1", "stationSpatiale1", 0, 2);

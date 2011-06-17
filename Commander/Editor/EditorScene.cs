@@ -1,6 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -9,57 +9,35 @@
 
     class EditorScene : Scene
     {
-        private Main Main;
         private string ChoixTransition;
-        private Simulation Simulation;
-        private GenerateurGUI GenerateurGUI;
+        private Simulator Simulator;
         private Cursor Cursor;
 
 
-        public EditorScene(Main main)
-            : base(Vector2.Zero, 720, 1280)
+        public EditorScene()
+            : base(Vector2.Zero, 1280, 720)
         {
-            Main = main;
-
             Name = "Editeur";
 
-            Simulation = new Simulation(main, this, ScenariosFactory.getDescripteurBidon());
-            Simulation.Players = Main.Players;
-            Simulation.Initialize();
-            Simulation.EditorMode = true;
-            Simulation.Etat = GameState.Paused;
+            Simulator = new Simulator(this, LevelsFactory.GetEmptyDescriptor());
+            Simulator.Initialize();
+            Simulator.EditorMode = true;
+            Simulator.State = GameState.Paused;
 
-            Cursor = new Cursor(Main, this, Vector3.Zero, 10, Preferences.PrioriteGUIConsoleEditeur);
-            GenerateurGUI = new GenerateurGUI(Simulation, Cursor, new Vector3(-300, 80, 0));
-            GenerateurGUI.Visible = true;
-
-            Main.PlayersController.PlayerDisconnected += new NoneHandler(DoPlayerDisconnected);
-        }
-
-
-        private void DoPlayerDisconnected()
-        {
-            Visuals.Transite("EditeurToChargement");
+            Cursor = new Cursor(this, Vector3.Zero, 10, Preferences.PrioriteGUIConsoleEditeur);
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            if (GenerateurGUI.Visible)
-                Simulation.Etat = GameState.Paused;
-            else
-                Simulation.Etat = GameState.Running;
-
-            GenerateurGUI.Update(gameTime);
-            Simulation.Update(gameTime);
+            Simulator.Update(gameTime);
         }
 
 
         protected override void UpdateVisual()
         {
             Cursor.Draw();
-            GenerateurGUI.Draw();
-            Simulation.Draw();
+            Simulator.Draw();
         }
 
 
@@ -67,7 +45,7 @@
         {
             base.OnFocus();
 
-            Inputs.AddListener(Simulation);
+            Inputs.AddListener(Simulator);
         }
 
 
@@ -75,110 +53,79 @@
         {
             base.OnFocusLost();
 
-            //EphemereGames.Core.Persistance.Facade.SaveData("savePlayer");
-            Inputs.RemoveListener(Simulation);
+            Inputs.RemoveListener(Simulator);
         }
 
 
         #region Input Handling
 
-        public override void doMouseMoved(PlayerIndex inputIndex, Vector3 delta)
+        public override void DoMouseMoved(Core.Input.Player p, Vector3 delta)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (!GenerateurGUI.Visible)
-                return;
+            Player player = (Player) p;
 
-            p.Move(ref delta, p.MouseConfiguration.Speed);
-            Cursor.Position = p.Position;
+            player.Move(ref delta, MouseConfiguration.Speed);
+            Cursor.Position = player.Position;
         }
 
 
-        public override void doGamePadJoystickMoved(PlayerIndex inputIndex, Buttons button, Vector3 delta)
+        public override void DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, Vector3 delta)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (!GenerateurGUI.Visible)
-                return;
+            Player player = (Player) p;
 
-            if (button == p.GamePadConfiguration.MoveCursor)
+            if (button == GamePadConfiguration.MoveCursor)
             {
-                p.Move(ref delta, p.GamePadConfiguration.Speed);
-                Cursor.Position = p.Position;
+                player.Move(ref delta, GamePadConfiguration.Speed);
+                Cursor.Position = player.Position;
             }
         }
 
 
-        public override void doMouseButtonPressedOnce(PlayerIndex inputIndex, MouseButton button)
+        public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (!GenerateurGUI.Visible)
-                return;
-
-            if (button == p.MouseConfiguration.Cancel)
+            if (button == MouseConfiguration.Cancel)
                 BeginTransition();
-
-            if (button == p.MouseConfiguration.Select)
-                GenerateurGUI.DoClick();
         }
 
 
-        public override void doGamePadButtonPressedOnce(PlayerIndex inputIndex, Buttons button)
+        public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
 
-            if (button == p.GamePadConfiguration.Cancel)
+            if (button == GamePadConfiguration.Cancel)
                 BeginTransition();
-
-            if (button == p.GamePadConfiguration.Editor)
-                DoToggleEditor();
-
-            if (button == p.GamePadConfiguration.Select)
-                GenerateurGUI.DoClick();
         }
 
 
-        public override void doKeyPressedOnce(PlayerIndex inputIndex, Keys key)
+        public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            Player p = Main.Players[inputIndex];
-
             if (!p.Master)
                 return;
-
-            if (key == p.KeyboardConfiguration.Editor)
-                DoToggleEditor();
         }
+
+
+        public override void DoPlayerDisconnected(Core.Input.Player player)
+        {
+            if (player.Master)
+                TransiteTo("Chargement");
+        }
+
 
         #endregion
 
 
         private void BeginTransition()
         {
-            Visuals.Transite("EditeurToMenu");
-        }
-
-
-        private void DoToggleEditor()
-        {
-            GenerateurGUI.Visible = !GenerateurGUI.Visible;
-
-            if (GenerateurGUI.Visible)
-                Cursor.FadeIn();
-            else
-                Cursor.FadeOut();
+            Visuals.Transite("Editeur", "Menu");
         }
     }
 }

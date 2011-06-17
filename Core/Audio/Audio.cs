@@ -1,20 +1,22 @@
 ﻿namespace EphemereGames.Core.Audio
 {
-    using System;
+    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
-    using EphemereGames.Core.Persistence;
     
 
     public static class Audio
     {
+        internal static SoundEffectsController SoundEffectsController = new SoundEffectsController();
+
+
         public static void Initialize(float volumeMusique, float volumeEffetsSonores)
         {
             Preferences.VolumeMusique = volumeMusique;
             Preferences.VolumeEffetsSonores = volumeEffetsSonores;
 
-            SoundEffectsController.Instance.VolumeMusique = volumeMusique;
-            SoundEffectsController.Instance.VolumeEffetsSonores = volumeEffetsSonores;
+            SoundEffectsController.MusicVolume = volumeMusique;
+            SoundEffectsController.SfxVolume = volumeEffetsSonores;
 
             Persistence.AddAssetType(new SoundEffect());
             Persistence.AddAssetType(new Music());
@@ -23,68 +25,54 @@
 
         public static void PlaySfx(string bankName, string sfxName)
         {
-            SoundEffectsController.Instance.jouerEffetSonore(bankName, sfxName);
+            SoundEffectsController.PlaySfx(bankName, sfxName);
         }
 
 
         public static void StopSfx(string bankName, string sfxName)
         {
-            SoundEffectsController.Instance.arreterEffetSonore(bankName, sfxName);
+            SoundEffectsController.StopSfx(bankName, sfxName);
         }
 
         public static bool IsSfxBankInUse(string bankName)
         {
-            return SoundEffectsController.Instance.getEffetsSonores(bankName).Utilise;
+            return SoundEffectsController.GetSfxBank(bankName).InUse;
         }
 
 
         public static void PlayMusic(string musicName, bool progressive, int fadeTime, bool loop)
         {
-            SoundEffectsController.Instance.getMusique(musicName).jouer(progressive, fadeTime, loop);
+            SoundEffectsController.GetMusic(musicName).jouer(progressive, fadeTime, loop);
         }
 
 
         public static void Update(GameTime gameTime)
         {
-            SoundEffectsController.Instance.Update(gameTime);
+            SoundEffectsController.Update(gameTime);
         }
 
 
         public static void SetMaxSimultaneousSfx(int max)
         {
-            SoundEffectsController.Instance.MaxEffetsSonoresEnMemeTemps = max;
+            SoundEffectsController.MaxSimultaneousSfx = max;
         }
 
 
         public static void SetMaxInstancesSfx(string sfxName, int maxInstances)
         {
-            SoundEffectsController.Instance.setMaxInstancesActivesEffetSonore(sfxName, maxInstances);
-        }
-
-
-        //todo: pas le bon comportement
-        public static void UnpauseSfx(string sceneName, bool progressive, int fadeTime)
-        {
-            SoundEffectsController.Instance.getEffetsSonores(sceneName).reprendre(progressive, fadeTime);
-        }
-
-
-        //todo: pas le bon comportement
-        public static void PauseSfx(string sceneName, bool progressive, int fadeTime)
-        {
-            SoundEffectsController.Instance.getEffetsSonores(sceneName).pauser(progressive, fadeTime);
+            SoundEffectsController.SetMaxActivesSfxInstances(sfxName, maxInstances);
         }
 
 
         public static void StopMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getMusique(musicName).arreter(progressive, fadeTime);
+            SoundEffectsController.GetMusic(musicName).Stop(progressive, fadeTime);
         }
 
 
         public static void PauseMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getMusique(musicName).pauser(progressive, fadeTime);
+            SoundEffectsController.GetMusic(musicName).Pause(progressive, fadeTime);
         }
 
 
@@ -93,7 +81,7 @@
             set
             {
                 Preferences.VolumeMusique = value;
-                SoundEffectsController.Instance.VolumeMusique = value;
+                SoundEffectsController.MusicVolume = value;
             }
         }
 
@@ -103,20 +91,20 @@
             set
             {
                 Preferences.VolumeEffetsSonores = value;
-                SoundEffectsController.Instance.VolumeEffetsSonores = value;
+                SoundEffectsController.SfxVolume = value;
             }
         }
 
 
         public static bool IsMusicPlaying(string musicName)
         {
-            return SoundEffectsController.Instance.getMusique(musicName).Etat == SoundState.Playing;
+            return SoundEffectsController.GetMusic(musicName).State == SoundState.Playing;
         }
 
 
-        public static void UnpauseMusic(string musicName, bool progressive, int fadeTime)
+        public static void ResumeMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.Instance.getMusique(musicName).reprendre(progressive, fadeTime);
+            SoundEffectsController.GetMusic(musicName).Unpause(progressive, fadeTime);
         }
     }
 }

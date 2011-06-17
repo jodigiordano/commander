@@ -11,19 +11,17 @@
         public int Valeur, Min, Max, Increment;
 
         private Scene Scene;
-        private Cursor Curseur;
         private Image Gauche;
         private Image Droite;
         private Text ValeurRep;
         private Vector3 Position;
         private Circle GaucheCercle;
         private Circle DroiteCercle;
-        
 
-        public HorizontalSlider(Scene scene, Cursor curseur, Vector3 position, int min, int max, int valeur, int increment, float priorite)
+
+        public HorizontalSlider(Scene scene, Vector3 position, int min, int max, int valeur, int increment, float priorite)
         {
             Scene = scene;
-            Curseur = curseur;
             Position = position;
 
             Valeur = valeur;
@@ -47,11 +45,11 @@
         }
 
 
-        public void doClick()
+        public void DoClick(Circle circle)
         {
-            if (Physics.collisionCercleCercle(Curseur.Circle, GaucheCercle) && Valeur > Min)
+            if (Physics.collisionCercleCercle(circle, GaucheCercle) && Valeur > Min)
                 Valeur = Math.Max(Min, Valeur - Increment);
-            else if (Physics.collisionCercleCercle(Curseur.Circle, DroiteCercle) && Valeur < Max)
+            else if (Physics.collisionCercleCercle(circle, DroiteCercle) && Valeur < Max)
                 Valeur = Math.Min(Max, Valeur + Increment);
         }
 

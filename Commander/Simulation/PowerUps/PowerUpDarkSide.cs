@@ -1,4 +1,4 @@
-namespace EphemereGames.Commander
+namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Audio;
     using EphemereGames.Core.Visual;
@@ -10,7 +10,7 @@ namespace EphemereGames.Commander
         public CelestialBody CorpsCeleste;
 
 
-        public PowerUpDarkSide(Simulation simulation)
+        public PowerUpDarkSide(Simulator simulation)
             : base(simulation)
         {
             Type = PowerUpType.DarkSide;
