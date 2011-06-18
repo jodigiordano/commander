@@ -98,6 +98,8 @@ namespace EphemereGames.Commander.Simulation
             Audio.PlaySfx(@"Partie", Miner.SfxOut);
 
             Firing = false;
+
+            Miner.Active = false;
         }
     }
 }

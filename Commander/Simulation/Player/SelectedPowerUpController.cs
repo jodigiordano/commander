@@ -26,7 +26,7 @@
         }
 
 
-        public void UpdateSelection()
+        public void Update()
         {
             PowerUpToBuy = PowerUpType.None;
 

@@ -74,7 +74,7 @@
         {
             Simulation = simulation;
             TimeLastBullet = 0;
-            Type = TurretType.Unknown;
+            Type = TurretType.None;
             Name = "Unknown";
             CanSell = true;
             DisabledCounter = 0;

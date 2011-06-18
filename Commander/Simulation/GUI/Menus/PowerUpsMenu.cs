@@ -9,7 +9,7 @@
     {
         public HumanBattleship HumanBattleship;
 
-        public Dictionary<PowerUpType, bool> AvailablePowerUpsToBuy;
+        public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public PowerUpType PowerUpToBuy;
 
         private Dictionary<PowerUpType, Image> ImagesPowerUpsBuy;
@@ -124,11 +124,11 @@
 
         public void Draw()
         {
-            if (Simulation.PowerUpsFactory.Availables.Count == 0)
+            if (AvailablePowerUps.Count == 0)
                 return;
 
             // draw the power-ups
-            foreach (var kvp in AvailablePowerUpsToBuy)
+            foreach (var kvp in AvailablePowerUps)
             {
                 PowerUp p = Simulation.PowerUpsFactory.Availables[kvp.Key];
              
@@ -136,7 +136,7 @@
                     ImagesTurretsPowerUps[p.Type].Draw();
                 else
                 {
-                    ImagesPlaceHolders[p.Type].Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
+                    ImagesPlaceHolders[p.Type].Color = AvailablePowerUps[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
 
                     Simulation.Scene.Add(ImagesPowerUpsBuy[p.Type]);
                     Simulation.Scene.Add(ImagesPlaceHolders[p.Type]);
@@ -155,11 +155,11 @@
 
                 PowerUpPriceTitleAndCost.Data = p.BuyTitle;
                 PowerUpPriceTitleAndCost.Position = position - new Vector3(0, 60, 0);
-                PowerUpPriceTitleAndCost.Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
+                PowerUpPriceTitleAndCost.Color = AvailablePowerUps[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
 
                 PowerUpDescription.Data = p.BuyDescription;
                 PowerUpDescription.Position = position - new Vector3(0, 40, 0);
-                PowerUpDescription.Color = AvailablePowerUpsToBuy[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
+                PowerUpDescription.Color = AvailablePowerUps[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
 
                 PowerUpPriceBubble.Dimension.X = (int) position.X;
                 PowerUpPriceBubble.Dimension.Y = (int) position.Y - 60;

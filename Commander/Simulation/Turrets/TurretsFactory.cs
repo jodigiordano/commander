@@ -10,7 +10,7 @@
         Gravitational,
         MultipleLasers,
         Laser,
-        Unknown,
+        None,
         Alien,
         SlowMotion,
         Booster,

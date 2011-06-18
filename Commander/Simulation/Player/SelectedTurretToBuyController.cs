@@ -2,30 +2,25 @@
 {
     using System.Collections.Generic;
 
+
     class SelectedTurretToBuyController
     {
-        public Dictionary<TurretType, bool> AvailableTurrets;
+        private LinkedListNode<TurretType> SelectedTurret;
+        private LinkedList<TurretType> AvailableTurretsToBuy;
+        private Dictionary<TurretType, bool> AvailableTurretsToBuyDic;
 
-        public Turret TurretToBuy
+
+        public SelectedTurretToBuyController(Dictionary<TurretType, bool> availableTurretsToBuyDic)
         {
-            get { return (SelectedTurret == null) ? null : SelectedTurret.Value; }
+            SelectedTurret = null;
+            AvailableTurretsToBuy = new LinkedList<TurretType>();
+            AvailableTurretsToBuyDic = availableTurretsToBuyDic;
         }
 
 
-        private LinkedListNode<Turret> SelectedTurret;
-        private LinkedList<Turret> AvailableTurretsToBuy;
-        private CommonStash CommonStash;
-        private Simulator Simulation;
-
-
-        public SelectedTurretToBuyController(Simulator simulation, CommonStash commonStash)
+        public TurretType TurretToBuy
         {
-            Simulation = simulation;
-            CommonStash = commonStash;
-
-            SelectedTurret = null;
-            AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
-            AvailableTurretsToBuy = new LinkedList<Turret>();
+            get { return (SelectedTurret == null) ? TurretType.None : SelectedTurret.Value; }
         }
 
 
@@ -47,22 +42,22 @@
         }
 
 
-        public Turret FirstAvailable
-        {
-            get { return (AvailableTurretsToBuy.First != null) ? AvailableTurretsToBuy.First.Value : null; }
-        }
+        //public TurretType FirstAvailable
+        //{
+        //    get { return (AvailableTurretsToBuy.First != null) ? AvailableTurretsToBuy.First.Value : null; }
+        //}
 
 
-        public Turret LastAvailable
-        {
-            get { return (AvailableTurretsToBuy.Last != null) ? AvailableTurretsToBuy.Last.Value : null; }
-        }
+        //public TurretType LastAvailable
+        //{
+        //    get { return (AvailableTurretsToBuy.Last != null) ? AvailableTurretsToBuy.Last.Value : null; }
+        //}
 
 
-        public void SetSelectedTurret(Turret turret)
-        {
-            SelectedTurret = AvailableTurretsToBuy.Find(turret);
-        }
+        //public void SetSelectedTurret(Turret turret)
+        //{
+        //    SelectedTurret = AvailableTurretsToBuy.Find(turret);
+        //}
 
 
         public void Update(CelestialBody celestialBody)
@@ -70,7 +65,6 @@
             bool previousSelection = SelectedTurret != null;
 
             AvailableTurretsToBuy.Clear();
-            AvailableTurrets.Clear();
 
             if (celestialBody == null)
             {
@@ -78,13 +72,9 @@
                 return;
             }
 
-            foreach (var turret in Simulation.TurretsFactory.Availables.Values)
-            {
-                if (turret.BuyPrice <= CommonStash.Cash)
-                    AvailableTurretsToBuy.AddLast(turret);
-
-                AvailableTurrets.Add(turret.Type, turret.BuyPrice <= CommonStash.Cash);
-            }
+            foreach (var turret in AvailableTurretsToBuyDic)
+                if (turret.Value)
+                    AvailableTurretsToBuy.AddLast(turret.Key);
 
             if (AvailableTurretsToBuy.Count > 0 && !previousSelection)
                 SelectedTurret = AvailableTurretsToBuy.First;

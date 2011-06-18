@@ -20,6 +20,8 @@
         public Path Path;
         public Path PathPreview;
         public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
+        public Dictionary<PowerUpType, bool> AvailablePowerUps;
+        public Dictionary<TurretType, bool> AvailableTurrets;
 
         private Simulator Simulation;
         private SelectedCelestialBodyAnimation SelectedCelestialBodyAnimation;
@@ -72,9 +74,12 @@
 
             PlayerLives = new PlayerLives(Simulation, Level.CelestialBodyToProtect, new Color(255, 0, 220));
             PathPreviewing = new PathPreview(PathPreview, Path);
+
+            MenuCelestialBody.AvailableTurrets = AvailableTurrets;
             MenuCelestialBody.Initialize();
 
             MenuPowerUps.Turrets = Turrets;
+            MenuPowerUps.AvailablePowerUps = AvailablePowerUps;
             MenuPowerUps.Initialize();
 
             MenuGeneral.CompositionNextWave = CompositionNextWave;
@@ -251,11 +256,9 @@
             var selection = player.ActualSelection;
 
             MenuCelestialBody.CelestialBody = selection.CelestialBody;
-            MenuCelestialBody.AvailableTurrets = selection.AvailableTurrets;
             MenuCelestialBody.TurretToBuy = selection.TurretToBuy;
-            MenuCelestialBody.Visible = selection.TurretToPlace == null && selection.CelestialBody != null && selection.AvailableTurrets.Count != 0;
+            MenuCelestialBody.Visible = selection.TurretToPlace == null && selection.CelestialBody != null;
 
-            MenuPowerUps.AvailablePowerUpsToBuy = selection.AvailablePowerUpsToBuy;
             MenuPowerUps.PowerUpToBuy = selection.PowerUpToBuy;
 
             MenuTurret.Turret = selection.Turret;
@@ -286,8 +289,7 @@
                 selection.CelestialBody.ContientTourelleGravitationnelle)
                 PathPreviewing.RemoveCelestialObject(selection.CelestialBody);
             else if (PathPreviewing != null &&
-                selection.TurretToBuy != null &&
-                selection.TurretToBuy.Type == TurretType.Gravitational)
+                selection.TurretToBuy == TurretType.Gravitational)
                 PathPreviewing.AddCelestialObject(selection.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.TurretToPlace != null &&

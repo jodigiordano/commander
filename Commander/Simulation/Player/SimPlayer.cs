@@ -11,10 +11,9 @@
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
 
         private Vector3 position;
-        private PlayerSelection PreviousSelection;
         public PlayerSelection ActualSelection;
 
-        private SelectedCelestialBodyController CelestialBodyController;
+        private SelectedCelestialBodyController SelectedCelestialBodyController;
         private SelectedTurretToBuyController TurretToBuyController;
         private SelectedPowerUpController SelectedPowerUpController;
 
@@ -28,6 +27,9 @@
 
         private Simulator Simulation;
 
+        public Dictionary<PowerUpType, bool> AvailablePowerUps;
+        public Dictionary<TurretType, bool> AvailableTurrets;
+
 
         public SimPlayer(Simulator simulation)
         {
@@ -39,12 +41,10 @@
 
         public void Initialize()
         {
-            ActualSelection = new PlayerSelection(Simulation);
-            PreviousSelection = new PlayerSelection(Simulation);
-            TurretToBuyController = new SelectedTurretToBuyController(Simulation, CommonStash);
-            CelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Cercle);
+            ActualSelection = new PlayerSelection(CommonStash);
+            TurretToBuyController = new SelectedTurretToBuyController(AvailableTurrets);
+            SelectedCelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Cercle);
             SelectedPowerUpController = new SelectedPowerUpController(Simulation.PowerUpsFactory.Availables, Cercle);
-            ActualSelection.AvailableTurrets = TurretToBuyController.AvailableTurrets;
             PowerUpInUse = PowerUpType.None;
         }
 
@@ -69,12 +69,12 @@
 
         public void UpdateDemoSelection()
         {
-            CelestialBodyController.UpdateSelection();
+            SelectedCelestialBodyController.Update();
 
-            ActualSelection.CelestialBody = CelestialBodyController.CelestialBody;
+            ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
 
-            if (CelestialBodyController.CelestialBody != null &&
-                CelestialBodyController.SelectedCelestialBodyChanged)
+            if (SelectedCelestialBodyController.CelestialBody != null &&
+                SelectedCelestialBodyController.SelectedCelestialBodyChanged)
             {
                 ActualSelection.GameAction = GameAction.None;
                 ActualSelection.NextGameAction();
@@ -89,98 +89,93 @@
 
         public void UpdateSelection()
         {
-            CheckAvailablePowerUps();
-
+            // In a power-up
             if (PowerUpInUse != PowerUpType.None)
             {
-                ActualSelection.TurretToBuy = null;
+                ActualSelection.TurretToBuy = TurretType.None;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
                 ActualSelection.TurretOption = TurretAction.None;
                 ActualSelection.CelestialBody = null;
 
                 if (PowerUpInUse == PowerUpType.FinalSolution)
                 {
-                    //ActualSelection.PowerUpToBuy = PowerUpType.FinalSolution;
-                    CelestialBodyController.UpdateSelection();
-                    ActualSelection.CelestialBody = CelestialBodyController.CelestialBody;
+                    SelectedCelestialBodyController.Update();
+                    ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
                 }
 
                 return;
             }
 
+
+            // Placing a turret
             if (ActualSelection.TurretToPlace != null)
             {
-                CelestialBodyController.Initialize();
+                SelectedCelestialBodyController.Initialize();
 
                 ActualSelection.Turret = null;
-                ActualSelection.TurretToBuy = null;
+                ActualSelection.TurretToBuy = TurretType.None;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
                 ActualSelection.TurretOption = TurretAction.None;
 
                 return;
             }
 
-            CelestialBodyController.UpdateSelection();
-            SelectedPowerUpController.UpdateSelection();
+            SelectedCelestialBodyController.Update();
+            ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
+            ActualSelection.Turret = SelectedCelestialBodyController.Turret;
 
-            ActualSelection.CelestialBody = CelestialBodyController.CelestialBody;
-            ActualSelection.Turret = CelestialBodyController.Turret;
+            SelectedPowerUpController.Update();
             ActualSelection.PowerUpToBuy = SelectedPowerUpController.PowerUpToBuy;
+
+            TurretToBuyController.Update(ActualSelection.CelestialBody);
+            ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
+
 
             if (ActualSelection.PowerUpToBuy != PowerUpType.None)
             {
                 ActualSelection.CelestialBody = null;
                 ActualSelection.Turret = null;
-                ActualSelection.TurretToBuy = null;
+                ActualSelection.TurretToBuy = TurretType.None;
                 ActualSelection.TurretOption = TurretAction.None;
 
                 return;
             }
 
-            if (ActualSelection.CelestialBody != null)
-            {
-                TurretToBuyController.Update(ActualSelection.CelestialBody);
-                CheckAvailablePowerUps();
 
-                if (TurretToBuyController.TurretToBuy != null)
-                    ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-            }
-            
-            if (ActualSelection.Turret != null)
-                CheckAvailableTurretOptions();
-
-            if (CelestialBodyController.CelestialBody != null &&
-                CelestialBodyController.Turret == null &&
-                CelestialBodyController.SelectedCelestialBodyChanged)
+            if (SelectedCelestialBodyController.CelestialBody != null &&
+                SelectedCelestialBodyController.Turret == null &&
+                SelectedCelestialBodyController.SelectedCelestialBodyChanged)
             {
-                TurretToBuyController.Update(ActualSelection.CelestialBody);
-                ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
                 ActualSelection.TurretOption = TurretAction.None;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
 
-                CheckAvailablePowerUps();
+                return;
             }
 
-            else if (CelestialBodyController.Turret != null)
+
+            if (SelectedCelestialBodyController.Turret != null)
             {
-                ActualSelection.TurretToBuy = null;
+                ActualSelection.TurretToBuy = TurretType.None;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
 
                 if (ActualSelection.TurretOption == TurretAction.None)
                     ActualSelection.TurretOption = TurretAction.Update;
 
-                CheckAvailableTurretOptions();
+                return;
             }
 
-            else if (CelestialBodyController.CelestialBody == null &&
-                     CelestialBodyController.Turret == null)
+
+            if (SelectedCelestialBodyController.CelestialBody == null &&
+                SelectedCelestialBodyController.Turret == null)
             {
                 TurretToBuyController.Update(ActualSelection.CelestialBody);
                 ActualSelection.CelestialBody = null;
                 ActualSelection.Turret = null;
-                ActualSelection.TurretToBuy = null;
+                ActualSelection.TurretToBuy = TurretType.None;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
                 ActualSelection.TurretOption = TurretAction.None;
+
+                return;
             }
         }
 
@@ -237,9 +232,11 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            Position += CelestialBodyController.DoGlueMode();
+            ActualSelection.CheckAvailableTurretOptions();
+
+            Position += SelectedCelestialBodyController.DoGlueMode();
 
             NotifyChanged();
             NotifyMoved();
@@ -248,18 +245,8 @@
 
         public void DoCelestialBodyDestroyed()
         {
-            CelestialBodyController.DoCelestialBodyDestroyed();
-            ActualSelection.TurretToBuy = null;
-        }
-
-
-        public void CheckAvailablePowerUps()
-        {
-            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Values)
-                ActualSelection.AvailablePowerUpsToBuy[powerUp.Type] =
-                    powerUp.BuyPrice <= CommonStash.Cash &&
-                    powerUp.UsePrice <= CommonStash.Cash &&
-                    ActivesPowerUps[powerUp.Type];
+            SelectedCelestialBodyController.DoCelestialBodyDestroyed();
+            ActualSelection.TurretToBuy = TurretType.None;
         }
 
 
@@ -281,29 +268,6 @@
         {
             position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Cercle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Cercle.Radius);
             position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Cercle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Cercle.Radius);
-        }
-
-
-        private void CheckAvailableTurretOptions()
-        {
-            bool majEtaitIndisponible = !ActualSelection.AvailableTurretOptions[TurretAction.Update];
-
-            ActualSelection.AvailableTurretOptions[TurretAction.Sell] =
-                ActualSelection.Turret.CanSell &&
-                !ActualSelection.Turret.Disabled;
-
-            ActualSelection.AvailableTurretOptions[TurretAction.Update] =
-                ActualSelection.Turret.CanUpdate &&
-                ActualSelection.Turret.UpdatePrice <= CommonStash.Cash;
-
-
-            //des que l'option de maj redevient disponible, elle est selectionnee
-            if (majEtaitIndisponible && ActualSelection.AvailableTurretOptions[TurretAction.Update])
-                ActualSelection.TurretOption = TurretAction.Update;
-
-            //change automatiquement la selection de cette option quand elle n'est pas disponible
-            if (!ActualSelection.AvailableTurretOptions[TurretAction.Update] && ActualSelection.TurretOption == TurretAction.Update)
-                ActualSelection.TurretOption = TurretAction.Sell;
         }
     }
 }

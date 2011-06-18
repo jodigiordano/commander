@@ -183,6 +183,8 @@ namespace EphemereGames.Commander.Simulation
             GUIController.Turrets = TurretsController.Turrets;
             SpaceshipsController.Minerals = EnemiesController.Minerals;
             CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
+            GUIController.AvailablePowerUps = SimPlayersController.AvailablePowerUps;
+            GUIController.AvailableTurrets = SimPlayersController.AvailableTurrets;
 
 
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);

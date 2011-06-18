@@ -23,40 +23,34 @@
     {
         public CelestialBody CelestialBody;
         public PowerUpType PowerUpToBuy;
-        public Dictionary<PowerUpType, bool> AvailablePowerUpsToBuy;
 
         public Turret Turret;
         public TurretAction TurretOption;
         public Dictionary<TurretAction, bool> AvailableTurretOptions;
 
-        public Turret TurretToBuy;
-        public Dictionary<TurretType, bool> AvailableTurrets;
-
+        public TurretType TurretToBuy;
         public Turret TurretToPlace;
 
         public GameAction GameAction;
 
+        private CommonStash CommonStash;
 
-        public PlayerSelection(Simulator simulation)
+
+        public PlayerSelection(CommonStash commonStash)
         {
-            AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
-
-            AvailablePowerUpsToBuy = new Dictionary<PowerUpType, bool>(PowerUpTypeComparer.Default);
-
-            foreach (var powerUp in simulation.PowerUpsFactory.Availables.Keys)
-                AvailablePowerUpsToBuy.Add(powerUp, false);
-
-            AvailableTurretOptions = new Dictionary<TurretAction, bool>(TurretActionComparer.Default);
-            AvailableTurretOptions.Add(TurretAction.Sell, false);
-            AvailableTurretOptions.Add(TurretAction.Update, false);
+            CommonStash = commonStash;
 
             CelestialBody = null;
             PowerUpToBuy = PowerUpType.None;
             Turret = null;
-            TurretToBuy = null;
+            TurretToBuy = TurretType.None;
             TurretOption = TurretAction.None;
             TurretToPlace = null;
             GameAction = GameAction.None;
+
+            AvailableTurretOptions = new Dictionary<TurretAction, bool>(TurretActionComparer.Default);
+            AvailableTurretOptions.Add(TurretAction.Sell, false);
+            AvailableTurretOptions.Add(TurretAction.Update, false);
         }
 
 
@@ -136,61 +130,28 @@
         }
 
 
-        public void SynchronizeFrom(PlayerSelection other)
+        public void CheckAvailableTurretOptions()
         {
-            this.AvailablePowerUpsToBuy.Clear();
-            this.AvailableTurretOptions.Clear();
+            if (Turret == null)
+                return;
 
-            foreach (var kvp in other.AvailablePowerUpsToBuy)
-                this.AvailablePowerUpsToBuy.Add(kvp.Key, kvp.Value);
+            bool majEtaitIndisponible = !AvailableTurretOptions[TurretAction.Update];
 
-            foreach (var kvp in other.AvailableTurretOptions)
-                this.AvailableTurretOptions.Add(kvp.Key, kvp.Value);
+            AvailableTurretOptions[TurretAction.Sell] =
+                Turret.CanSell &&
+                !Turret.Disabled;
 
-            this.CelestialBody = other.CelestialBody;
-            this.PowerUpToBuy = other.PowerUpToBuy;
-            this.TurretOption = other.TurretOption;
-            this.Turret = other.Turret;
-            this.TurretToBuy = other.TurretToBuy;
-        }
+            AvailableTurretOptions[TurretAction.Update] =
+                Turret.CanUpdate &&
+                Turret.UpdatePrice <= CommonStash.Cash;
 
+            //des que l'option de maj redevient disponible, elle est selectionnee
+            if (majEtaitIndisponible && AvailableTurretOptions[TurretAction.Update])
+                TurretOption = TurretAction.Update;
 
-        public override bool Equals(object obj)
-        {
-            PlayerSelection other = obj as PlayerSelection;
-
-            if (other == null)
-                return false;
-
-            return
-                this.CelestialBody == other.CelestialBody &&
-                this.PowerUpToBuy == other.PowerUpToBuy &&
-                this.TurretOption == other.TurretOption &&
-                this.Turret == other.Turret &&
-                this.TurretToBuy == other.TurretToBuy &&
-                DictEquals<PowerUpType, bool>(this.AvailablePowerUpsToBuy, other.AvailablePowerUpsToBuy) &&
-                DictEquals<TurretAction, bool>(this.AvailableTurretOptions, other.AvailableTurretOptions);
-        }
-
-
-        private bool DictEquals<K, V>(IDictionary<K, V> d1, IDictionary<K, V> d2)
-        {
-            if (d1.Count != d2.Count)
-                return false;
-
-            foreach (var kvp in d1)
-            {
-                V value;
-                bool contains = d2.TryGetValue(kvp.Key, out value);
-
-                if (!contains)
-                    return false;
-
-                if (!kvp.Value.Equals(value))
-                    return false;
-            }
-
-            return true;
+            //change automatiquement la selection de cette option quand elle n'est pas disponible
+            if (!AvailableTurretOptions[TurretAction.Update] && TurretOption == TurretAction.Update)
+                TurretOption = TurretAction.Sell;
         }
     }
 }

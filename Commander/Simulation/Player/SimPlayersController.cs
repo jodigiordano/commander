@@ -18,6 +18,10 @@
         public Vector3 InitialPlayerPosition;
 
 
+        public Dictionary<PowerUpType, bool> AvailablePowerUps;
+        public Dictionary<TurretType, bool> AvailableTurrets;
+
+
         //todo
         public CelestialBody SelectedCelestialBody { get { return Player.ActualSelection.CelestialBody; } }
 
@@ -29,21 +33,36 @@
         public SimPlayersController(Simulator simulation)
         {
             Simulation = simulation;
+
+            AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
+            AvailablePowerUps = new Dictionary<PowerUpType, bool>(PowerUpTypeComparer.Default);
         }
 
 
         public void Initialize()
         {
-            Player = new SimPlayer(Simulation);
-            Player.CelestialBodies = CelestialBodies;
-            Player.ActivesPowerUps = ActivesPowerUps;
-            Player.CommonStash = CommonStash;
+            foreach (var turret in Simulation.TurretsFactory.Availables.Keys)
+                AvailableTurrets.Add(turret, false);
+
+            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Keys)
+                AvailablePowerUps.Add(powerUp, false);
+
+            Player = new SimPlayer(Simulation)
+            {
+                CelestialBodies = CelestialBodies,
+                ActivesPowerUps = ActivesPowerUps,
+                CommonStash = CommonStash,
+                Position = InitialPlayerPosition,
+                AvailableTurrets = AvailableTurrets,
+                AvailablePowerUps = AvailablePowerUps
+            };
+
             Player.Initialize();
-            Player.Position = InitialPlayerPosition;
             Player.Changed += new SimPlayerHandler(DoPlayerChanged);
             Player.Moved += new SimPlayerHandler(DoPlayerMoved);
 
-            Player.CheckAvailablePowerUps();
+            CheckAvailablePowerUps();
+            CheckAvailableTurrets();
 
             NotifyCommonStashChanged(CommonStash);
             NotifyPlayerChanged(Player);
@@ -172,7 +191,7 @@
                 DoPowerUpUse();
 
             Player.PowerUpInUse = PowerUpType.None;
-            Player.CheckAvailablePowerUps();
+            CheckAvailablePowerUps();
             Player.UpdateSelection();
         }
 
@@ -245,8 +264,8 @@
             Player.Move(ref delta, MouseConfiguration.Speed);
 
             if (Player.ActualSelection.TurretToPlace != null &&
-                Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(Player.Position))
-                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
+                Player.ActualSelection.CelestialBody.OuterTurretZone.Outside(Player.Position))
+                Player.Position = Player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
 
 
             Player.UpdateSelection();
@@ -271,8 +290,8 @@
             Player.Move(ref delta, GamePadConfiguration.Speed);
 
             if (Player.ActualSelection.TurretToPlace != null &&
-                Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(Player.Position))
-                Player.Position = Player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
+                Player.ActualSelection.CelestialBody.OuterTurretZone.Outside(Player.Position))
+                Player.Position = Player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
 
 
             Player.UpdateSelection();
@@ -381,20 +400,17 @@
 
         public void Update(GameTime gameTime)
         {
-            Player.Update(gameTime);
+            CheckAvailablePowerUps();
+            Player.Update();
 
-            Turret turretToPlace = Player.ActualSelection.TurretToPlace;
-
-            if (turretToPlace != null)
+            if (Player.ActualSelection.TurretToPlace != null)
             {
-                CelestialBody celestialBody = turretToPlace.CelestialBody;
+                Turret turretToPlace = Player.ActualSelection.TurretToPlace;
+                CelestialBody celestialBody = Player.ActualSelection.TurretToPlace.CelestialBody;
                 turretToPlace.Position = Player.Position;
 
                 if (celestialBody.OuterTurretZone.Outside(Player.Position))
                     Player.Position = celestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
-
-                //if (!celestialBody.InnerTurretZone.Outside(Player.Position))
-                //    Player.Position = celestialBody.InnerTurretZone.NearestPointToCircumference(Player.Position);
 
                 turretToPlace.CanPlace = celestialBody.InnerTurretZone.Outside(turretToPlace.Position);
                 
@@ -462,7 +478,7 @@
         {
             // activate a power-up
             if (Player.ActualSelection.PowerUpToBuy != PowerUpType.None &&
-                Player.ActualSelection.AvailablePowerUpsToBuy[Player.ActualSelection.PowerUpToBuy])
+                AvailablePowerUps[Player.ActualSelection.PowerUpToBuy])
             {
                 PowerUp p = Simulation.PowerUpsFactory.Availables[Player.ActualSelection.PowerUpToBuy];
 
@@ -474,7 +490,7 @@
                     NotifyCommonStashChanged(CommonStash);
                 }
                 
-                Player.CheckAvailablePowerUps();
+                CheckAvailablePowerUps();
                 Player.UpdateSelection();
 
                 return;
@@ -482,9 +498,9 @@
 
 
             // buy a turret
-            if (Player.ActualSelection.TurretToBuy != null)
+            if (Player.ActualSelection.TurretToBuy != TurretType.None)
             {
-                Player.ActualSelection.TurretToPlace = Simulation.TurretsFactory.Create(Player.ActualSelection.TurretToBuy.Type);
+                Player.ActualSelection.TurretToPlace = Simulation.TurretsFactory.Create(Player.ActualSelection.TurretToBuy);
                 Player.ActualSelection.TurretToPlace.CelestialBody = Player.ActualSelection.CelestialBody;
                 Player.ActualSelection.TurretToPlace.Position = Player.Position;
                 Player.ActualSelection.TurretToPlace.ToPlaceMode = true;
@@ -559,11 +575,28 @@
             CommonStash.Cash -= p.UsePrice;
             NotifyCommonStashChanged(CommonStash);
 
-            Player.CheckAvailablePowerUps();
+            CheckAvailablePowerUps();
             Player.UpdateSelection();
 
             if (CommonStash.Cash < p.UsePrice)
                 NotifyDesactivatePowerUpAsked(Player.PowerUpInUse);
+        }
+
+
+        private void CheckAvailablePowerUps()
+        {
+            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Values)
+                AvailablePowerUps[powerUp.Type] =
+                    powerUp.BuyPrice <= CommonStash.Cash &&
+                    powerUp.UsePrice <= CommonStash.Cash &&
+                    ActivesPowerUps[powerUp.Type];
+        }
+
+
+        private void CheckAvailableTurrets()
+        {
+            foreach (var turret in Simulation.TurretsFactory.Availables.Values)
+                AvailableTurrets[turret.Type] = turret.BuyPrice <= CommonStash.Cash;
         }
     }
 }

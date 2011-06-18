@@ -49,7 +49,7 @@
         }
 
 
-        public void UpdateSelection()
+        public void Update()
         {
             DoTurretSelection();
             DoCelestialBodySelection(); 

@@ -10,7 +10,7 @@
         public CelestialBody CelestialBody;
 
         public Dictionary<TurretType, bool> AvailableTurrets;
-        public Turret TurretToBuy;
+        public TurretType TurretToBuy;
 
         public bool Visible;
 
@@ -130,7 +130,7 @@
                 Simulation.Scene.Add(LogosTourellesAchat[t.Type]);
                 Simulation.Scene.Add(PrixTourellesAchat[t.Type]);
 
-                if (TurretToBuy != null && TurretToBuy.Type == t.Type)
+                if (TurretToBuy != null && TurretToBuy == t.Type)
                 {
                     WidgetSelection.Position = this.Position + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices, 0);
                     Simulation.Scene.Add(WidgetSelection);
