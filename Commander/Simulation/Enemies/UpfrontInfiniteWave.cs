@@ -9,8 +9,8 @@
         private int MaxWaves;
 
 
-        public UpfrontInfiniteWave(Simulator simulation, DescriptorInfiniteWaves descriptor, int nbWaves)
-            : base(simulation, descriptor)
+        public UpfrontInfiniteWave(Simulator simulator, DescriptorInfiniteWaves descriptor, int nbWaves)
+            : base(simulator, descriptor)
         {
             Waves = new List<Wave>();
             MaxWaves = nbWaves;
@@ -25,7 +25,7 @@
                 Generator.Waves[0].StartingTime = 0;
 
             foreach (var wave in Generator.Waves)
-                Waves.Add(new Wave(simulation, wave));
+                Waves.Add(new Wave(simulator, wave));
         }
 
 

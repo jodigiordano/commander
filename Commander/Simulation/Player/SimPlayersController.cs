@@ -5,11 +5,13 @@
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
 
 
     class SimPlayersController
     {
+        public Dictionary<PowerUpType, bool> AvailablePowerUps;
+        public Dictionary<TurretType, bool> AvailableTurrets;
+
         public CelestialBody CelestialBodyToProtect;
         public List<CelestialBody> CelestialBodies;
         public CommonStash CommonStash;
@@ -17,165 +19,110 @@
         public SandGlass SandGlass;
         public Vector3 InitialPlayerPosition;
 
+        public event TurretHandler BuyTurretAsked;
+        public event TurretHandler SellTurretAsked;
+        public event TurretHandler UpgradeTurretAsked;
+        public event TurretSimPlayerHandler TurretToPlaceSelected;
+        public event TurretSimPlayerHandler TurretToPlaceDeselected;
+        public event NoneHandler NextWaveAsked;
+        public event CommonStashHandler CommonStashChanged;
+        public event SimPlayerHandler PlayerSelectionChanged;
+        public event SimPlayerHandler PlayerMoved;
+        public event PowerUpTypeSimPlayerHandler ActivatePowerUpAsked;
+        public event PowerUpTypeHandler DesactivatePowerUpAsked;
+        public event SimPlayerHandler PlayerConnected;
+        public event SimPlayerHandler PlayerDisconnected;
+        public event NoneHandler ShowAdvancedViewAsked;
+        public event NoneHandler HideAdvancedViewAsked;
+        public event NoneHandler ShowNextWaveAsked;
+        public event NoneHandler HideNextWaveAsked;
 
-        public Dictionary<PowerUpType, bool> AvailablePowerUps;
-        public Dictionary<TurretType, bool> AvailableTurrets;
+        private Simulator Simulator;
+        private Dictionary<Player, SimPlayer> Players;
+
+        private SimPlayer PlayerInAdvancedView;
+        private SimPlayer PlayerInNextWave;
 
 
-        //todo
-        public CelestialBody SelectedCelestialBody { get { return Player.ActualSelection.CelestialBody; } }
-
-
-        private Simulator Simulation;
-        private SimPlayer Player;
-
-
-        public SimPlayersController(Simulator simulation)
+        public SimPlayersController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
             AvailablePowerUps = new Dictionary<PowerUpType, bool>(PowerUpTypeComparer.Default);
+
+            Players = new Dictionary<Player, SimPlayer>();
         }
 
 
         public void Initialize()
         {
-            foreach (var turret in Simulation.TurretsFactory.Availables.Keys)
+            foreach (var turret in Simulator.TurretsFactory.Availables.Keys)
                 AvailableTurrets.Add(turret, false);
 
-            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Keys)
+            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
                 AvailablePowerUps.Add(powerUp, false);
 
-            Player = new SimPlayer(Simulation)
+            Players.Clear();
+
+            CheckAvailablePowerUps();
+            CheckAvailableTurrets();
+
+            PlayerInAdvancedView = null;
+            PlayerInNextWave = null;
+
+            NotifyCommonStashChanged(CommonStash);
+
+        }
+
+
+        public void AddPlayer(Player player)
+        {
+            var simPlayer = new SimPlayer(Simulator)
             {
                 CelestialBodies = CelestialBodies,
-                ActivesPowerUps = ActivesPowerUps,
                 CommonStash = CommonStash,
                 Position = InitialPlayerPosition,
                 AvailableTurrets = AvailableTurrets,
                 AvailablePowerUps = AvailablePowerUps
             };
 
-            Player.Initialize();
-            Player.Changed += new SimPlayerHandler(DoPlayerChanged);
-            Player.Moved += new SimPlayerHandler(DoPlayerMoved);
+            simPlayer.Initialize();
 
-            CheckAvailablePowerUps();
-            CheckAvailableTurrets();
+            Players.Add(player, simPlayer);
 
-            NotifyCommonStashChanged(CommonStash);
-            NotifyPlayerChanged(Player);
-            NotifyPlayerMoved(Player);
+            NotifyPlayerConnected(simPlayer);
         }
 
 
-        #region Events
-
-        public delegate void TurretTypeCelestialObjectVector3Handler(TurretType typeTourelle, CelestialBody corpsCeleste, Vector3 position);
-        public delegate void CelestialObjectTurretHandler(CelestialBody corpsCeleste, Turret turret);
-
-        public event TurretHandler AchatTourelleDemande;
-        public event TurretHandler VenteTourelleDemande;
-        public event TurretHandler MiseAJourTourelleDemande;
-        public event TurretHandler TurretToPlaceSelected;
-        public event TurretHandler TurretToPlaceDeselected;
-        public event NoneHandler ProchaineVagueDemandee;
-        public event CommonStashHandler CommonStashChanged;
-        public event SimPlayerHandler PlayerSelectionChanged;
-        public event SimPlayerHandler PlayerMoved;
-        public event PowerUpTypeHandler ActivatePowerUpAsked;
-        public event PowerUpTypeHandler DesactivatePowerUpAsked;
-
-
-        private void NotifyTurretToPlaceSelected(Turret turret)
+        public void RemovePlayer(Player player)
         {
-            if (TurretToPlaceSelected != null)
-                TurretToPlaceSelected(turret);
+            var simPlayer = Players[player];
+
+            DoAdvancedViewAction(player, false);
+            CheckNextWaveAsked(player);
+
+            Players.Remove(player);
+
+            NotifyPlayerDisconnected(simPlayer);
         }
 
 
-        private void NotifyTurretToPlaceDeselected(Turret turret)
+        public bool HasPlayer(Player player)
         {
-            if (TurretToPlaceDeselected != null)
-                TurretToPlaceDeselected(turret);
+            return Players.ContainsKey(player);
         }
-
-
-        private void NotifyActivatePowerUpAsked(PowerUpType type)
-        {
-            if (ActivatePowerUpAsked != null)
-                ActivatePowerUpAsked(type);
-        }
-
-
-        private void NotifyDesactivatePowerUpAsked(PowerUpType type)
-        {
-            if (DesactivatePowerUpAsked != null)
-                DesactivatePowerUpAsked(type);
-        }
-
-
-        private void NotifyCommonStashChanged(CommonStash stash)
-        {
-            if (CommonStashChanged != null)
-                CommonStashChanged(stash);
-        }
-
-
-        private void NotifyAchatTourelleDemande(Turret turret)
-        {
-            if (AchatTourelleDemande != null)
-                AchatTourelleDemande(turret);
-        }
-
-
-        private void NotifyVenteTourelleDemande(Turret turret)
-        {
-            if (VenteTourelleDemande != null)
-                VenteTourelleDemande(turret);
-        }
-
-
-        private void NotifyMiseAJourTourelleDemande(Turret turret)
-        {
-            if (MiseAJourTourelleDemande != null)
-                MiseAJourTourelleDemande(turret);
-        }
-
-
-        private void NotifyProchaineVagueDemandee()
-        {
-            if (ProchaineVagueDemandee != null)
-                ProchaineVagueDemandee();
-        }
-
-
-        private void NotifyPlayerChanged(SimPlayer player)
-        {
-            if (PlayerSelectionChanged != null)
-                PlayerSelectionChanged(player);
-        }
-
-
-        private void NotifyPlayerMoved(SimPlayer player)
-        {
-            if (PlayerMoved != null)
-                PlayerMoved(player);
-        }
-        
-        #endregion
 
 
         public void DoPowerUpStarted(PowerUp powerUp)
         {
             if (powerUp.NeedInput)
-                Player.PowerUpInUse = powerUp.Type;
+                powerUp.Owner.PowerUpInUse = powerUp.Type;
 
             if (powerUp.Type == PowerUpType.FinalSolution)
-                ((PowerUpLastSolution) powerUp).Selection = Player.ActualSelection;
+                ((PowerUpLastSolution) powerUp).Selection = powerUp.Owner.ActualSelection;
 
-            Player.UpdateSelection();
+            powerUp.Owner.UpdateSelection();
         }
 
 
@@ -183,29 +130,42 @@
         {
             if (powerUp.NeedInput)
             {
-                Player.Position = powerUp.Position;
-                NotifyPlayerMoved(Player);
+                powerUp.Owner.Position = powerUp.Position;
+                NotifyPlayerMoved(powerUp.Owner);
             }
 
             if (powerUp.Type == PowerUpType.FinalSolution && ((PowerUpLastSolution) powerUp).GoAhead)
-                DoPowerUpUse();
+                DoPowerUpUse(powerUp.Owner);
 
-            Player.PowerUpInUse = PowerUpType.None;
-            CheckAvailablePowerUps();
-            Player.UpdateSelection();
+            powerUp.Owner.PowerUpInUse = PowerUpType.None;
+            powerUp.Owner.UpdateSelection();
         }
 
 
         public void DoObjectCreated(IObjetPhysique obj)
         {
-            if (obj is RailGunBullet || obj is MineBullet)
-                DoPowerUpUse();
+            var rgb = obj as RailGunBullet;
+
+            if (rgb != null)
+            {
+                DoPowerUpUse(rgb.Owner);
+                return;
+            }
+
+
+            var mb = obj as RailGunBullet;
+
+            if (mb != null)
+            {
+                DoPowerUpUse(mb.Owner);
+                return;
+            }
         }
 
 
-        public void DoObjetDetruit(IObjetPhysique objet)
+        public void DoObjetDestroyed(IObjetPhysique obj)
         {
-            Enemy ennemi = objet as Enemy;
+            Enemy ennemi = obj as Enemy;
 
             if (ennemi != null)
             {
@@ -213,14 +173,16 @@
                 CommonStash.Score += ennemi.PointsValue;
                 CommonStash.TotalScore += ennemi.PointsValue;
 
-                Player.UpdateSelection();
+                foreach (var player in Players.Values)
+                    player.UpdateSelection();
+                
                 NotifyCommonStashChanged(CommonStash);
 
                 return;
             }
 
 
-            Mineral mineral = objet as Mineral;
+            Mineral mineral = obj as Mineral;
 
             if (mineral != null)
             {
@@ -239,335 +201,312 @@
             }
 
 
-            CelestialBody celestialBody = objet as CelestialBody;
+            CelestialBody celestialBody = obj as CelestialBody;
 
             if (celestialBody != null)
             {
-                Player.DoCelestialBodyDestroyed();
-                Player.UpdateSelection();
+                foreach (var player in Players.Values)
+                {
+                    player.DoCelestialBodyDestroyed();
+                    player.UpdateSelection();
+                }
                 return;
             }
         }
 
 
-        public void DoMouseMoved(Core.Input.Player p, ref Vector3 delta)
+        public void DoMove(Player p, ref Vector3 delta)
         {
-            if (Simulation.DemoMode)
+            SimPlayer player = Players[p];
+
+            if (Simulator.DemoMode)
             {
-                Player.Move(ref delta, MouseConfiguration.Speed);
-                Player.UpdateDemoSelection();
-                NotifyPlayerMoved(Player);
+                player.Move(ref delta, MouseConfiguration.Speed);
+                player.UpdateDemoSelection();
+                NotifyPlayerMoved(player);
                 return;
             }
 
 
-            Player.Move(ref delta, MouseConfiguration.Speed);
+            player.Move(ref delta, MouseConfiguration.Speed);
 
-            if (Player.ActualSelection.TurretToPlace != null &&
-                Player.ActualSelection.CelestialBody.OuterTurretZone.Outside(Player.Position))
-                Player.Position = Player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
+            if (player.ActualSelection.TurretToPlace != null &&
+                player.ActualSelection.CelestialBody.OuterTurretZone.Outside(player.Position))
+                player.Position = player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(player.Position);
 
 
-            Player.UpdateSelection();
-            NotifyPlayerMoved(Player);
-            NotifyPlayerChanged(Player);
+            player.UpdateSelection();
+            NotifyPlayerMoved(player);
+            NotifyPlayerChanged(player);
         }
 
 
-        public void DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, ref Vector3 delta)
+        public void DoGameAction(Player p, int delta)
         {
-            if (button != GamePadConfiguration.MoveCursor)
+            var player = Players[p];
+
+            if (player.ActualSelection.CelestialBody == null)
                 return;
 
-            if (Simulation.DemoMode)
-            {
-                Player.Move(ref delta, GamePadConfiguration.Speed);
-                Player.UpdateDemoSelection();
-                NotifyPlayerMoved(Player);
-                return;
-            }
+            if (delta > 0)
+                player.NextGameAction();
+            else
+                player.PreviousGameAction();
 
-            Player.Move(ref delta, GamePadConfiguration.Speed);
-
-            if (Player.ActualSelection.TurretToPlace != null &&
-                Player.ActualSelection.CelestialBody.OuterTurretZone.Outside(Player.Position))
-                Player.Position = Player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
-
-
-            Player.UpdateSelection();
-            NotifyPlayerMoved(Player);
+            return;
         }
 
 
-        public void DoMouseScrolled(Core.Input.Player p, int delta)
+        public void DoTurretBought(Turret turret)
         {
-            if (Simulation.DemoMode)
-            {
-                if (Player.ActualSelection.CelestialBody == null)
-                    return;
-
-                if (delta > 0)
-                    Player.NextGameAction();
-                else
-                    Player.PreviousGameAction();
-
-                return;
-            }
-
-
-            DoNextorPreviousAction(delta);
-        }
-
-
-        public void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
-        {
-            if (Simulation.DemoMode)
-            {
-                if ( Player.ActualSelection.CelestialBody == null )
-                    return;
-
-                if ( button == GamePadConfiguration.SelectionNext )
-                    Player.NextGameAction();
-                else if ( button == GamePadConfiguration.SelectionPrevious )
-                    Player.PreviousGameAction();
-
-                return;
-            }
-
-            if (button == GamePadConfiguration.Select)
-                DoSelectAction();
-            else if (button == GamePadConfiguration.Cancel)
-                DoCancelAction();
-            else if (button == GamePadConfiguration.SelectionNext)
-                DoNextorPreviousAction(1);
-            else if (button == GamePadConfiguration.SelectionPrevious)
-                DoNextorPreviousAction(-1);
-        }
-
-
-        public void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
-        {
-            if (Simulation.DemoMode)
-                return;
-
-            if (button == MouseConfiguration.Select)
-                DoSelectAction();
-            else if (button == MouseConfiguration.Cancel)
-                DoCancelAction();
-        }
-
-
-        public void DoTourelleAchetee(Turret tourelle)
-        {
-            CommonStash.Cash -= tourelle.BuyPrice;
+            CommonStash.Cash -= turret.BuyPrice;
             NotifyCommonStashChanged(CommonStash);
 
-            Player.UpdateSelection();
+            foreach (var player in Players.Values)
+                player.UpdateSelection();
 
-            if (tourelle.Type == TurretType.Gravitational && !Simulation.DemoMode)
+            if (turret.Type == TurretType.Gravitational && !Simulator.DemoMode)
                 Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
         }
 
 
-        public void DoTourelleVendue(Turret tourelle)
+        public void DoTurretSold(Turret turret)
         {
-            CommonStash.Cash += tourelle.SellPrice;
+            CommonStash.Cash += turret.SellPrice;
             NotifyCommonStashChanged(CommonStash);
 
-            Player.UpdateSelection();
+            foreach (var player in Players.Values)
+                player.UpdateSelection();
 
-            if (tourelle.Type == TurretType.Gravitational)
+            if (turret.Type == TurretType.Gravitational)
                 Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
             else
                 Audio.PlaySfx(@"Partie", @"sfxTourelleVendue");
         }
 
 
-        public void DoTourelleMiseAJour(Turret tourelle)
+        public void DoTurretUpdated(Turret turret)
         {
-            CommonStash.Cash -= tourelle.BuyPrice; //parce qu'effectue une fois la tourelle mise a jour
+            CommonStash.Cash -= turret.BuyPrice; //parce qu'effectue une fois la tourelle mise a jour
             NotifyCommonStashChanged(CommonStash);
 
-            Player.UpdateSelection();
+            foreach (var player in Players.Values)
+                player.UpdateSelection();
         }
 
 
         public void DoTurretReactivated(Turret turret)
         {
-            Player.UpdateSelection();
+            foreach (var player in Players.Values)
+                player.UpdateSelection();
+        }
+
+
+        public CelestialBody GetSelectedCelestialBody(Player p)
+        {
+            return Players[p].ActualSelection.CelestialBody;
         }
 
 
         public void Update(GameTime gameTime)
         {
             CheckAvailablePowerUps();
-            Player.Update();
+            CheckAvailableTurrets();
 
-            if (Player.ActualSelection.TurretToPlace != null)
+            foreach (var player in Players.Keys)
             {
-                Turret turretToPlace = Player.ActualSelection.TurretToPlace;
-                CelestialBody celestialBody = Player.ActualSelection.TurretToPlace.CelestialBody;
-                turretToPlace.Position = Player.Position;
+                CheckNextWaveAsked(player);
+            }
 
-                if (celestialBody.OuterTurretZone.Outside(Player.Position))
-                    Player.Position = celestialBody.OuterTurretZone.NearestPointToCircumference(Player.Position);
+            foreach (var player in Players.Values)
+            {
+                player.Update();
 
-                turretToPlace.CanPlace = celestialBody.InnerTurretZone.Outside(turretToPlace.Position);
-                
-                if (turretToPlace.CanPlace)
-                    foreach (var turret in celestialBody.Turrets)
-                    {
-                        turretToPlace.CanPlace = !turret.Visible ||
-                            !Physics.collisionCercleCercle(turret.Circle, turretToPlace.Circle);
+                NotifyPlayerChanged(player);
+                NotifyPlayerMoved(player);
+            }
+        }
 
-                        if (!turretToPlace.CanPlace)
-                            break;
-                    }
+        private void CheckNextWaveAsked(Player p)
+        {
+            SimPlayer player = Players[p];
+
+            if (PlayerInNextWave == null &&
+                player.PowerUpInUse == PowerUpType.None &&
+                player.ActualSelection.TurretToPlace == null &&
+                Physics.collisionCercleRectangle(player.Circle, SandGlass.Rectangle))
+            {
+                PlayerInNextWave = player;
+                NotifyShowNextWaveAsked();
+                return;
+            }
+
+            if (PlayerInNextWave == player &&
+                (!p.Connected ||
+                !Physics.collisionCercleRectangle(player.Circle, SandGlass.Rectangle)))
+            {
+                PlayerInNextWave = null;
+                NotifyHideNextWaveAsked();
+                return;
             }
         }
 
 
         public void Draw()
         {
-            if (Player.ActualSelection.TurretToPlace != null)
-                Player.ActualSelection.TurretToPlace.Draw();
+            foreach (var player in Players.Values)
+                if (player.ActualSelection.TurretToPlace != null)
+                    player.ActualSelection.TurretToPlace.Draw();
         }
 
 
-        private void DoPlayerChanged(SimPlayer player)
+        public void DoNextOrPreviousAction(Player p, int delta)
         {
-            NotifyPlayerChanged(player);
-        }
+            var player = Players[p];
 
-
-        private void DoPlayerMoved(SimPlayer player)
-        {
-            NotifyPlayerMoved(player);
-        }
-
-
-        private void DoNextorPreviousAction(int delta)
-        {
             // turret's options
-            if (Player.ActualSelection.Turret != null)
+            if (player.ActualSelection.Turret != null)
             {
                 if (delta > 0)
-                    Player.NextTurretOption();
+                    player.NextTurretOption();
                 else
-                    Player.PreviousTurretOption();
+                    player.PreviousTurretOption();
 
                 return;
             }
 
 
             // shop turrets
-            if (Player.ActualSelection.CelestialBody != null &&
-                Player.ActualSelection.Turret == null)
+            if (player.ActualSelection.CelestialBody != null &&
+                player.ActualSelection.Turret == null)
             {
                 if (delta > 0)
-                    Player.NextShitToBuy();
+                    player.NextShitToBuy();
                 else
-                    Player.PreviousShitToBuy();
+                    player.PreviousShitToBuy();
 
                 return;
             }
         }
 
 
-        private void DoSelectAction()
+        public void DoSelectAction(Player pl)
         {
-            // activate a power-up
-            if (Player.ActualSelection.PowerUpToBuy != PowerUpType.None &&
-                AvailablePowerUps[Player.ActualSelection.PowerUpToBuy])
-            {
-                PowerUp p = Simulation.PowerUpsFactory.Availables[Player.ActualSelection.PowerUpToBuy];
+            var player = Players[pl];
 
-                NotifyActivatePowerUpAsked(Player.ActualSelection.PowerUpToBuy);
+            // activate a power-up
+            if (player.ActualSelection.PowerUpToBuy != PowerUpType.None &&
+                AvailablePowerUps[player.ActualSelection.PowerUpToBuy])
+            {
+                PowerUp p = Simulator.PowerUpsFactory.Availables[player.ActualSelection.PowerUpToBuy];
+
+                NotifyActivatePowerUpAsked(player.ActualSelection.PowerUpToBuy, player);
 
                 if (p.PayOnActivation)
                 {
                     CommonStash.Cash -= p.BuyPrice;
                     NotifyCommonStashChanged(CommonStash);
                 }
-                
-                CheckAvailablePowerUps();
-                Player.UpdateSelection();
+
+                player.UpdateSelection();
 
                 return;
             }
 
 
             // buy a turret
-            if (Player.ActualSelection.TurretToBuy != TurretType.None)
+            if (player.ActualSelection.TurretToBuy != TurretType.None)
             {
-                Player.ActualSelection.TurretToPlace = Simulation.TurretsFactory.Create(Player.ActualSelection.TurretToBuy);
-                Player.ActualSelection.TurretToPlace.CelestialBody = Player.ActualSelection.CelestialBody;
-                Player.ActualSelection.TurretToPlace.Position = Player.Position;
-                Player.ActualSelection.TurretToPlace.ToPlaceMode = true;
-                Player.UpdateSelection();
-                NotifyTurretToPlaceSelected(Player.ActualSelection.TurretToPlace);
+                player.ActualSelection.TurretToPlace = Simulator.TurretsFactory.Create(player.ActualSelection.TurretToBuy);
+                player.ActualSelection.TurretToPlace.CelestialBody = player.ActualSelection.CelestialBody;
+                player.ActualSelection.TurretToPlace.Position = player.Position;
+                player.ActualSelection.TurretToPlace.ToPlaceMode = true;
+                player.UpdateSelection();
+                NotifyTurretToPlaceSelected(player.ActualSelection.TurretToPlace, player);
 
                 return;
             }
 
             // place a turret
-            if (Player.ActualSelection.TurretToPlace != null &&
-                Player.ActualSelection.TurretToPlace.CanPlace)
+            if (player.ActualSelection.TurretToPlace != null &&
+                player.ActualSelection.TurretToPlace.CanPlace)
             {
-                Player.ActualSelection.TurretToPlace.ToPlaceMode = false;
-                NotifyAchatTourelleDemande(Player.ActualSelection.TurretToPlace);
-                NotifyTurretToPlaceDeselected(Player.ActualSelection.TurretToPlace);
-                Player.ActualSelection.TurretToPlace = null;
-                Player.UpdateSelection();
+                player.ActualSelection.TurretToPlace.ToPlaceMode = false;
+                NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace);
+                NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
+                player.ActualSelection.TurretToPlace = null;
+                player.UpdateSelection();
                 return;
             }
 
 
             // upgrade or sell a turret
-            if (Player.ActualSelection.Turret != null && !Player.ActualSelection.Turret.Disabled)
+            if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
             {
-                switch (Player.ActualSelection.TurretOption)
+                switch (player.ActualSelection.TurretOption)
                 {
                     case TurretAction.Sell:
-                        NotifyVenteTourelleDemande(Player.ActualSelection.Turret);
+                        NotifySellTurretAsked(player.ActualSelection.Turret);
                         break;
                     case TurretAction.Update:
-                        NotifyMiseAJourTourelleDemande(Player.ActualSelection.Turret);
+                        NotifyUpgradeTurretAsked(player.ActualSelection.Turret);
                         break;
                 }
 
-                Player.UpdateSelection();
+                player.UpdateSelection();
 
                 return;
             }
 
 
             // call next wave
-            if (Player.PowerUpInUse == PowerUpType.None && Physics.collisionCercleRectangle(Player.Cercle, SandGlass.Rectangle))
+            if (player.PowerUpInUse == PowerUpType.None && Physics.collisionCercleRectangle(player.Circle, SandGlass.Rectangle))
             {
-                NotifyProchaineVagueDemandee();
+                NotifyNextWaveAsked();
                 return;
             }
         }
 
 
-        private void DoCancelAction()
+        public void DoCancelAction(Player p)
         {
-            if (Player.ActualSelection.TurretToPlace == null)
+            var player = Players[p];
+
+            if (player.ActualSelection.TurretToPlace == null)
                 return;
 
-            NotifyTurretToPlaceDeselected(Player.ActualSelection.TurretToPlace);
-            Player.ActualSelection.TurretToPlace = null;
-            Player.UpdateSelection();
+            NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
+            player.ActualSelection.TurretToPlace = null;
+            player.UpdateSelection();
         }
 
 
-        private void DoPowerUpUse()
+        public void DoAdvancedViewAction(Player p, bool pressed)
         {
-            if (Player.PowerUpInUse == PowerUpType.None)
+            var player = Players[p];
+
+            if (PlayerInAdvancedView == null && pressed)
+            {
+                PlayerInAdvancedView = player;
+                NotifyShowAdvancedViewAsked();
+                return;
+            }
+
+            if (PlayerInAdvancedView == player && !pressed)
+            {
+                PlayerInAdvancedView = null;
+                NotifyHideAdvancedViewAsked();
+                return;
+            }
+        }
+
+
+        private void DoPowerUpUse(SimPlayer player)
+        {
+            if (player.PowerUpInUse == PowerUpType.None)
                 return;
 
-            PowerUp p = Simulation.PowerUpsFactory.Availables[Player.PowerUpInUse];
+            PowerUp p = Simulator.PowerUpsFactory.Availables[player.PowerUpInUse];
 
             if (!p.PayOnUse)
                 return;
@@ -575,17 +514,16 @@
             CommonStash.Cash -= p.UsePrice;
             NotifyCommonStashChanged(CommonStash);
 
-            CheckAvailablePowerUps();
-            Player.UpdateSelection();
+            player.UpdateSelection();
 
             if (CommonStash.Cash < p.UsePrice)
-                NotifyDesactivatePowerUpAsked(Player.PowerUpInUse);
+                NotifyDesactivatePowerUpAsked(player.PowerUpInUse);
         }
 
 
         private void CheckAvailablePowerUps()
         {
-            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Values)
+            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Values)
                 AvailablePowerUps[powerUp.Type] =
                     powerUp.BuyPrice <= CommonStash.Cash &&
                     powerUp.UsePrice <= CommonStash.Cash &&
@@ -595,8 +533,127 @@
 
         private void CheckAvailableTurrets()
         {
-            foreach (var turret in Simulation.TurretsFactory.Availables.Values)
+            foreach (var turret in Simulator.TurretsFactory.Availables.Values)
                 AvailableTurrets[turret.Type] = turret.BuyPrice <= CommonStash.Cash;
+        }
+
+
+        private void NotifyTurretToPlaceSelected(Turret turret, SimPlayer player)
+        {
+            if (TurretToPlaceSelected != null)
+                TurretToPlaceSelected(turret, player);
+        }
+
+
+        private void NotifyTurretToPlaceDeselected(Turret turret, SimPlayer player)
+        {
+            if (TurretToPlaceDeselected != null)
+                TurretToPlaceDeselected(turret, player);
+        }
+
+
+        private void NotifyActivatePowerUpAsked(PowerUpType type, SimPlayer player)
+        {
+            if (ActivatePowerUpAsked != null)
+                ActivatePowerUpAsked(type, player);
+        }
+
+
+        private void NotifyDesactivatePowerUpAsked(PowerUpType type)
+        {
+            if (DesactivatePowerUpAsked != null)
+                DesactivatePowerUpAsked(type);
+        }
+
+
+        private void NotifyCommonStashChanged(CommonStash stash)
+        {
+            if (CommonStashChanged != null)
+                CommonStashChanged(stash);
+        }
+
+
+        private void NotifyBuyTurretAsked(Turret turret)
+        {
+            if (BuyTurretAsked != null)
+                BuyTurretAsked(turret);
+        }
+
+
+        private void NotifySellTurretAsked(Turret turret)
+        {
+            if (SellTurretAsked != null)
+                SellTurretAsked(turret);
+        }
+
+
+        private void NotifyUpgradeTurretAsked(Turret turret)
+        {
+            if (UpgradeTurretAsked != null)
+                UpgradeTurretAsked(turret);
+        }
+
+
+        private void NotifyNextWaveAsked()
+        {
+            if (NextWaveAsked != null)
+                NextWaveAsked();
+        }
+
+
+        private void NotifyPlayerChanged(SimPlayer player)
+        {
+            if (PlayerSelectionChanged != null)
+                PlayerSelectionChanged(player);
+        }
+
+
+        private void NotifyPlayerMoved(SimPlayer player)
+        {
+            if (PlayerMoved != null)
+                PlayerMoved(player);
+        }
+
+
+        private void NotifyPlayerConnected(SimPlayer player)
+        {
+            if (PlayerConnected != null)
+                PlayerConnected(player);
+        }
+
+
+        private void NotifyPlayerDisconnected(SimPlayer player)
+        {
+            if (PlayerDisconnected != null)
+                PlayerDisconnected(player);
+        }
+
+
+        private void NotifyShowAdvancedViewAsked()
+        {
+            if (ShowAdvancedViewAsked != null)
+                ShowAdvancedViewAsked();
+        }
+
+
+        private void NotifyHideAdvancedViewAsked()
+        {
+            if (HideAdvancedViewAsked != null)
+                HideAdvancedViewAsked();
+        }
+
+
+        private void NotifyShowNextWaveAsked()
+        {
+            if (ShowNextWaveAsked != null)
+                ShowNextWaveAsked();
+        }
+
+
+        private void NotifyHideNextWaveAsked()
+        {
+            if (HideNextWaveAsked != null)
+                HideNextWaveAsked();
         }
     }
 }

@@ -12,13 +12,13 @@
 
         private double TempsDebut;
         private List<EnemyDescriptor> EnemiesToCreate;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private int EnemiesAlive;
 
 
-        public Wave(Simulator simulation, WaveDescriptor descriptor)
+        public Wave(Simulator simulator, WaveDescriptor descriptor)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             EnemiesToCreate = new List<EnemyDescriptor>();
             NewEnemies = new List<Enemy>();
@@ -69,7 +69,7 @@
             {
                 var desc = EnemiesToCreate[i];
 
-                Enemy e = Simulation.EnemiesFactory.Get
+                Enemy e = Simulator.EnemiesFactory.Get
                 (
                     desc.Type,
                     desc.SpeedLevel,

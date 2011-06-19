@@ -10,8 +10,8 @@
         private Enemy EnemyAttacked;
 
 
-        public LaserTurret(Simulator simulation)
-            : base(simulation)
+        public LaserTurret(Simulator simulator)
+            : base(simulator)
         {
             Type = TurretType.Laser;
             Name = "Laser";

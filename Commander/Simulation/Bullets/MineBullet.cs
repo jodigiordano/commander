@@ -10,6 +10,8 @@
 
     class MineBullet : Bullet
     {
+        public SimPlayer Owner;
+
         private Sprite ImageAlt;
 
 

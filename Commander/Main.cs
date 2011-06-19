@@ -78,10 +78,13 @@ namespace EphemereGames.Commander
             Visuals.TransitionAnimation = new AnimationTransition(500, Preferences.PrioriteTransitionScene);
 
             Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
-            Inputs.AddPlayer(new Player(PlayerIndex.One));
-            Inputs.AddPlayer(new Player(PlayerIndex.Two));
-            Inputs.AddPlayer(new Player(PlayerIndex.Three));
-            Inputs.AddPlayer(new Player(PlayerIndex.Four));
+
+            //todo: pass the Player Class to Inputs so it can spawn players on the fly
+            Inputs.AddPlayer(new Player());
+            Inputs.AddPlayer(new Player());
+            Inputs.AddPlayer(new Player());
+            Inputs.AddPlayer(new Player());
+            Inputs.AddPlayer(new Player()); //for mouse. tmp.
 
             Physics.Initialize();
             Audio.Initialize(0, 0);
@@ -143,7 +146,7 @@ namespace EphemereGames.Commander
             Visuals.Update(gameTime);
             Inputs.Update(gameTime);
 
-            if (!Initializing)
+            if (!Initializing && Persistence.IsPackageLoaded("principal"))
                 Audio.Update(gameTime);
 
             if (Persistence.DataLoaded("savePlayer"))

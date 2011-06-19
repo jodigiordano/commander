@@ -10,7 +10,7 @@
     {
         public List<Turret> Turrets;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Dictionary<IObjetPhysique, TextBubble> TalkingTurrets;
         private double TimeLastQuote;
         private List<KeyValuePair<IObjetPhysique, TextBubble>> ToDelete;
@@ -256,9 +256,9 @@
         };
 
 
-        public MessagesController(Simulator simulation)
+        public MessagesController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             TalkingTurrets = new Dictionary<IObjetPhysique, TextBubble>();
 
             TimeLastQuote = 0;
@@ -305,7 +305,7 @@
 
             visualPriority = (visualPriority == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : visualPriority;
 
-            TextBubble bulle = new TextBubble(Simulation, texteInfos, obj.Position, 0, visualPriority);
+            TextBubble bulle = new TextBubble(Simulator, texteInfos, obj.Position, 0, visualPriority);
 
             bulle.Texte.Data = message;
             bulle.TempsAffichage = time;
@@ -333,7 +333,7 @@
 
         private void DoQuoteTurret(GameTime gameTime)
         {
-            if (!Simulation.DemoMode)
+            if (!Simulator.DemoMode)
                 return;
 
             if (Turrets.Count <= 0)
@@ -373,7 +373,7 @@
                         }
                     }
 
-                    TextBubble bulle = new TextBubble(Simulation, texte, tourelle.Position, 0, Preferences.PrioriteSimulationTourelle - 0.02f);
+                    TextBubble bulle = new TextBubble(Simulator, texte, tourelle.Position, 0, Preferences.PrioriteSimulationTourelle - 0.02f);
                     bulle.TempsAffichage = texte.Data.Length * 100;
 
                     foreach (var kvp in TalkingTurrets)
@@ -399,13 +399,13 @@
 
         public void DisplayPausedMessage()
         {
-            this.ShowMessage(Simulation.CelestialBodyPausedGame, QuotesPause[Main.Random.Next(0, QuotesPause.Count)], 1000000000, -1);
+            this.ShowMessage(Simulator.CelestialBodyPausedGame, QuotesPause[Main.Random.Next(0, QuotesPause.Count)], 1000000000, -1);
         }
 
 
         public void StopPausedMessage()
         {
-            this.StopMessage(Simulation.CelestialBodyPausedGame);
+            this.StopMessage(Simulator.CelestialBodyPausedGame);
         }
 
 

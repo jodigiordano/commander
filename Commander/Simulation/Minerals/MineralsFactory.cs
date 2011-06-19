@@ -16,14 +16,14 @@
 
     class MineralsFactory
     {
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Dictionary<MineralType, MineralDefinition> Minerals;
         private Pool<Mineral> Pool;
 
 
-        public MineralsFactory(Simulator simulation)
+        public MineralsFactory(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             Pool = new Pool<Mineral>();
             Minerals = new Dictionary<MineralType, MineralDefinition>(MineralTypeComparer.Default);
@@ -89,7 +89,7 @@
 
             m.Definition = Minerals[type];
             m.VisualPriority = visualPriority;
-            m.Scene = Simulation.Scene;
+            m.Scene = Simulator.Scene;
 
             m.Initialize();
 

@@ -6,8 +6,8 @@ namespace EphemereGames.Commander.Simulation
 
     class NanobotsTurret : Turret
     {
-        public NanobotsTurret( Simulator simulation )
-            : base( simulation )
+        public NanobotsTurret( Simulator simulator )
+            : base( simulator )
         {
             Type = TurretType.Nanobots;
             Name = "Nanobots";

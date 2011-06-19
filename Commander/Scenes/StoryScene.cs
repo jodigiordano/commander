@@ -75,61 +75,43 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (!p.Master)
-                return;
-
             DoAction();
         }
 
 
         public override void DoGamePadButtonReleased(Core.Input.Player p, Buttons button)
         {
-            if (!p.Master)
-                return;
-
             DoCancel();
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (!p.Master)
-                return;
-
             DoAction();
         }
 
 
         public override void DoKeyReleased(Core.Input.Player p, Keys key)
         {
-            if (!p.Master)
-                return;
-
             DoCancel();
         }
 
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (!p.Master)
-                return;
-
             DoAction();
         }
 
 
         public override void DoMouseButtonReleased(Core.Input.Player p, MouseButton button)
         {
-            if (!p.Master)
-                return;
-
             DoCancel();
         }
 
 
         public override void DoPlayerDisconnected(Core.Input.Player p)
         {
-            if (p.Master)
+            if (Inputs.ConnectedPlayers.Count == 0)
                 TransiteTo("Chargement");
         }
 

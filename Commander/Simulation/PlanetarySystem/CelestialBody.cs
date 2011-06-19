@@ -56,7 +56,7 @@
 
 
         public CelestialBody(
-            Simulator simulation,
+            Simulator simulator,
             string nom,
             Vector3 positionBase,
             Vector3 offset,
@@ -68,7 +68,7 @@
             bool enBackground,
             int rotation)
         {
-            Simulation = simulation;
+            Simulation = simulator;
             Name = nom;
             LifePoints = float.MaxValue;
             Priorite = 0;
@@ -140,7 +140,7 @@
 
 
         public CelestialBody(
-            Simulator simulation,
+            Simulator simulator,
             string nom,
             Vector3 positionBase,
             Vector3 offset,
@@ -152,7 +152,7 @@
             bool enBackground,
             int rotation)
         {
-            this.Simulation = simulation;
+            this.Simulation = simulator;
             this.Name = nom;
             this.LifePoints = float.MaxValue;
             this.Priorite = 0;

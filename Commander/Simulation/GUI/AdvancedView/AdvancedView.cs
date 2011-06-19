@@ -6,17 +6,17 @@
     class AdvancedView
     {
         private bool visible;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private EnemiesLives EnemiesLives;
         private List<CelestialBody> CelestialBodies;
 
 
-        public AdvancedView(Simulator simulation, List<Enemy> enemies, List<CelestialBody> celestialBodies)
+        public AdvancedView(Simulator simulator, List<Enemy> enemies, List<CelestialBody> celestialBodies)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             visible = false;
             CelestialBodies = celestialBodies;
-            EnemiesLives = new EnemiesLives(simulation, enemies);
+            EnemiesLives = new EnemiesLives(simulator, enemies);
         }
 
 
@@ -38,18 +38,6 @@
                     }
             }
         }
-
-
-        //public void Show()
-        //{
-
-        //}
-
-
-        //public void Hide()
-        //{
-
-        //}
 
 
         public void Draw()

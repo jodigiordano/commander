@@ -11,9 +11,9 @@
         public Bubble Bulle;
 
 
-        public AbstractMenu(Simulator simulation)
+        public AbstractMenu(Simulator simulator)
         {
-            this.Simulation = simulation;
+            this.Simulation = simulator;
 
             this.Taille = Vector2.Zero;
 

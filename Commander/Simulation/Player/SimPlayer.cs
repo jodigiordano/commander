@@ -8,33 +8,28 @@
     class SimPlayer
     {
         public List<CelestialBody> CelestialBodies;
-        public Dictionary<PowerUpType, bool> ActivesPowerUps;
+        public Dictionary<PowerUpType, bool> AvailablePowerUps;
+        public Dictionary<TurretType, bool> AvailableTurrets;
 
-        private Vector3 position;
         public PlayerSelection ActualSelection;
 
         private SelectedCelestialBodyController SelectedCelestialBodyController;
         private SelectedTurretToBuyController TurretToBuyController;
         private SelectedPowerUpController SelectedPowerUpController;
 
-        public event SimPlayerHandler Changed;
-        public event SimPlayerHandler Moved;
-
         public CommonStash CommonStash;
 
-        public Circle Cercle;
+        public Circle Circle;
         public PowerUpType PowerUpInUse;
 
-        private Simulator Simulation;
-
-        public Dictionary<PowerUpType, bool> AvailablePowerUps;
-        public Dictionary<TurretType, bool> AvailableTurrets;
+        private Vector3 position;
+        private Simulator Simulator;
 
 
-        public SimPlayer(Simulator simulation)
+        public SimPlayer(Simulator simulator)
         {
-            Simulation = simulation;
-            Cercle = new Circle(Position, 8);
+            Simulator = simulator;
+            Circle = new Circle(Position, 8);
             PowerUpInUse = PowerUpType.None;
         }
 
@@ -43,8 +38,8 @@
         {
             ActualSelection = new PlayerSelection(CommonStash);
             TurretToBuyController = new SelectedTurretToBuyController(AvailableTurrets);
-            SelectedCelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Cercle);
-            SelectedPowerUpController = new SelectedPowerUpController(Simulation.PowerUpsFactory.Availables, Cercle);
+            SelectedCelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Circle);
+            SelectedPowerUpController = new SelectedPowerUpController(Simulator.PowerUpsFactory.Availables, Circle);
             PowerUpInUse = PowerUpType.None;
         }
 
@@ -56,7 +51,7 @@
             {
                 position = value;
                 VerifyFrame();
-                Cercle.Position = position;
+                Circle.Position = position;
             }
         }
 
@@ -238,8 +233,28 @@
 
             Position += SelectedCelestialBodyController.DoGlueMode();
 
-            NotifyChanged();
-            NotifyMoved();
+            // Manage turret to place (to always has a valid position)
+            if (ActualSelection.TurretToPlace != null)
+            {
+                Turret turretToPlace = ActualSelection.TurretToPlace;
+                CelestialBody celestialBody = ActualSelection.TurretToPlace.CelestialBody;
+                turretToPlace.Position = position;
+
+                if (celestialBody.OuterTurretZone.Outside(ref position))
+                    Position = celestialBody.OuterTurretZone.NearestPointToCircumference(ref position);
+
+                turretToPlace.CanPlace = celestialBody.InnerTurretZone.Outside(turretToPlace.Position);
+
+                if (turretToPlace.CanPlace)
+                    foreach (var turret in celestialBody.Turrets)
+                    {
+                        turretToPlace.CanPlace = !turret.Visible ||
+                            !Physics.collisionCercleCercle(turret.Circle, turretToPlace.Circle);
+
+                        if (!turretToPlace.CanPlace)
+                            break;
+                    }
+            }
         }
 
 
@@ -250,24 +265,10 @@
         }
 
 
-        private void NotifyChanged()
-        {
-            if (Changed != null)
-                Changed(this);
-        }
-
-
-        private void NotifyMoved()
-        {
-            if (Moved != null)
-                Moved(this);
-        }
-
-
         private void VerifyFrame()
         {
-            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Cercle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Cercle.Radius);
-            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Cercle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Cercle.Radius);
+            position.X = MathHelper.Clamp(position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius);
+            position.Y = MathHelper.Clamp(position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius);
         }
     }
 }

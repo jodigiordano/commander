@@ -8,16 +8,16 @@
     class SelectedCelestialBodyAnimation
     {
         private CelestialBody celestialBody;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Particle Selection;
         private Vector3 PositionLastEmission;
 
 
-        public SelectedCelestialBodyAnimation(Simulator simulation)
+        public SelectedCelestialBodyAnimation(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
-            Selection = Simulation.Scene.Particles.Get(@"selectionCorpsCeleste");
+            Selection = Simulator.Scene.Particles.Get(@"selectionCorpsCeleste");
             Selection.VisualPriority = Preferences.PrioriteGUISelectionCorpsCeleste;
         }
 

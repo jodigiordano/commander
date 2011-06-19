@@ -16,7 +16,7 @@
         public Path Path;
         public Path PathPreview;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Core.Utilities.Pool<ShootingStar> ShootingStarsFactory;
         private bool DeadlyShootingStars;
 
@@ -29,14 +29,14 @@
         private bool FinalSolution;
 
 
-        public PlanetarySystemController(Simulator simulation)
+        public PlanetarySystemController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             CelestialBodies = new List<CelestialBody>();
             ShootingStars = new List<ShootingStar>();
             ShootingStarsFactory = new Core.Utilities.Pool<ShootingStar>();
-            Path = new Path(simulation, new Color(255, 255, 255, 100), TypeBlend.Add);
-            PathPreview = new Path(simulation, new Color(255, 255, 255, 0), TypeBlend.Add);
+            Path = new Path(simulator, new Color(255, 255, 255, 100), TypeBlend.Add);
+            PathPreview = new Path(simulator, new Color(255, 255, 255, 0), TypeBlend.Add);
         }
 
 
@@ -51,7 +51,7 @@
             SyncUpdateShootingStars = new Action(UpdateShootingStars);
             SyncPathPreview = new Action(PathPreview.Update);
 
-            Stars = Simulation.Scene.Particles.Get(@"etoilesScintillantes");
+            Stars = Simulator.Scene.Particles.Get(@"etoilesScintillantes");
             Stars.VisualPriority = Preferences.PrioriteGUIEtoiles;
             StarsEmitter = 0;
             DeadlyShootingStars = false;
@@ -191,11 +191,11 @@
 
                     star.Colour = newColor2;
 
-                    var effect = Simulation.Scene.Particles.Get(@"starExplosion");
+                    var effect = Simulator.Scene.Particles.Get(@"starExplosion");
                     effect.ParticleEffect[0].ReleaseColour = newColor;
                     effect.Trigger(ref star.Position);
                     effect.VisualPriority = Preferences.PrioriteFondEcran - 0.00001f;
-                    Simulation.Scene.Particles.Return(effect);
+                    Simulator.Scene.Particles.Return(effect);
                 }
             }
 
@@ -234,8 +234,8 @@
             if (Main.Random.Next(0, DeadlyShootingStars ? 300 : 1000) == 0)
             {
                 ShootingStar ss = ShootingStarsFactory.Get();
-                ss.Scene = Simulation.Scene;
-                ss.Terrain = Simulation.Terrain;
+                ss.Scene = Simulator.Scene;
+                ss.Terrain = Simulator.Terrain;
                 ss.LoadContent();
                 ss.Initialize();
 

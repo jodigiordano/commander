@@ -12,12 +12,12 @@
         public bool InPowerUp;
 
         private List<PowerUp> PowerUps;
-        private Simulator Simulation;
+        private Simulator Simulator;
 
 
-        public PowerUpsController(Simulator simulation)
+        public PowerUpsController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             ActivesPowerUps = new Dictionary<PowerUpType, bool>();
             PowerUps = new List<PowerUp>();
@@ -27,7 +27,7 @@
 
         public void Initialize()
         {
-            foreach (var powerUp in Simulation.PowerUpsFactory.Availables.Keys)
+            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
                 ActivesPowerUps.Add(powerUp, true);
         }
 
@@ -57,12 +57,13 @@
         }
 
 
-        public void DoActivatePowerUpAsked(PowerUpType type)
+        public void DoActivatePowerUpAsked(PowerUpType type, SimPlayer player)
         {
             ActivesPowerUps[type] = false;
 
-            PowerUp p = Simulation.PowerUpsFactory.Create(type);
+            PowerUp p = Simulator.PowerUpsFactory.Create(type);
 
+            p.Owner = player;
             p.Start();
 
             PowerUps.Add(p);

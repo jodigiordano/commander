@@ -12,7 +12,7 @@
         public int RemainingWaves;
         public double TimeNextWave;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Text WidgetScore;
         private Text WidgetCash;
         private Text WidgetRemainingWaves;
@@ -26,17 +26,17 @@
         {
             set
             {
-                MenuNextWave = new NextWaveMenu(Simulation, value, this.Position - new Vector3(150, 30, 0), Preferences.PrioriteGUIPanneauGeneral + 0.049f);
+                MenuNextWave = new NextWaveMenu(Simulator, value, this.Position - new Vector3(150, 30, 0), Preferences.PrioriteGUIPanneauGeneral + 0.049f);
             }
         }
 
 
-        public GameMenu(Simulator simulation, Vector3 position)
+        public GameMenu(Simulator simulator, Vector3 position)
         {
-            this.Simulation = simulation;
+            this.Simulator = simulator;
             this.Position = position;
 
-            this.SandGlass = new SandGlass(simulation.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
+            this.SandGlass = new SandGlass(simulator.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f);
             this.Cash = 0;
 
 
@@ -106,9 +106,9 @@
             WidgetRemainingWaves.Data = (RemainingWaves == -1) ? "Inf." : RemainingWaves.ToString();
             WidgetScore.Data = Score.ToString();
 
-            Simulation.Scene.Add(WidgetCash);
-            Simulation.Scene.Add(WidgetRemainingWaves);
-            Simulation.Scene.Add(WidgetScore);
+            Simulator.Scene.Add(WidgetCash);
+            Simulator.Scene.Add(WidgetRemainingWaves);
+            Simulator.Scene.Add(WidgetScore);
 
             SandGlass.Draw();
             MenuNextWave.Draw();

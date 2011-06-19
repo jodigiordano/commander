@@ -12,8 +12,8 @@ namespace EphemereGames.Commander.Simulation
         private float ActiveTime;
 
 
-        public PowerUpSpaceship(Simulator simulation, HumanBattleship humanBattleship)
-            : base(simulation)
+        public PowerUpSpaceship(Simulator simulator, HumanBattleship humanBattleship)
+            : base(simulator)
         {
             HumanBattleship = humanBattleship;
 

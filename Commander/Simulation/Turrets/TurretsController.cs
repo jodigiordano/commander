@@ -17,14 +17,14 @@
         public PlanetarySystemController PlanetarySystemController;
         public List<Turret> Turrets { get; private set; }
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Dictionary<Turret, Enemy> AssociationsThisTick;
         private Dictionary<Turret, int> BoostedTurretsThisTick;
 
 
-        public TurretsController(Simulator simulation)
+        public TurretsController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             Turrets = new List<Turret>();
             AssociationsThisTick = new Dictionary<Turret, Enemy>();
             BoostedTurretsThisTick = new Dictionary<Turret, int>();
@@ -36,7 +36,7 @@
             for (int i = 0; i < StartingTurrets.Count; i++)
                 Turrets.Add(StartingTurrets[i]);
 
-            if (Simulation.DemoMode)
+            if (Simulator.DemoMode)
                 foreach (var turret in Turrets)
                     turret.ShowForm = false;
         }

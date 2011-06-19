@@ -5,7 +5,7 @@
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
-    class LiteSimulation
+    class LiteSimulator
     {
         public LevelDescriptor Descripteur;
 
@@ -55,7 +55,7 @@
 
         private List<CorpsCelesteLite> CorpsCelestes;
 
-        public LiteSimulation()
+        public LiteSimulator()
         {
             CorpsCelestes = new List<CorpsCelesteLite>();
         }

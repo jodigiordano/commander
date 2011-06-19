@@ -21,13 +21,14 @@
         public Vector3 Position             { get; protected set; }
         public abstract bool Terminated     { get; }
         public bool TerminatedOverride      { protected get; set; }
+        public SimPlayer Owner              { get; set; }
 
         protected Simulator Simulation;
 
 
-        public PowerUp(Simulator simulation)
+        public PowerUp(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulation = simulator;
             Type = PowerUpType.None;
             PayOnActivation = true;
             PayOnUse = false;
@@ -43,6 +44,7 @@
             Position = Vector3.Zero;
             Category = PowerUpCategory.Other;
             TerminatedOverride = false;
+            Owner = null;
         }
 
 

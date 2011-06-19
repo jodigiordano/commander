@@ -63,12 +63,12 @@
         public LevelDescriptor LevelDescriptor;
         public bool SystemeCentre;
 
-        private LiteSimulation SimulationLite;
+        private LiteSimulator SimulatorLite;
         private List<CelestialBodyDescriptor> CorpsCelestes;
 
         public LevelGenerator()
         {
-            SimulationLite = new LiteSimulation();
+            SimulatorLite = new LiteSimulator();
             CorpsCelestes = new List<CelestialBodyDescriptor>();
         }
 
@@ -153,12 +153,12 @@
 
         public List<Vector3> pointsConsideres()
         {
-            return SimulationLite.pointsConsideres;
+            return SimulatorLite.pointsConsideres;
         }
 
         public List<Circle> cerclesConsideres()
         {
-            return SimulationLite.cerclesConsideres;
+            return SimulatorLite.cerclesConsideres;
         }
 
         private CelestialBodyDescriptor genererCorpsCeleste(bool fixe)
@@ -201,7 +201,7 @@
                 d.Rotation = Main.Random.Next(-360, 360);
                 d.StartingPosition = Main.Random.Next(0, 100);
             }
-            while (!SimulationLite.dansLesBornes(d, rp) || SimulationLite.collisionPlanetaire(d, CorpsCelestes));
+            while (!SimulatorLite.dansLesBornes(d, rp) || SimulatorLite.collisionPlanetaire(d, CorpsCelestes));
 
             Console.WriteLine("nb tentatives: " + nbTentatives);
             

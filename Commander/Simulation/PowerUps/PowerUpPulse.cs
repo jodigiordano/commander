@@ -13,8 +13,8 @@ namespace EphemereGames.Commander.Simulation
         private Vector3 BulletPosition;
 
 
-        public PowerUpPulse(Simulator simulation)
-            : base(simulation)
+        public PowerUpPulse(Simulator simulator)
+            : base(simulator)
         {
             Type = PowerUpType.Pulse;
             Category = PowerUpCategory.Other;

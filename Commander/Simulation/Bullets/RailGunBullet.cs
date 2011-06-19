@@ -8,6 +8,9 @@
 
     class RailGunBullet : Bullet
     {
+        public SimPlayer Owner;
+
+
         public RailGunBullet()
             : base()
         {

@@ -24,7 +24,7 @@
     {
         public List<Enemy> AvailableEnemies { get; private set; }
         private Dictionary<EnemyType, Pool<Enemy>> EnemiesPools;
-        private Simulator Simulation;
+        private Simulator Simulator;
 
 
         public Dictionary<EnemyType, string> ImagesEnemies = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
@@ -57,9 +57,9 @@
         };
 
 
-        public EnemiesFactory(Simulator simulation)
+        public EnemiesFactory(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             EnemiesPools = new Dictionary<EnemyType, Pool<Enemy>>(EnemyTypeComparer.Default);
             EnemiesPools.Add(EnemyType.Asteroid, new Pool<Enemy>());
@@ -93,7 +93,7 @@
 
             e.Name = GetTexture(type);
             e.Type = type;
-            e.Simulation = Simulation;
+            e.Simulation = Simulator;
             e.Speed = GetSpeed(type, speedLevel);
             e.LifePoints = e.StartingLifePoints = GetLives(type, livesLevel); ;
             e.CashValue = value;

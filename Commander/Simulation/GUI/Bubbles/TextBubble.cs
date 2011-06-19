@@ -20,8 +20,8 @@
             }
         }
 
-        public TextBubble(Simulator simulation, Text texte, Vector3 position, double tempsAffichage, double prioriteAffichage)
-            : base(simulation, new Rectangle(), prioriteAffichage)
+        public TextBubble(Simulator simulator, Text texte, Vector3 position, double tempsAffichage, double prioriteAffichage)
+            : base(simulator, new Rectangle(), prioriteAffichage)
         {
             this.Texte = texte;
             this.Texte.VisualPriority = prioriteAffichage - 0.01f;

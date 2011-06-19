@@ -53,9 +53,9 @@
         protected bool ShowTrail;
 
 
-        public Spaceship(Simulator simulation)
+        public Spaceship(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulation = simulator;
             Image = new Image("Vaisseau", Position)
             {
                 SizeX = 4

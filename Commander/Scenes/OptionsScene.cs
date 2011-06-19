@@ -140,6 +140,8 @@
         {
             base.OnFocus();
 
+            SyncPlayers();
+
             Music.Valeur = Main.SaveGame.VolumeMusic;
             SoundEffects.Valeur = Main.SaveGame.VolumeSfx;
         }
@@ -191,6 +193,12 @@
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
+            if (key == KeyboardConfiguration.Disconnect)
+            {
+                Inputs.DisconnectPlayer(p);
+                return;
+            }
+
             if (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel)
                 BeginTransition();
 
@@ -201,6 +209,13 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
+            if (button == GamePadConfiguration.Disconnect)
+            {
+                Inputs.DisconnectPlayer(p);
+                return;
+            }
+
+
             if (button == GamePadConfiguration.Select)
             {
                 Player player = (Player) p;
@@ -221,7 +236,7 @@
         {
             Cursors.Remove((Player) player);
 
-            if (player.Master)
+            if (Inputs.ConnectedPlayers.Count == 0)
                 TransiteTo("Chargement");
         }
 
@@ -241,6 +256,20 @@
         private void BeginTransition()
         {
             TransiteTo("Menu");
+        }
+
+
+        private void SyncPlayers()
+        {
+            foreach (var p in Inputs.Players)
+            {
+                Player player = (Player) p;
+
+                if (p.Connected && !Cursors.ContainsKey(player))
+                    DoPlayerConnected(player);
+                else if (!p.Connected && Cursors.ContainsKey(player))
+                    DoPlayerDisconnected(player);
+            }
         }
     }
 }

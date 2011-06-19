@@ -19,14 +19,14 @@
         public RailGunTurret RailGun;
         public SniperTurret Sniper;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private double VisualPriority;
         private Image Image;
 
 
-        public HumanBattleship(Simulator simulation, Vector3 position, double visualPriority)
+        public HumanBattleship(Simulator simulator, Vector3 position, double visualPriority)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             VisualPriority = visualPriority;
             Position = position;
 
@@ -43,7 +43,7 @@
         {
             Image.Position = this.Position;
 
-            Simulation.Scene.Add(Image);
+            Simulator.Scene.Add(Image);
         }
     }
 }

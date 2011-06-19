@@ -7,14 +7,14 @@
 
     class PlayerLives
     {
-        private Simulator Simulation;
+        private Simulator Simulator;
         private CelestialBody CelestialBody;
         private List<Moon> Moons;
 
 
-        public PlayerLives(Simulator simulation, CelestialBody celestialBody, Color color)
+        public PlayerLives(Simulator simulator, CelestialBody celestialBody, Color color)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             CelestialBody = celestialBody;
 
             CelestialBody.Lunes.Clear();
@@ -82,9 +82,9 @@
             Moon lune;
 
             if (Main.Random.Next(0, 2) == 0)
-                lune = new MoonMatrix(Simulation, CelestialBody, 255, "luneVies", 3);
+                lune = new MoonMatrix(Simulator, CelestialBody, 255, "luneVies", 3);
             else
-                lune = new MoonPath(Simulation, CelestialBody, 255, "luneVies", 3);
+                lune = new MoonPath(Simulator, CelestialBody, 255, "luneVies", 3);
 
             return lune;
         }

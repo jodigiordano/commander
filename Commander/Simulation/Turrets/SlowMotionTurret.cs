@@ -10,8 +10,8 @@ namespace EphemereGames.Commander.Simulation
         private float LastRotation;
 
 
-        public SlowMotionTurret(Simulator simulation)
-            : base(simulation)
+        public SlowMotionTurret(Simulator simulator)
+            : base(simulator)
         {
             Type = TurretType.SlowMotion;
             Name = "Slow";

@@ -12,13 +12,13 @@
         public HumanBattleship HumanBattleship;
         public event PhysicalObjectHandler ObjectCreated;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private List<Spaceship> Spaceships;
 
 
-        public SpaceshipsController(Simulator simulation)
+        public SpaceshipsController(Simulator simulator)
         {
-            this.Simulation = simulation;
+            this.Simulator = simulator;
             this.Spaceships = new List<Spaceship>();
         }
 

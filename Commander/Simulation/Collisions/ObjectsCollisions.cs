@@ -9,7 +9,7 @@
     {
         public List<KeyValuePair<IObjetPhysique, IObjetPhysique>> Output;
 
-        public Simulator Simulation;
+        public Simulator Simulator;
         public HiddenEnemies HiddenEnemies;
         public bool DarkSide;
         public bool DeadlyShootingStars;
@@ -89,7 +89,7 @@
                 if (kvp.Value.FirstOnPath || (kvp.Value.LastOnPath && kvp.Key.Path.Pourc(kvp.Key.Displacement) > 0.98))
                     continue;
 
-                Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(kvp.Key, ((PowerUpDarkSide) Simulation.PowerUpsFactory.Availables[PowerUpType.DarkSide]).CorpsCeleste));
+                Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(kvp.Key, ((PowerUpDarkSide) Simulator.PowerUpsFactory.Availables[PowerUpType.DarkSide]).CorpsCeleste));
             }
         }
 

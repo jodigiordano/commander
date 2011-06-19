@@ -33,12 +33,12 @@
     {
         public Dictionary<PowerUpType, PowerUp> Availables;
         public HumanBattleship HumanBattleship;
-        private Simulator Simulation;
+        private Simulator Simulator;
 
 
-        public PowerUpsFactory(Simulator simulation)
+        public PowerUpsFactory(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             Availables = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
         }
@@ -50,19 +50,19 @@
 
             switch (type)
             {
-                case PowerUpType.Collector:             t = new PowerUpCollector(Simulation, HumanBattleship);          break;
-                case PowerUpType.FinalSolution:         t = new PowerUpLastSolution(Simulation);                        break;
-                case PowerUpType.Spaceship:             t = new PowerUpSpaceship(Simulation, HumanBattleship);          break;
-                case PowerUpType.TheResistance:         t = new PowerUpTheResistance(Simulation, HumanBattleship);      break;
-                case PowerUpType.DeadlyShootingStars:   t = new PowerUpDeadlyShootingStars(Simulation);                 break;
-                case PowerUpType.RailGun:               t = new PowerUpRailGun(Simulation, HumanBattleship);            break;
-                case PowerUpType.AutomaticCollector:    t = new PowerUpAutomaticCollector(Simulation, HumanBattleship); break;
-                case PowerUpType.DarkSide:              t = new PowerUpDarkSide(Simulation);                            break;
-                case PowerUpType.Miner:                 t = new PowerUpMiner(Simulation, HumanBattleship);              break;
-                case PowerUpType.Pulse:                 t = new PowerUpPulse(Simulation);                               break;
-                case PowerUpType.Shield:                t = new PowerUpShield(Simulation);                              break;
-                case PowerUpType.Sniper:                t = new PowerUpSniper(Simulation, HumanBattleship);             break;
-                default:                                t = new PowerUpCollector(Simulation, HumanBattleship);          break;
+                case PowerUpType.Collector:             t = new PowerUpCollector(Simulator, HumanBattleship);          break;
+                case PowerUpType.FinalSolution:         t = new PowerUpLastSolution(Simulator);                        break;
+                case PowerUpType.Spaceship:             t = new PowerUpSpaceship(Simulator, HumanBattleship);          break;
+                case PowerUpType.TheResistance:         t = new PowerUpTheResistance(Simulator, HumanBattleship);      break;
+                case PowerUpType.DeadlyShootingStars:   t = new PowerUpDeadlyShootingStars(Simulator);                 break;
+                case PowerUpType.RailGun:               t = new PowerUpRailGun(Simulator, HumanBattleship);            break;
+                case PowerUpType.AutomaticCollector:    t = new PowerUpAutomaticCollector(Simulator, HumanBattleship); break;
+                case PowerUpType.DarkSide:              t = new PowerUpDarkSide(Simulator);                            break;
+                case PowerUpType.Miner:                 t = new PowerUpMiner(Simulator, HumanBattleship);              break;
+                case PowerUpType.Pulse:                 t = new PowerUpPulse(Simulator);                               break;
+                case PowerUpType.Shield:                t = new PowerUpShield(Simulator);                              break;
+                case PowerUpType.Sniper:                t = new PowerUpSniper(Simulator, HumanBattleship);             break;
+                default:                                t = new PowerUpCollector(Simulator, HumanBattleship);          break;
             }
 
             return t;

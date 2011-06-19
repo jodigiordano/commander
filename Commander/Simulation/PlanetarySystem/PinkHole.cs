@@ -9,7 +9,7 @@
     class PinkHole : CelestialBody
     {
         public PinkHole(
-            Simulator simulation,
+            Simulator simulator,
             string nom,
             Vector3 positionBase,
             Vector3 offset,
@@ -20,7 +20,7 @@
             float prioriteAffichage,
             bool enBackground,
             int rotation)
-            : base (simulation, nom, positionBase, offset, rayon, tempsRotation, representation, pourcDepart, prioriteAffichage, enBackground, rotation)
+            : base (simulator, nom, positionBase, offset, rayon, tempsRotation, representation, pourcDepart, prioriteAffichage, enBackground, rotation)
         {
             Lunes = new List<Moon>();
         }

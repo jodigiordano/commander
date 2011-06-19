@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -7,7 +8,7 @@
     class WorldMenu : AbstractMenu
     {
         public CelestialBody CelestialBody;
-        public LevelDescriptor Level;
+        private Dictionary<string, LevelDescriptor> AvailableLevels;
         public GameAction Action;
 
         private Text ResumeGame;
@@ -20,10 +21,11 @@
         private double VisualPriority;
 
 
-        public WorldMenu(Simulator simulation, double visualPriority)
-            : base(simulation)
+        public WorldMenu(Simulator simulator, double visualPriority, Dictionary<string, LevelDescriptor> availableLevels)
+            : base(simulator)
         {
             VisualPriority = visualPriority;
+            AvailableLevels = availableLevels;
 
             ResumeGame = new Text("resume game", "Pixelite", Color.White, Vector3.Zero);
             ResumeGame.SizeX = 2;
@@ -91,7 +93,7 @@
 
         public override void Draw()
         {
-            if (CelestialBody == null || Level == null || Action == GameAction.None)
+            if (CelestialBody == null || Action == GameAction.None)
                 return;
 
 
@@ -131,10 +133,12 @@
 
         private void DrawInfos()
         {
-            Title.Data = Level.Mission;
+            LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
+
+            Title.Data = descriptor.Mission;
             Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 32, 0);
             Title.Origin = Title.Center;
-            Difficulty.Data = Level.Difficulty;
+            Difficulty.Data = descriptor.Difficulty;
             Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
             Difficulty.Origin = Difficulty.Center;
 
@@ -147,15 +151,16 @@
 
         private void DrawHighScore()
         {
+            LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
             HighScores highscores = null;
 
-            Main.SaveGame.HighScores.TryGetValue(Level.Id, out highscores);
+            Main.SaveGame.HighScores.TryGetValue(descriptor.Id, out highscores);
 
             Highscore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
             Highscore.Origin = Highscore.Center;
             Highscore.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 40, 0);
 
-            int nbStars = (highscores == null) ? 0 : Level.NbStars(highscores.Scores[0].Value);
+            int nbStars = (highscores == null) ? 0 : descriptor.NbStars(highscores.Scores[0].Value);
 
             for (int i = 0; i < 3; i++)
             {

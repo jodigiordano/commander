@@ -7,15 +7,15 @@
 
     public enum InputType
     {
-        Mouse,
-        Gamepad,
-        None
+        Mouse = 0x0000,
+        Gamepad = 0x0100,
+        None = 0x1100
     }
 
 
     public static class Inputs
     {
-        private static InputController InputController;
+        internal static InputsController InputsController;
         internal static PlayerConnection PlayerConnection;
         internal static PlayersController PlayersController;
         private static Vibrator Vibrator;
@@ -28,8 +28,8 @@
             Vibrator = new Vibrator();
             Vibrator.Initialize();
 
-            InputController = new InputController(mouseBasePosition);
-            InputController.Initialize();
+            InputsController = new InputsController(mouseBasePosition);
+            InputsController.Initialize();
 
             PlayersController = new PlayersController();
             PlayersController.Initialize();
@@ -42,9 +42,9 @@
             List<Buttons> gamepadButtons,
             List<Keys> keyboardKeys)
         {
-            InputController.MapMouseButtons(player, mouseButtons);
-            InputController.MapGamePadButtons(player, gamepadButtons);
-            InputController.MapKeys(player, keyboardKeys);
+            InputsController.MapMouseButtons(player, mouseButtons);
+            InputsController.MapGamePadButtons(player, gamepadButtons);
+            InputsController.MapKeys(player, keyboardKeys);
         }
 
 
@@ -52,7 +52,7 @@
         {
             set
             {
-                InputController.Active = value;
+                InputsController.Active = value;
             }
         }
 
@@ -63,42 +63,49 @@
         }
 
 
+        public static void DisconnectPlayer(Player player)
+        {
+            PlayerConnection.Disconnect(player);
+        }
+
+
         public static void AddListener(InputListener listener)
         {
-            InputController.AddListener(listener);
+            InputsController.AddListener(listener);
             PlayersController.AddListener(listener);
         }
 
 
         public static void RemoveListener(InputListener listener)
         {
-            InputController.RemoveListener(listener);
+            InputsController.RemoveListener(listener);
             PlayersController.RemoveListener(listener);
         }
 
 
         public static void Update(GameTime gameTime)
         {
-            InputController.Update(gameTime);
+            InputsController.Update();
+            PlayersController.Update();
             Vibrator.Update(gameTime);
         }
 
 
         public static bool IsKeyPressed(Player player, Keys key)
         {
-            return InputController.IsKeyPressed(player, key);
+            return InputsController.IsKeyPressed(player, key);
         }
 
 
         public static bool IsMouseButtonPressed(Player player, MouseButton button)
         {
-            return InputController.IsMouseButtonPressed(player, button);
+            return InputsController.IsMouseButtonPressed(player, button);
         }
 
 
         public static bool IsGamePadButtonPressed(Player player, Buttons button)
         {
-            return InputController.IsGamePadButtonPressed(player, button);
+            return InputsController.IsGamePadButtonPressed(player, button);
         }
 
 
@@ -114,7 +121,7 @@
         public static void AddPlayer(Player player)
         {
             PlayersController.AddPlayer(player);
-            InputController.AddPlayer(player);
+            InputsController.AddPlayer(player);
         }
 
 

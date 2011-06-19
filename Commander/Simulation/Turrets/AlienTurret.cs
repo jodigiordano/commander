@@ -7,8 +7,8 @@ namespace EphemereGames.Commander.Simulation
 
     class AlienTurret : GravitationalTurret
     {
-        public AlienTurret(Simulator simulation)
-            : base(simulation)
+        public AlienTurret(Simulator simulator)
+            : base(simulator)
         {
             Name = "Alien";
 

@@ -22,6 +22,7 @@
     class PlayerSelection
     {
         public CelestialBody CelestialBody;
+
         public PowerUpType PowerUpToBuy;
 
         public Turret Turret;

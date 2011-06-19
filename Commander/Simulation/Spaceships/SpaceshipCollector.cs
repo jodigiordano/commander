@@ -5,8 +5,8 @@
 
     class SpaceshipCollector : SpaceshipSpaceship
     {
-        public SpaceshipCollector(Simulator simulation)
-            : base(simulation)
+        public SpaceshipCollector(Simulator simulator)
+            : base(simulator)
         {
             Image = new Image("Collecteur")
             {

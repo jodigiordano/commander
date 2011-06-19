@@ -5,8 +5,8 @@
 
     class MultipleLasersTurret : Turret
     {
-        public MultipleLasersTurret(Simulator simulation)
-            : base(simulation)
+        public MultipleLasersTurret(Simulator simulator)
+            : base(simulator)
         {
             Type = TurretType.MultipleLasers;
             Name = "Multi-laser";

@@ -35,16 +35,16 @@
         public GameState State;
         public Level Level;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private int WavesCounter;
         private double ElapsedTime;
 
         private bool HelpSaved;
 
 
-        public LevelsController(Simulator simulation)
+        public LevelsController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
         }
 
 
@@ -55,13 +55,13 @@
 
             if (Main.SaveGame.Tutorials.ContainsKey(Level.Id) && Main.SaveGame.Tutorials[Level.Id] > 2)
             {
-                Help = new Help(Simulation, new List<string>());
+                Help = new Help(Simulator, new List<string>());
                 HelpSaved = true;
             }
 
             else
             {
-                Help = new Help(Simulation, Level.HelpTexts);
+                Help = new Help(Simulator, Level.HelpTexts);
                 HelpSaved = false;
             }
         }
@@ -93,9 +93,9 @@
 
         public void Draw()
         {
-            Simulation.Scene.Add(Level.Background);
+            Simulator.Scene.Add(Level.Background);
 
-            if (!Simulation.DemoMode && Help.Active)
+            if (!Simulator.DemoMode && Help.Active)
                 Help.Draw();
         }
 
@@ -104,7 +104,7 @@
         {
             WavesCounter++;
 
-            if (WavesCounter == Waves.Count && State == GameState.Running && !Simulation.DemoMode && !Simulation.EditorMode)
+            if (WavesCounter == Waves.Count && State == GameState.Running && !Simulator.DemoMode && !Simulator.EditorMode)
             {
                 State = GameState.Won;
 
@@ -131,7 +131,7 @@
             if (!(celestialBody is AsteroidBelt))
                 celestialBody.DoHit(enemy);
 
-            if (!Simulation.DemoMode && Simulation.State != GameState.Lost)
+            if (!Simulator.DemoMode && Simulator.State != GameState.Lost)
             {
                 Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteTouche");
             }
@@ -139,7 +139,7 @@
             if (celestialBody == CelestialBodyToProtect)
                 CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints; //correct de caster?
 
-            if (CommonStash.Lives <= 0 && State == GameState.Running && !Simulation.DemoMode && !Simulation.EditorMode)
+            if (CommonStash.Lives <= 0 && State == GameState.Running && !Simulator.DemoMode && !Simulator.EditorMode)
             {
                 CelestialBodyToProtect.DoDie();
                 Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
@@ -170,7 +170,7 @@
 
             Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
 
-            if (celestialBody == CelestialBodyToProtect && !Simulation.DemoMode && !Simulation.EditorMode)
+            if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)
             {
                 State = GameState.Lost;
 

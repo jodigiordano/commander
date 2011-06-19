@@ -25,12 +25,12 @@
     {
         public Dictionary<TurretType, Turret> Availables;
         public Dictionary<int, TurretBoostLevel> BoostLevels;
-        private Simulator Simulation;
+        private Simulator Simulator;
 
 
-        public TurretsFactory(Simulator simulation)
+        public TurretsFactory(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             Availables = new Dictionary<TurretType, Turret>(TurretTypeComparer.Default);
 
@@ -80,18 +80,18 @@
 
             switch (type)
             {
-                case TurretType.Basic:              t = new BasicTurret(Simulation);            break;
-                case TurretType.Gravitational:      t = new GravitationalTurret(Simulation);    break;
-                case TurretType.MultipleLasers:     t = new MultipleLasersTurret(Simulation);   break;
-                case TurretType.Laser:              t = new LaserTurret(Simulation);            break;
-                case TurretType.Missile:            t = new MissileTurret(Simulation);          break;
-                case TurretType.Alien:              t = new AlienTurret(Simulation);            break;
-                case TurretType.SlowMotion:         t = new SlowMotionTurret(Simulation);       break;
-                case TurretType.Booster:            t = new BoosterTurret(Simulation);          break;
-                case TurretType.Gunner:             t = new GunnerTurret(Simulation);           break;
-                case TurretType.Nanobots:           t = new NanobotsTurret(Simulation);         break;
-                case TurretType.RailGun:            t = new RailGunTurret(Simulation);          break;
-                default:                            t = new BasicTurret(Simulation);            break;
+                case TurretType.Basic:              t = new BasicTurret(Simulator);            break;
+                case TurretType.Gravitational:      t = new GravitationalTurret(Simulator);    break;
+                case TurretType.MultipleLasers:     t = new MultipleLasersTurret(Simulator);   break;
+                case TurretType.Laser:              t = new LaserTurret(Simulator);            break;
+                case TurretType.Missile:            t = new MissileTurret(Simulator);          break;
+                case TurretType.Alien:              t = new AlienTurret(Simulator);            break;
+                case TurretType.SlowMotion:         t = new SlowMotionTurret(Simulator);       break;
+                case TurretType.Booster:            t = new BoosterTurret(Simulator);          break;
+                case TurretType.Gunner:             t = new GunnerTurret(Simulator);           break;
+                case TurretType.Nanobots:           t = new NanobotsTurret(Simulator);         break;
+                case TurretType.RailGun:            t = new RailGunTurret(Simulator);          break;
+                default:                            t = new BasicTurret(Simulator);            break;
             }
 
             return t;

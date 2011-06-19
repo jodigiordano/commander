@@ -11,8 +11,8 @@ namespace EphemereGames.Commander.Simulation
     {
         private Particle Glow;
 
-        public BoosterTurret( Simulator simulation )
-            : base( simulation )
+        public BoosterTurret( Simulator simulator )
+            : base( simulator )
         {
             Type = TurretType.Booster;
             Name = "Booster";

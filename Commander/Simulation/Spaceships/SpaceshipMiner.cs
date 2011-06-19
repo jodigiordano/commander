@@ -6,11 +6,13 @@
 
     class SpaceshipMiner : SpaceshipSpaceship
     {
+        public SimPlayer Owner;
+
         private List<Bullet> ToAdd;
 
 
-        public SpaceshipMiner(Simulator simulation)
-            : base(simulation)
+        public SpaceshipMiner(Simulator simulator)
+            : base(simulator)
         {
             Image = new Image("Resistance3")
             {
@@ -40,6 +42,7 @@
             mb.VisualPriority = Preferences.PrioriteSimulationChemin - 0.001f;
             mb.Speed = 0;
             mb.ExplosionRange = 70;
+            mb.Owner = Owner;
 
             ToAdd.Add(mb);
         }

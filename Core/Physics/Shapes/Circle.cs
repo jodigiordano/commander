@@ -151,6 +151,12 @@
 
         public Vector3 NearestPointToCircumference(Vector3 point)
         {
+            return NearestPointToCircumference(ref point);
+        }
+
+
+        public Vector3 NearestPointToCircumference(ref Vector3 point)
+        {
             Vector2 centreToPoint = new Vector2(point.X - Position.X, point.Y - Position.Y);
             float longueur = centreToPoint.Length();
 

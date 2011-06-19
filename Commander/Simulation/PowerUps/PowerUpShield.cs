@@ -13,8 +13,8 @@ namespace EphemereGames.Commander.Simulation
         private double ActiveTime;
 
 
-        public PowerUpShield(Simulator simulation)
-            : base(simulation)
+        public PowerUpShield(Simulator simulator)
+            : base(simulator)
         {
             Type = PowerUpType.Shield;
             Category = PowerUpCategory.Other;

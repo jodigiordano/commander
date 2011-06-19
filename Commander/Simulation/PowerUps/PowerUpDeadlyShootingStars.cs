@@ -11,8 +11,8 @@ namespace EphemereGames.Commander.Simulation
         public int AttackPoints                 { get; private set; }
 
 
-        public PowerUpDeadlyShootingStars(Simulator simulation)
-            : base(simulation)
+        public PowerUpDeadlyShootingStars(Simulator simulator)
+            : base(simulator)
         {
             DestructionRange = new Circle(new Vector3(), 100);
             AttackPoints = 50000;

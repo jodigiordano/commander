@@ -1,13 +1,17 @@
 namespace EphemereGames.Commander.Simulation
 {
+    using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
 
 
     class RailGunTurret : Turret
     {
-        public RailGunTurret(Simulator simulation)
-            : base(simulation)
+        public SimPlayer Owner;
+
+
+        public RailGunTurret(Simulator simulator)
+            : base(simulator)
         {
             Type = TurretType.RailGun;
             Name = "RailGun";
@@ -23,6 +27,17 @@ namespace EphemereGames.Commander.Simulation
 
             ActualLevel = Levels.First;
             Upgrade();
+        }
+
+
+        public override List<Bullet> BulletsThisTick()
+        {
+            var result = base.BulletsThisTick();
+
+            foreach (var bullet in result)
+                ((RailGunBullet) bullet).Owner = Owner;
+
+            return result;
         }
     }
 }

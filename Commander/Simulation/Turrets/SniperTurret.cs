@@ -6,8 +6,8 @@ namespace EphemereGames.Commander.Simulation
 
     class SniperTurret : Turret
     {
-        public SniperTurret(Simulator simulation)
-            : base(simulation)
+        public SniperTurret(Simulator simulator)
+            : base(simulator)
         {
             Type = TurretType.Sniper;
             Name = "Sniper";

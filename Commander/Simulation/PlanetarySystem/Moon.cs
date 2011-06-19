@@ -17,9 +17,9 @@
         protected bool Inversed;
 
 
-        public Moon(Simulator simulation, CelestialBody celestialBody, int alpha, string imageName, int size)
+        public Moon(Simulator simulator, CelestialBody celestialBody, int alpha, string imageName, int size)
         {
-            Simulation = simulation;
+            Simulation = simulator;
             CelestialBody = celestialBody;
 
             Representation = new Image(imageName)

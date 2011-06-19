@@ -11,8 +11,8 @@ namespace EphemereGames.Commander.Simulation
         private bool terminated;
 
 
-        public PowerUpSniper(Simulator simulation, HumanBattleship humanBattleship)
-            : base(simulation)
+        public PowerUpSniper(Simulator simulator, HumanBattleship humanBattleship)
+            : base(simulator)
         {
             HumanBattleship = humanBattleship;
             Type = PowerUpType.Sniper;

@@ -84,7 +84,7 @@
     <Compile Include="Editor\EditorScene.cs" />
     <Compile Include="Editor\GeneratorData.cs" />
     <Compile Include="Editor\LevelGenerator.cs" />
-    <Compile Include="Editor\LiteSimulation.cs" />
+    <Compile Include="Editor\LiteSimulator.cs" />
     <Compile Include="EqualityComparers.cs" />
     <Compile Include="GUI\Controls\CheckBox.cs" />
     <Compile Include="GUI\Controls\HorizontalSlider.cs" />
@@ -126,6 +126,7 @@
     <Compile Include="Simulation\GUI\Bubbles\Bubble.cs" />
     <Compile Include="Simulation\GUI\Bubbles\TextBubble.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
+    <Compile Include="Simulation\GUI\GUIPlayer.cs" />
     <Compile Include="Simulation\GUI\Menus\AbstractMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\CelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\GameMenu.cs" />

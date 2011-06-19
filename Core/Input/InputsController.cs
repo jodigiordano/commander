@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    class InputController
+    class InputsController
     {
         public bool Active;
         private Vector2 MouseBasePosition;
@@ -13,7 +13,7 @@
         private List<InputListener> Listeners;
 
 
-        public InputController(Vector2 mouseBasePosition)
+        public InputsController(Vector2 mouseBasePosition)
         {
             Active = true;
             MouseBasePosition = mouseBasePosition;
@@ -112,21 +112,38 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             if (!Active)
                 return;
 
             // Receive raw input
-            foreach (var source in Sources.Values)
+            foreach (var source in Sources)
             {
-                source.DoKeyboardInput();
-                source.DoMouseInput();
-                source.DoGamePadInput();
+                var player = source.Key;
+                var state = source.Value;
+
+                if (player.Connected && player.InputType == InputType.Gamepad)
+                {
+                    state.DoGamePadInput();
+                }
+
+                else if (player.Connected)
+                {
+                    state.DoKeyboardInput();
+                    state.DoMouseInput();
+                }
+
+                else
+                {
+                    state.DoKeyboardInput();
+                    state.DoMouseInput();
+                    state.DoGamePadInput();
+                }
             }
 
             // Spread the word
-            for (int i = 0; i < Listeners.Count; i++) //because Scenes can be created in another thread
+            for (int i = 0; i < Listeners.Count; i++)
             {
                 if (!Listeners[i].EnableInputs)
                     continue;

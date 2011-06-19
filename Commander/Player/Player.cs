@@ -11,7 +11,8 @@
         private Vector3 position;
 
 
-        public Player(PlayerIndex playerIndex) : base(playerIndex)
+        public Player()
+            : base()
         {
             Circle = new Circle(Position, 8);
 

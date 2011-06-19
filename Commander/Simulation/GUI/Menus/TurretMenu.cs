@@ -25,8 +25,8 @@
         private float TextSize;
 
 
-        public TurretMenu(Simulator simulation, float prioriteAffichage)
-            : base(simulation)
+        public TurretMenu(Simulator simulator, float prioriteAffichage)
+            : base(simulator)
         {
             MenuWidth = 140;
             DistanceBetweenTwoChoices = 30;

@@ -11,8 +11,8 @@ namespace EphemereGames.Commander.Simulation
         private bool Firing;
 
 
-        public PowerUpMiner(Simulator simulation, HumanBattleship humanBattleship)
-            : base(simulation)
+        public PowerUpMiner(Simulator simulator, HumanBattleship humanBattleship)
+            : base(simulator)
         {
             HumanBattleship = humanBattleship;
 
@@ -84,7 +84,8 @@ namespace EphemereGames.Commander.Simulation
                 VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f,
                 Bouncing = new Vector3(Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], 0),
                 StartingObject = HumanBattleship,
-                AutomaticMode = false
+                AutomaticMode = false,
+                Owner = Owner
             };
 
             Audio.PlaySfx(@"Partie", Miner.SfxIn);

@@ -29,9 +29,9 @@
         private int PreviousNbLinesToDraw;
 
 
-        public Path(Simulator simulation, Color couleur, TypeBlend melange)
+        public Path(Simulator simulator, Color couleur, TypeBlend melange)
         {
-            Scene = simulation.Scene;
+            Scene = simulator.Scene;
             
             InnerPath = new Path3D();
             Times = new List<double>(MaxCurvePoints);

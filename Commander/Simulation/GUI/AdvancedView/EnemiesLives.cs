@@ -10,13 +10,13 @@
     {
         private List<List<Image>> Lives;
         private List<Enemy> Enemies;
-        private Simulator Simulation;
+        private Simulator Simulator;
 
 
-        public EnemiesLives(Simulator simulation, List<Enemy> enemies)
+        public EnemiesLives(Simulator simulator, List<Enemy> enemies)
         {
             Enemies = enemies;
-            Simulation = simulation;
+            Simulator = simulator;
 
             Lives = new List<List<Image>>();
 
@@ -53,7 +53,7 @@
 
                 Lives[livesIndex][index].Position = enemy.Position - new Vector3(0, enemy.Image.AbsoluteSize.Y, 0);
 
-                Simulation.Scene.Add(Lives[livesIndex][index]);
+                Simulator.Scene.Add(Lives[livesIndex][index]);
                 livesIndex++;
 
                 if (livesIndex >= 100)

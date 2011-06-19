@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Security.Principal;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.GamerServices;
 
 
     class PlayersController
@@ -15,12 +14,20 @@
 
 
         private List<InputListener> Listeners;
+        private Stack<PlayerIndex> AvailablesIndexes;
 
 
         public PlayersController()
         {
             Players = new List<Player>();
             Listeners = new List<InputListener>();
+
+            AvailablesIndexes = new Stack<PlayerIndex>();
+            AvailablesIndexes.Push(PlayerIndex.Four);
+            AvailablesIndexes.Push(PlayerIndex.Three);
+            AvailablesIndexes.Push(PlayerIndex.Two);
+            AvailablesIndexes.Push(PlayerIndex.One);
+
             ConnectedPlayers = new List<Player>();
 
             MasterPlayer = null;
@@ -31,6 +38,11 @@
         public void AddPlayer(Player player)
         {
             Players.Add(player);
+
+            if (AvailablesIndexes.Count != 0)
+                player.Index = AvailablesIndexes.Pop();
+            else
+                player.Index = PlayerIndex.Four;
 
             player.Initialize();
         }
@@ -54,6 +66,12 @@
         public void RemoveListener(InputListener listener)
         {
             Listeners.Remove(listener);
+        }
+
+
+        public void Update()
+        {
+
         }
 
 
@@ -88,32 +106,43 @@
             ConnectedPlayers.Add(p);
 
             if (p.InputType == InputType.Mouse)
+            {
                 MouseInUse = true;
 
+                Players[Players.Count - 1].Index = p.Index;
+            }
+
             foreach (var l in Listeners)
-                l.DoPlayerConnected(p);
+                if (l.EnableInputs)
+                    l.DoPlayerConnected(p);
         }
 
 
         private void DoPlayerDisconnected(Player p)
         {
+            ConnectedPlayers.Remove(p);
+
             if (p.Master)
             {
                 p.Master = false;
-                MasterPlayer = null;
+
+                if (ConnectedPlayers.Count != 0)
+                    ConnectedPlayers[0].Master = true;
+
+                MasterPlayer = (ConnectedPlayers.Count != 0) ? ConnectedPlayers[0] : null;
             }
 
             p.Profile = null;
             p.Connected = false;
-            p.InputType = InputType.None;
-
-            ConnectedPlayers.Remove(p);
-
+            
             if (p.InputType == InputType.Mouse)
                 MouseInUse = false;
 
+            p.InputType = InputType.None;
+
             foreach (var l in Listeners)
-                l.DoPlayerDisconnected(p);
+                if (l.EnableInputs)
+                    l.DoPlayerDisconnected(p);
         }
 
 

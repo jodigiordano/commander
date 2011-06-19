@@ -28,8 +28,8 @@
         private float ImageSize;
 
 
-        public CelestialBodyMenu(Simulator simulation, float prioriteAffichage)
-            : base(simulation)
+        public CelestialBodyMenu(Simulator simulator, float prioriteAffichage)
+            : base(simulator)
         {
             MenuWidth = 140;
             DistanceBetweenTwoChoices = 35;
@@ -53,7 +53,7 @@
 
             AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
 
-            Visible = true;
+            Visible = false;
         }
 
 

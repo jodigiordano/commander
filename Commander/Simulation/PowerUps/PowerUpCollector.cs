@@ -10,8 +10,8 @@ namespace EphemereGames.Commander.Simulation
         private HumanBattleship HumanBattleship;
 
 
-        public PowerUpCollector(Simulator simulation, HumanBattleship humanBattleship)
-            : base(simulation)
+        public PowerUpCollector(Simulator simulator, HumanBattleship humanBattleship)
+            : base(simulator)
         {
             HumanBattleship = humanBattleship;
 

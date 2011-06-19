@@ -135,7 +135,7 @@
     <Compile Include="Input\PlayerConnection.cs" />
     <Compile Include="Input\Inputs.cs" />
     <Compile Include="Input\InputListener.cs" />
-    <Compile Include="Input\InputController.cs" />
+    <Compile Include="Input\InputsController.cs" />
     <Compile Include="Input\InputSource.cs" />
     <Compile Include="Input\MouseButton.cs" />
     <Compile Include="Input\EqualityComparers.cs" />

@@ -20,9 +20,9 @@
         public int BlaPosition;
 
 
-        public Bubble(Simulator simulation, Rectangle dimension, double prioriteAffichage)
+        public Bubble(Simulator simulator, Rectangle dimension, double prioriteAffichage)
         {
-            this.Simulation = simulation;
+            this.Simulation = simulator;
             this.Dimension = dimension;
 
             Bla = new Image("bulleBlabla");

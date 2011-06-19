@@ -14,8 +14,8 @@
         public int BuyPrice;
 
 
-        public SpaceshipSpaceship(Simulator simulation)
-            : base(simulation)
+        public SpaceshipSpaceship(Simulator simulator)
+            : base(simulator)
         {
             RotationMaximaleRad = 0.2f;
             Acceleration = Vector3.Zero;

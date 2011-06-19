@@ -1,12 +1,12 @@
 ﻿namespace EphemereGames.Core.Input
 {
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
     using Microsoft.Xna.Framework.Input;
-    using System.Collections.Generic;
 
 
-    public abstract class Player
+    public abstract class Player : IEqualityComparer<Player>
     {
         public SignedInGamer Profile;
         public PlayerIndex Index;
@@ -20,9 +20,9 @@
         public List<Buttons> GamePadButtonsToListenTo;
 
 
-        public Player(PlayerIndex index)
+        public Player()
         {
-            Index = index;
+            Index = PlayerIndex.One;
             Connected = false;
             Master = false;
             Name = "Unknown";
@@ -47,6 +47,18 @@
         public void Connect()
         {
             Inputs.ConnectPlayer(this);
+        }
+
+
+        public bool Equals(Player x, Player y)
+        {
+            return x.Index == y.Index && x.InputType == y.InputType;
+        }
+
+
+        public int GetHashCode(Player obj)
+        {
+            return (int) obj.Index + (int) obj.InputType;
         }
     }
 }

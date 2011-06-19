@@ -229,7 +229,7 @@
         }
 
 
-        public override void OnFocus()
+        public override void OnFocus() //Not ran the first time
         {
             base.OnFocus();
 
@@ -237,6 +237,11 @@
             InitPressStart();
             LoadingTranslation.PartieTraduite.Color.A = 0;
             LoadingTranslation.PartieNonTraduite.Color.A = 0;
+            VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
+            VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
+            ThreadLoadScenes = new Thread(LoadScenes);
+            ScenesAreLoaded = false;
+            SandGlass.FadeOut(0);
             SceneState = State.ConnectPlayer;
         }
 

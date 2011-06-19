@@ -11,13 +11,13 @@ namespace EphemereGames.Commander.Simulation
         public event PhysicalObjectHandler ObjectDestroyed;
         public List<Bullet> Bullets { get; private set; }
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Matrix RotationMatrix;
 
 
-        public BulletsController(Simulator simulation)
+        public BulletsController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             Bullets = new List<Bullet>();
 
@@ -40,7 +40,7 @@ namespace EphemereGames.Commander.Simulation
                     //b.Hide();
                     NotifyObjectDestroyed(b);
 
-                    Simulation.BulletsFactory.Return(b);
+                    Simulator.BulletsFactory.Return(b);
 
                     Bullets.RemoveAt(i);
                 }

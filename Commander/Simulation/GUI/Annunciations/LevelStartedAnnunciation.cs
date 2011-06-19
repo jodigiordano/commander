@@ -8,17 +8,17 @@
     class LevelStartedAnnunciation
     {
         private Translator TranslatorMission;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private double Term = 23000;
         private EffectsController<IVisual> EffectsController; // needed to be controller by this object because of the Tutorial system
 
 
-        public LevelStartedAnnunciation(Simulator simulation, Level level)
+        public LevelStartedAnnunciation(Simulator simulator, Level level)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             TranslatorMission = new Translator
-            (Simulation.Scene, new Vector3(-600, -330, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), level.Mission, 4, true, 4000, 250, Preferences.PrioriteGUIHistoire);
+            (Simulator.Scene, new Vector3(-600, -330, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), level.Mission, 4, true, 4000, 250, Preferences.PrioriteGUIHistoire);
 
             EffectsController = new EffectsController<IVisual>();
 

@@ -10,8 +10,8 @@ namespace EphemereGames.Commander.Simulation
         private Enemy EnemyAttacked;
 
 
-        public GunnerTurret( Simulator simulation )
-            : base( simulation )
+        public GunnerTurret( Simulator simulator )
+            : base( simulator )
         {
             Type = TurretType.Gunner;
             Name = "Gunner";

@@ -182,6 +182,7 @@
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
+    <Compile Include="Simulation\GUI\GUIPlayer.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
@@ -192,7 +193,7 @@
     <Compile Include="Simulation\MessagesController.cs" />
     <Compile Include="Simulation\Enemies\WaveGenerator.cs" />
     <Compile Include="Editor\EditorScene.cs" />
-    <Compile Include="Editor\LiteSimulation.cs" />
+    <Compile Include="Editor\LiteSimulator.cs" />
     <Compile Include="Editor\Descriptors.cs" />
     <Compile Include="Editor\LevelGenerator.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsFactory.cs" />

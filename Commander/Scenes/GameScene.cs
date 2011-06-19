@@ -30,6 +30,7 @@
             Simulator = new Simulator(this, level);
             Simulator.Initialize();
             Simulator.AddNewGameStateListener(doNouvelEtatPartie);
+            Inputs.AddListener(Simulator);
         }
 
 
@@ -67,6 +68,8 @@
         {
             base.OnFocus();
 
+            Simulator.SyncPlayers();
+
             EnableUpdate = true;
 
             if (!Audio.IsMusicPlaying(SelectedMusic))
@@ -74,7 +77,7 @@
             else
                 Audio.ResumeMusic(SelectedMusic, true, 1000);
 
-            Inputs.AddListener(Simulator);
+            Simulator.EnableInputs = true;
         }
 
 
@@ -86,7 +89,7 @@
 
             Audio.PauseMusic(SelectedMusic, true, 1000);
 
-            Inputs.RemoveListener(Simulator);
+            Simulator.EnableInputs = false;
         }
 
 
@@ -104,9 +107,6 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (!p.Master)
-                return;
-
             if ((Simulator.State == GameState.Won || Simulator.State == GameState.Lost) &&
                 (button == MouseConfiguration.Select || button == MouseConfiguration.Back))
                 BeginTransition();
@@ -115,9 +115,6 @@
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (!p.Master)
-                return;
-
             if ((key == KeyboardConfiguration.Cancel || key == KeyboardConfiguration.Back) && Simulator.HelpMode)
                 return;
 
@@ -131,10 +128,7 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (!p.Master)
-                return;
-
-            if (button == GamePadConfiguration.Back || button == GamePadConfiguration.Back2)
+            if (button == GamePadConfiguration.Back)
                 BeginTransition();
 
             if ((Simulator.State == GameState.Won || Simulator.State == GameState.Lost) &&
@@ -148,7 +142,7 @@
         
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
-            if (player.Master)
+            if (Inputs.ConnectedPlayers.Count == 0)
                 TransiteTo("Chargement");
         }
 

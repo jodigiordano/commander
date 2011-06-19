@@ -34,14 +34,16 @@
 
         public void Initialize()
         {
-            // Initialize the simulation
+            // Initialize the simulator
             Simulator = new Simulator(this, LevelsFactory.GetDescriptor(Descriptor.Layout))
             {
                 DemoMode = true,
-                WorldMode = true
+                WorldMode = true,
+                AvailableLevelsDemoMode = LevelsDescriptors
             };
 
             Simulator.Initialize();
+            Inputs.AddListener(Simulator);
 
 
             // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
@@ -92,7 +94,6 @@
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            UpdateSelectedLevel();
             Simulator.Update(gameTime);
         }
 
@@ -108,9 +109,12 @@
 
         public override void OnFocus()
         {
-            Inputs.AddListener(Simulator);
+            Simulator.EnableInputs = true;
+
             InitializeLevelsStates();
             Main.SelectedWorld = Name;
+
+            Simulator.SyncPlayers();
 
             if (!Audio.IsMusicPlaying(Main.SelectedMusic))
                 Audio.ResumeMusic(Main.SelectedMusic, true, 1000);
@@ -119,28 +123,22 @@
 
         public override void OnFocusLost()
         {
-            Inputs.RemoveListener(Simulator);
+            Simulator.EnableInputs = false;
         }
 
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (!p.Master)
-                return;
-
             if (button == MouseConfiguration.Cancel)
                 DoCancelAction();
 
             if (button == MouseConfiguration.Select)
-                DoSelectAction();
+                DoSelectAction((Player) p);
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (!p.Master)
-                return;
-
             if (key == KeyboardConfiguration.Cancel)
                 DoCancelAction();
 
@@ -151,9 +149,6 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (!p.Master)
-                return;
-
             if (button == GamePadConfiguration.Cancel)
                 DoCancelAction();
 
@@ -161,13 +156,13 @@
                 Main.ChangeMusic();
 
             if (button == GamePadConfiguration.Select)
-                DoSelectAction();
+                DoSelectAction((Player) p);
         }
 
 
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
-            if (player.Master)
+            if (Inputs.ConnectedPlayers.Count == 0)
                 TransiteTo("Chargement");
         }
 
@@ -178,7 +173,7 @@
         }
 
 
-        private void DoSelectAction()
+        private void DoSelectAction(Player p)
         {
             // Select a warp
             if (WorldSelected != null)
@@ -192,13 +187,15 @@
             }
 
             // Select a level
-            if (LevelSelected != null)
+            var level = GetSelectedLevel(p);
+
+            if (level != null)
             {
                 GameScene currentGame = Main.GameInProgress;
 
                 if (currentGame != null && 
                     !currentGame.IsFinished &&
-                    currentGame.Simulator.LevelDescriptor.Id == LevelSelected.Id &&
+                    currentGame.Simulator.LevelDescriptor.Id == level.Id &&
                     Simulator.GameAction == GameAction.Resume)
                 {
                     currentGame.Simulator.State = GameState.Running;
@@ -215,7 +212,7 @@
                         Main.AvailableMusics.Add(currentGame.SelectedMusic);
                 }
 
-                currentGame = new GameScene(LevelSelected);
+                currentGame = new GameScene(level);
                 Main.GameInProgress = currentGame;
                 currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
                 Simulator.MessagesController.StopPausedMessage();
@@ -271,12 +268,11 @@
         }
 
 
-        private LevelDescriptor LevelSelected
+        private LevelDescriptor GetSelectedLevel(Player p)
         {
-            get
-            {
-                return Simulator.SelectedCelestialBody != null ? LevelsDescriptors[Simulator.SelectedCelestialBody.Name] : null;
-            }
+            CelestialBody c = Simulator.GetSelectedCelestialBody(p);
+
+            return c != null ? LevelsDescriptors[c.Name] : null;
         }
 
 
@@ -284,37 +280,26 @@
         {
             get
             {
-                return (Simulator.SelectedCelestialBody != null && Simulator.SelectedCelestialBody is PinkHole) ? (WorldScene) Visuals.GetScene(Warps[Simulator.SelectedCelestialBody.Name]) : null;
+                CelestialBody c = Simulator.GetSelectedCelestialBody(Inputs.MasterPlayer);
+
+                return (c != null && c is PinkHole) ? (WorldScene) Visuals.GetScene(Warps[c.Name]) : null;
             }
         }
 
 
-        public bool PausedGameSelected
+        public bool PausedGameSelected(Player p)
         {
-            get
-            {
-                return Main.GameInProgress != null && LevelSelected != null && Main.GameInProgress.Simulator.LevelDescriptor.Id == LevelSelected.Id;
-            }
+            var level = GetSelectedLevel(p);
+
+            return Main.GameInProgress != null && level != null && Main.GameInProgress.Simulator.LevelDescriptor.Id == level.Id;
         }
 
 
         public void ShowWarpBlockedMessage()
         {
-            Simulator.MessagesController.ShowMessage(Simulator.SelectedCelestialBody, Descriptor.WarpBlockedMessage, 5000, -1);
-        }
+            CelestialBody c = Simulator.GetSelectedCelestialBody(Inputs.MasterPlayer);
 
-
-        private void UpdateSelectedLevel()
-        {
-            if (LevelSelected != null)
-            {
-                Simulator.SelectedLevelDemoMode.Id = LevelSelected.Id;
-                Simulator.SelectedLevelDemoMode.Mission = LevelSelected.Mission;
-                Simulator.SelectedLevelDemoMode.Difficulty = LevelSelected.Difficulty;
-                Simulator.SelectedLevelDemoMode.Waves = LevelSelected.Waves;
-                Simulator.SelectedLevelDemoMode.Player = LevelSelected.Player;
-                Simulator.SelectedLevelDemoMode.LifePacks = LevelSelected.LifePacks;
-            }
+            Simulator.MessagesController.ShowMessage(c, Descriptor.WarpBlockedMessage, 5000, -1);
         }
 
 

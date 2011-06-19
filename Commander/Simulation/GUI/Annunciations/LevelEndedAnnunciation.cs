@@ -25,7 +25,7 @@
         private Translator TranslatorGameWon;
         private Translator TranslatorScoreExplanations;
         private Translator TranslatorTotalScore;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private bool HighscoreBeaten;
         private Text NewHighscore;
         private Image[] Stars;
@@ -44,9 +44,9 @@
         //};
 
 
-        public LevelEndedAnnunciation(Simulator simulation, List<CelestialBody> celestialBodies, Level level)
+        public LevelEndedAnnunciation(Simulator simulator, List<CelestialBody> celestialBodies, Level level)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             CelestialBodies = celestialBodies;
             Level = level;
 
@@ -56,18 +56,18 @@
 
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
-                Particle particule = this.Simulation.Scene.Particles.Get(@"missileAlien");
+                Particle particule = this.Simulator.Scene.Particles.Get(@"missileAlien");
                 particule.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.10f;
 
                 MissilesVisual.Add(particule);
 
-                particule = this.Simulation.Scene.Particles.Get(@"implosionAlien");
+                particule = this.Simulator.Scene.Particles.Get(@"implosionAlien");
                 particule.VisualPriority = Preferences.PrioriteGUIVictoireDefaite + 0.09f;
 
                 Implosions.Add(particule);
             }
 
-            AlienShip = new AlienSpaceship(simulation.Scene, Preferences.PrioriteGUIVictoireDefaite + 0.08f);
+            AlienShip = new AlienSpaceship(simulator.Scene, Preferences.PrioriteGUIVictoireDefaite + 0.08f);
 
             Filter = new Image("PixelBlanc")
             {
@@ -109,14 +109,14 @@
             //AlienShip.Show();
 
             TranslatorScoreExplanations = new Translator
-            (Simulation.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Level.CommonStash.Score + " (base) + " +
+            (Simulator.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Level.CommonStash.Score + " (base) + " +
                 Level.CommonStash.Cash + " (cash) +\n\n" +
                 (Level.CommonStash.Lives * 50) + " (lives) + " +
                 Level.CommonStash.TimeLeft + " (time) =", 3, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
             TranslatorTotalScore = new Translator
-            (Simulation.Scene, new Vector3(-600, -40, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Level.CommonStash.TotalScore.ToString(), 5, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
+            (Simulator.Scene, new Vector3(-600, -40, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Level.CommonStash.TotalScore.ToString(), 5, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
             HighScores h;
@@ -130,7 +130,7 @@
             if (GameState == GameState.Won)
             {
                 TranslatorGameWon = new Translator
-                (Simulation.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), "Thank you Commander!\n\nBut our enemy destroyed the colony anyway!", 3, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
+                (Simulator.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), "Thank you Commander!\n\nBut our enemy destroyed the colony anyway!", 3, true, 2000, 200, Preferences.PrioriteGUIVictoireDefaite + 0.01f);
 
 
                 MovePathEffect e = new MovePathEffect();
@@ -151,42 +151,42 @@
                     15000
                 });
 
-                this.Simulation.Scene.PhysicalEffects.Add(AlienShip.Representation, e);
+                this.Simulator.Scene.PhysicalEffects.Add(AlienShip.Representation, e);
 
-                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
 
-                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
 
                 int nbStars = Level.NbStars(Level.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
-                    this.Simulation.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 5000, 1000));
+                    this.Simulator.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 5000, 1000));
 
-                 Simulation.Scene.VisualEffects.Add(NewHighscore, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                 Simulator.Scene.VisualEffects.Add(NewHighscore, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
             }
 
             else if (GameState == GameState.Lost)
             {
-                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulation.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
 
                 int nbStars = Level.NbStars(Level.CommonStash.TotalScore);
 
                 for (int i = 0; i < 3; i++)
-                    this.Simulation.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 0, 1000));
+                    this.Simulator.Scene.VisualEffects.Add(Stars[i], Core.Visual.VisualEffects.FadeInFrom0((i < nbStars) ? 255 : 50, 0, 1000));
 
-                Simulation.Scene.VisualEffects.Add(NewHighscore, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                Simulator.Scene.VisualEffects.Add(NewHighscore, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
             }
 
-            this.Simulation.Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeInFrom0(200, 0, 1000));
+            this.Simulator.Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeInFrom0(200, 0, 1000));
 
             MovePathEffect effet = new MovePathEffect();
             effet.Delay = 0;
@@ -204,7 +204,7 @@
                     1200
                 });
 
-            this.Simulation.Scene.PhysicalEffects.Add(Filter, effet);
+            this.Simulator.Scene.PhysicalEffects.Add(Filter, effet);
         }
 
 
@@ -227,7 +227,7 @@
                         deplacement.Vitesse = 10f;
                         deplacement.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
 
-                        this.Simulation.Scene.PhysicalEffects.Add(Missiles[i].Key, deplacement);
+                        this.Simulator.Scene.PhysicalEffects.Add(Missiles[i].Key, deplacement);
                     }
 
                     TimeLostState = Double.NegativeInfinity;
@@ -320,11 +320,11 @@
                 TranslatorScoreExplanations.Draw();
                 TranslatorTotalScore.Draw();
 
-                Simulation.Scene.Add(NewHighscore);
-                Simulation.Scene.Add(Stars[0]);
-                Simulation.Scene.Add(Stars[1]);
-                Simulation.Scene.Add(Stars[2]);
-                Simulation.Scene.Add(Filter);
+                Simulator.Scene.Add(NewHighscore);
+                Simulator.Scene.Add(Stars[0]);
+                Simulator.Scene.Add(Stars[1]);
+                Simulator.Scene.Add(Stars[2]);
+                Simulator.Scene.Add(Filter);
             }
         }
     }

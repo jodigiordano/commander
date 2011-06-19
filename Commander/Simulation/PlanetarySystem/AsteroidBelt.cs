@@ -27,7 +27,7 @@
 
 
         public AsteroidBelt(
-            Simulator simulation,
+            Simulator simulator,
             string name,
             Vector3 basePosition,
             float radius,
@@ -35,7 +35,7 @@
             List<Image> images,
             int startingPourcentage)
             : base(
-                simulation,
+                simulator,
                 name,
                 basePosition,
                 Vector3.Zero,

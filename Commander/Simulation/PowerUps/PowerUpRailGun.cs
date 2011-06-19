@@ -14,8 +14,8 @@ namespace EphemereGames.Commander.Simulation
         private bool Firing;
 
 
-        public PowerUpRailGun(Simulator simulation, HumanBattleship humanBattleship)
-            : base(simulation)
+        public PowerUpRailGun(Simulator simulator, HumanBattleship humanBattleship)
+            : base(simulator)
         {
             HumanBattleship = humanBattleship;
 
@@ -85,6 +85,7 @@ namespace EphemereGames.Commander.Simulation
             terminated = false;
             HumanBattleship.RailGun.Wander = false;
             Turret = HumanBattleship.RailGun;
+            Turret.Owner = Owner;
             Firing = false;
 
             Audio.PlaySfx(@"Partie", @"sfxRailGunIn");

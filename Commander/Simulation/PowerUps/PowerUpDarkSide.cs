@@ -10,8 +10,8 @@ namespace EphemereGames.Commander.Simulation
         public CelestialBody CorpsCeleste;
 
 
-        public PowerUpDarkSide(Simulator simulation)
-            : base(simulation)
+        public PowerUpDarkSide(Simulator simulator)
+            : base(simulator)
         {
             Type = PowerUpType.DarkSide;
             Category = PowerUpCategory.Other;

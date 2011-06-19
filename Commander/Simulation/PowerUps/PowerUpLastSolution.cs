@@ -15,8 +15,8 @@ namespace EphemereGames.Commander.Simulation
         private bool terminated;
 
 
-        public PowerUpLastSolution(Simulator simulation)
-            : base(simulation)
+        public PowerUpLastSolution(Simulator simulator)
+            : base(simulator)
         {
             ZoneImpactDestruction = 200;
             AttackPoints = int.MaxValue / 2;

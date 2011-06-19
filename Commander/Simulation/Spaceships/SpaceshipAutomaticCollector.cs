@@ -10,8 +10,8 @@
         public List<Mineral> Minerals;
 
 
-        public SpaceshipAutomaticCollector(Simulator simulation)
-            : base(simulation)
+        public SpaceshipAutomaticCollector(Simulator simulator)
+            : base(simulator)
         {
             Image = new Image("Collecteur")
             {

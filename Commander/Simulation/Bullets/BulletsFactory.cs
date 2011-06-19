@@ -25,12 +25,12 @@
     class BulletsFactory
     {
         private Dictionary<BulletType, object> BulletsPools;
-        private Simulator Simulation;
+        private Simulator Simulator;
 
 
-        public BulletsFactory(Simulator simulation)
+        public BulletsFactory(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             BulletsPools = new Dictionary<BulletType, object>(BulletTypeComparer.Default)
             {
@@ -68,7 +68,7 @@
                 case BulletType.Mine: b = ((Pool<MineBullet>) BulletsPools[type]).Get(); break;
             }
 
-            b.Scene = Simulation.Scene;
+            b.Scene = Simulator.Scene;
             b.Type = type;
 
             if (!b.AssetsLoaded)

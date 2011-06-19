@@ -8,12 +8,12 @@
     {
         public CelestialBody CelestialBody;
         private Image BlowUpZoneVisual;
-        private Simulator Simulation;
+        private Simulator Simulator;
 
 
-        public FinalSolutionPreview(Simulator simulation)
+        public FinalSolutionPreview(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             BlowUpZoneVisual = new Image("CercleBlanc")
             {
@@ -29,8 +29,8 @@
                 return;
 
             BlowUpZoneVisual.Position = CelestialBody.Position;
-            BlowUpZoneVisual.SizeX = (((PowerUpLastSolution) Simulation.PowerUpsFactory.Availables[PowerUpType.FinalSolution]).ZoneImpactDestruction / 100) * 2;
-            Simulation.Scene.Add(BlowUpZoneVisual);
+            BlowUpZoneVisual.SizeX = (((PowerUpLastSolution) Simulator.PowerUpsFactory.Availables[PowerUpType.FinalSolution]).ZoneImpactDestruction / 100) * 2;
+            Simulator.Scene.Add(BlowUpZoneVisual);
         }
     }
 }

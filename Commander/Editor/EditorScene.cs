@@ -61,9 +61,6 @@
 
         public override void DoMouseMoved(Core.Input.Player p, Vector3 delta)
         {
-            if (!p.Master)
-                return;
-
             Player player = (Player) p;
 
             player.Move(ref delta, MouseConfiguration.Speed);
@@ -73,9 +70,6 @@
 
         public override void DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, Vector3 delta)
         {
-            if (!p.Master)
-                return;
-
             Player player = (Player) p;
 
             if (button == GamePadConfiguration.MoveCursor)
@@ -88,9 +82,6 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (!p.Master)
-                return;
-
             if (button == MouseConfiguration.Cancel)
                 BeginTransition();
         }
@@ -98,9 +89,6 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (!p.Master)
-                return;
-
             if (button == GamePadConfiguration.Cancel)
                 BeginTransition();
         }
@@ -108,14 +96,13 @@
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (!p.Master)
-                return;
+
         }
 
 
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
-            if (player.Master)
+            if (Inputs.ConnectedPlayers.Count == 0)
                 TransiteTo("Chargement");
         }
 

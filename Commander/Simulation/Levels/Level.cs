@@ -31,15 +31,15 @@
 
         public List<string> HelpTexts;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private LevelDescriptor Descriptor;
 
         private float NextCelestialBodyVisualPriority = Preferences.PrioriteSimulationCorpsCeleste;
 
 
-        public Level(Simulator simulation, LevelDescriptor descriptor)
+        public Level(Simulator simulator, LevelDescriptor descriptor)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             Descriptor = descriptor;
 
             Id = descriptor.Id;
@@ -104,13 +104,13 @@
                 {
                     c = new PinkHole
                     (
-                       Simulation,
+                       Simulator,
                        descriptor.Name,
                        descriptor.Position,
                        descriptor.Offset,
                        (int) descriptor.Size,
                        descriptor.Speed,
-                       Simulation.Scene.Particles.Get(descriptor.ParticulesEffect),
+                       Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f,
                        descriptor.InBackground,
@@ -124,13 +124,13 @@
                 {
                     c = new CelestialBody
                     (
-                       Simulation,
+                       Simulator,
                        descriptor.Name,
                        descriptor.Position,
                        descriptor.Offset,
                        (int) descriptor.Size,
                        descriptor.Speed,
-                       Simulation.Scene.Particles.Get(descriptor.ParticulesEffect),
+                       Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f,
                        descriptor.InBackground,
@@ -144,13 +144,13 @@
                 {
                     c = new CelestialBody
                     (
-                        Simulation,
+                        Simulator,
                         descriptor.Name,
                         descriptor.Position,
                         descriptor.Offset,
                         (int) descriptor.Size,
                         descriptor.Speed,
-                        Simulation.Scene.Particles.Get(descriptor.ParticulesEffect),
+                        Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
                         descriptor.StartingPosition, NextCelestialBodyVisualPriority -= 0.001f,
                         descriptor.InBackground,
                        descriptor.Rotation
@@ -170,7 +170,7 @@
                 {
                     c = new CelestialBody
                     (
-                       Simulation,
+                       Simulator,
                        descriptor.Name,
                        descriptor.Position,
                        descriptor.Offset,
@@ -194,7 +194,7 @@
 
                     c = new AsteroidBelt
                     (
-                        Simulation,
+                        Simulator,
                         descriptor.Name,
                         descriptor.Position,
                         (int) descriptor.Size,
@@ -231,7 +231,7 @@
 
                 if (descriptor.HasGravitationalTurret)
                 {
-                    t = Simulation.TurretsFactory.Create(TurretType.Gravitational);
+                    t = Simulator.TurretsFactory.Create(TurretType.Gravitational);
 
                     t.CanSell = false;
                     t.CanUpdate = false;
@@ -247,7 +247,7 @@
 
                 foreach (var turretDesc in descriptor.StartingTurrets)
                 {
-                    t = Simulation.TurretsFactory.Create(turretDesc.Type);
+                    t = Simulator.TurretsFactory.Create(turretDesc.Type);
 
                     t.CanSell = turretDesc.CanSell;
                     t.CanUpdate = turretDesc.CanUpgrade;
@@ -271,7 +271,7 @@
 
             if (Descriptor.InfiniteWaves != null)
             {
-                InfiniteWaves = new InfiniteWave(Simulation, Descriptor.InfiniteWaves);
+                InfiniteWaves = new InfiniteWave(Simulator, Descriptor.InfiniteWaves);
                 //InfiniteWaves = Descriptor.InfiniteWaves.Upfront ?
                 //    new UpfrontInfiniteWave(Simulation, Descriptor.InfiniteWaves, Descriptor.InfiniteWaves.NbWaves) :
                 //    new InfiniteWave(Simulation, Descriptor.InfiniteWaves);
@@ -280,7 +280,7 @@
 
             else
                 for (int i = 0; i < Descriptor.Waves.Count; i++)
-                    Waves.AddLast(new Wave(Simulation, Descriptor.Waves[i]));
+                    Waves.AddLast(new Wave(Simulator, Descriptor.Waves[i]));
         }
 
 
@@ -289,7 +289,7 @@
             AvailableTurrets = new Dictionary<TurretType, Turret>(TurretTypeComparer.Default);
 
             foreach (var type in Descriptor.AvailableTurrets)
-                AvailableTurrets.Add(type, Simulation.TurretsFactory.Create(type));
+                AvailableTurrets.Add(type, Simulator.TurretsFactory.Create(type));
         }
 
 
@@ -298,7 +298,7 @@
             AvailablePowerUps = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
 
             foreach (var type in Descriptor.AvailablePowerUps)
-                AvailablePowerUps.Add(type, Simulation.PowerUpsFactory.Create(type));
+                AvailablePowerUps.Add(type, Simulator.PowerUpsFactory.Create(type));
         }
     }
 }

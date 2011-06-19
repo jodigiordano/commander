@@ -70,9 +70,9 @@
         private Matrix rotationMatrix;
 
         
-        public Turret(Simulator simulation)
+        public Turret(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulation = simulator;
             TimeLastBullet = 0;
             Type = TurretType.None;
             Name = "Unknown";
@@ -242,7 +242,7 @@
         }
 
 
-        public List<Bullet> BulletsThisTick()
+        public virtual List<Bullet> BulletsThisTick()
         {
             Bullets.Clear();
 

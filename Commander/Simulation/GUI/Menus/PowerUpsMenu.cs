@@ -22,7 +22,7 @@
         private Color ColorPowerUpAvailable;
         private Color ColorPowerUpNotAvailable;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private double VisualPriority;
         private Vector3 Position;
         private float TextSize;
@@ -34,9 +34,9 @@
         public List<Turret> Turrets;
 
 
-        public PowerUpsMenu(Simulator simulation, Vector3 position, double visualPriority)
+        public PowerUpsMenu(Simulator simulator, Vector3 position, double visualPriority)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             VisualPriority = visualPriority;
             Position = position;
             TextSize = 2;
@@ -56,7 +56,7 @@
                 VisualPriority = VisualPriority + 0.001f
             };
 
-            PowerUpPriceBubble = new Bubble(Simulation, new Rectangle(0, 0, 100, 30), VisualPriority + 0.002)
+            PowerUpPriceBubble = new Bubble(Simulator, new Rectangle(0, 0, 100, 30), VisualPriority + 0.002)
             {
                 BlaPosition = 3
             };
@@ -68,14 +68,14 @@
             ImagesPlaceHolders = new Dictionary<PowerUpType, Image>(PowerUpTypeComparer.Default);
             ImagesTurretsPowerUps = new Dictionary<PowerUpType, Turret>(PowerUpTypeComparer.Default);
 
-            HumanBattleship = new HumanBattleship(Simulation, this.Position - new Vector3(300, 75, 0), this.VisualPriority + 0.005f);
+            HumanBattleship = new HumanBattleship(Simulator, this.Position - new Vector3(300, 75, 0), this.VisualPriority + 0.005f);
             HumanBattleshipHasArrived = false;
         }
 
 
         public void Initialize()
         {
-            Dictionary<PowerUpType, PowerUp> availablePowerUps = Simulation.PowerUpsFactory.Availables;
+            Dictionary<PowerUpType, PowerUp> availablePowerUps = Simulator.PowerUpsFactory.Availables;
 
             var index = 0;
             foreach (var p in availablePowerUps.Values)
@@ -90,25 +90,25 @@
             }
 
 
-            Simulation.Scene.PhysicalEffects.Add(HumanBattleship, Core.Physics.PhysicalEffects.Arrival(
+            Simulator.Scene.PhysicalEffects.Add(HumanBattleship, Core.Physics.PhysicalEffects.Arrival(
                 this.Position + new Vector3(50, 25, 0),
                 1000,
                 2000), HumanBattleshipArrived);
 
             foreach (var image in ImagesPowerUpsBuy)
-                Simulation.Scene.PhysicalEffects.Add(image.Value, Core.Physics.PhysicalEffects.Arrival(
+                Simulator.Scene.PhysicalEffects.Add(image.Value, Core.Physics.PhysicalEffects.Arrival(
                     image.Value.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
 
             foreach (var image in ImagesPlaceHolders)
-                Simulation.Scene.PhysicalEffects.Add(image.Value, Core.Physics.PhysicalEffects.Arrival(
+                Simulator.Scene.PhysicalEffects.Add(image.Value, Core.Physics.PhysicalEffects.Arrival(
                     image.Value.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
 
             foreach (var turret in ImagesTurretsPowerUps.Values)
-                Simulation.Scene.PhysicalEffects.Add(turret, Core.Physics.PhysicalEffects.Arrival(
+                Simulator.Scene.PhysicalEffects.Add(turret, Core.Physics.PhysicalEffects.Arrival(
                     turret.Position + new Vector3(300, 75, 0),
                     1000,
                     2000));
@@ -130,7 +130,7 @@
             // draw the power-ups
             foreach (var kvp in AvailablePowerUps)
             {
-                PowerUp p = Simulation.PowerUpsFactory.Availables[kvp.Key];
+                PowerUp p = Simulator.PowerUpsFactory.Availables[kvp.Key];
              
                 if (p.Category == PowerUpCategory.Turret)
                     ImagesTurretsPowerUps[p.Type].Draw();
@@ -138,8 +138,8 @@
                 {
                     ImagesPlaceHolders[p.Type].Color = AvailablePowerUps[p.Type] ? ColorPowerUpAvailable : ColorPowerUpNotAvailable;
 
-                    Simulation.Scene.Add(ImagesPowerUpsBuy[p.Type]);
-                    Simulation.Scene.Add(ImagesPlaceHolders[p.Type]);
+                    Simulator.Scene.Add(ImagesPowerUpsBuy[p.Type]);
+                    Simulator.Scene.Add(ImagesPlaceHolders[p.Type]);
                 }
             }
 
@@ -147,7 +147,7 @@
             // draw the description / price of the power-up
             if (HumanBattleshipHasArrived && PowerUpToBuy != PowerUpType.None)
             {
-                PowerUp p = Simulation.PowerUpsFactory.Availables[PowerUpToBuy];
+                PowerUp p = Simulator.PowerUpsFactory.Availables[PowerUpToBuy];
 
                 Vector3 position = (p.Category == PowerUpCategory.Turret) ?
                     ImagesTurretsPowerUps[p.Type].Position :
@@ -164,8 +164,8 @@
                 PowerUpPriceBubble.Dimension.X = (int) position.X;
                 PowerUpPriceBubble.Dimension.Y = (int) position.Y - 60;
 
-                Simulation.Scene.Add(PowerUpPriceTitleAndCost);
-                Simulation.Scene.Add(PowerUpDescription);
+                Simulator.Scene.Add(PowerUpPriceTitleAndCost);
+                Simulator.Scene.Add(PowerUpDescription);
 
                 PowerUpPriceBubble.Dimension.Width = (int) MathHelper.Max(PowerUpPriceTitleAndCost.TextSize.X, PowerUpDescription.TextSize.X) + 10;
                 PowerUpPriceBubble.Draw();
@@ -205,7 +205,7 @@
         {
             if (p.Type == PowerUpType.RailGun)
             {
-                RailGunTurret rgt = new RailGunTurret(Simulation)
+                RailGunTurret rgt = new RailGunTurret(Simulator)
                 {
                     Position = HumanBattleship.Position + new Vector3(130, 30, 0),
                     VisualPriority = this.VisualPriority + 0.004f,
@@ -227,7 +227,7 @@
 
             else if (p.Type == PowerUpType.Sniper)
             {
-                SniperTurret st = new SniperTurret(Simulation)
+                SniperTurret st = new SniperTurret(Simulator)
                 {
                     Position = HumanBattleship.Position + new Vector3(60, 80, 0),
                     VisualPriority = this.VisualPriority + 0.004f,

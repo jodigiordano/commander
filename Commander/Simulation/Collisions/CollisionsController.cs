@@ -16,7 +16,7 @@
         public event TurretPhysicalObjectHandler InTurretRange;
         public event EnemyBulletHandler BulletDeflected;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private RectanglePhysique Battlefield;
         private GridWorld EnemiesGrid;
         private GridWorld TurretsGrid;
@@ -43,10 +43,10 @@
         public bool Debug;
 
 
-        public CollisionsController(Simulator simulation)
+        public CollisionsController(Simulator simulator)
         {
-            Simulation = simulation;
-            Battlefield = Simulation.Terrain;
+            Simulator = simulator;
+            Battlefield = Simulator.Terrain;
             EnemiesGrid = new GridWorld(this.Battlefield, 50);
             TurretsGrid = new GridWorld(this.Battlefield, 50);
             Debug = false;
@@ -90,7 +90,7 @@
             ObjectsCollisions.HiddenEnemies = HiddenEnemies;
             ObjectsCollisions.Minerals = Minerals;
             ObjectsCollisions.ShootingStars = ShootingStars;
-            ObjectsCollisions.Simulation = Simulation;
+            ObjectsCollisions.Simulator = Simulator;
             ObjectsCollisions.Turrets = Turrets;
 
             SyncOutOfBounds = new Action(OutOfBounds.Sync);
@@ -161,7 +161,7 @@
                     c.Position = p.Position;
                     c.Radius = p.ExplosionRange;
 
-                    Simulation.Scene.Add(new VisualRectangle(c.Rectangle, Color.Cyan));
+                    Simulator.Scene.Add(new VisualRectangle(c.Rectangle, Color.Cyan));
                 }
             }
 
@@ -170,7 +170,7 @@
 
             foreach (var e in Enemies)
             {
-                Simulation.Scene.Add(new VisualRectangle(e.Circle.Rectangle, Color.Yellow));
+                Simulator.Scene.Add(new VisualRectangle(e.Circle.Rectangle, Color.Yellow));
                 DrawRectangle(e, Color.Orange);
             }
 
@@ -182,9 +182,9 @@
         private void DrawRectangle(IObjetPhysique objet, Color couleur)
         {
             if (objet.Shape == Shape.Rectangle)
-                Simulation.Scene.Add(new VisualRectangle(objet.Rectangle.RectanglePrimitif, couleur));
+                Simulator.Scene.Add(new VisualRectangle(objet.Rectangle.RectanglePrimitif, couleur));
             else if (objet.Shape == Shape.Circle)
-                Simulation.Scene.Add(new VisualRectangle(objet.Circle.Rectangle, couleur));
+                Simulator.Scene.Add(new VisualRectangle(objet.Circle.Rectangle, couleur));
         }
 
 

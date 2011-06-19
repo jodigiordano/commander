@@ -12,12 +12,12 @@
         private List<Spaceship> Spaceships;
 
 
-        public TheResistance(Simulator simulation)
-            : base(simulation)
+        public TheResistance(Simulator simulator)
+            : base(simulator)
         {
             Spaceships = new List<Spaceship>();
 
-            Spaceships.Add(new Spaceship(simulation)
+            Spaceships.Add(new Spaceship(simulator)
             {
                 ShootingFrequency = 100,
                 BulletHitPoints = 10,
@@ -30,7 +30,7 @@
                 AutomaticMode = true
             });
 
-            Spaceships.Add(new Spaceship(simulation)
+            Spaceships.Add(new Spaceship(simulator)
             {
                 ShootingFrequency = 200,
                 BulletHitPoints = 30,
@@ -43,7 +43,7 @@
                 AutomaticMode = true
             });
 
-            Spaceships.Add(new Spaceship(simulation)
+            Spaceships.Add(new Spaceship(simulator)
             {
                 ShootingFrequency = 500,
                 BulletHitPoints = 100,

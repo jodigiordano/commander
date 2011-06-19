@@ -6,13 +6,13 @@
         protected int NbWavesAsked;
         protected DescriptorInfiniteWaves Descriptor;
 
-        private Simulator Simulation;
+        private Simulator Simulator;
         private int ActualDifficulty;
 
 
-        public InfiniteWave(Simulator simulation, DescriptorInfiniteWaves descriptor)
+        public InfiniteWave(Simulator simulator, DescriptorInfiniteWaves descriptor)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             Descriptor = descriptor;
             NbWavesAsked = 0;
             ActualDifficulty = Descriptor.StartingDifficulty - Descriptor.DifficultyIncrement;
@@ -39,7 +39,7 @@
 
             NbWavesAsked++;
 
-            return new Wave(Simulation, Generator.Waves[0]);
+            return new Wave(Simulator, Generator.Waves[0]);
         }
     }
 }

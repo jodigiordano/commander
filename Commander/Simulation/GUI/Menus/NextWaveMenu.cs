@@ -11,7 +11,7 @@
         public bool Visible;
 
         private Dictionary<EnemyType, EnemyDescriptor> EnnemisQtes;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private Bubble Bulle;
         private Dictionary<EnemyType, Image> RepresentationsEnnemis;
         private Dictionary<EnemyType, Text> RepresentationsQtes;
@@ -20,12 +20,12 @@
 
 
         public NextWaveMenu(
-            Simulator simulation,
+            Simulator simulator,
             Dictionary<EnemyType, EnemyDescriptor> ennemisQtes,
             Vector3 positionInitiale,
             float prioriteAffichage)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             EnnemisQtes = ennemisQtes;
             Position = positionInitiale;
             PrioriteAffichage = prioriteAffichage;
@@ -34,7 +34,7 @@
             RepresentationsQtes = new Dictionary<EnemyType, Text>();
             RepresentationsNiveaux = new Dictionary<EnemyType, Text>();
 
-            foreach (var kvp in Simulation.EnemiesFactory.ImagesEnemies)
+            foreach (var kvp in Simulator.EnemiesFactory.ImagesEnemies)
             {
                 Image im = new Image(kvp.Value)
                 {
@@ -61,7 +61,7 @@
                 RepresentationsNiveaux.Add(kvp.Key, t);
             }
 
-            Bulle = new Bubble(Simulation, Rectangle.Empty, this.PrioriteAffichage + 0.0001f);
+            Bulle = new Bubble(Simulator, Rectangle.Empty, this.PrioriteAffichage + 0.0001f);
             Bulle.BlaPosition = 1;
 
             Visible = false;
@@ -102,9 +102,9 @@
                 qty.Origin = qty.Center;
                 qty.Position = new Vector3(this.Position.X + 80, image.Position.Y, 0);
 
-                Simulation.Scene.Add(image);
-                Simulation.Scene.Add(qty);
-                Simulation.Scene.Add(level);
+                Simulator.Scene.Add(image);
+                Simulator.Scene.Add(qty);
+                Simulator.Scene.Add(level);
             }
 
             Bulle.Draw();

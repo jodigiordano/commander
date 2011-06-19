@@ -26,7 +26,7 @@
         public event EnemyCelestialBodyHandler EnemyReachedEndOfPath;
 
         private List<KeyValuePair<int, MineralType>> MineralsDistribution;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private LinkedListNode<Wave> NextWave { get; set; }
         private List<Wave> ActiveWaves { get; set; }
         private double WaveCounter { get; set; }
@@ -40,9 +40,9 @@
         private int EnemiesCreatedCounter;
 
 
-        public EnemiesController(Simulator simulation)
+        public EnemiesController(Simulator simulator)
         {
-            Simulation = simulation;
+            Simulator = simulator;
 
             Enemies = new List<Enemy>();
             Waves = new LinkedList<Wave>();
@@ -80,9 +80,9 @@
                 enemiesCnt += wave.EnemiesCount;
 
             Vector3 unitValue = new Vector3(
-                Simulation.MineralsFactory.GetValue(MineralType.Cash10),
-                Simulation.MineralsFactory.GetValue(MineralType.Cash25),
-                Simulation.MineralsFactory.GetValue(MineralType.Cash150));
+                Simulator.MineralsFactory.GetValue(MineralType.Cash10),
+                Simulator.MineralsFactory.GetValue(MineralType.Cash25),
+                Simulator.MineralsFactory.GetValue(MineralType.Cash150));
             Vector3 valuePerType = MineralsPercentages * MineralsValue; //atention: float
             Vector3 qtyPerType = valuePerType / unitValue;
 
@@ -217,7 +217,7 @@
                 if (!m.Alive)
                 {
                     m.DoDie();
-                    Simulation.MineralsFactory.Return(m);
+                    Simulator.MineralsFactory.Return(m);
 
                     NotifyObjectDestroyed(m);
 
@@ -236,7 +236,7 @@
                 if (!e.Alive)
                 {
                     e.DoDie();
-                    Simulation.EnemiesFactory.Return(e);
+                    Simulator.EnemiesFactory.Return(e);
 
                     if (e.EndOfPathReached)
                         NotifyEnemyReachedEndOfPath(e, Path.LastCelestialBody);
@@ -315,7 +315,7 @@
             {
                 while (MineralsDistribution.Count > 0 && MineralsDistribution[MineralsDistribution.Count - 1].Key == EnemiesCreatedCounter)
                 {
-                    e.Minerals.Add(Simulation.MineralsFactory.Get(MineralsDistribution[MineralsDistribution.Count - 1].Value, e.Image.VisualPriority + 0.01));
+                    e.Minerals.Add(Simulator.MineralsFactory.Get(MineralsDistribution[MineralsDistribution.Count - 1].Value, e.Image.VisualPriority + 0.01));
 
                     MineralsDistribution.RemoveAt(MineralsDistribution.Count - 1);
                 }
@@ -323,7 +323,7 @@
                 EnemiesCreatedCounter++;
             }
 
-            Simulation.Scene.VisualEffects.Add(e.Image, Core.Visual.VisualEffects.FadeInFrom0(255, 0, e.FadeInTime));
+            Simulator.Scene.VisualEffects.Add(e.Image, Core.Visual.VisualEffects.FadeInFrom0(255, 0, e.FadeInTime));
 
             Enemies.Add(e);
 

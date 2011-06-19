@@ -6,8 +6,8 @@ namespace EphemereGames.Commander.Simulation
 
     class MissileTurret : Turret
     {
-        public MissileTurret(Simulator simulation)
-            : base(simulation)
+        public MissileTurret(Simulator simulator)
+            : base(simulator)
         {
             Type = TurretType.Missile;
             Name = "Missile";

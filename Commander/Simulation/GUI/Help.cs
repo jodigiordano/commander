@@ -10,7 +10,7 @@
         private Image Lieutenant;
         private Image Bubble;
         private TextTypeWriter Directive;
-        private Simulator Simulation;
+        private Simulator Simulator;
         private List<string> Texts;
         private int ActiveText;
         private bool ActiveOverride;
@@ -18,9 +18,9 @@
         private double EffectTimeRemaining;
 
 
-        public Help(Simulator simulation, List<string> texts)
+        public Help(Simulator simulator, List<string> texts)
         {
-            Simulation = simulation;
+            Simulator = simulator;
             Texts = texts;
 
             Lieutenant = new Image("lieutenant", new Vector3(-500, 370, 0));
@@ -41,9 +41,9 @@
 
             InitDirective(Texts.Count == 0 ? "" : Texts[ActiveText]);
 
-            Simulation.Scene.VisualEffects.Add(Lieutenant, Core.Visual.VisualEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
-            Simulation.Scene.VisualEffects.Add(Bubble, Core.Visual.VisualEffects.FadeInFrom0(150, 0, EffectTimeRemaining));
-            Simulation.Scene.VisualEffects.Add(Directive.Text, Core.Visual.VisualEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
+            Simulator.Scene.VisualEffects.Add(Lieutenant, Core.Visual.VisualEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
+            Simulator.Scene.VisualEffects.Add(Bubble, Core.Visual.VisualEffects.FadeInFrom0(150, 0, EffectTimeRemaining));
+            Simulator.Scene.VisualEffects.Add(Directive.Text, Core.Visual.VisualEffects.FadeInFrom0(255, 0, EffectTimeRemaining));
         }
 
 
@@ -143,8 +143,8 @@
 
         public void Draw()
         {
-            Simulation.Scene.Add(Lieutenant);
-            Simulation.Scene.Add(Bubble);
+            Simulator.Scene.Add(Lieutenant);
+            Simulator.Scene.Add(Bubble);
 
             Directive.Draw();
         }
@@ -153,9 +153,9 @@
         private void FadeOut()
         {
             HiddingOverride = true;
-            Simulation.Scene.VisualEffects.Add(Lieutenant, Core.Visual.VisualEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
-            Simulation.Scene.VisualEffects.Add(Bubble, Core.Visual.VisualEffects.FadeOutTo0(150, 0, EffectTimeRemaining / 2));
-            Simulation.Scene.VisualEffects.Add(Directive.Text, Core.Visual.VisualEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
+            Simulator.Scene.VisualEffects.Add(Lieutenant, Core.Visual.VisualEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
+            Simulator.Scene.VisualEffects.Add(Bubble, Core.Visual.VisualEffects.FadeOutTo0(150, 0, EffectTimeRemaining / 2));
+            Simulator.Scene.VisualEffects.Add(Directive.Text, Core.Visual.VisualEffects.FadeOutTo0(255, 0, EffectTimeRemaining / 2));
         }
 
 
@@ -186,7 +186,7 @@
                     "sfxLieutenantParle3",
                     "sfxLieutenantParle4"
                 },
-                Simulation.Scene
+                Simulator.Scene
             );
             Directive.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal - 0.01f;
         }

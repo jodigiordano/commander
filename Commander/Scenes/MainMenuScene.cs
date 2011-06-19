@@ -88,6 +88,7 @@
                 DemoMode = true
             };
             Simulator.Initialize();
+            Inputs.AddListener(Simulator);
         }
 
 
@@ -99,30 +100,31 @@
 
         protected override void UpdateVisual()
         {
-            if (Simulator.SelectedCelestialBody != null)
+            foreach (var player in Inputs.ConnectedPlayers)
             {
-                switch (Simulator.SelectedCelestialBody.Name)
+                CelestialBody c = Simulator.GetSelectedCelestialBody(player);
+
+                if (c != null)
                 {
-                    case "save the\nworld": Add(NewGame); break;
-                    case "quit": Add(Quit); break;
-                    case "help": Add(Help); break;
-                    case "options": Add(Options); break;
-                    case "editor":
+                    switch (c.Name)
+                    {
+                        case "save the\nworld": Add(NewGame); break;
+                        case "quit": Add(Quit); break;
+                        case "help": Add(Help); break;
+                        case "options": Add(Options); break;
+                        case "editor":
 
-                        if (Preferences.Debug)
-                        {
-                            Add(Editor);
-                        }
+                            if (Preferences.Debug)
+                                Add(Editor);
 
-                        break;
+                            break;
 
-                    case "resume game":
-                        if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                        {
-                            Add(ResumeGame);
-                        }
+                        case "resume game":
+                            if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
+                                Add(ResumeGame);
 
-                        break;
+                            break;
+                    }
                 }
             }
 
@@ -135,22 +137,22 @@
         {
             base.OnFocus();
 
+            Simulator.SyncPlayers();
+
             if (!Audio.IsMusicPlaying(Main.SelectedMusic))
                 Audio.PlayMusic(Main.SelectedMusic, true, 1000, true);
             else
                 Audio.ResumeMusic(Main.SelectedMusic, true, 1000);
 
-            Inputs.AddListener(Simulator);
+            Simulator.EnableInputs = true;
         }
+
 
         public override void OnFocusLost()
         {
             base.OnFocusLost();
 
-            if (Simulator.SelectedCelestialBody != null && Simulator.SelectedCelestialBody.Name == "resume game" && Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                Audio.PauseMusic(Main.SelectedMusic, true, 1000);
-
-            Inputs.RemoveListener(Simulator);
+            Simulator.EnableInputs = false;
         }
 
 
@@ -158,21 +160,15 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (!p.Master)
-                return;
-
             if (button == MouseConfiguration.Select)
-                beginTransition();
+                BeginTransition((Player) p);
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (!p.Master)
-                return;
-
             if (button == GamePadConfiguration.Select)
-                beginTransition();
+                BeginTransition((Player) p);
 
             if (button == GamePadConfiguration.ChangeMusic)
                 Main.ChangeMusic();
@@ -181,9 +177,6 @@
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (!p.Master)
-                return;
-
             if (key == KeyboardConfiguration.ChangeMusic)
                 Main.ChangeMusic();
         }
@@ -191,49 +184,45 @@
 
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
-            if (player.Master)
+            if (Inputs.ConnectedPlayers.Count == 0)
                 TransiteTo("Chargement");
         }
 
 
-        private void beginTransition()
+        private void BeginTransition(Player player)
         {
-            if (Simulator.SelectedCelestialBody == null)
+            CelestialBody c = Simulator.GetSelectedCelestialBody(player);
+
+            if (c == null)
                 return;
 
 #if !DEBUG
-            if (Simulator.SelectedCelestialBody.Name == "editor")
+            if (c.Name == "editor")
                 return;
 #endif
 
-            if ((Simulator.SelectedCelestialBody.Name == "resume game" &&
-                Main.GameInProgress != null &&
-                !Main.GameInProgress.IsFinished) ||
-                
-                (Simulator.SelectedCelestialBody.Name != "resume game"))
+            switch (c.Name)
             {
-                switch (Simulator.SelectedCelestialBody.Name)
-                {
-                    case "save the\nworld": Visuals.Transite("Menu", "Intro"); break;
-                    case "help": Visuals.Transite("Menu", "Aide"); break;
-                    case "options": Visuals.Transite("Menu", "Options"); break;
-                    case "editor": Visuals.Transite("Menu", "Editeur"); break;
+                case "save the\nworld": TransiteTo("Intro"); break;
+                case "help": TransiteTo("Aide"); break;
+                case "options": TransiteTo("Options"); break;
+                case "editor": TransiteTo("Editeur"); break;
 
-                    case "quit":
-                        if (Preferences.Target == Setting.Xbox360 && Main.TrialMode.Active)
-                            Visuals.Transite("Menu", "Acheter");
-                        else
-                            Main.Instance.Exit();
-                        break;
+                case "quit":
+                    if (Preferences.Target == Setting.Xbox360 && Main.TrialMode.Active)
+                        TransiteTo("Acheter");
+                    else
+                        Main.Instance.Exit();
+                    break;
 
-                    case "resume game":
-                        if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                        {
-                            Main.GameInProgress.State = GameState.Running;
-                            Visuals.Transite("Menu", "Partie");
-                        }
-                        break;
-                }
+                case "resume game":
+                    if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
+                    {
+                        Main.GameInProgress.State = GameState.Running;
+                        Audio.PauseMusic(Main.SelectedMusic, true, 1000);
+                        TransiteTo("Partie");
+                    }
+                    break;
             }
         }
 

@@ -1,8 +1,7 @@
 ﻿namespace EphemereGames.Core.Input
 {
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.GamerServices;
     using System;
+    using Microsoft.Xna.Framework.GamerServices;
     
 
     internal delegate void PlayerHandler(Player p);
@@ -33,6 +32,20 @@
 
             if (SignedInGamer.SignedInGamers[player.Index] == null)
                 Guide.ShowSignIn(1, false);
+        }
+
+
+        public void Disconnect(Player player)
+        {
+#if WINDOWS
+            NotifyPlayerDisconnected(player);
+            return;
+#endif
+
+            if (Guide.IsVisible)
+                return;
+
+            Guide.ShowSignIn(1, false);
         }
 
 
