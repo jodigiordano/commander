@@ -15,7 +15,7 @@ namespace EphemereGames.Commander.Simulation
         public Shape Shape                                          { get; set; }
         public Circle Circle                                        { get; set; }
         public Line Line                                           { get; set; }
-        public RectanglePhysique Rectangle                          { get; set; }
+        public PhysicalRectangle Rectangle                          { get; set; }
         public float LifePoints                                     { get; set; }
         public float StartingLifePoints                             { get; set; }
         public float AttackPoints                                   { get; set; }
@@ -71,7 +71,7 @@ namespace EphemereGames.Commander.Simulation
             PointsValue = 1;
 
             Shape = Shape.Rectangle;
-            Rectangle = new RectanglePhysique(0, 0, 1, 1);
+            Rectangle = new PhysicalRectangle(0, 0, 1, 1);
             Circle = new Circle(Vector3.Zero, 1);
             Type = EnemyType.Asteroid;
             Level = 0;
@@ -107,7 +107,7 @@ namespace EphemereGames.Commander.Simulation
             Path.Position(Displacement, ref position);
 
             Rectangle.Width = Rectangle.Height = EnemiesFactory.GetSize(Type);
-            Circle.Radius = Rectangle.Width / 2 - 3;
+            Circle.Radius = Rectangle.Width / 2;
 
             Rectangle.X = (int)Position.X - Rectangle.Width / 2;
             Rectangle.Y = (int)Position.Y - Rectangle.Height / 2;

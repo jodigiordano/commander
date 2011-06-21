@@ -11,10 +11,11 @@
         public Circle Circle { get; set; }
         public Shape Shape { get; set; }
         public bool Active;
- 
+
+        protected Scene Scene;
+        protected Image Representation;
+
         private Vector3 position;
-        private Scene Scene;
-        private Image representation;
         private Vector2 Size;
         private double VisualPriority;
         private Color Color;
@@ -45,13 +46,13 @@
 
         public void SetRepresentation(string imageName, float size)
         {
-            representation = new Image(imageName, position)
+            Representation = new Image(imageName, position)
             {
                 VisualPriority = VisualPriority,
                 Color = Color,
                 SizeX = size
             };
-            Size = representation.AbsoluteSize;
+            Size = Representation.AbsoluteSize;
         }
 
 
@@ -74,24 +75,24 @@
         }
 
 
-        public void FadeIn()
+        public virtual void FadeIn()
         {
-            Scene.VisualEffects.Add(representation, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 250));
+            Scene.VisualEffects.Add(Representation, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 250));
             Active = true;
         }
 
 
-        public void FadeOut()
+        public virtual void FadeOut()
         {
-            Scene.VisualEffects.Add(representation, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
+            Scene.VisualEffects.Add(Representation, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
             Active = false;
         }
 
 
-        public void Draw()
+        public virtual void Draw()
         {
-            representation.Position = this.Position;
-            Scene.Add(representation);
+            Representation.Position = this.Position;
+            Scene.Add(Representation);
         }
 
 
@@ -99,7 +100,7 @@
         //not implemented
         public Vector3 Direction { get; set; }
         public float Rotation { get; set; }
-        public RectanglePhysique Rectangle { get; set; }
+        public PhysicalRectangle Rectangle { get; set; }
         public Line Line { get; set; }
 
         #endregion

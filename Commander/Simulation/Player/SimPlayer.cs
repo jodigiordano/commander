@@ -20,10 +20,17 @@
         public CommonStash CommonStash;
 
         public Circle Circle;
+        public Color Color;
+        public string Representation;
         public PowerUpType PowerUpInUse;
 
         private Vector3 position;
+        private Vector3 direction;
         private Simulator Simulator;
+
+        private SpaceshipSpaceship SpaceshipMove;
+
+        public bool TurretToPlaceChanged;
 
 
         public SimPlayer(Simulator simulator)
@@ -31,6 +38,13 @@
             Simulator = simulator;
             Circle = new Circle(Position, 8);
             PowerUpInUse = PowerUpType.None;
+
+            SpaceshipMove = new SpaceshipSpaceship(simulator)
+            {
+                AutomaticMode = false
+            };
+
+            TurretToPlaceChanged = false;
         }
 
 
@@ -49,16 +63,35 @@
             get { return position; }
             set
             {
-                position = value;
+                position = SpaceshipMove.Position = value;
                 VerifyFrame();
                 Circle.Position = position;
             }
         }
 
 
+        public Vector3 Direction
+        {
+            get { return direction; }
+            set
+            {
+                direction = SpaceshipMove.Direction = value;
+            }
+        }
+
+
         public void Move(ref Vector3 delta, float speed)
         {
-            Position += delta * speed;
+            if (ActualSelection.TurretToPlace != null)
+            {
+                Position += delta * speed;
+                SpaceshipMove.Stop();
+            }
+
+            else
+            {
+                SpaceshipMove.NextInput = delta;
+            }
         }
 
 
@@ -229,6 +262,19 @@
 
         public void Update()
         {
+            if (ActualSelection.TurretToPlace == null)
+            {
+                SpaceshipMove.Update();
+                Position = SpaceshipMove.Position;
+                Direction = SpaceshipMove.Direction;
+                SpaceshipMove.NextInput = Vector3.Zero;
+            }
+
+            else
+            {
+                SpaceshipMove.Position = Position;
+            }
+
             ActualSelection.CheckAvailableTurretOptions();
 
             Position += SelectedCelestialBodyController.DoGlueMode();
@@ -249,12 +295,14 @@
                     foreach (var turret in celestialBody.Turrets)
                     {
                         turretToPlace.CanPlace = !turret.Visible ||
-                            !Physics.collisionCercleCercle(turret.Circle, turretToPlace.Circle);
+                            !Physics.CircleCicleCollision(turret.Circle, turretToPlace.Circle);
 
                         if (!turretToPlace.CanPlace)
                             break;
                     }
             }
+
+            TurretToPlaceChanged = false;
         }
 
 

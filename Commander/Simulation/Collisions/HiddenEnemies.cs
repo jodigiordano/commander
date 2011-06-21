@@ -42,7 +42,7 @@
             Enemy e = Enemies[index];
 
             if (!Output.ContainsKey(e) &&
-                Physics.collisionCercleCercle(CurrentCelestialBody.Circle, e.Circle))
+                Physics.CircleCicleCollision(CurrentCelestialBody.Circle, e.Circle))
             {
                 Output.Add(e, CurrentCelestialBody);
             }

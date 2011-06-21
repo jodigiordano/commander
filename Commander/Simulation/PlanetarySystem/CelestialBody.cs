@@ -24,7 +24,7 @@
         public Shape Shape                                      { get; set; }
         public Circle Circle                                    { get; set; }
         public Line Line                                       { get; set; }
-        public RectanglePhysique Rectangle                      { get; set; }
+        public PhysicalRectangle Rectangle                      { get; set; }
         public float LifePoints                                 { get; set; }
         public float AttackPoints                               { get; set; }
         public bool Alive                                       { get { return LifePoints > 0; } }

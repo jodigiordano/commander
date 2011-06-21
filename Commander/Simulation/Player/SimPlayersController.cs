@@ -17,7 +17,6 @@
         public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public SandGlass SandGlass;
-        public Vector3 InitialPlayerPosition;
 
         public event TurretHandler BuyTurretAsked;
         public event TurretHandler SellTurretAsked;
@@ -76,15 +75,18 @@
         }
 
 
-        public void AddPlayer(Player player)
+        public void AddPlayer(Commander.Player player)
         {
             var simPlayer = new SimPlayer(Simulator)
             {
                 CelestialBodies = CelestialBodies,
                 CommonStash = CommonStash,
-                Position = InitialPlayerPosition,
+                Position = player.Position,
+                Direction = new Vector3(0, -1, 0),
                 AvailableTurrets = AvailableTurrets,
-                AvailablePowerUps = AvailablePowerUps
+                AvailablePowerUps = AvailablePowerUps,
+                Color = player.Color,
+                Representation = player.Representation,
             };
 
             simPlayer.Initialize();
@@ -163,25 +165,8 @@
         }
 
 
-        public void DoObjetDestroyed(IObjetPhysique obj)
+        public void DoObjectHit(IObjetPhysique obj, IObjetPhysique by)
         {
-            Enemy ennemi = obj as Enemy;
-
-            if (ennemi != null)
-            {
-                CommonStash.Cash += ennemi.CashValue;
-                CommonStash.Score += ennemi.PointsValue;
-                CommonStash.TotalScore += ennemi.PointsValue;
-
-                foreach (var player in Players.Values)
-                    player.UpdateSelection();
-                
-                NotifyCommonStashChanged(CommonStash);
-
-                return;
-            }
-
-
             Mineral mineral = obj as Mineral;
 
             if (mineral != null)
@@ -196,6 +181,26 @@
                     CommonStash.Cash += mineral.Value;
                     NotifyCommonStashChanged(CommonStash);
                 }
+
+                return;
+            }
+        }
+
+
+        public void DoObjetDestroyed(IObjetPhysique obj)
+        {
+            Enemy ennemi = obj as Enemy;
+
+            if (ennemi != null)
+            {
+                CommonStash.Cash += ennemi.CashValue;
+                CommonStash.Score += ennemi.PointsValue;
+                CommonStash.TotalScore += ennemi.PointsValue;
+
+                foreach (var player in Players.Values)
+                    player.UpdateSelection();
+                
+                NotifyCommonStashChanged(CommonStash);
 
                 return;
             }
@@ -223,7 +228,7 @@
             {
                 player.Move(ref delta, MouseConfiguration.Speed);
                 player.UpdateDemoSelection();
-                NotifyPlayerMoved(player);
+                //NotifyPlayerMoved(player);
                 return;
             }
 
@@ -235,9 +240,9 @@
                 player.Position = player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(player.Position);
 
 
-            player.UpdateSelection();
-            NotifyPlayerMoved(player);
-            NotifyPlayerChanged(player);
+            //player.UpdateSelection();
+            //NotifyPlayerMoved(player);
+            //NotifyPlayerChanged(player);
         }
 
 
@@ -321,6 +326,7 @@
             foreach (var player in Players.Values)
             {
                 player.Update();
+                player.UpdateSelection();
 
                 NotifyPlayerChanged(player);
                 NotifyPlayerMoved(player);
@@ -334,7 +340,7 @@
             if (PlayerInNextWave == null &&
                 player.PowerUpInUse == PowerUpType.None &&
                 player.ActualSelection.TurretToPlace == null &&
-                Physics.collisionCercleRectangle(player.Circle, SandGlass.Rectangle))
+                Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
             {
                 PlayerInNextWave = player;
                 NotifyShowNextWaveAsked();
@@ -343,7 +349,7 @@
 
             if (PlayerInNextWave == player &&
                 (!p.Connected ||
-                !Physics.collisionCercleRectangle(player.Circle, SandGlass.Rectangle)))
+                !Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle)))
             {
                 PlayerInNextWave = null;
                 NotifyHideNextWaveAsked();
@@ -421,6 +427,7 @@
                 player.ActualSelection.TurretToPlace.CelestialBody = player.ActualSelection.CelestialBody;
                 player.ActualSelection.TurretToPlace.Position = player.Position;
                 player.ActualSelection.TurretToPlace.ToPlaceMode = true;
+                player.TurretToPlaceChanged = true;
                 player.UpdateSelection();
                 NotifyTurretToPlaceSelected(player.ActualSelection.TurretToPlace, player);
 
@@ -435,6 +442,7 @@
                 NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace);
                 NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
                 player.ActualSelection.TurretToPlace = null;
+                player.TurretToPlaceChanged = true;
                 player.UpdateSelection();
                 return;
             }
@@ -460,7 +468,7 @@
 
 
             // call next wave
-            if (player.PowerUpInUse == PowerUpType.None && Physics.collisionCercleRectangle(player.Circle, SandGlass.Rectangle))
+            if (player.PowerUpInUse == PowerUpType.None && Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
             {
                 NotifyNextWaveAsked();
                 return;

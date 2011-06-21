@@ -70,7 +70,8 @@
 
             SandGlass = new SandGlass(this, 5000, new Vector3(0, 250, 0), 0.3f)
             {
-                RemainingTime = 5000
+                RemainingTime = 5000,
+                Alpha = 0
             };
 
             Logo = new Image("Logo", new Vector3(0, -100, 0))
@@ -289,7 +290,7 @@
             {
                 ShootingStar ss = new ShootingStar();
                 ss.Scene = this;
-                ss.Terrain = new Core.Physics.RectanglePhysique(-800, -450, 1400, 900);
+                ss.Terrain = new Core.Physics.PhysicalRectangle(-800, -450, 1400, 900);
                 ss.LoadContent();
                 ss.Initialize();
 

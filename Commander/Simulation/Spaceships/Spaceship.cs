@@ -21,7 +21,7 @@
         public float ResistanceRotation         { get; set; }
         public Shape Shape                      { get; set; }
         public Circle Circle                    { get; set; }
-        public RectanglePhysique Rectangle      { get; set; }
+        public PhysicalRectangle Rectangle      { get; set; }
         public Line Line                       { get; set; }
 
         public IObjetPhysique StartingObject    { get; set; }

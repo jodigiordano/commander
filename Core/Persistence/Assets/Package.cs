@@ -1,12 +1,13 @@
 ﻿namespace EphemereGames.Core.Persistence
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Media;
     using SpriteSheetRuntime;
-    
+#if !WINDOWS_PHONE
+    using Microsoft.Xna.Framework.Media;
+#endif
+
 
     class Package
     {
@@ -41,8 +42,10 @@
             {
                 if (asset.Type == "Texture2D")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<Texture2D>(asset.Path));
+#if !WINDOWS_PHONE
                 else if (asset.Type == "Video")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<Video>(asset.Path));
+#endif
                 else if (asset.Type == "EffetFX")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<Effect>(asset.Path));
                 else if (asset.Type == "Police")

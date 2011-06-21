@@ -25,7 +25,7 @@
         }
 
 
-        public bool Intersects(RectanglePhysique rectangle)
+        public bool Intersects(PhysicalRectangle rectangle)
         {
             if (Obj != null)
                 Position = Obj.Position;

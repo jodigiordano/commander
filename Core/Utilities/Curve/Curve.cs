@@ -37,6 +37,9 @@ namespace EphemereGames.Core.Utilities
 
         public float Evaluate(float position)
         {
+            if (Keys.Count == 0)
+                return 0;
+
             CurveKey first = Keys[0];
             CurveKey last = Keys[Keys.Count - 1];
 

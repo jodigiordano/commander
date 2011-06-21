@@ -20,7 +20,7 @@
         {
             Shape = Shape.Circle;
             Circle = new Circle(Vector3.Zero, 0);
-            Rectangle = new RectanglePhysique();
+            Rectangle = new PhysicalRectangle();
             Explosive = true;
         }
 

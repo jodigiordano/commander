@@ -3,9 +3,9 @@
     using System;
     using System.IO;
     using System.Xml.Serialization;
+    using EasyStorage;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
-    using EasyStorage;
 
 
     public abstract class Data
@@ -26,8 +26,11 @@
         public bool Loaded      { get; set; }
 
         [XmlIgnore]
+#if WINDOWS_PHONE
+        public IsolatedStorageSaveDevice SaveDevice { get; set; }
+#else
         public SharedSaveDevice SaveDevice { get; set; }
-
+#endif
 
         public Data()
         {
@@ -77,13 +80,18 @@
 
         private void Serialize(Stream stream)
         {
+//TODO!
+#if !WINDOWS_PHONE
             XmlSerializer serializer = new XmlSerializer(this.GetType());
             serializer.Serialize(stream, this);
+#endif
         }
 
 
         private void Deserialize(Stream stream)
         {
+//TODO!
+#if !WINDOWS_PHONE
             object data = null;
 
             try
@@ -109,6 +117,7 @@
                 Loaded = true;
                 DoLoadEnded();
             }
+#endif
         }
 
 

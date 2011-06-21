@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -16,11 +17,11 @@
         protected Image Filter;
         private Image Bla;
 
-        public Rectangle Dimension;
+        public PhysicalRectangle Dimension;
         public int BlaPosition;
 
 
-        public Bubble(Simulator simulator, Rectangle dimension, double prioriteAffichage)
+        public Bubble(Simulator simulator, PhysicalRectangle dimension, double prioriteAffichage)
         {
             this.Simulation = simulator;
             this.Dimension = dimension;
@@ -52,33 +53,24 @@
 
                 Edges.Add(iv);
             }
+
+            Color = Color.White;
         }
 
 
-        //public virtual void Show()
-        //{
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        Simulation.Scene.Add(Edges[i]);
-        //        Simulation.Scene.Add(Corners[i]);
-        //    }
+        public Color Color
+        {
+            set
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Edges[i].Color = value;
+                    Corners[i].Color = value;
+                }
 
-        //    Simulation.Scene.Add(Filter);
-        //    Simulation.Scene.Add(Bla);
-        //}
-
-
-        //public virtual void Hide()
-        //{
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        Simulation.Scene.Remove(Edges[i]);
-        //        Simulation.Scene.Remove(Corners[i]);
-        //    }
-
-        //    Simulation.Scene.Remove(Filter);
-        //    Simulation.Scene.Remove(Bla);
-        //}
+                Bla.Color = value;
+            }
+        }
 
 
         public virtual void Draw()

@@ -18,7 +18,7 @@ namespace EphemereGames.Core.Physics
 
         Shape Shape                 { get; set; }
         Circle Circle               { get; set; }
-        RectanglePhysique Rectangle { get; set; }
+        PhysicalRectangle Rectangle { get; set; }
         Line Line                  { get; set; }
     }
 }

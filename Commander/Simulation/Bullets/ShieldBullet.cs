@@ -10,7 +10,7 @@
             : base()
         {
             Shape = Shape.Rectangle;
-            Rectangle = new RectanglePhysique();
+            Rectangle = new PhysicalRectangle();
         }
 
 

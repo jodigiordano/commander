@@ -28,7 +28,7 @@
         private GridWorld.IntegerHandler HandlerShootingStarExplosion;
         private Bullet CurrentBullet;
         private ShootingStar CurrentShootingStar;
-        private RectanglePhysique Rectangle;
+        private PhysicalRectangle Rectangle;
         private Circle Circle;
         private Dictionary<int, int> TmpObjects;
 
@@ -41,7 +41,7 @@
             HandlerShootingStars = new GridWorld.IntegerHandler(CheckShootingStars);
             HandlerShootingStarExplosion = new GridWorld.IntegerHandler(CheckShootingStarExplosion);
             TmpObjects = new Dictionary<int, int>();
-            Rectangle = new RectanglePhysique();
+            Rectangle = new PhysicalRectangle();
             Circle = new Circle(Vector3.Zero, 0);
         }
 
@@ -103,7 +103,7 @@
             {
                 Mineral mineral = Minerals[i];
 
-                if (Physics.collisionCercleCercle(mineral.Circle, Collector.Circle))
+                if (Physics.CircleCicleCollision(mineral.Circle, Collector.Circle))
                 {
                     Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(mineral, Collector));
                     Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(Collector, mineral));
@@ -140,9 +140,9 @@
             bool collision = false;
 
             if (e.Shape == Shape.Rectangle)
-                collision = Physics.collisionRectangleRectangle(Rectangle, e.Rectangle);
+                collision = Physics.RectangleRectangleCollision(Rectangle, e.Rectangle);
             else if (e.Shape == Shape.Circle)
-                collision = Physics.collisionCercleCercle(CurrentShootingStar.Circle, e.Circle);
+                collision = Physics.CircleCicleCollision(CurrentShootingStar.Circle, e.Circle);
 
             if (collision)
             {
@@ -174,25 +174,30 @@
 
             bool collision = false;
 
+            
             //Degeux
             if (CurrentBullet.Shape == Shape.Rectangle && e.Shape == Shape.Rectangle)
             {
-                collision = Physics.collisionRectangleRectangle(CurrentBullet.Rectangle, e.Rectangle);
+                //Physics.TransformRectangle(CurrentBullet.Rectangle, CurrentBullet.Rotation, Rectangle);
+
+                collision = Physics.RectangleRectangleCollision(CurrentBullet.Rectangle, e.Rectangle);
             }
 
             else if (CurrentBullet.Shape == Shape.Circle && e.Shape == Shape.Rectangle)
             {
-                collision = Physics.collisionCercleRectangle(CurrentBullet.Circle, e.Rectangle);
+                collision = Physics.CircleRectangleCollision(CurrentBullet.Circle, e.Rectangle);
             }
 
             else if (CurrentBullet.Shape == Shape.Rectangle && e.Shape == Shape.Circle)
             {
-                collision = Physics.collisionCercleRectangle(e.Circle, CurrentBullet.Rectangle);
+                //Physics.TransformRectangle(CurrentBullet.Rectangle, CurrentBullet.Rotation, Rectangle);
+
+                collision = Physics.CircleRectangleCollision(e.Circle, CurrentBullet.Rectangle);
             }
 
             else if (CurrentBullet.Shape == Shape.Line && e.Shape == Shape.Rectangle)
             {
-                collision = Physics.collisionLigneRectangle(CurrentBullet.Line, e.Rectangle);
+                collision = Physics.LineRectangleCollision(CurrentBullet.Line, e.Rectangle);
             }
 
             if (collision)
@@ -228,7 +233,7 @@
 
             Enemy e = Enemies[index];
 
-            if (Physics.collisionCercleCercle(Circle, e.Circle))
+            if (Physics.CircleCicleCollision(Circle, e.Circle))
                 Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, CurrentBullet));
 
             return true;
@@ -244,7 +249,7 @@
 
             Enemy e = Enemies[index];
 
-            if (Physics.collisionCercleCercle(Circle, e.Circle))
+            if (Physics.CircleCicleCollision(Circle, e.Circle))
                 Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, CurrentShootingStar));
 
             return true;

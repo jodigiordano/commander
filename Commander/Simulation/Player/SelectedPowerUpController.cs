@@ -34,7 +34,7 @@
             {
                 powerUp.Value.Position = PowerUps[powerUp.Key].BuyPosition;
 
-                if (Physics.collisionCercleCercle(powerUp.Value, CursorCircle))
+                if (Physics.CircleCicleCollision(powerUp.Value, CursorCircle))
                     PowerUpToBuy = powerUp.Key;
             }
         }

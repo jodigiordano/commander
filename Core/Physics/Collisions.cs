@@ -1,33 +1,35 @@
 ﻿namespace EphemereGames.Core.Physics
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+
     class Collisions
     {
-        private enum SensLigne
+        private enum LineDirection
         {
-            SensMontre,
-            ContreSensMontre,
-            Ligne
+            Clockwise,
+            CounterClockwise,
+            Line
         }
 
 
-        public static bool collisionLigneLigne(ref Vector2 l1p1, ref Vector2 l1p2, ref Vector2 l2p1, ref Vector2 l2p2)
+        public static bool LineLineCollision(
+            ref Vector2 line1Start, ref Vector2 line1End,
+            ref Vector2 line2Start, ref Vector2 line2End)
         {
-            SensLigne test1a, test1b, test2a, test2b;
+            LineDirection test1a, test1b, test2a, test2b;
 
 
-            test1a = getSensLigne(ref l1p1, ref l1p2, ref l2p1);
-            test1b = getSensLigne(ref l1p1, ref l1p2, ref l2p2);
+            test1a = GetLineDirection(ref line1Start, ref line1End, ref line2Start);
+            test1b = GetLineDirection(ref line1Start, ref line1End, ref line2End);
 
             if (test1a != test1b)
             {
 
-                test2a = getSensLigne(ref l2p1, ref l2p2, ref l1p1);
-                test2b = getSensLigne(ref l2p1, ref l2p2, ref l1p2);
+                test2a = GetLineDirection(ref line2Start, ref line2End, ref line1Start);
+                test2b = GetLineDirection(ref line2Start, ref line2End, ref line1End);
 
                 if (test2a != test2b)
                     return true;
@@ -37,7 +39,7 @@
         }
 
 
-        public static bool collisionLigneRectangle(ref Vector2 pointDebut, ref Vector2 pointFin, RectanglePhysique rectangle)
+        public static bool LineRectangleCollision(ref Vector2 lineStart, ref Vector2 lineEnd, PhysicalRectangle rectangle)
         {
             Vector2 v1 = new Vector2(rectangle.X, rectangle.Y);
             Vector2 v2 = new Vector2(rectangle.X, rectangle.Y + rectangle.Height);
@@ -45,69 +47,78 @@
             Vector2 v4 = new Vector2(rectangle.X + rectangle.Width, rectangle.Y);
 
             if (
-             collisionLigneLigne(ref pointDebut, ref pointFin, ref v1, ref v2) ||
-             collisionLigneLigne(ref pointDebut, ref pointFin, ref v1, ref v4) ||
-             collisionLigneLigne(ref pointDebut, ref pointFin, ref v4, ref v3) ||
-             collisionLigneLigne(ref pointDebut, ref pointFin, ref v2, ref v3))
+             LineLineCollision(ref lineStart, ref lineEnd, ref v1, ref v2) ||
+             LineLineCollision(ref lineStart, ref lineEnd, ref v1, ref v4) ||
+             LineLineCollision(ref lineStart, ref lineEnd, ref v4, ref v3) ||
+             LineLineCollision(ref lineStart, ref lineEnd, ref v2, ref v3))
                 return true;
 
             return false;
         }
 
 
-        public static bool collisionLigneRectangle(Line ligne, RectanglePhysique rectangle)
+        public static bool LineRectangleCollision(Line line, PhysicalRectangle rectangle)
         {
-            Vector2 debut = ligne.DebutV2;
-            Vector2 fin = ligne.FinV2;
+            Vector2 debut = line.DebutV2;
+            Vector2 fin = line.FinV2;
 
-            return collisionLigneRectangle(ref debut, ref fin, rectangle);
+            return LineRectangleCollision(ref debut, ref fin, rectangle);
         }
 
 
-        public static bool collisionTriangleRectangle(Triangle triangle, RectanglePhysique rectangle)
+        public static bool TriangleRectangleCollision(Triangle triangle, PhysicalRectangle rectangle)
         {
             Vector2 s1 = triangle.Sommet1;
             Vector2 s2 = triangle.Sommet2;
             Vector2 s3 = triangle.Sommet3;
 
-            if (collisionLigneRectangle(ref s1, ref s2, rectangle) ||
-                collisionLigneRectangle(ref s2, ref s3, rectangle) ||
-                collisionLigneRectangle(ref s3, ref s1, rectangle))
+            if (LineRectangleCollision(ref s1, ref s2, rectangle) ||
+                LineRectangleCollision(ref s2, ref s3, rectangle) ||
+                LineRectangleCollision(ref s3, ref s1, rectangle))
                 return true;
 
             return false;
         }
 
 
-        public static bool collisionPointRectangle(ref Vector2 point, RectanglePhysique rectangle)
+        public static bool PointRectangleCollision(ref Vector2 point, PhysicalRectangle rectangle)
         {
             return (point.X >= rectangle.Left && point.X <= rectangle.Right &&
                     point.Y >= rectangle.Top && point.Y <= rectangle.Bottom);
         }
 
 
-        public static bool collisionCercleRectangle(Circle cercle, RectanglePhysique rectangle)
+        public static bool CircleRectangleCollision(Circle circle, PhysicalRectangle rectangle)
         {
-            return cercle.Intersects(rectangle);
+            return circle.Intersects(rectangle);
         }
 
 
-        public static bool collisionRectangleRectangle(RectanglePhysique rectangle1, RectanglePhysique rectangle2)
+        public static bool RectangleRectangleCollision(PhysicalRectangle rectangle1, PhysicalRectangle rectangle2)
         {
             return rectangle1.Intersects(rectangle2);
         }
 
 
-        public static bool collisionCercleCercle(Circle cercle1, Circle cercle2)
+        public static bool CircleCircleCollision(Circle circle1, Circle circle2)
         {
-            return cercle1.Intersects(cercle2);
+            return circle1.Intersects(circle2);
         }
 
 
-        public static bool collisionPixels(ref Matrix Transformee1, Texture2D Texture1, ref Color[] TextureData1, ref Matrix Transformee2, Texture2D Texture2, ref Color[] TextureData2) {
+        public static bool PointCircleCollision(ref Vector3 point, Circle circle)
+        {
+            return circle.Intersects(ref point);
+        }
+
+
+        public static bool PixelCollision(
+            ref Matrix transform1, Texture2D texture1, ref Color[] textureData1,
+            ref Matrix transform2, Texture2D texture2, ref Color[] textureData2) {
+            
             // Calculate a matrix which transforms from A's local space into
             // world space and then into B's local space
-            Matrix transformAToB = Transformee1 * Matrix.Invert(Transformee2);
+            Matrix transformAToB = transform1 * Matrix.Invert(transform2);
 
             // When a point moves in A's local space, it moves in B's local space with a
             // fixed direction and distance proportional to the movement in A.
@@ -121,25 +132,25 @@
             Vector2 yPosInB = Vector2.Transform(Vector2.Zero, transformAToB);
 
             // For each row of pixels in A
-            for (int yA = 0; yA < Texture1.Height; yA++)
+            for (int yA = 0; yA < texture1.Height; yA++)
             {
                 // Start at the beginning of the row
                 Vector2 posInB = yPosInB;
 
                 // For each pixel in this row
-                for (int xA = 0; xA < Texture1.Width; xA++)
+                for (int xA = 0; xA < texture1.Width; xA++)
                 {
                     // Round to the nearest pixel
                     int xB = (int)Math.Round(posInB.X);
                     int yB = (int)Math.Round(posInB.Y);
 
                     // If the pixel lies within the bounds of B
-                    if (0 <= xB && xB < Texture2.Width &&
-                        0 <= yB && yB < Texture2.Height)
+                    if (0 <= xB && xB < texture2.Width &&
+                        0 <= yB && yB < texture2.Height)
                     {
                         // Get the colors of the overlapping pixels
-                        Color colorA = TextureData1[xA + yA * Texture1.Width];
-                        Color colorB = TextureData2[xB + yB * Texture2.Width];
+                        Color colorA = textureData1[xA + yA * texture1.Width];
+                        Color colorB = textureData2[xB + yB * texture2.Width];
 
                         // If both pixels are not completely transparent,
                         if (colorA.A != 0 && colorB.A != 0)
@@ -163,53 +174,42 @@
             return false;
         }
 
-
-        public static void rectangleTransforme(ref Matrix transform, RectanglePhysique rectangle)
+        private static Matrix RotationMatrix;
+        public static void TransformRectangle(PhysicalRectangle r, float rotationRad, PhysicalRectangle outR)
         {
-            // Get all four corners in local space
-            Vector2 leftTop = new Vector2(rectangle.Left, rectangle.Top);
-            Vector2 rightTop = new Vector2(rectangle.Right, rectangle.Top);
-            Vector2 leftBottom = new Vector2(rectangle.Left, rectangle.Bottom);
-            Vector2 rightBottom = new Vector2(rectangle.Right, rectangle.Bottom);
+            Matrix.CreateRotationZ(rotationRad, out RotationMatrix);
+            Vector2 upperLeft = new Vector2(-r.Width / 2, -r.Height / 2);
+            Vector2 downRight = new Vector2(r.Width / 2, r.Height / 2);
 
-            // Transform all four corners into work space
-            Vector2.Transform(ref leftTop, ref transform, out leftTop);
-            Vector2.Transform(ref rightTop, ref transform, out rightTop);
-            Vector2.Transform(ref leftBottom, ref transform, out leftBottom);
-            Vector2.Transform(ref rightBottom, ref transform, out rightBottom);
+            Vector2.Transform(ref upperLeft, ref RotationMatrix, out upperLeft);
+            Vector2.Transform(ref downRight, ref RotationMatrix, out downRight);
 
-            // Find the minimum and maximum extents of the rectangle in world space
-            Vector2 min = Vector2.Min(Vector2.Min(leftTop, rightTop),
-                                      Vector2.Min(leftBottom, rightBottom));
-            Vector2 max = Vector2.Max(Vector2.Max(leftTop, rightTop),
-                                      Vector2.Max(leftBottom, rightBottom));
+            Vector2 heightWidth;
+            Vector2.Subtract(ref upperLeft, ref downRight, out heightWidth);
 
-            rectangle.X = (int)min.X;
-            rectangle.Y = (int)min.Y;
-            rectangle.Width = (int)(max.X - min.X);
-            rectangle.Height = (int)(max.Y - min.Y);
+            heightWidth.X = Math.Abs(heightWidth.X);
+            heightWidth.Y = Math.Abs(heightWidth.Y);
+
+            outR.X = (int)(r.X + (r.Width / 2) - heightWidth.X / 2);
+            outR.Y = (int)(r.Y - (r.Height / 2) - heightWidth.Y / 2);
+            outR.Width = (int) heightWidth.X;
+            outR.Height = (int) heightWidth.Y;
         }
 
 
-        private static SensLigne getSensLigne(ref Vector2 pt1, ref Vector2 pt2, ref Vector2 pt3)
+        private static LineDirection GetLineDirection(ref Vector2 pt1, ref Vector2 pt2, ref Vector2 pt3)
         {
             float tester =
                 (pt2.X - pt1.X) * (pt3.Y - pt1.Y) -
                 (pt3.X - pt1.X) * (pt2.Y - pt1.Y);
 
             if (tester > 0)
-                return SensLigne.ContreSensMontre;
+                return LineDirection.CounterClockwise;
             
             if (tester < 0)
-                return SensLigne.SensMontre;
+                return LineDirection.Clockwise;
 
-            return SensLigne.Ligne;
-        }
-
-
-        public static bool collisionPointCercle(ref Vector3 point, Circle cercle)
-        {
-            return cercle.Intersects(ref point);
+            return LineDirection.Line;
         }
     }
 }

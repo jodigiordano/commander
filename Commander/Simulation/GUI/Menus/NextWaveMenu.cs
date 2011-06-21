@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -61,7 +62,7 @@
                 RepresentationsNiveaux.Add(kvp.Key, t);
             }
 
-            Bulle = new Bubble(Simulator, Rectangle.Empty, this.PrioriteAffichage + 0.0001f);
+            Bulle = new Bubble(Simulator, new PhysicalRectangle(), this.PrioriteAffichage + 0.0001f);
             Bulle.BlaPosition = 1;
 
             Visible = false;

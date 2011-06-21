@@ -90,19 +90,19 @@
         public LevelDescriptor()
         {
             Id = -1;
-            Mission = "test";
-            Difficulty = "test";
+            Mission = "1-1";
+            Difficulty = "Easy";
 
             PlanetarySystem = new List<CelestialBodyDescriptor>();
             Waves = new List<WaveDescriptor>();
             InfiniteWaves = null;
             Player = new PlayerDescriptor();
-            CelestialBodyToProtect = 0;
-            Background = "fond1";
+            CelestialBodyToProtect = -1;
+            Background = "fondecran4";
 
-            MineralsValue = 500;
+            MineralsValue = 0;
             MineralsPercentages = new Vector3(0.6f, 0.3f, 0.1f);
-            LifePacks = 5;
+            LifePacks = 0;
 
             AvailableTurrets = new List<TurretType>();
             AvailablePowerUps = new List<PowerUpType>();
@@ -374,7 +374,7 @@
         public PlayerDescriptor()
         {
             Money = 0;
-            Lives = 1;
+            Lives = 0;
         }
     }
 

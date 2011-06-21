@@ -1,52 +1,69 @@
 ﻿namespace EphemereGames.Core.Physics
 {
-    using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     
+
     public static class Physics
     {
         public static void Initialize() {}
 
-        public static bool collisionPixels(ref Matrix transformee1, Texture2D texture1, ref Color[] couleurs1, ref Matrix transformee2, Texture2D texture2, ref Color[] couleurs2)
+
+        public static bool PixelsCollision(
+            ref Matrix transform1, Texture2D texture1, ref Color[] textureData1,
+            ref Matrix transform2, Texture2D texture2, ref Color[] textureData2)
         {
-            return Collisions.collisionPixels(ref transformee1, texture1, ref couleurs1, ref transformee2, texture2, ref couleurs2);
+            return Collisions.PixelCollision(
+                ref transform1, texture1, ref textureData1,
+                ref transform2, texture2, ref textureData2);
         }
 
-        public static bool collisionPointRectangle(ref Vector2 point, RectanglePhysique rectangle)
+
+        public static bool PointRectangleCollision(ref Vector2 point, PhysicalRectangle rectangle)
         {
-            return Collisions.collisionPointRectangle(ref point, rectangle);
+            return Collisions.PointRectangleCollision(ref point, rectangle);
         }
 
-        public static bool collisionCercleRectangle(Circle cercle, RectanglePhysique rectangle)
+
+        public static bool CircleRectangleCollision(Circle circle, PhysicalRectangle rectangle)
         {
-            return Collisions.collisionCercleRectangle(cercle, rectangle);
+            return Collisions.CircleRectangleCollision(circle, rectangle);
         }
 
-        public static bool collisionRectangleRectangle(RectanglePhysique rectangle, RectanglePhysique rectangle_2)
+
+        public static bool RectangleRectangleCollision(PhysicalRectangle rectangle, PhysicalRectangle rectangle2)
         {
-            return Collisions.collisionRectangleRectangle(rectangle, rectangle_2);
+            return Collisions.RectangleRectangleCollision(rectangle, rectangle2);
         }
 
-        public static bool collisionTriangleRectangle(Triangle triangle, RectanglePhysique rectangle)
+
+        public static bool TriangleRectangleCollision(Triangle triangle, PhysicalRectangle rectangle)
         {
-            return Collisions.collisionTriangleRectangle(triangle, rectangle);
+            return Collisions.TriangleRectangleCollision(triangle, rectangle);
         }
 
-        public static bool collisionLigneRectangle(Line ligne, RectanglePhysique rectangle)
+
+        public static bool LineRectangleCollision(Line line, PhysicalRectangle rectangle)
         {
-            return Collisions.collisionLigneRectangle(ligne, rectangle);
+            return Collisions.LineRectangleCollision(line, rectangle);
         }
 
-        public static bool collisionPointCercle(ref Vector3 point, Circle cercle)
+
+        public static bool PointCircleCollision(ref Vector3 point, Circle circle)
         {
-            return Collisions.collisionPointCercle(ref point, cercle);
+            return Collisions.PointCircleCollision(ref point, circle);
         }
 
-        public static bool collisionCercleCercle(Circle cercle1, Circle cercle2)
+
+        public static bool CircleCicleCollision(Circle circle1, Circle circle2)
         {
-            return Collisions.collisionCercleCercle(cercle1, cercle2);
+            return Collisions.CircleCircleCollision(circle1, circle2);
+        }
+
+
+        public static void TransformRectangle(PhysicalRectangle physicalRectangle, float rotationRad, PhysicalRectangle physicalRectangleOut)
+        {
+            Collisions.TransformRectangle(physicalRectangle, rotationRad, physicalRectangleOut);
         }
     }
 }

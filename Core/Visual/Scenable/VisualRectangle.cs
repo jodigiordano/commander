@@ -1,10 +1,8 @@
-
 namespace EphemereGames.Core.Visual
 {
-    using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+
 
     public class VisualRectangle : IScenable
     {
@@ -14,21 +12,28 @@ namespace EphemereGames.Core.Visual
         public TypeBlend Blend                  { get; set; }
         public int Id                           { get; private set; }
 
-        private Color Couleur                   { get; set; }
-        private Rectangle Rectangle             { get; set; }
+        private Color Color;
+        private Rectangle Rectangle;
+        private bool Filled;
 
-        public VisualRectangle(Rectangle rectangle, Color couleur)
+
+        public VisualRectangle(Rectangle rectangle, Color color) : this(rectangle, color, false) { }
+
+
+        public VisualRectangle(Rectangle rectangle, Color color, bool filled)
         {
             VisualPriority = 0;
             Blend = TypeBlend.Default;
-            Couleur = couleur;
+            Color = color;
             Rectangle = rectangle;
             Id = Visuals.NextHashCode;
+            Filled = filled;
         }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Primitives.DrawRect(spriteBatch, Rectangle, Couleur);
+            Primitives.DrawRect(spriteBatch, Rectangle, Color, Filled);
         }
     }
 }

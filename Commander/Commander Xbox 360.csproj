@@ -90,6 +90,7 @@
     <Compile Include="GUI\Controls\HorizontalSlider.cs" />
     <Compile Include="GUI\Controls\PushButton.cs" />
     <Compile Include="GUI\SandGlass.cs" />
+    <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\Scores.cs" />
     <Compile Include="Player\TrialMode.cs" />

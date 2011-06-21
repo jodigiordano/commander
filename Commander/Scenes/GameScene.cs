@@ -29,7 +29,7 @@
 
             Simulator = new Simulator(this, level);
             Simulator.Initialize();
-            Simulator.AddNewGameStateListener(doNouvelEtatPartie);
+            Simulator.AddNewGameStateListener(DoNewGameState);
             Inputs.AddListener(Simulator);
         }
 
@@ -93,7 +93,7 @@
         }
 
 
-        public void doNouvelEtatPartie(GameState nouvelEtat)
+        public void DoNewGameState(GameState nouvelEtat)
         {
             if (nouvelEtat == GameState.Won || nouvelEtat == GameState.Lost)
             {

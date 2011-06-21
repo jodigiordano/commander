@@ -14,7 +14,7 @@
 
         private GridWorld.IntegerHandler Handler;
         private Turret CurrentTurret;
-        private RectanglePhysique CurrentTurretRectangle;
+        private PhysicalRectangle CurrentTurretRectangle;
         private Circle CurrentTurretRange;
         
         
@@ -23,7 +23,7 @@
             Output = new List<KeyValuePair<Turret, Turret>>();
             Handler = new GridWorld.IntegerHandler(CheckTurretIsBoosted);
             CurrentTurret = null;
-            CurrentTurretRectangle = new RectanglePhysique();
+            CurrentTurretRectangle = new PhysicalRectangle();
             CurrentTurretRange = new Circle(Vector3.Zero, 0);
         }
 
@@ -53,7 +53,7 @@
             if (boostedTurret.Type == TurretType.Booster)
                 return true;
 
-            if (Physics.collisionCercleCercle(boostedTurret.Circle, CurrentTurretRange))
+            if (Physics.CircleCicleCollision(boostedTurret.Circle, CurrentTurretRange))
                 Output.Add(new KeyValuePair<Turret, Turret>(CurrentTurret, boostedTurret));
 
             return true;

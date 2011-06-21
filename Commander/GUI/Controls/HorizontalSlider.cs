@@ -47,9 +47,9 @@
 
         public void DoClick(Circle circle)
         {
-            if (Physics.collisionCercleCercle(circle, GaucheCercle) && Valeur > Min)
+            if (Physics.CircleCicleCollision(circle, GaucheCercle) && Valeur > Min)
                 Valeur = Math.Max(Min, Valeur - Increment);
-            else if (Physics.collisionCercleCercle(circle, DroiteCercle) && Valeur < Max)
+            else if (Physics.CircleCicleCollision(circle, DroiteCercle) && Valeur < Max)
                 Valeur = Math.Min(Max, Valeur + Increment);
         }
 

@@ -16,7 +16,7 @@
 
         private GridWorld.IntegerHandler Handler;
         private Turret CurrentTurret;
-        private RectanglePhysique CurrentTurretRectangle;
+        private PhysicalRectangle CurrentTurretRectangle;
         private Circle CurrentTurretRange;
 
 
@@ -25,7 +25,7 @@
             Output = new List<KeyValuePair<Turret, Enemy>>();
             Handler = new GridWorld.IntegerHandler(CheckEnemyIsInRange);
             CurrentTurret = null;
-            CurrentTurretRectangle = new RectanglePhysique();
+            CurrentTurretRectangle = new PhysicalRectangle();
             CurrentTurretRange = new Circle(Vector3.Zero, 0);
         }
 
@@ -55,7 +55,7 @@
             if (HiddenEnemies.Output.ContainsKey(e))
                 return true;
 
-            if (Physics.collisionCercleCercle(CurrentTurretRange, e.Circle))
+            if (Physics.CircleCicleCollision(CurrentTurretRange, e.Circle))
             {
                 Output.Add(new KeyValuePair<Turret, Enemy>(CurrentTurret, e));
 

@@ -3,13 +3,16 @@
     using System.Collections.Generic;
     using EasyStorage;
     using Microsoft.Xna.Framework;
-using System;
-    
+
 
     class DataController
     {
         private Dictionary<string, Data> Datas;
+#if WINDOWS_PHONE
+        private IsolatedStorageSaveDevice SaveDevice;
+#else
         private SharedSaveDevice SaveDevice;
+#endif
         private GameTime GameTime;
 
 
@@ -17,11 +20,15 @@ using System;
         {
             Datas = new Dictionary<string, Data>();
 
+#if WINDOWS_PHONE
+            SaveDevice = new IsolatedStorageSaveDevice();
+#else
             SaveDevice = new SharedSaveDevice();
             SaveDevice.DeviceSelectorCanceled += (s, e) => e.Response = SaveDeviceEventResponse.Force;
             SaveDevice.DeviceDisconnected += (s, e) => e.Response = SaveDeviceEventResponse.Force;
 
             SaveDevice.PromptForDevice();
+#endif
         }
 
 
@@ -40,7 +47,9 @@ using System;
 
         public void Save(string dataName)
         {
+#if !WINDOWS_PHONE
             SaveDevice.Update(GameTime);
+#endif
 
             ParallelTasks.Parallel.StartBackground(Datas[dataName].Save);
         }
@@ -48,7 +57,9 @@ using System;
 
         public void Load(string dataName)
         {
+#if !WINDOWS_PHONE
             SaveDevice.Update(GameTime);
+#endif
 
             ParallelTasks.Parallel.StartBackground(Datas[dataName].Load);
         }

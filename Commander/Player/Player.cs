@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
@@ -7,14 +8,60 @@
     class Player : Core.Input.Player
     {
         public Circle Circle;
+        public Color Color;
+        public string Representation;
 
         private Vector3 position;
+
+
+        private static List<Vector3> AvailableInitalPositions = new List<Vector3>()
+        {
+            new Vector3(-60, -100, 0),
+            new Vector3(-30, -100, 0),
+            new Vector3(0, -100, 0),
+            new Vector3(30, -100, 0),
+            new Vector3(60, -100, 0)
+        };
+
+
+        private static List<Color> AvailableColors = new List<Color>()
+        {
+            new Color(255, 0, 136),
+            new Color(255, 115, 40),
+            new Color(128, 255, 63),
+            new Color(95, 71, 255),
+            new Color(255, 227, 48)
+        };
+
+
+        private static List<string> AvailableRepresentations = new List<string>()
+        {
+            "Vaisseau",
+            "Collecteur",
+            "Resistance1",
+            "Resistance2",
+            "Resistance3"
+        };
 
 
         public Player()
             : base()
         {
             Circle = new Circle(Position, 8);
+
+            int index = 0;
+
+            index = Main.Random.Next(0, AvailableColors.Count);
+            Color = AvailableColors[index];
+            AvailableColors.RemoveAt(index);
+
+            index = Main.Random.Next(0, AvailableRepresentations.Count);
+            Representation = AvailableRepresentations[index];
+            AvailableRepresentations.RemoveAt(index);
+
+            index = Main.Random.Next(0, AvailableInitalPositions.Count);
+            Position = AvailableInitalPositions[index];
+            AvailableInitalPositions.RemoveAt(index);
 
             KeysToListenTo = KeyboardConfiguration.ToList;
             MouseButtonsToListenTo = MouseConfiguration.ToList;

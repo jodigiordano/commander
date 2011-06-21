@@ -1,79 +1,57 @@
 ================================================================================
-                         todo for Windows release
+                                TODO COMMANDER
 ================================================================================
-. spread the word on towerdefence.net
-. answer customers emails
-. test Xbox360 controller and normal controller
-
-D checks and correct errors from the error database
-D verify trial mode
-D no editor in release
-D put up forum (http://community.ephemeregames.com/)
-D replug upgrade gravitational turret
-C change level done/not done assets
-D only popup tutorial two times
-D gravitational turret preview fucked up
-D new way to calculate the path that doesn't do hicups
-D diminish time before first wave in tutorials levels
-D 5 new loading quotes
-D +1/+10+50/+1life when a mineral is taken
-D at the end of level, show beaten highscore
-D new tutorial system
-D fix world/menu scenarios turrets placements
-D fix highscore visibility
-D Partie scene inputs
-D increase ingame menu choices size
-D redo the help menu and include both mouse/gamepad for Windows version
-D finish tutorial entries
-D unplug old tutorial system
-D help message: one click => end transcription and not skip to next msg
-D visual priority between two enemies (flickering when one outrace another)
-
-. replug the editor
-. 2 new turrets
-. 2 new enemies (mini-planet, swarm?)
-   . enemy who put dangerous minerals on the battlefield
-. 9 new levels
-. 1 new world
-. 1 new mineral
-. finish easy levels to get access to world 2
-. new planets / backgrounds assets
-
-. Cd7 - Schubert - Nummer 5, vers 4 min.
-. Cd7 - Schubert - Nummer 8, vers la fin.
-
-================================================================================
-                         todo for Xbox360 release
-================================================================================
-. report error system and update system
-. redo the evil list
-. add dead zone support again and verify nothing is in the deadzone
+=> change GUI for power-ups: space station in the bottom left of the screen		DONE.
+=> se débarasser du bouton de vente: jamais utilisé, really.
+=> replugger les power-ups (dont la destruction d'une planete)				DONE.
+=> replug the scenarios									DONE.
+=> spaceshipcontroller -> powerupscontroller + powerupdestruction			DONE.
+=> object created / object destroyed for powerUps					DONE.
+=> use object destroyed for powerUps to recheck for powerUp availability		DONE.
+=> install and use redgate ants profiler to make this bitch run faster			DONE.
+=> pixeliser les etoiles
+=> remettre les quotes lorsqu'on meurt (rester dans le drole)
+=> changer le "niveau complete" par un petit vaisseau extra-terrestre
+=> Utiliser RunningSlowly pour les particules
+=> Si planete a proteger hitted + qu'une fois par x temps, pas jouer x particules	DONE.
 
 
 ================================================================================
-                                  bugs
+                                 TODO CORE
 ================================================================================
-. in debug mode, when not connected to internet, the validation scene kicks in
+=> Add Windows Phone Mobile 7 support for data persistence.
+
+
+================================================================================
+                                 TODO BUGS
+================================================================================
+=> 
 
 
 
 ================================================================================
-                                 features
+                               TODO GRAPHICS
 ================================================================================
-. ingame, show potential highscore?
-. make the world 1 levels less difficult
-. adjust the pacing of world 1
-. change the menu
+=> 
+
 
 
 ================================================================================
-                                  website
+                             TODO OPTIMIZATION
 ================================================================================
-. forum [ideas, bugs, etc.]
+=> check for memory leaks								DONE.
 
 
+
 ================================================================================
-                                random ideas
+                               TODO GAMEPLAY
 ================================================================================
-. Battle for Ovula: a special theme where the action takes place in an uterus
-. Commander - The screensaver: a minimal simulation where a random level is generated 
+=>
+
+
+
+================================================================================
+                                TODO AUDIO
+================================================================================
+=>
+

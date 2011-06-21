@@ -23,11 +23,11 @@
             1200000
         };
 
-        private static Dictionary<Size, RectanglePhysique> Cadres = new Dictionary<Size, RectanglePhysique>()
+        private static Dictionary<Size, PhysicalRectangle> Cadres = new Dictionary<Size, PhysicalRectangle>()
         {
-            { Size.Small,  new RectanglePhysique(-640 + 123, -370 + 112, 1098, 560) },
-            { Size.Normal, new RectanglePhysique(-640 + 147, -370 + 136, 1050, 512) },
-            { Size.Big,  new RectanglePhysique(-640 + 179, -370 + 168,  986, 448) }
+            { Size.Small,  new PhysicalRectangle(-640 + 123, -370 + 112, 1098, 560) },
+            { Size.Normal, new PhysicalRectangle(-640 + 147, -370 + 136, 1050, 512) },
+            { Size.Big,  new PhysicalRectangle(-640 + 179, -370 + 168,  986, 448) }
         };
 
         private static Dictionary<Size, Vector3> DistancesMin = new Dictionary<Size, Vector3>()
@@ -83,7 +83,7 @@
 
         public void genererSystemePlanetaire()
         {
-            LevelDescriptor = LevelsFactory.GetEmptyDescriptor();
+            LevelDescriptor = new LevelDescriptor();
 
             CorpsCelestes.Clear();
 
@@ -175,7 +175,7 @@
 
             int nbTentatives = 0;
 
-            RectanglePhysique rp = null;
+            PhysicalRectangle rp = null;
 
             do
             {

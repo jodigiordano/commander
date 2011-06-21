@@ -23,7 +23,7 @@
             : base()
         {
             Shape = Shape.Rectangle;
-            Rectangle = new RectanglePhysique();
+            Rectangle = new PhysicalRectangle();
             Explosive = true;
         }
 
@@ -103,6 +103,7 @@
                 Wander = true;
 
             Position += Speed * Direction;
+            Rotation = (float) Math.Atan2(Direction.Y, Direction.X);
 
             ConeEmitter emitter = (ConeEmitter)TrailEffect.ParticleEffect[0];
             emitter.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
@@ -114,7 +115,7 @@
         public override void Draw()
         {
             if (Target.Alive)
-                Image.Rotation = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
+                Image.Rotation = MathHelper.Pi + Rotation;
 
             if (TrailEffectCounter > 0)
                 TrailEffect.Trigger(ref this.position);

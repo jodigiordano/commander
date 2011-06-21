@@ -32,7 +32,7 @@
 
         public void doClick()
         {
-            Pressed = Physics.collisionCercleCercle(Curseur.Circle, BoutonCercle);
+            Pressed = Physics.CircleCicleCollision(Curseur.Circle, BoutonCercle);
         }
 
 

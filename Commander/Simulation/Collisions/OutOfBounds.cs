@@ -9,7 +9,7 @@
         public List<Bullet> Output;
 
         public List<Bullet> Bullets;
-        public RectanglePhysique Battlefield;
+        public PhysicalRectangle Battlefield;
 
 
         public OutOfBounds()
@@ -29,7 +29,7 @@
                 if (bullet.Shape == Shape.Line || bullet.Shape == Shape.Circle)
                     continue;
 
-                if (!Physics.collisionRectangleRectangle(bullet.Rectangle, this.Battlefield))
+                if (!Physics.RectangleRectangleCollision(bullet.Rectangle, this.Battlefield))
                     Output.Add(bullet);
             }
         }

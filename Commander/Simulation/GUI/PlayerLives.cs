@@ -17,9 +17,13 @@
             Simulator = simulator;
             CelestialBody = celestialBody;
 
-            CelestialBody.Lunes.Clear();
-
             Moons = new List<Moon>();
+
+            if (CelestialBody == null)
+                return;
+
+
+            CelestialBody.Lunes.Clear();
 
             for (int i = 0; i < celestialBody.LifePoints; i++)
                 Moons.Add(CreateMoon());
@@ -28,6 +32,9 @@
 
         public void Update(GameTime gameTime)
         {
+            if (CelestialBody == null)
+                return;
+
             int difference = (int) (Moons.Count - CelestialBody.LifePoints);
 
             if (difference < 0)
@@ -35,7 +42,6 @@
                 for (int i = 0; i < Math.Abs(difference); i++)
                 {
                     Moon m = CreateMoon();
-                    //m.Show();
                     Moons.Add(m);
                 }
             }
@@ -45,7 +51,6 @@
                 for (int i = 0; i < difference && Moons.Count > 0; i++)
                 {
                     Moon m = Moons[Moons.Count - 1];
-                    //m.Hide();
                     Moons.RemoveAt(Moons.Count - 1);
                 }
             }
@@ -55,22 +60,11 @@
         }
 
 
-        //public void Show()
-        //{
-        //    foreach (var moon in Moons)
-        //        moon.Show();
-        //}
-
-
-        //public void Hide()
-        //{
-        //    foreach (var moon in Moons)
-        //        moon.Hide();
-        //}
-
-
         public void Draw()
         {
+            if (CelestialBody == null)
+                return;
+
             if (CelestialBody.Alive)
                 foreach (var moon in Moons)
                     moon.Draw();

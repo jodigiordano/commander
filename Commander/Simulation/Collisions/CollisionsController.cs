@@ -17,7 +17,7 @@
         public event EnemyBulletHandler BulletDeflected;
 
         private Simulator Simulator;
-        private RectanglePhysique Battlefield;
+        private PhysicalRectangle Battlefield;
         private GridWorld EnemiesGrid;
         private GridWorld TurretsGrid;
 
@@ -156,7 +156,7 @@
             {
                 DrawRectangle(p, Color.Red);
 
-                if (p is MissileBullet)
+                if (p.Explosive)
                 {
                     c.Position = p.Position;
                     c.Radius = p.ExplosionRange;
@@ -170,12 +170,14 @@
 
             foreach (var e in Enemies)
             {
-                Simulator.Scene.Add(new VisualRectangle(e.Circle.Rectangle, Color.Yellow));
-                DrawRectangle(e, Color.Orange);
+                Simulator.Scene.Add(new VisualRectangle(e.Circle.Rectangle, e.Color));
+                DrawRectangle(e, e.Color);
             }
 
             foreach (var e in Minerals)
                 DrawRectangle(e, Color.Yellow);
+
+            EnemiesGrid.Draw(Simulator.Scene, Enemies);
         }
 
 

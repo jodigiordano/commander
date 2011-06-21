@@ -8,13 +8,13 @@
     static class KeyboardConfiguration
     {
         public static Keys Next = Keys.Enter;
-        public static Keys Back = Keys.Back;
-        public static Keys Cancel = Keys.Back;
+        public static Keys Back = Keys.Escape;
+        public static Keys Cancel = Keys.Escape;
         public static Keys ChangeMusic = Keys.RightShift;
         public static Keys NextWave = Keys.RightControl;
         public static Keys Debug = Keys.F1;
         public static Keys Editor = Keys.F2;
-        public static Keys Disconnect = Keys.Escape;
+        public static Keys Disconnect = Keys.Q;
 
         public static List<Keys> ToList
         {

@@ -53,17 +53,25 @@
         }
 
 
-        private void DoManualMode(Vector3 donneesThumbstick)
+        public void Stop()
         {
-            donneesThumbstick /= 10;
+            Bouncing = Vector3.Zero;
+            Acceleration = Vector3.Zero;
+            NextInput = Vector3.Zero;
+        }
 
-            donneesThumbstick.X = MathHelper.Clamp(donneesThumbstick.X, -1, 1);
-            donneesThumbstick.Y = MathHelper.Clamp(donneesThumbstick.Y, -1, 1);
 
-            if (donneesThumbstick.X != 0 || donneesThumbstick.Y != 0)
+        private void DoManualMode(Vector3 input)
+        {
+            input /= 5;
+
+            input.X = MathHelper.Clamp(input.X, -1, 1);
+            input.Y = MathHelper.Clamp(input.Y, -1, 1);
+
+            if (input.X != 0 || input.Y != 0)
             {
                 // Trouver la direction visée
-                Vector3 directionVisee = donneesThumbstick;
+                Vector3 directionVisee = input;
                 Vector3 direction = Direction;
 
                 // Trouver l'angle d'alignement
@@ -87,7 +95,7 @@
 
 
 
-            DoAcceleration(ref donneesThumbstick);
+            DoAcceleration(ref input);
 
             Position += Speed * Acceleration;
         }

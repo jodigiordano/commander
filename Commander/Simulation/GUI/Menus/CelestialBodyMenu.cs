@@ -18,7 +18,7 @@
         private Dictionary<TurretType, Text> PrixTourellesAchat;
 
         private Image WidgetSelection;
-        private float PrioriteAffichage;
+        private double VisualPriority;
 
         private int MenuWidth;
         private int DistanceBetweenTwoChoices;
@@ -28,8 +28,8 @@
         private float ImageSize;
 
 
-        public CelestialBodyMenu(Simulator simulator, float prioriteAffichage)
-            : base(simulator)
+        public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color)
+            : base(simulator, visualPriority, color)
         {
             MenuWidth = 140;
             DistanceBetweenTwoChoices = 35;
@@ -38,18 +38,16 @@
             TextSize = 2;
             ImageSize = 3;
 
-            PrioriteAffichage = prioriteAffichage;
+            VisualPriority = visualPriority;
 
-            WidgetSelection = new Image
-            (
-                "PixelBlanc",
-                Position
-            );
-            WidgetSelection.Origin = Vector2.Zero;
-            WidgetSelection.Size = new Vector2(MenuWidth, DistanceBetweenTwoChoices);
-            WidgetSelection.Color = Color.Green;
-            WidgetSelection.Color.A = 230;
-            WidgetSelection.VisualPriority = this.PrioriteAffichage + 0.01f;
+            WidgetSelection = new Image("PixelBlanc", Position)
+            {
+                Origin = Vector2.Zero,
+                Size = new Vector2(MenuWidth, DistanceBetweenTwoChoices),
+                Color = Color.Green,
+                Alpha = 230,
+                VisualPriority = this.VisualPriority + 0.01f
+            };
 
             AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
 
@@ -67,13 +65,13 @@
             foreach (var t in tourellesDisponibles.Values)
             {
                 Image image = t.BaseImage.Clone();
-                image.VisualPriority = this.PrioriteAffichage;
+                image.VisualPriority = this.VisualPriority;
                 image.SizeX = ImageSize;
                 LogosTourellesAchat.Add(t.Type, image);
 
                 Text prix = new Text("Pixelite");
                 prix.SizeX = TextSize;
-                prix.VisualPriority = this.PrioriteAffichage;
+                prix.VisualPriority = this.VisualPriority;
 
                 PrixTourellesAchat.Add(t.Type, prix);
             }
@@ -110,7 +108,7 @@
 
             DrawTurretsToBuy();
 
-            Bulle.Draw();
+            Bubble.Draw();
         }
 
 

@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -21,7 +22,7 @@
         }
 
         public TextBubble(Simulator simulator, Text texte, Vector3 position, double tempsAffichage, double prioriteAffichage)
-            : base(simulator, new Rectangle(), prioriteAffichage)
+            : base(simulator, new PhysicalRectangle(), prioriteAffichage)
         {
             this.Texte = texte;
             this.Texte.VisualPriority = prioriteAffichage - 0.01f;
@@ -55,22 +56,6 @@
             ComputeSize();
             ComputePosition();
         }
-
-
-        //public override void Show()
-        //{
-        //    base.Show();
-
-        //    Simulation.Scene.Add(Texte);
-        //}
-
-
-        //public override void Hide()
-        //{
-        //    base.Hide();
-
-        //    Simulation.Scene.Remove(Texte);
-        //}
 
 
         public override void Draw()

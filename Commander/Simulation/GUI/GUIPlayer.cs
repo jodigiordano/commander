@@ -6,7 +6,7 @@
 
     class GUIPlayer
     {
-        public Cursor Cursor;
+        public SpaceshipCursor Cursor;
         public Cursor Crosshair;
         public SelectedCelestialBodyAnimation SelectedCelestialBodyAnimation;
         public CelestialBodyMenu MenuCelestialBody;
@@ -19,23 +19,23 @@
         private Simulator Simulator;
 
         
-        public GUIPlayer(Simulator simulator, Dictionary<TurretType, bool> availableTurrets, Dictionary<string, LevelDescriptor> availableLevelsDemoMenu)
+        public GUIPlayer(Simulator simulator, Dictionary<TurretType, bool> availableTurrets, Dictionary<string, LevelDescriptor> availableLevelsDemoMenu, Color color, string representation)
         {
             Simulator = simulator;
 
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulator);
 
-            Cursor = new Cursor(Simulator.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral);
+            Cursor = new SpaceshipCursor(Simulator.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, color, representation);
             Crosshair = new Cursor(Simulator.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
-            MenuTurret = new TurretMenu(Simulator, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
-            MenuCelestialBody = new CelestialBodyMenu(Simulator, Preferences.PrioriteGUIPanneauGeneral + 0.03f);
+            MenuTurret = new TurretMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
+            MenuCelestialBody = new CelestialBodyMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
 
             FinalSolutionPreview = new FinalSolutionPreview(Simulator);
 
             MenuCelestialBody.AvailableTurrets = availableTurrets;
             MenuCelestialBody.Initialize();
 
-            WorldMenu = new WorldMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste - 0.01f, availableLevelsDemoMenu);
+            WorldMenu = new WorldMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, availableLevelsDemoMenu, color);
 
             PowerUpInputMode = false;
             PowerUpFinalSolution = false;

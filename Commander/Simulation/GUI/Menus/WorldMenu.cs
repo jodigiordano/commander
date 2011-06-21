@@ -21,8 +21,8 @@
         private double VisualPriority;
 
 
-        public WorldMenu(Simulator simulator, double visualPriority, Dictionary<string, LevelDescriptor> availableLevels)
-            : base(simulator)
+        public WorldMenu(Simulator simulator, double visualPriority, Dictionary<string, LevelDescriptor> availableLevels, Color color)
+            : base(simulator, visualPriority, color)
         {
             VisualPriority = visualPriority;
             AvailableLevels = availableLevels;
@@ -93,7 +93,7 @@
 
         public override void Draw()
         {
-            if (CelestialBody == null || Action == GameAction.None)
+            if (CelestialBody == null)
                 return;
 
 
@@ -127,7 +127,7 @@
             Simulation.Scene.Add(ResumeGame);
             Simulation.Scene.Add(NewGame);
             Simulation.Scene.Add(Selector);
-            Bulle.Draw();
+            Bubble.Draw();
         }
 
 

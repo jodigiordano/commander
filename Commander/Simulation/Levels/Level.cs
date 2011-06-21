@@ -63,7 +63,8 @@
                     break;
                 }
 
-            CelestialBodyToProtect.LifePoints = descriptor.Player.Lives;
+            if (CelestialBodyToProtect != null)
+                CelestialBodyToProtect.LifePoints = descriptor.Player.Lives;
 
             CommonStash = new CommonStash();
             CommonStash.Lives = descriptor.Player.Lives;

@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using ProjectMercury;
-    using ProjectMercury.Renderers;
     using ProjectMercury.Emitters;
-    using Microsoft.Xna.Framework.Content;
+    using ProjectMercury.Renderers;
 
 
     enum State
@@ -50,7 +50,6 @@
 
             ParticleEffect = model.DeepCopy();
 
-            // doit être fait ici car l'allocation des tableaux de particules se fait dans cette méthode
             ParticleEffect.Initialise();
         }
 
@@ -135,7 +134,7 @@
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            this.Renderer.RenderEffect(this.ParticleEffect, ref Scene.Camera.Transform);
+            Renderer.RenderEffect(this.ParticleEffect, ref Scene.Camera.Transform);
         }
 
 

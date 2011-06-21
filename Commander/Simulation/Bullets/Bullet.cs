@@ -18,7 +18,7 @@ namespace EphemereGames.Commander.Simulation
         public Circle Circle                                        { get; set; }
         public Line Line                                            { get; set; }
 
-        public RectanglePhysique Rectangle                          { get; set; }
+        public PhysicalRectangle Rectangle                          { get; set; }
         public float LifePoints                                     { get; set; }
         public float AttackPoints                                   { get; set; }
 
@@ -57,6 +57,22 @@ namespace EphemereGames.Commander.Simulation
             }
 
             OutOfBounds = false;
+
+            //switch (Shape)
+            //{
+            //    case Shape.Rectangle:
+            //        Rectangle.X = (int) Position.X - Rectangle.Width / 2;
+            //        Rectangle.Y = (int) Position.Y - Rectangle.Height / 2;
+            //        break;
+
+            //    case Shape.Circle:
+            //        Circle.Position = this.Position;
+            //        Rectangle.X = (int) (Position.X - Circle.Radius);
+            //        Rectangle.Y = (int) (Position.Y - Circle.Radius);
+            //        Rectangle.Width = (int) (Circle.Radius * 2);
+            //        Rectangle.Height = (int) (Circle.Radius * 2);
+            //        break;
+            //}
         }
 
 

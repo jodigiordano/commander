@@ -1,8 +1,10 @@
 ﻿namespace EphemereGames.Core.Input
 {
     using System.Collections.Generic;
-    using System.Security.Principal;
     using Microsoft.Xna.Framework;
+#if WINDOWS
+    using System.Security.Principal;
+#endif
 
 
     class PlayersController
@@ -148,7 +150,11 @@
 
         internal Player GetPlayer(PlayerIndex index)
         {
-            return Players.Find(p => p.Index == index);
+            foreach (var p in Players)
+                if (p.Index == index)
+                    return p;
+
+            return null;
         }
     }
 }

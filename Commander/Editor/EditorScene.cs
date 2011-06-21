@@ -9,9 +9,7 @@
 
     class EditorScene : Scene
     {
-        private string ChoixTransition;
         private Simulator Simulator;
-        private Cursor Cursor;
 
 
         public EditorScene()
@@ -19,12 +17,13 @@
         {
             Name = "Editeur";
 
-            Simulator = new Simulator(this, LevelsFactory.GetEmptyDescriptor());
-            Simulator.Initialize();
-            Simulator.EditorMode = true;
-            Simulator.State = GameState.Paused;
+            Simulator = new Simulator(this, LevelsFactory.GetEmptyDescriptor())
+            {
+                EditorMode = true
+            };
 
-            Cursor = new Cursor(this, Vector3.Zero, 10, Preferences.PrioriteGUIConsoleEditeur);
+            Simulator.Initialize();
+            Inputs.AddListener(Simulator);
         }
 
 
@@ -36,7 +35,6 @@
 
         protected override void UpdateVisual()
         {
-            Cursor.Draw();
             Simulator.Draw();
         }
 
@@ -45,7 +43,9 @@
         {
             base.OnFocus();
 
-            Inputs.AddListener(Simulator);
+            Simulator.SyncPlayers();
+
+            Simulator.EnableInputs = true;
         }
 
 
@@ -53,50 +53,31 @@
         {
             base.OnFocusLost();
 
-            Inputs.RemoveListener(Simulator);
+            Simulator.EnableInputs = false;
         }
 
 
         #region Input Handling
 
-        public override void DoMouseMoved(Core.Input.Player p, Vector3 delta)
+
+        public override void DoKeyPressedOnce(Core.Input.Player player, Keys key)
         {
-            Player player = (Player) p;
-
-            player.Move(ref delta, MouseConfiguration.Speed);
-            Cursor.Position = player.Position;
-        }
-
-
-        public override void DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, Vector3 delta)
-        {
-            Player player = (Player) p;
-
-            if (button == GamePadConfiguration.MoveCursor)
-            {
-                player.Move(ref delta, GamePadConfiguration.Speed);
-                Cursor.Position = player.Position;
-            }
+            if (key == KeyboardConfiguration.Back)
+                TransiteTo("Menu");
         }
 
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Cancel)
-                BeginTransition();
+            if (button == MouseConfiguration.Back)
+                TransiteTo("Menu");
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Cancel)
-                BeginTransition();
-        }
-
-
-        public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
-        {
-
+            if (button == GamePadConfiguration.Back)
+                TransiteTo("Menu");
         }
 
 
@@ -108,11 +89,5 @@
 
 
         #endregion
-
-
-        private void BeginTransition()
-        {
-            Visuals.Transite("Editeur", "Menu");
-        }
     }
 }

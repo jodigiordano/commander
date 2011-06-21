@@ -77,7 +77,7 @@
             }
         }
 
-        public bool dansLesBornes(CelestialBodyDescriptor descripteur, RectanglePhysique cadre)
+        public bool dansLesBornes(CelestialBodyDescriptor descripteur, PhysicalRectangle cadre)
         {
             CorpsCelesteLite corpsCeleste = new CorpsCelesteLite
             (

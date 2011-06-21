@@ -39,8 +39,8 @@
 
         public const float PrioriteGUIVictoireDefaite = 0.1f; //(Sous-composants, + [0.0 .. 0.09]) donc [0.0 .. 0.09]
         public const float PrioriteGUIHistoire = 0.2f;  //(Sous-composants, + [0.0 .. 0.09]) donc [0.1 .. 0.19]
-        public const float PrioriteGUIPanneauGeneral = 0.3f; //(Sous-composants, + [0.0 .. 0.09]) donc [0.2 .. 0.29]
-        public const float PrioriteGUIPanneauCorpsCeleste = 0.4f; //(Sous-composants, + [0.0 .. 0.09]) donc [0.3 .. 0.39]
+        public const float PrioriteGUIPanneauGeneral = 0.4f; //(Sous-composants, + [0.0 .. 0.09]) donc [0.2 .. 0.29]
+        public const float PrioriteGUIPanneauCorpsCeleste = 0.3f; //(Sous-composants, + [0.0 .. 0.09]) donc [0.3 .. 0.39]
         public const float PrioriteGUIPanneauDebug = 0f;
         public const float PrioriteGUIConsoleEditeur = 0f;
         public const float PrioriteGUIMenuPrincipal = 0.03f;

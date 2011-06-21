@@ -179,11 +179,11 @@
 
             switch (type)
             {
-                case EnemyType.Asteroid: size = 20; break;
+                case EnemyType.Asteroid: size = 35; break;
                 case EnemyType.Centaur: size = 30; break;
                 case EnemyType.Comet: size = 10; break;
                 case EnemyType.Meteoroid: size = 35; break;
-                case EnemyType.Plutoid: size = 25; break;
+                case EnemyType.Plutoid: size = 35; break;
                 case EnemyType.Trojan: size = 15; break;
                 case EnemyType.Apohele: size = 20; break;
                 case EnemyType.Damacloid: size = 20; break;

@@ -19,7 +19,7 @@
             : base()
         {
             Speed = 0;
-            Rectangle = new RectanglePhysique();
+            Rectangle = new PhysicalRectangle();
             CanonRotation = new Matrix();
         }
 

@@ -14,7 +14,7 @@
         public List<Enemy> Enemies;
 
         private GridWorld.IntegerHandler Handler;
-        private RectanglePhysique CelestialBodyRectangle;
+        private PhysicalRectangle CelestialBodyRectangle;
         private Circle CelestiablBodyRange;
 
 
@@ -22,7 +22,7 @@
         {
             Handler = new GridWorld.IntegerHandler(CheckEnemiesHit);
             Output = new Dictionary<int, Enemy>();
-            CelestialBodyRectangle = new RectanglePhysique();
+            CelestialBodyRectangle = new PhysicalRectangle();
             CelestiablBodyRange = new Circle(Vector3.Zero, 0);
         }
 
@@ -45,7 +45,7 @@
             if (Output.ContainsKey(hash))
                 return true;
 
-            if (Physics.collisionCercleCercle(CelestiablBodyRange, e.Circle))
+            if (Physics.CircleCicleCollision(CelestiablBodyRange, e.Circle))
                 Output.Add(hash, e);
 
             return true;

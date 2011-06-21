@@ -13,7 +13,7 @@
     class ShootingStar : IObjetPhysique, ILivingObject
     {
         public Scene Scene;
-        public RectanglePhysique Terrain;
+        public PhysicalRectangle Terrain;
         private bool ContentLoaded;
 
         public Vector3 Position         { get { return position; } set { position = value; } }
@@ -151,7 +151,7 @@
         #region Useless
         public float Speed { get; set; }
         public Vector3 Direction { get; set; }
-        public RectanglePhysique Rectangle { get; set; }
+        public PhysicalRectangle Rectangle { get; set; }
         public Line Line { get; set; }
         public float Masse { get; set; }
         public float Rotation { get; set; }

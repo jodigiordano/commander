@@ -37,7 +37,7 @@
 
         public void doClick()
         {
-            if (Physics.collisionCercleCercle(Curseur.Circle, BoxCercle))
+            if (Physics.CircleCicleCollision(Curseur.Circle, BoxCercle))
                 Checked = !Checked;
         }
 

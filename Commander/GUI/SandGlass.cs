@@ -13,14 +13,13 @@
         public double RemainingTime;
 
         public Vector3 Position             { get; set; }
-        public RectanglePhysique Rectangle  { get; set; }
+        public PhysicalRectangle Rectangle  { get; set; }
         public Shape Shape                  { get; set; }
 
         private Scene Scene;
         private Image Image;
         private List<Image> Pixels;
         private int Progress;
-        private int PreviousProgress;
         private double MinimumTime;
         private RotationEffect RotationEffect;
 
@@ -115,15 +114,26 @@
             }
 
             Progress = 0;
-            PreviousProgress = 0;
 
             Shape = Shape.Rectangle;
             Vector2 representationSize = Image.AbsoluteSize;
-            Rectangle = new RectanglePhysique(
+            Rectangle = new PhysicalRectangle(
                 (int) (Image.Position.X - representationSize.X / 2),
                 (int) (Image.Position.Y - representationSize.Y / 2),
                 (int) representationSize.X,
                 (int) representationSize.Y);
+        }
+
+
+        public byte Alpha
+        {
+            set
+            {
+                Image.Alpha = value;
+
+                foreach (var pixel in Pixels)
+                    pixel.Alpha = value;
+            }
         }
 
 
@@ -153,23 +163,6 @@
         }
 
 
-        //public void Show()
-        //{
-        //    Scene.Add(Image);
-
-        //    AddUpperPixels();
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Scene.Remove(Image);
-
-        //    foreach (var pixel in Pixels)
-        //        Scene.Remove(pixel);
-        //}
-
-
         public void Draw()
         {
             int nbPixels = NB_PIXELS / 2;
@@ -180,43 +173,12 @@
             for (int i = 0; i < Progress; i++)
                 Scene.Add(Pixels[nbPixels + i]);
 
-            //if (PreviousProgress >= nbPixels)
-            //{
-            //    AddUpperPixels();
-            //    RemoveLowerPixels();
-            //    PreviousProgress = 0;
-            //}
-            
-            //int delta = Progress - PreviousProgress;
-
-            //for (int i = PreviousProgress; i < Progress; i++)
-            //    Scene.Remove(Pixels[i]);
-
-            //for (int i = PreviousProgress; i < Progress; i++)
-            //    Scene.Add(Pixels[nbPixels + i]);
-
-            //PreviousProgress = Progress;
-
             Scene.Add(Image);
 
             // rotation
             for (int i = 0; i < NB_PIXELS; i++)
                 Pixels[i].Rotation = Image.Rotation;
         }
-
-
-        //private void AddUpperPixels()
-        //{
-        //    for (int i = 0; i < NB_PIXELS / 2; i++)
-        //        Scene.Add(Pixels[i]);
-        //}
-
-
-        //private void RemoveLowerPixels()
-        //{
-        //    for (int i = 1; i <= NB_PIXELS / 2; i++)
-        //        Scene.Remove(Pixels[NB_PIXELS - i]);
-        //}
 
 
         public void Flip()
@@ -235,19 +197,22 @@
 
         public void FadeOut(double time)
         {
-            Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.FadeOutTo0(255, 0, time));
-
-            foreach (var pixel in Pixels)
-                Scene.VisualEffects.Add(pixel, Core.Visual.VisualEffects.FadeOutTo0(255, 0, time));
+            Fade(0, time);
         }
 
 
         public void FadeIn(double time)
         {
-            Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.FadeInFrom0(255, 0, time));
+            Fade(255, time);
+        }
+
+
+        public void Fade(int to, double time)
+        {
+            Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.Fade(Image.Alpha, to, 0, time));
 
             foreach (var pixel in Pixels)
-                Scene.VisualEffects.Add(pixel, Core.Visual.VisualEffects.FadeInFrom0(255, 0, time));
+                Scene.VisualEffects.Add(pixel, Core.Visual.VisualEffects.Fade(pixel.Alpha, to, 0, time));
         }
 
 

@@ -319,36 +319,9 @@
 
         public static LevelDescriptor GetEmptyDescriptor()
         {
-            LevelDescriptor d = new LevelDescriptor();
+            var l = new LevelDescriptor();
 
-            CelestialBodyDescriptor c;
-            WaveDescriptor v;
-
-            d.Player.Lives = 1;
-            d.Player.Money = 100;
-
-            d.Background = "fondecran16";
-
-            c = new CelestialBodyDescriptor();
-            c.Name = "CeintureAsteroide";
-            c.Invincible = true;
-            c.Position = new Vector3(700, -400, 0);
-            c.Speed = 50000;
-            c.Size = Size.Small;
-            c.Images.Add("Asteroid");
-            c.PathPriority = 1;
-            c.CanSelect = false;
-            c.AddTurret(TurretType.Gravitational, 1, Vector3.Zero, true, false, false);
-
-            d.CelestialBodyToProtect = c.PathPriority;
-
-            d.PlanetarySystem.Add(c);
-
-            d.Waves.Add(new WaveDescriptor());
-            d.Waves[0].Enemies.Add(EnemyType.Asteroid);
-            d.Waves[0].Quantity = 50;
-
-            return d;
+            return l;
         }
 
 

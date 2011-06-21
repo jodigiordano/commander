@@ -12,7 +12,7 @@
             : base()
         {
             Shape = Shape.Rectangle;
-            Rectangle = new RectanglePhysique();
+            Rectangle = new PhysicalRectangle();
         }
 
 
@@ -22,8 +22,8 @@
 
             Vector2 imageSize = Image.AbsoluteSize;
 
-            Rectangle.Width = (int) (imageSize.X);
-            Rectangle.Height = (int) (imageSize.Y);
+            Rectangle.Width = (int) (imageSize.Y / 2) + 2;
+            Rectangle.Height = (int) (imageSize.Y / 2) + 2;
 
             base.LoadAssets();
         }
@@ -53,6 +53,7 @@
         public override void Update()
         {
             Position += Speed * Direction;
+            Rotation = (float) Math.Atan2(Direction.Y, Direction.X);
 
             base.Update();
         }

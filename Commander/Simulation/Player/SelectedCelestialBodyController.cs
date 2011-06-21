@@ -70,7 +70,7 @@
 
                 for (int j = 0; j < CelestialBodies[i].Turrets.Count; j++)
                     if (CelestialBodies[i].Turrets[j].Visible &&
-                        Physics.collisionCercleCercle(Cercle, CelestialBodies[i].Turrets[j].Circle))
+                        Physics.CircleCicleCollision(Cercle, CelestialBodies[i].Turrets[j].Circle))
                     {
                         SelectedCelestialBodyIndex = -1;
                         SelectedTurretCelestialBodyIndex = i;
@@ -100,7 +100,7 @@
                 if (!CelestialBodies[i].Alive || !CelestialBodies[i].Selectionnable)
                     continue;
 
-                if (Physics.collisionCercleCercle(Cercle, CelestialBodies[i].Circle))
+                if (Physics.CircleCicleCollision(Cercle, CelestialBodies[i].Circle))
                 {
                     SelectedCelestialBodyIndex = i;
                     break;

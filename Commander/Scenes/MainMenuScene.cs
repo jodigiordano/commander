@@ -84,7 +84,6 @@
             //Simulation = new Simulation(Main, this, ScenariosFactory.getDescripteurTestsPerformance())
             Simulator = new Simulator(this, levelDescriptor)
             {
-                PositionCurseur = new Vector3(400, 20, 0),
                 DemoMode = true
             };
             Simulator.Initialize();

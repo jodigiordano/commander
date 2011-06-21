@@ -9,7 +9,7 @@
         public PulseBullet()
             : base()
         {
-            Rectangle = new RectanglePhysique();
+            Rectangle = new PhysicalRectangle();
         }
 
 

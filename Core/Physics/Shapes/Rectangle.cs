@@ -4,21 +4,21 @@
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     
-    public class RectanglePhysique
+    public class PhysicalRectangle
     {
         public Rectangle RectanglePrimitif;
 
-        public RectanglePhysique()
+        public PhysicalRectangle()
         {
             RectanglePrimitif = new Rectangle();
         }
 
-        public RectanglePhysique(int x, int y, int width, int height)
+        public PhysicalRectangle(int x, int y, int width, int height)
         {
             RectanglePrimitif = new Rectangle(x, y, width, height);
         }
 
-        public RectanglePhysique(Rectangle rectangle)
+        public PhysicalRectangle(Rectangle rectangle)
         {
             RectanglePrimitif = rectangle;
         }
@@ -67,7 +67,7 @@
             get { return RectanglePrimitif.Bottom; }
         }
 
-        public bool Intersects(RectanglePhysique autre)
+        public bool Intersects(PhysicalRectangle autre)
         {
             bool resultat;
 
@@ -112,7 +112,7 @@
             pointC = ligne.DebutV2;
             pointD = ligne.FinV2;
 
-            if (Collisions.collisionLigneLigne(ref pointA, ref pointB, ref pointC, ref pointD))
+            if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
                 return ligne.pointIntersection(ref pointA, ref pointB);
 
 
@@ -123,7 +123,7 @@
             pointC = ligne.DebutV2;
             pointD = ligne.FinV2;
 
-            if (Collisions.collisionLigneLigne(ref pointA, ref pointB, ref pointC, ref pointD))
+            if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
                 return ligne.pointIntersection(ref pointA, ref pointB);
 
 
@@ -134,7 +134,7 @@
             pointC = ligne.DebutV2;
             pointD = ligne.FinV2;
 
-            if (Collisions.collisionLigneLigne(ref pointA, ref pointB, ref pointC, ref pointD))
+            if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
                 return ligne.pointIntersection(ref pointA, ref pointB);
 
 
@@ -145,7 +145,7 @@
             pointC = ligne.DebutV2;
             pointD = ligne.FinV2;
 
-            if (Collisions.collisionLigneLigne(ref pointA, ref pointB, ref pointC, ref pointD))
+            if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
                 return ligne.pointIntersection(ref pointA, ref pointB);
 
 

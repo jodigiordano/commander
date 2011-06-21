@@ -42,12 +42,10 @@ namespace EphemereGames.Commander.Simulation
         public EnemiesFactory EnemiesFactory;
         public MineralsFactory MineralsFactory;
         public BulletsFactory BulletsFactory;
-        public RectanglePhysique Terrain;
-        public RectanglePhysique InnerTerrain;
+        public PhysicalRectangle Terrain;
+        public PhysicalRectangle InnerTerrain;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
         public CelestialBody CelestialBodyPausedGame;
-        
-        public Vector3 PositionCurseur; 
 
         public PlanetarySystemController PlanetarySystemController;
         public MessagesController MessagesController;
@@ -72,8 +70,8 @@ namespace EphemereGames.Commander.Simulation
             MineralsFactory = new MineralsFactory(this);
             BulletsFactory = new BulletsFactory(this);
 
-            Terrain = new RectanglePhysique(-840, -560, 1680, 1120);
-            InnerTerrain = new RectanglePhysique(-640, -320, 1280, 720);
+            Terrain = new PhysicalRectangle(-840, -560, 1680, 1120);
+            InnerTerrain = new PhysicalRectangle(-640, -320, 1280, 720);
 
             CollisionsController = new CollisionsController(this);
             BulletsController = new BulletsController(this);
@@ -90,7 +88,7 @@ namespace EphemereGames.Commander.Simulation
             WorldMode = false;
             DemoMode = false;
             EditorMode = false;
-            DebugMode = false;
+            DebugMode = Preferences.Debug;
             GameAction = GameAction.None;
         }
 
@@ -174,7 +172,6 @@ namespace EphemereGames.Commander.Simulation
             GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
             GUIController.Level = LevelsController.Level;
             GUIController.Enemies = EnemiesController.Enemies;
-            SimPlayersController.InitialPlayerPosition = PositionCurseur;
             GUIController.InfiniteWaves = LevelsController.InfiniteWaves;
             GUIController.Waves = LevelsController.Waves;
             GUIController.AvailableLevelsDemoMode = AvailableLevelsDemoMode;
@@ -254,6 +251,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.HideAdvancedViewAsked += new NoneHandler(GUIController.DoHideAdvancedViewAsked);
             SimPlayersController.ShowNextWaveAsked += new NoneHandler(GUIController.DoShowNextWaveAsked);
             SimPlayersController.HideNextWaveAsked += new NoneHandler(GUIController.DoHideNextWaveAsked);
+            CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(SimPlayersController.DoObjectHit);
 
             LevelsController.Initialize();
             EnemiesController.Initialize();
@@ -413,7 +411,7 @@ namespace EphemereGames.Commander.Simulation
 
         void InputListener.DoKeyReleased(Core.Input.Player p, Keys key)
         {
-            if (this.DebugMode && key == KeyboardConfiguration.Debug)
+            if (DebugMode && key == KeyboardConfiguration.Debug)
                 CollisionsController.Debug = false;
 
             if (LevelsController.Help.Active)
@@ -589,7 +587,7 @@ namespace EphemereGames.Commander.Simulation
 
         public void DoPlayerConnected(Core.Input.Player player)
         {
-            SimPlayersController.AddPlayer((Player) player);
+            SimPlayersController.AddPlayer((Commander.Player) player);
         }
 
 

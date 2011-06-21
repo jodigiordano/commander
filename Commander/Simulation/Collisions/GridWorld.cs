@@ -2,20 +2,21 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class GridWorld
     {
         private List<List<List<int>>> Grid;
-        private RectanglePhysique Space;
+        private PhysicalRectangle Space;
         private Vector2 SpaceUpperLeft;
         private int CellSize;
         private int NbRows;
         private int NbColumns;
 
 
-        public GridWorld(RectanglePhysique space, int cellSize)
+        public GridWorld(PhysicalRectangle space, int cellSize)
         {
             this.Space = space;
             this.CellSize = cellSize;
@@ -103,7 +104,7 @@
 
         public delegate bool IntegerHandler(int i);
 
-        public void GetItems(RectanglePhysique rectangle, IntegerHandler callback)
+        public void GetItems(PhysicalRectangle rectangle, IntegerHandler callback)
         {
             Vector2 upperLeft = new Vector2(rectangle.Left, rectangle.Top);
             Vector2.Subtract(ref upperLeft, ref SpaceUpperLeft, out upperLeft);
@@ -190,7 +191,7 @@
         }
 
 
-        public IEnumerable<int> GetItems(RectanglePhysique rectangle)
+        public IEnumerable<int> GetItems(PhysicalRectangle rectangle)
         {
             Vector2 upperLeft = new Vector2(rectangle.Left, rectangle.Top);
             Vector2.Subtract(ref upperLeft, ref SpaceUpperLeft, out upperLeft);
@@ -261,6 +262,34 @@
             for (int i = 0; i < NbRows; i++)
                 for (int j = 0; j < NbColumns; j++)
                     Grid[i][j].Clear();
+        }
+
+
+        public void Draw(Scene scene, List<Enemy> enemies)
+        {
+            for (int i = 0; i < NbRows; i++)
+                scene.Add(new VisualLine(SpaceUpperLeft + new Vector2(0, i * CellSize), new Vector2(Space.Right, Space.Top) + new Vector2(0, i * CellSize), Color.Azure));
+
+            for (int i = 0; i < NbColumns; i++)
+                scene.Add(new VisualLine(SpaceUpperLeft + new Vector2(i * CellSize, 0), new Vector2(Space.Left, Space.Bottom) + new Vector2(i * CellSize, 0), Color.Azure));
+
+            for (int i = 0; i < NbRows; i++)
+                for (int j = 0; j < NbColumns; j++)
+                    for (int k = 0; k < Grid[i][j].Count; k++)
+                    {
+                        var enemyId = Grid[i][j][k];
+
+                        if (enemyId >= enemies.Count)
+                            continue;
+
+                        Enemy objet = enemies[Grid[i][j][k]];
+
+                        Rectangle r = objet.Rectangle.RectanglePrimitif;
+                        r.X = (int) (SpaceUpperLeft.X + j * CellSize);
+                        r.Y = (int) (SpaceUpperLeft.Y + i * CellSize);
+
+                        scene.Add(new VisualRectangle(r, objet.Color, true));
+                    }
         }
     }
 }

@@ -28,7 +28,7 @@
 
 
         //one
-        private GameMenu MenuGeneral;
+        private GameMenu GameMenu;
         private AdvancedView AdvancedView;
         private PowerUpsMenu MenuPowerUps;
         private PathPreview PathPreviewing;
@@ -45,7 +45,7 @@
         {
             Simulator = simulator;
 
-            MenuGeneral = new GameMenu(Simulator, new Vector3(400, -260, 0));
+            GameMenu = new GameMenu(Simulator, new Vector3(400, -260, 0));
             MenuPowerUps = new PowerUpsMenu(Simulator, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             Players = new Dictionary<SimPlayer, GUIPlayer>();
         }
@@ -68,9 +68,9 @@
             MenuPowerUps.AvailablePowerUps = AvailablePowerUps;
             MenuPowerUps.Initialize();
 
-            MenuGeneral.CompositionNextWave = CompositionNextWave;
-            MenuGeneral.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
-            MenuGeneral.TimeNextWave = Waves.First.Value.StartingTime;
+            GameMenu.CompositionNextWave = CompositionNextWave;
+            GameMenu.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
+            GameMenu.TimeNextWave = Waves.Count == 0 ? 0 : Waves.First.Value.StartingTime;
 
             if (!Simulator.DemoMode)
                 AdvancedView = new AdvancedView(Simulator, Enemies, CelestialBodies);
@@ -79,13 +79,18 @@
 
         public SandGlass SandGlass
         {
-            get { return MenuGeneral.SandGlass; }
+            get { return GameMenu.SandGlass; }
         }
 
 
         public void DoPlayerConnected(SimPlayer p)
         {
-            Players.Add(p, new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode));
+            GUIPlayer player = 
+                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.Representation);
+
+            player.Cursor.Position = p.Position;
+
+            Players.Add(p, player);
         }
 
 
@@ -97,26 +102,26 @@
 
         public void DoShowNextWaveAsked()
         {
-            MenuGeneral.MenuNextWave.Visible = true;
+            GameMenu.MenuNextWave.Visible = true;
         }
 
 
         public void DoHideNextWaveAsked()
         {
-            MenuGeneral.MenuNextWave.Visible = false;
+            GameMenu.MenuNextWave.Visible = false;
         }
 
 
         public void DoNextWave()
         {
-            MenuGeneral.SandGlass.Flip();
+            GameMenu.SandGlass.Flip();
         }
 
 
         public void DoCommonStashChanged(CommonStash stash)
         {
-            MenuGeneral.Score = stash.TotalScore;
-            MenuGeneral.Cash = stash.Cash;
+            GameMenu.Score = stash.TotalScore;
+            GameMenu.Cash = stash.Cash;
         }
 
 
@@ -140,13 +145,13 @@
 
         public void DoShowNextWave()
         {
-            MenuGeneral.MenuNextWave.Visible = true;
+            GameMenu.MenuNextWave.Visible = true;
         }
 
 
         public void DoHideNextWave()
         {
-            MenuGeneral.MenuNextWave.Visible = false;
+            GameMenu.MenuNextWave.Visible = false;
         }
 
 
@@ -198,22 +203,22 @@
 
         public void DoWaveStarted()
         {
-            MenuGeneral.TimeNextWave = double.MaxValue;
-            MenuGeneral.RemainingWaves--;
+            GameMenu.TimeNextWave = double.MaxValue;
+            GameMenu.RemainingWaves--;
 
             if (!Simulator.DemoMode)
                 Audio.PlaySfx(@"Partie", @"sfxNouvelleVague");
 
-            if (InfiniteWaves != null || MenuGeneral.RemainingWaves <= 0)
+            if (InfiniteWaves != null || GameMenu.RemainingWaves <= 0)
                 return;
 
             //todo
             LinkedListNode<Wave> vagueSuivante = Waves.First;
 
-            for (int i = 0; i < Waves.Count - MenuGeneral.RemainingWaves; i++)
+            for (int i = 0; i < Waves.Count - GameMenu.RemainingWaves; i++)
                 vagueSuivante = vagueSuivante.Next;
 
-            MenuGeneral.TimeNextWave = vagueSuivante.Value.StartingTime;
+            GameMenu.TimeNextWave = vagueSuivante.Value.StartingTime;
         }
 
 
@@ -222,6 +227,7 @@
             var player = Players[p];
 
             player.Cursor.Position = p.Position;
+            player.Cursor.Direction = p.Direction;
             player.Crosshair.Position = p.Position;
         }
 
@@ -281,6 +287,7 @@
             player.MenuTurret.Turret = selection.Turret;
             player.MenuTurret.AvailableTurretOptions = selection.AvailableTurretOptions;
             player.MenuTurret.SelectedOption = selection.TurretOption;
+            player.MenuTurret.Visible = player.MenuTurret.Turret != null && !player.MenuTurret.Turret.Disabled;
 
             player.WorldMenu.CelestialBody = selection.CelestialBody;
             player.WorldMenu.Action = selection.GameAction;
@@ -316,11 +323,20 @@
 
         public void Update(GameTime gameTime)
         {
+            foreach (var player in Players.Values)
+            {
+                if ((player.MenuTurret.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.MenuTurret.Bubble.Dimension, GameMenu.Rectangle)) ||
+                    (player.MenuCelestialBody.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.MenuCelestialBody.Bubble.Dimension, GameMenu.Rectangle)))
+                    GameMenu.FadeOut(100, 250);
+                else
+                    GameMenu.FadeIn(255, 250);
+            }
+
             if (PowerUpsToBuyCount == 0)
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
 
-            if (MenuGeneral.TimeNextWave > 0)
-                MenuGeneral.TimeNextWave = Math.Max(0, MenuGeneral.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
+            if (GameMenu.TimeNextWave > 0)
+                GameMenu.TimeNextWave = Math.Max(0, GameMenu.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
 
             if (Simulator.DemoMode)
             {
@@ -337,7 +353,7 @@
 
             else
             {
-                MenuGeneral.Update();
+                GameMenu.Update();
                 LevelStartedAnnunciation.Update(gameTime);
                 LevelEndedAnnunciation.Update(gameTime);
                 PlayerLives.Update(gameTime);
@@ -360,7 +376,7 @@
             if (Simulator.DemoMode)
                 return;
 
-            MenuGeneral.Draw();
+            GameMenu.Draw();
             LevelStartedAnnunciation.Draw();
             LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();

@@ -11,6 +11,8 @@
         public Dictionary<TurretAction, bool> AvailableTurretOptions;
         public TurretAction SelectedOption;
 
+        public bool Visible;
+
         private Image WidgetSelection;
         private Image LogoPrixVente;
         private Text PrixVente;
@@ -18,43 +20,43 @@
         private Text PrixMiseAJour;
         private Text NiveauTourelle;
 
-        private float PrioriteAffichage;
+        private double VisualPriority;
 
         private int MenuWidth;
         private int DistanceBetweenTwoChoices;
         private float TextSize;
 
 
-        public TurretMenu(Simulator simulator, float prioriteAffichage)
-            : base(simulator)
+        public TurretMenu(Simulator simulator, double visualPriority, Color color)
+            : base(simulator, visualPriority, color)
         {
             MenuWidth = 140;
             DistanceBetweenTwoChoices = 30;
             TextSize = 2f;
 
-            PrioriteAffichage = prioriteAffichage;
+            VisualPriority = visualPriority;
 
             LogoPrixVente = new Image("sell");
-            LogoPrixVente.VisualPriority = this.PrioriteAffichage;
+            LogoPrixVente.VisualPriority = this.VisualPriority;
             LogoPrixVente.SizeX = 0.75f;
             LogoPrixVente.Origin = Vector2.Zero;
 
             PrixVente = new Text("Pixelite");
             PrixVente.SizeX = TextSize;
-            PrixVente.VisualPriority = this.PrioriteAffichage;
+            PrixVente.VisualPriority = this.VisualPriority;
 
             LogoPrixMiseAJour = new Image("upgrade");
-            LogoPrixMiseAJour.VisualPriority = this.PrioriteAffichage;
+            LogoPrixMiseAJour.VisualPriority = this.VisualPriority;
             LogoPrixMiseAJour.SizeX = 0.75f;
             LogoPrixMiseAJour.Origin = Vector2.Zero;
 
             PrixMiseAJour = new Text("Pixelite");
             PrixMiseAJour.SizeX = TextSize;
-            PrixMiseAJour.VisualPriority = this.PrioriteAffichage;
+            PrixMiseAJour.VisualPriority = this.VisualPriority;
 
             NiveauTourelle = new Text("Pixelite");
             NiveauTourelle.SizeX = TextSize;
-            NiveauTourelle.VisualPriority = this.PrioriteAffichage - 0.0001f;
+            NiveauTourelle.VisualPriority = this.VisualPriority - 0.0001f;
 
             WidgetSelection = new Image
             (
@@ -63,9 +65,11 @@
             );
             WidgetSelection.Color = Color.Green;
             WidgetSelection.Color.A = 230;
-            WidgetSelection.VisualPriority = this.PrioriteAffichage + 0.01f;
+            WidgetSelection.VisualPriority = this.VisualPriority + 0.01f;
             WidgetSelection.Size = new Vector2(MenuWidth, DistanceBetweenTwoChoices);
             WidgetSelection.Origin = Vector2.Zero;
+
+            Visible = false;
         }
 
 
@@ -100,7 +104,7 @@
 
         public override void Draw()
         {
-            if (Turret == null || Turret.Disabled)
+            if (!Visible)
                 return;
 
             base.Draw();
@@ -148,7 +152,7 @@
             }
 
             if (Turret.CanSell || Turret.CanUpdate)
-                Bulle.Draw();
+                Bubble.Draw();
         }
     }
 }

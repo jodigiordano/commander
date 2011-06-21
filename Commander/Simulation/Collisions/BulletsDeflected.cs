@@ -15,7 +15,7 @@
 
         private GridWorld.IntegerHandler Handler;
         private Bullet CurrentBullet;
-        private RectanglePhysique CurrentBulletRectangle;
+        private PhysicalRectangle CurrentBulletRectangle;
         private Circle CurrentBulletDeflectRange;
         
         
@@ -24,7 +24,7 @@
             Output = new List<KeyValuePair<Enemy, Bullet>>();
             Handler = new GridWorld.IntegerHandler(CheckBulletIsDeflected);
             CurrentBullet = null;
-            CurrentBulletRectangle = new RectanglePhysique();
+            CurrentBulletRectangle = new PhysicalRectangle();
             CurrentBulletDeflectRange = new Circle(Vector3.Zero, 0);
         }
 
@@ -54,7 +54,7 @@
             if (e.Type != EnemyType.Vulcanoid)
                 return true;
 
-            if (Physics.collisionCercleCercle(CurrentBulletDeflectRange, e.Circle))
+            if (Physics.CircleCicleCollision(CurrentBulletDeflectRange, e.Circle))
             {
                 Output.Add(new KeyValuePair<Enemy, Bullet>(e, CurrentBullet));
                 return false;

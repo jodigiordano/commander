@@ -1,9 +1,9 @@
 ﻿namespace EphemereGames.Core.Visual
 {
+    using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using SpriteSheetRuntime;
-    using EphemereGames.Core.Physics;
 
 
     public class Image : IScenable, IPhysicalObject, IVisual
@@ -23,9 +23,9 @@
         public Rectangle VisiblePart    { get; set; }
         public SpriteEffects Effect;
         public Color Color;
+        public string TextureName       { get; private set; }
 
         private Texture2D Texture;
-        private string TextureName;
 
 
         public Image(string imageName) : this(imageName, Vector3.Zero) {}
