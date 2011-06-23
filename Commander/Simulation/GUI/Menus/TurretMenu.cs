@@ -58,27 +58,25 @@
             NiveauTourelle.SizeX = TextSize;
             NiveauTourelle.VisualPriority = this.VisualPriority - 0.0001f;
 
-            WidgetSelection = new Image
-            (
-                "PixelBlanc",
-                Position
-            );
-            WidgetSelection.Color = Color.Green;
-            WidgetSelection.Color.A = 230;
-            WidgetSelection.VisualPriority = this.VisualPriority + 0.01f;
-            WidgetSelection.Size = new Vector2(MenuWidth, DistanceBetweenTwoChoices);
-            WidgetSelection.Origin = Vector2.Zero;
+            WidgetSelection = new Image("PixelBlanc", ActualPosition)
+            {
+                Color = color,
+                Alpha = 230,
+                VisualPriority = VisualPriority + 0.01f,
+                Size = new Vector2(MenuWidth, DistanceBetweenTwoChoices),
+                Origin = Vector2.Zero
+            };
 
             Visible = false;
         }
 
 
-        protected override Vector2 MenuSize
+        protected override Vector3 MenuSize
         {
             get
             {
                 if (Turret == null)
-                    return Vector2.Zero;
+                    return Vector3.Zero;
 
                 int nb = AvailableTurretOptions.Count;
 
@@ -88,7 +86,7 @@
                 if (!Turret.CanUpdate)
                     nb--;
 
-                return new Vector2(MenuWidth, (nb == 0) ? 0 : nb * DistanceBetweenTwoChoices);
+                return new Vector3(MenuWidth, (nb == 0) ? 0 : nb * DistanceBetweenTwoChoices, 0);
             }
         }
 
@@ -112,13 +110,13 @@
             // Afficher le prix de vente
             if (Turret.CanSell)
             {
-                LogoPrixVente.Position = this.Position + (Turret.CanUpdate ? new Vector3(7, DistanceBetweenTwoChoices + 2, 0) : new Vector3(7, 2, 0));
-                PrixVente.Position = this.Position + (Turret.CanUpdate ? new Vector3(60, DistanceBetweenTwoChoices + 2, 0) : new Vector3(60, 2, 0));
+                LogoPrixVente.Position = this.ActualPosition + (Turret.CanUpdate ? new Vector3(7, DistanceBetweenTwoChoices + 2, 0) : new Vector3(7, 2, 0));
+                PrixVente.Position = this.ActualPosition + (Turret.CanUpdate ? new Vector3(60, DistanceBetweenTwoChoices + 2, 0) : new Vector3(60, 2, 0));
                 PrixVente.Data = Turret.SellPrice + "M$";
 
                 if (SelectedOption == 0)
                 {
-                    WidgetSelection.Position = this.Position + (Turret.CanUpdate ? new Vector3(0, DistanceBetweenTwoChoices, 0) : new Vector3(0, 0, 0));
+                    WidgetSelection.Position = this.ActualPosition + (Turret.CanUpdate ? new Vector3(0, DistanceBetweenTwoChoices, 0) : new Vector3(0, 0, 0));
                     Simulation.Scene.Add(WidgetSelection);
                 }
 
@@ -131,15 +129,15 @@
             // Afficher le prix de mise a jour
             if (Turret.CanUpdate)
             {
-                LogoPrixMiseAJour.Position = this.Position + new Vector3(5, 2, 0);
-                NiveauTourelle.Position = this.Position + new Vector3(20, 2, 0);
+                LogoPrixMiseAJour.Position = this.ActualPosition + new Vector3(5, 2, 0);
+                NiveauTourelle.Position = this.ActualPosition + new Vector3(20, 2, 0);
                 NiveauTourelle.Data = (Turret.Level + 1).ToString();
-                PrixMiseAJour.Position = this.Position + new Vector3(60, 2, 0);
+                PrixMiseAJour.Position = this.ActualPosition + new Vector3(60, 2, 0);
                 PrixMiseAJour.Data = Turret.UpdatePrice + "M$";
 
                 if (SelectedOption == TurretAction.Update)
                 {
-                    WidgetSelection.Position = this.Position;
+                    WidgetSelection.Position = this.ActualPosition;
                     Simulation.Scene.Add(WidgetSelection);
                 }
 

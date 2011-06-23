@@ -18,6 +18,7 @@
         private Turret CurrentTurret;
         private PhysicalRectangle CurrentTurretRectangle;
         private Circle CurrentTurretRange;
+        private Enemy NearestEnemy;
 
 
         public EnemyInRange()
@@ -36,6 +37,8 @@
 
             for (int i = 0; i < Turrets.Count; i++)
             {
+                NearestEnemy = null;
+
                 CurrentTurret = Turrets[i];
 
                 if (CurrentTurret.Type == TurretType.Gravitational || CurrentTurret.Type == TurretType.Booster)
@@ -44,6 +47,9 @@
                 SyncRectangleAndCircle();
 
                 EnemiesGrid.GetItems(CurrentTurretRectangle, Handler);
+
+                if (NearestEnemy != null)
+                    Output.Add(new KeyValuePair<Turret, Enemy>(CurrentTurret, NearestEnemy));
             }
         }
 
@@ -55,12 +61,11 @@
             if (HiddenEnemies.Output.ContainsKey(e))
                 return true;
 
-            if (Physics.CircleCicleCollision(CurrentTurretRange, e.Circle))
-            {
-                Output.Add(new KeyValuePair<Turret, Enemy>(CurrentTurret, e));
+            if (NearestEnemy != null && NearestEnemy.Displacement > e.Displacement)
+                return true;
 
-                return false;
-            }
+            if (Physics.CircleCicleCollision(CurrentTurretRange, e.Circle))
+                NearestEnemy = e;
 
             return true;
         }

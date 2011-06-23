@@ -1,9 +1,8 @@
 ﻿namespace EphemereGames.Core.Visual
 {
-    using System.Collections.Generic;
+    using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Physics;
 
 
     public class Text : IScenable, IPhysicalObject, IVisual
@@ -14,7 +13,6 @@
         public Vector2 TextureSize;
         public float Rotation           { get; set; }
 
-        public Vector3 Position         { get; set; }
         public TypeBlend Blend          { get; set; }
         public double VisualPriority    { get; set; }
         public int Id                   { get; private set; }
@@ -22,8 +20,11 @@
 
         private SpriteFont Font;
         private bool TextSizeComputed;
+        private bool RectangleComputed;
         private Vector2 textSize;
+        private PhysicalRectangle rectangle;
         private string data;
+        private Vector3 position;
 
 
         public Text(string data, string fontName, Color color, Vector3 position)
@@ -34,6 +35,7 @@
             Position = position;
             Size = new Vector2(1);
             TextSizeComputed = false;
+            RectangleComputed = false;
             Id = Visuals.NextHashCode;
         }
 
@@ -41,6 +43,18 @@
         public Text(string fontName) : this("", fontName, Color.White, Vector3.Zero) {}
         public Text(string text, string fontName) : this(text, fontName, Color.White, Vector3.Zero) { }
         public Text(string text, string fontName, Vector3 position) : this(text, fontName, Color.White, position) { }
+
+
+        public Vector3 Position
+        {
+            get { return position; }
+            set
+            {
+                position = value;
+
+                RectangleComputed = false;
+            }
+        }
 
 
         public Vector2 TextSize
@@ -62,7 +76,9 @@
             set
             {
                 data = value;
+
                 TextSizeComputed = false;
+                RectangleComputed = false;
             }
         }
 
@@ -73,7 +89,9 @@
             set
             {
                 Size = new Vector2(value);
+
                 TextSizeComputed = false;
+                RectangleComputed = false;
             }
         }
 
@@ -83,6 +101,28 @@
             Origin = Center;
 
             return this;
+        }
+
+
+        public PhysicalRectangle GetRectangle()
+        {
+            if (rectangle == null)
+                rectangle = new PhysicalRectangle();
+
+            if (RectangleComputed)
+                return rectangle;
+
+            var upperLeft = GetUpperLeft();
+            var size = TextSize;
+            
+            rectangle.X = (int) upperLeft.X;
+            rectangle.Y = (int) upperLeft.Y;
+            rectangle.Width = (int) size.X;
+            rectangle.Height = (int) size.Y;
+
+            RectangleComputed = true;
+
+            return rectangle;
         }
 
 
@@ -114,6 +154,13 @@
                 return textSize;
             }
         }
+
+
+        private Vector3 GetUpperLeft()
+        {
+            return Position - new Vector3(Origin * Size, 0);
+        }
+
 
         //useless
         public Rectangle VisiblePart { get; set; }

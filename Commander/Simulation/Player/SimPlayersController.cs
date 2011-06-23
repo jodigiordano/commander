@@ -228,7 +228,6 @@
             {
                 player.Move(ref delta, MouseConfiguration.Speed);
                 player.UpdateDemoSelection();
-                //NotifyPlayerMoved(player);
                 return;
             }
 
@@ -238,11 +237,6 @@
             if (player.ActualSelection.TurretToPlace != null &&
                 player.ActualSelection.CelestialBody.OuterTurretZone.Outside(player.Position))
                 player.Position = player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(player.Position);
-
-
-            //player.UpdateSelection();
-            //NotifyPlayerMoved(player);
-            //NotifyPlayerChanged(player);
         }
 
 
@@ -387,9 +381,9 @@
                 player.ActualSelection.Turret == null)
             {
                 if (delta > 0)
-                    player.NextShitToBuy();
+                    player.NextTurretToBuy();
                 else
-                    player.PreviousShitToBuy();
+                    player.PreviousTurretToBuy();
 
                 return;
             }

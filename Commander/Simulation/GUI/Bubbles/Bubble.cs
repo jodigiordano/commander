@@ -33,7 +33,7 @@
             Filter = new Image("PixelBlanc")
             {
                 Color = new Color(0, 0, 0, 200),
-                VisualPriority = prioriteAffichage + 0.00002f,
+                VisualPriority = prioriteAffichage + 0.000002,
                 Origin = Vector2.Zero
             };
 
@@ -43,12 +43,12 @@
             for (int i = 0; i < 4; i++)
             {
                 Image iv = new Image("bulleCoin");
-                iv.VisualPriority = prioriteAffichage + 0.00001f;
+                iv.VisualPriority = prioriteAffichage + 0.000001;
 
                 Corners.Add(iv);
 
                 iv = new Image("PixelBlanc");
-                iv.VisualPriority = prioriteAffichage + 0.00001f;
+                iv.VisualPriority = prioriteAffichage + 0.000001;
                 iv.Origin = Vector2.Zero;
 
                 Edges.Add(iv);

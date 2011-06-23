@@ -13,6 +13,7 @@
     {
         public const int TimeBetweenTwoMusics = 300;
         public static Vector2 Xbox360DeadZoneV2 = new Vector2(20, 30);
+        public static Vector3 Xbox360DeadZone = new Vector3(20, 30, 0);
         public static float TargetElapsedTimeMs = 16;
 
 

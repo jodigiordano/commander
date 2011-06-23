@@ -180,10 +180,17 @@
     <Compile Include="Simulation\Collisions\EnemyInRange.cs" />
     <Compile Include="Simulation\Collisions\OutOfBounds.cs" />
     <Compile Include="Simulation\Collisions\HiddenEnemies.cs" />
+    <Compile Include="Simulation\Editor\EditorController.cs" />
+    <Compile Include="Simulation\Editor\EditorPlayerSelection.cs" />
+    <Compile Include="Simulation\Editor\EditorPlayer.cs" />
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
+    <Compile Include="Simulation\GUI\Editor\EditorGeneralMenu.cs" />
+    <Compile Include="Simulation\GUI\Editor\EditorGUIController.cs" />
+    <Compile Include="Simulation\GUI\Editor\EditorGUIPlayer.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
     <Compile Include="Simulation\GUI\GUIPlayer.cs" />
+    <Compile Include="Simulation\GUI\Menus\TextMenu.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
@@ -372,6 +379,7 @@
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

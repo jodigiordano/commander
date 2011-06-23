@@ -37,7 +37,7 @@
 
             Selector = new Image("PixelBlanc", Vector3.Zero);
             Selector.Size = new Vector2(190, 30);
-            Selector.Color = Color.Green;
+            Selector.Color = color;
             Selector.Color.A = 230;
             Selector.VisualPriority = visualPriority + 0.01f;
             Selector.Origin = Vector2.Zero;
@@ -70,14 +70,14 @@
         }
 
 
-        protected override Vector2 MenuSize
+        protected override Vector3 MenuSize
         {
             get
             {
                 if (CelestialBody == null)
-                    return Vector2.Zero;
+                    return Vector3.Zero;
 
-                return new Vector2(190, 60);
+                return new Vector3(190, 60, 0);
             }
         }
 
@@ -119,9 +119,9 @@
 
         private void DrawGameInProgress()
         {
-            NewGame.Position = Position + new Vector3(5, 3, 0);
-            ResumeGame.Position = Position + new Vector3(5, 33, 0);
-            Selector.Position = (Action == GameAction.Resume) ? Position + new Vector3(0, 30, 0) : Position;
+            NewGame.Position = ActualPosition + new Vector3(5, 3, 0);
+            ResumeGame.Position = ActualPosition + new Vector3(5, 33, 0);
+            Selector.Position = (Action == GameAction.Resume) ? ActualPosition + new Vector3(0, 30, 0) : ActualPosition;
 
 
             Simulation.Scene.Add(ResumeGame);

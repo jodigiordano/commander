@@ -247,4 +247,31 @@
             return (int) obj;
         }
     }
+
+
+    class EditorGeneralMenuActionComparer : IEqualityComparer<EditorGeneralMenuAction>
+    {
+        private static EditorGeneralMenuActionComparer instance;
+        public static EditorGeneralMenuActionComparer Default
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new EditorGeneralMenuActionComparer();
+                return instance;
+            }
+        }
+
+
+        public bool Equals(EditorGeneralMenuAction x, EditorGeneralMenuAction y)
+        {
+            return x == y;
+        }
+
+
+        public int GetHashCode(EditorGeneralMenuAction obj)
+        {
+            return (int) obj;
+        }
+    }
 }

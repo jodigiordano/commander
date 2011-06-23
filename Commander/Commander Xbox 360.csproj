@@ -118,6 +118,9 @@
     <Compile Include="Simulation\Collisions\HiddenEnemies.cs" />
     <Compile Include="Simulation\Collisions\ObjectsCollisions.cs" />
     <Compile Include="Simulation\Collisions\OutOfBounds.cs" />
+    <Compile Include="Simulation\Editor\EditorController.cs" />
+    <Compile Include="Simulation\Editor\EditorPlayer.cs" />
+    <Compile Include="Simulation\Editor\EditorPlayerSelection.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\Enemies\InfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />
@@ -126,6 +129,9 @@
     <Compile Include="Simulation\GUI\Annunciations\LevelStartedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\Bubble.cs" />
     <Compile Include="Simulation\GUI\Bubbles\TextBubble.cs" />
+    <Compile Include="Simulation\GUI\Editor\EditorGeneralMenu.cs" />
+    <Compile Include="Simulation\GUI\Editor\EditorGUIController.cs" />
+    <Compile Include="Simulation\GUI\Editor\EditorGUIPlayer.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
     <Compile Include="Simulation\GUI\GUIPlayer.cs" />
     <Compile Include="Simulation\GUI\Menus\AbstractMenu.cs" />
@@ -133,6 +139,7 @@
     <Compile Include="Simulation\GUI\Menus\GameMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\NextWaveMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\PowerUpsMenu.cs" />
+    <Compile Include="Simulation\GUI\Menus\TextMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\TurretMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\WorldMenu.cs" />
     <Compile Include="Simulation\Levels\Level.cs" />

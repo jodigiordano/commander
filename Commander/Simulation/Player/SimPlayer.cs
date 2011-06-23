@@ -41,7 +41,8 @@
 
             SpaceshipMove = new SpaceshipSpaceship(simulator)
             {
-                AutomaticMode = false
+                AutomaticMode = false,
+                Speed = 3
             };
 
             TurretToPlaceChanged = false;
@@ -50,7 +51,7 @@
 
         public void Initialize()
         {
-            ActualSelection = new PlayerSelection(CommonStash);
+            ActualSelection = new PlayerSelection();
             TurretToBuyController = new SelectedTurretToBuyController(AvailableTurrets);
             SelectedCelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Circle);
             SelectedPowerUpController = new SelectedPowerUpController(Simulator.PowerUpsFactory.Availables, Circle);
@@ -105,7 +106,7 @@
                 SelectedCelestialBodyController.SelectedCelestialBodyChanged)
             {
                 ActualSelection.GameAction = GameAction.None;
-                ActualSelection.NextGameAction();
+                NextGameAction();
             }
 
             else if (ActualSelection.CelestialBody == null)
@@ -222,41 +223,79 @@
         }
 
 
-        public void NextShitToBuy()
-        {
-            TurretToBuyController.Next();
-            ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-        }
-
-
-        public void PreviousShitToBuy()
-        {
-            TurretToBuyController.Previous();
-            ActualSelection.TurretToBuy = TurretToBuyController.TurretToBuy;
-        }
-
-
         public void NextGameAction()
         {
-            ActualSelection.NextGameAction();
+            int actual = (int) ActualSelection.GameAction;
+            int nbChoices = 2;
+
+            actual += 1;
+
+            if (actual >= nbChoices)
+                actual = 0;
+
+            ActualSelection.GameAction = (GameAction) actual;
         }
 
 
         public void PreviousGameAction()
         {
-            ActualSelection.PreviousGameAction();
+            int actual = (int) ActualSelection.GameAction;
+            int nbChoices = 2;
+
+            actual -= 1;
+
+            if (actual < 0)
+                actual = nbChoices - 1;
+
+            ActualSelection.GameAction = (GameAction) actual;
         }
 
 
         public void NextTurretOption()
         {
-            ActualSelection.NextTurretOption();
+            int actual = (int) ActualSelection.TurretOption;
+            int nbChoices = ActualSelection.AvailableTurretOptions.Count;
+            int next = actual;
+
+            for (int i = 1; i < nbChoices; i++)
+            {
+                actual += 1;
+
+                if (actual >= nbChoices)
+                    actual = 0;
+
+                if (ActualSelection.AvailableTurretOptions[(TurretAction) actual])
+                {
+                    next = actual;
+                    break;
+                }
+            }
+
+            ActualSelection.TurretOption = (TurretAction) next;
         }
 
 
         public void PreviousTurretOption()
         {
-            ActualSelection.PreviousTurretOption();
+            int actual = (int) ActualSelection.TurretOption;
+            int nbChoices = ActualSelection.AvailableTurretOptions.Count;
+            int previous = actual;
+
+            for (int i = 1; i < nbChoices; i++)
+            {
+                actual -= 1;
+
+                if (actual < 0)
+                    actual = nbChoices - 1;
+
+                if (ActualSelection.AvailableTurretOptions[(TurretAction) actual])
+                {
+                    previous = actual;
+                    break;
+                }
+            }
+
+            ActualSelection.TurretOption = (TurretAction) previous;
         }
 
 
@@ -264,6 +303,10 @@
         {
             if (ActualSelection.TurretToPlace == null)
             {
+                if (SpaceshipMove.NextInput == Vector3.Zero &&
+                    (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
+                    SpaceshipMove.Friction = 0.05f;
+
                 SpaceshipMove.Update();
                 Position = SpaceshipMove.Position;
                 Direction = SpaceshipMove.Direction;
@@ -275,7 +318,7 @@
                 SpaceshipMove.Position = Position;
             }
 
-            ActualSelection.CheckAvailableTurretOptions();
+            CheckAvailableTurretOptions();
 
             Position += SelectedCelestialBodyController.DoGlueMode();
 
@@ -317,6 +360,31 @@
         {
             position.X = MathHelper.Clamp(position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius);
             position.Y = MathHelper.Clamp(position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius);
+        }
+
+
+        private void CheckAvailableTurretOptions()
+        {
+            if (ActualSelection.Turret == null)
+                return;
+
+            bool majEtaitIndisponible = !ActualSelection.AvailableTurretOptions[TurretAction.Update];
+
+            ActualSelection.AvailableTurretOptions[TurretAction.Sell] =
+                ActualSelection.Turret.CanSell &&
+                !ActualSelection.Turret.Disabled;
+
+            ActualSelection.AvailableTurretOptions[TurretAction.Update] =
+                ActualSelection.Turret.CanUpdate &&
+                ActualSelection.Turret.UpdatePrice <= CommonStash.Cash;
+
+            //des que l'option de maj redevient disponible, elle est selectionnee
+            if (majEtaitIndisponible && ActualSelection.AvailableTurretOptions[TurretAction.Update])
+                ActualSelection.TurretOption = TurretAction.Update;
+
+            //change automatiquement la selection de cette option quand elle n'est pas disponible
+            if (!ActualSelection.AvailableTurretOptions[TurretAction.Update] && ActualSelection.TurretOption == TurretAction.Update)
+                ActualSelection.TurretOption = TurretAction.Sell;
         }
     }
 }

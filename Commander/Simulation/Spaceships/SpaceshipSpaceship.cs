@@ -10,6 +10,7 @@
         private Vector3 Acceleration;
         
         public Vector3 Bouncing;
+        public float Friction;
         public double ActiveTime;
         public int BuyPrice;
 
@@ -23,6 +24,8 @@
             SfxOut = "sfxPowerUpDoItYourselfOut";
             SfxIn = "sfxPowerUpDoItYourselfIn";
             ShowTrail = true;
+
+            Friction = 0;
         }
 
 
@@ -50,6 +53,7 @@
                 DoManualMode(NextInput);
 
             DoBouncing();
+            DoFriction();
         }
 
 
@@ -101,6 +105,13 @@
         }
 
 
+        private void DoFriction()
+        {
+            if (Friction > 0)
+                Friction = Math.Max(0, Friction - 0.01f);
+        }
+
+
         private void DoBouncing()
         {
             if (Position.X > 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius)
@@ -142,33 +153,33 @@
             Position += Bouncing;
 
             if (Bouncing.X > 0)
-                Bouncing.X = Math.Max(0, Bouncing.X - 0.5f);
+                Bouncing.X = Math.Max(0, Bouncing.X - 0.8f);
             else if (Bouncing.X < 0)
-                Bouncing.X = Math.Min(0, Bouncing.X + 0.5f);
+                Bouncing.X = Math.Min(0, Bouncing.X + 0.8f);
 
             if (Bouncing.Y > 0)
-                Bouncing.Y = Math.Max(0, Bouncing.Y - 0.5f);
+                Bouncing.Y = Math.Max(0, Bouncing.Y - 0.8f);
             else if (Bouncing.Y < 0)
-                Bouncing.Y = Math.Min(0, Bouncing.Y + 0.5f);
+                Bouncing.Y = Math.Min(0, Bouncing.Y + 0.8f);
         }
 
 
-        private void DoAcceleration(ref Vector3 donneesThumbstick)
+        private void DoAcceleration(ref Vector3 input)
         {
-            Acceleration += donneesThumbstick / 5f;
+            Acceleration += input / 10f;
 
             Acceleration.X = MathHelper.Clamp(Acceleration.X, -2, 2);
             Acceleration.Y = MathHelper.Clamp(Acceleration.Y, -2, 2);
 
             if (Acceleration.X > 0)
-                Acceleration.X = Math.Max(0, Acceleration.X - 0.03f);
+                Acceleration.X = Math.Max(0, Acceleration.X - (0.03f + Friction));
             else if (Acceleration.X < 0)
-                Acceleration.X = Math.Min(0, Acceleration.X + 0.03f);
+                Acceleration.X = Math.Min(0, Acceleration.X + (0.03f + Friction));
 
             if (Acceleration.Y > 0)
-                Acceleration.Y = Math.Max(0, Acceleration.Y - 0.03f);
+                Acceleration.Y = Math.Max(0, Acceleration.Y - (0.03f + Friction));
             else if (Acceleration.Y < 0)
-                Acceleration.Y = Math.Min(0, Acceleration.Y + 0.03f);
+                Acceleration.Y = Math.Min(0, Acceleration.Y + (0.03f + Friction));
         }
     }
 }

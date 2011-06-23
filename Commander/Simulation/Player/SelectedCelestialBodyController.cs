@@ -7,7 +7,6 @@
 
     class SelectedCelestialBodyController
     {
-        public Vector3 LastPositionSelectedCelestialBody;
         public bool SelectedCelestialBodyChanged;
         public bool SelectedTurretChanged;
 
@@ -16,6 +15,9 @@
         private int SelectedTurretIndex;
         private List<CelestialBody> CelestialBodies;
         private Circle Cercle;
+
+        private Vector3 LastPositionSelectedCelestialBody;
+        private Vector3 LastPositionSelectedTurret;
 
 
         public SelectedCelestialBodyController(List<CelestialBody> celestialBodies, Circle cercle)
@@ -34,6 +36,7 @@
             SelectedTurretCelestialBodyIndex = -1;
 
             LastPositionSelectedCelestialBody = Vector3.Zero;
+            LastPositionSelectedTurret = Vector3.Zero;
         }
 
 
@@ -65,24 +68,29 @@
 
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
-                if (!CelestialBodies[i].Alive || !CelestialBodies[i].Selectionnable)
+                CelestialBody cb = CelestialBodies[i];
+
+                if (!cb.Alive || !cb.Selectionnable)
                     continue;
 
-                for (int j = 0; j < CelestialBodies[i].Turrets.Count; j++)
-                    if (CelestialBodies[i].Turrets[j].Visible &&
-                        Physics.CircleCicleCollision(Cercle, CelestialBodies[i].Turrets[j].Circle))
+                for (int j = 0; j < cb.Turrets.Count; j++)
+                {
+                    Turret t = cb.Turrets[j];
+
+                    if (t.Visible && Physics.CircleCicleCollision(Cercle, t.Circle))
                     {
                         SelectedCelestialBodyIndex = -1;
                         SelectedTurretCelestialBodyIndex = i;
                         SelectedTurretIndex = j;
                         break;
                     }
+                }
             }
 
             SelectedTurretChanged = SelectedTurretIndex != previousIndex;
 
-            if (SelectedTurretChanged && SelectedTurretIndex != -1)
-                LastPositionSelectedCelestialBody = CelestialBodies[SelectedTurretCelestialBodyIndex].Position;
+            if (SelectedTurretChanged && SelectedTurretCelestialBodyIndex != -1 && SelectedTurretIndex != -1)
+                LastPositionSelectedTurret = CelestialBodies[SelectedTurretCelestialBodyIndex].Turrets[SelectedTurretIndex].Position;
         }
 
 
@@ -97,10 +105,12 @@
 
             for (int i = 0; i < CelestialBodies.Count; i++)
             {
-                if (!CelestialBodies[i].Alive || !CelestialBodies[i].Selectionnable)
+                CelestialBody cb = CelestialBodies[i];
+
+                if (!cb.Alive || !cb.Selectionnable)
                     continue;
 
-                if (Physics.CircleCicleCollision(Cercle, CelestialBodies[i].Circle))
+                if (Physics.CircleCicleCollision(Cercle, cb.Circle))
                 {
                     SelectedCelestialBodyIndex = i;
                     break;
@@ -116,20 +126,23 @@
 
         public Vector3 DoGlueMode()
         {
-            if ( SelectedCelestialBodyIndex >= 0 && SelectedCelestialBodyIndex < CelestialBodies.Count)
-            {
-                Vector3 diff = CelestialBodies[SelectedCelestialBodyIndex].Position - LastPositionSelectedCelestialBody;
+            CelestialBody cb = (SelectedCelestialBodyIndex >= 0 && SelectedCelestialBodyIndex < CelestialBodies.Count) ? CelestialBodies[SelectedCelestialBodyIndex] : null;
+            Turret t = (SelectedTurretCelestialBodyIndex >= 0 && SelectedTurretCelestialBodyIndex < CelestialBodies.Count && SelectedTurretIndex >= 0 && SelectedTurretIndex < CelestialBodies[SelectedTurretCelestialBodyIndex].Turrets.Count) ? CelestialBodies[SelectedTurretCelestialBodyIndex].Turrets[SelectedTurretIndex] : null;
 
-                LastPositionSelectedCelestialBody = CelestialBodies[SelectedCelestialBodyIndex].Position;
+            if (t != null)
+            {
+                Vector3 diff = t.Position - LastPositionSelectedTurret;
+
+                LastPositionSelectedTurret = t.Position;
 
                 return diff;
             }
 
-            else if ( SelectedCelestialBodyIndex >= 0 && SelectedCelestialBodyIndex < CelestialBodies.Count )
+            else if (cb != null)
             {
-                Vector3 diff = CelestialBodies[SelectedTurretCelestialBodyIndex].Position - LastPositionSelectedCelestialBody;
+                Vector3 diff = cb.Position - LastPositionSelectedCelestialBody;
 
-                LastPositionSelectedCelestialBody = CelestialBodies[SelectedTurretCelestialBodyIndex].Position;
+                LastPositionSelectedCelestialBody = cb.Position;
 
                 return diff;
             }

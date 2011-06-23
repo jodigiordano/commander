@@ -40,13 +40,13 @@
 
             VisualPriority = visualPriority;
 
-            WidgetSelection = new Image("PixelBlanc", Position)
+            WidgetSelection = new Image("PixelBlanc", ActualPosition)
             {
                 Origin = Vector2.Zero,
                 Size = new Vector2(MenuWidth, DistanceBetweenTwoChoices),
-                Color = Color.Green,
+                Color = color,
                 Alpha = 230,
-                VisualPriority = this.VisualPriority + 0.01f
+                VisualPriority = this.VisualPriority + 0.00001
             };
 
             AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
@@ -78,14 +78,14 @@
         }
 
 
-        protected override Vector2 MenuSize
+        protected override Vector3 MenuSize
         {
             get
             {
                 if (!Visible)
-                    return Vector2.Zero;
+                    return Vector3.Zero;
 
-                return new Vector2(MenuWidth, AvailableTurrets.Count * DistanceBetweenTwoChoices);
+                return new Vector3(MenuWidth, AvailableTurrets.Count * DistanceBetweenTwoChoices, 0);
             }
         }
 
@@ -114,14 +114,14 @@
 
         private void DrawTurretsToBuy()
         {
-            int compteurEmplacement = 0;
+            int slotCounter = 0;
 
             foreach (var kvp in AvailableTurrets)
             {
                 Turret t = Simulation.TurretsFactory.Availables[kvp.Key];
 
-                LogosTourellesAchat[t.Type].Position = this.Position + PositionChoice + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices + 2, 0);
-                PrixTourellesAchat[t.Type].Position = this.Position + PositionChoicePrice + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices + 2, 0);
+                LogosTourellesAchat[t.Type].Position = this.ActualPosition + PositionChoice + new Vector3(0, slotCounter * DistanceBetweenTwoChoices + 2, 0);
+                PrixTourellesAchat[t.Type].Position = this.ActualPosition + PositionChoicePrice + new Vector3(0, slotCounter * DistanceBetweenTwoChoices + 2, 0);
                 PrixTourellesAchat[t.Type].Data = t.BuyPrice + "M$";
 
 
@@ -130,13 +130,13 @@
 
                 if (TurretToBuy != null && TurretToBuy == t.Type)
                 {
-                    WidgetSelection.Position = this.Position + new Vector3(0, compteurEmplacement * DistanceBetweenTwoChoices, 0);
+                    WidgetSelection.Position = this.ActualPosition + new Vector3(0, slotCounter * DistanceBetweenTwoChoices, 0);
                     Simulation.Scene.Add(WidgetSelection);
                 }
 
                 PrixTourellesAchat[t.Type].Color = (kvp.Value) ? Color.White : Color.Red;
 
-                compteurEmplacement++;
+                slotCounter++;
             }
         }
     }
