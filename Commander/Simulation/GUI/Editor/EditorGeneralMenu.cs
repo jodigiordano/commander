@@ -8,7 +8,7 @@
 
     class EditorGeneralMenu
     {
-        public Dictionary<EditorGeneralMenuAction, Text> Menus;
+        public Dictionary<EditorGeneralMenuChoice, Image> Menus;
 
         private Simulator Simulator;
         private Vector3 Position;
@@ -21,12 +21,13 @@
             Position = position;
             VisualPriority = visualPriority;
 
-            Menus = new Dictionary<EditorGeneralMenuAction, Text>(EditorGeneralMenuActionComparer.Default);
+            Menus = new Dictionary<EditorGeneralMenuChoice, Image>(EditorGeneralMenuChoiceComparer.Default);
 
-            Menus.Add(EditorGeneralMenuAction.Gameplay, new Text("G", "Pixelite", position) { SizeX = 3, VisualPriority = visualPriority });
-            Menus.Add(EditorGeneralMenuAction.Waves, new Text("W", "Pixelite", position + new Vector3(50, 0, 0)) { SizeX = 3, VisualPriority = visualPriority });
-            Menus.Add(EditorGeneralMenuAction.Battlefield, new Text("B", "Pixelite", position + new Vector3(100, 0, 0)) { SizeX = 3, VisualPriority = visualPriority });
-            Menus.Add(EditorGeneralMenuAction.File, new Text("F", "Pixelite", position + new Vector3(150, 0, 0)) { SizeX = 3, VisualPriority = visualPriority });
+
+            Menus.Add(EditorGeneralMenuChoice.File, new Image("EditorFile", position) { SizeX = 4, VisualPriority = visualPriority });
+            Menus.Add(EditorGeneralMenuChoice.Gameplay, new Image("EditorGameplay", position + new Vector3(50, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
+            Menus.Add(EditorGeneralMenuChoice.Waves, new Image("EditorWaves", position + new Vector3(100, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
+            Menus.Add(EditorGeneralMenuChoice.Battlefield, new Image("EditorBattlefield", position + new Vector3(150, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
         }
 
 
@@ -37,13 +38,24 @@
         }
 
 
-        public EditorGeneralMenuAction GetSelection(Circle circle)
+        public EditorGeneralMenuChoice GetSelection(Circle circle)
         {
             foreach (var kvp in Menus)
                 if (Physics.CircleRectangleCollision(circle, kvp.Value.GetRectangle()))
                     return kvp.Key;
 
-            return EditorGeneralMenuAction.None;
+            return EditorGeneralMenuChoice.None;
+        }
+
+
+        public void DoMenuChanged(EditorGeneralMenuChoice before, EditorGeneralMenuChoice now)
+        {
+            if (before != EditorGeneralMenuChoice.None)
+                Simulator.Scene.VisualEffects.Add(Menus[before], VisualEffects.ChangeSize(5, 4, 0, 250));
+
+
+            if (now != EditorGeneralMenuChoice.None)
+                Simulator.Scene.VisualEffects.Add(Menus[now], VisualEffects.ChangeSize(4, 5, 0, 250));
         }
     }
 }

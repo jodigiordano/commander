@@ -14,7 +14,7 @@
         public Vector2 TextureSize;
 
         public Vector3 position;
-        public Vector3 Position         { get { return position; } set { position = value; } }
+        public Vector3 Position         { get { return position; } set { position = value; RectangleComputed = false; } }
         public float Rotation           { get; set; }
         public TypeBlend Blend          { get; set; }
         public double VisualPriority    { get; set; }
@@ -26,6 +26,9 @@
         public string TextureName       { get; private set; }
 
         private Texture2D Texture;
+
+        private bool RectangleComputed;
+        private PhysicalRectangle rectangle;
 
 
         public Image(string imageName) : this(imageName, Vector3.Zero) {}
@@ -47,13 +50,14 @@
             Effect = SpriteEffects.None;
             VisualPriority = 0;
             Id = Visuals.NextHashCode;
+            RectangleComputed = false;
         }
 
 
         public float SizeX
         {
             get { return Size.X; }
-            set { Size = new Vector2(value); }
+            set { Size = new Vector2(value); RectangleComputed = false; }
         }
 
 
@@ -70,6 +74,28 @@
         {
             get { return Color.A; }
             set { Color.A = value; }
+        }
+
+
+        public PhysicalRectangle GetRectangle()
+        {
+            if (rectangle == null)
+                rectangle = new PhysicalRectangle();
+
+            if (RectangleComputed)
+                return rectangle;
+
+            var upperLeft = GetUpperLeft();
+            var size = AbsoluteSize;
+
+            rectangle.X = (int) upperLeft.X;
+            rectangle.Y = (int) upperLeft.Y;
+            rectangle.Width = (int) size.X;
+            rectangle.Height = (int) size.Y;
+
+            RectangleComputed = true;
+
+            return rectangle;
         }
 
 
@@ -119,5 +145,11 @@
 
 
         public float Speed { get; set; }
+
+
+        private Vector3 GetUpperLeft()
+        {
+            return Position - new Vector3(Origin * Size, 0);
+        }
     }
 }

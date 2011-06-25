@@ -5,139 +5,88 @@
     using Microsoft.Xna.Framework;
 
 
-    class CelestialBodyMenu : AbstractMenu
+    class CelestialBodyMenu
     {
         public CelestialBody CelestialBody;
 
         public Dictionary<TurretType, bool> AvailableTurrets;
         public TurretType TurretToBuy;
 
-        public bool Visible;
+        private ContextualMenu Menu;
+        private List<ContextualMenuChoice> Choices;
 
-        private Dictionary<TurretType, Image> LogosTourellesAchat;
-        private Dictionary<TurretType, Text> PrixTourellesAchat;
-
-        private Image WidgetSelection;
+        private Simulator Simulator;
         private double VisualPriority;
-
-        private int MenuWidth;
-        private int DistanceBetweenTwoChoices;
-        private Vector3 PositionChoice;
-        private Vector3 PositionChoicePrice;
-        private float TextSize;
-        private float ImageSize;
+        private Color Color;
 
 
         public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color)
-            : base(simulator, visualPriority, color)
         {
-            MenuWidth = 140;
-            DistanceBetweenTwoChoices = 35;
-            PositionChoice = new Vector3(20, 15, 0);
-            PositionChoicePrice = new Vector3(40, 2, 0);
-            TextSize = 2;
-            ImageSize = 3;
-
+            Simulator = simulator;
             VisualPriority = visualPriority;
-
-            WidgetSelection = new Image("PixelBlanc", ActualPosition)
-            {
-                Origin = Vector2.Zero,
-                Size = new Vector2(MenuWidth, DistanceBetweenTwoChoices),
-                Color = color,
-                Alpha = 230,
-                VisualPriority = this.VisualPriority + 0.00001
-            };
-
-            AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
-
-            Visible = false;
+            Color = color;
         }
 
 
         public void Initialize()
         {
-            LogosTourellesAchat = new Dictionary<TurretType, Image>(TurretTypeComparer.Default);
-            PrixTourellesAchat = new Dictionary<TurretType, Text>(TurretTypeComparer.Default);
+            Choices = new List<ContextualMenuChoice>();
 
-            Dictionary<TurretType, Turret> tourellesDisponibles = Simulation.TurretsFactory.Availables;
+            Dictionary<TurretType, Turret> availableTurrets = Simulator.TurretsFactory.Availables;
 
-            foreach (var t in tourellesDisponibles.Values)
+            foreach (var t in availableTurrets.Values)
             {
                 Image image = t.BaseImage.Clone();
-                image.VisualPriority = this.VisualPriority;
-                image.SizeX = ImageSize;
-                LogosTourellesAchat.Add(t.Type, image);
+                image.SizeX = 3;
+                image.Origin = Vector2.Zero;
 
-                Text prix = new Text("Pixelite");
-                prix.SizeX = TextSize;
-                prix.VisualPriority = this.VisualPriority;
-
-                PrixTourellesAchat.Add(t.Type, prix);
+                Choices.Add(new LogoTextContextualMenuChoice(
+                    new Text(t.BuyPrice + "M$", "Pixelite") { SizeX = 2 },
+                    image) { LogoOffet = new Vector3(0, -2, 0) });
             }
+
+            Menu = new ContextualMenu(Simulator, VisualPriority, Color, Choices, 5);
         }
 
 
-        protected override Vector3 MenuSize
+        public bool Visible
         {
-            get
-            {
-                if (!Visible)
-                    return Vector3.Zero;
-
-                return new Vector3(MenuWidth, AvailableTurrets.Count * DistanceBetweenTwoChoices, 0);
-            }
+            get { return Menu.Visible; }
+            set { Menu.Visible = value; }
         }
 
 
-        protected override Vector3 BasePosition
+        public Bubble Bubble
         {
-            get
-            {
-                return (CelestialBody == null) ? Vector3.Zero : CelestialBody.Position;
-            }
+            get { return Menu.Bubble; }
         }
 
 
-        public override void Draw()
+        public void Draw()
         {
             if (!Visible)
                 return;
 
-            base.Draw();
+            if (CelestialBody == null)
+                return;
 
-            DrawTurretsToBuy();
-
-            Bubble.Draw();
-        }
-
-
-        private void DrawTurretsToBuy()
-        {
             int slotCounter = 0;
 
             foreach (var kvp in AvailableTurrets)
             {
-                Turret t = Simulation.TurretsFactory.Availables[kvp.Key];
+                var turret = (LogoTextContextualMenuChoice) Choices[slotCounter];
 
-                LogosTourellesAchat[t.Type].Position = this.ActualPosition + PositionChoice + new Vector3(0, slotCounter * DistanceBetweenTwoChoices + 2, 0);
-                PrixTourellesAchat[t.Type].Position = this.ActualPosition + PositionChoicePrice + new Vector3(0, slotCounter * DistanceBetweenTwoChoices + 2, 0);
-                PrixTourellesAchat[t.Type].Data = t.BuyPrice + "M$";
+                turret.SetColor((kvp.Value) ? Color.White : Color.Red);
 
-
-                Simulation.Scene.Add(LogosTourellesAchat[t.Type]);
-                Simulation.Scene.Add(PrixTourellesAchat[t.Type]);
-
-                if (TurretToBuy != null && TurretToBuy == t.Type)
-                {
-                    WidgetSelection.Position = this.ActualPosition + new Vector3(0, slotCounter * DistanceBetweenTwoChoices, 0);
-                    Simulation.Scene.Add(WidgetSelection);
-                }
-
-                PrixTourellesAchat[t.Type].Color = (kvp.Value) ? Color.White : Color.Red;
+                if (TurretToBuy == Simulator.TurretsFactory.Availables[kvp.Key].Type)
+                    Menu.SelectedIndex = slotCounter;
 
                 slotCounter++;
             }
+
+
+            Menu.Position = CelestialBody.Position;
+            Menu.Draw();
         }
     }
 }

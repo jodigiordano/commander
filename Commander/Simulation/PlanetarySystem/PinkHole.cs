@@ -8,43 +8,64 @@
 
     class PinkHole : CelestialBody
     {
+        private Particle Effect;
+
+
         public PinkHole(
             Simulator simulator,
-            string nom,
-            Vector3 positionBase,
+            string name,
+            Vector3 startingPosition,
             Vector3 offset,
-            float rayon,
-            double tempsRotation,
-            Particle representation,
-            int pourcDepart,
-            float prioriteAffichage,
-            bool enBackground,
-            int rotation)
-            : base (simulator, nom, positionBase, offset, rayon, tempsRotation, representation, pourcDepart, prioriteAffichage, enBackground, rotation)
+            Size size,
+            float speed,
+            Particle effect,
+            int startingPourc,
+            float visualPriority)
+            : base (simulator, name, startingPosition, offset, size, speed, null, startingPourc, visualPriority)
         {
             Lunes = new List<Moon>();
+
+            Effect = effect;
         }
+
 
         public Color Couleur
         {
             set
             {
-                ((ColourInterpolatorModifier)ParticulesRepresentation.ParticleEffect[0].Modifiers[2]).MiddleColour = value.ToVector3();
+                ((ColourInterpolatorModifier) Effect.ParticleEffect[0].Modifiers[2]).MiddleColour = value.ToVector3();
             }
         }
 
-        public TypeBlend Melange
+
+        public override double VisualPriority
         {
+            get
+            {
+                return VisualPriorityBackup;
+            }
+
             set
             {
-                ParticulesRepresentation.Blend = value;
+                VisualPriorityBackup = Effect.VisualPriority;
+
+                Effect.VisualPriority = value;
+
+                for (int i = 0; i < Turrets.Count; i++)
+                    Turrets[i].VisualPriority = value;
             }
         }
+
 
         public override void Update()
         {
             this.AnciennePosition = this.Position;
-            ((RadialGravityModifier)ParticulesRepresentation.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
+            ((RadialGravityModifier) Effect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
+
+            Vector3 deplacement;
+            Vector3.Subtract(ref this.position, ref this.AnciennePosition, out deplacement);
+            Effect.Move(ref deplacement);
+            Effect.Trigger(ref position);
 
             base.Update();
         }

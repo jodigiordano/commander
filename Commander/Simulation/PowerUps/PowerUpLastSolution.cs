@@ -9,7 +9,7 @@ namespace EphemereGames.Commander.Simulation
         public float ZoneImpactDestruction  { get; private set; }
         public int AttackPoints             { get; private set; }
         public bool GoAhead                 { get; private set; }
-        public PlayerSelection Selection;
+        public SimPlayerSelection Selection;
         public CelestialBody CelestialBody;
 
         private bool terminated;

@@ -57,7 +57,7 @@
             InitializeAvailablePowerUps();
 
             for (int i = 0; i < PlanetarySystem.Count; i++)
-                if (PlanetarySystem[i].Priorite == Descriptor.CelestialBodyToProtect)
+                if (PlanetarySystem[i].PathPriority == Descriptor.CelestialBodyToProtect)
                 {
                     CelestialBodyToProtect = PlanetarySystem[i];
                     break;
@@ -75,12 +75,6 @@
             LifePacks = descriptor.LifePacks;
 
             HelpTexts = descriptor.HelpTexts;
-        }
-
-
-        private string nomRepresentation(Size taille, string nomBase)
-        {
-            return nomBase + ((taille == Size.Small) ? 1 : (taille == Size.Normal) ? 2 : 3).ToString();
         }
 
 
@@ -109,61 +103,13 @@
                        descriptor.Name,
                        descriptor.Position,
                        descriptor.Offset,
-                       (int) descriptor.Size,
+                       descriptor.Size,
                        descriptor.Speed,
                        Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
                        descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001f,
-                       descriptor.InBackground,
-                       descriptor.Rotation
+                       NextCelestialBodyVisualPriority -= 0.001f
                     );
 
-                }
-
-                // Sun
-                else if (descriptor.Image == null && descriptor.ParticulesEffect != null)
-                {
-                    c = new CelestialBody
-                    (
-                       Simulator,
-                       descriptor.Name,
-                       descriptor.Position,
-                       descriptor.Offset,
-                       (int) descriptor.Size,
-                       descriptor.Speed,
-                       Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
-                       descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001f,
-                       descriptor.InBackground,
-                       descriptor.Rotation
-                    );
-
-                }
-
-                // Gaz body
-                else if (descriptor.Image != null && descriptor.ParticulesEffect != null)
-                {
-                    c = new CelestialBody
-                    (
-                        Simulator,
-                        descriptor.Name,
-                        descriptor.Position,
-                        descriptor.Offset,
-                        (int) descriptor.Size,
-                        descriptor.Speed,
-                        Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
-                        descriptor.StartingPosition, NextCelestialBodyVisualPriority -= 0.001f,
-                        descriptor.InBackground,
-                       descriptor.Rotation
-                    );
-
-                    c.Representation = new Image(nomRepresentation(descriptor.Size, descriptor.Image))
-                    {
-                        VisualPriority = c.ParticulesRepresentation.VisualPriority + 0.001f
-                    };
-
-                    if (descriptor.InBackground)
-                        c.Representation.Color.A = 60;
                 }
 
                 // Normal
@@ -175,37 +121,30 @@
                        descriptor.Name,
                        descriptor.Position,
                        descriptor.Offset,
-                       (int) descriptor.Size,
+                       descriptor.Size,
                        descriptor.Speed,
-                       new Image(nomRepresentation(descriptor.Size, descriptor.Image)),
+                       descriptor.Image,
                        descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001f,
-                       descriptor.InBackground,
-                       descriptor.Rotation
+                       NextCelestialBodyVisualPriority -= 0.001f
                     );
                 }
 
                 // Asteroids belt
                 else
                 {
-                    List<Image> representations = new List<Image>();
-
-                    for (int j = 0; j < descriptor.Images.Count; j++)
-                        representations.Add(new Image(descriptor.Images[j]));
-
                     c = new AsteroidBelt
                     (
                         Simulator,
                         descriptor.Name,
                         descriptor.Position,
-                        (int) descriptor.Size,
+                        descriptor.Size,
                         descriptor.Speed,
-                        representations,
+                        descriptor.Images,
                         descriptor.StartingPosition
                     );
                 }
 
-                c.Priorite = descriptor.PathPriority;
+                c.PathPriority = descriptor.PathPriority;
                 c.Selectionnable = descriptor.CanSelect;
                 c.Invincible = descriptor.Invincible;
 
@@ -224,7 +163,7 @@
                 Turret t = null;
 
                 for (int i = 0; i < PlanetarySystem.Count; i++)
-                    if (PlanetarySystem[i].Priorite == descriptor.PathPriority)
+                    if (PlanetarySystem[i].PathPriority == descriptor.PathPriority)
                     {
                         celestialBody = PlanetarySystem[i];
                         break;
@@ -232,18 +171,9 @@
 
                 if (descriptor.HasGravitationalTurret)
                 {
-                    t = Simulator.TurretsFactory.Create(TurretType.Gravitational);
+                    celestialBody.AddToStartingPath();
 
-                    t.CanSell = false;
-                    t.CanUpdate = false;
-                    t.Level = 1;
-                    t.BackActiveThisTickOverride = true;
-                    t.Visible = false;
-                    t.CelestialBody = celestialBody;
-                    t.Position = celestialBody.Position;
-
-                    celestialBody.Turrets.Add(t);
-                    Turrets.Add(t);
+                    Turrets.Add(celestialBody.StartingPathTurret);
                 }
 
                 foreach (var turretDesc in descriptor.StartingTurrets)

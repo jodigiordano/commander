@@ -7,12 +7,13 @@
 
     class EditorPlayer
     {
-        public Circle Circle;
-        public Color Color;
+        public SimPlayer SimPlayer;
         public EditorGeneralMenu GeneralMenu;
-        public Dictionary<EditorGeneralMenuAction, TextMenu> GeneralMenuSubMenus;
+        public Dictionary<EditorGeneralMenuChoice, ContextualMenu> GeneralMenuSubMenus;
 
         public EditorPlayerSelection ActualSelection;
+        public Circle Circle { get { return SimPlayer.Circle; } }
+        public Color Color { get { return SimPlayer.Color; } }
 
         private Simulator Simulator;
 
@@ -35,33 +36,42 @@
         {
             CheckGeneralMenu();
 
-            if (ActualSelection.GeneralMenu == EditorGeneralMenuAction.None)
-            {
+            // main menu
+            if (ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
                 ActualSelection.GeneralMenuSubMenuIndex = -1;
-            }
+
+            if (ActualSelection.GeneralMenuChoice != EditorGeneralMenuChoice.None && ActualSelection.GeneralMenuSubMenuIndex == -1)
+                ActualSelection.GeneralMenuSubMenuIndex = 0;
+
+            // celestial body
+            if (SimPlayer.ActualSelection.CelestialBody == null)
+                ActualSelection.CelestialBodyChoice = -1;
+
+            if (SimPlayer.ActualSelection.CelestialBody != null && ActualSelection.CelestialBodyChoice == -1)
+                ActualSelection.CelestialBodyChoice = 0;
         }
 
 
-        public void NextGeneralMenuOption()
+        public void NextGeneralMenuChoice()
         {
-            if (ActualSelection.GeneralMenu == EditorGeneralMenuAction.None)
+            if (ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
                 return;
 
-            int nbChoices = GeneralMenuSubMenus[ActualSelection.GeneralMenu].ChoicesCount;
+            int nbChoices = GeneralMenuSubMenus[ActualSelection.GeneralMenuChoice].ChoicesCount;
 
             ActualSelection.GeneralMenuSubMenuIndex++;
 
-            if (ActualSelection.GeneralMenuSubMenuIndex >= GeneralMenu.Menus.Count)
+            if (ActualSelection.GeneralMenuSubMenuIndex >= nbChoices)
                 ActualSelection.GeneralMenuSubMenuIndex = 0;
         }
 
 
-        public void PreviousGeneralMenuOption()
+        public void PreviousGeneralMenuChoice()
         {
-            if (ActualSelection.GeneralMenu == EditorGeneralMenuAction.None)
+            if (ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
                 return;
 
-            int nbChoices = GeneralMenuSubMenus[ActualSelection.GeneralMenu].ChoicesCount;
+            int nbChoices = GeneralMenuSubMenus[ActualSelection.GeneralMenuChoice].ChoicesCount;
 
             ActualSelection.GeneralMenuSubMenuIndex--;
 
@@ -70,9 +80,43 @@
         }
 
 
+        public void NextCelestialBodyChoice()
+        {
+            if (ActualSelection.CelestialBodyChoice == -1)
+                return;
+
+            int actual = (int) ActualSelection.CelestialBodyChoice;
+            int nbChoices = 10;
+
+            actual += 1;
+
+            if (actual >= nbChoices)
+                actual = 0;
+
+            ActualSelection.CelestialBodyChoice = actual;
+        }
+
+
+        public void PreviousCelestialBodyChoice()
+        {
+            if (ActualSelection.CelestialBodyChoice == -1)
+                return;
+
+            int actual = (int) ActualSelection.CelestialBodyChoice;
+            int nbChoices = 10;
+
+            actual -= 1;
+
+            if (actual < 0)
+                actual = nbChoices - 1;
+
+            ActualSelection.CelestialBodyChoice = actual;
+        }
+
+
         private void CheckGeneralMenu()
         {
-            ActualSelection.GeneralMenu = GeneralMenu.GetSelection(Circle);
+            ActualSelection.GeneralMenuChoice = GeneralMenu.GetSelection(Circle);
         }
     }
 }

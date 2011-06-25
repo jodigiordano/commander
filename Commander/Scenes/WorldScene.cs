@@ -44,6 +44,7 @@
 
             Simulator.Initialize();
             Inputs.AddListener(Simulator);
+            Simulator.EnableInputs = false;
 
 
             // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
@@ -196,7 +197,7 @@
                 if (currentGame != null && 
                     !currentGame.IsFinished &&
                     currentGame.Simulator.LevelDescriptor.Id == level.Id &&
-                    Simulator.GameAction == GameAction.Resume)
+                    Simulator.GameAction == PausedGameChoice.Resume)
                 {
                     currentGame.Simulator.State = GameState.Running;
                     Audio.PauseMusic(Main.SelectedMusic, true, 1000);
@@ -316,7 +317,7 @@
                     kvp.Key.Position + new Vector3(kvp.Key.Circle.Radius, kvp.Key.Circle.Radius, 0) +
                     ((kvp.Key.Circle.Radius < (int) Size.Normal) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0)));
 
-                kvp.Value.VisualPriority = kvp.Key.Representation.VisualPriority - 0.0001f;
+                kvp.Value.VisualPriority = kvp.Key.Image.VisualPriority - 0.0001f;
                 kvp.Value.SizeX = (kvp.Key.Circle.Radius < (int) Size.Normal) ? 0.5f : 0.80f;
             }
 

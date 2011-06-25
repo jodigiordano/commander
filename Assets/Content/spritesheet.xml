@@ -150,6 +150,12 @@
     <Item><Key>Curseur</Key><Value>GUI/Curseur.png</Value></Item>
     <Item><Key>checkbox</Key><Value>GUI/checkbox.png</Value></Item>
     
+    <!-- Editor -->
+    <Item><Key>EditorFile</Key><Value>Editor/disk.png</Value></Item>
+    <Item><Key>EditorWaves</Key><Value>Editor/waves.png</Value></Item>
+    <Item><Key>EditorGameplay</Key><Value>Editor/gameplay.png</Value></Item>
+    <Item><Key>EditorBattlefield</Key><Value>Editor/planetarySystem.png</Value></Item>
+    
     
     <!-- Particles -->
     <Item><Key>Cercle</Key><Value>particules/cercle.png</Value></Item>

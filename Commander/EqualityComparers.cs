@@ -222,7 +222,7 @@
     }
 
 
-    class TurretActionComparer : IEqualityComparer<TurretAction>
+    class TurretActionComparer : IEqualityComparer<TurretChoice>
     {
         private static TurretActionComparer instance;
         public static TurretActionComparer Default
@@ -236,40 +236,67 @@
         }
 
 
-        public bool Equals(TurretAction x, TurretAction y)
+        public bool Equals(TurretChoice x, TurretChoice y)
         {
             return x == y;
         }
 
 
-        public int GetHashCode(TurretAction obj)
+        public int GetHashCode(TurretChoice obj)
         {
             return (int) obj;
         }
     }
 
 
-    class EditorGeneralMenuActionComparer : IEqualityComparer<EditorGeneralMenuAction>
+    class EditorGeneralMenuChoiceComparer : IEqualityComparer<EditorGeneralMenuChoice>
     {
-        private static EditorGeneralMenuActionComparer instance;
-        public static EditorGeneralMenuActionComparer Default
+        private static EditorGeneralMenuChoiceComparer instance;
+        public static EditorGeneralMenuChoiceComparer Default
         {
             get
             {
                 if (instance == null)
-                    instance = new EditorGeneralMenuActionComparer();
+                    instance = new EditorGeneralMenuChoiceComparer();
                 return instance;
             }
         }
 
 
-        public bool Equals(EditorGeneralMenuAction x, EditorGeneralMenuAction y)
+        public bool Equals(EditorGeneralMenuChoice x, EditorGeneralMenuChoice y)
         {
             return x == y;
         }
 
 
-        public int GetHashCode(EditorGeneralMenuAction obj)
+        public int GetHashCode(EditorGeneralMenuChoice obj)
+        {
+            return (int) obj;
+        }
+    }
+
+
+    class EditorPanelComparer : IEqualityComparer<EditorPanel>
+    {
+        private static EditorPanelComparer instance;
+        public static EditorPanelComparer Default
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new EditorPanelComparer();
+                return instance;
+            }
+        }
+
+
+        public bool Equals(EditorPanel x, EditorPanel y)
+        {
+            return x == y;
+        }
+
+
+        public int GetHashCode(EditorPanel obj)
         {
             return (int) obj;
         }

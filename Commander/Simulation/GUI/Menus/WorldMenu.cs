@@ -5,56 +5,51 @@
     using Microsoft.Xna.Framework;
 
 
-    class WorldMenu : AbstractMenu
+    class WorldMenu
     {
         public CelestialBody CelestialBody;
         private Dictionary<string, LevelDescriptor> AvailableLevels;
-        public GameAction Action;
+        public PausedGameChoice PausedGameChoice;
 
-        private Text ResumeGame;
-        private Text NewGame;
         private Text Title;
         private Text Difficulty;
         private Text Highscore;
-        private Image Selector;
         private Image[] HighscoreStars;
         private double VisualPriority;
 
+        private ContextualMenu PausedGameMenu;
+        private List<ContextualMenuChoice> PausedGameChoices;
+
+        private Simulator Simulator;
+
 
         public WorldMenu(Simulator simulator, double visualPriority, Dictionary<string, LevelDescriptor> availableLevels, Color color)
-            : base(simulator, visualPriority, color)
         {
+            Simulator = simulator;
             VisualPriority = visualPriority;
             AvailableLevels = availableLevels;
 
-            ResumeGame = new Text("resume game", "Pixelite", Color.White, Vector3.Zero);
-            ResumeGame.SizeX = 2;
-            ResumeGame.VisualPriority = visualPriority;
+            PausedGameChoices = new List<ContextualMenuChoice>()
+            {
+                new TextContextualMenuChoice(new Text("resume game", "Pixelite") { SizeX = 2 }),
+                new TextContextualMenuChoice(new Text("new game", "Pixelite") { SizeX = 2 })
+            };
 
-            NewGame = new Text("new game", "Pixelite", Color.White, Vector3.Zero);
-            NewGame.VisualPriority = visualPriority;
-            NewGame.SizeX = 2;
-
-            Selector = new Image("PixelBlanc", Vector3.Zero);
-            Selector.Size = new Vector2(190, 30);
-            Selector.Color = color;
-            Selector.Color.A = 230;
-            Selector.VisualPriority = visualPriority + 0.01f;
-            Selector.Origin = Vector2.Zero;
+            PausedGameMenu = new ContextualMenu(simulator, visualPriority, color, PausedGameChoices, 15);
 
             Title = new Text("Pixelite");
             Title.SizeX = 4;
-            Title.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
+            Title.VisualPriority = Preferences.PrioriteFondEcran - 0.00001;
             Title.Color.A = 200;
 
             Difficulty = new Text("Pixelite");
             Difficulty.SizeX = 3;
-            Difficulty.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
+            Difficulty.VisualPriority = Preferences.PrioriteFondEcran - 0.00001;
             Difficulty.Color.A = 200;
 
             Highscore = new Text("Pixelite");
             Highscore.SizeX = 2;
-            Highscore.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
+            Highscore.VisualPriority = Preferences.PrioriteFondEcran - 0.00001;
             Highscore.Color.A = 200;
 
             HighscoreStars = new Image[3];
@@ -63,71 +58,34 @@
             {
                 var star = new Image("Star", Vector3.Zero);
                 star.SizeX = 0.25f;
-                star.VisualPriority = Preferences.PrioriteFondEcran - 0.01f;
+                star.VisualPriority = Preferences.PrioriteFondEcran - 0.00001;
                 star.Color.A = 200;
                 HighscoreStars[i] = star;
             }
         }
 
 
-        protected override Vector3 MenuSize
-        {
-            get
-            {
-                if (CelestialBody == null)
-                    return Vector3.Zero;
-
-                return new Vector3(190, 60, 0);
-            }
-        }
-
-
-        protected override Vector3 BasePosition
-        {
-            get
-            {
-                return (CelestialBody == null) ? Vector3.Zero : CelestialBody.Position - new Vector3(0, CelestialBody.Circle.Radius / 4, 0);
-            }
-        }
-
-
-        public override void Draw()
+        public void Draw()
         {
             if (CelestialBody == null)
                 return;
 
-
             DrawInfos();
-
 
             if (CelestialBody is PinkHole)
                 return;
-
 
             DrawHighScore();
 
 
             if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished &&
                 Main.GameInProgress.Simulator.LevelDescriptor.Mission == CelestialBody.Name &&
-                Simulation.Scene.EnableInputs)
+                Simulator.Scene.EnableInputs)
             {
-                base.Draw();
-                DrawGameInProgress();
+                PausedGameMenu.Position = CelestialBody.Position;
+                PausedGameMenu.SelectedIndex = (int) PausedGameChoice;
+                PausedGameMenu.Draw();
             }
-        }
-
-
-        private void DrawGameInProgress()
-        {
-            NewGame.Position = ActualPosition + new Vector3(5, 3, 0);
-            ResumeGame.Position = ActualPosition + new Vector3(5, 33, 0);
-            Selector.Position = (Action == GameAction.Resume) ? ActualPosition + new Vector3(0, 30, 0) : ActualPosition;
-
-
-            Simulation.Scene.Add(ResumeGame);
-            Simulation.Scene.Add(NewGame);
-            Simulation.Scene.Add(Selector);
-            Bubble.Draw();
         }
 
 
@@ -143,8 +101,8 @@
             Difficulty.Origin = Difficulty.Center;
 
 
-            Simulation.Scene.Add(Title);
-            Simulation.Scene.Add(Difficulty);
+            Simulator.Scene.Add(Title);
+            Simulator.Scene.Add(Difficulty);
 
         }
 
@@ -169,10 +127,10 @@
             }
 
 
-            Simulation.Scene.Add(Highscore);
-            Simulation.Scene.Add(HighscoreStars[0]);
-            Simulation.Scene.Add(HighscoreStars[1]);
-            Simulation.Scene.Add(HighscoreStars[2]);
+            Simulator.Scene.Add(Highscore);
+            Simulator.Scene.Add(HighscoreStars[0]);
+            Simulator.Scene.Add(HighscoreStars[1]);
+            Simulator.Scene.Add(HighscoreStars[2]);
         }
     }
 }

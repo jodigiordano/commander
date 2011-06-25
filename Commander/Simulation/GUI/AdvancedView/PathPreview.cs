@@ -35,15 +35,15 @@
 
         public void AddCelestialObject(CelestialBody obj)
         {
-            if (State == PathState.ObjectAdded || Path.contientCorpsCeleste(obj))
+            if (State == PathState.ObjectAdded || Path.ContainsCelestialBody(obj))
                 return;
 
             if (State == PathState.RollbackingObjectAdded || State == PathState.RollbackingObjectRemoved)
                 EffectsController.Clear();
 
             CelestialObject = obj;
-            CelestialObject.ContientTourelleGravitationnelleByPass = true;
-            Path.ajouterCorpsCeleste(obj);
+            CelestialObject.HasGravitationalTurretBypass = true;
+            Path.AddCelestialBody(obj);
             State = PathState.ObjectAdded;
 
             EffectsController.Clear();
@@ -59,7 +59,7 @@
                 return;
 
             CelestialObject = obj;
-            Path.enleverCorpsCeleste(obj);
+            Path.RemoveCelestialBody(obj);
             State = PathState.ObjectRemoved;
 
             EffectsController.Clear();
@@ -86,7 +86,7 @@
         public void Commit()
         {
             if (CelestialObject != null)
-                CelestialObject.ContientTourelleGravitationnelleByPass = false;
+                CelestialObject.HasGravitationalTurretBypass = false;
 
             CelestialObject = null;
             State = PathState.None;
@@ -118,11 +118,11 @@
             switch (State)
             {
                 case PathState.RollbackingObjectAdded:
-                    Path.enleverCorpsCeleste(CelestialObject);
-                    CelestialObject.ContientTourelleGravitationnelleByPass = false;
+                    Path.RemoveCelestialBody(CelestialObject);
+                    CelestialObject.HasGravitationalTurretBypass = false;
                     break;
                 case PathState.RollbackingObjectRemoved:
-                    Path.ajouterCorpsCeleste(CelestialObject);
+                    Path.AddCelestialBody(CelestialObject);
                     break;
             }
         }

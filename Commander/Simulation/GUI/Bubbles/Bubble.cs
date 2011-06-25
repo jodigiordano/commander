@@ -21,19 +21,19 @@
         public int BlaPosition;
 
 
-        public Bubble(Simulator simulator, PhysicalRectangle dimension, double prioriteAffichage)
+        public Bubble(Simulator simulator, PhysicalRectangle dimension, double visualPriority)
         {
             this.Simulation = simulator;
             this.Dimension = dimension;
 
             Bla = new Image("bulleBlabla");
-            Bla.VisualPriority = prioriteAffichage;
+            Bla.VisualPriority = visualPriority;
             Bla.Origin = Vector2.Zero;
 
             Filter = new Image("PixelBlanc")
             {
                 Color = new Color(0, 0, 0, 200),
-                VisualPriority = prioriteAffichage + 0.000002,
+                VisualPriority = visualPriority + 0.000002,
                 Origin = Vector2.Zero
             };
 
@@ -42,16 +42,8 @@
 
             for (int i = 0; i < 4; i++)
             {
-                Image iv = new Image("bulleCoin");
-                iv.VisualPriority = prioriteAffichage + 0.000001;
-
-                Corners.Add(iv);
-
-                iv = new Image("PixelBlanc");
-                iv.VisualPriority = prioriteAffichage + 0.000001;
-                iv.Origin = Vector2.Zero;
-
-                Edges.Add(iv);
+                Corners.Add(new Image("bulleCoin") { VisualPriority = visualPriority + 0.000001 });
+                Edges.Add(new Image("PixelBlanc") { VisualPriority = visualPriority + 0.000001, Origin = Vector2.Zero });
             }
 
             Color = Color.White;
@@ -121,7 +113,7 @@
                     Bla.Effect = SpriteEffects.FlipHorizontally;
                     break;
                 case 2: // bas droite
-                    Bla.Position = new Vector3(Dimension.Right + 16, Dimension.Bottom - 32, 0);
+                    Bla.Position = new Vector3(Dimension.Right + 16, Dimension.Bottom - 16, 0);
                     Bla.Origin = Bla.Center;
                     Bla.Rotation = MathHelper.Pi;
                     Bla.Effect = SpriteEffects.None;
@@ -143,6 +135,36 @@
 
             Simulation.Scene.Add(Filter);
             Simulation.Scene.Add(Bla);
+        }
+
+
+        public virtual void Fade(int from, int to, double length, Core.NoneHandler callback)
+        {
+            var effect = VisualEffects.Fade(from, to, 0, length);
+            effect.TerminatedCallback = callback;
+
+            foreach (var coin in Corners)
+            {
+                coin.Color.A = (byte) from;
+                Simulation.Scene.VisualEffects.Add(coin, VisualEffects.Fade(from, to, 0, length));
+            }
+
+            foreach (var contour in Edges)
+            {
+                contour.Color.A = (byte) from;
+                Simulation.Scene.VisualEffects.Add(contour, VisualEffects.Fade(from, to, 0, length));
+            }
+
+            Filter.Color.A = (byte) from;
+            Bla.Color.A = (byte) from;
+
+            Simulation.Scene.VisualEffects.Add(Bla, VisualEffects.Fade(from, to, 0, length));
+
+            effect = VisualEffects.Fade(Math.Min(from, 128), Math.Min(to, 128), 0, length);
+
+            Filter.Alpha = (byte) Math.Max(from, 128);
+
+            Simulation.Scene.VisualEffects.Add(Filter, effect);
         }
 
 

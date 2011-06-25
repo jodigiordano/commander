@@ -42,6 +42,8 @@
         private SimPlayer PlayerInAdvancedView;
         private SimPlayer PlayerInNextWave;
 
+        private bool UpdateSelection;
+
 
         public SimPlayersController(Simulator simulator)
         {
@@ -69,6 +71,8 @@
 
             PlayerInAdvancedView = null;
             PlayerInNextWave = null;
+
+            UpdateSelection = true;
 
             NotifyCommonStashChanged(CommonStash);
 
@@ -113,6 +117,12 @@
         public bool HasPlayer(Player player)
         {
             return Players.ContainsKey(player);
+        }
+
+
+        public SimPlayer GetPlayer(Player player)
+        {
+            return Players[player];
         }
 
 
@@ -227,7 +237,6 @@
             if (Simulator.DemoMode)
             {
                 player.Move(ref delta, MouseConfiguration.Speed);
-                player.UpdateDemoSelection();
                 return;
             }
 
@@ -320,7 +329,12 @@
             foreach (var player in Players.Values)
             {
                 player.Update();
-                player.UpdateSelection();
+
+                if (UpdateSelection)
+                    player.UpdateSelection();
+
+                if (Simulator.DemoMode)
+                    player.UpdateDemoSelection();
 
                 NotifyPlayerChanged(player);
                 NotifyPlayerMoved(player);
@@ -445,12 +459,12 @@
             // upgrade or sell a turret
             if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
             {
-                switch (player.ActualSelection.TurretOption)
+                switch (player.ActualSelection.TurretChoice)
                 {
-                    case TurretAction.Sell:
+                    case TurretChoice.Sell:
                         NotifySellTurretAsked(player.ActualSelection.Turret);
                         break;
-                    case TurretAction.Update:
+                    case TurretChoice.Update:
                         NotifyUpgradeTurretAsked(player.ActualSelection.Turret);
                         break;
                 }
@@ -499,6 +513,29 @@
                 PlayerInAdvancedView = null;
                 NotifyHideAdvancedViewAsked();
                 return;
+            }
+        }
+
+
+        public void DoEditorPanelCommandExecuted(EditorPlayer p, EditorPanelCommand command)
+        {
+            if (command.Show)
+            {
+                foreach (var player in Players.Values)
+                {
+                    player.ActualSelection.CelestialBody = null;
+                    player.ActualSelection.Turret = null;
+                    player.ActualSelection.TurretToPlace = null;
+
+                    NotifyPlayerChanged(player);
+                }
+
+                UpdateSelection = false;
+            }
+
+            else if (!command.Show)
+            {
+                UpdateSelection = true;
             }
         }
 

@@ -72,12 +72,12 @@
             {
                 CelestialBody corps = CelestialBodies[i];
 
-                if (corps.Priorite == -1)
+                if (corps.PathPriority == -1)
                     continue;
 
                 for (int j = 0; j < corps.Turrets.Count; j++)
                     if (corps.Turrets[j].Type == TurretType.Gravitational)
-                        ajouterCorpsCeleste(corps);
+                        AddCelestialBody(corps);
             }
 
             Active = true;
@@ -105,7 +105,7 @@
         {
             get
             {
-                return CelestialBodiesPath.GetFirst();
+                return CelestialBodiesPath.Count == 0 ? null : CelestialBodiesPath.GetFirst();
             }
         }
 
@@ -119,33 +119,36 @@
         }
 
 
-        public bool contientCorpsCeleste(CelestialBody corpsCeleste)
+        public bool ContainsCelestialBody(CelestialBody celestialBody)
         {
-            return CelestialBodiesPath.Contains(corpsCeleste);
+            return CelestialBodiesPath.Contains(celestialBody);
         }
 
 
-        public void enleverCorpsCeleste(CelestialBody corpsCeleste)
+        public void RemoveCelestialBody(CelestialBody celestialBody)
         {
             FirstCelestialBody.FirstOnPath = false;
             LastCelestialBody.LastOnPath = false;
 
-            CelestialBodiesPath.Remove(corpsCeleste);
+            CelestialBodiesPath.Remove(celestialBody);
 
-            FirstCelestialBody.FirstOnPath = true;
-            LastCelestialBody.LastOnPath = true;
+            if (FirstCelestialBody != null)
+            {
+                FirstCelestialBody.FirstOnPath = true;
+                LastCelestialBody.LastOnPath = true;
+            }
         }
 
 
-        public void ajouterCorpsCeleste(CelestialBody corpsCeleste)
+        public void AddCelestialBody(CelestialBody celestialBody)
         {
-            if (contientCorpsCeleste(corpsCeleste))
+            if (ContainsCelestialBody(celestialBody))
                 return;
 
-            if (corpsCeleste.Priorite == -1)
+            if (celestialBody.PathPriority == -1)
                 return;
 
-            if (!corpsCeleste.ContientTourelleGravitationnelle)
+            if (!celestialBody.HasGravitationalTurret)
                 return;
 
             if (LastCelestialBody != null)
@@ -153,14 +156,14 @@
                 FirstCelestialBody.FirstOnPath = false;
                 LastCelestialBody.LastOnPath = false;
 
-                CelestialBodiesPath.Add(corpsCeleste);
+                CelestialBodiesPath.Add(celestialBody);
 
                 FirstCelestialBody.FirstOnPath = true;
                 LastCelestialBody.LastOnPath = true;
             }
 
             else
-                CelestialBodiesPath.Add(corpsCeleste);
+                CelestialBodiesPath.Add(celestialBody);
         }
 
 
@@ -195,31 +198,6 @@
         {
             if (!Active)
                 return;
-
-            //int nbLines = (int) (Length / DistanceTwoPoints) + 1;
-            //int toAddOrDelete = nbLines - PreviousNbLinesToDraw;
-            
-            //int cnt = Math.Abs(toAddOrDelete);
-
-            //for (int i = 0; i < cnt; i++)
-            //    if (toAddOrDelete > 0)
-            //        Scene.Add(Lines[PreviousNbLinesToDraw + i]);
-            //    else
-            //        Scene.Remove(Lines[PreviousNbLinesToDraw - i - 1]);
-
-            //PreviousNbLinesToDraw = nbLines;
-            
-            //for (int j = 0; j < nbLines; j++)
-            //{
-            //    InnerPath.Position(j * DistanceTwoPoints, ref Lines[j].position);
-
-            //    Lines[j].Rotation = InnerPath.rotation(j * DistanceTwoPoints);
-            //    Lines[j].Color.G = Lines[j].Color.B = (byte) (255 * (1 - (((float)j + 1) / nbLines)));
-            //    Lines[j].VisualPriority = Preferences.PrioriteSimulationChemin + InnerPath.Pourc(j * DistanceTwoPoints) / 1000f;
-
-            //    if (j >= MaxVisibleLines)
-            //        break;
-            //}
 
             int nbLines = Math.Min((int) (Length / DistanceTwoPoints) + 1, MaxVisibleLines);
             
@@ -330,7 +308,7 @@
 
                 Points[NbPoints++] = exitVec;
 
-                if (CelestialBodiesPath[i].ContientTourelleGravitationnelleNiveau2)
+                if (CelestialBodiesPath[i].HasLevel2GravitationalTurret)
                 {
                     step = MathHelper.TwoPi / 8;
 

@@ -1,5 +1,5 @@
 ================================================================================
-                                TODO COMMANDER
+                                TODO GENERAL
 ================================================================================
 => change GUI for power-ups: space station in the bottom left of the screen		DONE.
 => se débarasser du bouton de vente: jamais utilisé, really.
@@ -14,6 +14,8 @@
 => changer le "niveau complete" par un petit vaisseau extra-terrestre
 => Utiliser RunningSlowly pour les particules
 => Si planete a proteger hitted + qu'une fois par x temps, pas jouer x particules	DONE.
+=> Add mouse/gamepad sensitivity in options
+=> Spaceships: Bumping, fire at each others, racing mode
 
 
 ================================================================================
@@ -46,7 +48,7 @@
 ================================================================================
                                TODO GAMEPLAY
 ================================================================================
-=>
+=> the path can include a celestial body more than once
 
 
 

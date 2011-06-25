@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
 
-    enum TurretAction
+    enum TurretChoice
     {
         None = -1,
         Sell = 0,
@@ -11,7 +11,7 @@
     }
 
 
-    public enum GameAction
+    public enum PausedGameChoice
     {
         None = -1,
         Resume = 0,
@@ -19,35 +19,35 @@
     }
 
 
-    class PlayerSelection
+    class SimPlayerSelection
     {
         public CelestialBody CelestialBody;
 
         public PowerUpType PowerUpToBuy;
 
         public Turret Turret;
-        public TurretAction TurretOption;
-        public Dictionary<TurretAction, bool> AvailableTurretOptions;
+        public TurretChoice TurretChoice;
+        public Dictionary<TurretChoice, bool> AvailableTurretOptions;
 
         public TurretType TurretToBuy;
         public Turret TurretToPlace;
 
-        public GameAction GameAction;
+        public PausedGameChoice GameChoice;
 
 
-        public PlayerSelection()
+        public SimPlayerSelection()
         {
             CelestialBody = null;
             PowerUpToBuy = PowerUpType.None;
             Turret = null;
             TurretToBuy = TurretType.None;
-            TurretOption = TurretAction.None;
+            TurretChoice = TurretChoice.None;
             TurretToPlace = null;
-            GameAction = GameAction.None;
+            GameChoice = PausedGameChoice.None;
 
-            AvailableTurretOptions = new Dictionary<TurretAction, bool>(TurretActionComparer.Default);
-            AvailableTurretOptions.Add(TurretAction.Sell, false);
-            AvailableTurretOptions.Add(TurretAction.Update, false);
+            AvailableTurretOptions = new Dictionary<TurretChoice, bool>(TurretActionComparer.Default);
+            AvailableTurretOptions.Add(TurretChoice.Sell, false);
+            AvailableTurretOptions.Add(TurretChoice.Update, false);
         }
     }
 }

@@ -110,5 +110,30 @@
 
             return e;
         }
+
+
+        public static SizeEffect ChangeSize(float from, float to, double delay, double length)
+        {
+            SizeEffect se = SizeEffect.Pool.Get();
+
+            se.Path =
+                new Path2D(new List<Vector2>
+                {
+                    new Vector2(from, from),
+                    new Vector2((from + to) / 2, (from + to) / 2),
+                    new Vector2(to, to)
+                }, new List<double>
+                {
+                    0,
+                    length / 2,
+                    length
+                });
+
+            se.Progress = Effect<IVisual>.ProgressType.Linear;
+            se.Delay = delay;
+            se.Length = length;
+
+            return se;
+        }
     }
 }

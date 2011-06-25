@@ -277,20 +277,20 @@
             var selection = p.ActualSelection;
             var player = Players[p];
 
-            player.MenuCelestialBody.CelestialBody = selection.CelestialBody;
-            player.MenuCelestialBody.TurretToBuy = selection.TurretToBuy;
-            player.MenuCelestialBody.Visible = selection.TurretToPlace == null && selection.CelestialBody != null;
+            player.CelestialBodyMenu.CelestialBody = selection.CelestialBody;
+            player.CelestialBodyMenu.TurretToBuy = selection.TurretToBuy;
+            player.CelestialBodyMenu.Visible = selection.TurretToPlace == null && selection.CelestialBody != null;
 
             if (selection.PowerUpToBuy != PowerUpType.None)
                 MenuPowerUps.PowerUpToBuy = selection.PowerUpToBuy;
 
-            player.MenuTurret.Turret = selection.Turret;
-            player.MenuTurret.AvailableTurretOptions = selection.AvailableTurretOptions;
-            player.MenuTurret.SelectedOption = selection.TurretOption;
-            player.MenuTurret.Visible = player.MenuTurret.Turret != null && !player.MenuTurret.Turret.Disabled;
+            player.TurretMenu.Turret = selection.Turret;
+            player.TurretMenu.AvailableTurretOptions = selection.AvailableTurretOptions;
+            player.TurretMenu.SelectedOption = selection.TurretChoice;
+            player.TurretMenu.Visible = player.TurretMenu.Turret != null && !player.TurretMenu.Turret.Disabled;
 
             player.WorldMenu.CelestialBody = selection.CelestialBody;
-            player.WorldMenu.Action = selection.GameAction;
+            player.WorldMenu.PausedGameChoice = selection.GameChoice;
 
             player.SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
 
@@ -302,12 +302,12 @@
                 selection.Turret.Type == TurretType.Gravitational &&
                 selection.Turret.CanSell &&
                 !selection.Turret.Disabled &&
-                selection.TurretOption == TurretAction.Sell)
+                selection.TurretChoice == TurretChoice.Sell)
                 PathPreviewing.RemoveCelestialObject(selection.Turret.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.CelestialBody != null &&
                 player.PowerUpFinalSolution &&
-                selection.CelestialBody.ContientTourelleGravitationnelle)
+                selection.CelestialBody.HasGravitationalTurret)
                 PathPreviewing.RemoveCelestialObject(selection.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.TurretToBuy == TurretType.Gravitational)
@@ -325,8 +325,8 @@
         {
             foreach (var player in Players.Values)
             {
-                if ((player.MenuTurret.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.MenuTurret.Bubble.Dimension, GameMenu.Rectangle)) ||
-                    (player.MenuCelestialBody.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.MenuCelestialBody.Bubble.Dimension, GameMenu.Rectangle)))
+                if ((player.TurretMenu.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.TurretMenu.Bubble.Dimension, GameMenu.Rectangle)) ||
+                    (player.CelestialBodyMenu.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.CelestialBodyMenu.Bubble.Dimension, GameMenu.Rectangle)))
                     GameMenu.FadeOut(100, 250);
                 else
                     GameMenu.FadeIn(255, 250);

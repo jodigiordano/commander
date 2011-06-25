@@ -1,7 +1,6 @@
 namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Audio;
-    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -27,12 +26,10 @@ namespace EphemereGames.Commander.Simulation
                     "",
                     Vector3.Zero,
                     Vector3.Zero,
+                    Size.Small,
                     0,
+                    null,
                     0,
-                    new Image("PixelBlanc"),
-                    0,
-                    0,
-                    true,
                     0);
             CorpsCeleste.AttackPoints = 0.5f;
         }

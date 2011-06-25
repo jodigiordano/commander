@@ -24,6 +24,7 @@
 
             Simulator.Initialize();
             Inputs.AddListener(Simulator);
+            Simulator.EnableInputs = false;
         }
 
 

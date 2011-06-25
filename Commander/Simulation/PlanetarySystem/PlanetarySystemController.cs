@@ -69,10 +69,10 @@
                 {
                     c.DoDie();
 
-                    if (Path.contientCorpsCeleste(c))
+                    if (Path.ContainsCelestialBody(c))
                     {
-                        Path.enleverCorpsCeleste(c);
-                        PathPreview.enleverCorpsCeleste(c);
+                        Path.RemoveCelestialBody(c);
+                        PathPreview.RemoveCelestialBody(c);
                     }
 
                     CelestialBodies.RemoveAt(i);
@@ -104,20 +104,6 @@
         }
 
 
-        //public void Show()
-        //{
-        //    for (int i = 0; i < CelestialBodies.Count; i++)
-        //        CelestialBodies[i].Show();
-        //}
-
-
-        //public void Hide()
-        //{
-        //    for (int i = 0; i < CelestialBodies.Count; i++)
-        //        CelestialBodies[i].Hide();
-        //}
-
-
         public void Draw()
         {
             foreach (var c in CelestialBodies)
@@ -132,11 +118,11 @@
             celestialBody.Turrets.Add(turret);
 
             if (turret.Type == TurretType.Gravitational &&
-                celestialBody.Priorite != -1 &&
-                !Path.contientCorpsCeleste(celestialBody))
+                celestialBody.PathPriority != -1 &&
+                !Path.ContainsCelestialBody(celestialBody))
             {
-                Path.ajouterCorpsCeleste(celestialBody);
-                PathPreview.ajouterCorpsCeleste(celestialBody);
+                Path.AddCelestialBody(celestialBody);
+                PathPreview.AddCelestialBody(celestialBody);
             }
 
             return true;
@@ -155,8 +141,8 @@
 
             if (turret.Type == TurretType.Gravitational && nbGravTurrets == 1)
             {
-                Path.enleverCorpsCeleste(celestialBody);
-                PathPreview.enleverCorpsCeleste(celestialBody);
+                Path.RemoveCelestialBody(celestialBody);
+                PathPreview.RemoveCelestialBody(celestialBody);
             }
 
             celestialBody.Turrets.Remove(turret);
@@ -261,6 +247,104 @@
         {
             foreach (var c in CelestialBodies)
                 c.Update();
+        }
+
+
+        public List<CelestialBodyDescriptor> GenerateDescriptor()
+        {
+            List<CelestialBodyDescriptor> descriptor = new List<CelestialBodyDescriptor>();
+
+            foreach (var c in CelestialBodies)
+                descriptor.Add(c.GenerateDescriptor());
+
+            return descriptor;
+        }
+
+
+        public void DoEditorCelestialBodyCommandExecuted(EditorPlayer player, EditorCelestialBodyCommand command)
+        {
+            if (command.Name == "Add")
+            {
+                var celestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, CelestialBodies, Preferences.PrioriteSimulationCorpsCeleste);
+                celestialBody.PathPriority = GetHighestPathPriority() + 1;
+                CelestialBodies.Add(celestialBody);
+            }
+
+            else if (command.Name == "Remove")
+            {
+                command.CelestialBody.LifePoints = 0;
+            }
+
+            else if (command.Name == "ToggleSpeed")
+            {
+                command.CelestialBody.SetSpeed(command.Speed);
+            }
+
+            else if (command.Name == "PushFirst")
+            {
+                Path.RemoveCelestialBody(command.CelestialBody);
+                command.CelestialBody.PathPriority = GetLowestPathPriority() - 1;
+                Path.AddCelestialBody(command.CelestialBody);
+            }
+
+
+            else if (command.Name == "PushLast")
+            {
+                Path.RemoveCelestialBody(command.CelestialBody);
+                command.CelestialBody.PathPriority = GetHighestPathPriority() + 1;
+                Path.AddCelestialBody(command.CelestialBody);
+            }
+
+
+            else if (command.Name == "ToggleSize")
+            {
+                command.CelestialBody.SetSize(command.Size);
+                command.CelestialBody.SetImage(command.CelestialBody.PartialImageName);
+            }
+
+            else if (command.Name == "AddGravitationalTurret")
+            {
+                command.CelestialBody.AddToStartingPath();
+                Path.AddCelestialBody(command.CelestialBody);
+                PathPreview.AddCelestialBody(command.CelestialBody);
+            }
+
+            else if (command.Name == "RemoveGravitationalTurret")
+            {
+                command.CelestialBody.RemoveFromStartingPath();
+                Path.RemoveCelestialBody(command.CelestialBody);
+                PathPreview.RemoveCelestialBody(command.CelestialBody);
+            }
+
+            else if (command.Name == "Clear")
+            {
+                foreach (var c in CelestialBodies)
+                    c.LifePoints = 0;
+            }
+        }
+
+
+        private int GetHighestPathPriority()
+        {
+            int highestPriorty = 0;
+
+            foreach (var c in CelestialBodies)
+                if (c.PathPriority > highestPriorty)
+                    highestPriorty = c.PathPriority;
+
+            return highestPriorty;
+        }
+
+
+        private int GetLowestPathPriority()
+        {
+            int lowestPriority = (CelestialBodies.Count == 0) ? 0 : CelestialBodies[0].PathPriority;
+
+            foreach (var c in CelestialBodies)
+                if (c.PathPriority < lowestPriority)
+                    lowestPriority = c.PathPriority;
+
+            return lowestPriority;
         }
     }
 }

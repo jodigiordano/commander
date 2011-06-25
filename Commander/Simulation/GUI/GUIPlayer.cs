@@ -9,8 +9,8 @@
         public SpaceshipCursor Cursor;
         public Cursor Crosshair;
         public SelectedCelestialBodyAnimation SelectedCelestialBodyAnimation;
-        public CelestialBodyMenu MenuCelestialBody;
-        public TurretMenu MenuTurret;
+        public CelestialBodyMenu CelestialBodyMenu;
+        public TurretMenu TurretMenu;
         public FinalSolutionPreview FinalSolutionPreview;
         public bool PowerUpInputMode;
         public bool PowerUpFinalSolution;
@@ -27,13 +27,13 @@
 
             Cursor = new SpaceshipCursor(Simulator.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, color, representation);
             Crosshair = new Cursor(Simulator.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
-            MenuTurret = new TurretMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
-            MenuCelestialBody = new CelestialBodyMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
+            TurretMenu = new TurretMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
+            CelestialBodyMenu = new CelestialBodyMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
 
             FinalSolutionPreview = new FinalSolutionPreview(Simulator);
 
-            MenuCelestialBody.AvailableTurrets = availableTurrets;
-            MenuCelestialBody.Initialize();
+            CelestialBodyMenu.AvailableTurrets = availableTurrets;
+            CelestialBodyMenu.Initialize();
 
             WorldMenu = new WorldMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, availableLevelsDemoMenu, color);
 
@@ -59,8 +59,11 @@
             if (PowerUpInputMode)
                 return;
 
-            MenuCelestialBody.Draw();
-            MenuTurret.Draw();
+            if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)
+                return;
+
+            CelestialBodyMenu.Draw();
+            TurretMenu.Draw();
         }
     }
 }
