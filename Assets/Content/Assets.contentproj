@@ -860,9 +860,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\scenario0.xml">
+    <None Include="scenarios\level0.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>scenario0</Name>
+      <Name>level0</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </None>
@@ -1484,8 +1484,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\scenario8.xml">
-      <Name>scenario8</Name>
+    <None Include="scenarios\level8.xml">
+      <Name>level8</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1584,46 +1584,46 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\scenario2.xml">
-      <Name>scenario2</Name>
+    <None Include="scenarios\level2.xml">
+      <Name>level2</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\scenario1.xml">
-      <Name>scenario1</Name>
+    <None Include="scenarios\level1.xml">
+      <Name>level1</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="scenarios\scenario3.xml">
-      <Name>scenario3</Name>
+    <None Include="scenarios\level3.xml">
+      <Name>level3</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="scenarios\scenario4.xml">
-      <Name>scenario4</Name>
+    <None Include="scenarios\level4.xml">
+      <Name>level4</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="scenarios\scenario5.xml">
-      <Name>scenario5</Name>
+    <None Include="scenarios\level5.xml">
+      <Name>level5</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="scenarios\scenario6.xml">
-      <Name>scenario6</Name>
+    <None Include="scenarios\level6.xml">
+      <Name>level6</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="scenarios\scenario7.xml">
-      <Name>scenario7</Name>
+    <None Include="scenarios\level7.xml">
+      <Name>level7</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

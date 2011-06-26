@@ -102,8 +102,6 @@
         }
 
 
-        public delegate bool IntegerHandler(int i);
-
         public void GetItems(PhysicalRectangle rectangle, IntegerHandler callback)
         {
             Vector2 upperLeft = new Vector2(rectangle.Left, rectangle.Top);

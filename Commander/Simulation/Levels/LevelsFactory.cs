@@ -66,9 +66,9 @@
             if (id == 9)
             {
                 d = new LevelDescriptor();
-                d.Id = 9;
-                d.Mission = "World2";
-                d.Difficulty = "";
+                d.Infos.Id = 9;
+                d.Infos.Mission = "World2";
+                d.Infos.Difficulty = "";
 
                 return d;
             }
@@ -76,9 +76,9 @@
             else if (id == 19)
             {
                 d = new LevelDescriptor();
-                d.Id = 19;
-                d.Mission = "World3";
-                d.Difficulty = "";
+                d.Infos.Id = 19;
+                d.Infos.Mission = "World3";
+                d.Infos.Difficulty = "";
 
                 return d;
             }
@@ -86,9 +86,9 @@
             else if (id == 20)
             {
                 d = new LevelDescriptor();
-                d.Id = 20;
-                d.Mission = "World1";
-                d.Difficulty = "";
+                d.Infos.Id = 20;
+                d.Infos.Mission = "World1";
+                d.Infos.Difficulty = "";
 
                 return d;
             }
@@ -96,9 +96,9 @@
             else if (id == 31)
             {
                 d = new LevelDescriptor();
-                d.Id = id;
-                d.Mission = "World2";
-                d.Difficulty = "";
+                d.Infos.Id = id;
+                d.Infos.Mission = "World2";
+                d.Infos.Difficulty = "";
 
                 return d;
             }
@@ -106,9 +106,9 @@
             else if (id >= 21 && id <= 30)
             {
                 d = new LevelDescriptor();
-                d.Id = id;
-                d.Mission = "3-" + (id - 20);
-                d.Difficulty = (id == 10 || id == 17) ? "Easy" : (id == 11 || id == 12 || id == 13 || id == 14) ? "Normal" : "Hard";
+                d.Infos.Id = id;
+                d.Infos.Mission = "3-" + (id - 20);
+                d.Infos.Difficulty = (id == 10 || id == 17) ? "Easy" : (id == 11 || id == 12 || id == 13 || id == 14) ? "Normal" : "Hard";
 
                 return d;
             }
@@ -127,7 +127,7 @@
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(LevelDescriptor));
 
-                using (StreamReader reader = new StreamReader(".\\Content\\scenarios\\scenario" + id + ".xml"))
+                using (StreamReader reader = new StreamReader(".\\Content\\scenarios\\level" + id + ".xml"))
                     d = (LevelDescriptor) serializer.Deserialize(reader.BaseStream);
 
                 return d;
@@ -146,13 +146,13 @@
             d.Player.Lives = 1;
             d.Player.Money = 100;
 
-            d.Background = "fondecran16";
+            d.Infos.Background = "fondecran16";
 
             d.AddCelestialBody(Size.Normal, new Vector3(-300, -150, 0), "save the\nworld", "planete2", 0, 100);
             d.PlanetarySystem[0].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
             d.PlanetarySystem[0].AddTurret(TurretType.Basic, 5, new Vector3(10, -14, 0), true);
 
-            d.CelestialBodyToProtect = d.PlanetarySystem[0].PathPriority;
+            d.Objective.CelestialBodyToProtect = d.PlanetarySystem[0].PathPriority;
 
             d.AddCelestialBody(Size.Big, new Vector3(300, -220, 0), "options", "planete4", 0, 99);
             d.PlanetarySystem[1].AddTurret(TurretType.Gravitational, 1, new Vector3(3, 2, 0), false);
@@ -217,7 +217,7 @@
             d.Player.Lives = 1;
             d.Player.Money = 100;
 
-            d.Background = "fondecran14";
+            d.Infos.Background = "fondecran14";
 
             for (int i = 0; i < 6; i++)
             {
@@ -238,7 +238,7 @@
                 d.PlanetarySystem.Add(c);
             }
 
-            d.CelestialBodyToProtect = d.PlanetarySystem[0].PathPriority;
+            d.Objective.CelestialBodyToProtect = d.PlanetarySystem[0].PathPriority;
 
             for (int i = 0; i < 8; i++)
             {
@@ -334,7 +334,7 @@
             d.Player.Lives = 1;
             d.Player.Money = 100;
 
-            d.Background = "fondecran4";
+            d.Infos.Background = "fondecran4";
 
             d.AddCelestialBody(Size.Small, new Vector3(-300, -200, 0), "1-1", "planete6", 0, 1);
             d.PlanetarySystem[0].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
@@ -377,7 +377,7 @@
             d.AddPinkHole(new Vector3(-50, -220, 0), "World2", 0, 10);
             d.PlanetarySystem[9].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
-            d.CelestialBodyToProtect = d.PlanetarySystem[9].PathPriority;
+            d.Objective.CelestialBodyToProtect = d.PlanetarySystem[9].PathPriority;
 
             c = new CelestialBodyDescriptor();
             c.Name = "Asteroid belt";
@@ -422,7 +422,7 @@
             d.Player.Lives = 1;
             d.Player.Money = 100;
 
-            d.Background = "fondecran5";
+            d.Infos.Background = "fondecran5";
 
             d.AddPinkHole(new Vector3(0, 300, 0), "World1", 0, 1);
             d.PlanetarySystem[0].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
@@ -470,7 +470,7 @@
             d.AddPinkHole(new Vector3(-125, -200, 0), "World3", 0, 11);
             d.PlanetarySystem[10].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
-            d.CelestialBodyToProtect = d.PlanetarySystem[10].PathPriority;
+            d.Objective.CelestialBodyToProtect = d.PlanetarySystem[10].PathPriority;
 
             c = new CelestialBodyDescriptor();
             c.Name = "Asteroid belt";
@@ -508,7 +508,7 @@
             d.Player.Lives = 1;
             d.Player.Money = 100;
 
-            d.Background = "fondecran6";
+            d.Infos.Background = "fondecran6";
 
             d.AddPinkHole(new Vector3(500, 0, 0), "World2", 0, 1);
             d.PlanetarySystem[0].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
@@ -551,7 +551,7 @@
             d.PlanetarySystem[10].AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false);
 
 
-            d.CelestialBodyToProtect = d.PlanetarySystem[10].PathPriority;
+            d.Objective.CelestialBodyToProtect = d.PlanetarySystem[10].PathPriority;
 
             c = new CelestialBodyDescriptor();
             c.Name = "Asteroid belt";

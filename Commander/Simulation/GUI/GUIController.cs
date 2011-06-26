@@ -18,21 +18,19 @@
         public LinkedList<Wave> Waves;
         public Path Path;
         public Path PathPreview;
-        public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
 
+        public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
+
         private Simulator Simulator;
-
         private Dictionary<SimPlayer, GUIPlayer> Players;
-
 
         //one
         private GameMenu GameMenu;
         private AdvancedView AdvancedView;
         private PowerUpsMenu MenuPowerUps;
         private PathPreview PathPreviewing;
-
 
         //not player-related
         private LevelStartedAnnunciation LevelStartedAnnunciation;
@@ -48,15 +46,22 @@
             GameMenu = new GameMenu(Simulator, new Vector3(400, -260, 0));
             MenuPowerUps = new PowerUpsMenu(Simulator, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
             Players = new Dictionary<SimPlayer, GUIPlayer>();
+
+            if (!Simulator.DemoMode)
+                AdvancedView = new AdvancedView(Simulator);
         }
 
 
         public void Initialize()
         {
-            GamePausedResistance = new TheResistance(Simulator);
-            GamePausedResistance.Enemies = new List<Enemy>();
+            Players.Clear();
+
+            GamePausedResistance = new TheResistance(Simulator)
+            {
+                Enemies = new List<Enemy>(),
+                AlphaChannel = 100
+            };
             GamePausedResistance.Initialize();
-            GamePausedResistance.AlphaChannel = 100;
             
             LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulator, Level);
             LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, CelestialBodies, Level);
@@ -73,7 +78,11 @@
             GameMenu.TimeNextWave = Waves.Count == 0 ? 0 : Waves.First.Value.StartingTime;
 
             if (!Simulator.DemoMode)
-                AdvancedView = new AdvancedView(Simulator, Enemies, CelestialBodies);
+            {
+                AdvancedView.Enemies = Enemies;
+                AdvancedView.CelestialBodies = CelestialBodies;
+                AdvancedView.Initialize();
+            }
         }
 
 

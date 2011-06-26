@@ -9,16 +9,17 @@
 
     class EnemiesController
     {
-        public List<Enemy> Enemies                                         { get; private set; }
-        public LinkedList<Wave> Waves                                      { get; set; }
-        public Dictionary<EnemyType, EnemyDescriptor> NextWaveData         { get; set; }
-        public InfiniteWave InfiniteWaves                                  { get; set; }
-        public Path Path                                                   { get; set; }
-        public Path PathPreview                                            { get; set; }
-        public Vector3 MineralsPercentages;
-        public int MineralsValue;
+        public LinkedList<Wave> Waves;
+        public InfiniteWave InfiniteWaves;
+        public Path Path;
+        public Path PathPreview;
+        public int MineralsCash;
         public int LifePacksGiven;
+
+        public List<Enemy> Enemies;
+        public Dictionary<EnemyType, EnemyDescriptor> NextWaveData;
         public List<Mineral> Minerals;
+
         public event NoneHandler WaveEnded;
         public event NoneHandler WaveStarted;
         public event PhysicalObjectHandler ObjectDestroyed;
@@ -27,9 +28,10 @@
 
         private List<KeyValuePair<int, MineralType>> MineralsDistribution;
         private Simulator Simulator;
-        private LinkedListNode<Wave> NextWave { get; set; }
-        private List<Wave> ActiveWaves { get; set; }
-        private double WaveCounter { get; set; }
+        private LinkedListNode<Wave> NextWave;
+        private List<Wave> ActiveWaves;
+        private double WaveCounter;
+        private int EnemiesCreatedCounter;
 
         private Action SyncRemoveEnemies;
         private Action SyncRemoveMinerals;
@@ -37,15 +39,12 @@
         private Action SyncUpdateEnemies;
         private Action SyncUpdateMinerals;
 
-        private int EnemiesCreatedCounter;
-
 
         public EnemiesController(Simulator simulator)
         {
             Simulator = simulator;
 
             Enemies = new List<Enemy>();
-            Waves = new LinkedList<Wave>();
             ActiveWaves = new List<Wave>();
             Minerals = new List<Mineral>();
             MineralsDistribution = new List<KeyValuePair<int, MineralType>>();
@@ -61,10 +60,15 @@
 
         public void Initialize()
         {
+            Enemies.Clear();
+            NextWaveData.Clear();
+            Minerals.Clear();
+            MineralsDistribution.Clear();
+            NextWave = Waves.First;
+            ActiveWaves.Clear();
+
             WaveCounter = 0;
             EnemiesCreatedCounter = 0;
-
-            NextWave = Waves.First;
 
             RecalculateCompositionNextWave();
 
@@ -72,8 +76,6 @@
                 return;
 
             // Minerals Distribution
-            MineralsDistribution.Clear();
-
             int enemiesCnt = 0;
 
             foreach (var wave in Waves)
@@ -83,7 +85,7 @@
                 Simulator.MineralsFactory.GetValue(MineralType.Cash10),
                 Simulator.MineralsFactory.GetValue(MineralType.Cash25),
                 Simulator.MineralsFactory.GetValue(MineralType.Cash150));
-            Vector3 valuePerType = MineralsPercentages * MineralsValue; //atention: float
+            Vector3 valuePerType = new Vector3(0.6f, 0.3f, 0.1f) * MineralsCash; //atention: float
             Vector3 qtyPerType = valuePerType / unitValue;
 
 
@@ -104,8 +106,6 @@
                 return (m1.Key > m2.Key) ? -1 : (m1.Key < m2.Key) ? 1 : 0;
             });
         }
-
-
 
 
         public void Update()
@@ -129,30 +129,6 @@
             t2.Wait();
 
             AddWave();
-        }
-
-        private void ProcessDeadEnemies()
-        {
-            for (int i = Enemies.Count - 1; i > -1; i--)
-            {
-                Enemy e = Enemies[i];
-
-                if (!e.Alive)
-                {
-                    if (e.Type == EnemyType.Damacloid && !e.EndOfPathReached)
-                        ExtractSwarm(e); //Add a descriptor to a Wave.ToCreate
-
-                    RemoveFromWave(e); //Cycle in Waves; Wave.Alives--
-                    ExtractMinerals(e); //Add minerals
-                }
-            }
-        }
-
-        private void AddNewEnemies()
-        {
-            foreach (var w in ActiveWaves)
-                foreach (var e in w.NewEnemies)
-                    AddEnemy(e, w);
         }
 
 
@@ -192,6 +168,32 @@
                 return;
 
             NextWave.Value.StartingTime = 0;
+        }
+
+
+        private void ProcessDeadEnemies()
+        {
+            for (int i = Enemies.Count - 1; i > -1; i--)
+            {
+                Enemy e = Enemies[i];
+
+                if (!e.Alive)
+                {
+                    if (e.Type == EnemyType.Damacloid && !e.EndOfPathReached)
+                        ExtractSwarm(e); //Add a descriptor to a Wave.ToCreate
+
+                    RemoveFromWave(e); //Cycle in Waves; Wave.Alives--
+                    ExtractMinerals(e); //Add minerals
+                }
+            }
+        }
+
+
+        private void AddNewEnemies()
+        {
+            foreach (var w in ActiveWaves)
+                foreach (var e in w.NewEnemies)
+                    AddEnemy(e, w);
         }
 
 

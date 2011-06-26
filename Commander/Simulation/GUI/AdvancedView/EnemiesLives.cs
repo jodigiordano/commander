@@ -8,14 +8,14 @@
 
     class EnemiesLives
     {
+        public List<Enemy> Enemies;
+
         private List<List<Image>> Lives;
-        private List<Enemy> Enemies;
         private Simulator Simulator;
 
 
-        public EnemiesLives(Simulator simulator, List<Enemy> enemies)
+        public EnemiesLives(Simulator simulator)
         {
-            Enemies = enemies;
             Simulator = simulator;
 
             Lives = new List<List<Image>>();

@@ -9,27 +9,6 @@ namespace EphemereGames.Commander.Simulation
     using Microsoft.Xna.Framework.Input;
 
 
-    delegate void PhysicalObjectHandler(IObjetPhysique o);
-    delegate void PhysicalObjectPhysicalObjectHandler(IObjetPhysique o1, IObjetPhysique o2);
-    delegate void SimPlayerHandler(SimPlayer p);
-    delegate void CommonStashHandler(CommonStash s);
-    delegate void CelestialObjectHandler(CelestialBody c);
-    delegate void NewGameStateHandler(GameState s);
-    delegate void TurretHandler(Turret t);
-    delegate void TurretSimPlayerHandler(Turret t, SimPlayer p);
-    delegate void PowerUpTypeSimPlayerHandler(PowerUpType p, SimPlayer sp);
-    delegate void PowerUpTypeHandler(PowerUpType p);
-    delegate void PowerUpHandler(PowerUp p);
-    delegate void TurretTurretHandler(Turret t1, Turret t2);
-    delegate void EnemyCelestialBodyHandler(Enemy e, CelestialBody c);
-    delegate void TurretPhysicalObjectHandler(Turret t, IObjetPhysique o);
-    delegate void EnemyBulletHandler(Enemy e, Bullet b);
-    delegate void EditorPlayerHandler(EditorPlayer e);
-    delegate void EditorPlayerEditorCommandHandler(EditorPlayer p, EditorCommand e);
-    delegate void EditorPlayerCelestialBodyEditorCommandHandler(EditorPlayer p, EditorCelestialBodyCommand e);
-    delegate void EditorPlayerPanelEditorCommandHandler(EditorPlayer p, EditorPanelCommand e);
-
-
     class Simulator : InputListener
     {
         public Scene Scene;
@@ -105,11 +84,7 @@ namespace EphemereGames.Commander.Simulation
             EditorState = EditorState.Editing;
             DebugMode = Preferences.Debug;
             GameAction = PausedGameChoice.None;
-        }
 
-
-        public void Initialize()
-        {
             Scene.Particles.Add(
                 new List<string>() {
                     @"projectileMissileDeplacement",
@@ -157,59 +132,11 @@ namespace EphemereGames.Commander.Simulation
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
 
 
-            LevelsController.Level = new Level(this, LevelDescriptor);
-            TurretsFactory.Availables = LevelsController.AvailableTurrets;
-            PowerUpsFactory.Availables = LevelsController.AvailablePowerUps;
-            CollisionsController.Bullets = BulletsController.Bullets;
-            CollisionsController.Enemies = EnemiesController.Enemies;
-            SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
-            PlanetarySystemController.CelestialBodies = LevelsController.CelestialBodies;
-            TurretsController.PlanetarySystemController = PlanetarySystemController;
-            EnemiesController.InfiniteWaves = LevelsController.InfiniteWaves;
-            EnemiesController.Waves = LevelsController.Waves;
-            CollisionsController.Turrets = TurretsController.Turrets;
-            SimPlayersController.CommonStash = LevelsController.CommonStash;
-            SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
-            GUIController.Path = PlanetarySystemController.Path;
-            GUIController.PathPreview = PlanetarySystemController.PathPreview;
-            EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
-            TurretsController.StartingTurrets = LevelsController.StartingTurrets;
-            EnemiesController.Path = PlanetarySystemController.Path;
-            CollisionsController.CelestialBodies = LevelsController.CelestialBodies;
-            CollisionsController.Minerals = EnemiesController.Minerals;
-            EnemiesController.MineralsValue = LevelsController.Level.MineralsValue;
-            EnemiesController.MineralsPercentages = LevelsController.Level.MineralsPercentages;
-            EnemiesController.LifePacksGiven = LevelsController.Level.LifePacks;
-            SpaceshipsController.Enemies = EnemiesController.Enemies;
-            MessagesController.Turrets = TurretsController.Turrets;
-            GUIController.CompositionNextWave = EnemiesController.NextWaveData;
-            SimPlayersController.SandGlass = GUIController.SandGlass;
-            GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
-            GUIController.Level = LevelsController.Level;
-            GUIController.Enemies = EnemiesController.Enemies;
-            GUIController.InfiniteWaves = LevelsController.InfiniteWaves;
-            GUIController.Waves = LevelsController.Waves;
-            GUIController.AvailableLevelsDemoMode = AvailableLevelsDemoMode;
-            SpaceshipsController.HumanBattleship = GUIController.HumanBattleship;
-            PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
-            SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
-            GUIController.Turrets = TurretsController.Turrets;
-            SpaceshipsController.Minerals = EnemiesController.Minerals;
-            CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
-            GUIController.AvailablePowerUps = SimPlayersController.AvailablePowerUps;
-            GUIController.AvailableTurrets = SimPlayersController.AvailableTurrets;
-            EditorController.GeneralMenu = EditorGUIController.GeneralMenu;
-            EditorController.GeneralMenuSubMenus = EditorGUIController.GeneralMenuSubMenus;
-            EditorController.Panels = EditorGUIController.Panels;
-            EditorController.EditorGUIPlayers = EditorGUIController.Players;
-
-
-
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(BulletsController.DoObjectHit);
             CollisionsController.ObjectOutOfBounds += new PhysicalObjectHandler(BulletsController.DoObjectOutOfBounds);
             SimPlayersController.BuyTurretAsked += new TurretHandler(TurretsController.DoBuyTurret);
-            EnemiesController.WaveEnded += new NoneHandler(LevelsController.doWaveEnded);
+            EnemiesController.WaveEnded += new NoneHandler(LevelsController.DoWaveEnded);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjetDestroyed);
             CollisionsController.InTurretRange += new TurretPhysicalObjectHandler(TurretsController.DoInRangeTurret);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
@@ -218,7 +145,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.SellTurretAsked += new TurretHandler(TurretsController.DoSellTurret);
             TurretsController.TurretSold += new TurretHandler(SimPlayersController.DoTurretSold);
             TurretsController.TurretBought += new TurretHandler(SimPlayersController.DoTurretBought);
-            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(LevelsController.doEnemyReachedEnd);
+            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(LevelsController.DoEnemyReachedEnd);
             TurretsController.TurretUpdated += new TurretHandler(SimPlayersController.DoTurretUpdated);
             SimPlayersController.UpgradeTurretAsked += new TurretHandler(TurretsController.DoUpgradeTurret);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
@@ -229,7 +156,7 @@ namespace EphemereGames.Commander.Simulation
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
-            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(LevelsController.doObjectDestroyed);
+            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(LevelsController.DoObjectDestroyed);
             EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.DoEnemyReachedEndOfPath);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.DoCelestialBodyDestroyed);
             EnemiesController.WaveStarted += new NoneHandler(GUIController.DoNextWave);
@@ -239,7 +166,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(this.DoPlayerSelectionChanged);
             TurretsController.TurretReactivated += new TurretHandler(SimPlayersController.DoTurretReactivated);
             SimPlayersController.PlayerMoved += new SimPlayerHandler(GUIController.DoPlayerMoved);
-            LevelsController.NewGameState += new NewGameStateHandler(this.DoNewGameState); //must come after GUIController.doGameStateChanged
+            LevelsController.NewGameState += new NewGameStateHandler(this.DoNewGameState); //must come after GUIController.DoGameStateChanged
             LevelsController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
             SimPlayersController.TurretToPlaceSelected += new TurretSimPlayerHandler(GUIController.DoTurretToPlaceSelected);
             SimPlayersController.TurretToPlaceDeselected += new TurretSimPlayerHandler(GUIController.DoTurretToPlaceDeselected);
@@ -283,6 +210,55 @@ namespace EphemereGames.Commander.Simulation
             EditorController.EditorCelestialBodyCommandExecuted += new EditorPlayerCelestialBodyEditorCommandHandler(EditorGUIController.DoEditorCelestialBodyCommandExecuted);
             EditorController.EditorPanelCommandExecuted += new EditorPlayerPanelEditorCommandHandler(EditorGUIController.DoEditorPanelCommandExecuted);
             EditorController.EditorPanelCommandExecuted += new EditorPlayerPanelEditorCommandHandler(SimPlayersController.DoEditorPanelCommandExecuted);
+        }
+
+
+        public void Initialize()
+        {
+            LevelsController.Level = new Level(this, LevelDescriptor);
+            TurretsFactory.Availables = LevelsController.AvailableTurrets;
+            PowerUpsFactory.Availables = LevelsController.AvailablePowerUps;
+            CollisionsController.Bullets = BulletsController.Bullets;
+            CollisionsController.Enemies = EnemiesController.Enemies;
+            SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
+            PlanetarySystemController.CelestialBodies = LevelsController.CelestialBodies;
+            TurretsController.PlanetarySystemController = PlanetarySystemController;
+            EnemiesController.InfiniteWaves = LevelsController.InfiniteWaves;
+            EnemiesController.Waves = LevelsController.Waves;
+            CollisionsController.Turrets = TurretsController.Turrets;
+            SimPlayersController.CommonStash = LevelsController.CommonStash;
+            SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
+            GUIController.Path = PlanetarySystemController.Path;
+            GUIController.PathPreview = PlanetarySystemController.PathPreview;
+            EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
+            TurretsController.StartingTurrets = LevelsController.StartingTurrets;
+            EnemiesController.Path = PlanetarySystemController.Path;
+            CollisionsController.CelestialBodies = LevelsController.CelestialBodies;
+            CollisionsController.Minerals = EnemiesController.Minerals;
+            EnemiesController.MineralsCash = LevelsController.Level.Cash;
+            EnemiesController.LifePacksGiven = LevelsController.Level.LifePacks;
+            SpaceshipsController.Enemies = EnemiesController.Enemies;
+            MessagesController.Turrets = TurretsController.Turrets;
+            GUIController.CompositionNextWave = EnemiesController.NextWaveData;
+            SimPlayersController.SandGlass = GUIController.SandGlass;
+            GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
+            GUIController.Level = LevelsController.Level;
+            GUIController.Enemies = EnemiesController.Enemies;
+            GUIController.InfiniteWaves = LevelsController.InfiniteWaves;
+            GUIController.Waves = LevelsController.Waves;
+            GUIController.AvailableLevelsDemoMode = AvailableLevelsDemoMode;
+            SpaceshipsController.HumanBattleship = GUIController.HumanBattleship;
+            PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
+            SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
+            GUIController.Turrets = TurretsController.Turrets;
+            SpaceshipsController.Minerals = EnemiesController.Minerals;
+            CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
+            GUIController.AvailablePowerUps = SimPlayersController.AvailablePowerUps;
+            GUIController.AvailableTurrets = SimPlayersController.AvailableTurrets;
+            EditorController.GeneralMenu = EditorGUIController.GeneralMenu;
+            EditorController.GeneralMenuSubMenus = EditorGUIController.GeneralMenuSubMenus;
+            EditorController.Panels = EditorGUIController.Panels;
+            EditorController.EditorGUIPlayers = EditorGUIController.Players;
 
             LevelsController.Initialize();
             EnemiesController.Initialize();

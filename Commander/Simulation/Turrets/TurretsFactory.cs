@@ -3,24 +3,6 @@
     using System.Collections.Generic;
 
 
-    public enum TurretType
-    {
-        Basic,
-        Missile,
-        Gravitational,
-        MultipleLasers,
-        Laser,
-        None,
-        Alien,
-        SlowMotion,
-        Booster,
-        Gunner,
-        Nanobots,
-        RailGun,
-        Sniper
-    };
-
-
     class TurretsFactory
     {
         public Dictionary<TurretType, Turret> Availables;

@@ -7,15 +7,16 @@
 
     class TurretsController
     {
+        public List<Turret> StartingTurrets;
+        public PlanetarySystemController PlanetarySystemController;
+
+        public List<Turret> Turrets;
+
         public event TurretHandler TurretBought;
         public event TurretHandler TurretSold;
         public event TurretHandler TurretUpdated;
         public event TurretHandler TurretReactivated;
         public event PhysicalObjectHandler ObjectCreated;
-        
-        public List<Turret> StartingTurrets;
-        public PlanetarySystemController PlanetarySystemController;
-        public List<Turret> Turrets { get; private set; }
 
         private Simulator Simulator;
         private Dictionary<Turret, Enemy> AssociationsThisTick;
@@ -33,6 +34,10 @@
 
         public void Initialize()
         {
+            Turrets.Clear();
+            AssociationsThisTick.Clear();
+            BoostedTurretsThisTick.Clear();
+
             for (int i = 0; i < StartingTurrets.Count; i++)
                 Turrets.Add(StartingTurrets[i]);
 

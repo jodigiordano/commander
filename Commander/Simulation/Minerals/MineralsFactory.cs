@@ -5,15 +5,6 @@
     using Microsoft.Xna.Framework;
 
 
-    public enum MineralType
-    {
-        Cash10,
-        Cash25,
-        Cash150,
-        Life1
-    };
-
-
     class MineralsFactory
     {
         private Simulator Simulator;

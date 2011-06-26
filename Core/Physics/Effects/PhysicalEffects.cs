@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -68,6 +69,8 @@
 
             var t = new Path2D(positions, temps);
 
+            eDt.PointAt = false;
+            eDt.StartAt = 0;
             eDt.InnerPath = t;
             eDt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
             eDt.Delay = timeStart;
@@ -96,6 +99,57 @@
             e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
 
             return e;
+        }
+
+
+        public static List<KeyValuePair<MovePathEffect, Text>> FollowText(Text text, Path2D path, int centerDistPx, float rotationRad, bool rightToLeft)
+        {
+            //Separate each letter in it's own Text object
+            List<Text> letters = new List<Text>();
+
+            for (int i = 0; i < text.Data.Length; i++)
+            {
+                var copy = text.Clone();
+
+                copy.Data = text.Data[i].ToString();
+                copy.Origin = copy.Center;
+
+                letters.Add(copy);
+            }
+
+            //A letter size in time
+            var letterSize = centerDistPx;
+
+
+            //Create the effects
+            List<KeyValuePair<MovePathEffect, Text>> result = new List<KeyValuePair<MovePathEffect, Text>>();
+
+            for (int i = 0; i < letters.Count; i++)
+            {
+                MovePathEffect mpe = MovePathEffect.Pool.Get();
+
+                if (rightToLeft)
+                    mpe.StartAt = (letters.Count - i) * letterSize;
+                else
+                    mpe.StartAt = i * letterSize;
+
+                if (rightToLeft)
+                    mpe.Length = path.Length - i * letterSize;
+                else
+                    mpe.Length = path.Length - ((letters.Count - i) * letterSize);
+
+
+                mpe.PointAt = true;
+                mpe.InnerPath = path;
+                mpe.RotationRad = rotationRad;
+                mpe.Delay = 0;
+                mpe.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+
+                result.Add(new KeyValuePair<MovePathEffect, Text>(mpe, letters[i]));
+            }
+
+
+            return result;
         }
     }
 }

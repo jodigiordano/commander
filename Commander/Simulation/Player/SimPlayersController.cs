@@ -9,14 +9,14 @@
 
     class SimPlayersController
     {
-        public Dictionary<PowerUpType, bool> AvailablePowerUps;
-        public Dictionary<TurretType, bool> AvailableTurrets;
-
         public CelestialBody CelestialBodyToProtect;
         public List<CelestialBody> CelestialBodies;
         public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public SandGlass SandGlass;
+
+        public Dictionary<PowerUpType, bool> AvailablePowerUps;
+        public Dictionary<TurretType, bool> AvailableTurrets;
 
         public event TurretHandler BuyTurretAsked;
         public event TurretHandler SellTurretAsked;
@@ -58,13 +58,15 @@
 
         public void Initialize()
         {
+            AvailablePowerUps.Clear();
+            AvailableTurrets.Clear();
+            Players.Clear();
+
             foreach (var turret in Simulator.TurretsFactory.Availables.Keys)
                 AvailableTurrets.Add(turret, false);
 
             foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
                 AvailablePowerUps.Add(powerUp, false);
-
-            Players.Clear();
 
             CheckAvailablePowerUps();
             CheckAvailableTurrets();
@@ -75,7 +77,6 @@
             UpdateSelection = true;
 
             NotifyCommonStashChanged(CommonStash);
-
         }
 
 

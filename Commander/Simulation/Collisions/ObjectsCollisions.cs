@@ -22,10 +22,10 @@
         public Spaceship Collector;
         public Spaceship AutomaticCollector;
 
-        private GridWorld.IntegerHandler HandlerBulletEnemy;
-        private GridWorld.IntegerHandler HandlerBulletExplosion;
-        private GridWorld.IntegerHandler HandlerShootingStars;
-        private GridWorld.IntegerHandler HandlerShootingStarExplosion;
+        private IntegerHandler HandlerBulletEnemy;
+        private IntegerHandler HandlerBulletExplosion;
+        private IntegerHandler HandlerShootingStars;
+        private IntegerHandler HandlerShootingStarExplosion;
         private Bullet CurrentBullet;
         private ShootingStar CurrentShootingStar;
         private PhysicalRectangle Rectangle;
@@ -36,10 +36,10 @@
         public ObjectsCollisions()
         {
             Output = new List<KeyValuePair<IObjetPhysique, IObjetPhysique>>();
-            HandlerBulletEnemy = new GridWorld.IntegerHandler(CheckBulletEnemy);
-            HandlerBulletExplosion = new GridWorld.IntegerHandler(CheckBulletExplosion);
-            HandlerShootingStars = new GridWorld.IntegerHandler(CheckShootingStars);
-            HandlerShootingStarExplosion = new GridWorld.IntegerHandler(CheckShootingStarExplosion);
+            HandlerBulletEnemy = new IntegerHandler(CheckBulletEnemy);
+            HandlerBulletExplosion = new IntegerHandler(CheckBulletExplosion);
+            HandlerShootingStars = new IntegerHandler(CheckShootingStars);
+            HandlerShootingStarExplosion = new IntegerHandler(CheckShootingStarExplosion);
             TmpObjects = new Dictionary<int, int>();
             Rectangle = new PhysicalRectangle();
             Circle = new Circle(Vector3.Zero, 0);

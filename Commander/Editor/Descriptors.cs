@@ -8,23 +8,6 @@
     using Microsoft.Xna.Framework.Content;
 
 
-    public enum Distance
-    {
-        Joined = 0,
-        Near = 10,
-        Normal = 60,
-        Far = 110
-    }
-
-
-    public enum Size
-    {
-        Small = 28,
-        Normal = 50,
-        Big = 68
-    }
-
-
     [XmlRoot(ElementName = "World")]
     public class WorldDescriptor
     {
@@ -52,13 +35,11 @@
     }
 
 
-    [XmlRoot(ElementName = "Scenario")]
+    [XmlRoot(ElementName = "Level")]
     public class LevelDescriptor
     {
-        public int Id;
-        public string Mission;
-        public string Difficulty;
-        public string Background;
+        public InfosDescriptor Infos;
+        public ObjectiveDescriptor Objective;
 
         [XmlArrayItem("CelestialBody")]
         public List<CelestialBodyDescriptor> PlanetarySystem;
@@ -72,16 +53,9 @@
         public PlayerDescriptor Player;
         public List<TurretType> AvailableTurrets;
         public List<PowerUpType> AvailablePowerUps;
-        public int CelestialBodyToProtect;
 
         [ContentSerializer(Optional = true)]
-        public int MineralsValue;
-
-        [ContentSerializer(Optional = true)]
-        public Vector3 MineralsPercentages;
-
-        [ContentSerializer(Optional = true)]
-        public int LifePacks;
+        public MineralsDescriptor Minerals;
 
         [ContentSerializer(Optional = true)]
         public List<string> HelpTexts;
@@ -89,23 +63,18 @@
 
         public LevelDescriptor()
         {
-            Id = -1;
-            Mission = "1-1";
-            Difficulty = "Easy";
+            Infos = new InfosDescriptor();
+            Objective = new ObjectiveDescriptor();
 
             PlanetarySystem = new List<CelestialBodyDescriptor>();
             Waves = new List<WaveDescriptor>();
             InfiniteWaves = null;
             Player = new PlayerDescriptor();
-            CelestialBodyToProtect = -1;
-            Background = "fondecran4";
-
-            MineralsValue = 0;
-            MineralsPercentages = new Vector3(0.6f, 0.3f, 0.1f);
-            LifePacks = 0;
 
             AvailableTurrets = new List<TurretType>();
             AvailablePowerUps = new List<PowerUpType>();
+
+            Minerals = new MineralsDescriptor();
 
             HelpTexts = new List<string>();
         }
@@ -167,7 +136,7 @@
             foreach (var wave in Waves)
                 maxCash += wave.Quantity * wave.CashValue;
 
-            int maxLives = Player.Lives + LifePacks;
+            int maxLives = Player.Lives + Minerals.LifePacks;
 
             int bestScore = (maxLives * 50) + maxCash + (int)(ParTime / 100);
 
@@ -176,6 +145,38 @@
             return (score >= bestScore) ? 3 :
                    (score >= bestScore * 0.75) ? 2 :
                    (score > -bestScore * 0.5) ? 1 : 0;
+        }
+    }
+
+
+    [XmlRoot(ElementName = "Infos")]
+    public class InfosDescriptor
+    {
+        public int Id;
+        public string Mission;
+        public string Difficulty;
+        public string Background;
+
+
+        public InfosDescriptor()
+        {
+            Id = -1;
+            Mission = "1-1";
+            Difficulty = "Easy";
+            Background = "fondecran4";
+        }
+    }
+
+
+    [XmlRoot(ElementName = "Objective")]
+    public class ObjectiveDescriptor
+    {
+        public int CelestialBodyToProtect;
+
+
+        public ObjectiveDescriptor()
+        {
+            CelestialBodyToProtect = -1;
         }
     }
 
@@ -405,5 +406,20 @@
         public bool Visible;
         public bool CanSell;
         public bool CanUpgrade;
+    }
+
+
+    [XmlRoot(ElementName = "Minerals")]
+    public class MineralsDescriptor
+    {
+        public int Cash;
+        public int LifePacks;
+
+
+        public MineralsDescriptor()
+        {
+            Cash = 0;
+            LifePacks = 0;
+        }
     }
 }

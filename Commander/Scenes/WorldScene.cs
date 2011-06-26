@@ -51,14 +51,14 @@
             foreach (var level in Descriptor.Levels)
             {
                 LevelDescriptor d = LevelsFactory.GetDescriptor(level);
-                LevelsDescriptors.Add(d.Mission, d);
+                LevelsDescriptors.Add(d.Infos.Mission, d);
             }
 
             foreach (var level in Descriptor.Warps)
             {
                 LevelDescriptor d = LevelsFactory.GetDescriptor(level.Key);
-                LevelsDescriptors.Add(d.Mission, d);
-                Warps.Add(d.Mission, level.Value);
+                LevelsDescriptors.Add(d.Infos.Mission, d);
+                Warps.Add(d.Infos.Mission, level.Value);
             }
 
 
@@ -196,7 +196,7 @@
 
                 if (currentGame != null && 
                     !currentGame.IsFinished &&
-                    currentGame.Simulator.LevelDescriptor.Id == level.Id &&
+                    currentGame.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id &&
                     Simulator.GameAction == PausedGameChoice.Resume)
                 {
                     currentGame.Simulator.State = GameState.Running;
@@ -292,7 +292,7 @@
         {
             var level = GetSelectedLevel(p);
 
-            return Main.GameInProgress != null && level != null && Main.GameInProgress.Simulator.LevelDescriptor.Id == level.Id;
+            return Main.GameInProgress != null && level != null && Main.GameInProgress.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id;
         }
 
 
@@ -311,7 +311,7 @@
                 var descriptor = LevelsDescriptors[kvp.Key.Name];
 
                 int value = 0;
-                bool done = Main.SaveGame.Progress.TryGetValue(descriptor.Id, out value) && value > 0;
+                bool done = Main.SaveGame.Progress.TryGetValue(descriptor.Infos.Id, out value) && value > 0;
 
                 kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone",
                     kvp.Key.Position + new Vector3(kvp.Key.Circle.Radius, kvp.Key.Circle.Radius, 0) +

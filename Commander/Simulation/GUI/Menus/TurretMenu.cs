@@ -23,7 +23,7 @@
             {
                 new LogoTextContextualMenuChoice(
                     new Text("Pixelite") { SizeX = textSize },
-                    new Image("sell") { SizeX = 0.75f, Origin = Vector2.Zero }) { DistanceBetweenNameAndLogo = new Vector2(60, 0) },
+                    new Image("sell") { SizeX = 0.75f, Origin = Vector2.Zero }) { LogoOffet = new Vector3(3, 3, 0), DistanceBetweenNameAndLogo = new Vector2(60, 0) },
                 new UpgradeTurretContextualMenuChoice(
                     new Text("Pixelite") { SizeX = textSize },
                     new Text("Pixelite") { SizeX = textSize },

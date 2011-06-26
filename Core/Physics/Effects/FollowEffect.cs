@@ -7,8 +7,8 @@
 
     public class FollowEffect : Effect<IPhysicalObject>
     {
-        public IObjetPhysique ObjetSuivi    { get; set; }
-        public float Vitesse                { get; set; }
+        public IObjetPhysique FollowedObject    { get; set; }
+        public float Speed                { get; set; }
 
         public static Pool<FollowEffect> Pool = new Pool<FollowEffect>();
 
@@ -21,10 +21,10 @@
 
         protected override void LogicLinear()
         {
-            Vector3 direction = ObjetSuivi.Position - Obj.Position;
+            Vector3 direction = FollowedObject.Position - Obj.Position;
             direction.Normalize();
 
-            Obj.Position += direction * Vitesse;
+            Obj.Position += direction * Speed;
         }
 
 

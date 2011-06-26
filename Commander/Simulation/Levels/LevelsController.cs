@@ -7,33 +7,24 @@
     using Microsoft.Xna.Framework;
 
 
-    enum GameState
-    {
-        Running,
-        Paused,
-        Won,
-        Lost
-    }
-
-
     class LevelsController
     {
+        public GameState State;
+        public Level Level;
+
         public event NewGameStateHandler NewGameState;
         public event CommonStashHandler CommonStashChanged;
 
         public Help Help;
 
         public List<CelestialBody> CelestialBodies                   { get { return Level.PlanetarySystem; } }
-        public InfiniteWave InfiniteWaves                         { get { return Level.InfiniteWaves; } }
-        public LinkedList<Wave> Waves                               { get { return Level.Waves; } }
-        public CommonStash CommonStash                              { get { return Level.CommonStash; } }
-        public List<Turret> StartingTurrets                         { get { return Level.Turrets; } }
+        public InfiniteWave InfiniteWaves                            { get { return Level.InfiniteWaves; } }
+        public LinkedList<Wave> Waves                                { get { return Level.Waves; } }
+        public CommonStash CommonStash                               { get { return Level.CommonStash; } }
+        public List<Turret> StartingTurrets                          { get { return Level.Turrets; } }
         public CelestialBody CelestialBodyToProtect                  { get { return Level.CelestialBodyToProtect; } }
-        public Dictionary<TurretType, Turret> AvailableTurrets      { get { return Level.AvailableTurrets; } }
-        public Dictionary<PowerUpType, PowerUp> AvailablePowerUps   { get { return Level.AvailablePowerUps; } }
-
-        public GameState State;
-        public Level Level;
+        public Dictionary<TurretType, Turret> AvailableTurrets       { get { return Level.AvailableTurrets; } }
+        public Dictionary<PowerUpType, PowerUp> AvailablePowerUps    { get { return Level.AvailablePowerUps; } }
 
         private Simulator Simulator;
         private int WavesCounter;
@@ -100,7 +91,7 @@
         }
 
 
-        public void doWaveEnded()
+        public void DoWaveEnded()
         {
             WavesCounter++;
 
@@ -123,7 +114,7 @@
         }
 
 
-        public void doEnemyReachedEnd(Enemy enemy, CelestialBody celestialBody)
+        public void DoEnemyReachedEnd(Enemy enemy, CelestialBody celestialBody)
         {
             if (State == GameState.Won)
                 return;
@@ -158,7 +149,7 @@
         }
         
 
-        public void doObjectDestroyed(IObjetPhysique obj)
+        public void DoObjectDestroyed(IObjetPhysique obj)
         {
             if (State == GameState.Won || State == GameState.Lost)
                 return;
@@ -195,6 +186,18 @@
                 ((PowerUpShield) powerUp).Bullet.Position = CelestialBodyToProtect.Position;
             }
         }
+
+
+        //public InfosDescriptor GenerateDescriptor()
+        //{
+        //    return new InfosDescriptor()
+        //    {
+                //Background = Background.TextureName,
+                //Difficulty = Difficulty,
+                //Id = Id,
+                //Mission = Mission
+        //    };
+        //}
 
 
         private void ComputeFinalScore()

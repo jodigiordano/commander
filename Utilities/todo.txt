@@ -16,6 +16,7 @@
 => Si planete a proteger hitted + qu'une fois par x temps, pas jouer x particules	DONE.
 => Add mouse/gamepad sensitivity in options
 => Spaceships: Bumping, fire at each others, racing mode
+=> editor > celestial body > change rotating sens
 
 
 ================================================================================
@@ -34,7 +35,9 @@
 ================================================================================
                                TODO GRAPHICS
 ================================================================================
-=> 
+=> text along path effect
+=> drop the pixelate font for a more defined one
+=> drop the pixelate planets for more defined one
 
 
 

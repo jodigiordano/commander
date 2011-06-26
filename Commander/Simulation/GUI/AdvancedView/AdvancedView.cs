@@ -5,18 +5,26 @@
 
     class AdvancedView
     {
+        public List<Enemy> Enemies;
+        public List<CelestialBody> CelestialBodies;
+
         private bool visible;
         private Simulator Simulator;
         private EnemiesLives EnemiesLives;
-        private List<CelestialBody> CelestialBodies;
 
 
-        public AdvancedView(Simulator simulator, List<Enemy> enemies, List<CelestialBody> celestialBodies)
+        public AdvancedView(Simulator simulator)
         {
             Simulator = simulator;
+            EnemiesLives = new EnemiesLives(Simulator);
+
             visible = false;
-            CelestialBodies = celestialBodies;
-            EnemiesLives = new EnemiesLives(simulator, enemies);
+        }
+
+
+        public void Initialize()
+        {
+            EnemiesLives.Enemies = Enemies;
         }
 
 

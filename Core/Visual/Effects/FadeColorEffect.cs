@@ -12,25 +12,25 @@
 
         protected override void InitializeLogic()
         {
-            Obj.Alpha = (byte) (Path.positionDepart().Y * 255);
+            Obj.Alpha = (byte) (Path.GetStartingPosition().Y * 255);
         }
 
 
         protected override void LogicLinear()
         {
-            Obj.Alpha = (byte) (Path.position(ElaspedTime).Y * 255);
+            Obj.Alpha = (byte) (Path.GetPosition(ElaspedTime).Y * 255);
         }
 
 
         protected override void LogicAfter()
         {
-            Obj.Alpha = (byte) (Path.position(Length).Y * 255);
+            Obj.Alpha = (byte) (Path.GetPosition(Length).Y * 255);
         }
 
 
         protected override void LogicNow()
         {
-            Obj.Alpha = (byte) (Path.position(Length).Y * 255);
+            Obj.Alpha = (byte) (Path.GetPosition(Length).Y * 255);
         }
 
 

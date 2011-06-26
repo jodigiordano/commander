@@ -79,7 +79,7 @@
 
 
             if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished &&
-                Main.GameInProgress.Simulator.LevelDescriptor.Mission == CelestialBody.Name &&
+                Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == CelestialBody.Name &&
                 Simulator.Scene.EnableInputs)
             {
                 PausedGameMenu.Position = CelestialBody.Position;
@@ -93,10 +93,10 @@
         {
             LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
 
-            Title.Data = descriptor.Mission;
+            Title.Data = descriptor.Infos.Mission;
             Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 32, 0);
             Title.Origin = Title.Center;
-            Difficulty.Data = descriptor.Difficulty;
+            Difficulty.Data = descriptor.Infos.Difficulty;
             Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
             Difficulty.Origin = Difficulty.Center;
 
@@ -112,7 +112,7 @@
             LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
             HighScores highscores = null;
 
-            Main.SaveGame.HighScores.TryGetValue(descriptor.Id, out highscores);
+            Main.SaveGame.HighScores.TryGetValue(descriptor.Infos.Id, out highscores);
 
             Highscore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
             Highscore.Origin = Highscore.Center;

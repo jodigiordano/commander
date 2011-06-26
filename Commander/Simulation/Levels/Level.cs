@@ -7,33 +7,32 @@
 
     class Level
     {
+        //infos
         public int Id;
         public string Mission;
         public string Difficulty;
         public double ParTime;
         public Image Background;
 
+        // objective
+        public CelestialBody CelestialBodyToProtect;
+        
+        // other
         public List<CelestialBody> PlanetarySystem;
         public List<Turret> Turrets;
-
         public InfiniteWave InfiniteWaves;
         public LinkedList<Wave> Waves;
-
         public CommonStash CommonStash;
-
         public Dictionary<TurretType, Turret> AvailableTurrets;
         public Dictionary<PowerUpType, PowerUp> AvailablePowerUps;
-        public CelestialBody CelestialBodyToProtect;
-
-        public int MineralsValue;
-        public Vector3 MineralsPercentages;
-        public int LifePacks;
-
         public List<string> HelpTexts;
+        
+        // minerals
+        public int Cash;
+        public int LifePacks;
 
         private Simulator Simulator;
         private LevelDescriptor Descriptor;
-
         private float NextCelestialBodyVisualPriority = Preferences.PrioriteSimulationCorpsCeleste;
 
 
@@ -42,12 +41,18 @@
             Simulator = simulator;
             Descriptor = descriptor;
 
-            Id = descriptor.Id;
-            Mission = descriptor.Mission;
-            Difficulty = descriptor.Difficulty;
-            ParTime = descriptor.ParTime;
+            Initialize();
+        }
 
-            Background = new Image(descriptor.Background, Vector3.Zero);
+
+        public void Initialize()
+        {
+            Id = Descriptor.Infos.Id;
+            Mission = Descriptor.Infos.Mission;
+            Difficulty = Descriptor.Infos.Difficulty;
+            ParTime = Descriptor.ParTime;
+
+            Background = new Image(Descriptor.Infos.Background, Vector3.Zero);
             Background.VisualPriority = Preferences.PrioriteFondEcran;
 
             InitializePlanetarySystem();
@@ -57,24 +62,29 @@
             InitializeAvailablePowerUps();
 
             for (int i = 0; i < PlanetarySystem.Count; i++)
-                if (PlanetarySystem[i].PathPriority == Descriptor.CelestialBodyToProtect)
+                if (PlanetarySystem[i].PathPriority == Descriptor.Objective.CelestialBodyToProtect)
                 {
                     CelestialBodyToProtect = PlanetarySystem[i];
                     break;
                 }
 
             if (CelestialBodyToProtect != null)
-                CelestialBodyToProtect.LifePoints = descriptor.Player.Lives;
+                CelestialBodyToProtect.LifePoints = Descriptor.Player.Lives;
 
             CommonStash = new CommonStash();
-            CommonStash.Lives = descriptor.Player.Lives;
-            CommonStash.Cash = descriptor.Player.Money;
+            CommonStash.Lives = Descriptor.Player.Lives;
+            CommonStash.Cash = Descriptor.Player.Money;
 
-            MineralsValue = descriptor.MineralsValue;
-            MineralsPercentages = descriptor.MineralsPercentages;
-            LifePacks = descriptor.LifePacks;
+            Cash = Descriptor.Minerals.Cash;
+            LifePacks = Descriptor.Minerals.LifePacks;
 
-            HelpTexts = descriptor.HelpTexts;
+            HelpTexts = Descriptor.HelpTexts;
+        }
+
+
+        public void SyncDescriptor()
+        {
+            Descriptor.PlanetarySystem = Simulator.PlanetarySystemController.GenerateDescriptor();
         }
 
 
@@ -203,9 +213,6 @@
             if (Descriptor.InfiniteWaves != null)
             {
                 InfiniteWaves = new InfiniteWave(Simulator, Descriptor.InfiniteWaves);
-                //InfiniteWaves = Descriptor.InfiniteWaves.Upfront ?
-                //    new UpfrontInfiniteWave(Simulation, Descriptor.InfiniteWaves, Descriptor.InfiniteWaves.NbWaves) :
-                //    new InfiniteWave(Simulation, Descriptor.InfiniteWaves);
                 Waves.AddLast(InfiniteWaves.GetNextWave());
             }
 

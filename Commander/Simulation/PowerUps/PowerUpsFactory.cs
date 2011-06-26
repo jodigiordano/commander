@@ -3,32 +3,6 @@
     using System.Collections.Generic;
 
 
-    public enum PowerUpType
-    {
-        None = -1,
-        Collector = 0,
-        FinalSolution = 1,
-        Spaceship = 2,
-        TheResistance = 3,
-        DeadlyShootingStars = 4,
-        Pulse = 5,
-        Miner = 6,
-        Shield = 7,
-        Sniper = 8,
-        AutomaticCollector = 9,
-        DarkSide = 10,
-        RailGun = 11
-    };
-
-
-    public enum PowerUpCategory
-    {
-        Spaceship,
-        Turret,
-        Other
-    }
-
-
     class PowerUpsFactory
     {
         public Dictionary<PowerUpType, PowerUp> Availables;

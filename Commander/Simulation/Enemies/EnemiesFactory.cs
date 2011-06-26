@@ -5,21 +5,6 @@
     using Microsoft.Xna.Framework;
 
 
-    public enum EnemyType
-    {
-        Asteroid,
-        Comet,
-        Plutoid,
-        Centaur,
-        Trojan,
-        Meteoroid,
-        Apohele,
-        Damacloid,
-        Vulcanoid,
-        Swarm
-    };
-
-
     class EnemiesFactory
     {
         public List<Enemy> AvailableEnemies { get; private set; }

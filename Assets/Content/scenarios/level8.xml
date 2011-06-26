@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
-<Scenario>
-  <Id>8</Id>
-  <Mission>1-9</Mission>
-  <Difficulty>Normal</Difficulty>
-  <Background>fondecran3</Background>  
+<Level>
+  <Infos>
+    <Id>8</Id>
+    <Mission>1-9</Mission>
+    <Difficulty>Normal</Difficulty>
+    <Background>fondecran3</Background>
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
+  </Objective>
   <PlanetarySystem>
     <CelestialBody>
       <Images>
@@ -360,12 +365,8 @@
     <PowerUpType>AutomaticCollector</PowerUpType>
     <PowerUpType>DarkSide</PowerUpType>
   </AvailablePowerUps>
-  <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
-  <MineralsValue>2000</MineralsValue>
-  <MineralsPercentages>
-    <X>0.6</X>
-    <Y>0.3</Y>
-    <Z>0.1</Z>
-  </MineralsPercentages>
-  <LifePacks>15</LifePacks>
-</Scenario>
+  <Minerals>
+    <Cash>2000</Cash>
+    <LifePacks>15</LifePacks>
+  </Minerals>
+</Level>

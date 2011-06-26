@@ -11,8 +11,6 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
 
-    delegate void NoneHandler();
-
 
     class Main : Game
     {

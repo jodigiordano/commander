@@ -47,7 +47,7 @@
         {
             set
             {
-                Logo.Position = value;
+                Logo.Position = value + new Vector3(0, 3, 0);
                 Level.Position = value + new Vector3(20, 0, 0);
                 Price.Position = value + new Vector3(60, 0, 0);
             }

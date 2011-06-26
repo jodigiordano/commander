@@ -12,7 +12,7 @@
         public GridWorld TurretsGrid;
         public List<Turret> Turrets;
 
-        private GridWorld.IntegerHandler Handler;
+        private IntegerHandler Handler;
         private Turret CurrentTurret;
         private PhysicalRectangle CurrentTurretRectangle;
         private Circle CurrentTurretRange;
@@ -21,7 +21,7 @@
         public BoostedTurrets()
         {
             Output = new List<KeyValuePair<Turret, Turret>>();
-            Handler = new GridWorld.IntegerHandler(CheckTurretIsBoosted);
+            Handler = new IntegerHandler(CheckTurretIsBoosted);
             CurrentTurret = null;
             CurrentTurretRectangle = new PhysicalRectangle();
             CurrentTurretRange = new Circle(Vector3.Zero, 0);

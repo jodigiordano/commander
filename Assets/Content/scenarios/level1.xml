@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
-<Scenario>
-  <Id>1</Id>
-  <Mission>1-2</Mission>
-  <Difficulty>Easy</Difficulty>
-  <Background>fondecran13</Background>
+<Level>
+  <Infos>
+    <Id>1</Id>
+    <Mission>1-2</Mission>
+    <Difficulty>Easy</Difficulty>
+    <Background>fondecran13</Background>    
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>5</CelestialBodyToProtect>
+  </Objective>  
   <PlanetarySystem>
     <CelestialBody>
       <Images>
@@ -215,14 +220,6 @@
     <PowerUpType>Miner</PowerUpType>
     <PowerUpType>Shield</PowerUpType>
   </AvailablePowerUps>
-  <CelestialBodyToProtect>5</CelestialBodyToProtect>
-  <MineralsValue>0</MineralsValue>
-  <MineralsPercentages>
-    <X>0.6</X>
-    <Y>0.3</Y>
-    <Z>0.1</Z>
-  </MineralsPercentages>
-  <LifePacks>0</LifePacks>
   <HelpTexts>
     <string>
       <![CDATA[Welcome back, Commander.
@@ -243,4 +240,4 @@ When enemies are on the path, you will also see their remaining lives. Good luck
 [Continue]]]>
     </string>
   </HelpTexts>  
-</Scenario>
+</Level>

@@ -16,19 +16,19 @@
 
         protected override void LogicLinear()
         {
-            Obj.Size = Path.position(ElaspedTime);
+            Obj.Size = Path.GetPosition(ElaspedTime);
         }
 
 
         protected override void LogicAfter()
         {
-            Obj.Size = Path.position(ElaspedTime);
+            Obj.Size = Path.GetPosition(ElaspedTime);
         }
 
 
         protected override void LogicNow()
         {
-            Obj.Size = Path.position(Length);
+            Obj.Size = Path.GetPosition(Length);
         }
 
 

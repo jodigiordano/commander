@@ -14,7 +14,7 @@
         public List<Enemy> Enemies;
         public HiddenEnemies HiddenEnemies;
 
-        private GridWorld.IntegerHandler Handler;
+        private IntegerHandler Handler;
         private Turret CurrentTurret;
         private PhysicalRectangle CurrentTurretRectangle;
         private Circle CurrentTurretRange;
@@ -24,7 +24,7 @@
         public EnemyInRange()
         {
             Output = new List<KeyValuePair<Turret, Enemy>>();
-            Handler = new GridWorld.IntegerHandler(CheckEnemyIsInRange);
+            Handler = new IntegerHandler(CheckEnemyIsInRange);
             CurrentTurret = null;
             CurrentTurretRectangle = new PhysicalRectangle();
             CurrentTurretRange = new Circle(Vector3.Zero, 0);

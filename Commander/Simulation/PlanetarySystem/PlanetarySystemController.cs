@@ -11,14 +11,14 @@
     class PlanetarySystemController
     {
         public List<CelestialBody> CelestialBodies;
+
         public List<ShootingStar> ShootingStars;
-        public event PhysicalObjectHandler ObjectDestroyed;
         public Path Path;
         public Path PathPreview;
 
+        public event PhysicalObjectHandler ObjectDestroyed;
+
         private Simulator Simulator;
-        private Core.Utilities.Pool<ShootingStar> ShootingStarsFactory;
-        private bool DeadlyShootingStars;
 
         private Action SyncUpdateShootingStars;
         private Action SyncPathPreview;
@@ -26,34 +26,39 @@
         private Particle Stars;
         private double StarsEmitter;
 
+        private Core.Utilities.Pool<ShootingStar> ShootingStarsFactory;
+        private bool DeadlyShootingStars;
         private bool FinalSolution;
 
 
         public PlanetarySystemController(Simulator simulator)
         {
             Simulator = simulator;
-            CelestialBodies = new List<CelestialBody>();
             ShootingStars = new List<ShootingStar>();
             ShootingStarsFactory = new Core.Utilities.Pool<ShootingStar>();
-            Path = new Path(simulator, new Color(255, 255, 255, 100), TypeBlend.Add);
-            PathPreview = new Path(simulator, new Color(255, 255, 255, 0), TypeBlend.Add);
+
+            Path = new Path(Simulator, new Color(255, 255, 255, 100), TypeBlend.Add);
+            PathPreview = new Path(Simulator, new Color(255, 255, 255, 0), TypeBlend.Add);
+
+            SyncUpdateShootingStars = new Action(UpdateShootingStars);
+            SyncPathPreview = new Action(PathPreview.Update);
         }
 
 
         public void Initialize()
         {
+            ShootingStars.Clear();
+
             Path.CelestialBodies = CelestialBodies;
             Path.Initialize();
 
             PathPreview.CelestialBodies = CelestialBodies;
             PathPreview.Initialize();
 
-            SyncUpdateShootingStars = new Action(UpdateShootingStars);
-            SyncPathPreview = new Action(PathPreview.Update);
-
             Stars = Simulator.Scene.Particles.Get(@"etoilesScintillantes");
             Stars.VisualPriority = Preferences.PrioriteGUIEtoiles;
             StarsEmitter = 0;
+
             DeadlyShootingStars = false;
             FinalSolution = false;
         }

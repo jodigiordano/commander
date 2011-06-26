@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
-<Scenario>
-  <Id>6</Id>
-  <Mission>1-7</Mission>
-  <Difficulty>Hard</Difficulty>
-  <Background>fondecran14</Background>
+<Level>
+  <Infos>
+    <Id>6</Id>
+    <Mission>1-7</Mission>
+    <Difficulty>Hard</Difficulty>
+    <Background>fondecran14</Background>
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
+  </Objective>
   <PlanetarySystem>
     <CelestialBody>
       <Images>
@@ -480,12 +485,8 @@
     <PowerUpType>DarkSide</PowerUpType>
     <PowerUpType>RailGun</PowerUpType>
   </AvailablePowerUps>
-  <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
-  <MineralsValue>5000</MineralsValue>
-  <MineralsPercentages>
-    <X>0.6</X>
-    <Y>0.3</Y>
-    <Z>0.1</Z>
-  </MineralsPercentages>
-  <LifePacks>15</LifePacks>
-</Scenario>
+  <Minerals>
+    <Cash>5000</Cash>
+    <LifePacks>15</LifePacks>
+  </Minerals>
+</Level>

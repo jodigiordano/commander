@@ -13,7 +13,7 @@
         public List<Bullet> Bullets;
         public List<Enemy> Enemies;
 
-        private GridWorld.IntegerHandler Handler;
+        private IntegerHandler Handler;
         private Bullet CurrentBullet;
         private PhysicalRectangle CurrentBulletRectangle;
         private Circle CurrentBulletDeflectRange;
@@ -22,7 +22,7 @@
         public BulletsDeflected()
         {
             Output = new List<KeyValuePair<Enemy, Bullet>>();
-            Handler = new GridWorld.IntegerHandler(CheckBulletIsDeflected);
+            Handler = new IntegerHandler(CheckBulletIsDeflected);
             CurrentBullet = null;
             CurrentBulletRectangle = new PhysicalRectangle();
             CurrentBulletDeflectRange = new Circle(Vector3.Zero, 0);

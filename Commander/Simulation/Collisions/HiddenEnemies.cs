@@ -13,13 +13,13 @@
         public List<Enemy> Enemies;
 
         private CelestialBody CurrentCelestialBody;
-        private GridWorld.IntegerHandler Handler;
+        private IntegerHandler Handler;
         
         
         public HiddenEnemies()
         {
             Output = new Dictionary<Enemy, CelestialBody>();
-            Handler = new GridWorld.IntegerHandler(CheckEnemyIsHidden);
+            Handler = new IntegerHandler(CheckEnemyIsHidden);
             CurrentCelestialBody = null;
         }
 

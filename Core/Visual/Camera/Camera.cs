@@ -145,17 +145,17 @@ namespace EphemereGames.Core.Visual
             float tmpRotation;
 
             // position
-            float multiplier = 1 - SpeedMovement.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y;
+            float multiplier = 1 - SpeedMovement.GetPosition(gameTime.ElapsedGameTime.TotalMilliseconds).Y;
             position.X = positionEnd.X - positionDelta.X * multiplier;
             position.Y = positionEnd.Y - positionDelta.Y * multiplier;
 
             // zoom
-            tmpZoomDelta = positionDelta.Z * (1 - SpeedZoom.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y);
+            tmpZoomDelta = positionDelta.Z * (1 - SpeedZoom.GetPosition(gameTime.ElapsedGameTime.TotalMilliseconds).Y);
             position.Z = positionEnd.Z - tmpZoomDelta;
 
             // rotation
             tmpRotation = rotation;
-            rotation = rotationEnd - (rotationDelta * (1 - SpeedRotation.position(gameTime.ElapsedGameTime.TotalMilliseconds).Y));
+            rotation = rotationEnd - (rotationDelta * (1 - SpeedRotation.GetPosition(gameTime.ElapsedGameTime.TotalMilliseconds).Y));
 
             updateTransform();
         }

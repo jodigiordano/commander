@@ -26,7 +26,7 @@
         public NoneHandler TerminatedCallback;
 
         private double RemainingBeforeStart;
-        private double RemainingBeforeEnd;
+        protected double RemainingBeforeEnd;
         protected double ElaspedTime;
         protected double TimeOneTick;
         private bool Initialized;

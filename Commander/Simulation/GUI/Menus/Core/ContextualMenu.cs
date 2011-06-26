@@ -193,7 +193,7 @@
         {
             int slotCounter = 0;
 
-            float distanceY = (Title != null) ? (Size.Y - Title.TextSize.Y - 10) / Choices.Count : Size.Y / Choices.Count;
+            float distanceY = Choices[0].Size.Y + DistanceBetweenTwoChoices; //(Title != null) ? (Size.Y - Title.TextSize.Y - 10) / Choices.Count : Size.Y / Choices.Count;
             float startingAt = (Title != null) ? Title.TextSize.Y + 10 : 0;
 
             foreach (var choice in Choices)
@@ -290,14 +290,13 @@
                 width = Title.TextSize.X;
 
             width += Border.X * 2;
-            height += Border.Y * 2;
 
             Size = new Vector3(
                 width,
-                Choices.Count * height + (Choices.Count - 1) * DistanceBetweenTwoChoices + (Title != null ? height + 10 : 0),
+                (Choices.Count * height) + ((Choices.Count - 1) * DistanceBetweenTwoChoices) + (Title != null ? height + 10 : 0) + (Border.Y * 4),
                 0);
 
-            WidgetSelection.Size = new Vector2(width, height);
+            WidgetSelection.Size = new Vector2(width, height + Border.Y * 2);
             TitleSeparator.Size = new Vector2(width, 5);
         }
 

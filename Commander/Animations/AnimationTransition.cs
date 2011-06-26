@@ -110,7 +110,7 @@ namespace EphemereGames.Commander
         {
             for (int i = 0; i < AlienShips.Count; i++)
             {
-                AlienShips[i].Representation.position = new Vector3(Paths[i].position(RelativeTime), 0);
+                AlienShips[i].Representation.position = new Vector3(Paths[i].GetPosition(RelativeTime), 0);
                 AlienShips[i].Draw();
             }
         }

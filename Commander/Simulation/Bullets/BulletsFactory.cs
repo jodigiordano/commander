@@ -4,24 +4,6 @@
     using EphemereGames.Core.Utilities;
 
 
-    enum BulletType
-    {
-        Base,
-        Missile,
-        Missile2,
-        LaserMultiple,
-        LaserSimple,
-        Aucun,
-        SlowMotion,
-        Gunner,
-        Nanobots,
-        RailGun,
-        Shield,
-        Pulse,
-        Mine
-    };
-
-
     class BulletsFactory
     {
         private Dictionary<BulletType, object> BulletsPools;

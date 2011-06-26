@@ -141,6 +141,15 @@
         }
 
 
+        public Text Clone()
+        {
+            Text i = (Text) this.MemberwiseClone();
+            i.Id = Visuals.NextHashCode;
+
+            return i;
+        }
+
+
         private Vector2 RelativeTextSize
         {
             get

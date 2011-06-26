@@ -130,7 +130,7 @@
             TrailDirection = Path.direction(relativeTime);
             ((ConeEmitter) Effect.ParticleEffect[0]).Direction = (float) Math.Atan2(TrailDirection.Y, TrailDirection.X) - MathHelper.Pi;
 
-            Vector2 p = Path.position(relativeTime);
+            Vector2 p = Path.GetPosition(relativeTime);
             position = new Vector3(p.X, p.Y, 0);
 
             Circle.Position = position;

@@ -3,22 +3,6 @@
     using System.Collections.Generic;
 
 
-    enum TurretChoice
-    {
-        None = -1,
-        Sell = 0,
-        Update = 1
-    }
-
-
-    public enum PausedGameChoice
-    {
-        None = -1,
-        Resume = 0,
-        New = 1
-    }
-
-
     class SimPlayerSelection
     {
         public CelestialBody CelestialBody;

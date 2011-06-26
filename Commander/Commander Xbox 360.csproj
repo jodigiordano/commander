@@ -80,8 +80,10 @@
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
     <Compile Include="Animations\IntroAnimation.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="Editor\Descriptors.cs" />
     <Compile Include="Editor\GeneratorData.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="EqualityComparers.cs" />
     <Compile Include="GUI\Controls\CheckBox.cs" />
     <Compile Include="GUI\Controls\CloseButton.cs" />

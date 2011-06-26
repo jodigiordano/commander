@@ -15,7 +15,7 @@
 
         protected override void LogicLinear()
         {
-            Obj.Speed = StartingSpeed + DeltaSpeed * InnerPath.position(ElaspedTime).Y;
+            Obj.Speed = StartingSpeed + DeltaSpeed * InnerPath.GetPosition(ElaspedTime).Y;
         }
 
 

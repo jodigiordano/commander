@@ -8,7 +8,7 @@
 
     class PathPreview
     {
-        public enum PathState
+        private enum PathState
         {
             None,
             ObjectAdded,

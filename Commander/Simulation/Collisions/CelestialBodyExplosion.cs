@@ -13,14 +13,14 @@
         public GridWorld EnemiesGrid;
         public List<Enemy> Enemies;
 
-        private GridWorld.IntegerHandler Handler;
+        private IntegerHandler Handler;
         private PhysicalRectangle CelestialBodyRectangle;
         private Circle CelestiablBodyRange;
 
 
         public CelestialBodyExplosion()
         {
-            Handler = new GridWorld.IntegerHandler(CheckEnemiesHit);
+            Handler = new IntegerHandler(CheckEnemiesHit);
             Output = new Dictionary<int, Enemy>();
             CelestialBodyRectangle = new PhysicalRectangle();
             CelestiablBodyRange = new Circle(Vector3.Zero, 0);

@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
-<Scenario>
-  <Id>2</Id>
-  <Mission>1-3</Mission>
-  <Difficulty>Normal</Difficulty>
-  <Background>fondecran9</Background>
+<Level>
+  <Infos>
+    <Id>2</Id>
+    <Mission>1-3</Mission>
+    <Difficulty>Normal</Difficulty>
+    <Background>fondecran9</Background>
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
+  </Objective>
   <PlanetarySystem>
     <CelestialBody>
       <Images>
@@ -385,14 +390,6 @@
     <PowerUpType>Pulse</PowerUpType>
     <PowerUpType>DarkSide</PowerUpType>
   </AvailablePowerUps>
-  <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
-  <MineralsValue>0</MineralsValue>
-  <MineralsPercentages>
-    <X>0.6</X>
-    <Y>0.3</Y>
-    <Z>0.1</Z>
-  </MineralsPercentages>
-  <LifePacks>0</LifePacks>
   <HelpTexts>
     <string>
       <![CDATA[Hey, Commander.
@@ -417,4 +414,4 @@ Good luck, Commander!
 [Continue]]]>
     </string>
   </HelpTexts>  
-</Scenario>
+</Level>

@@ -39,7 +39,11 @@
 
         public void Initialize()
         {
+            foreach (var subMenu in GeneralMenuSubMenus.Values)
+                subMenu.Visible = false;
 
+            foreach (var panel in Panels.Values)
+                panel.Visible = false;
         }
 
 

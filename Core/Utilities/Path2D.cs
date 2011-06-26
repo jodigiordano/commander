@@ -3,13 +3,12 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
 
 
     public class Path2D
     {
         private List<Microsoft.Xna.Framework.Curve> Curves;
-        private double Length;
+        public double Length;
 
 
         public Path2D() : this(new List<Vector2>(), new List<double>()) { }
@@ -53,7 +52,7 @@
         }
 
 
-        public Vector2 positionDepart()
+        public Vector2 GetStartingPosition()
         {
             return new Vector2(
                 Curves[0].Evaluate(0.0f),
@@ -70,7 +69,7 @@
         }
 
 
-        public Vector2 position(double temps)
+        public Vector2 GetPosition(double temps)
         {
             return new Vector2( // On ajoute un tick au temps (si tu ne comprends pas pourquoi, demande-moi, car j'ai pas le goût d'écrire l'explication ici lol)
                 Curves[0].Evaluate((float) temps + 1000 / 60.0f),
@@ -88,7 +87,7 @@
         }
 
 
-        public float rotation(double temps) {
+        public float GetRotation(double temps) {
             Vector2 directionActuelle = direction(temps);
 
             return (MathHelper.PiOver2) + (float)Math.Atan2(directionActuelle.Y, directionActuelle.X);
@@ -97,8 +96,8 @@
 
         public Vector2 direction(double temps)
         {
-            Vector2 positionAvant = position(temps);
-            Vector2 positionApres = position(temps + 1);
+            Vector2 positionAvant = GetPosition(temps);
+            Vector2 positionApres = GetPosition(temps + 1);
 
             Vector2 direction = positionApres - positionAvant;
 

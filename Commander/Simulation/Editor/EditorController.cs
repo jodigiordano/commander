@@ -29,10 +29,7 @@
             Simulator = simulator;
 
             Players = new Dictionary<SimPlayer, EditorPlayer>();
-            PanelsOpenCloseCommands = new Dictionary<EditorPanel, EditorPanelCommand[]>();
-
-            OpenedPanel = EditorPanel.None;
-
+            PanelsOpenCloseCommands = new Dictionary<EditorPanel, EditorPanelCommand[]>(EditorPanelComparer.Default);
 
             Simulator.EditorCommands = new Dictionary<string, EditorCommand>()
             {
@@ -66,12 +63,7 @@
                 { "PlaytestState", new EditorCommand("PlaytestState")  },
                 { "EditState", new EditorCommand("EditState")  }
             };
-        }
 
-
-        public void Initialize()
-        {
-            Players.Clear();
 
             foreach (var command in Simulator.EditorCommands.Values)
             {
@@ -85,6 +77,14 @@
 
                 PanelsOpenCloseCommands[panelCommand.Panel][panelCommand.Show ? 0 : 1] = panelCommand;
             }
+        }
+
+
+        public void Initialize()
+        {
+            Players.Clear();
+
+            OpenedPanel = EditorPanel.None;
         }
 
 
@@ -238,11 +238,15 @@
             if (command.Name == "PlaytestState")
             {
                 Simulator.EditorState = EditorState.Playtest;
+                Simulator.Initialize();
+                Simulator.SyncPlayers();
             }
 
             else if (command.Name == "EditState")
             {
                 Simulator.EditorState = EditorState.Editing;
+                Simulator.Initialize();
+                Simulator.SyncPlayers();
             }
 
             NotifyEditorCommandExecuted(player, command);

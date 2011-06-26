@@ -52,7 +52,7 @@
 
         public override Vector2 Size
         {
-            get { return Name.TextSize + new Vector2(DistanceBetweenNameAndLogo.X + Logo.AbsoluteSize.X, 0); }
+            get { return Name.TextSize + new Vector2(DistanceBetweenNameAndLogo.X, 0); }
         }
 
 

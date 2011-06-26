@@ -134,6 +134,8 @@
 
 
                 MovePathEffect e = new MovePathEffect();
+                e.PointAt = false;
+                e.StartAt = 0;
                 e.Delay = 2000;
                 e.Length = 15000;
                 e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
@@ -188,11 +190,13 @@
 
             this.Simulator.Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeInFrom0(200, 0, 1000));
 
-            MovePathEffect effet = new MovePathEffect();
-            effet.Delay = 0;
-            effet.Length = 10000;
-            effet.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
-            effet.InnerPath = new Path2D(new List<Vector2>
+            MovePathEffect mpe = new MovePathEffect();
+            mpe.StartAt = 0;
+            mpe.PointAt = false;
+            mpe.Delay = 0;
+            mpe.Length = 10000;
+            mpe.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            mpe.InnerPath = new Path2D(new List<Vector2>
                 {
                     new Vector2(-1920, -155),
                     new Vector2(-1000, -155),
@@ -204,7 +208,7 @@
                     1200
                 });
 
-            this.Simulator.Scene.PhysicalEffects.Add(Filter, effet);
+            this.Simulator.Scene.PhysicalEffects.Add(Filter, mpe);
         }
 
 
@@ -223,8 +227,8 @@
                         FollowEffect deplacement = new FollowEffect();
                         deplacement.Delay = i * 500;
                         deplacement.Length = 10000;
-                        deplacement.ObjetSuivi = CelestialBodies[i];
-                        deplacement.Vitesse = 10f;
+                        deplacement.FollowedObject = CelestialBodies[i];
+                        deplacement.Speed = 10f;
                         deplacement.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
 
                         this.Simulator.Scene.PhysicalEffects.Add(Missiles[i].Key, deplacement);

@@ -2,12 +2,6 @@
 {
     using Microsoft.Xna.Framework;
 
-    enum Setting
-    {
-        WindowsDemo,
-        WindowsFull,
-        Xbox360
-    }
 
     class Preferences
     {

@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
-<Scenario>
-  <Id>3</Id>
-  <Mission>1-4</Mission>
-  <Difficulty>Normal</Difficulty>
-  <Background>fondecran2</Background>
+<Level>
+  <Infos>
+    <Id>3</Id>
+    <Mission>1-4</Mission>
+    <Difficulty>Normal</Difficulty>
+    <Background>fondecran2</Background>
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>9</CelestialBodyToProtect>
+  </Objective>  
   <PlanetarySystem>
     <CelestialBody>
       <Images>
@@ -386,14 +391,10 @@
     <PowerUpType>DeadlyShootingStars</PowerUpType>
     <PowerUpType>Miner</PowerUpType>
   </AvailablePowerUps>
-  <CelestialBodyToProtect>9</CelestialBodyToProtect>
-  <MineralsValue>5000</MineralsValue>
-  <MineralsPercentages>
-    <X>0.6</X>
-    <Y>0.3</Y>
-    <Z>0.1</Z>
-  </MineralsPercentages>
-  <LifePacks>20</LifePacks>
+  <Minerals>
+    <Cash>5000</Cash>
+    <LifePacks>20</LifePacks>
+  </Minerals>
   <HelpTexts>
     <string>
       <![CDATA[Welcome back, Commander.
@@ -405,4 +406,4 @@ In this level, you have access to the collector power-up. When enemies die, they
 [Continue]]]>
     </string>
   </HelpTexts>  
-</Scenario>
+</Level>

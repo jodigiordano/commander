@@ -10,6 +10,14 @@
 
     class CollisionsController
     {
+        public List<Bullet> Bullets;
+        public List<Enemy> Enemies;
+        public List<Turret> Turrets;
+        public List<CelestialBody> CelestialBodies;
+        public List<Mineral> Minerals;
+        public List<ShootingStar> ShootingStars;
+        public bool Debug;
+
         public event PhysicalObjectHandler ObjectOutOfBounds;
         public event PhysicalObjectPhysicalObjectHandler ObjectHit;
         public event TurretTurretHandler TurretBoosted;
@@ -34,22 +42,14 @@
         private Action SyncBoostedTurrets;
         private Action SyncBulletsDeflected;
 
-        public List<Bullet> Bullets;
-        public List<Enemy> Enemies;
-        public List<Turret> Turrets;
-        public List<CelestialBody> CelestialBodies;
-        public List<Mineral> Minerals;
-        public List<ShootingStar> ShootingStars;
-        public bool Debug;
-
 
         public CollisionsController(Simulator simulator)
         {
             Simulator = simulator;
             Battlefield = Simulator.Terrain;
-            EnemiesGrid = new GridWorld(this.Battlefield, 50);
-            TurretsGrid = new GridWorld(this.Battlefield, 50);
-            Debug = false;
+            EnemiesGrid = new GridWorld(Battlefield, 50);
+            TurretsGrid = new GridWorld(Battlefield, 50);
+            
             HiddenEnemies = new HiddenEnemies();
             BoostedTurrets = new BoostedTurrets();
             BulletsDeflected = new BulletsDeflected();
@@ -57,11 +57,18 @@
             EnemyInRange = new EnemyInRange();
             ObjectsCollisions = new ObjectsCollisions();
             CelestialBodyExplosion = new CelestialBodyExplosion();
+
+            SyncOutOfBounds = new Action(OutOfBounds.Sync);
+            SyncEnemyInRange = new Action(EnemyInRange.Sync);
+            SyncBoostedTurrets = new Action(BoostedTurrets.Sync);
+            SyncBulletsDeflected = new Action(BulletsDeflected.Sync);
         }
 
 
         public void Initialize()
         {
+            Debug = false;
+
             HiddenEnemies.CelestialBodies = CelestialBodies;
             HiddenEnemies.Enemies = Enemies;
             HiddenEnemies.EnemiesGrid = EnemiesGrid;
@@ -92,11 +99,6 @@
             ObjectsCollisions.ShootingStars = ShootingStars;
             ObjectsCollisions.Simulator = Simulator;
             ObjectsCollisions.Turrets = Turrets;
-
-            SyncOutOfBounds = new Action(OutOfBounds.Sync);
-            SyncEnemyInRange = new Action(EnemyInRange.Sync);
-            SyncBoostedTurrets = new Action(BoostedTurrets.Sync);
-            SyncBulletsDeflected = new Action(BulletsDeflected.Sync);
         }
 
 

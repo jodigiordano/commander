@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
-<Scenario>
-  <Id>0</Id>
-  <Mission>1-1</Mission>
-  <Difficulty>Easy</Difficulty>
-  <Background>fondecran1</Background>
+<Level>
+  <Infos>
+    <Id>0</Id>
+    <Mission>1-1</Mission>
+    <Difficulty>Easy</Difficulty>
+    <Background>fondecran1</Background>    
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>5</CelestialBodyToProtect>
+  </Objective>
   <PlanetarySystem>
     <CelestialBody>
       <Images>
@@ -228,14 +233,6 @@
     <PowerUpType>Shield</PowerUpType>
     <PowerUpType>RailGun</PowerUpType>
   </AvailablePowerUps>
-  <CelestialBodyToProtect>5</CelestialBodyToProtect>
-  <MineralsValue>0</MineralsValue>
-  <MineralsPercentages>
-    <X>0.6</X>
-    <Y>0.3</Y>
-    <Z>0.1</Z>
-  </MineralsPercentages>
-  <LifePacks>0</LifePacks>
   <HelpTexts>
     <string><![CDATA[Welcome to the battlefield, Commander.
 
@@ -284,4 +281,4 @@ This is it for now, Commander. You'll receive further instructions in other leve
 [Continue]]]>
     </string>
   </HelpTexts>
-</Scenario>
+</Level>
