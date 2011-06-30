@@ -1,10 +1,11 @@
 ﻿namespace EphemereGames.Core.Input
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-
-
+    
+    
     public enum InputType
     {
         Mouse = 0x0000,
@@ -15,6 +16,14 @@
 
     public static class Inputs
     {
+#if WINDOWS && TRIAL
+        internal static Setting Target = Setting.WindowsDemo;
+#elif WINDOWS
+        internal static Setting Target = Setting.WindowsFull;
+#else
+        internal static Setting Target = Setting.Xbox360;
+#endif
+
         internal static InputsController InputsController;
         internal static PlayerConnection PlayerConnection;
         internal static PlayersController PlayersController;

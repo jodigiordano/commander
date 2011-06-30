@@ -18,9 +18,9 @@
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
 
-        public event TurretHandler BuyTurretAsked;
-        public event TurretHandler SellTurretAsked;
-        public event TurretHandler UpgradeTurretAsked;
+        public event TurretSimPlayerHandler BuyTurretAsked;
+        public event TurretSimPlayerHandler SellTurretAsked;
+        public event TurretSimPlayerHandler UpgradeTurretAsked;
         public event TurretSimPlayerHandler TurretToPlaceSelected;
         public event TurretSimPlayerHandler TurretToPlaceDeselected;
         public event NoneHandler NextWaveAsked;
@@ -28,13 +28,13 @@
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
         public event PowerUpTypeSimPlayerHandler ActivatePowerUpAsked;
-        public event PowerUpTypeHandler DesactivatePowerUpAsked;
+        public event PowerUpTypeSimPlayerHandler DesactivatePowerUpAsked;
         public event SimPlayerHandler PlayerConnected;
         public event SimPlayerHandler PlayerDisconnected;
-        public event NoneHandler ShowAdvancedViewAsked;
-        public event NoneHandler HideAdvancedViewAsked;
-        public event NoneHandler ShowNextWaveAsked;
-        public event NoneHandler HideNextWaveAsked;
+        public event SimPlayerHandler ShowAdvancedViewAsked;
+        public event SimPlayerHandler HideAdvancedViewAsked;
+        public event SimPlayerHandler ShowNextWaveAsked;
+        public event SimPlayerHandler HideNextWaveAsked;
 
         private Simulator Simulator;
         private Dictionary<Player, SimPlayer> Players;
@@ -92,6 +92,7 @@
                 AvailablePowerUps = AvailablePowerUps,
                 Color = player.Color,
                 Representation = player.Representation,
+                UpdateSelectionz = UpdateSelection
             };
 
             simPlayer.Initialize();
@@ -127,31 +128,31 @@
         }
 
 
-        public void DoPowerUpStarted(PowerUp powerUp)
+        public void DoPowerUpStarted(PowerUp powerUp, SimPlayer p)
         {
-            if (powerUp.NeedInput)
-                powerUp.Owner.PowerUpInUse = powerUp.Type;
+            //if (powerUp.NeedInput)
+            //    powerUp.Owner.PowerUpInUse = powerUp.Type;
 
             if (powerUp.Type == PowerUpType.FinalSolution)
-                ((PowerUpLastSolution) powerUp).Selection = powerUp.Owner.ActualSelection;
+                ((PowerUpLastSolution) powerUp).Selection = p.ActualSelection;
 
-            powerUp.Owner.UpdateSelection();
+            p.UpdateSelection();
         }
 
 
-        public void DoPowerUpStopped(PowerUp powerUp)
+        public void DoPowerUpStopped(PowerUp powerUp, SimPlayer p)
         {
             if (powerUp.NeedInput)
             {
-                powerUp.Owner.Position = powerUp.Position;
-                NotifyPlayerMoved(powerUp.Owner);
+                p.Position = powerUp.Position;
+                NotifyPlayerMoved(p);
             }
 
             if (powerUp.Type == PowerUpType.FinalSolution && ((PowerUpLastSolution) powerUp).GoAhead)
-                DoPowerUpUse(powerUp.Owner);
+                DoPowerUpUse(p);
 
-            powerUp.Owner.PowerUpInUse = PowerUpType.None;
-            powerUp.Owner.UpdateSelection();
+            //p.PowerUpInUse = PowerUpType.None;
+            p.UpdateSelection();
         }
 
 
@@ -266,26 +267,26 @@
         }
 
 
-        public void DoTurretBought(Turret turret)
+        public void DoTurretBought(Turret turret, SimPlayer player)
         {
             CommonStash.Cash -= turret.BuyPrice;
             NotifyCommonStashChanged(CommonStash);
 
-            foreach (var player in Players.Values)
-                player.UpdateSelection();
+            foreach (var p in Players.Values)
+                p.UpdateSelection();
 
             if (turret.Type == TurretType.Gravitational && !Simulator.DemoMode)
                 Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
         }
 
 
-        public void DoTurretSold(Turret turret)
+        public void DoTurretSold(Turret turret, SimPlayer player)
         {
             CommonStash.Cash += turret.SellPrice;
             NotifyCommonStashChanged(CommonStash);
 
-            foreach (var player in Players.Values)
-                player.UpdateSelection();
+            foreach (var p in Players.Values)
+                p.UpdateSelection();
 
             if (turret.Type == TurretType.Gravitational)
                 Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
@@ -294,13 +295,13 @@
         }
 
 
-        public void DoTurretUpdated(Turret turret)
+        public void DoTurretUpdated(Turret turret, SimPlayer player)
         {
             CommonStash.Cash -= turret.BuyPrice; //parce qu'effectue une fois la tourelle mise a jour
             NotifyCommonStashChanged(CommonStash);
 
-            foreach (var player in Players.Values)
-                player.UpdateSelection();
+            foreach (var p in Players.Values)
+                p.UpdateSelection();
         }
 
 
@@ -331,12 +332,6 @@
             {
                 player.Update();
 
-                if (UpdateSelection)
-                    player.UpdateSelection();
-
-                if (Simulator.DemoMode)
-                    player.UpdateDemoSelection();
-
                 NotifyPlayerChanged(player);
                 NotifyPlayerMoved(player);
             }
@@ -352,16 +347,16 @@
                 Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
             {
                 PlayerInNextWave = player;
-                NotifyShowNextWaveAsked();
+                NotifyShowNextWaveAsked(player);
                 return;
             }
 
             if (PlayerInNextWave == player &&
-                (!p.Connected ||
+                (p.State == PlayerState.Disconnected ||
                 !Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle)))
             {
                 PlayerInNextWave = null;
-                NotifyHideNextWaveAsked();
+                NotifyHideNextWaveAsked(player);
                 return;
             }
         }
@@ -448,7 +443,7 @@
                 player.ActualSelection.TurretToPlace.CanPlace)
             {
                 player.ActualSelection.TurretToPlace.ToPlaceMode = false;
-                NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace);
+                NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace, player);
                 NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
                 player.ActualSelection.TurretToPlace = null;
                 player.TurretToPlaceChanged = true;
@@ -463,10 +458,10 @@
                 switch (player.ActualSelection.TurretChoice)
                 {
                     case TurretChoice.Sell:
-                        NotifySellTurretAsked(player.ActualSelection.Turret);
+                        NotifySellTurretAsked(player.ActualSelection.Turret, player);
                         break;
                     case TurretChoice.Update:
-                        NotifyUpgradeTurretAsked(player.ActualSelection.Turret);
+                        NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
                         break;
                 }
 
@@ -505,14 +500,14 @@
             if (PlayerInAdvancedView == null && pressed)
             {
                 PlayerInAdvancedView = player;
-                NotifyShowAdvancedViewAsked();
+                NotifyShowAdvancedViewAsked(player);
                 return;
             }
 
             if (PlayerInAdvancedView == player && !pressed)
             {
                 PlayerInAdvancedView = null;
-                NotifyHideAdvancedViewAsked();
+                NotifyHideAdvancedViewAsked(player);
                 return;
             }
         }
@@ -532,11 +527,17 @@
                 }
 
                 UpdateSelection = false;
+
+                foreach (var player in Players.Values)
+                    player.UpdateSelectionz = false;
             }
 
             else if (!command.Show)
             {
                 UpdateSelection = true;
+
+                foreach (var player in Players.Values)
+                    player.UpdateSelectionz = true;
             }
         }
 
@@ -557,7 +558,7 @@
             player.UpdateSelection();
 
             if (CommonStash.Cash < p.UsePrice)
-                NotifyDesactivatePowerUpAsked(player.PowerUpInUse);
+                NotifyDesactivatePowerUpAsked(player.PowerUpInUse, player);
         }
 
 
@@ -599,10 +600,10 @@
         }
 
 
-        private void NotifyDesactivatePowerUpAsked(PowerUpType type)
+        private void NotifyDesactivatePowerUpAsked(PowerUpType type, SimPlayer player)
         {
             if (DesactivatePowerUpAsked != null)
-                DesactivatePowerUpAsked(type);
+                DesactivatePowerUpAsked(type, player);
         }
 
 
@@ -613,24 +614,24 @@
         }
 
 
-        private void NotifyBuyTurretAsked(Turret turret)
+        private void NotifyBuyTurretAsked(Turret turret, SimPlayer player)
         {
             if (BuyTurretAsked != null)
-                BuyTurretAsked(turret);
+                BuyTurretAsked(turret, player);
         }
 
 
-        private void NotifySellTurretAsked(Turret turret)
+        private void NotifySellTurretAsked(Turret turret, SimPlayer player)
         {
             if (SellTurretAsked != null)
-                SellTurretAsked(turret);
+                SellTurretAsked(turret, player);
         }
 
 
-        private void NotifyUpgradeTurretAsked(Turret turret)
+        private void NotifyUpgradeTurretAsked(Turret turret, SimPlayer player)
         {
             if (UpgradeTurretAsked != null)
-                UpgradeTurretAsked(turret);
+                UpgradeTurretAsked(turret, player);
         }
 
 
@@ -669,31 +670,31 @@
         }
 
 
-        private void NotifyShowAdvancedViewAsked()
+        private void NotifyShowAdvancedViewAsked(SimPlayer player)
         {
             if (ShowAdvancedViewAsked != null)
-                ShowAdvancedViewAsked();
+                ShowAdvancedViewAsked(player);
         }
 
 
-        private void NotifyHideAdvancedViewAsked()
+        private void NotifyHideAdvancedViewAsked(SimPlayer player)
         {
             if (HideAdvancedViewAsked != null)
-                HideAdvancedViewAsked();
+                HideAdvancedViewAsked(player);
         }
 
 
-        private void NotifyShowNextWaveAsked()
+        private void NotifyShowNextWaveAsked(SimPlayer player)
         {
             if (ShowNextWaveAsked != null)
-                ShowNextWaveAsked();
+                ShowNextWaveAsked(player);
         }
 
 
-        private void NotifyHideNextWaveAsked()
+        private void NotifyHideNextWaveAsked(SimPlayer player)
         {
             if (HideNextWaveAsked != null)
-                HideNextWaveAsked();
+                HideNextWaveAsked(player);
         }
     }
 }

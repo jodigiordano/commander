@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using Microsoft.Xna.Framework;
+    using EphemereGames.Core.Utilities;
 
 
     class Preferences

@@ -1,10 +1,9 @@
 ﻿namespace EphemereGames.Core.Input
 {
+    using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    using System.Collections.Generic;
-    using System;
-    using EphemereGames.Core.Utilities;
 
 
     class InputSource
@@ -210,7 +209,7 @@
 
         public void TellListener(InputListener listener)
         {
-            if (!Player.Connected)
+            if (Player.State == PlayerState.Disconnected)
             {
                 TellIfWantsToConnect(listener);
                 return;

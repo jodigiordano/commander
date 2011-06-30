@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
@@ -9,7 +8,6 @@
     {
         public SimPlayer SimPlayer;
         public EditorGeneralMenu GeneralMenu;
-        public Dictionary<EditorGeneralMenuChoice, ContextualMenu> GeneralMenuSubMenus;
 
         public EditorPlayerSelection ActualSelection;
         public Circle Circle { get { return SimPlayer.Circle; } }
@@ -57,7 +55,7 @@
             if (ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
                 return;
 
-            int nbChoices = GeneralMenuSubMenus[ActualSelection.GeneralMenuChoice].ChoicesCount;
+            int nbChoices = GeneralMenu.SubMenus[ActualSelection.GeneralMenuChoice].ChoicesCount;
 
             ActualSelection.GeneralMenuSubMenuIndex++;
 
@@ -71,7 +69,7 @@
             if (ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
                 return;
 
-            int nbChoices = GeneralMenuSubMenus[ActualSelection.GeneralMenuChoice].ChoicesCount;
+            int nbChoices = GeneralMenu.SubMenus[ActualSelection.GeneralMenuChoice].ChoicesCount;
 
             ActualSelection.GeneralMenuSubMenuIndex--;
 

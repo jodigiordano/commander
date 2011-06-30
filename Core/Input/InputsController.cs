@@ -123,12 +123,12 @@
                 var player = source.Key;
                 var state = source.Value;
 
-                if (player.Connected && player.InputType == InputType.Gamepad)
+                if (player.State == PlayerState.Connected && player.InputType == InputType.Gamepad)
                 {
                     state.DoGamePadInput();
                 }
 
-                else if (player.Connected)
+                else if (player.State == PlayerState.Connected)
                 {
                     state.DoKeyboardInput();
                     state.DoMouseInput();

@@ -7,11 +7,10 @@
     class PowerUpsController
     {
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
-        public event PowerUpHandler PowerUpStarted;
-        public event PowerUpHandler PowerUpStopped;
-        public bool InPowerUp;
+        public event PowerUpSimPlayerHandler PowerUpStarted;
+        public event PowerUpSimPlayerHandler PowerUpStopped;
 
-        private List<PowerUp> PowerUps;
+        private Dictionary<SimPlayer, List<PowerUp>> PowerUps;
         private Simulator Simulator;
 
 
@@ -20,8 +19,7 @@
             Simulator = simulator;
 
             ActivesPowerUps = new Dictionary<PowerUpType, bool>();
-            PowerUps = new List<PowerUp>();
-            InPowerUp = false;
+            PowerUps = new Dictionary<SimPlayer, List<PowerUp>>();
         }
 
 
@@ -32,26 +30,46 @@
         }
 
 
+        public void DoPlayerConnected(SimPlayer player)
+        {
+            if (!PowerUps.ContainsKey(player))
+                PowerUps.Add(player, new List<PowerUp>());
+        }
+
+
+        public void DoPlayerDisconnected(SimPlayer player)
+        {
+            foreach (var powerUp in PowerUps[player])
+                powerUp.TerminatedOverride = true;
+        }
+
+
         public void Update()
         {
-            for (int i = PowerUps.Count - 1; i > -1; i--)
+            foreach (var kvp in PowerUps)
             {
-                PowerUp p = PowerUps[i];
+                var player = kvp.Key;
+                var pus = kvp.Value;
 
-                p.Update();
-
-                if (PowerUps[i].Terminated)
+                for (int i = pus.Count - 1; i > -1; i--)
                 {
-                    p.Stop();
+                    PowerUp p = pus[i];
 
-                    ActivesPowerUps[p.Type] = true;
+                    p.Update();
 
-                    PowerUps.RemoveAt(i);
+                    if (pus[i].Terminated)
+                    {
+                        p.Stop();
 
-                    if (p.NeedInput)
-                        InPowerUp = false;
+                        ActivesPowerUps[p.Type] = true;
 
-                    NotifyPowerUpStopped(p);
+                        pus.RemoveAt(i);
+
+                        if (p.NeedInput)
+                            player.PowerUpInUse = PowerUpType.None;
+
+                        NotifyPowerUpStopped(p, player);
+                    }
                 }
             }
         }
@@ -66,67 +84,74 @@
             p.Owner = player;
             p.Start();
 
-            PowerUps.Add(p);
+            PowerUps[player].Add(p);
 
             if (p.NeedInput)
-                InPowerUp = true;
+                player.PowerUpInUse = p.Type;
 
-            NotifyPowerUpStarted(p);
+            NotifyPowerUpStarted(p, player);
         }
 
 
-        public void DoDesactivatePowerUpAsked(PowerUpType type)
+        public void DoDesactivatePowerUpAsked(PowerUpType type, SimPlayer player)
         {
-            PowerUp p = PowerUps.Find(e => e.Type == type);
+            PowerUp p = null;
+            
+            foreach (var powerUp in PowerUps[player])
+                if (powerUp.Type == type)
+                {
+                    p = powerUp;
+                    break;
+                }
 
             p.Stop();
 
             ActivesPowerUps[p.Type] = true;
 
-            PowerUps.Remove(p);
+            PowerUps[player].Remove(p);
 
             if (p.NeedInput)
-                InPowerUp = false;
+                player.PowerUpInUse = PowerUpType.None;
 
-            NotifyPowerUpStopped(p);
+            NotifyPowerUpStopped(p, player);
         }
 
 
         public void DoPlayerMoved(SimPlayer player)
         {
-            foreach (var powerUp in PowerUps)
+            foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
                     powerUp.DoInputMoved(player.Position);
         }
 
 
-        public void DoInputCanceled()
+        public void DoInputCanceled(SimPlayer player)
         {
-            foreach (var powerUp in PowerUps)
+            foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
                     powerUp.DoInputCanceled();
         }
 
 
-        public void DoInputReleased()
+        public void DoInputReleased(SimPlayer player)
         {
-            foreach (var powerUp in PowerUps)
+            foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
                     powerUp.DoInputReleased();
         }
 
 
-        public void DoInputPressed()
+        public void DoInputPressed(SimPlayer player)
         {
-            foreach (var powerUp in PowerUps)
+            foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
                     powerUp.DoInputPressed();
         }
 
 
-        public void DoInputMovedDelta(Vector3 delta)
+        public void DoInputMovedDelta(SimPlayer player, Vector3 delta)
         {
-            foreach (var powerUp in PowerUps)
+            foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
                     powerUp.DoInputMovedDelta(delta);
         }
@@ -134,24 +159,27 @@
 
         public void DoNewGameState(GameState state)
         {
-            InPowerUp = false;
+            foreach (var kvp in PowerUps)
+            {
+                kvp.Key.PowerUpInUse = PowerUpType.None;
 
-            foreach (var p in PowerUps)
-                p.TerminatedOverride = true;
+                foreach (var p in kvp.Value)
+                    p.TerminatedOverride = true;
+            }
         }
 
 
-        private void NotifyPowerUpStarted(PowerUp powerUp)
+        private void NotifyPowerUpStarted(PowerUp powerUp, SimPlayer player)
         {
             if (PowerUpStarted != null)
-                PowerUpStarted(powerUp);
+                PowerUpStarted(powerUp, player);
         }
 
 
-        private void NotifyPowerUpStopped(PowerUp powerUp)
+        private void NotifyPowerUpStopped(PowerUp powerUp, SimPlayer player)
         {
             if (PowerUpStopped != null)
-                PowerUpStopped(powerUp);
+                PowerUpStopped(powerUp, player);
         }
     }
 }

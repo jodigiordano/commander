@@ -100,7 +100,7 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void DoPowerUpStarted(PowerUp powerUp)
+        public void DoPowerUpStarted(PowerUp powerUp, SimPlayer player)
         {
             if (powerUp.Type == PowerUpType.Pulse)
                 Bullets.Add(((PowerUpPulse) powerUp).Bullet);
@@ -109,7 +109,7 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void DoPowerUpStopped(PowerUp powerUp)
+        public void DoPowerUpStopped(PowerUp powerUp, SimPlayer player)
         {
             if (powerUp.Type == PowerUpType.Pulse)
                 ((PowerUpPulse) powerUp).Bullet.LifePoints = 0;

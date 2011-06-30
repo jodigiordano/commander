@@ -61,7 +61,7 @@
         }
 
 
-        public void DoPowerUpStarted(PowerUp powerUp)
+        public void DoPowerUpStarted(PowerUp powerUp, SimPlayer player)
         {
             switch (powerUp.Type)
             {
@@ -74,7 +74,7 @@
         }
 
 
-        public void DoPowerUpStopped(PowerUp powerUp)
+        public void DoPowerUpStopped(PowerUp powerUp, SimPlayer player)
         {
             //todo
         }

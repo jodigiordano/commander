@@ -42,6 +42,32 @@
         }
 
 
+        public ContextualMenu OpenedMenu
+        {
+            get
+            {
+                if (TurretMenu.Visible)
+                    return TurretMenu.Menu;
+
+                if (CelestialBodyMenu.Visible)
+                    return CelestialBodyMenu.Menu;
+
+                if (WorldMenu.PausedGameMenuVisible)
+                    return WorldMenu.PausedGameMenu;
+
+                return null;
+            }
+        }
+
+
+        public void Update()
+        {
+            TurretMenu.Update();
+            CelestialBodyMenu.Update();
+            WorldMenu.Update();
+        }
+
+
         public void Draw()
         {
             Cursor.Draw();

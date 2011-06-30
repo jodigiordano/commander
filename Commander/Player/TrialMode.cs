@@ -29,8 +29,8 @@
         {
             get
             {
-                return (Preferences.Target == Setting.WindowsDemo) ? true :
-                       (Preferences.Target == Setting.WindowsFull) ? false : Guide.IsTrialMode;
+                return (Preferences.Target == Core.Utilities.Setting.WindowsDemo) ? true :
+                       (Preferences.Target == Core.Utilities.Setting.WindowsFull) ? false : Guide.IsTrialMode;
             }
         }
 
@@ -41,17 +41,17 @@
 
             switch (Preferences.Target)
             {
-                case Setting.WindowsDemo:
+                case Core.Utilities.Setting.WindowsDemo:
                     EndOfDemo = Main.SaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
                                 Main.SaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
                                 Main.SaveGame.Progress.TryGetValue(2, out level) && level > 0;
                     break;
 
-                case Setting.WindowsFull:
+                case Core.Utilities.Setting.WindowsFull:
                     EndOfDemo = false;
                     break;
 
-                case Setting.Xbox360:
+                case Core.Utilities.Setting.Xbox360:
                     int nbTableauxTermines = 0;
 
                     for (int i = 0; i < 9; i++)

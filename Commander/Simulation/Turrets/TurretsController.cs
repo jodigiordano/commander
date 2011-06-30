@@ -12,9 +12,9 @@
 
         public List<Turret> Turrets;
 
-        public event TurretHandler TurretBought;
-        public event TurretHandler TurretSold;
-        public event TurretHandler TurretUpdated;
+        public event TurretSimPlayerHandler TurretBought;
+        public event TurretSimPlayerHandler TurretSold;
+        public event TurretSimPlayerHandler TurretUpdated;
         public event TurretHandler TurretReactivated;
         public event PhysicalObjectHandler ObjectCreated;
 
@@ -109,18 +109,18 @@
         }
 
 
-        public void DoBuyTurret(Turret turret)
+        public void DoBuyTurret(Turret turret, SimPlayer player)
         {
             turret.RelativePosition = turret.Position - turret.CelestialBody.position;
             //turret.Show();
 
             PlanetarySystemController.AddTurret(turret);
             Turrets.Add(turret);
-            NotifyTurretBought(turret);
+            NotifyTurretBought(turret, player);
         }
 
 
-        public void DoSellTurret(Turret turret)
+        public void DoSellTurret(Turret turret, SimPlayer player)
         {
             PlanetarySystemController.RemoveTurret(turret);
 
@@ -128,14 +128,14 @@
             //turret.Hide();
 
             Turrets.Remove(turret);
-            NotifyTurretSold(turret);
+            NotifyTurretSold(turret, player);
         }
 
 
-        public void DoUpgradeTurret(Turret turret)
+        public void DoUpgradeTurret(Turret turret, SimPlayer player)
         {
             if (turret.Upgrade())
-                NotifyTurretUpgraded(turret);
+                NotifyTurretUpgraded(turret, player);
         }
 
 
@@ -200,24 +200,24 @@
         }
 
 
-        private void NotifyTurretBought(Turret turret)
+        private void NotifyTurretBought(Turret turret, SimPlayer player)
         {
             if (TurretBought != null)
-                TurretBought(turret);
+                TurretBought(turret, player);
         }
 
 
-        private void NotifyTurretSold(Turret turret)
+        private void NotifyTurretSold(Turret turret, SimPlayer player)
         {
             if (TurretSold != null)
-                TurretSold(turret);
+                TurretSold(turret, player);
         }
 
 
-        private void NotifyTurretUpgraded(Turret turret)
+        private void NotifyTurretUpgraded(Turret turret, SimPlayer player)
         {
             if (TurretUpdated != null)
-                TurretUpdated(turret);
+                TurretUpdated(turret, player);
         }
 
 

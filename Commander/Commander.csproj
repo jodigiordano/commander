@@ -191,6 +191,7 @@
     <Compile Include="Simulation\Editor\EditorPlayer.cs" />
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
+    <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorCelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorGeneralMenu.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorGUIController.cs" />

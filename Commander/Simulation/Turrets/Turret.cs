@@ -69,6 +69,8 @@
 
         private Matrix rotationMatrix;
 
+        public SimPlayer PlayerCheckedIn;
+
         
         public Turret(Simulator simulator)
         {
@@ -129,6 +131,8 @@
             emitter.ReleaseScale.Variation = 10;
             emitter.Term = this.Circle.Radius / 300f;
             emitter.ReleaseColour = this.Color.ToVector3();
+
+            PlayerCheckedIn = null;
         }
 
 

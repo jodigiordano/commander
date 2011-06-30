@@ -184,6 +184,7 @@
     <Compile Include="Utilities\Collections\Strings.cs" />
     <Compile Include="Utilities\Collections\Util.cs" />
     <Compile Include="Utilities\CustomBlends.cs" />
+    <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\EffectsController.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />

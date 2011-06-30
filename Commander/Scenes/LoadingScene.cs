@@ -279,7 +279,7 @@
         private void InitPressStart()
         {
             PressStart = new Translator
-            (this, new Vector3(0, 150, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Setting.Xbox360) ? "Press a button, Commander" : "Click a button, Commander", 3, true, 3000, 250, 0.3f);
+            (this, new Vector3(0, 150, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button, Commander" : "Click a button, Commander", 3, true, 3000, 250, 0.3f);
             PressStart.Centre = true;
         }
 

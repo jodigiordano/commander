@@ -12,6 +12,7 @@
         public Vector3 Position;
         public int SelectedIndex;
         public bool Visible;
+        public int Layout;
 
         protected Simulator Simulator;
         protected double VisualPriority;
@@ -32,7 +33,10 @@
         private bool ChoiceAvailabilityChanged;
 
         private Vector3 ActualPosition;
-        private Vector3 Border;
+        private Vector3 Margin;
+
+        private List<PhysicalRectangle> Layouts;
+        private List<PhysicalRectangle> PossibleLayouts;
 
 
         public ContextualMenu(Simulator simulator, double visualPriority, Color color, List<ContextualMenuChoice> choices, int distanceBetweenTwoChoices)
@@ -77,12 +81,16 @@
 
             }
 
-            Border = new Vector3(3, 3, 0);
+            Margin = new Vector3(3, 3, 0);
 
             ComputeSize();
 
             ChoiceDataChanged = false;
             ChoiceAvailabilityChanged = false;
+
+            Layout = 0;
+            Layouts = new List<PhysicalRectangle>() { new PhysicalRectangle(), new PhysicalRectangle(), new PhysicalRectangle(), new PhysicalRectangle() };
+            PossibleLayouts = new List<PhysicalRectangle>();
         }
 
 
@@ -140,6 +148,11 @@
 
         public virtual Color Color
         {
+            get
+            {
+                return TitleSeparator.Color;
+            }
+
             set
             {
                 WidgetSelection.Color = value;
@@ -189,8 +202,50 @@
         }
 
 
+        public List<PhysicalRectangle> GetPossibleLayouts()
+        {
+            PossibleLayouts.Clear();
+
+            Layouts[0].X = (int) Position.X;
+            Layouts[0].Y = (int) Position.Y - 30;
+            Layouts[0].Width = (int) Size.X + 40;
+            Layouts[0].Height = (int) Size.Y + 20;
+
+            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[0]) ? Layouts[0] : null);
+
+
+            Layouts[1].X = (int) Position.X - 10;
+            Layouts[1].Y = (int) (Position.Y - Size.Y - 30);
+            Layouts[1].Width = (int) Size.X + 20;
+            Layouts[1].Height = (int) Size.Y + 40;
+
+            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[1]) ? Layouts[1] : null);
+
+
+            Layouts[2].X = (int) (Position.X - Size.X - 40);
+            Layouts[2].Y = (int) Position.Y - 10;
+            Layouts[2].Width = (int) Size.X + 40;
+            Layouts[2].Height = (int) Size.Y + 20;
+
+            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[2]) ? Layouts[2] : null);
+
+
+            Layouts[3].X = (int) (Position.X - Size.X - 40);
+            Layouts[3].Y = (int) (Position.Y - Size.Y - 30);
+            Layouts[3].Width = (int) Size.X + 40;
+            Layouts[3].Height = (int) Size.Y + 30;
+
+            PossibleLayouts.Add(Layouts[3]);
+
+            return PossibleLayouts;
+        }
+
+
         private void DrawChoices()
         {
+            if (Choices.Count == 0)
+                return;
+
             int slotCounter = 0;
 
             float distanceY = Choices[0].Size.Y + DistanceBetweenTwoChoices; //(Title != null) ? (Size.Y - Title.TextSize.Y - 10) / Choices.Count : Size.Y / Choices.Count;
@@ -199,7 +254,7 @@
             foreach (var choice in Choices)
             {
                 var position = ActualPosition;
-                Vector3.Add(ref position, ref Border, out position);
+                Vector3.Add(ref position, ref Margin, out position);
                 position.Y += startingAt + slotCounter * distanceY;
 
                 choice.Position = position;
@@ -208,7 +263,7 @@
 
                 if (slotCounter == SelectedIndex)
                 {
-                    position.X -= Border.X;
+                    position.X -= Margin.X;
 
                     WidgetSelection.Position = position;
                     Simulator.Scene.Add(WidgetSelection);
@@ -234,37 +289,52 @@
 
         private void DrawBubble()
         {
-            bool tropADroite = Position.X + Size.X + 30 > 640 - Preferences.Xbox360DeadZoneV2.X;
-            bool tropBas = Position.Y + Size.Y + 20 > 370 - Preferences.Xbox360DeadZoneV2.Y;
+            //bool tropADroite = Position.X + Size.X + 30 > 640 - Preferences.Xbox360DeadZoneV2.X;
+            //bool tropBas = Position.Y + Size.Y + 20 > 370 - Preferences.Xbox360DeadZoneV2.Y;
 
 
-            if (tropADroite && tropBas)
+            switch (Layout)
             {
-                ActualPosition.X -= Size.X + 30;
-                ActualPosition.Y -= Size.Y - 20;
-                Bubble.BlaPosition = 2;
+                case 0:
+                    Bubble.BlaPosition = 0;
+                    Bubble.Dimension.X = (int) Position.X + 30;
+                    Bubble.Dimension.Y = (int) Position.Y - 20;
+                    Bubble.Dimension.Width = (int) Size.X;
+                    Bubble.Dimension.Height = (int) Size.Y;
+                    break;
+
+                case 1:
+                    Bubble.BlaPosition = 3;
+                    Bubble.Dimension.X = (int) Position.X;
+                    Bubble.Dimension.Y = (int) (Position.Y - Size.Y - 20);
+                    Bubble.Dimension.Width = (int) Size.X;
+                    Bubble.Dimension.Height = (int) Size.Y;
+                    break;
+
+                case 2:
+                    Bubble.BlaPosition = 1;
+                    Bubble.Dimension.X = (int) (Position.X - Size.X - 30);
+                    Bubble.Dimension.Y = (int) Position.Y;
+                    Bubble.Dimension.Width = (int) Size.X;
+                    Bubble.Dimension.Height = (int) Size.Y;
+                    break;
+
+                case 3:
+                    Bubble.BlaPosition = 2;
+                    Bubble.Dimension.X = (int) (Position.X - Size.X - 30);
+                    Bubble.Dimension.Y = (int) (Position.Y - Size.Y - 20);
+                    Bubble.Dimension.Width = (int) Size.X;
+                    Bubble.Dimension.Height = (int) Size.Y;
+                    break;
             }
 
-            else if (tropADroite)
-            {
-                ActualPosition.X -= Size.X + 30;
-                Bubble.BlaPosition = 1;
-            }
+            ActualPosition.X = Bubble.Dimension.X;
+            ActualPosition.Y = Bubble.Dimension.Y;
 
-            else if (tropBas)
-            {
-                ActualPosition.Y -= Size.Y + 20;
-                Bubble.BlaPosition = 3;
-            }
-
-            else
-            {
-                ActualPosition.X += 30;
-                ActualPosition.Y -= 20;
-                Bubble.BlaPosition = 0;
-            }
-
-            Bubble.Dimension = new PhysicalRectangle((int) ActualPosition.X, (int) ActualPosition.Y, (int) Size.X, (int) Size.Y);
+            //if (Simulator.DebugMode)
+            //{
+            //    Simulator.Scene.Add(new VisualRectangle(Layouts[Layout].RectanglePrimitif, Color.Red));
+            //}
 
             Bubble.Draw();
         }
@@ -289,14 +359,14 @@
             if (Title != null && Title.TextSize.X > width)
                 width = Title.TextSize.X;
 
-            width += Border.X * 2;
+            width += Margin.X * 2;
 
             Size = new Vector3(
                 width,
-                (Choices.Count * height) + ((Choices.Count - 1) * DistanceBetweenTwoChoices) + (Title != null ? height + 10 : 0) + (Border.Y * 4),
+                (Choices.Count * height) + ((Choices.Count - 1) * DistanceBetweenTwoChoices) + (Title != null ? height + 10 : 0) + (Margin.Y * 4),
                 0);
 
-            WidgetSelection.Size = new Vector2(width, height + Border.Y * 2);
+            WidgetSelection.Size = new Vector2(width, height + Margin.Y * 2);
             TitleSeparator.Size = new Vector2(width, 5);
         }
 

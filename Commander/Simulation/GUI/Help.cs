@@ -161,11 +161,11 @@
 
         private void InitDirective(string text)
         {
-            text = text.Replace("[Cancel]", Preferences.Target == Setting.Xbox360 ? "[B]" : "[Esc]");
-            text = text.Replace("[Continue]", Preferences.Target == Setting.Xbox360 ? "[Press A to continue]" : "[Click to continue]");
-            text = text.Replace("[Action]", Preferences.Target == Setting.Xbox360 ? "[Press A]" : "[Click]");
-            text = text.Replace("[AdvancedView]", Preferences.Target == Setting.Xbox360 ? "[X]" : "[Middle mouse]");
-            text = text.Replace("[Cycle]", Preferences.Target == Setting.Xbox360 ? "[LT/RT]" : "[Middle mouse scroll]");
+            text = text.Replace("[Cancel]", Preferences.Target == Core.Utilities.Setting.Xbox360 ? "[B]" : "[Esc]");
+            text = text.Replace("[Continue]", Preferences.Target == Core.Utilities.Setting.Xbox360 ? "[Press A to continue]" : "[Click to continue]");
+            text = text.Replace("[Action]", Preferences.Target == Core.Utilities.Setting.Xbox360 ? "[Press A]" : "[Click]");
+            text = text.Replace("[AdvancedView]", Preferences.Target == Core.Utilities.Setting.Xbox360 ? "[X]" : "[Middle mouse]");
+            text = text.Replace("[Cycle]", Preferences.Target == Core.Utilities.Setting.Xbox360 ? "[LT/RT]" : "[Middle mouse scroll]");
 
 
             Directive = new TextTypeWriter(

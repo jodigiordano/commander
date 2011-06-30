@@ -59,7 +59,7 @@ namespace EphemereGames.Commander
             GeneratorData = new GeneratorData();
             Window.AllowUserResizing = false;
 
-            if (Preferences.Target == Setting.Xbox360)
+            if (Preferences.Target == Core.Utilities.Setting.Xbox360)
                 Components.Add(new GamerServicesComponent(this));
 
             Instance = this;
@@ -100,7 +100,7 @@ namespace EphemereGames.Commander
         protected override void OnExiting(object sender, EventArgs args)
         {
 #if WINDOWS
-            if (Preferences.Target == Setting.WindowsDemo)
+            if (Preferences.Target == Core.Utilities.Setting.WindowsDemo)
                 System.Diagnostics.Process.Start("http://commander.ephemeregames.com");
 #endif
 

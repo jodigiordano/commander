@@ -13,7 +13,7 @@
 
         private Dictionary<EnemyType, EnemyDescriptor> EnnemisQtes;
         private Simulator Simulator;
-        private Bubble Bulle;
+        private Bubble Bubble;
         private Dictionary<EnemyType, Image> RepresentationsEnnemis;
         private Dictionary<EnemyType, Text> RepresentationsQtes;
         private Dictionary<EnemyType, Text> RepresentationsNiveaux;
@@ -62,10 +62,19 @@
                 RepresentationsNiveaux.Add(kvp.Key, t);
             }
 
-            Bulle = new Bubble(Simulator, new PhysicalRectangle(), this.PrioriteAffichage + 0.0001f);
-            Bulle.BlaPosition = 1;
+            Bubble = new Bubble(Simulator, new PhysicalRectangle(), this.PrioriteAffichage + 0.0001f);
+            Bubble.BlaPosition = 1;
 
             Visible = false;
+        }
+
+
+        public Color Color
+        {
+            set
+            {
+                Bubble.Color = value;
+            }
         }
 
 
@@ -74,11 +83,11 @@
             if (!Visible || EnnemisQtes.Count == 0)
                 return;
 
-            Bulle.Dimension.X = (int) this.Position.X;
-            Bulle.Dimension.Y = (int) this.Position.Y;
+            Bubble.Dimension.X = (int) this.Position.X;
+            Bubble.Dimension.Y = (int) this.Position.Y;
 
-            Bulle.Dimension.Width = 100;
-            Bulle.Dimension.Height = 10;
+            Bubble.Dimension.Width = 100;
+            Bubble.Dimension.Height = 10;
 
             foreach (var ennemiQte in EnnemisQtes)
             {
@@ -89,11 +98,11 @@
                 image.Position = this.Position + new Vector3
                 (
                     25,
-                    Bulle.Dimension.Height + image.AbsoluteSize.Y / 2.0f,
+                    Bubble.Dimension.Height + image.AbsoluteSize.Y / 2.0f,
                     0
                 );
 
-                Bulle.Dimension.Height += (int) image.AbsoluteSize.Y + 10;
+                Bubble.Dimension.Height += (int) image.AbsoluteSize.Y + 10;
 
                 level.Data = (ennemiQte.Value.LivesLevel).ToString();
                 level.Origin = level.Center;
@@ -108,7 +117,7 @@
                 Simulator.Scene.Add(level);
             }
 
-            Bulle.Draw();
+            Bubble.Draw();
         }
     }
 }

@@ -103,8 +103,6 @@
             if (p.Name.Length > 5)
                 p.Name = p.Name.Substring(0, 5);
 
-            p.Connected = true;
-
             ConnectedPlayers.Add(p);
 
             if (p.InputType == InputType.Mouse)
@@ -135,7 +133,6 @@
             }
 
             p.Profile = null;
-            p.Connected = false;
             
             if (p.InputType == InputType.Mouse)
                 MouseInUse = false;

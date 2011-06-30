@@ -75,7 +75,7 @@
         {
             if (Main.TrialMode.Active && button == Buttons.A)
             {
-                if (Preferences.Target == Setting.Xbox360)
+                if (Preferences.Target == Core.Utilities.Setting.Xbox360)
                 {
                     try
                     {

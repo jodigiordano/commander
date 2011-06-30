@@ -101,12 +101,17 @@
         }
 
 
+        public void Update()
+        {
+            if (CelestialBody != null)
+                Menu.Position = CelestialBody.Position;
+        }
+
+
         public void Draw()
         {
             if (!Visible)
                 return;
-
-            Menu.Position = CelestialBody.Position;
 
             Menu.Draw();
         }

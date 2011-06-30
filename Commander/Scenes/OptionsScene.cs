@@ -265,9 +265,9 @@
             {
                 Player player = (Player) p;
 
-                if (p.Connected && !Cursors.ContainsKey(player))
+                if (p.State == PlayerState.Connected && !Cursors.ContainsKey(player))
                     DoPlayerConnected(player);
-                else if (!p.Connected && Cursors.ContainsKey(player))
+                else if (p.State == PlayerState.Disconnected && Cursors.ContainsKey(player))
                     DoPlayerDisconnected(player);
             }
         }

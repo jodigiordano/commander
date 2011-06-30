@@ -126,6 +126,7 @@
     <Compile Include="Utilities\Curve\CurveKey.cs" />
     <Compile Include="Utilities\CustomBlends.cs" />
     <Compile Include="Utilities\Effect.cs" />
+    <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\EffectsController.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />

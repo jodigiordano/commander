@@ -10,10 +10,12 @@
 
         public EditorGeneralMenu GeneralMenu;
         public Dictionary<EditorPanel, Panel> Panels;
-        public Dictionary<EditorGeneralMenuChoice, ContextualMenu> GeneralMenuSubMenus;
         public Dictionary<EditorPlayer, EditorGUIPlayer> Players;
 
         private Simulator Simulator;
+        private EditorGUIPlayer PlayerBrowsingGeneralMenu;
+
+        private ContextualMenusCollisions ContextualMenusCollisions;
 
 
         public EditorGUIController(Simulator simulator)
@@ -21,7 +23,6 @@
             Simulator = simulator;
 
             GeneralMenu = new EditorGeneralMenu(simulator, new Vector3(400, 300, 0), Preferences.PrioriteSimulationCorpsCeleste);
-            GeneralMenuSubMenus = new Dictionary<EditorGeneralMenuChoice, ContextualMenu>(EditorGeneralMenuChoiceComparer.Default);
 
             Players = new Dictionary<EditorPlayer, EditorGUIPlayer>();
 
@@ -34,16 +35,29 @@
             panel = new Panel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
             panel.SetTitle("Load");
             Panels.Add(EditorPanel.Load, panel);
+
+            panel = new Panel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            panel.SetTitle("Save As...");
+            Panels.Add(EditorPanel.Save, panel);
+
+            panel = new Panel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            panel.SetTitle("Delete");
+            Panels.Add(EditorPanel.Delete, panel);
+
+            ContextualMenusCollisions = new ContextualMenusCollisions();
         }
 
 
         public void Initialize()
         {
-            foreach (var subMenu in GeneralMenuSubMenus.Values)
-                subMenu.Visible = false;
+            Players.Clear();
+
+            PlayerBrowsingGeneralMenu = null;
 
             foreach (var panel in Panels.Values)
                 panel.Visible = false;
+
+            GeneralMenu.Initialize();
         }
 
 
@@ -54,13 +68,6 @@
             player.GeneralMenu = GeneralMenu;
 
             Players.Add(p, player);
-
-            //ark...
-            if (GeneralMenuSubMenus.Count == 0)
-            {
-                foreach (var subMenu in player.GeneralMenuChoices)
-                    GeneralMenuSubMenus.Add(subMenu.Key, subMenu.Value);
-            }
         }
 
 
@@ -75,10 +82,17 @@
             var player = Players[p];
 
             // Change general menu
-            if (player.SelectedGeneralMenu != p.ActualSelection.GeneralMenuChoice)
+            if (PlayerBrowsingGeneralMenu == null || (player == PlayerBrowsingGeneralMenu &&
+                player.SelectedGeneralMenu != p.ActualSelection.GeneralMenuChoice))
             {
-                GeneralMenu.DoMenuChanged(player.SelectedGeneralMenu, p.ActualSelection.GeneralMenuChoice);
-                player.DoGeneralMenuChanged(player.SelectedGeneralMenu, p.ActualSelection.GeneralMenuChoice);
+                if (PlayerBrowsingGeneralMenu == null)
+                    PlayerBrowsingGeneralMenu = player;
+
+                if (player == PlayerBrowsingGeneralMenu)
+                    GeneralMenu.DoMenuChanged(player.SelectedGeneralMenu, p.ActualSelection.GeneralMenuChoice, p.Color);
+
+                if (player == PlayerBrowsingGeneralMenu && p.ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
+                    PlayerBrowsingGeneralMenu = null;
             }
 
             // update actual selection
@@ -115,20 +129,37 @@
         {
             GeneralMenu.Draw();
 
+            OrganizeContextualMenus();
+
             foreach (var player in Players.Values)
                 player.Draw();
 
             foreach (var panel in Panels.Values)
                 panel.Draw();
+
+            if (PlayerBrowsingGeneralMenu != null)
+            {
+                var menu = GeneralMenu.SubMenus[PlayerBrowsingGeneralMenu.SelectedGeneralMenu];
+                menu.SelectedIndex = PlayerBrowsingGeneralMenu.GeneralMenuSubMenuIndex;
+                menu.Draw();
+            }
+
+
+            if (GeneralMenu.SubMenuToFadeOut != EditorGeneralMenuChoice.None)
+            {
+                var menu = GeneralMenu.SubMenus[GeneralMenu.SubMenuToFadeOut];
+                menu.Position = GeneralMenu.Menus[GeneralMenu.SubMenuToFadeOut].Position;
+                menu.Draw();
+            }
         }
 
 
         public void DoEditorCommandExecuted(EditorPlayer p, EditorCommand command)
         {
             if (command.Name == "PlaytestState" || command.Name == "EditState")
-            {
-                ((EditorToggleContextualMenuChoice) GeneralMenuSubMenus[EditorGeneralMenuChoice.File].GetChoice(3)).Next();
-            }
+                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(3)).Next();
+            else if (command.Name == "PauseSimulation" || command.Name == "ResumeSimulation")
+                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(5)).Next();
         }
 
 
@@ -143,6 +174,31 @@
             var player = Players[p];
 
             player.CelestialBodyMenu.SyncData();
+        }
+
+
+        private void OrganizeContextualMenus()
+        {
+            ContextualMenusCollisions.Menus.Clear();
+
+            foreach (var p in Players.Values)
+            {
+                p.Update();
+
+                if (p.OpenedMenu != null)
+                    ContextualMenusCollisions.Menus.Add(p.OpenedMenu);
+            }
+
+            if (PlayerBrowsingGeneralMenu != null)
+            {
+                var menu = GeneralMenu.SubMenus[PlayerBrowsingGeneralMenu.SelectedGeneralMenu];
+
+                menu.Position = GeneralMenu.Menus[PlayerBrowsingGeneralMenu.SelectedGeneralMenu].Position;
+
+                ContextualMenusCollisions.Menus.Add(menu);
+            }
+
+            ContextualMenusCollisions.Sync();
         }
     }
 }

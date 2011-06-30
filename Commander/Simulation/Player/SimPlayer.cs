@@ -19,6 +19,8 @@
 
         public CommonStash CommonStash;
 
+        public bool UpdateSelectionz;
+
         public Circle Circle;
         public Color Color;
         public string Representation;
@@ -53,7 +55,7 @@
         {
             ActualSelection = new SimPlayerSelection();
             TurretToBuyController = new SelectedTurretToBuyController(AvailableTurrets);
-            SelectedCelestialBodyController = new SelectedCelestialBodyController(CelestialBodies, Circle);
+            SelectedCelestialBodyController = new SelectedCelestialBodyController(Simulator, this, CelestialBodies);
             SelectedPowerUpController = new SelectedPowerUpController(Simulator.PowerUpsFactory.Availables, Circle);
             PowerUpInUse = PowerUpType.None;
         }
@@ -78,6 +80,18 @@
             {
                 direction = SpaceshipMove.Direction = value;
             }
+        }
+
+
+        public Vector3 CurrentSpeed
+        {
+            get { return SpaceshipMove.CurrentSpeed; }
+        }
+
+
+        public Vector3 NextInput
+        {
+            get { return SpaceshipMove.NextInput; }
         }
 
 
@@ -310,7 +324,6 @@
                 SpaceshipMove.Update();
                 Position = SpaceshipMove.Position;
                 Direction = SpaceshipMove.Direction;
-                SpaceshipMove.NextInput = Vector3.Zero;
             }
 
             else
@@ -346,6 +359,14 @@
             }
 
             TurretToPlaceChanged = false;
+
+            if (UpdateSelectionz)
+                UpdateSelection();
+
+            if (Simulator.DemoMode)
+                UpdateDemoSelection();
+
+            SpaceshipMove.NextInput = Vector3.Zero;
         }
 
 

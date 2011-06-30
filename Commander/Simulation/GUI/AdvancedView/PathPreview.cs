@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
+    using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -19,82 +20,137 @@
 
         private Path Path;
         private Path ActualPath;
-        private CelestialBody CelestialObject;
-        private PathState State;
+        private Dictionary<GUIPlayer, CelestialBody> CelestialObject;
+        private Dictionary<GUIPlayer, PathState> State;
         private EffectsController<IVisual> EffectsController;
+        private GUIPlayer FadePlayer;
+        private int FadeCount;
 
 
         public PathPreview(Path path, Path actualPath)
         {
             Path = path;
             ActualPath = actualPath;
-            State = PathState.None;
+            State = new Dictionary<GUIPlayer, PathState>();
+            CelestialObject = new Dictionary<GUIPlayer, CelestialBody>();
             EffectsController = new EffectsController<IVisual>();
+            FadeCount = 0;
+            FadePlayer = null;
         }
 
 
-        public void AddCelestialObject(CelestialBody obj)
+        public void DoPlayerConnected(GUIPlayer player)
         {
-            if (State == PathState.ObjectAdded || Path.ContainsCelestialBody(obj))
+            State.Add(player, PathState.None);
+            CelestialObject.Add(player, null);
+        }
+
+
+        public void DoPlayerDisconnected(GUIPlayer player)
+        {
+            State.Remove(player);
+            CelestialObject.Remove(player);
+        }
+
+
+        public void AddCelestialObject(GUIPlayer player, CelestialBody obj)
+        {
+            if (State[player] == PathState.ObjectAdded || Path.ContainsCelestialBody(obj))
                 return;
 
-            if (State == PathState.RollbackingObjectAdded || State == PathState.RollbackingObjectRemoved)
-                EffectsController.Clear();
-
-            CelestialObject = obj;
-            CelestialObject.HasGravitationalTurretBypass = true;
+            CelestialObject[player] = obj;
+            obj.HasGravitationalTurretBypass = true;
             Path.AddCelestialBody(obj);
-            State = PathState.ObjectAdded;
+            State[player] = PathState.ObjectAdded;
 
-            EffectsController.Clear();
+            //EffectsController.Clear();
 
-            ActualPath.Fade(Math.Min((int) ActualPath.Alpha, 100), 25, EffectsController, null);
-            Path.Fade(Math.Max((int) Path.Alpha, 0), 200, EffectsController, null);
+            if (FadeCount == 0)
+            {
+                ActualPath.Fade(Math.Min((int) ActualPath.Alpha, 100), 25, EffectsController, null);
+                Path.Fade(Math.Max((int) Path.Alpha, 0), 200, EffectsController, null);
+            }
+
+            FadeCount++;
         }
 
 
-        public void RemoveCelestialObject(CelestialBody obj)
+        public void RemoveCelestialObject(GUIPlayer player, CelestialBody obj)
         {
-            if (State == PathState.ObjectRemoved)
+            if (State[player] == PathState.ObjectRemoved)
                 return;
 
-            CelestialObject = obj;
+            CelestialObject[player] = obj;
             Path.RemoveCelestialBody(obj);
-            State = PathState.ObjectRemoved;
+            State[player] = PathState.ObjectRemoved;
 
-            EffectsController.Clear();
+            //EffectsController.Clear();
 
-            ActualPath.Fade(Math.Min((int) ActualPath.Alpha, 100), 25, EffectsController, null);
-            Path.Fade(Math.Max((int) Path.Alpha, 0), 200, EffectsController, null);
+            if (FadeCount == 0)
+            {
+                ActualPath.Fade(Math.Min((int) ActualPath.Alpha, 100), 25, EffectsController, null);
+                Path.Fade(Math.Max((int) Path.Alpha, 0), 200, EffectsController, null);
+            }
+
+            FadeCount++;
         }
 
 
-        public void RollBack()
+        public void RollBack(GUIPlayer player)
         {
-            if (State == PathState.ObjectAdded || State == PathState.ObjectRemoved)
+            if (State[player] == PathState.ObjectAdded || State[player] == PathState.ObjectRemoved)
             {
-                EffectsController.Clear();
+                //EffectsController.Clear();
 
-                ActualPath.Fade(Math.Max((int) ActualPath.Alpha, 25), 100, EffectsController, FadeCompleted);
-                Path.Fade(Math.Min((int) Path.Alpha, 200), 0, EffectsController, FadeCompleted);
+                FadeCount--;
 
-                State = State == PathState.ObjectAdded ? PathState.RollbackingObjectAdded : PathState.RollbackingObjectRemoved;
+                if (FadeCount == 0)
+                {
+                    ActualPath.Fade(Math.Max((int) ActualPath.Alpha, 25), 100, EffectsController, FadeCompleted);
+                    Path.Fade(Math.Min((int) Path.Alpha, 200), 0, EffectsController, FadeCompleted);
+                    FadePlayer = player;
+
+                    State[player] = State[player] == PathState.ObjectAdded ? PathState.RollbackingObjectAdded : PathState.RollbackingObjectRemoved;
+                }
+
+                else
+                {
+                    switch (State[player])
+                    {
+                        case PathState.ObjectAdded:
+                            Path.RemoveCelestialBody(CelestialObject[player]);
+                            CelestialObject[player].HasGravitationalTurretBypass = false;
+                            State[player] = PathState.None;
+                            break;
+                        case PathState.ObjectRemoved:
+                            Path.AddCelestialBody(CelestialObject[player]);
+                            State[player] = PathState.None;
+                            break;
+                    }
+
+                    State[player] = PathState.None;
+                }
             }
         }
 
 
-        public void Commit()
+        public void Commit(GUIPlayer player)
         {
-            if (CelestialObject != null)
-                CelestialObject.HasGravitationalTurretBypass = false;
+            if (CelestialObject[player] != null)
+                CelestialObject[player].HasGravitationalTurretBypass = false;
 
-            CelestialObject = null;
-            State = PathState.None;
+            CelestialObject[player] = null;
+            State[player] = PathState.None;
 
             EffectsController.Clear();
 
-            ActualPath.Fade(Math.Max((int) ActualPath.Alpha, 25), 100, EffectsController, null);
-            Path.Fade(Math.Min((int) Path.Alpha, 200), 0, EffectsController, null);
+            FadeCount--;
+
+            if (FadeCount == 0)
+            {
+                ActualPath.Fade(Math.Max((int) ActualPath.Alpha, 25), 100, EffectsController, null);
+                Path.Fade(Math.Min((int) Path.Alpha, 200), 0, EffectsController, null);
+            }
         }
 
 
@@ -106,7 +162,7 @@
 
         public void Draw()
         {
-            if (State == PathState.None && EffectsController.ActiveEffectsCount == 0)
+            if (FadeCount == 0 && EffectsController.ActiveEffectsCount == 0)
                 return;
 
             Path.Draw();
@@ -115,14 +171,16 @@
 
         private void FadeCompleted()
         {
-            switch (State)
+            switch (State[FadePlayer])
             {
                 case PathState.RollbackingObjectAdded:
-                    Path.RemoveCelestialBody(CelestialObject);
-                    CelestialObject.HasGravitationalTurretBypass = false;
+                    Path.RemoveCelestialBody(CelestialObject[FadePlayer]);
+                    CelestialObject[FadePlayer].HasGravitationalTurretBypass = false;
+                    State[FadePlayer] = PathState.None;
                     break;
                 case PathState.RollbackingObjectRemoved:
-                    Path.AddCelestialBody(CelestialObject);
+                    Path.AddCelestialBody(CelestialObject[FadePlayer]);
+                    State[FadePlayer] = PathState.None;
                     break;
             }
         }

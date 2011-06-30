@@ -6,7 +6,6 @@
     class EditorController
     {
         public EditorGeneralMenu GeneralMenu;
-        public Dictionary<EditorGeneralMenuChoice, ContextualMenu> GeneralMenuSubMenus;
         public Dictionary<EditorPanel, Panel> Panels;
         public Dictionary<EditorPlayer, EditorGUIPlayer> EditorGUIPlayers;
 
@@ -56,7 +55,6 @@
                 { "HideSavePanel", new EditorPanelCommand("HideSavePanel", EditorPanel.Save, false)   },
                 { "SaveLevel", new EditorCommand("SaveLevel")  },
                 { "RestartSimulation", new EditorCommand("RestartSimulation")  },
-                { "PauseSimulation", new EditorCommand("PauseSimulation")  },
                 { "QuickGeneratePlanetarySystem", new EditorCommand("QuickGeneratePlanetarySystem")  },
                 { "AddPlanet", new EditorCelestialBodyCommand("Add")  },
                 { "ValidatePlanetarySystem", new EditorCommand("ValidatePlanetarySystem")  },
@@ -93,8 +91,7 @@
             var editorPlayer = new EditorPlayer(Simulator)
             {
                 SimPlayer = player,
-                GeneralMenu = GeneralMenu,
-                GeneralMenuSubMenus = GeneralMenuSubMenus
+                GeneralMenu = GeneralMenu
             };
 
 
@@ -169,7 +166,7 @@
 
             if (player.ActualSelection.GeneralMenuChoice != EditorGeneralMenuChoice.None)
             {
-                var menu = GeneralMenuSubMenus[player.ActualSelection.GeneralMenuChoice];
+                var menu = GeneralMenu.SubMenus[player.ActualSelection.GeneralMenuChoice];
                 var choice = menu.GetChoice(player.ActualSelection.GeneralMenuSubMenuIndex);
 
                 EditorCommand command = GetCommand(choice);
@@ -238,6 +235,7 @@
             if (command.Name == "PlaytestState")
             {
                 Simulator.EditorState = EditorState.Playtest;
+                Simulator.SyncLevel();
                 Simulator.Initialize();
                 Simulator.SyncPlayers();
             }
@@ -247,6 +245,25 @@
                 Simulator.EditorState = EditorState.Editing;
                 Simulator.Initialize();
                 Simulator.SyncPlayers();
+            }
+
+            else if (command.Name == "RestartSimulation")
+            {
+                if (Simulator.EditorState == EditorState.Editing)
+                    Simulator.SyncLevel();
+                
+                Simulator.Initialize();
+                Simulator.SyncPlayers();
+            }
+
+            else if (command.Name == "PauseSimulation")
+            {
+                Simulator.State = GameState.Paused;
+            }
+
+            else if (command.Name == "ResumeSimulation")
+            {
+                Simulator.State = GameState.Running;
             }
 
             NotifyEditorCommandExecuted(player, command);
@@ -264,7 +281,7 @@
             {
                 var closeCommand = PanelsOpenCloseCommands[OpenedPanel][command.Show ? 1 : 0];
 
-                NotifyEditorCommandExecuted(player, closeCommand);
+                NotifyEditorPanelCommandExecuted(player, closeCommand);
 
                 OpenedPanel = command.Panel;
             }

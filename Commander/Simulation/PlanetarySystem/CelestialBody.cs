@@ -58,6 +58,8 @@
         private int StartingPourc;
         public Turret StartingPathTurret;
 
+        public SimPlayer PlayerCheckedIn;
+
 
         public CelestialBody(
             Simulator simulator,
@@ -109,6 +111,8 @@
             DarkSideEffect = Simulator.Scene.Particles.Get(@"darkSideEffect");
             DarkSideEffect.VisualPriority = VisualPriority + 0.0001f;
             ((CircleEmitter) DarkSideEffect.ParticleEffect[0]).Radius = Circle.Radius;
+
+            PlayerCheckedIn = null;
         }
 
 

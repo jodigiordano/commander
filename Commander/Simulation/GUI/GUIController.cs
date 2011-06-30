@@ -38,6 +38,12 @@
         private PlayerLives PlayerLives;
         private TheResistance GamePausedResistance;
 
+        private ContextualMenusCollisions ContextualMenusCollisions;
+
+        private GUIPlayer GamePausedMenuPlayerCheckedIn;
+        private GUIPlayer NextWaveCheckedIn;
+        private GUIPlayer AdvancedViewCheckedIn;
+
 
         public GUIController(Simulator simulator)
         {
@@ -49,6 +55,8 @@
 
             if (!Simulator.DemoMode)
                 AdvancedView = new AdvancedView(Simulator);
+
+            ContextualMenusCollisions = new ContextualMenusCollisions();
         }
 
 
@@ -83,6 +91,10 @@
                 AdvancedView.CelestialBodies = CelestialBodies;
                 AdvancedView.Initialize();
             }
+
+            GamePausedMenuPlayerCheckedIn = null;
+            NextWaveCheckedIn = null;
+            AdvancedViewCheckedIn = null;
         }
 
 
@@ -100,24 +112,40 @@
             player.Cursor.Position = p.Position;
 
             Players.Add(p, player);
+
+            PathPreviewing.DoPlayerConnected(player);
         }
 
 
         public void DoPlayerDisconnected(SimPlayer p)
         {
+            PathPreviewing.DoPlayerDisconnected(Players[p]);
             Players.Remove(p);
         }
 
 
-        public void DoShowNextWaveAsked()
+        public void DoShowNextWaveAsked(SimPlayer p)
         {
-            GameMenu.MenuNextWave.Visible = true;
+            var player = Players[p];
+
+            if (NextWaveCheckedIn == null)
+            {
+                GameMenu.MenuNextWave.Visible = true;
+                GameMenu.MenuNextWave.Color = p.Color;
+                NextWaveCheckedIn = player;
+            }
         }
 
 
-        public void DoHideNextWaveAsked()
+        public void DoHideNextWaveAsked(SimPlayer p)
         {
-            GameMenu.MenuNextWave.Visible = false;
+            var player = Players[p];
+
+            if (NextWaveCheckedIn == player)
+            {
+                GameMenu.MenuNextWave.Visible = false;
+                NextWaveCheckedIn = null;
+            }
         }
 
 
@@ -140,33 +168,33 @@
         }
 
 
-        public void DoShowAdvancedViewAsked()
+        public void DoShowAdvancedViewAsked(SimPlayer p)
         {
-            AdvancedView.Visible = true;
+            var player = Players[p];
+
+            if (AdvancedViewCheckedIn == null)
+            {
+                AdvancedView.Visible = true;
+                AdvancedViewCheckedIn = player;
+            }
         }
 
 
-        public void DoHideAdvancedViewAsked()
+        public void DoHideAdvancedViewAsked(SimPlayer p)
         {
-            AdvancedView.Visible = false;
+            var player = Players[p];
+
+            if (AdvancedViewCheckedIn == player)
+            {
+                AdvancedView.Visible = false;
+                AdvancedViewCheckedIn = null;
+            }
         }
 
 
-        public void DoShowNextWave()
+        public void DoPowerUpStarted(PowerUp powerUp, SimPlayer p)
         {
-            GameMenu.MenuNextWave.Visible = true;
-        }
-
-
-        public void DoHideNextWave()
-        {
-            GameMenu.MenuNextWave.Visible = false;
-        }
-
-
-        public void DoPowerUpStarted(PowerUp powerUp)
-        {
-            var player = Players[powerUp.Owner];
+            var player = Players[p];
 
             if (powerUp.NeedInput)
             {
@@ -185,9 +213,9 @@
         }
 
 
-        public void DoPowerUpStopped(PowerUp powerUp)
+        public void DoPowerUpStopped(PowerUp powerUp, SimPlayer p)
         {
-            var player = Players[powerUp.Owner];
+            var player = Players[p];
 
             if (powerUp.NeedInput)
             {
@@ -199,10 +227,10 @@
 
                 if (powerUp.Type == PowerUpType.FinalSolution)
                 {
-                    PowerUpLastSolution p = (PowerUpLastSolution) powerUp;
+                    PowerUpLastSolution pls = (PowerUpLastSolution) powerUp;
 
-                    if (p.GoAhead)
-                        PathPreviewing.Commit();
+                    if (pls.GoAhead)
+                        PathPreviewing.Commit(player);
 
                     player.PowerUpFinalSolution = false;
                 }
@@ -265,19 +293,23 @@
         }
 
 
-        public void DoTurretBought(Turret turret)
+        public void DoTurretBought(Turret turret, SimPlayer p)
         {
+            var player = Players[p];
+
             if (PathPreviewing != null &&
                 turret.Type == TurretType.Gravitational)
-                PathPreviewing.Commit();
+                PathPreviewing.Commit(player);
         }
 
 
-        public void DoTurretSold(Turret turret)
+        public void DoTurretSold(Turret turret, SimPlayer p)
         {
+            var player = Players[p];
+
             if (PathPreviewing != null &&
                 turret.Type == TurretType.Gravitational)
-                PathPreviewing.Commit();
+                PathPreviewing.Commit(player);
         }
 
 
@@ -298,8 +330,23 @@
             player.TurretMenu.SelectedOption = selection.TurretChoice;
             player.TurretMenu.Visible = player.TurretMenu.Turret != null && !player.TurretMenu.Turret.Disabled;
 
-            player.WorldMenu.CelestialBody = selection.CelestialBody;
-            player.WorldMenu.PausedGameChoice = selection.GameChoice;
+            if (Simulator.WorldMode)
+            {
+                player.WorldMenu.CelestialBody = selection.CelestialBody;
+                player.WorldMenu.PausedGameChoice = selection.GameChoice;
+
+                if (GamePausedMenuPlayerCheckedIn == null && player.WorldMenu.PausedGameMenuVisible)
+                {
+                    GamePausedMenuPlayerCheckedIn = player;
+                    player.WorldMenu.PausedGameMenuCheckedIn = true;
+                }
+
+                else if (GamePausedMenuPlayerCheckedIn == player && selection.CelestialBody == null)
+                {
+                    GamePausedMenuPlayerCheckedIn = null;
+                    player.WorldMenu.PausedGameMenuCheckedIn = false;
+                }
+            }
 
             player.SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
 
@@ -312,34 +359,43 @@
                 selection.Turret.CanSell &&
                 !selection.Turret.Disabled &&
                 selection.TurretChoice == TurretChoice.Sell)
-                PathPreviewing.RemoveCelestialObject(selection.Turret.CelestialBody);
+                PathPreviewing.RemoveCelestialObject(player, selection.Turret.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.CelestialBody != null &&
                 player.PowerUpFinalSolution &&
                 selection.CelestialBody.HasGravitationalTurret)
-                PathPreviewing.RemoveCelestialObject(selection.CelestialBody);
+                PathPreviewing.RemoveCelestialObject(player, selection.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.TurretToBuy == TurretType.Gravitational)
-                PathPreviewing.AddCelestialObject(selection.CelestialBody);
+                PathPreviewing.AddCelestialObject(player, selection.CelestialBody);
             else if (PathPreviewing != null &&
                 selection.TurretToPlace != null &&
                 selection.TurretToPlace.Type == TurretType.Gravitational)
-                PathPreviewing.AddCelestialObject(selection.CelestialBody);
+                PathPreviewing.AddCelestialObject(player, selection.CelestialBody);
             else if (PathPreviewing != null)
-                PathPreviewing.RollBack();
+                PathPreviewing.RollBack(player);
         }
 
 
         public void Update(GameTime gameTime)
         {
+            bool fadeGameMenu = false;
+
             foreach (var player in Players.Values)
             {
-                if ((player.TurretMenu.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.TurretMenu.Bubble.Dimension, GameMenu.Rectangle)) ||
-                    (player.CelestialBodyMenu.Visible && Core.Physics.Physics.RectangleRectangleCollision(player.CelestialBodyMenu.Bubble.Dimension, GameMenu.Rectangle)))
-                    GameMenu.FadeOut(100, 250);
-                else
-                    GameMenu.FadeIn(255, 250);
+                var menu = player.OpenedMenu;
+
+                if (menu == null)
+                    continue;
+
+                if (Core.Physics.Physics.RectangleRectangleCollision(menu.Bubble.Dimension, GameMenu.Rectangle))
+                    fadeGameMenu = true;
             }
+
+            if (fadeGameMenu)
+                GameMenu.FadeOut(100, 250);
+            else
+                GameMenu.FadeIn(255, 250);
 
             if (PowerUpsToBuyCount == 0)
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
@@ -374,6 +430,8 @@
 
         public void Draw()
         {
+            OrganizeContextualMenus();
+
             foreach (var player in Players.Values)
                 player.Draw();
 
@@ -407,6 +465,22 @@
 
                 return count;
             }
+        }
+
+
+        private void OrganizeContextualMenus()
+        {
+            ContextualMenusCollisions.Menus.Clear();
+
+            foreach (var p in Players.Values)
+            {
+                p.Update();
+
+                if (p.OpenedMenu != null)
+                    ContextualMenusCollisions.Menus.Add(p.OpenedMenu);
+            }
+
+            ContextualMenusCollisions.Sync();
         }
     }
 }

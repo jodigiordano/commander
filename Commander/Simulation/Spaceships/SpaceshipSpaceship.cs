@@ -57,6 +57,12 @@
         }
 
 
+        public Vector3 CurrentSpeed
+        {
+            get { return Speed * Acceleration; }
+        }
+
+
         public void Stop()
         {
             Bouncing = Vector3.Zero;

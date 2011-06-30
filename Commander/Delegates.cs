@@ -20,7 +20,7 @@ namespace EphemereGames.Commander.Simulation
     delegate void TurretSimPlayerHandler(Turret t, SimPlayer p);
     delegate void PowerUpTypeSimPlayerHandler(PowerUpType p, SimPlayer sp);
     delegate void PowerUpTypeHandler(PowerUpType p);
-    delegate void PowerUpHandler(PowerUp p);
+    delegate void PowerUpSimPlayerHandler(PowerUp p, SimPlayer pl);
     delegate void TurretTurretHandler(Turret t1, Turret t2);
     delegate void EnemyCelestialBodyHandler(Enemy e, CelestialBody c);
     delegate void TurretPhysicalObjectHandler(Turret t, IObjetPhysique o);

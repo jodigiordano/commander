@@ -28,7 +28,7 @@
 
         private Core.Utilities.Pool<ShootingStar> ShootingStarsFactory;
         private bool DeadlyShootingStars;
-        private bool FinalSolution;
+        //private bool FinalSolution;
 
 
         public PlanetarySystemController(Simulator simulator)
@@ -60,7 +60,7 @@
             StarsEmitter = 0;
 
             DeadlyShootingStars = false;
-            FinalSolution = false;
+            //FinalSolution = false;
         }
 
 
@@ -156,7 +156,7 @@
         }
 
 
-        public void DoPowerUpStarted(PowerUp powerUp)
+        public void DoPowerUpStarted(PowerUp powerUp, SimPlayer player)
         {
             if (powerUp.Type == PowerUpType.Pulse)
                 ((PowerUpPulse) powerUp).Path = Path;
@@ -190,17 +190,17 @@
                 }
             }
 
-            if (powerUp.Type == PowerUpType.FinalSolution)
-                FinalSolution = true;
+            //if (powerUp.Type == PowerUpType.FinalSolution)
+            //    FinalSolution = true;
         }
 
 
-        public void DoPowerUpStopped(PowerUp powerUp)
+        public void DoPowerUpStopped(PowerUp powerUp, SimPlayer player)
         {
             if (powerUp.Type != PowerUpType.FinalSolution)
                 return;
 
-            FinalSolution = false;
+            //FinalSolution = false;
 
             PowerUpLastSolution p = (PowerUpLastSolution) powerUp;
 

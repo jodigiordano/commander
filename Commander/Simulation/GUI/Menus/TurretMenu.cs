@@ -11,7 +11,8 @@
         public Dictionary<TurretChoice, bool> AvailableTurretOptions;
         public TurretChoice SelectedOption;
 
-        private ContextualMenu Menu;
+        public ContextualMenu Menu;
+        
         private List<ContextualMenuChoice> Choices;
 
 
@@ -47,6 +48,13 @@
         }
 
 
+        public void Update()
+        {
+            if (Turret != null)
+                Menu.Position = Turret.Position;
+        }
+
+
         public void Draw()
         {
             if (!Visible)
@@ -76,41 +84,6 @@
                 upgrade.SetColor((AvailableTurretOptions[TurretChoice.Update]) ? Color.White : Color.Red);
             }
 
-            // Afficher le prix de vente
-            //if (Turret.CanSell)
-            //{
-                //LogoPrixVente.Position = this.ActualPosition + (Turret.CanUpdate ? new Vector3(7, DistanceBetweenTwoChoices + 2, 0) : new Vector3(7, 2, 0));
-                //PrixVente.Position = this.ActualPosition + (Turret.CanUpdate ? new Vector3(60, DistanceBetweenTwoChoices + 2, 0) : new Vector3(60, 2, 0));
-                //PrixVente.Data = Turret.SellPrice + "M$";
-
-                //Simulator.Scene.Add(LogoPrixVente);
-                //Simulator.Scene.Add(PrixVente);
-            //}
-
-            // Afficher le prix de mise a jour
-            //if (Turret.CanUpdate)
-            //{
-                //LogoPrixMiseAJour.Position = this.ActualPosition + new Vector3(5, 2, 0);
-                //NiveauTourelle.Position = this.ActualPosition + new Vector3(20, 2, 0);
-                //NiveauTourelle.Data = (Turret.Level + 1).ToString();
-                //PrixMiseAJour.Position = this.ActualPosition + new Vector3(60, 2, 0);
-                //PrixMiseAJour.Data = Turret.UpdatePrice + "M$";
-
-                //if (SelectedOption == TurretChoice.Update)
-                //{
-                //    WidgetSelection.Position = this.ActualPosition;
-                //    Simulator.Scene.Add(WidgetSelection);
-                //}
-
-                //PrixMiseAJour.Color = (AvailableTurretOptions[TurretChoice.Update]) ? Color.White : Color.Red;
-                //NiveauTourelle.Color = (AvailableTurretOptions[TurretChoice.Update]) ? Color.White : Color.Red;
-
-                //Simulator.Scene.Add(LogoPrixMiseAJour);
-                //Simulator.Scene.Add(NiveauTourelle);
-                //Simulator.Scene.Add(PrixMiseAJour);
-            //}
-
-            Menu.Position = Turret.Position;
             Menu.SelectedIndex = (int) SelectedOption;
             Menu.Draw();
         }

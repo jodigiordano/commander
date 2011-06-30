@@ -12,7 +12,8 @@
         public Dictionary<TurretType, bool> AvailableTurrets;
         public TurretType TurretToBuy;
 
-        private ContextualMenu Menu;
+        public ContextualMenu Menu;
+
         private List<ContextualMenuChoice> Choices;
 
         private Simulator Simulator;
@@ -62,6 +63,13 @@
         }
 
 
+        public void Update()
+        {
+            if (CelestialBody != null)
+                Menu.Position = CelestialBody.Position;
+        }
+
+
         public void Draw()
         {
             if (!Visible)
@@ -84,8 +92,6 @@
                 slotCounter++;
             }
 
-
-            Menu.Position = CelestialBody.Position;
             Menu.Draw();
         }
     }

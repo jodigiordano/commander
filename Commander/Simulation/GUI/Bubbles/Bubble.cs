@@ -141,24 +141,23 @@
         public virtual void Fade(int from, int to, double length, Core.NoneHandler callback)
         {
             var effect = VisualEffects.Fade(from, to, 0, length);
-            effect.TerminatedCallback = callback;
 
             foreach (var coin in Corners)
             {
                 coin.Color.A = (byte) from;
-                Simulation.Scene.VisualEffects.Add(coin, VisualEffects.Fade(from, to, 0, length));
+                Simulation.Scene.VisualEffects.Add(coin, effect, callback);
             }
 
             foreach (var contour in Edges)
             {
                 contour.Color.A = (byte) from;
-                Simulation.Scene.VisualEffects.Add(contour, VisualEffects.Fade(from, to, 0, length));
+                Simulation.Scene.VisualEffects.Add(contour, effect);
             }
 
             Filter.Color.A = (byte) from;
             Bla.Color.A = (byte) from;
 
-            Simulation.Scene.VisualEffects.Add(Bla, VisualEffects.Fade(from, to, 0, length));
+            Simulation.Scene.VisualEffects.Add(Bla, effect);
 
             effect = VisualEffects.Fade(Math.Min(from, 128), Math.Min(to, 128), 0, length);
 
@@ -168,38 +167,15 @@
         }
 
 
-        public virtual void FadeIn(double time)
+        public virtual void FadeIn(double length)
         {
-            foreach (var coin in Corners)
-            {
-                coin.Color.A = 0;
-                Simulation.Scene.VisualEffects.Add(coin, VisualEffects.FadeInFrom0(255, 0, time));
-            }
-
-            foreach (var contour in Edges)
-            {
-                contour.Color.A = 0;
-                Simulation.Scene.VisualEffects.Add(contour, VisualEffects.FadeInFrom0(255, 0, time));
-            }
-
-            Filter.Color.A = 0;
-            Bla.Color.A = 0;
-
-            Simulation.Scene.VisualEffects.Add(Filter, VisualEffects.FadeInFrom0(128, 0, time));
-            Simulation.Scene.VisualEffects.Add(Bla, VisualEffects.FadeInFrom0(255, 0, time));
+            Fade(0, 255, length, null);
         }
 
 
-        public virtual void FadeOut(double time)
+        public virtual void FadeOut(double length)
         {
-            foreach (var coin in Corners)
-                Simulation.Scene.VisualEffects.Add(coin, VisualEffects.FadeOutTo0(255, 0, time));
-
-            foreach (var contour in Edges)
-                Simulation.Scene.VisualEffects.Add(contour, VisualEffects.FadeOutTo0(255, 0, time));
-
-            Simulation.Scene.VisualEffects.Add(Filter, VisualEffects.FadeOutTo0(128, 0, time));
-            Simulation.Scene.VisualEffects.Add(Bla, VisualEffects.FadeOutTo0(255, 0, time));
+            Fade(Bla.Alpha, 0, length, null);
         }
     }
 }

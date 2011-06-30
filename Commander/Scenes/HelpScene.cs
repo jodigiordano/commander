@@ -73,7 +73,7 @@
             titre.Origin = titre.Center;
             titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new Image(Preferences.Target == Setting.Xbox360 ? "HelpControls" : "HelpControlsWin", new Vector3(0, 50, 0));
+            slide = new Image(Preferences.Target == Core.Utilities.Setting.Xbox360 ? "HelpControls" : "HelpControlsWin", new Vector3(0, 50, 0));
             slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<Text,Image>(titre, slide));
@@ -93,7 +93,7 @@
             titre.Origin = titre.Center;
             titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new Image(Preferences.Target == Setting.Xbox360 ? "HelpMercenaries" : "HelpMercenariesWin", new Vector3(0, 50, 0));
+            slide = new Image(Preferences.Target == Core.Utilities.Setting.Xbox360 ? "HelpMercenaries" : "HelpMercenariesWin", new Vector3(0, 50, 0));
             slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<Text, Image>(titre, slide));
@@ -103,7 +103,7 @@
             titre.Origin = titre.Center;
             titre.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
-            slide = new Image(Preferences.Target == Setting.Xbox360 ? "HelpTheResistance" : "HelpTheResistanceWin", new Vector3(0, 50, 0));
+            slide = new Image(Preferences.Target == Core.Utilities.Setting.Xbox360 ? "HelpTheResistance" : "HelpTheResistanceWin", new Vector3(0, 50, 0));
             slide.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.01f;
 
             TitresSlides.Add(new KeyValuePair<Text, Image>(titre, slide));

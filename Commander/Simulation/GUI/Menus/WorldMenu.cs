@@ -17,7 +17,9 @@
         private Image[] HighscoreStars;
         private double VisualPriority;
 
-        private ContextualMenu PausedGameMenu;
+        public bool PausedGameMenuCheckedIn;
+        public ContextualMenu PausedGameMenu;
+
         private List<ContextualMenuChoice> PausedGameChoices;
 
         private Simulator Simulator;
@@ -62,6 +64,29 @@
                 star.Color.A = 200;
                 HighscoreStars[i] = star;
             }
+
+            PausedGameMenuCheckedIn = false;
+        }
+
+
+        public bool PausedGameMenuVisible
+        {
+            get
+            {
+                return
+                    CelestialBody != null &&
+                    Main.GameInProgress != null &&
+                    !Main.GameInProgress.IsFinished &&
+                    Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == CelestialBody.Name &&
+                    Simulator.Scene.EnableInputs;
+            }
+        }
+
+
+        public void Update()
+        {
+            if (CelestialBody != null)
+                PausedGameMenu.Position = CelestialBody.Position;
         }
 
 
@@ -78,11 +103,8 @@
             DrawHighScore();
 
 
-            if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished &&
-                Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == CelestialBody.Name &&
-                Simulator.Scene.EnableInputs)
+            if (PausedGameMenuCheckedIn && PausedGameMenuVisible)
             {
-                PausedGameMenu.Position = CelestialBody.Position;
                 PausedGameMenu.SelectedIndex = (int) PausedGameChoice;
                 PausedGameMenu.Draw();
             }

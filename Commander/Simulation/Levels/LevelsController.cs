@@ -178,7 +178,7 @@
         }
 
 
-        public void DoPowerUpStarted(PowerUp powerUp)
+        public void DoPowerUpStarted(PowerUp powerUp, SimPlayer player)
         {
             if (powerUp.Type == PowerUpType.Shield)
             {

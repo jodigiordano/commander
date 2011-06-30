@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Core.Physics
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     
     public class PhysicalRectangle
@@ -71,7 +70,7 @@
         {
             bool resultat;
 
-            this.RectanglePrimitif.Intersects(ref autre.RectanglePrimitif, out resultat);
+            RectanglePrimitif.Intersects(ref autre.RectanglePrimitif, out resultat);
 
             return resultat;
         }
@@ -80,6 +79,16 @@
         public bool Includes(Vector3 point)
         {
             return (point.X >= this.Left && point.X <= this.Right && point.Y >= this.Top && point.Y <= this.Bottom);
+        }
+
+
+        public bool Includes(PhysicalRectangle other)
+        {
+            bool result;
+
+            RectanglePrimitif.Contains(ref other.RectanglePrimitif, out result);
+
+            return result;
         }
 
 

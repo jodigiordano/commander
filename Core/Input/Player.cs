@@ -5,12 +5,20 @@
     using Microsoft.Xna.Framework.GamerServices;
     using Microsoft.Xna.Framework.Input;
 
+    public enum PlayerState
+    {
+        Connecting,
+        Connected,
+        Disconnecting,
+        Disconnected
+    }
+
 
     public abstract class Player : IEqualityComparer<Player>
     {
         public SignedInGamer Profile;
         public PlayerIndex Index;
-        public bool Connected;
+        public PlayerState State;
         public InputType InputType;
         public bool Master;
         public string Name;
@@ -23,7 +31,7 @@
         public Player()
         {
             Index = PlayerIndex.One;
-            Connected = false;
+            State = PlayerState.Disconnected;
             Master = false;
             Name = "Unknown";
             InputType = InputType.None;
@@ -36,7 +44,7 @@
 
         public virtual void Initialize()
         {
-            Connected = false;
+            State = PlayerState.Disconnected;
             Master = false;
             Profile = null;
             Name = "Unknown";

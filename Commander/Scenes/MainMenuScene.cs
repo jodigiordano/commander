@@ -208,7 +208,7 @@
                 case "editor": TransiteTo("Editeur"); break;
 
                 case "quit":
-                    if (Preferences.Target == Setting.Xbox360 && Main.TrialMode.Active)
+                    if (Preferences.Target == Core.Utilities.Setting.Xbox360 && Main.TrialMode.Active)
                         TransiteTo("Acheter");
                     else
                         Main.Instance.Exit();

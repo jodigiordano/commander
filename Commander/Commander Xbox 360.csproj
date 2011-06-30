@@ -135,6 +135,7 @@
     <Compile Include="Simulation\GUI\Annunciations\LevelStartedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\Bubble.cs" />
     <Compile Include="Simulation\GUI\Bubbles\TextBubble.cs" />
+    <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorCelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorGeneralMenu.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorGUIController.cs" />
