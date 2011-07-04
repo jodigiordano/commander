@@ -97,23 +97,12 @@
 
         public void Move(ref Vector3 delta, float speed)
         {
-            if (ActualSelection.TurretToPlace != null)
-            {
-                Position += delta * speed;
-                SpaceshipMove.Stop();
-            }
-
-            else
-            {
-                SpaceshipMove.NextInput = delta;
-            }
+            SpaceshipMove.NextInput = delta;
         }
 
 
         public void UpdateDemoSelection()
         {
-            //SelectedCelestialBodyController.Update();
-
             ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
 
             if (SelectedCelestialBodyController.CelestialBody != null &&
@@ -153,8 +142,6 @@
             // Placing a turret
             if (ActualSelection.TurretToPlace != null)
             {
-                SelectedCelestialBodyController.Initialize();
-
                 ActualSelection.Turret = null;
                 ActualSelection.TurretToBuy = TurretType.None;
                 ActualSelection.PowerUpToBuy = PowerUpType.None;
@@ -315,21 +302,13 @@
 
         public void Update()
         {
-            if (ActualSelection.TurretToPlace == null)
-            {
-                if (SpaceshipMove.NextInput == Vector3.Zero &&
+            if (ActualSelection.TurretToPlace == null &&SpaceshipMove.NextInput == Vector3.Zero &&
                     (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
                     SpaceshipMove.Friction = 0.05f;
 
-                SpaceshipMove.Update();
-                Position = SpaceshipMove.Position;
-                Direction = SpaceshipMove.Direction;
-            }
-
-            else
-            {
-                SpaceshipMove.Position = Position;
-            }
+            SpaceshipMove.Update();
+            Position = SpaceshipMove.Position;
+            Direction = SpaceshipMove.Direction;
 
             CheckAvailableTurretOptions();
 

@@ -82,7 +82,6 @@ namespace EphemereGames.Commander
             Inputs.AddPlayer(new Player());
             Inputs.AddPlayer(new Player());
             Inputs.AddPlayer(new Player());
-            Inputs.AddPlayer(new Player()); //for mouse. tmp.
 
             Physics.Initialize();
             Audio.Initialize(0, 0);

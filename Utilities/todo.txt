@@ -17,6 +17,8 @@
 => Add mouse/gamepad sensitivity in options
 => Spaceships: Bumping, fire at each others, racing mode
 => editor > celestial body > change rotating sens
+=> 4 players max									DONE.
+=> Placing a turret => same move feel as in the spaceship				DONE.
 
 
 ================================================================================
