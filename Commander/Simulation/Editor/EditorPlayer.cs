@@ -84,7 +84,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 10;
+            int nbChoices = 11;
 
             actual += 1;
 
@@ -101,7 +101,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 10;
+            int nbChoices = 11;
 
             actual -= 1;
 

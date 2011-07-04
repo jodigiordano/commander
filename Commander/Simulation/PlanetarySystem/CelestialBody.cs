@@ -15,7 +15,7 @@
         public Image Image;
         public int PathPriority;
         public Vector3 position;
-        public Vector3 Position                                 { get { return position; } set { this.AnciennePosition = position; position = value; } }
+        public Vector3 Position                                 { get { return position; } set { this.LastPosition = position; position = value; } }
         public float Speed                                      { get; set; }
         public float Rotation                                   { get; set; }
         public Vector3 Direction                                { get; set; }
@@ -25,13 +25,15 @@
         public PhysicalRectangle Rectangle                      { get; set; }
         public float LifePoints                                 { get; set; }
         public float AttackPoints                               { get; set; }
-        public bool Alive                                       { get { return LifePoints > 0; } }
+        public bool AliveOverride;
+        public bool Alive                                       { get { return AliveOverride || LifePoints > 0; } }
         public bool Selectionnable;
         public bool Invincible;
         public bool LastOnPath;
         public bool FirstOnPath;
+        public bool ShowPath;
         public Vector3 Offset;
-        public List<Moon> Lunes;
+        public List<Moon> Moons;
         public bool HasGravitationalTurretBypass;
         public double VisualPriorityBackup;
         public Circle InnerTurretZone;
@@ -41,9 +43,9 @@
         public bool DarkSide;
 
         protected Simulator Simulator;
-        protected Vector3 AnciennePosition;
+        protected Vector3 LastPosition;
         protected double ActualRotationTime;
-        protected Vector3 PositionBase;
+        protected Vector3 BasePosition;
 
         private Particle DieEffect1;
         private Particle DieEffect2;
@@ -78,7 +80,7 @@
             Size = size;
 
             LifePoints = float.MaxValue;
-            PathPriority = 0;
+            PathPriority = int.MinValue;
             Selectionnable = true;
             Invincible = false;
             LastOnPath = false;
@@ -96,7 +98,7 @@
             SetImage(partialImageName);
 
             Offset = offset;
-            Position = AnciennePosition = PositionBase = startingPosition;
+            Position = LastPosition = BasePosition = startingPosition;
             SetSpeed(speed);
 
             InitMoons();
@@ -113,6 +115,8 @@
             ((CircleEmitter) DarkSideEffect.ParticleEffect[0]).Radius = Circle.Radius;
 
             PlayerCheckedIn = null;
+            AliveOverride = false;
+            ShowPath = false;
         }
 
 
@@ -189,11 +193,12 @@
 
         public void SetSpeed(float speed)
         {
-            Speed = speed;
-            ActualRotationTime = Math.Max(ActualRotationTime, Speed * (StartingPourc / 100.0f));
+            double actualPourc = (Speed == 0) ? 0 : ActualRotationTime / Speed;
 
-            if (Speed != 0)
-                Move();
+            Speed = speed;
+            ActualRotationTime = Speed * actualPourc;
+
+            Move();
         }
 
 
@@ -260,7 +265,7 @@
 
         public virtual void Update()
         {
-            if (Speed != 0)
+            if (Speed != float.MaxValue)
             {
                 ActualRotationTime = (ActualRotationTime + Preferences.TargetElapsedTimeMs) % Speed;
 
@@ -271,14 +276,14 @@
             InnerTurretZone.Position = Position;
             OuterTurretZone.Position = Position;
 
-            for (int i = 0; i < Lunes.Count; i++)
-                Lunes[i].Update();
+            for (int i = 0; i < Moons.Count; i++)
+                Moons[i].Update();
         }
 
 
         public virtual void Draw()
         {
-            if (this.LifePoints <= 0)
+            if (!Alive)
                 return;
 
             if (Image != null)
@@ -287,7 +292,7 @@
                 Simulator.Scene.Add(Image);
             }
 
-            foreach (var lune in Lunes)
+            foreach (var lune in Moons)
                 lune.Draw();
 
             if (ShowTurretsZone)
@@ -357,9 +362,55 @@
         }
 
 
+        public Vector3 GetPositionAtPerc(float perc)
+        {
+            Vector3 result = new Vector3();
+
+            Move(Speed, Speed * MathHelper.Clamp(perc, 0, 1), ref BasePosition, ref Offset, ref result);
+
+            return result;
+        }
+
+
+        public static void Move(double rotationTime, double actualRotationTime, ref Vector3 basePosition, ref Vector3 offset, ref Vector3 result)
+        {
+            if (rotationTime == float.MaxValue)
+            {
+                Vector3.Add(ref basePosition, ref offset, out result);
+
+                return;
+            }
+
+            result.X = basePosition.X * (float) Math.Cos((MathHelper.TwoPi / rotationTime) * actualRotationTime);
+            result.Y = basePosition.Y * (float) Math.Sin((MathHelper.TwoPi / rotationTime) * actualRotationTime);
+            result.Z = 0;
+
+            Vector3.Add(ref result, ref offset, out result);
+        }
+
+
+        public virtual CelestialBodyDescriptor GenerateDescriptor()
+        {
+            return new CelestialBodyDescriptor()
+            {
+                CanSelect = Selectionnable,
+                Image = PartialImageName,
+                InBackground = false,
+                Invincible = Invincible,
+                Name = Name,
+                Offset = Offset,
+                PathPriority = PathPriority,
+                Position = BasePosition,
+                Speed = (int) Speed,
+                Size = Size,
+                HasGravitationalTurret = StartingPathTurret != null
+            };
+        }
+
+
         private void InitMoons()
         {
-            Lunes = new List<Moon>();
+            Moons = new List<Moon>();
             int nbLunes = Main.Random.Next(0, 3);
 
             for (int i = 0; i < nbLunes; i++)
@@ -371,7 +422,7 @@
                 else
                     lune = new MoonPath(Simulator, this, 50);
 
-                Lunes.Add(lune);
+                Moons.Add(lune);
             }
         }
 
@@ -384,41 +435,9 @@
 
         private void Move()
         {
-            this.AnciennePosition = position;
+            LastPosition = position;
 
-            this.position.X = this.PositionBase.X * (float) Math.Cos((MathHelper.TwoPi / Speed) * ActualRotationTime);
-            this.position.Y = this.PositionBase.Y * (float) Math.Sin((MathHelper.TwoPi / Speed) * ActualRotationTime);
-
-            Vector3.Add(ref this.position, ref this.Offset, out this.position);
-        }
-
-
-        public static void Move(double tempsRotation, double tempsRotationActuel, ref Vector3 positionBase, ref Vector3 offset, ref Vector3 resultat)
-        {
-            resultat.X = positionBase.X * (float) Math.Cos((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
-            resultat.Y = positionBase.Y * (float) Math.Sin((MathHelper.TwoPi / tempsRotation) * tempsRotationActuel);
-            resultat.Z = 0;
-
-            Vector3.Add(ref resultat, ref offset, out resultat);
-        }
-
-        
-        public virtual CelestialBodyDescriptor GenerateDescriptor()
-        {
-            return new CelestialBodyDescriptor()
-            {
-                CanSelect = Selectionnable,
-                Image = PartialImageName,
-                InBackground = false,
-                Invincible = Invincible,
-                Name = Name,
-                Offset = Offset,
-                PathPriority = PathPriority,
-                Position = PositionBase,
-                Speed = (int) Speed,
-                Size = Size,
-                HasGravitationalTurret = StartingPathTurret != null
-            };
+            Move(Speed, ActualRotationTime, ref BasePosition, ref Offset, ref position);
         }
     }
 }

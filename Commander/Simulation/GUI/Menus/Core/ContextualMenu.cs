@@ -25,7 +25,7 @@
         public Bubble Bubble { get; private set; }
         private Vector3 Size;
 
-        private List<ContextualMenuChoice> Choices;
+        public List<ContextualMenuChoice> Choices;
 
         private int DistanceBetweenTwoChoices;
 

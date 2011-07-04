@@ -7,16 +7,16 @@
 
     class CloseButton
     {
-        private Scene Scene; 
+        public NoneHandler Handler;
+        public Scene Scene; 
+        
         private Image Button;
         private Text ButtonX;
         private Circle ButtonCircle;
 
 
-        public CloseButton(Scene scene, Vector3 position, double visualPriority)
+        public CloseButton(Vector3 position, double visualPriority)
         {
-            Scene = scene;
-
             Button = new Image("checkbox", position)
             {
                 VisualPriority = visualPriority + 0.0000001,
@@ -35,7 +35,15 @@
 
         public bool DoClick(Circle circle)
         {
-            return Physics.CircleCicleCollision(circle, ButtonCircle);
+            if (Physics.CircleCicleCollision(circle, ButtonCircle))
+            {
+                if (Handler != null)
+                    Handler();
+
+                return true;
+            }
+
+            return false;
         }
 
 

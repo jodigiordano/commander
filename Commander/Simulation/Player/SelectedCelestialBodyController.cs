@@ -106,6 +106,20 @@
             SelectedCelestialBodyChanged = true;
 
             DoCelestialBodySelection();
+
+            if (Simulator.EditorMode &&
+                Simulator.EditorState == EditorState.Editing &&
+                Player.Position.X > Simulator.InnerTerrain.Right - 100 &&
+                Player.Position.Y < Simulator.InnerTerrain.Top + 100)
+            {
+                if (PreviousCelestialBody != null)
+                    PreviousCelestialBody.PlayerCheckedIn = null;
+
+                CelestialBody = PlanetarySystemController.GetCelestialBodyWithLowestPathPriority(CelestialBodies);
+
+                if (CelestialBody != null)
+                    LastPositionCelestialBody = CelestialBody.Position;
+            }
         }
 
 
@@ -175,6 +189,9 @@
 
         public Vector3 DoGlueMode()
         {
+            if (Simulator.EditorMode && CelestialBody != null && CelestialBody.Name == "Asteroid belt")
+                return Vector3.Zero;
+
             if (Turret != null)
             {
                 Vector3 diff = Turret.Position - LastPositionTurret;

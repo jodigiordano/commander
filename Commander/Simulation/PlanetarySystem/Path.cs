@@ -72,7 +72,7 @@
             {
                 CelestialBody corps = CelestialBodies[i];
 
-                if (corps.PathPriority == -1)
+                if (corps.PathPriority == int.MinValue)
                     continue;
 
                 for (int j = 0; j < corps.Turrets.Count; j++)
@@ -127,8 +127,11 @@
 
         public void RemoveCelestialBody(CelestialBody celestialBody)
         {
-            FirstCelestialBody.FirstOnPath = false;
-            LastCelestialBody.LastOnPath = false;
+            if (FirstCelestialBody != null)
+            {
+                FirstCelestialBody.FirstOnPath = false;
+                LastCelestialBody.LastOnPath = false;
+            }
 
             CelestialBodiesPath.Remove(celestialBody);
 
@@ -145,7 +148,7 @@
             if (ContainsCelestialBody(celestialBody))
                 return;
 
-            if (celestialBody.PathPriority == -1)
+            if (celestialBody.PathPriority == int.MinValue)
                 return;
 
             if (!celestialBody.HasGravitationalTurret)

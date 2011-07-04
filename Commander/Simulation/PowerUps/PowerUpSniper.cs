@@ -27,6 +27,7 @@ namespace EphemereGames.Commander.Simulation
             Crosshair = "crosshairSniper";
             CrosshairSize = 2;
             Position = Vector3.Zero;
+            AssociatedTurret = TurretType.Sniper;
 
             terminated = false;
         }

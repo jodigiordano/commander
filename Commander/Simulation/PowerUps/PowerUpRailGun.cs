@@ -31,6 +31,7 @@ namespace EphemereGames.Commander.Simulation
             NeedInput = true;
             Crosshair = "crosshairRailGun";
             Position = Vector3.Zero;
+            AssociatedTurret = TurretType.RailGun;
         }
 
 

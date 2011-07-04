@@ -58,7 +58,13 @@
                 new EditorTextContextualMenuChoice("Modify Trajectory", new EditorCelestialBodyCommand("ModifyTrajectory")),
                 new EditorTextContextualMenuChoice("Move along trajectory", new EditorCelestialBodyCommand("MoveAlongTrajectory")),
                 new EditorTextContextualMenuChoice("Verify", new EditorCelestialBodyCommand("Verify")),
-
+                new EditorToggleContextualMenuChoice(
+                    new List<string>() { "Show path", "Hide path" },
+                    new List<EditorCommand>()
+                    {
+                        new EditorCelestialBodyCommand("ShowPathPreview"),
+                        new EditorCelestialBodyCommand("HidePathPreview")
+                    })
             };
 
             Menu = new ContextualMenu(Simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, color, Choices, 5);
@@ -97,7 +103,7 @@
                 }
             }
 
-
+            ((EditorToggleContextualMenuChoice) Choices[10]).SetChoice(CelestialBody.ShowPath ? 1 : 0);
         }
 
 

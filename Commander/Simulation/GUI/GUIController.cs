@@ -74,7 +74,10 @@
             LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulator, Level);
             LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, CelestialBodies, Level);
 
-            PlayerLives = new PlayerLives(Simulator, Level.CelestialBodyToProtect, new Color(255, 0, 220));
+            PlayerLives = new PlayerLives(Simulator, new Color(255, 0, 220))
+            {
+                CelestialBody = Level.CelestialBodyToProtect
+            };
             PathPreviewing = new PathPreview(PathPreview, Path);
 
             MenuPowerUps.Turrets = Turrets;
@@ -450,6 +453,31 @@
             PlayerLives.Draw();
             MenuPowerUps.Draw();
             PathPreviewing.Draw();
+        }
+
+
+        public void DoEditorCommandExecuted(EditorCommand command)
+        {
+            if (command.Name == "AddOrRemovePowerUp")
+            {
+                MenuPowerUps.Position = new Vector3(-550, 200, 0);
+                MenuPowerUps.Initialize();
+            }
+
+            else if (command.Name == "Clear")
+            {
+                PlayerLives.CelestialBody = null;
+            }
+
+            else if (command.Name == "AddPlanet" || command.Name == "PushFirst" || command.Name == "PushLast")
+            {
+                PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
+            }
+
+            else if (command.Name == "Remove")
+            {
+                PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
+            }
         }
 
 

@@ -1,0 +1,88 @@
+﻿namespace EphemereGames.Commander
+{
+    using System.Collections.Generic;
+    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
+
+
+    class SlideshowPanel : Panel
+    {
+        private NumericHorizontalSlider Slider;
+        private List<PanelWidget> Panels;
+
+        private bool RecalculatePositions;
+
+
+        public SlideshowPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
+            : base(scene, position, size, visualPriority, color)
+        {
+            Slider = new NumericHorizontalSlider("Wave", 0, 100, 0, 1, 200)
+            {
+                Scene = scene,
+                VisualPriority = visualPriority
+            };
+
+            Panels = new List<PanelWidget>();
+
+            RecalculatePositions = true;
+        }
+
+
+        public override void AddWidget(string name, PanelWidget widget)
+        {
+            Panels.Add(widget);
+
+            base.AddWidget(name, widget);
+        }
+
+
+        public override void Draw()
+        {
+            if (!Visible)
+                return;
+
+            base.Draw();
+            Slider.Draw();
+
+            if (RecalculatePositions)
+            {
+                Slider.Position = base.GetUpperLeftUsableSpace();
+
+                Vector3 upperLeft = base.GetUpperLeftUsableSpace() + new Vector3(0, Slider.Dimension.Y, 0);
+
+                foreach (var w in Widgets.Values)
+                    w.Position = upperLeft;
+            }
+        }
+
+
+        public override void Fade(int from, int to, double length)
+        {
+            Slider.Fade(from, to, length);
+
+            base.Fade(from, to, length);
+        }
+
+
+        protected override bool Click(Circle circle)
+        {
+            if (Slider.DoClick(circle))
+                return true;
+
+            return base.Click(circle);
+        }
+
+
+        protected override void DrawWidgets()
+        {
+            Panels[Slider.Value].Draw();
+        }
+
+
+        protected override bool ClickWidgets(Circle circle)
+        {
+            return Panels[Slider.Value].DoClick(circle);
+        }
+    }
+}

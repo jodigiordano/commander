@@ -6,6 +6,7 @@
     class TurretsFactory
     {
         public Dictionary<TurretType, Turret> Availables;
+        public Dictionary<TurretType, Turret> All;
         public Dictionary<int, TurretBoostLevel> BoostLevels;
         private Simulator Simulator;
 
@@ -15,6 +16,7 @@
             Simulator = simulator;
 
             Availables = new Dictionary<TurretType, Turret>(TurretTypeComparer.Default);
+            All = new Dictionary<TurretType, Turret>(TurretTypeComparer.Default);
 
             BoostLevels = new Dictionary<int, TurretBoostLevel>();
             BoostLevels.Add(0, new TurretBoostLevel()
@@ -53,6 +55,18 @@
                 BulletHitPointsMultiplier = 1.3f,
                 BulletExplosionRangeMultiplier = 1.3f
             });
+
+            All.Add(TurretType.Basic, Create(TurretType.Basic));
+            All.Add(TurretType.Gravitational, Create(TurretType.Gravitational));
+            All.Add(TurretType.MultipleLasers, Create(TurretType.MultipleLasers));
+            All.Add(TurretType.Laser, Create(TurretType.Laser));
+            All.Add(TurretType.Missile, Create(TurretType.Missile));
+            All.Add(TurretType.SlowMotion, Create(TurretType.SlowMotion));
+            All.Add(TurretType.Booster, Create(TurretType.Booster));
+            All.Add(TurretType.Gunner, Create(TurretType.Gunner));
+            All.Add(TurretType.Nanobots, Create(TurretType.Nanobots));
+            All.Add(TurretType.RailGun, Create(TurretType.RailGun));
+            All.Add(TurretType.Sniper, Create(TurretType.Sniper));
         }
 
 
@@ -73,6 +87,7 @@
                 case TurretType.Gunner:             t = new GunnerTurret(Simulator);           break;
                 case TurretType.Nanobots:           t = new NanobotsTurret(Simulator);         break;
                 case TurretType.RailGun:            t = new RailGunTurret(Simulator);          break;
+                case TurretType.Sniper:             t = new SniperTurret(Simulator);           break;
                 default:                            t = new BasicTurret(Simulator);            break;
             }
 

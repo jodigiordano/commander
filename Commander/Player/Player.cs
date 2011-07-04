@@ -14,7 +14,7 @@
         private Vector3 position;
 
 
-        private static List<Vector3> AvailableInitalPositions = new List<Vector3>()
+        private static List<Vector3> AvailablesInitalPositions = new List<Vector3>()
         {
             new Vector3(-60, -100, 0),
             new Vector3(-30, -100, 0),
@@ -24,7 +24,7 @@
         };
 
 
-        private static List<Color> AvailableColors = new List<Color>()
+        private static List<Color> AvailablesColors = new List<Color>()
         {
             new Color(255, 0, 136),
             new Color(255, 115, 40),
@@ -34,7 +34,7 @@
         };
 
 
-        private static List<string> AvailableRepresentations = new List<string>()
+        private static List<string> AvailablesRepresentations = new List<string>()
         {
             "Vaisseau",
             "Collecteur",
@@ -51,17 +51,17 @@
 
             int index = 0;
 
-            index = Main.Random.Next(0, AvailableColors.Count);
-            Color = AvailableColors[index];
-            AvailableColors.RemoveAt(index);
+            index = Main.Random.Next(0, AvailablesColors.Count);
+            Color = AvailablesColors[index];
+            AvailablesColors.RemoveAt(index);
 
-            index = Main.Random.Next(0, AvailableRepresentations.Count);
-            Representation = AvailableRepresentations[index];
-            AvailableRepresentations.RemoveAt(index);
+            index = Main.Random.Next(0, AvailablesRepresentations.Count);
+            Representation = AvailablesRepresentations[index];
+            AvailablesRepresentations.RemoveAt(index);
 
-            index = Main.Random.Next(0, AvailableInitalPositions.Count);
-            Position = AvailableInitalPositions[index];
-            AvailableInitalPositions.RemoveAt(index);
+            index = Main.Random.Next(0, AvailablesInitalPositions.Count);
+            Position = AvailablesInitalPositions[index];
+            AvailablesInitalPositions.RemoveAt(index);
 
             KeysToListenTo = KeyboardConfiguration.ToList;
             MouseButtonsToListenTo = MouseConfiguration.ToList;

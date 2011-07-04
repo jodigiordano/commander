@@ -2,6 +2,7 @@
 {
     delegate void NoneHandler();
     delegate bool IntegerHandler(int i);
+    delegate void PanelWidgetHandler(PanelWidget p);
 }
 
 
@@ -26,7 +27,5 @@ namespace EphemereGames.Commander.Simulation
     delegate void TurretPhysicalObjectHandler(Turret t, IObjetPhysique o);
     delegate void EnemyBulletHandler(Enemy e, Bullet b);
     delegate void EditorPlayerHandler(EditorPlayer e);
-    delegate void EditorPlayerEditorCommandHandler(EditorPlayer p, EditorCommand e);
-    delegate void EditorPlayerCelestialBodyEditorCommandHandler(EditorPlayer p, EditorCelestialBodyCommand e);
-    delegate void EditorPlayerPanelEditorCommandHandler(EditorPlayer p, EditorPanelCommand e);
+    delegate void EditorCommandHandler(EditorCommand e);
 }

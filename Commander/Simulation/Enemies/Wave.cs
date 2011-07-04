@@ -15,10 +15,13 @@
         private Simulator Simulator;
         private int EnemiesAlive;
 
+        public WaveDescriptor Descriptor;
+
 
         public Wave(Simulator simulator, WaveDescriptor descriptor)
         {
             Simulator = simulator;
+            Descriptor = descriptor;
 
             EnemiesToCreate = new List<EnemyDescriptor>();
             NewEnemies = new List<Enemy>();

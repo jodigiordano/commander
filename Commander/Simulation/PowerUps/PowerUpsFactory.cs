@@ -6,6 +6,7 @@
     class PowerUpsFactory
     {
         public Dictionary<PowerUpType, PowerUp> Availables;
+        public Dictionary<PowerUpType, PowerUp> All;
         public HumanBattleship HumanBattleship;
         private Simulator Simulator;
 
@@ -15,6 +16,20 @@
             Simulator = simulator;
 
             Availables = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
+            All = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
+
+            All.Add(PowerUpType.Collector, Create(PowerUpType.Collector));
+            All.Add(PowerUpType.FinalSolution, Create(PowerUpType.FinalSolution));
+            All.Add(PowerUpType.Spaceship, Create(PowerUpType.Spaceship));
+            All.Add(PowerUpType.TheResistance, Create(PowerUpType.TheResistance));
+            All.Add(PowerUpType.DeadlyShootingStars, Create(PowerUpType.DeadlyShootingStars));
+            All.Add(PowerUpType.RailGun, Create(PowerUpType.RailGun));
+            All.Add(PowerUpType.AutomaticCollector, Create(PowerUpType.AutomaticCollector));
+            All.Add(PowerUpType.DarkSide, Create(PowerUpType.DarkSide));
+            All.Add(PowerUpType.Miner, Create(PowerUpType.Miner));
+            All.Add(PowerUpType.Pulse, Create(PowerUpType.Pulse));
+            All.Add(PowerUpType.Shield, Create(PowerUpType.Shield));
+            All.Add(PowerUpType.Sniper, Create(PowerUpType.Sniper));
         }
 
 

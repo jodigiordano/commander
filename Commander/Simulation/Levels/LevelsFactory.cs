@@ -321,6 +321,8 @@
         {
             var l = new LevelDescriptor();
 
+            l.AddAsteroidBelt();
+
             return l;
         }
 

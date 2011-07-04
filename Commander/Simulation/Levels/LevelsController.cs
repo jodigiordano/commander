@@ -188,16 +188,76 @@
         }
 
 
-        //public InfosDescriptor GenerateDescriptor()
-        //{
-        //    return new InfosDescriptor()
-        //    {
-                //Background = Background.TextureName,
-                //Difficulty = Difficulty,
-                //Id = Id,
-                //Mission = Mission
-        //    };
-        //}
+        public void DoEditorCommandExecuted(EditorCommand c)
+        {
+            switch (c.Type)
+            {
+                case EditorCommandType.CelestialBody:
+                    DoEditorCelestialBodyCommand((EditorCelestialBodyCommand) c);
+                    break;
+
+                case EditorCommandType.Player:
+                    DoEditorPlayerCommand((EditorPlayerCommand) c);
+                    break;
+            }
+        }
+
+
+        private void DoEditorCelestialBodyCommand(EditorCelestialBodyCommand command)
+        {
+            if (command.Name == "Clear")
+            {
+                Level.CelestialBodyToProtect = null;
+            }
+
+            else if (command.Name == "AddPlanet")
+            {
+                if (Level.CelestialBodyToProtect == null)
+                {
+                    Level.CelestialBodyToProtect = command.CelestialBody;
+                    Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+                }
+            }
+
+            else if (command.Name == "PushFirst")
+            {
+                Level.CelestialBodyToProtect = PlanetarySystemController.GetCelestialBodyWithHighestPathPriority(CelestialBodies);
+                Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+            }
+
+
+            else if (command.Name == "PushLast")
+            {
+                Level.CelestialBodyToProtect = command.CelestialBody;
+                Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+            }
+
+
+            else if (command.Name == "Remove")
+            {
+                Level.CelestialBodyToProtect = PlanetarySystemController.GetAliveCelestialBodyWithHighestPathPriority(CelestialBodies);
+
+                if (Level.CelestialBodyToProtect != null)
+                    Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+            }
+        }
+
+
+        private void DoEditorPlayerCommand(EditorPlayerCommand command)
+        {
+            if (command.Name == "AddOrRemoveLives")
+            {
+                CommonStash.Lives = command.LifePoints;
+
+                if (CelestialBodyToProtect != null)
+                    CelestialBodyToProtect.LifePoints = command.LifePoints;
+            }
+
+            else if (command.Name == "AddOrRemoveCash")
+            {
+                CommonStash.Cash = command.Cash;
+            }
+        }
 
 
         private void ComputeFinalScore()

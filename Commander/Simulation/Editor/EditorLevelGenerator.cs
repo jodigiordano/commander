@@ -17,9 +17,9 @@
             Size.Big
         };
 
-        public static List<int> PossibleRotationTimes = new List<int>()
+        public static List<float> PossibleRotationTimes = new List<float>()
         {
-            0,
+            float.MaxValue,
             1200000,
             900000,
             600000,

@@ -17,12 +17,31 @@
             80000
         };
 
+
         private static List<double> TimePause = new List<double>()
         {
             5000,
             10000,
             15000
         };
+
+
+        public static List<string> WavesTypesStrings = new List<string>()
+        {
+            WaveType.Homogene.ToString("g"),
+            WaveType.DistinctFollow.ToString("g"),
+            WaveType.PackedH.ToString("g")
+        };
+
+
+        public static List<string> DistancesStrings = new List<string>()
+        {
+            Distance.Joined.ToString("g"),
+            Distance.Near.ToString("g"),
+            Distance.Normal.ToString("g"),
+            Distance.Far.ToString("g")
+        };
+
 
         private static List<Distance> Distances = new List<Distance>()
         {
@@ -32,35 +51,20 @@
             Distance.Far
         };
 
-        private enum WaveType
-        {
-            Homogene = 0,
-            /*Entrecroisement,
-            Heterogene,
-            MiniVaguesHeterogenes,
-            MiniVaguesHomogenes,*/
-            DistinctWhichFollow,
-            /*PackHeterogene,*/
-            PackHomogene
-        }
 
         private static Dictionary<WaveType, Vector2> MinMaxEnnemisTypeVague = new Dictionary<WaveType,Vector2>()
         {
             { WaveType.Homogene, new Vector2(1, 1) },
-            /*{ TypeVague.Entrecroisement, new Vector2(2, int.MaxValue) },
-            { TypeVague.Heterogene, new Vector2(2, int.MaxValue) },*/
-            /*{ TypeVague.MiniVaguesHeterogenes, new Vector2(3, int.MaxValue) },
-            { TypeVague.MiniVaguesHomogenes, new Vector2(1, 1) },*/
-            { WaveType.DistinctWhichFollow, new Vector2(2, int.MaxValue) },
-            { WaveType.PackHomogene, new Vector2(1, 1) }/*,
-            { TypeVague.PackHeterogene, new Vector2(2, int.MaxValue) }*/
+            { WaveType.DistinctFollow, new Vector2(2, int.MaxValue) },
+            { WaveType.PackedH, new Vector2(1, 1) }
         };
+
 
         public int DifficultyStart;
         public int DifficultyEnd;
         public int QtyEnemies;
         public List<EnemyType> Enemies;
-        public int NbWaves;
+        public int WavesCount;
         public List<WaveDescriptor> Waves;
         public int MineralsPerWave;
 
@@ -70,7 +74,7 @@
             DifficultyEnd = 1;
             QtyEnemies = 1;
             Enemies = new List<EnemyType>();
-            NbWaves = 1;
+            WavesCount = 1;
         }
 
         public void Generate()
@@ -78,18 +82,18 @@
             Waves = new List<WaveDescriptor>();
 
             // Ajustement dans la quantité d'ennemis
-            QtyEnemies = Math.Max(QtyEnemies, NbWaves * MinEnemiesPerWave + MinEnemiesPerWave*2);
+            QtyEnemies = Math.Max(QtyEnemies, WavesCount * MinEnemiesPerWave + MinEnemiesPerWave*2);
 
             List<WaveType> typesVaguesGenerees = new List<WaveType>();
             List<int> qtesParVague = new List<int>();
-            List<List<EnemyType>> ennemisParVague = new List<List<EnemyType>>();
+            List<List<EnemyType>> enemiesPerWave = new List<List<EnemyType>>();
 
             // Déterminer les types de vagues utilisées            
             do
             {
                 typesVaguesGenerees.Clear();
 
-                for (int i = 0; i < NbWaves; i++)
+                for (int i = 0; i < WavesCount; i++)
                 {
                     WaveType typeVague = (WaveType)Main.Random.Next(0, MinMaxEnnemisTypeVague.Count);
 
@@ -106,62 +110,59 @@
             {
                 qtesParVague.Clear();
 
-                for (int i = 0; i < NbWaves; i++)
+                for (int i = 0; i < WavesCount; i++)
                     qtesParVague.Add(0);
 
                 for (int i = 0; i < QtyEnemies; i++)
-                    qtesParVague[Main.Random.Next(0, NbWaves)]++;
+                    qtesParVague[Main.Random.Next(0, WavesCount)]++;
             } while (!AreAppropriateQtyPerWave(qtesParVague));
 
 
             // Déterminer les ennemis utilisés dans chaque vague
             do
             {
-                ennemisParVague.Clear();
+                enemiesPerWave.Clear();
 
-                for (int i = 0; i < NbWaves; i++)
-                    ennemisParVague.Add(new List<EnemyType>());
+                for (int i = 0; i < WavesCount; i++)
+                    enemiesPerWave.Add(new List<EnemyType>());
 
                 //pour chaque vague => utiliser x ennemis où  x <= Min(TypeVague.MaxEnnemis, EnnemisDispo.Count)
-                for (int i = 0; i < NbWaves; i++)
+                for (int i = 0; i < WavesCount; i++)
                 {
                     int nbEnnemisDansCetteVague = (int) Math.Min(MinMaxEnnemisTypeVague[typesVaguesGenerees[i]].Y, Enemies.Count);
 
-                    while (ennemisParVague[i].Count < nbEnnemisDansCetteVague)
+                    while (enemiesPerWave[i].Count < nbEnnemisDansCetteVague)
                     {
                         int type = Main.Random.Next(0, Enemies.Count);
 
-                        if (!ennemisParVague[i].Contains(Enemies[type]))
-                            ennemisParVague[i].Add(Enemies[type]);
+                        if (!enemiesPerWave[i].Contains(Enemies[type]))
+                            enemiesPerWave[i].Add(Enemies[type]);
                     }
                 }
 
-            } while (!AreAllEnemiesUsed(ennemisParVague));
+            } while (!AreAllEnemiesUsed(enemiesPerWave));
 
 
-            // Générer les vagues (enfin!)
-            for (int i = 0; i < NbWaves; i++)
+            // Generate the waves
+            for (int i = 0; i < WavesCount; i++)
             {
                 WaveType type = typesVaguesGenerees[i];
-                int quantite = qtesParVague[i];
-                List<EnemyType> ennemis = ennemisParVague[i];
+                int qty = qtesParVague[i];
+                List<EnemyType> enemies = enemiesPerWave[i];
 
-                WaveDescriptor description = new WaveDescriptor();
+                WaveDescriptor descriptor = new WaveDescriptor();
 
                 switch (type)
                 {
-                    case WaveType.Homogene: GenerateHomogene(description, quantite, ennemis); break;
-                    //case TypeVague.Heterogene: genererHeterogene(description, quantite, ennemis); break;
-                    //case TypeVague.Entrecroisement: genererEntrecroisement(description, quantite, ennemis); break;
-                    case WaveType.DistinctWhichFollow: GenerateDistinctsWhichFollow(description, quantite, ennemis); break;
-                    //case TypeVague.MiniVaguesHeterogenes: genererHomogene(description, quantite, ennemis[0]); break;
-                    //case TypeVague.MiniVaguesHomogenes: genererHomogene(description, quantite, ennemis[0]); break;
-                    //case TypeVague.PackHeterogene: genererPackHeterogene(description, quantite, ennemis); break;
-                    case WaveType.PackHomogene: GeneratePackHomogene(description, quantite, ennemis); break;
+                    case WaveType.Homogene: GenerateHomogene(descriptor); break;
+                    case WaveType.DistinctFollow: GenerateDistinctsWhichFollow(descriptor, qty, enemies.Count); break;
+                    case WaveType.PackedH: GeneratePackedHomogene(descriptor, qty); break;
                 }
 
-                description.StartingTime = TimeBetweenTwoWaves[Main.Random.Next(0, TimeBetweenTwoWaves.Count)];
-                Waves.Add(description);
+                descriptor.Enemies = enemies;
+                descriptor.Quantity = qty;
+                descriptor.StartingTime = TimeBetweenTwoWaves[Main.Random.Next(0, TimeBetweenTwoWaves.Count)];
+                Waves.Add(descriptor);
             }
 
             AdjustDifficulty(Waves);
@@ -171,9 +172,9 @@
 
         private void DistributeMoney(List<WaveDescriptor> vagues)
         {
-            for (int i = 0; i < NbWaves; i++)
+            for (int i = 0; i < WavesCount; i++)
             {
-                int valeurVague = (int) Math.Max(MineralsPerWave * (1.0/2.0/(NbWaves-i)), vagues[i].Quantity);
+                int valeurVague = (int) Math.Max(MineralsPerWave * (1.0/2.0/(WavesCount-i)), vagues[i].Quantity);
                 int valeurEnnemi = (int)Math.Ceiling((double)valeurVague / vagues[i].Quantity);
 
                 vagues[i].CashValue = valeurEnnemi;
@@ -183,9 +184,9 @@
 
         private void AdjustDifficulty(List<WaveDescriptor> vagues)
         {
-            float step = (DifficultyEnd - DifficultyStart) / (float) ((NbWaves == 1) ? 1 : (NbWaves - 1));
+            float step = (DifficultyEnd - DifficultyStart) / (float) ((WavesCount == 1) ? 1 : (WavesCount - 1));
 
-            for (int i = 0; i < NbWaves; i++)
+            for (int i = 0; i < WavesCount; i++)
             {
                 int difficulte = (int) (DifficultyStart + step * i);
 
@@ -195,51 +196,25 @@
         }
 
 
-        private void GenerateDistinctsWhichFollow(WaveDescriptor description, int qte, List<EnemyType> ennemis)
+        private void GenerateDistinctsWhichFollow(WaveDescriptor description, int qty, int enemiesCount)
         {
-            description.Enemies = ennemis;
             description.Distance = Distances[Main.Random.Next(2, Distances.Count)];
-            description.Quantity = qte;
-            description.SwitchEvery = qte / ennemis.Count;
+            description.SwitchEvery = qty / enemiesCount;
             description.Delay = Main.Random.Next(2000, 4000);
             description.ApplyDelayEvery = description.SwitchEvery;
         }
 
 
-        //private void genererEntrecroisement(DescripteurVague description, int qte, List<EnemyType> ennemis)
-        //{
-        //    Distance distance = DistancesDisponibles[Main.Random.Next(2, DistancesDisponibles.Count)];
-
-        //    int QteAvantSwitch = qte / Main.Random.Next(5, 10);
-
-        //    QteAvantSwitch = (int)MathHelper.Clamp(QteAvantSwitch, 10, 30);
-
-        //    for (int i = 0; i < qte; i++)
-        //    {
-        //        description.Distances.Add(distance);
-
-        //        DescripteurEnnemi descEnnemi = new DescripteurEnnemi();
-        //        descEnnemi.Type = ennemis[(i / QteAvantSwitch) % ennemis.Count];
-
-        //        description.Ennemis.Add(descEnnemi);
-        //    }
-        //}
-
-
-        private void GenerateHomogene(WaveDescriptor description, int qte, List<EnemyType> ennemis)
+        private void GenerateHomogene(WaveDescriptor description)
         {
-            description.Quantity = qte;
-            description.Enemies = ennemis;
             description.Distance = Distances[Main.Random.Next(2, Distances.Count)];
         }
 
 
-        private void GeneratePackHomogene(WaveDescriptor description, int qte, List<EnemyType> ennemis)
+        private void GeneratePackedHomogene(WaveDescriptor description, int qty)
         {
-            description.Enemies = ennemis;
             description.Distance = Distance.Near;
-            description.Quantity = qte;
-            description.SwitchEvery = qte / Main.Random.Next(5, 10);
+            description.SwitchEvery = qty / Main.Random.Next(5, 10);
             description.Delay = Main.Random.Next(4000, 8000);
             description.ApplyDelayEvery = description.SwitchEvery;
         }

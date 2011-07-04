@@ -37,7 +37,7 @@ namespace EphemereGames.Commander.Simulation
 
             if (Glow == null)
             {
-                Glow = Simulation.Scene.Particles.Get( "boosterTurret" );
+                Glow = Simulator.Scene.Particles.Get( "boosterTurret" );
                 setGlow();
             }
 

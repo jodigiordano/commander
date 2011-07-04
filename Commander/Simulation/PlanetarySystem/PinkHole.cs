@@ -23,7 +23,7 @@
             float visualPriority)
             : base (simulator, name, startingPosition, offset, size, speed, null, startingPourc, visualPriority)
         {
-            Lunes = new List<Moon>();
+            Moons = new List<Moon>();
 
             Effect = effect;
         }
@@ -59,11 +59,11 @@
 
         public override void Update()
         {
-            this.AnciennePosition = this.Position;
+            this.LastPosition = this.Position;
             ((RadialGravityModifier) Effect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
 
             Vector3 deplacement;
-            Vector3.Subtract(ref this.position, ref this.AnciennePosition, out deplacement);
+            Vector3.Subtract(ref this.position, ref this.LastPosition, out deplacement);
             Effect.Move(ref deplacement);
             Effect.Trigger(ref position);
 

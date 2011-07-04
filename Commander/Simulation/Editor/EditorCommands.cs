@@ -6,11 +6,14 @@
     class EditorCommand : IEqualityComparer<EditorCommand>
     {
         public string Name;
+        public EditorCommandType Type;
+        public EditorPlayer Owner;
 
 
         public EditorCommand(string name)
         {
             Name = name;
+            Type = EditorCommandType.Basic;
         }
 
 
@@ -36,6 +39,7 @@
         public EditorPanelCommand(string name, EditorPanel panel, bool show)
             : base(name)
         {
+            Type = EditorCommandType.Panel;
             Panel = panel;
             Show = show;
         }
@@ -45,14 +49,29 @@
     class EditorCelestialBodyCommand : EditorCommand
     {
         public CelestialBody CelestialBody;
-        public int Speed;
+        public float Speed;
         public Size Size;
+        public bool ShowPath;
 
 
         public EditorCelestialBodyCommand(string name)
             : base(name)
         {
+            Type = EditorCommandType.CelestialBody;
+        }
+    }
 
+
+    class EditorPlayerCommand : EditorCommand
+    {
+        public int LifePoints;
+        public int Cash;
+
+
+        public EditorPlayerCommand(string name)
+            : base(name)
+        {
+            Type = EditorCommandType.Player;
         }
     }
 }

@@ -20,7 +20,6 @@ namespace EphemereGames.Commander.Simulation
         
         public bool EditorMode;
         internal EditorState EditorState;
-        internal Dictionary<string, EditorCommand> EditorCommands;
         internal Level Level;
 
         public bool HelpMode { get { return LevelsController.Help.Active; } }
@@ -53,39 +52,6 @@ namespace EphemereGames.Commander.Simulation
         public Simulator(Scene scene, LevelDescriptor descriptor)
         {
             Scene = scene;
-            LevelDescriptor = descriptor;
-            Level = new Level(this, descriptor);
-            TurretsFactory = new TurretsFactory(this);
-            PowerUpsFactory = new PowerUpsFactory(this);
-            EnemiesFactory = new EnemiesFactory(this);
-            MineralsFactory = new MineralsFactory(this);
-            BulletsFactory = new BulletsFactory(this);
-
-            Terrain = new PhysicalRectangle(-840, -560, 1680, 1120);
-            InnerTerrain = new PhysicalRectangle(-640, -360, 1280, 720);
-
-            EditorCommands = new Dictionary<string, EditorCommand>();
-
-            CollisionsController = new CollisionsController(this);
-            BulletsController = new BulletsController(this);
-            EnemiesController = new EnemiesController(this);
-            SimPlayersController = new SimPlayersController(this);
-            TurretsController = new TurretsController(this);
-            PlanetarySystemController = new PlanetarySystemController(this);
-            SpaceshipsController = new SpaceshipsController(this);
-            MessagesController = new MessagesController(this);
-            GUIController = new GUIController(this);
-            PowerUpsController = new PowerUpsController(this);
-            LevelsController = new LevelsController(this);
-            EditorController = new EditorController(this);
-            EditorGUIController = new EditorGUIController(this);
-
-            WorldMode = false;
-            DemoMode = false;
-            EditorMode = false;
-            EditorState = EditorState.Editing;
-            DebugMode = Preferences.Debug;
-            GameAction = PausedGameChoice.None;
 
             Scene.Particles.Add(
                 new List<string>() {
@@ -132,6 +98,38 @@ namespace EphemereGames.Commander.Simulation
                 }, false);
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
+
+            LevelDescriptor = descriptor;
+            Level = new Level(this, descriptor);
+            TurretsFactory = new TurretsFactory(this);
+            PowerUpsFactory = new PowerUpsFactory(this);
+            EnemiesFactory = new EnemiesFactory(this);
+            MineralsFactory = new MineralsFactory(this);
+            BulletsFactory = new BulletsFactory(this);
+
+            Terrain = new PhysicalRectangle(-840, -560, 1680, 1120);
+            InnerTerrain = new PhysicalRectangle(-640, -360, 1280, 720);
+
+            CollisionsController = new CollisionsController(this);
+            BulletsController = new BulletsController(this);
+            EnemiesController = new EnemiesController(this);
+            SimPlayersController = new SimPlayersController(this);
+            TurretsController = new TurretsController(this);
+            PlanetarySystemController = new PlanetarySystemController(this);
+            SpaceshipsController = new SpaceshipsController(this);
+            MessagesController = new MessagesController(this);
+            GUIController = new GUIController(this);
+            PowerUpsController = new PowerUpsController(this);
+            LevelsController = new LevelsController(this);
+            EditorController = new EditorController(this);
+            EditorGUIController = new EditorGUIController(this);
+
+            WorldMode = false;
+            DemoMode = false;
+            EditorMode = false;
+            EditorState = EditorState.Editing;
+            DebugMode = Preferences.Debug;
+            GameAction = PausedGameChoice.None;
 
 
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);
@@ -209,11 +207,12 @@ namespace EphemereGames.Commander.Simulation
             EditorController.PlayerDisconnected += new EditorPlayerHandler(EditorGUIController.DoPlayerDisconnected);
             SimPlayersController.PlayerMoved += new SimPlayerHandler(EditorController.DoPlayerMoved);
             EditorController.PlayerChanged += new EditorPlayerHandler(EditorGUIController.DoPlayerChanged);
-            EditorController.EditorCelestialBodyCommandExecuted += new EditorPlayerCelestialBodyEditorCommandHandler(PlanetarySystemController.DoEditorCelestialBodyCommandExecuted); //must be executed before sync of gui
-            EditorController.EditorCommandExecuted += new EditorPlayerEditorCommandHandler(EditorGUIController.DoEditorCommandExecuted);
-            EditorController.EditorCelestialBodyCommandExecuted += new EditorPlayerCelestialBodyEditorCommandHandler(EditorGUIController.DoEditorCelestialBodyCommandExecuted);
-            EditorController.EditorPanelCommandExecuted += new EditorPlayerPanelEditorCommandHandler(EditorGUIController.DoEditorPanelCommandExecuted);
-            EditorController.EditorPanelCommandExecuted += new EditorPlayerPanelEditorCommandHandler(SimPlayersController.DoEditorPanelCommandExecuted);
+            EditorController.EditorCommandExecuted += new EditorCommandHandler(PlanetarySystemController.DoEditorCommandExecuted); //must be executed before sync of gui
+            EditorController.EditorCommandExecuted += new EditorCommandHandler(EditorGUIController.DoEditorCommandExecuted);
+            EditorController.EditorCommandExecuted += new EditorCommandHandler(PowerUpsController.DoEditorCommandExecuted); //must be done before the Players Controller
+            EditorController.EditorCommandExecuted += new EditorCommandHandler(SimPlayersController.DoEditorCommandExecuted); //must be done before the GUI
+            EditorController.EditorCommandExecuted += new EditorCommandHandler(LevelsController.DoEditorCommandExecuted); // must be donne before the GUI
+            EditorController.EditorCommandExecuted += new EditorCommandHandler(GUIController.DoEditorCommandExecuted);
         }
 
 
@@ -224,46 +223,48 @@ namespace EphemereGames.Commander.Simulation
             LevelsController.Level = Level;
             TurretsFactory.Availables = LevelsController.AvailableTurrets;
             PowerUpsFactory.Availables = LevelsController.AvailablePowerUps;
+            PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
             CollisionsController.Bullets = BulletsController.Bullets;
             CollisionsController.Enemies = EnemiesController.Enemies;
-            SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
-            PlanetarySystemController.CelestialBodies = LevelsController.CelestialBodies;
-            TurretsController.PlanetarySystemController = PlanetarySystemController;
-            EnemiesController.InfiniteWaves = LevelsController.InfiniteWaves;
-            EnemiesController.Waves = LevelsController.Waves;
             CollisionsController.Turrets = TurretsController.Turrets;
-            SimPlayersController.CommonStash = LevelsController.CommonStash;
-            SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
-            GUIController.Path = PlanetarySystemController.Path;
-            GUIController.PathPreview = PlanetarySystemController.PathPreview;
-            EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
-            TurretsController.StartingTurrets = LevelsController.StartingTurrets;
-            EnemiesController.Path = PlanetarySystemController.Path;
             CollisionsController.CelestialBodies = LevelsController.CelestialBodies;
             CollisionsController.Minerals = EnemiesController.Minerals;
+            CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
+            SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
+            SimPlayersController.CommonStash = LevelsController.CommonStash;
+            SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
+            SimPlayersController.SandGlass = GUIController.SandGlass;
+            SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
+            PlanetarySystemController.CelestialBodies = LevelsController.CelestialBodies;
+            TurretsController.PlanetarySystemController = PlanetarySystemController;
+            TurretsController.StartingTurrets = LevelsController.StartingTurrets;
+            EnemiesController.InfiniteWaves = LevelsController.InfiniteWaves;
+            EnemiesController.Waves = LevelsController.Waves;
+            EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
+            EnemiesController.Path = PlanetarySystemController.Path;
             EnemiesController.MineralsCash = LevelsController.Level.Cash;
             EnemiesController.LifePacksGiven = LevelsController.Level.LifePacks;
-            SpaceshipsController.Enemies = EnemiesController.Enemies;
-            MessagesController.Turrets = TurretsController.Turrets;
+            GUIController.Path = PlanetarySystemController.Path;
+            GUIController.PathPreview = PlanetarySystemController.PathPreview;
             GUIController.CompositionNextWave = EnemiesController.NextWaveData;
-            SimPlayersController.SandGlass = GUIController.SandGlass;
             GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
             GUIController.Level = LevelsController.Level;
             GUIController.Enemies = EnemiesController.Enemies;
             GUIController.InfiniteWaves = LevelsController.InfiniteWaves;
             GUIController.Waves = LevelsController.Waves;
             GUIController.AvailableLevelsDemoMode = AvailableLevelsDemoMode;
-            SpaceshipsController.HumanBattleship = GUIController.HumanBattleship;
-            PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
-            SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
-            GUIController.Turrets = TurretsController.Turrets;
-            SpaceshipsController.Minerals = EnemiesController.Minerals;
-            CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
             GUIController.AvailablePowerUps = SimPlayersController.AvailablePowerUps;
             GUIController.AvailableTurrets = SimPlayersController.AvailableTurrets;
+            GUIController.Turrets = TurretsController.Turrets;
+            SpaceshipsController.Enemies = EnemiesController.Enemies;
+            SpaceshipsController.HumanBattleship = GUIController.HumanBattleship;
+            SpaceshipsController.Minerals = EnemiesController.Minerals;
+            MessagesController.Turrets = TurretsController.Turrets;
             EditorController.GeneralMenu = EditorGUIController.GeneralMenu;
             EditorController.Panels = EditorGUIController.Panels;
             EditorController.EditorGUIPlayers = EditorGUIController.Players;
+            EditorController.CelestialBodies = LevelsController.CelestialBodies;
+            EditorGUIController.CelestialBodies = LevelsController.CelestialBodies;
 
             LevelsController.Initialize();
             EnemiesController.Initialize();
@@ -480,6 +481,15 @@ namespace EphemereGames.Commander.Simulation
                     PowerUpsController.DoInputPressed(simPlayer);
             }
 
+            if (EditorMode)
+            {
+                if (button == MouseConfiguration.Select)
+                    EditorController.DoSelectAction(simPlayer);
+            }
+
+            if (EditorMode && EditorState == EditorState.Editing)
+                return;
+
             if (!DemoMode)
             {
                 if (button == MouseConfiguration.Select)
@@ -490,12 +500,6 @@ namespace EphemereGames.Commander.Simulation
 
                 if (button == MouseConfiguration.AdvancedView)
                     SimPlayersController.DoAdvancedViewAction(player, true);
-            }
-
-            if (EditorMode)
-            {
-                if (button == MouseConfiguration.Select)
-                    EditorController.DoSelectAction(simPlayer);
             }
         }
 
@@ -508,7 +512,10 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
-            if (!DemoMode && button == MouseConfiguration.AdvancedView && !DemoMode)
+            if (EditorMode && EditorState == EditorState.Editing)
+                return;
+
+            if (!DemoMode && button == MouseConfiguration.AdvancedView)
                 SimPlayersController.DoAdvancedViewAction(player, false);
 
             if (simPlayer.PowerUpInUse != PowerUpType.None && button == MouseConfiguration.Select)
@@ -524,13 +531,16 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
+            if (EditorMode)
+                EditorController.DoNextOrPreviousAction(simPlayer, delta);
+
+            if (EditorMode && EditorState == EditorState.Editing)
+                return;
+
             if (DemoMode)
                 SimPlayersController.DoGameAction(player, delta);
             else
                 SimPlayersController.DoNextOrPreviousAction(player, delta);
-
-            if (EditorMode)
-                EditorController.DoNextOrPreviousAction(simPlayer, delta);
         }
 
 
@@ -578,6 +588,19 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
+            if (EditorMode)
+            {
+                if (button == GamePadConfiguration.Select)
+                    EditorController.DoSelectAction(simPlayer);
+                else if (button == GamePadConfiguration.SelectionNext)
+                    EditorController.DoNextOrPreviousAction(simPlayer, 1);
+                else if (button == GamePadConfiguration.SelectionPrevious)
+                    EditorController.DoNextOrPreviousAction(simPlayer, -1);
+            }
+
+            if (EditorMode && EditorState == EditorState.Editing)
+                return;
+
             if (simPlayer.PowerUpInUse != PowerUpType.None)
             {
                 if (button == GamePadConfiguration.Cancel)
@@ -608,16 +631,6 @@ namespace EphemereGames.Commander.Simulation
                 if (button == GamePadConfiguration.AdvancedView)
                     SimPlayersController.DoAdvancedViewAction(player, true);
             }
-
-            if (EditorMode)
-            {
-                if (button == GamePadConfiguration.Select)
-                    EditorController.DoSelectAction(simPlayer);
-                else if (button == GamePadConfiguration.SelectionNext)
-                    EditorController.DoNextOrPreviousAction(simPlayer, 1);
-                else if (button == GamePadConfiguration.SelectionPrevious)
-                    EditorController.DoNextOrPreviousAction(simPlayer, -1);
-            }
         }
 
 
@@ -631,6 +644,9 @@ namespace EphemereGames.Commander.Simulation
 
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(player);
+
+            if (EditorMode && EditorState == EditorState.Editing)
+                return;
 
             if (button == GamePadConfiguration.AdvancedView && !DemoMode)
                 SimPlayersController.DoAdvancedViewAction(player, false);

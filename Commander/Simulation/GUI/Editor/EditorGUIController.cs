@@ -15,6 +15,8 @@
         private Simulator Simulator;
         private EditorGUIPlayer PlayerBrowsingGeneralMenu;
 
+        private CelestialBodiesPathPreviews CelestialBodiesPathPreviews;
+
         private ContextualMenusCollisions ContextualMenusCollisions;
 
 
@@ -26,23 +28,60 @@
 
             Players = new Dictionary<EditorPlayer, EditorGUIPlayer>();
 
+            CelestialBodiesPathPreviews = new CelestialBodiesPathPreviews(Simulator);
+
             Panels = new Dictionary<EditorPanel, Panel>(EditorPanelComparer.Default);
 
-            var panel = new Panel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            panel.SetTitle("Player");
-            Panels.Add(EditorPanel.Player, panel);
+            // Player's panel
+            VerticalPanel playerPanel = new VerticalPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            playerPanel.SetTitle("Player");
+            playerPanel.AddWidget("Lives", new NumericHorizontalSlider("Starting lives", 0, 50, 0, 1, 100));
+            playerPanel.AddWidget("Cash", new NumericHorizontalSlider("Starting money", 0, 50000, 0, 500, 100));
+            Panels.Add(EditorPanel.Player, playerPanel);
 
-            panel = new Panel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            panel.SetTitle("Load");
-            Panels.Add(EditorPanel.Load, panel);
+            // Turrets' panel
+            GridPanel turretsPanel = new GridPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            turretsPanel.SetTitle("Turrets");
 
-            panel = new Panel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            panel.SetTitle("Save As...");
-            Panels.Add(EditorPanel.Save, panel);
+            foreach (var turret in Simulator.TurretsFactory.All)
+                turretsPanel.AddWidget(turret.Key.ToString(), new TurretCheckBox(Simulator.TurretsFactory.Create(turret.Key)));
+            Panels.Add(EditorPanel.Turrets, turretsPanel);
 
-            panel = new Panel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            panel.SetTitle("Delete");
-            Panels.Add(EditorPanel.Delete, panel);
+            // PowerUps' panel
+            GridPanel powerUpsPanel = new GridPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            powerUpsPanel.SetTitle("Power-Ups");
+
+            foreach (var powerUp in Simulator.PowerUpsFactory.All)
+                powerUpsPanel.AddWidget(powerUp.Key.ToString(),
+                    new PowerUpCheckBox(powerUp.Value.Category == PowerUpCategory.Turret ?
+                        Simulator.TurretsFactory.All[powerUp.Value.AssociatedTurret].BaseImage.TextureName : powerUp.Value.BuyImage,
+                        powerUp.Key));
+            Panels.Add(EditorPanel.PowerUps, powerUpsPanel);
+
+            // General panel
+            VerticalPanel generalPanel = new VerticalPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            generalPanel.SetTitle("General");
+            generalPanel.AddWidget("Difficulty", new ChoicesHorizontalSlider("Difficulty", new List<string>() { "Easy", "Normal", "Hard" }, 0));
+            generalPanel.AddWidget("World", new NumericHorizontalSlider("World #", 1, 20, 1, 1, 100));
+            generalPanel.AddWidget("Level", new NumericHorizontalSlider("Level #", 1, 50, 1, 1, 100));
+            Panels.Add(EditorPanel.General, generalPanel);
+
+            // Background panel
+            GridPanel backgroundPanel = new GridPanel(Simulator.Scene, Vector3.Zero, new Vector2(600, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false, NbColumns = 4 };
+            backgroundPanel.SetTitle("Background");
+
+            for (int i = 1; i <= 16; i++)
+                backgroundPanel.AddWidget("fondecran" + i, new ImageWidget("fondecran" + i, 0.1f));
+            Panels.Add(EditorPanel.Background, backgroundPanel);
+
+            // Waves panel
+            SlideshowPanel wavesPanel = new SlideshowPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            wavesPanel.SetTitle("Waves");
+
+            for (int i = 0; i < 20; i++)
+                wavesPanel.AddWidget("wave" + i, new WaveSubPanel(Simulator, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White));
+
+            Panels.Add(EditorPanel.Waves, wavesPanel);
 
             ContextualMenusCollisions = new ContextualMenusCollisions();
         }
@@ -58,6 +97,8 @@
                 panel.Visible = false;
 
             GeneralMenu.Initialize();
+
+            CelestialBodiesPathPreviews.CelestialBodies = CelestialBodies;
         }
 
 
@@ -151,27 +192,50 @@
                 menu.Position = GeneralMenu.Menus[GeneralMenu.SubMenuToFadeOut].Position;
                 menu.Draw();
             }
+
+            CelestialBodiesPathPreviews.Draw();
         }
 
 
-        public void DoEditorCommandExecuted(EditorPlayer p, EditorCommand command)
+        public void DoEditorCommandExecuted(EditorCommand command)
         {
             if (command.Name == "PlaytestState" || command.Name == "EditState")
+            {
                 ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(3)).Next();
-            else if (command.Name == "PauseSimulation" || command.Name == "ResumeSimulation")
+                return;
+            }
+
+
+            if (command.Name == "PauseSimulation" || command.Name == "ResumeSimulation")
+            {
                 ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(5)).Next();
+                return;
+            }
+
+
+            if (command.Type == EditorCommandType.Panel)
+            {
+                var panelCommand = (EditorPanelCommand) command;
+
+                Panels[panelCommand.Panel].Fade(panelCommand.Show ? 0 : 255, panelCommand.Show ? 255 : 0, 500);
+                return;
+            }
+
+
+            if (command.Type == EditorCommandType.CelestialBody)
+                DoEditorCelestialBodyCommandExecuted((EditorCelestialBodyCommand) command);
         }
 
 
-        public void DoEditorPanelCommandExecuted(EditorPlayer p, EditorPanelCommand command)
+        private void DoEditorCelestialBodyCommandExecuted(EditorCelestialBodyCommand command)
         {
-            Panels[command.Panel].Fade(command.Show ? 0 : 255, command.Show ? 255 : 0, 500);
-        }
+            var player = Players[command.Owner];
 
-
-        public void DoEditorCelestialBodyCommandExecuted(EditorPlayer p, EditorCelestialBodyCommand command)
-        {
-            var player = Players[p];
+            if (command.Name == "ShowPathPreview")
+                command.CelestialBody.ShowPath = true;
+            
+            else if (command.Name == "HidePathPreview")
+                command.CelestialBody.ShowPath = false;
 
             player.CelestialBodyMenu.SyncData();
         }

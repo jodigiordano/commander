@@ -112,6 +112,24 @@
         }
 
 
+        public void AddAsteroidBelt()
+        {
+            var c = new CelestialBodyDescriptor()
+            {
+                Name = "Asteroid belt",
+                Position = new Vector3(700, -400, 0),
+                Speed = 2560000,
+                StartingPosition = 40,
+                Size = Size.Small,
+                Images = new List<string>() { "Asteroid" },
+                PathPriority = int.MinValue + 1
+            };
+            c.AddTurret(TurretType.Alien, 1, Vector3.Zero, true, false, false);
+            
+            PlanetarySystem.Add(c);
+        }
+
+
         public double ParTime
         {
             get
@@ -232,7 +250,7 @@
         [ContentSerializer(Optional = true)]
         public string ParticulesEffect;
 
-        public int Speed;
+        public float Speed;
         public int PathPriority;
         public Vector3 Position;
 

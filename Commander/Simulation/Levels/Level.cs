@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -82,7 +83,51 @@
 
         public void SyncDescriptor()
         {
+            // Sync planetary system
             Descriptor.PlanetarySystem = Simulator.PlanetarySystemController.GenerateDescriptor();
+
+            // Sync turrets
+            Descriptor.AvailableTurrets.Clear();
+
+            foreach (var type in Simulator.TurretsFactory.Availables.Keys)
+                Descriptor.AvailableTurrets.Add(type);
+
+            // Sync power-ups
+            Descriptor.AvailablePowerUps.Clear();
+
+            foreach (var type in Simulator.PowerUpsFactory.Availables.Keys)
+                Descriptor.AvailablePowerUps.Add(type);
+
+            // Sync info
+            Descriptor.Infos.Background = Background.TextureName;
+            Descriptor.Infos.Difficulty = Difficulty;
+            Descriptor.Infos.Mission = Mission;
+
+            // Sync player
+            Descriptor.Player.Lives = CommonStash.Lives;
+            Descriptor.Player.Money = CommonStash.Cash;
+
+            // Sync planet to protect
+            if (CelestialBodyToProtect != null)
+                Descriptor.Objective.CelestialBodyToProtect = CelestialBodyToProtect.PathPriority;
+
+            // Sync Waves
+            Descriptor.Waves.Clear();
+
+            foreach (var w in Waves)
+                Descriptor.Waves.Add(w.Descriptor);
+
+            // Sync Asteroid Belt
+            var asteroidBelt = GetCelestialBodyWithLowestPathPriority(Descriptor.PlanetarySystem);
+
+            Bag<EnemyType> enemies = new Bag<EnemyType>();
+
+            foreach (var w in Descriptor.Waves)
+                foreach (var e in w.Enemies)
+                    enemies.Add(e);
+
+            foreach (var e in enemies)
+                asteroidBelt.Images.Add(e.ToString("g"));
         }
 
 
@@ -112,7 +157,7 @@
                        descriptor.Position,
                        descriptor.Offset,
                        descriptor.Size,
-                       descriptor.Speed,
+                       descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                        Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f
@@ -130,7 +175,7 @@
                        descriptor.Position,
                        descriptor.Offset,
                        descriptor.Size,
-                       descriptor.Speed,
+                       descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                        descriptor.Image,
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f
@@ -146,7 +191,7 @@
                         descriptor.Name,
                         descriptor.Position,
                         descriptor.Size,
-                        descriptor.Speed,
+                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                         descriptor.Images,
                         descriptor.StartingPosition
                     );
@@ -155,6 +200,9 @@
                 c.PathPriority = descriptor.PathPriority;
                 c.Selectionnable = descriptor.CanSelect;
                 c.Invincible = descriptor.Invincible;
+
+                if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)
+                    c.AliveOverride = true;
 
                 PlanetarySystem.Add(c);
             }
@@ -235,6 +283,21 @@
 
             foreach (var type in Descriptor.AvailablePowerUps)
                 AvailablePowerUps.Add(type, Simulator.PowerUpsFactory.Create(type));
+        }
+
+
+        private CelestialBodyDescriptor GetCelestialBodyWithLowestPathPriority(List<CelestialBodyDescriptor> celestialBodies)
+        {
+            if (celestialBodies.Count == 0)
+                return null;
+
+            CelestialBodyDescriptor lowest = celestialBodies[0];
+
+            foreach (var c in celestialBodies)
+                if (lowest.PathPriority == int.MinValue || c.PathPriority < lowest.PathPriority)
+                    lowest = c;
+
+            return lowest;
         }
     }
 }

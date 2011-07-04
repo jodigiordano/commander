@@ -162,4 +162,21 @@ namespace EphemereGames.Commander.Simulation
         Editing,
         Playtest
     }
+
+
+    enum EditorCommandType
+    {
+        Basic,
+        Panel,
+        CelestialBody,
+        Player
+    }
+
+
+    enum WaveType
+    {
+        Homogene = 0,
+        DistinctFollow,
+        PackedH
+    }
 }

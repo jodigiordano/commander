@@ -7,6 +7,7 @@
     {
         public PowerUpType Type             { get; protected set; }
         public PowerUpCategory Category     { get; protected set; }
+        public TurretType AssociatedTurret  { get; protected set; }
         public bool PayOnActivation         { get; protected set; }
         public bool PayOnUse                { get; protected set; }
         public string BuyImage              { get; protected set; }
@@ -45,6 +46,7 @@
             Category = PowerUpCategory.Other;
             TerminatedOverride = false;
             Owner = null;
+            AssociatedTurret = TurretType.None;
         }
 
 

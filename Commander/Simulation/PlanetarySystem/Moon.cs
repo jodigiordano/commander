@@ -6,14 +6,15 @@
 
     abstract class Moon
     {
+        public CelestialBody CelestialBody;
+        public Image Representation;
+
         protected Simulator Simulation;
-        protected CelestialBody CelestialBody;
         protected Matrix RotationMatrix;
         protected Vector3 Position;
         protected Vector3 relativePosition;
         protected double RotationTime;
         protected double ActualRotationTime;
-        public Image Representation;
         protected bool Inversed;
 
 
@@ -54,21 +55,9 @@
         }
 
 
-        //public void Show()
-        //{
-        //    Simulation.Scene.Add(Representation);
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Simulation.Scene.Remove(Representation);
-        //}
-
-
         public void Draw()
         {
-            Representation.Position = this.Position;
+            Representation.Position = Position;
             Simulation.Scene.Add(Representation);
         }
     }

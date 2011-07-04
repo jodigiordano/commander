@@ -38,13 +38,13 @@
 
             var choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Load", Simulator.EditorCommands["ShowLoadPanel"]),
-                new EditorTextContextualMenuChoice("Save", Simulator.EditorCommands["SaveLevel"]),
-                new EditorTextContextualMenuChoice("Save as...", Simulator.EditorCommands["ShowSavePanel"]),
-                new EditorToggleContextualMenuChoice(new List<string>() { "Playtest", "Edit" }, new List<EditorCommand>() { Simulator.EditorCommands["PlaytestState"], Simulator.EditorCommands["EditState"] }),
-                new EditorTextContextualMenuChoice("Restart", Simulator.EditorCommands["RestartSimulation"]),
+                new EditorTextContextualMenuChoice("Load", new EditorPanelCommand("ShowPanel", EditorPanel.Load, true)),
+                new EditorTextContextualMenuChoice("Save", new EditorCommand("SaveLevel")),
+                new EditorTextContextualMenuChoice("Save as...", new EditorPanelCommand("ShowPanel", EditorPanel.Save, true)),
+                new EditorToggleContextualMenuChoice(new List<string>() { "Playtest", "Edit" }, new List<EditorCommand>() { new EditorCommand("PlaytestState"), new EditorCommand("EditState") }),
+                new EditorTextContextualMenuChoice("Restart", new EditorCommand("RestartSimulation")),
                 new EditorToggleContextualMenuChoice(new List<string>() { "Pause", "Resume" }, new List<EditorCommand>() { new EditorCommand("PauseSimulation"), new EditorCommand("ResumeSimulation") }),
-                new EditorTextContextualMenuChoice("Delete", Simulator.EditorCommands["ShowDeletePanel"])
+                new EditorTextContextualMenuChoice("Delete", new EditorPanelCommand("ShowPanel", EditorPanel.Delete, true))
             };
 
             var menu = new ContextualMenu(simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, Color.White, choices, 5);
@@ -55,11 +55,11 @@
 
             choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Background", Simulator.EditorCommands["ShowBackgroundPanel"]),
-                new EditorTextContextualMenuChoice("General", Simulator.EditorCommands["ShowGeneralPanel"]),
-                new EditorTextContextualMenuChoice("Turrets", Simulator.EditorCommands["ShowTurretsPanel"]),
-                new EditorTextContextualMenuChoice("Power-ups", Simulator.EditorCommands["ShowPowerUpsPanel"]),
-                new EditorTextContextualMenuChoice("Player", Simulator.EditorCommands["ShowPlayerPanel"])
+                new EditorTextContextualMenuChoice("Background", new EditorPanelCommand("ShowPanel", EditorPanel.Background, true)),
+                new EditorTextContextualMenuChoice("General", new EditorPanelCommand("ShowPanel", EditorPanel.General, true)),
+                new EditorTextContextualMenuChoice("Turrets", new EditorPanelCommand("ShowPanel", EditorPanel.Turrets, true)),
+                new EditorTextContextualMenuChoice("Power-ups", new EditorPanelCommand("ShowPanel", EditorPanel.PowerUps, true)),
+                new EditorTextContextualMenuChoice("Player", new EditorPanelCommand("ShowPanel", EditorPanel.Player, true))
             };
 
             menu = new ContextualMenu(simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, Color.White, choices, 5);
@@ -70,10 +70,10 @@
 
             choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Quick generate", Simulator.EditorCommands["QuickGeneratePlanetarySystem"]),
-                new EditorTextContextualMenuChoice("Generate", Simulator.EditorCommands["ShowGeneratePlanetarySystemPanel"]),
-                new EditorTextContextualMenuChoice("Add a planet", Simulator.EditorCommands["AddPlanet"]),
-                new EditorTextContextualMenuChoice("Validate", Simulator.EditorCommands["ValidatePlanetarySystem"]),
+                new EditorTextContextualMenuChoice("Quick generate", new EditorCelestialBodyCommand("QuickGeneratePlanetarySystem")),
+                new EditorTextContextualMenuChoice("Generate", new EditorPanelCommand("ShowPanel", EditorPanel.GeneratePlanetarySystem, true)),
+                new EditorTextContextualMenuChoice("Add a planet", new EditorCelestialBodyCommand("AddPlanet")),
+                new EditorTextContextualMenuChoice("Validate", new EditorCelestialBodyCommand("ValidatePlanetarySystem")),
                 new EditorTextContextualMenuChoice("Clear", new EditorCelestialBodyCommand("Clear")),
             };
 
@@ -85,7 +85,7 @@
 
             choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Edit...", Simulator.EditorCommands["ShowWavesPanel"]),
+                new EditorTextContextualMenuChoice("Edit...", new EditorPanelCommand("ShowPanel", EditorPanel.Waves, true)),
             };
 
             menu = new ContextualMenu(simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, Color.White, choices, 5);
@@ -115,6 +115,11 @@
 
         public EditorGeneralMenuChoice GetSelection(Circle circle)
         {
+            if (Simulator.EditorState == EditorState.Playtest)
+                return Physics.CircleRectangleCollision(circle, Menus[EditorGeneralMenuChoice.File].GetRectangle()) ?
+                    EditorGeneralMenuChoice.File :
+                    EditorGeneralMenuChoice.None;
+
             foreach (var kvp in Menus)
                 if (Physics.CircleRectangleCollision(circle, kvp.Value.GetRectangle()))
                     return kvp.Key;

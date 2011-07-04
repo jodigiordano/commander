@@ -58,18 +58,12 @@
 
         public void Initialize()
         {
-            AvailablePowerUps.Clear();
-            AvailableTurrets.Clear();
-            Players.Clear();
-
-            foreach (var turret in Simulator.TurretsFactory.Availables.Keys)
-                AvailableTurrets.Add(turret, false);
-
-            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
-                AvailablePowerUps.Add(powerUp, false);
+            InitializePowerUpsAndTurrets();
 
             CheckAvailablePowerUps();
             CheckAvailableTurrets();
+            
+            Players.Clear();
 
             PlayerInAdvancedView = null;
             PlayerInNextWave = null;
@@ -513,32 +507,62 @@
         }
 
 
-        public void DoEditorPanelCommandExecuted(EditorPlayer p, EditorPanelCommand command)
+        public void DoEditorCommandExecuted(EditorCommand command)
         {
-            if (command.Show)
+            if (command.Name == "AddOrRemovePowerUp")
             {
-                foreach (var player in Players.Values)
-                {
-                    player.ActualSelection.CelestialBody = null;
-                    player.ActualSelection.Turret = null;
-                    player.ActualSelection.TurretToPlace = null;
+                InitializePowerUpsAndTurrets();
+                CheckAvailablePowerUps();
 
-                    NotifyPlayerChanged(player);
+                foreach (var pl in Players.Values)
+                    pl.Initialize();
+
+                return;
+            }
+
+
+            if (command.Type == EditorCommandType.Panel)
+            {
+                if (((EditorPanelCommand) command).Show)
+                {
+                    foreach (var player in Players.Values)
+                    {
+                        player.ActualSelection.CelestialBody = null;
+                        player.ActualSelection.Turret = null;
+                        player.ActualSelection.TurretToPlace = null;
+
+                        NotifyPlayerChanged(player);
+                    }
+
+                    UpdateSelection = false;
+
+                    foreach (var player in Players.Values)
+                        player.UpdateSelectionz = false;
                 }
 
-                UpdateSelection = false;
+                else
+                {
+                    UpdateSelection = true;
 
-                foreach (var player in Players.Values)
-                    player.UpdateSelectionz = false;
+                    foreach (var player in Players.Values)
+                        player.UpdateSelectionz = true;
+                }
+
+                return;
             }
+        }
 
-            else if (!command.Show)
-            {
-                UpdateSelection = true;
 
-                foreach (var player in Players.Values)
-                    player.UpdateSelectionz = true;
-            }
+        private void InitializePowerUpsAndTurrets()
+        {
+            AvailablePowerUps.Clear();
+            AvailableTurrets.Clear();
+
+            foreach (var turret in Simulator.TurretsFactory.Availables.Keys)
+                AvailableTurrets.Add(turret, false);
+
+            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
+                AvailablePowerUps.Add(powerUp, false);
         }
 
 

@@ -15,7 +15,7 @@
             Waves = new List<Wave>();
             MaxWaves = nbWaves;
 
-            Generator.NbWaves = nbWaves;
+            Generator.WavesCount = nbWaves;
             Generator.DifficultyStart = Descriptor.StartingDifficulty;
             Generator.DifficultyEnd = Descriptor.StartingDifficulty + Descriptor.DifficultyIncrement * nbWaves;
 

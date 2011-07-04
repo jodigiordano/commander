@@ -7,7 +7,7 @@
 
     class EnemiesFactory
     {
-        public List<Enemy> AvailableEnemies { get; private set; }
+        public List<Enemy> All;
         private Dictionary<EnemyType, Pool<Enemy>> EnemiesPools;
         private Simulator Simulator;
 
@@ -58,17 +58,17 @@
             EnemiesPools.Add(EnemyType.Vulcanoid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Swarm, new Pool<Enemy>());
 
-            AvailableEnemies = new List<Enemy>();
-            AvailableEnemies.Add(Get(EnemyType.Asteroid, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Centaur, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Comet, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Meteoroid, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Plutoid, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Trojan, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Apohele, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Damacloid, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Vulcanoid, 1, 1, 1));
-            AvailableEnemies.Add(Get(EnemyType.Swarm, 1, 1, 1));
+            All = new List<Enemy>();
+            All.Add(Get(EnemyType.Asteroid, 1, 1, 1));
+            All.Add(Get(EnemyType.Centaur, 1, 1, 1));
+            All.Add(Get(EnemyType.Comet, 1, 1, 1));
+            All.Add(Get(EnemyType.Meteoroid, 1, 1, 1));
+            All.Add(Get(EnemyType.Plutoid, 1, 1, 1));
+            All.Add(Get(EnemyType.Trojan, 1, 1, 1));
+            All.Add(Get(EnemyType.Apohele, 1, 1, 1));
+            All.Add(Get(EnemyType.Damacloid, 1, 1, 1));
+            All.Add(Get(EnemyType.Vulcanoid, 1, 1, 1));
+            All.Add(Get(EnemyType.Swarm, 1, 1, 1));
         }
 
 

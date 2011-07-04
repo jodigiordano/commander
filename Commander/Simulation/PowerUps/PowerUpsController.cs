@@ -25,6 +25,8 @@
 
         public void Initialize()
         {
+            ActivesPowerUps.Clear();
+
             foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
                 ActivesPowerUps.Add(powerUp, true);
         }
@@ -166,6 +168,13 @@
                 foreach (var p in kvp.Value)
                     p.TerminatedOverride = true;
             }
+        }
+
+
+        public void DoEditorCommandExecuted(EditorCommand command)
+        {
+            if (command.Name == "AddOrRemovePowerUp")
+                Initialize();
         }
 
 

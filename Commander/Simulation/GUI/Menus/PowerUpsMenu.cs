@@ -13,6 +13,8 @@
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public PowerUpType PowerUpToBuy;
 
+        public Vector3 Position;
+
         private Dictionary<PowerUpType, Image> ImagesPowerUpsBuy;
         private Dictionary<PowerUpType, Image> ImagesPlaceHolders;
         private Dictionary<PowerUpType, Turret> ImagesTurretsPowerUps;
@@ -25,7 +27,6 @@
 
         private Simulator Simulator;
         private double VisualPriority;
-        private Vector3 Position;
         private float TextSize;
         private float ImageSize;
         private Vector3 DistanceBetweenTwoChoices;
@@ -68,15 +69,19 @@
             ImagesPowerUpsBuy = new Dictionary<PowerUpType, Image>(PowerUpTypeComparer.Default);
             ImagesPlaceHolders = new Dictionary<PowerUpType, Image>(PowerUpTypeComparer.Default);
             ImagesTurretsPowerUps = new Dictionary<PowerUpType, Turret>(PowerUpTypeComparer.Default);
-
-            HumanBattleship = new HumanBattleship(Simulator, this.Position - new Vector3(300, 75, 0), this.VisualPriority + 0.005f);
-            HumanBattleshipHasArrived = false;
         }
 
 
         public void Initialize()
         {
             Dictionary<PowerUpType, PowerUp> availablePowerUps = Simulator.PowerUpsFactory.Availables;
+
+            ImagesPowerUpsBuy.Clear();
+            ImagesPlaceHolders.Clear();
+            ImagesTurretsPowerUps.Clear();
+
+            HumanBattleship = new HumanBattleship(Simulator, Position - new Vector3(300, 75, 0), VisualPriority + 0.005f);
+            HumanBattleshipHasArrived = false;
 
             var index = 0;
             foreach (var p in availablePowerUps.Values)

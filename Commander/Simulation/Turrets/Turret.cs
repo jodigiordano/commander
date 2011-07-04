@@ -25,8 +25,8 @@
         public int BuyPrice                         { get { return ActualLevel.Value.BuyPrice; } }
         public int UpdatePrice                      { get { return (ActualLevel.Equals(Levels.Last)) ? ActualLevel.Value.BuyPrice : ActualLevel.Next.Value.BuyPrice; } }
         public int SellPrice                        { get { return ActualLevel.Value.SellPrice; } }
-        public float Range                          { get { return ActualLevel.Value.Range * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].RangeMultiplier; } }
-        public double FireRate                      { get { return ActualLevel.Value.FireRate * Simulation.TurretsFactory.BoostLevels[BoostMultiplier].FireRateMultiplier; } }
+        public float Range                          { get { return ActualLevel.Value.Range * Simulator.TurretsFactory.BoostLevels[BoostMultiplier].RangeMultiplier; } }
+        public double FireRate                      { get { return ActualLevel.Value.FireRate * Simulator.TurretsFactory.BoostLevels[BoostMultiplier].FireRateMultiplier; } }
         public int NbCanons                         { get { return ActualLevel.Value.NbCanons; } }
         public double BuildingTime                  { get { return ActualLevel.Value.BuildingTime; } }
         public BulletType BulletType                { get { return ActualLevel.Value.Bullet; } }
@@ -50,7 +50,7 @@
         protected LinkedList<TurretLevel> Levels;
         protected string SfxShooting;
 
-        protected Simulator Simulation;
+        protected Simulator Simulator;
         private bool DisabledOverride;
         private bool CanUpdateOverride;
         private float RotationWander = 0;
@@ -74,7 +74,7 @@
         
         public Turret(Simulator simulator)
         {
-            Simulation = simulator;
+            Simulator = simulator;
             TimeLastBullet = 0;
             Type = TurretType.None;
             Name = "Unknown";
@@ -121,7 +121,7 @@
             PlayerControlled = false;
             UpdatePosition = true;
 
-            BoostGlow = Simulation.Scene.Particles.Get(@"boosterTurret");
+            BoostGlow = Simulator.Scene.Particles.Get(@"boosterTurret");
             BoostGlow.VisualPriority = this.VisualPriorityBackup + 0.006f;
 
             CircleEmitter emitter = (CircleEmitter) BoostGlow.ParticleEffect[0];
@@ -209,7 +209,7 @@
             if (Type != TurretType.SlowMotion && Type != TurretType.Gravitational && Type != TurretType.Alien)
                 DoWanderRotation();
 
-            if (DisabledAnnounciationCounter < 0 && !Simulation.DemoMode)
+            if (DisabledAnnounciationCounter < 0 && !Simulator.DemoMode)
             {
                 if (!this.BackActiveThisTickOverride)
                     Audio.PlaySfx(@"Partie", @"sfxTourelleMiseAJour");
@@ -260,7 +260,7 @@
                 Matrix.CreateRotationZ(MathHelper.PiOver2, out rotationMatrix);
                 Vector3 directionUnitairePerpendiculaire = Vector3.Transform(direction, rotationMatrix);
                 directionUnitairePerpendiculaire.Normalize();
-                TurretBoostLevel boostLevel = Simulation.TurretsFactory.BoostLevels[BoostMultiplier];
+                TurretBoostLevel boostLevel = Simulator.TurretsFactory.BoostLevels[BoostMultiplier];
                 
                 switch (BulletType)
                 {
@@ -270,7 +270,7 @@
                         {
                             Vector3 translation = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
 
-                            BasicBullet p = (BasicBullet) Simulation.BulletsFactory.Get(BulletType.Base);
+                            BasicBullet p = (BasicBullet) Simulator.BulletsFactory.Get(BulletType.Base);
 
                             p.Position = this.Position + translation;
                             p.Direction = direction;
@@ -284,7 +284,7 @@
 
                     case BulletType.Missile:
                     case BulletType.Missile2:
-                        MissileBullet pm = (MissileBullet) Simulation.BulletsFactory.Get(BulletType.Missile);
+                        MissileBullet pm = (MissileBullet) Simulator.BulletsFactory.Get(BulletType.Missile);
 
                         pm.Position = this.Position;
                         pm.Direction = EnemyWatched.Position - this.Position;
@@ -302,7 +302,7 @@
                     case BulletType.LaserMultiple:
                         for (int i = 0; i < NbCanons; i++)
                         {
-                            MultipleLasersBullet pLM = (MultipleLasersBullet) Simulation.BulletsFactory.Get(BulletType.LaserMultiple);
+                            MultipleLasersBullet pLM = (MultipleLasersBullet) Simulator.BulletsFactory.Get(BulletType.LaserMultiple);
 
                             pLM.Turret = this;
                             pLM.TargetOffset = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
@@ -316,7 +316,7 @@
                         break;
 
                     case BulletType.LaserSimple:
-                        LaserBullet pLS = (LaserBullet) Simulation.BulletsFactory.Get(BulletType.LaserSimple);
+                        LaserBullet pLS = (LaserBullet) Simulator.BulletsFactory.Get(BulletType.LaserSimple);
 
                         pLS.Turret = this;
                         pLS.Target = EnemyWatched;
@@ -330,7 +330,7 @@
                         break;
 
                     case BulletType.Gunner:
-                        GunnerBullet gb = (GunnerBullet) Simulation.BulletsFactory.Get(BulletType.Gunner);
+                        GunnerBullet gb = (GunnerBullet) Simulator.BulletsFactory.Get(BulletType.Gunner);
 
                         gb.Turret = this;
                         gb.Target = EnemyWatched;
@@ -344,7 +344,7 @@
                         break;
 
                     case BulletType.SlowMotion:
-                        SlowMotionBullet pSM = (SlowMotionBullet) Simulation.BulletsFactory.Get(BulletType.SlowMotion);
+                        SlowMotionBullet pSM = (SlowMotionBullet) Simulator.BulletsFactory.Get(BulletType.SlowMotion);
 
                         pSM.Position = this.Position;
                         pSM.Radius = Range;
@@ -355,7 +355,7 @@
                         break;
 
                     case BulletType.Nanobots:
-                        NanobotsBullet nb = (NanobotsBullet) Simulation.BulletsFactory.Get(BulletType.Nanobots);
+                        NanobotsBullet nb = (NanobotsBullet) Simulator.BulletsFactory.Get(BulletType.Nanobots);
 
                         nb.Position = this.Position;
                         nb.Direction = direction;
@@ -368,7 +368,7 @@
                         break;
 
                     case BulletType.RailGun:
-                        RailGunBullet rgb = (RailGunBullet) Simulation.BulletsFactory.Get(BulletType.RailGun);
+                        RailGunBullet rgb = (RailGunBullet) Simulator.BulletsFactory.Get(BulletType.RailGun);
 
                         rgb.Position = this.Position;
                         rgb.Direction = direction;
@@ -391,31 +391,17 @@
         }
 
 
-        //public virtual void Show()
-        //{
-        //    Simulation.Scene.Add(CanonImage);
-        //    Simulation.Scene.Add(BaseImage);
-        //    Simulation.Scene.Add(DisabledProgressBarImage);
-        //    Simulation.Scene.Add(DisabledBarImage);
-        //    Simulation.Scene.Add(RangeImage);
-        //    Simulation.Scene.Add(FormImage);
+        public void Fade(int from, int to, double length)
+        {
+            var effect = VisualEffects.Fade(from, to, 0, length);
 
-        //    DisabledProgressBarImage.Color.A = 0;
-        //    DisabledBarImage.Color.A = 0;
-        //    RangeImage.Color.A = 0;
-        //    FormImage.Color.A = 0;
-        //}
-
-
-        //public virtual void Hide()
-        //{
-        //    Simulation.Scene.Remove(CanonImage);
-        //    Simulation.Scene.Remove(BaseImage);
-        //    Simulation.Scene.Remove(DisabledProgressBarImage);
-        //    Simulation.Scene.Remove(DisabledBarImage);
-        //    Simulation.Scene.Remove(RangeImage);
-        //    Simulation.Scene.Remove(FormImage);
-        //}
+            Simulator.Scene.VisualEffects.Add(CanonImage, effect);
+            Simulator.Scene.VisualEffects.Add(BaseImage, effect);
+            Simulator.Scene.VisualEffects.Add(DisabledProgressBarImage, effect);
+            Simulator.Scene.VisualEffects.Add(DisabledBarImage, effect);
+            Simulator.Scene.VisualEffects.Add(RangeImage, effect);
+            Simulator.Scene.VisualEffects.Add(FormImage, effect);
+        }
 
 
         public virtual void Draw()
@@ -437,7 +423,7 @@
                 CanonImage.Rotation = Rotation;
 
 
-            if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulation.DemoMode && !ToPlaceMode)
+            if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulator.DemoMode && !ToPlaceMode)
             {
                 DisabledBarImage.Position = this.Position;
 
@@ -448,8 +434,8 @@
                 DisabledProgressBarImage.Size = new Vector2(pourcTemps * 30, 8);
                 DisabledProgressBarImage.Position = DisabledBarImage.Position - new Vector3(16, 4, 0);
 
-                Simulation.Scene.Add(DisabledProgressBarImage);
-                Simulation.Scene.Add(DisabledBarImage);
+                Simulator.Scene.Add(DisabledProgressBarImage);
+                Simulator.Scene.Add(DisabledBarImage);
             }
 
 
@@ -458,7 +444,7 @@
                 RangeImage.Position = this.Position;
                 RangeImage.SizeX = (Range / 100) * 2;
 
-                Simulation.Scene.Add(RangeImage);
+                Simulator.Scene.Add(RangeImage);
             }
 
 
@@ -467,7 +453,7 @@
                 FormImage.Position = this.Position;
                 FormImage.SizeX = (Circle.Radius / 100) * 2;
 
-                Simulation.Scene.Add(FormImage);
+                Simulator.Scene.Add(FormImage);
             }
 
 
@@ -486,8 +472,8 @@
             }
 
 
-            Simulation.Scene.Add(CanonImage);
-            Simulation.Scene.Add(BaseImage);
+            Simulator.Scene.Add(CanonImage);
+            Simulator.Scene.Add(BaseImage);
         }
 
 
@@ -522,9 +508,9 @@
             BaseImage.SizeX = 3;
             CanonImage.Origin = new Vector2(6, 8);
 
-            if (!Simulation.DemoMode && !Simulation.WorldMode && ActualLevel.Value.Level != 1)
+            if (!Simulator.DemoMode && !Simulator.WorldMode && ActualLevel.Value.Level != 1)
             {
-                RangeEffect = (FadeColorEffect) Simulation.Scene.VisualEffects.Add(RangeImage, VisualEffects.FadeOutTo0(RangeImage.Alpha, 300, 500), UpgradeFadeCompleted);
+                RangeEffect = (FadeColorEffect) Simulator.Scene.VisualEffects.Add(RangeImage, VisualEffects.FadeOutTo0(RangeImage.Alpha, 300, 500), UpgradeFadeCompleted);
                 ShowRange = true;
             }
 

@@ -7,26 +7,36 @@
 
     class PlayerLives
     {
+        private CelestialBody celestialBody;
+
         private Simulator Simulator;
-        private CelestialBody CelestialBody;
         private List<Moon> Moons;
 
 
-        public PlayerLives(Simulator simulator, CelestialBody celestialBody, Color color)
+        public PlayerLives(Simulator simulator, Color color)
         {
             Simulator = simulator;
-            CelestialBody = celestialBody;
 
             Moons = new List<Moon>();
 
             if (CelestialBody == null)
                 return;
 
+            CelestialBody.Moons.Clear();
+        }
 
-            CelestialBody.Lunes.Clear();
 
-            for (int i = 0; i < celestialBody.LifePoints; i++)
-                Moons.Add(CreateMoon());
+        public CelestialBody CelestialBody
+        {
+            get { return celestialBody; }
+            set
+            {
+                celestialBody = value;
+
+                if (value != null)
+                    foreach (var moon in Moons)
+                        moon.CelestialBody = value;
+            }
         }
 
 

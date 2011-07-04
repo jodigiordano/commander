@@ -70,8 +70,7 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Back)
-                TransiteTo("Menu");
+
         }
 
 

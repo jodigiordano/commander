@@ -1,6 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Visual;
 
 
     class EditorController
@@ -8,19 +10,18 @@
         public EditorGeneralMenu GeneralMenu;
         public Dictionary<EditorPanel, Panel> Panels;
         public Dictionary<EditorPlayer, EditorGUIPlayer> EditorGUIPlayers;
+        public List<CelestialBody> CelestialBodies;
 
         public event EditorPlayerHandler PlayerConnected;
         public event EditorPlayerHandler PlayerDisconnected;
         public event EditorPlayerHandler PlayerChanged;
-        public event EditorPlayerEditorCommandHandler EditorCommandExecuted;
-        public event EditorPlayerCelestialBodyEditorCommandHandler EditorCelestialBodyCommandExecuted;
-        public event EditorPlayerPanelEditorCommandHandler EditorPanelCommandExecuted;
+        public event EditorCommandHandler EditorCommandExecuted;
 
         private Dictionary<SimPlayer, EditorPlayer> Players;
         private Simulator Simulator;
 
         private EditorPanel OpenedPanel;
-        private Dictionary<EditorPanel, EditorPanelCommand[]> PanelsOpenCloseCommands;
+        private EditorPlayer CurrentOpenedPanelPlayer;
 
 
         public EditorController(Simulator simulator)
@@ -28,53 +29,6 @@
             Simulator = simulator;
 
             Players = new Dictionary<SimPlayer, EditorPlayer>();
-            PanelsOpenCloseCommands = new Dictionary<EditorPanel, EditorPanelCommand[]>(EditorPanelComparer.Default);
-
-            Simulator.EditorCommands = new Dictionary<string, EditorCommand>()
-            {
-                { "None", new EditorCommand("None") },
-                { "ShowPlayerPanel", new EditorPanelCommand("ShowPlayerPanel", EditorPanel.Player, true)  },
-                { "HidePlayerPanel", new EditorPanelCommand("HidePlayerPanel", EditorPanel.Player, false)  },
-                { "ShowLoadPanel", new EditorPanelCommand("ShowLoadPanel", EditorPanel.Load, true)   },
-                { "HideLoadPanel", new EditorPanelCommand("HideLoadPanel", EditorPanel.Load, false)   },
-                { "ShowWavesPanel", new EditorPanelCommand("ShowWavesPanel", EditorPanel.Waves, true)   },
-                { "HideWavesPanel", new EditorPanelCommand("HideWavesPanel", EditorPanel.Waves, true)   },
-                { "ShowGeneratePlanetarySystemPanel", new EditorPanelCommand("ShowGeneratePlanetarySystemPanel", EditorPanel.GeneratePlanetarySystem, true)   },
-                { "HideGeneratePlanetarySystemPanel", new EditorPanelCommand("HideGeneratePlanetarySystemPanel", EditorPanel.GeneratePlanetarySystem, false)   },
-                { "ShowDeletePanel", new EditorPanelCommand("ShowDeletePanel", EditorPanel.Delete, true)   },
-                { "HideDeletePanel", new EditorPanelCommand("HideDeletePanel", EditorPanel.Delete, false)   },
-                { "ShowPowerUpsPanel", new EditorPanelCommand("ShowPowerUpsPanel", EditorPanel.PowerUps, true)   },
-                { "HidePowerUpsPanel", new EditorPanelCommand("HidePowerUpsPanel", EditorPanel.PowerUps, false)   },
-                { "ShowTurretsPanel", new EditorPanelCommand("ShowTurretsPanel", EditorPanel.Turrets, true)   },
-                { "HideTurretsPanel", new EditorPanelCommand("HideTurretsPanel", EditorPanel.Turrets, false)   },
-                { "ShowGeneralPanel", new EditorPanelCommand("ShowGeneralPanel", EditorPanel.General, true)   },
-                { "HideGeneralPanel", new EditorPanelCommand("HideGeneralPanel", EditorPanel.General, false)   },
-                { "ShowBackgroundPanel", new EditorPanelCommand("ShowBackgroundPanel", EditorPanel.Background, true)   },
-                { "HideBackgroundPanel", new EditorPanelCommand("HideBackgroundPanel", EditorPanel.Background, false)   },
-                { "ShowSavePanel", new EditorPanelCommand("ShowSavePanel", EditorPanel.Save, true)   },
-                { "HideSavePanel", new EditorPanelCommand("HideSavePanel", EditorPanel.Save, false)   },
-                { "SaveLevel", new EditorCommand("SaveLevel")  },
-                { "RestartSimulation", new EditorCommand("RestartSimulation")  },
-                { "QuickGeneratePlanetarySystem", new EditorCommand("QuickGeneratePlanetarySystem")  },
-                { "AddPlanet", new EditorCelestialBodyCommand("Add")  },
-                { "ValidatePlanetarySystem", new EditorCommand("ValidatePlanetarySystem")  },
-                { "PlaytestState", new EditorCommand("PlaytestState")  },
-                { "EditState", new EditorCommand("EditState")  }
-            };
-
-
-            foreach (var command in Simulator.EditorCommands.Values)
-            {
-                var panelCommand = command as EditorPanelCommand;
-
-                if (panelCommand == null)
-                    continue;
-
-                if (!PanelsOpenCloseCommands.ContainsKey(panelCommand.Panel))
-                    PanelsOpenCloseCommands.Add(panelCommand.Panel, new EditorPanelCommand[2]);
-
-                PanelsOpenCloseCommands[panelCommand.Panel][panelCommand.Show ? 0 : 1] = panelCommand;
-            }
         }
 
 
@@ -83,6 +37,22 @@
             Players.Clear();
 
             OpenedPanel = EditorPanel.None;
+
+            Panels[EditorPanel.Player].SetHandler("Lives", DoLives);
+            Panels[EditorPanel.Player].SetHandler("Cash", DoCash);
+
+            Panels[EditorPanel.General].SetHandler("Difficulty", DoDifficulty);
+            Panels[EditorPanel.General].SetHandler("World", DoWorld);
+            Panels[EditorPanel.General].SetHandler("Level", DoLevel);
+
+            Panels[EditorPanel.Turrets].SetHandler(DoTurrets);
+            Panels[EditorPanel.PowerUps].SetHandler(DoPowerUps);
+            Panels[EditorPanel.Background].SetHandler(DoBackgrounds);
+
+            Panels[EditorPanel.Waves].SetHandler(DoWaves);
+
+            foreach (var panel in Panels.Values)
+                panel.CloseButtonHandler = DoClosePanel;
         }
 
 
@@ -171,7 +141,9 @@
 
                 EditorCommand command = GetCommand(choice);
 
-                ExecuteCommand(player, command);
+                command.Owner = player;
+
+                ExecuteCommand(command);
 
                 return;
             }
@@ -181,39 +153,38 @@
             {
                 var panel = Panels[OpenedPanel];
 
-                if (panel.CloseButton.DoClick(player.Circle)) // close a panel
-                {
-                    var closeCommand = PanelsOpenCloseCommands[OpenedPanel][1];
+                CurrentOpenedPanelPlayer = player;
 
-                    OpenedPanel = EditorPanel.None;
-
-                    NotifyEditorPanelCommandExecuted(player, closeCommand);
-                }
+                panel.DoClick(player.Circle);
 
                 return;
             }
 
+            if (Simulator.EditorState == EditorState.Playtest)
+                return;
 
             if (player.SimPlayer.ActualSelection.CelestialBody != null)
             {
                 var choice = EditorGUIPlayers[player].CelestialBodyMenu.Menu.GetCurrentChoice();
                 var command = GetCommand(choice);
 
-                ExecuteCommand(player, command);
+                command.Owner = player;
+
+                ExecuteCommand(command);
 
                 return;
             }
         }
 
 
-        private void ExecuteCommand(EditorPlayer player, EditorCommand command)
+        private void ExecuteCommand(EditorCommand command)
         {
             if (command is EditorCelestialBodyCommand)
-                DoExecuteEditorCelestialBodyCommand(player, (EditorCelestialBodyCommand) command);
+                DoExecuteEditorCelestialBodyCommand((EditorCelestialBodyCommand) command);
             else if (command is EditorPanelCommand)
-                DoExecuteEditorPanelCommand(player, (EditorPanelCommand) command);
+                DoExecuteEditorPanelCommand((EditorPanelCommand) command);
             else
-                DoExecuteEditorCommand(player, command);
+                DoExecuteEditorCommand(command);
         }
 
 
@@ -229,7 +200,7 @@
         }
 
 
-        private void DoExecuteEditorCommand(EditorPlayer player, EditorCommand command)
+        private void DoExecuteEditorCommand(EditorCommand command)
         {
             // toggle editor mode command
             if (command.Name == "PlaytestState")
@@ -266,35 +237,168 @@
                 Simulator.State = GameState.Running;
             }
 
-            NotifyEditorCommandExecuted(player, command);
+            NotifyEditorCommandExecuted(command);
         }
 
 
-        private void DoExecuteEditorPanelCommand(EditorPlayer player, EditorPanelCommand command)
+        private void DoExecuteEditorPanelCommand(EditorPanelCommand command)
         {
             if (OpenedPanel == EditorPanel.None) // open a panel
             {
                 OpenedPanel = command.Panel;
+                NotifyEditorCommandExecuted(command);
+            }
+
+            else if (OpenedPanel == command.Panel) // open a panel that is already opened => close it
+            {
+                var closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false);
+
+                OpenedPanel = EditorPanel.None;
+                
+                NotifyEditorCommandExecuted(closeCommand);
             }
 
             else if (OpenedPanel != command.Panel && command.Show) // open a panel while another is opened
             {
-                var closeCommand = PanelsOpenCloseCommands[OpenedPanel][command.Show ? 1 : 0];
+                var closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false);
 
-                NotifyEditorPanelCommandExecuted(player, closeCommand);
+                NotifyEditorCommandExecuted(closeCommand);
 
                 OpenedPanel = command.Panel;
-            }
 
-            NotifyEditorPanelCommandExecuted(player, command);
+                NotifyEditorCommandExecuted(command);
+            }
         }
 
 
-        private void DoExecuteEditorCelestialBodyCommand(EditorPlayer player, EditorCelestialBodyCommand command)
+        private void DoExecuteEditorCelestialBodyCommand(EditorCelestialBodyCommand command)
         {
-            command.CelestialBody = player.SimPlayer.ActualSelection.CelestialBody;
+            if (command.Name == "AddPlanet")
+                command.CelestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, CelestialBodies, Preferences.PrioriteSimulationCorpsCeleste);
+            else
+                command.CelestialBody = command.Owner.SimPlayer.ActualSelection.CelestialBody;
 
-            NotifyEditorCelestialBodyCommandExecuted(player, command);
+            NotifyEditorCommandExecuted(command);
+        }
+
+
+        private void DoLives(PanelWidget widget)
+        {
+            var slider = (NumericHorizontalSlider) widget;
+
+            var command = new EditorPlayerCommand("AddOrRemoveLives")
+            {
+                LifePoints = slider.Value,
+                Owner = CurrentOpenedPanelPlayer
+            };
+
+            NotifyEditorCommandExecuted(command);
+        }
+
+
+        private void DoCash(PanelWidget widget)
+        {
+            var slider = (NumericHorizontalSlider) widget;
+
+            var command = new EditorPlayerCommand("AddOrRemoveCash")
+            {
+                Cash = slider.Value,
+                Owner = CurrentOpenedPanelPlayer
+            };
+
+            NotifyEditorCommandExecuted(command);
+        }
+
+
+        private void DoDifficulty(PanelWidget widget)
+        {
+            var slider = (ChoicesHorizontalSlider) widget;
+
+            Simulator.Level.Difficulty = slider.Value;
+        }
+
+
+        private void DoWorld(PanelWidget widget)
+        {
+            var slider = (NumericHorizontalSlider) widget;
+
+            Simulator.Level.Mission =
+                slider.Value + "-" +
+                Simulator.Level.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[1];
+        }
+
+
+        private void DoLevel(PanelWidget widget)
+        {
+            var slider = (NumericHorizontalSlider) widget;
+
+            Simulator.Level.Mission =
+                Simulator.Level.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[0] + "-" +
+                slider.Value;
+        }
+
+
+        private void DoTurrets(PanelWidget widget)
+        {
+            var checkbox = (TurretCheckBox) widget;
+
+            if (checkbox.Checked)
+                Simulator.TurretsFactory.Availables.Add(checkbox.Turret.Type, checkbox.Turret);
+            else
+                Simulator.TurretsFactory.Availables.Remove(checkbox.Turret.Type);
+        }
+
+
+        private void DoPowerUps(PanelWidget widget)
+        {
+            var checkbox = (PowerUpCheckBox) widget;
+
+            if (checkbox.Checked)
+                Simulator.PowerUpsFactory.Availables.Add(checkbox.PowerUp, Simulator.PowerUpsFactory.Create(checkbox.PowerUp));
+            else
+                Simulator.PowerUpsFactory.Availables.Remove(checkbox.PowerUp);
+
+            NotifyEditorCommandExecuted(new EditorCommand("AddOrRemovePowerUp"));
+        }
+
+
+        private void DoBackgrounds(PanelWidget widget)
+        {
+            var img = (ImageWidget) widget;
+
+            Simulator.Level.Background = new Image(img.Image.TextureName) { VisualPriority = Preferences.PrioriteFondEcran };
+        }
+
+
+        private void DoWaves(PanelWidget widget)
+        {
+            // Prepare the waves
+            List<WaveDescriptor> descriptors = new List<WaveDescriptor>();
+
+            var panel = Panels[EditorPanel.Waves];
+
+            foreach (var w in panel.Widgets.Values)
+            {
+                var subPanel = (WaveSubPanel) w;
+
+                if (subPanel.EnemiesCount != 0)
+                    descriptors.Add(subPanel.GenerateDescriptor());
+            }
+
+            Simulator.Level.Waves.Clear();
+
+            foreach (var wd in descriptors)
+                Simulator.Level.Waves.AddLast(new Wave(Simulator, wd));
+        }
+
+
+        private void DoClosePanel()
+        {
+            var closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false) { Owner = CurrentOpenedPanelPlayer };
+
+            OpenedPanel = EditorPanel.None;
+
+            NotifyEditorCommandExecuted(closeCommand);
         }
 
 
@@ -319,24 +423,10 @@
         }
 
 
-        private void NotifyEditorCommandExecuted(EditorPlayer player, EditorCommand command)
+        private void NotifyEditorCommandExecuted(EditorCommand command)
         {
             if (EditorCommandExecuted != null)
-                EditorCommandExecuted(player, command);
-        }
-
-
-        private void NotifyEditorCelestialBodyCommandExecuted(EditorPlayer player, EditorCelestialBodyCommand command)
-        {
-            if (EditorCelestialBodyCommandExecuted != null)
-                EditorCelestialBodyCommandExecuted(player, command);
-        }
-
-
-        private void NotifyEditorPanelCommandExecuted(EditorPlayer player, EditorPanelCommand command)
-        {
-            if (EditorPanelCommandExecuted != null)
-                EditorPanelCommandExecuted(player, command);
+                EditorCommandExecuted(command);
         }
     }
 }

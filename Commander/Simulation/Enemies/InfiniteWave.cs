@@ -18,7 +18,7 @@
             ActualDifficulty = Descriptor.StartingDifficulty - Descriptor.DifficultyIncrement;
 
             Generator = new WaveGenerator();
-            Generator.NbWaves = 1;
+            Generator.WavesCount = 1;
             Generator.Enemies = Descriptor.Enemies;
             Generator.MineralsPerWave = Descriptor.MineralsPerWave;
             Generator.QtyEnemies = Main.Random.Next((int) Descriptor.MinMaxEnemiesPerWave.X, (int) Descriptor.MinMaxEnemiesPerWave.Y);
