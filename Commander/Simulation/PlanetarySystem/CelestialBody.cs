@@ -99,6 +99,8 @@
 
             Offset = offset;
             Position = LastPosition = BasePosition = startingPosition;
+            
+            Speed = float.MaxValue;
             SetSpeed(speed);
 
             InitMoons();
@@ -193,7 +195,8 @@
 
         public void SetSpeed(float speed)
         {
-            double actualPourc = (Speed == 0) ? 0 : ActualRotationTime / Speed;
+            //double actualPourc = (Speed == 0) ? 0 : ActualRotationTime / Speed;
+            double actualPourc = (Speed == float.MaxValue) ? 0 : ActualRotationTime / Speed;
 
             Speed = speed;
             ActualRotationTime = Speed * actualPourc;
@@ -266,11 +269,9 @@
         public virtual void Update()
         {
             if (Speed != float.MaxValue)
-            {
                 ActualRotationTime = (ActualRotationTime + Preferences.TargetElapsedTimeMs) % Speed;
 
-                Move();
-            }
+            Move();
 
             Circle.Position = Position;
             InnerTurretZone.Position = Position;
@@ -376,7 +377,8 @@
         {
             if (rotationTime == float.MaxValue)
             {
-                Vector3.Add(ref basePosition, ref offset, out result);
+                //Vector3.Add(ref basePosition, ref offset, out result);
+                result = basePosition;
 
                 return;
             }

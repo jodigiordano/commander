@@ -67,22 +67,22 @@
 
         public void Update()
         {
-            if (!Simulator.DemoMode && Player.NextInput != Vector3.Zero)
-            {
-                if (Turret != null)
-                {
-                    Turret.PlayerCheckedIn = null;
-                    Turret = null;
-                }
+            //if (!Simulator.DemoMode && Player.NextInput != Vector3.Zero)
+            //{
+            //    if (Turret != null)
+            //    {
+            //        Turret.PlayerCheckedIn = null;
+            //        Turret = null;
+            //    }
 
-                if (CelestialBody != null)
-                {
-                    CelestialBody.PlayerCheckedIn = null;
-                    CelestialBody = null;
-                }
+            //    if (CelestialBody != null)
+            //    {
+            //        CelestialBody.PlayerCheckedIn = null;
+            //        CelestialBody = null;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
             if (Turret != null && Physics.CircleCicleCollision(Player.Circle, Turret.Circle))
             {

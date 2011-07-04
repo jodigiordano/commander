@@ -44,7 +44,7 @@
         public static MouseButton AdvancedView = MouseButton.Middle;
         public static MouseButton SelectionNext = MouseButton.MiddleDown;
         public static MouseButton SelectionPrevious = MouseButton.MiddleUp;
-        public static float Speed = 0.5f;
+        public static float Speed = 1.5f;
 
 
         public static List<MouseButton> ToList
