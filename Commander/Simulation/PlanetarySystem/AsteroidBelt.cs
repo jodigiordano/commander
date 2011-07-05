@@ -39,6 +39,7 @@
                 name,
                 basePosition,
                 Vector3.Zero,
+                0,
                 size,
                 speed,
                 null,
@@ -47,14 +48,14 @@
         {
             List<Image> representations = new List<Image>();
 
-            for (int j = 0; j < images.Count; j++)
-                representations.Add(new Image(images[j]));
-
-
-            Asteroids = new List<Asteroid>(NbAsteroids);
+            foreach (var image in images)
+                representations.Add(new Image(image));
 
             if (representations.Count == 0)
                 representations.Add(new Image("Asteroid"));
+
+            Asteroids = new List<Asteroid>(NbAsteroids);
+
 
             for (int i = 0; i < NbAsteroids; i++)
             {
@@ -71,7 +72,7 @@
                 asteroid.Image.Color.A = 60;
                 asteroid.Image.SizeX = (Main.Random.Next(20, 70) / 30.0f) * 3;
 
-                CelestialBody.Move(Speed, (ActualRotationTime + asteroid.TimeOffset) % Speed, ref BasePosition, ref asteroid.Offset, ref asteroid.Image.position);
+                CelestialBody.Move(Speed, (ActualRotationTime + asteroid.TimeOffset) % Speed, ref BasePosition, ref asteroid.Offset, ref RotationMatrix, ref asteroid.Image.position);
 
                 Asteroids.Add(asteroid);
             }
@@ -84,7 +85,7 @@
 
             foreach (var a in Asteroids)
             {
-                CelestialBody.Move(Speed, (ActualRotationTime + a.TimeOffset) % Speed, ref BasePosition, ref a.Offset, ref a.Image.position);
+                CelestialBody.Move(Speed, (ActualRotationTime + a.TimeOffset) % Speed, ref BasePosition, ref a.Offset, ref RotationMatrix, ref a.Image.position);
                 a.Image.Rotation += a.RotationSpeed;
             }
         }

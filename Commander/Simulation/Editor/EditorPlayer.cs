@@ -50,6 +50,36 @@
         }
 
 
+        public void DoSelectAction()
+        {
+            if (SimPlayer.ActualSelection.CelestialBody == null)
+                return;
+
+            if (ActualSelection.CelestialBodyChoice == 8)
+                SimPlayer.ActualSelection.EditingState = EditorEditingState.MovingCB;
+            else if (ActualSelection.CelestialBodyChoice == 9)
+                SimPlayer.ActualSelection.EditingState = EditorEditingState.RotatingCB;
+            else if (ActualSelection.CelestialBodyChoice == 10)
+                SimPlayer.ActualSelection.EditingState = EditorEditingState.ShrinkingCB;
+            else if (ActualSelection.CelestialBodyChoice == 11)
+                SimPlayer.ActualSelection.EditingState = EditorEditingState.StartPosCB;
+
+            if (SimPlayer.ActualSelection.EditingState != EditorEditingState.None)
+                ActualSelection.CelestialBody = SimPlayer.ActualSelection.CelestialBody;
+        }
+
+
+        public void DoCancelAction()
+        {
+            if (SimPlayer.ActualSelection.EditingState == EditorEditingState.MovingCB)
+                SimPlayer.NinjaPosition = ActualSelection.CelestialBody.Position;
+
+            ActualSelection.CelestialBody = null;
+
+            SimPlayer.ActualSelection.EditingState = EditorEditingState.None;
+        }
+
+
         public void NextGeneralMenuChoice()
         {
             if (ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
@@ -84,7 +114,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 11;
+            int nbChoices = 13;
 
             actual += 1;
 
@@ -101,7 +131,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 11;
+            int nbChoices = 13;
 
             actual -= 1;
 

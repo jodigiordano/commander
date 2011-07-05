@@ -119,6 +119,9 @@
             if (State == GameState.Won)
                 return;
 
+            if (celestialBody == null)
+                return;
+
             if (!(celestialBody is AsteroidBelt))
                 celestialBody.DoHit(enemy);
 
@@ -222,6 +225,10 @@
             else if (command.Name == "PushFirst")
             {
                 Level.CelestialBodyToProtect = PlanetarySystemController.GetCelestialBodyWithHighestPathPriority(CelestialBodies);
+
+                if (Level.CelestialBodyToProtect == null)
+                    Level.CelestialBodyToProtect = PlanetarySystemController.GetAsteroidBelt(CelestialBodies);
+                
                 Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
             }
 
@@ -236,6 +243,9 @@
             else if (command.Name == "Remove")
             {
                 Level.CelestialBodyToProtect = PlanetarySystemController.GetAliveCelestialBodyWithHighestPathPriority(CelestialBodies);
+
+                if (Level.CelestialBodyToProtect == null)
+                    Level.CelestialBodyToProtect = PlanetarySystemController.GetAsteroidBelt(CelestialBodies);
 
                 if (Level.CelestialBodyToProtect != null)
                     Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;

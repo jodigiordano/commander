@@ -157,6 +157,8 @@
                 player.CelestialBodyMenu.CelestialBody = null;
                 player.CelestialBodyMenu.Visible = false;
             }
+
+            player.CelestialBodyMenu.Visible = p.SimPlayer.ActualSelection.EditingState == EditorEditingState.None;
         }
 
 

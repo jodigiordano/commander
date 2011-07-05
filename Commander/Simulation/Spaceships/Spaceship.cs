@@ -13,7 +13,6 @@
         public static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
 
 
-        public Vector3 Position                 { get; set; }
         public float Speed                      { get; set; }
         public float Masse                      { get; set; }
         public Vector3 Direction                { get; set; }
@@ -51,6 +50,9 @@
 
         private Particle TrailEffect;
         protected bool ShowTrail;
+
+        private Vector3 position;
+        public Vector3 LastPosition;
 
 
         public Spaceship(Simulator simulator)
@@ -97,8 +99,37 @@
         }
 
 
+
+        public Vector3 Position
+        {
+            get { return position; }
+            set
+            {
+                position = value;
+            }
+        }
+
+
+        public Vector3 NinjaPosition
+        {
+            set
+            {
+                Position = value;
+                LastPosition = value;
+            }
+        }
+
+
+        public Vector3 DeltaPosition
+        {
+            get { return Position - LastPosition; }
+        }
+
+
         public virtual void Update()
         {
+            LastPosition = position;
+
             if (StartingObject != null && GoBackToStartingObject)
                 TargetPosition = StartingObject.Position;
 

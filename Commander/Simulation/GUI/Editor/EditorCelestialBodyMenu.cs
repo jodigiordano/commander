@@ -55,9 +55,11 @@
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Small },
                     }),
                 new EditorTextContextualMenuChoice("Change Asset", new EditorCelestialBodyCommand("ChangeAsset")),
-                new EditorTextContextualMenuChoice("Modify Trajectory", new EditorCelestialBodyCommand("ModifyTrajectory")),
-                new EditorTextContextualMenuChoice("Move along trajectory", new EditorCelestialBodyCommand("MoveAlongTrajectory")),
                 new EditorTextContextualMenuChoice("Verify", new EditorCelestialBodyCommand("Verify")),
+                new EditorTextContextualMenuChoice("Move", new EditorCelestialBodyCommand("Move")),
+                new EditorTextContextualMenuChoice("Rotate", new EditorCelestialBodyCommand("Rotate")),
+                new EditorTextContextualMenuChoice("Shrink", new EditorCelestialBodyCommand("Shrink")),
+                new EditorTextContextualMenuChoice("Starting Position", new EditorCelestialBodyCommand("StartingPosition")),
                 new EditorToggleContextualMenuChoice(
                     new List<string>() { "Show path", "Hide path" },
                     new List<EditorCommand>()
@@ -103,7 +105,7 @@
                 }
             }
 
-            ((EditorToggleContextualMenuChoice) Choices[10]).SetChoice(CelestialBody.ShowPath ? 1 : 0);
+            ((EditorToggleContextualMenuChoice) Choices[12]).SetChoice(CelestialBody.ShowPath ? 1 : 0);
         }
 
 

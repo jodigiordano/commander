@@ -122,8 +122,8 @@
         {
             if (Position.X > 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius)
             {
-                Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Acceleration.X) * Speed * 1.5f;
-                Bouncing.Y = Bouncing.Y + Acceleration.Y * Speed * 1.5f;
+                Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Acceleration.X) * Speed * 2f;
+                Bouncing.Y = Bouncing.Y + Acceleration.Y * Speed * 2f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
@@ -131,8 +131,8 @@
 
             if (Position.X < -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius)
             {
-                Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Acceleration.X) * Speed * 1.5f;
-                Bouncing.Y = Bouncing.Y + Acceleration.Y * Speed * 1.5f;
+                Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Acceleration.X) * Speed * 2f;
+                Bouncing.Y = Bouncing.Y + Acceleration.Y * Speed * 2f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
@@ -140,8 +140,8 @@
 
             if (Position.Y > 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius)
             {
-                Bouncing.X = Bouncing.X + Acceleration.X * Speed * 1.5f;
-                Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Acceleration.Y) * Speed * 1.5f;
+                Bouncing.X = Bouncing.X + Acceleration.X * Speed * 2f;
+                Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Acceleration.Y) * Speed * 2f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
@@ -149,8 +149,8 @@
 
             if (Position.Y < -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius)
             {
-                Bouncing.X = Bouncing.X + Acceleration.X * Speed * 1.5f;
-                Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Acceleration.Y) * Speed * 1.5f;
+                Bouncing.X = Bouncing.X + Acceleration.X * Speed * 2f;
+                Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Acceleration.Y) * Speed * 2f;
 
                 Acceleration.X = 0;
                 Acceleration.Y = 0;

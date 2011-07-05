@@ -154,18 +154,9 @@
         {
             var rgb = obj as RailGunBullet;
 
-            if (rgb != null)
+            if (rgb != null && rgb.Owner != null)
             {
                 DoPowerUpUse(rgb.Owner);
-                return;
-            }
-
-
-            var mb = obj as RailGunBullet;
-
-            if (mb != null)
-            {
-                DoPowerUpUse(mb.Owner);
                 return;
             }
         }

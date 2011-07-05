@@ -27,12 +27,14 @@
             get { return celestialBody; }
             set
             {
+                if (celestialBody == null && value != null)
+                    PositionLastEmission = value.Position;
+
                 celestialBody = value;
 
                 if (celestialBody == null)
                     return;
 
-                PositionLastEmission = celestialBody.Position;
 
                 ((CircleEmitter)Selection.ParticleEffect[0]).Radius = celestialBody.Circle.Radius + 5;
             }

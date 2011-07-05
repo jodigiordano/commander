@@ -206,48 +206,6 @@
         }
 
 
-        private void NotifyObjetDetruit(IObjetPhysique obj)
-        {
-            if (ObjectDestroyed != null)
-                ObjectDestroyed(obj);
-        }
-
-
-        private void UpdateShootingStars()
-        {
-            if (Main.Random.Next(0, DeadlyShootingStars ? 300 : 1000) == 0)
-            {
-                ShootingStar ss = ShootingStarsFactory.Get();
-                ss.Scene = Simulator.Scene;
-                ss.Terrain = Simulator.Terrain;
-                ss.LoadContent();
-                ss.Initialize();
-
-                ShootingStars.Add(ss);
-            }
-
-            for (int i = ShootingStars.Count - 1; i > -1; i--)
-            {
-                ShootingStar ss = ShootingStars[i];
-
-                ss.Update();
-
-                if (!ss.Alive)
-                {
-                    ShootingStarsFactory.Return(ss);
-                    ShootingStars.RemoveAt(i);
-                }
-            }
-        }
-
-
-        private void UpdateCelestialBodies()
-        {
-            foreach (var c in CelestialBodies)
-                c.Update();
-        }
-
-
         public List<CelestialBodyDescriptor> GenerateDescriptor()
         {
             List<CelestialBodyDescriptor> descriptor = new List<CelestialBodyDescriptor>();
@@ -286,6 +244,9 @@
 
             else if (command.Name == "PushFirst")
             {
+                if (!Path.ContainsCelestialBody(command.CelestialBody))
+                    AddToStartingPath(command.CelestialBody);
+
                 Path.RemoveCelestialBody(command.CelestialBody);
                 command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
                 Path.AddCelestialBody(command.CelestialBody);
@@ -294,6 +255,9 @@
 
             else if (command.Name == "PushLast")
             {
+                if (!Path.ContainsCelestialBody(command.CelestialBody))
+                    AddToStartingPath(command.CelestialBody);
+
                 Path.RemoveCelestialBody(command.CelestialBody);
                 command.CelestialBody.PathPriority = GetHighestPathPriority(CelestialBodies) + 1;
                 Path.AddCelestialBody(command.CelestialBody);
@@ -308,26 +272,21 @@
 
             else if (command.Name == "AddGravitationalTurret")
             {
-                command.CelestialBody.AddToStartingPath();
-
-                if (command.CelestialBody.PathPriority == int.MinValue)
-                    command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
-
-                Path.AddCelestialBody(command.CelestialBody);
-                PathPreview.AddCelestialBody(command.CelestialBody);
+                AddToStartingPath(command.CelestialBody);
             }
 
             else if (command.Name == "RemoveGravitationalTurret")
             {
-                command.CelestialBody.RemoveFromStartingPath();
-                Path.RemoveCelestialBody(command.CelestialBody);
-                PathPreview.RemoveCelestialBody(command.CelestialBody);
+                RemoveFromStartingPath(command.CelestialBody);
             }
 
             else if (command.Name == "Clear")
             {
                 foreach (var cb in CelestialBodies)
                 {
+                    if (cb is AsteroidBelt)
+                        continue;
+
                     cb.LifePoints = 0;
                     cb.AliveOverride = false;
                 }
@@ -337,25 +296,17 @@
 
         public static int GetHighestPathPriority(List<CelestialBody> celestialBodies)
         {
-            int highestPriorty = 0;
+            var c = GetCelestialBodyWithHighestPathPriority(celestialBodies);
 
-            foreach (var c in celestialBodies)
-                if (c.PathPriority > highestPriorty)
-                    highestPriorty = c.PathPriority;
-
-            return highestPriorty;
+            return c == null ? 0 : c.PathPriority;
         }
 
 
         public static int GetLowestPathPriority(List<CelestialBody> celestialBodies)
         {
-            int lowestPriority = (celestialBodies.Count == 0) ? 0 : celestialBodies[0].PathPriority;
+            var c = GetCelestialBodyWithLowestPathPriority(celestialBodies);
 
-            foreach (var c in celestialBodies)
-                if (lowestPriority == int.MinValue || c.PathPriority < lowestPriority)
-                    lowestPriority = c.PathPriority;
-
-            return lowestPriority == int.MinValue ? 0 : lowestPriority;
+            return c == null ? 0 : c.PathPriority;
         }
 
 
@@ -364,25 +315,25 @@
             if (celestialBodies.Count == 0)
                 return null;
 
-            CelestialBody highest = celestialBodies[0];
+            CelestialBody highest = null;
 
             foreach (var c in celestialBodies)
-                if (c.Alive && c.PathPriority > highest.PathPriority)
+                if (!(c is AsteroidBelt) && (highest == null || (c.Alive && c.PathPriority > highest.PathPriority)))
                     highest = c;
 
-            return highest.Alive ? highest : null;
+            return highest;
         }
 
 
         public static CelestialBody GetCelestialBodyWithHighestPathPriority(List<CelestialBody> celestialBodies)
         {
-            if (celestialBodies.Count == 0)
+            if (celestialBodies.Count == 1)
                 return null;
 
-            CelestialBody highest = celestialBodies[0];
+            CelestialBody highest = null;
 
             foreach (var c in celestialBodies)
-                if (c.PathPriority > highest.PathPriority)
+                if (!(c is AsteroidBelt) && (highest == null || c.PathPriority > highest.PathPriority))
                     highest = c;
 
             return highest;
@@ -391,16 +342,88 @@
 
         public static CelestialBody GetCelestialBodyWithLowestPathPriority(List<CelestialBody> celestialBodies)
         {
-            if (celestialBodies.Count == 0)
+            if (celestialBodies.Count == 1)
                 return null;
 
-            CelestialBody lowest = celestialBodies[0];
+            CelestialBody lowest = null;
 
             foreach (var c in celestialBodies)
-                if (c.PathPriority < lowest.PathPriority)
+                if (!(c is AsteroidBelt) && (lowest == null || c.PathPriority < lowest.PathPriority))
                     lowest = c;
 
             return lowest;
+        }
+
+
+        public static AsteroidBelt GetAsteroidBelt(List<CelestialBody> CelestialBodies)
+        {
+            foreach (var c in CelestialBodies)
+                if (c is AsteroidBelt)
+                    return (AsteroidBelt) c;
+
+            return null;
+        }
+
+
+        private void NotifyObjetDetruit(IObjetPhysique obj)
+        {
+            if (ObjectDestroyed != null)
+                ObjectDestroyed(obj);
+        }
+
+
+        private void UpdateShootingStars()
+        {
+            if (Main.Random.Next(0, DeadlyShootingStars ? 300 : 1000) == 0)
+            {
+                ShootingStar ss = ShootingStarsFactory.Get();
+                ss.Scene = Simulator.Scene;
+                ss.Terrain = Simulator.Terrain;
+                ss.LoadContent();
+                ss.Initialize();
+
+                ShootingStars.Add(ss);
+            }
+
+            for (int i = ShootingStars.Count - 1; i > -1; i--)
+            {
+                ShootingStar ss = ShootingStars[i];
+
+                ss.Update();
+
+                if (!ss.Alive)
+                {
+                    ShootingStarsFactory.Return(ss);
+                    ShootingStars.RemoveAt(i);
+                }
+            }
+        }
+
+
+        private void RemoveFromStartingPath(CelestialBody celestialBody)
+        {
+            celestialBody.RemoveFromStartingPath();
+            Path.RemoveCelestialBody(celestialBody);
+            PathPreview.RemoveCelestialBody(celestialBody);
+        }
+
+
+        private void AddToStartingPath(CelestialBody celestialBody)
+        {
+            celestialBody.AddToStartingPath();
+
+            if (celestialBody.PathPriority == int.MinValue)
+                celestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
+
+            Path.AddCelestialBody(celestialBody);
+            PathPreview.AddCelestialBody(celestialBody);
+        }
+
+
+        private void UpdateCelestialBodies()
+        {
+            foreach (var c in CelestialBodies)
+                c.Update();
         }
     }
 }

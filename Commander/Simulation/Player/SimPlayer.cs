@@ -73,6 +73,23 @@
         }
 
 
+        public Vector3 NinjaPosition
+        {
+            set
+            {
+                SpaceshipMove.NinjaPosition = value;
+                position = SpaceshipMove.Position;
+                VerifyFrame();
+            }
+        }
+
+
+        public Vector3 DeltaPosition
+        {
+            get { return SpaceshipMove.DeltaPosition; }
+        }
+
+
         public Vector3 Direction
         {
             get { return direction; }

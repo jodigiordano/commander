@@ -23,11 +23,11 @@
             ShowFrame = false;
             DistanceBetweenTwoChoices = 15;
                 
-            StartingTime = new NumericHorizontalSlider("Starting time", 0, 1000, 0, 10, 100);
+            StartingTime = new NumericHorizontalSlider("Starting time", 0, 1000, 0, 10, 50);
             Enemies = new EnemiesWidget(simulator.EnemiesFactory.All, (int) size.X, 5);
-            Level = new NumericHorizontalSlider("Level", 0, 100, 0, 1, 100);
-            CashValue = new NumericHorizontalSlider("Cash", 0, 10000, 0, 100, 100);
-            Quantity = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 100);
+            Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 50);
+            CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 100);
+            Quantity = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 50);
             WavesTypes = new ChoicesHorizontalSlider("Wave type", WaveGenerator.WavesTypesStrings, 0);
 
             AddWidget("StartingTime", StartingTime);

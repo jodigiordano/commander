@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
 
 
     class EditorController
@@ -104,7 +105,47 @@
         {
             var player = Players[p];
 
+            if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.MovingCB)
+            {
+                player.ActualSelection.CelestialBody.Offset += player.SimPlayer.DeltaPosition;
+                player.SimPlayer.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+            }
+
+            else if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.ShrinkingCB)
+            {
+                player.SimPlayer.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+                player.ActualSelection.CelestialBody.Position = player.SimPlayer.Position;
+            }
+
+            else if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.RotatingCB)
+            {
+                player.SimPlayer.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+            }
+
+            else if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.StartPosCB)
+            {
+
+            }
+
             player.Circle.Position = p.Position;
+        }
+
+
+        public void DoPlayerMovedDelta(SimPlayer p, ref Vector3 delta)
+        {
+            var player = Players[p];
+
+            if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.RotatingCB)
+            {
+                float rotation = Core.Physics.Utilities.VectorToAngle(ref delta);
+                player.ActualSelection.CelestialBody.SetRotation(rotation);
+            }
+
+            else if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.ShrinkingCB)
+            {
+                player.ActualSelection.CelestialBody.BasePosition.X -= delta.Y;
+                player.ActualSelection.CelestialBody.BasePosition.Y += delta.X;
+            }
         }
 
 
@@ -133,6 +174,8 @@
         public void DoSelectAction(SimPlayer p)
         {
             var player = Players[p];
+
+            player.DoSelectAction();
 
             if (player.ActualSelection.GeneralMenuChoice != EditorGeneralMenuChoice.None)
             {
@@ -170,10 +213,25 @@
 
                 command.Owner = player;
 
+                if (player.SimPlayer.ActualSelection.EditingState != EditorEditingState.None)
+                    ExecuteCommand(new EditorCelestialBodyCommand("ShowPathPreview") { Owner = player });
+
                 ExecuteCommand(command);
 
                 return;
             }
+        }
+
+
+        public void DoCancelAction(SimPlayer p)
+        {
+            var player = Players[p];
+
+            //tmp
+            if (player.SimPlayer.ActualSelection.CelestialBody != null && player.SimPlayer.ActualSelection.EditingState != EditorEditingState.None)
+                ExecuteCommand(new EditorCelestialBodyCommand("HidePathPreview") { Owner = player });
+
+            player.DoCancelAction();
         }
 
 

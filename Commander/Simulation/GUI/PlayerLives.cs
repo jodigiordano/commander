@@ -31,6 +31,9 @@
             get { return celestialBody; }
             set
             {
+                if (value != null && value != celestialBody)
+                    Moons.Clear();
+
                 celestialBody = value;
 
                 if (value != null)

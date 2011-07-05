@@ -36,7 +36,7 @@
                 Size = size,
                 Color = Color.Black,
                 VisualPriority = visualPriority + 0.0003,
-                Alpha = 100,
+                Alpha = 200,
                 Origin = Vector2.Zero
             };
 
@@ -250,9 +250,9 @@
                 Scene.VisualEffects.Add(TitleSeparator, effect);
             }
 
-            effect = VisualEffects.Fade(Math.Min(from, 100), Math.Min(to, 100), 0, length);
+            effect = VisualEffects.Fade(Math.Min(from, 200), Math.Min(to, 200), 0, length);
 
-            Background.Alpha = (byte) Math.Min(from, 100);
+            Background.Alpha = (byte) Math.Min(from, 200);
 
             Scene.VisualEffects.Add(Background, effect);
 

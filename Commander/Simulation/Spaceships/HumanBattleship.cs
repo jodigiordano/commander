@@ -24,18 +24,22 @@
         private Image Image;
 
 
-        public HumanBattleship(Simulator simulator, Vector3 position, double visualPriority)
+        public HumanBattleship(Simulator simulator, double visualPriority)
         {
             Simulator = simulator;
             VisualPriority = visualPriority;
-            Position = position;
 
             Image = new Image("HumanBattleship")
             {
                 VisualPriority = visualPriority,
-                SizeX = 4,
-                Position = position
+                SizeX = 4
             };
+        }
+
+
+        public void Initialize()
+        {
+            Image.Position = Position;
         }
 
 

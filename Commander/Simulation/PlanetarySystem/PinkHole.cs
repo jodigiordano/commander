@@ -21,7 +21,7 @@
             Particle effect,
             int startingPourc,
             float visualPriority)
-            : base (simulator, name, startingPosition, offset, size, speed, null, startingPourc, visualPriority)
+            : base (simulator, name, startingPosition, offset, 0, size, speed, null, startingPourc, visualPriority)
         {
             Moons = new List<Moon>();
 

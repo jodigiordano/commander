@@ -478,6 +478,17 @@
             {
                 PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
             }
+
+            else if (command.Name == "ToggleSize")
+            {
+                var c = (EditorCelestialBodyCommand) command;
+
+                if (c.CelestialBody == PlayerLives.CelestialBody)
+                {
+                    PlayerLives.CelestialBody = null;
+                    PlayerLives.CelestialBody = c.CelestialBody;
+                }
+            }
         }
 
 

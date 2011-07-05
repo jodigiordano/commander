@@ -41,19 +41,18 @@
         public bool ShowTurretsZone;
         public float ZoneImpactDestruction;
         public bool DarkSide;
+        public Vector3 BasePosition;
 
         protected Simulator Simulator;
         protected Vector3 LastPosition;
         protected double ActualRotationTime;
-        protected Vector3 BasePosition;
 
         private Particle DieEffect1;
         private Particle DieEffect2;
         private Particle DarkSideEffect;
-        private Matrix RotationMatrix;
+        private float PathRotation;
+        protected Matrix RotationMatrix;
         private Image TurretsZoneImage;
-        private Simulator simulator;
-        private CelestialBodyDescriptor celestialBodyDescriptor;
 
         public string PartialImageName;
         private Size Size;
@@ -68,6 +67,7 @@
             string name,
             Vector3 startingPosition,
             Vector3 offset,
+            float rotationRad,
             Size size,
             float speed,
             string partialImageName,
@@ -88,6 +88,7 @@
             DarkSide = false;
             VisualPriorityBackup = visualPriority;
             StartingPourc = startingPourc;
+            PathRotation = 0;
 
             Shape = Shape.Circle;
             Circle = new Circle(Position, 0);
@@ -96,6 +97,7 @@
 
             SetSize(size);
             SetImage(partialImageName);
+            SetRotation(rotationRad);
 
             Offset = offset;
             Position = LastPosition = BasePosition = startingPosition;
@@ -127,6 +129,7 @@
             celestialBodyDescriptor.Name,
             celestialBodyDescriptor.Position,
             celestialBodyDescriptor.Offset,
+            celestialBodyDescriptor.Rotation,
             celestialBodyDescriptor.Size,
             celestialBodyDescriptor.Speed,
             celestialBodyDescriptor.Image,
@@ -151,6 +154,12 @@
                 for (int i = 0; i < Turrets.Count; i++)
                     Turrets[i].VisualPriority = value;
             }
+        }
+
+
+        public Vector3 DeltaPosition
+        {
+            get { return Position - LastPosition; }
         }
 
 
@@ -202,6 +211,14 @@
             ActualRotationTime = Speed * actualPourc;
 
             Move();
+        }
+
+
+        public void SetRotation(float rotationRad)
+        {
+            PathRotation = rotationRad;
+
+            Matrix.CreateRotationZ(PathRotation, out RotationMatrix);
         }
 
 
@@ -367,13 +384,13 @@
         {
             Vector3 result = new Vector3();
 
-            Move(Speed, Speed * MathHelper.Clamp(perc, 0, 1), ref BasePosition, ref Offset, ref result);
+            Move(Speed, Speed * MathHelper.Clamp(perc, 0, 1), ref BasePosition, ref Offset, ref RotationMatrix, ref result);
 
             return result;
         }
 
 
-        public static void Move(double rotationTime, double actualRotationTime, ref Vector3 basePosition, ref Vector3 offset, ref Vector3 result)
+        public static void Move(double rotationTime, double actualRotationTime, ref Vector3 basePosition, ref Vector3 offset, ref Matrix rotationMatrix, ref Vector3 result)
         {
             if (rotationTime == float.MaxValue)
             {
@@ -387,6 +404,8 @@
             result.Y = basePosition.Y * (float) Math.Sin((MathHelper.TwoPi / rotationTime) * actualRotationTime);
             result.Z = 0;
 
+
+            Vector3.Transform(ref result, ref rotationMatrix, out result);
             Vector3.Add(ref result, ref offset, out result);
         }
 
@@ -407,6 +426,14 @@
                 Size = Size,
                 HasGravitationalTurret = StartingPathTurret != null
             };
+        }
+
+
+        public void Move()
+        {
+            LastPosition = position;
+
+            Move(Speed, ActualRotationTime, ref BasePosition, ref Offset, ref RotationMatrix, ref position);
         }
 
 
@@ -432,14 +459,6 @@
         private string GetImageName(Size size, string partialName)
         {
             return partialName + ((size == Size.Small) ? 1 : (size == Size.Normal) ? 2 : 3).ToString();
-        }
-
-
-        private void Move()
-        {
-            LastPosition = position;
-
-            Move(Speed, ActualRotationTime, ref BasePosition, ref Offset, ref position);
         }
     }
 }

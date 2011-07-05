@@ -26,6 +26,7 @@ namespace EphemereGames.Commander.Simulation
                     "",
                     Vector3.Zero,
                     Vector3.Zero,
+                    0,
                     Size.Small,
                     float.MaxValue,
                     null,

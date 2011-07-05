@@ -179,4 +179,14 @@ namespace EphemereGames.Commander.Simulation
         DistinctFollow,
         PackedH
     }
+
+
+    enum EditorEditingState
+    {
+        None,
+        MovingCB,
+        RotatingCB,
+        ShrinkingCB,
+        StartPosCB
+    }
 }

@@ -18,6 +18,8 @@
 
         public PausedGameChoice GameChoice;
 
+        public EditorEditingState EditingState;
+
 
         public SimPlayerSelection()
         {
@@ -28,6 +30,7 @@
             TurretChoice = TurretChoice.None;
             TurretToPlace = null;
             GameChoice = PausedGameChoice.None;
+            EditingState = EditorEditingState.None;
 
             AvailableTurretOptions = new Dictionary<TurretChoice, bool>(TurretActionComparer.Default);
             AvailableTurretOptions.Add(TurretChoice.Sell, false);

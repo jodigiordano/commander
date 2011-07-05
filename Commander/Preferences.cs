@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
-    using Microsoft.Xna.Framework;
     using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework;
 
 
     class Preferences
@@ -15,6 +15,7 @@
 #if DEBUG
         public static bool Debug = true;
         public static bool FullScreen = false;
+        //public static bool FullScreen = true;
         public static bool HomeMadeValidation = false;
 #else
         public static bool Debug = false;

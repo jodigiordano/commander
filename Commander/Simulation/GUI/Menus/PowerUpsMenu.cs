@@ -69,6 +69,8 @@
             ImagesPowerUpsBuy = new Dictionary<PowerUpType, Image>(PowerUpTypeComparer.Default);
             ImagesPlaceHolders = new Dictionary<PowerUpType, Image>(PowerUpTypeComparer.Default);
             ImagesTurretsPowerUps = new Dictionary<PowerUpType, Turret>(PowerUpTypeComparer.Default);
+
+            HumanBattleship = new HumanBattleship(Simulator, VisualPriority + 0.005f);
         }
 
 
@@ -80,8 +82,9 @@
             ImagesPlaceHolders.Clear();
             ImagesTurretsPowerUps.Clear();
 
-            HumanBattleship = new HumanBattleship(Simulator, Position - new Vector3(300, 75, 0), VisualPriority + 0.005f);
+            HumanBattleship.Position = Position - new Vector3(300, 75, 0);
             HumanBattleshipHasArrived = false;
+            HumanBattleship.Initialize();
 
             var index = 0;
             foreach (var p in availablePowerUps.Values)

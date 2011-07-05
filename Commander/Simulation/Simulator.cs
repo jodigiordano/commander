@@ -512,6 +512,12 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
+            if (EditorMode)
+            {
+                if (button == MouseConfiguration.Cancel)
+                    EditorController.DoCancelAction(simPlayer);
+            }
+
             if (EditorMode && EditorState == EditorState.Editing)
                 return;
 
@@ -549,11 +555,13 @@ namespace EphemereGames.Commander.Simulation
             if (LevelsController.Help.Active)
                 return;
 
-            if (!EditorMode && State != GameState.Running)
-                return;
-
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
+
+            EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
+
+            if (!EditorMode && State != GameState.Running)
+                return;
 
             if (simPlayer.PowerUpInUse != PowerUpType.None)
                 PowerUpsController.DoInputMovedDelta(simPlayer, delta);
@@ -645,6 +653,12 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(player);
 
+            if (EditorMode)
+            {
+                if (button == GamePadConfiguration.Cancel)
+                    EditorController.DoCancelAction(simPlayer);
+            }
+
             if (EditorMode && EditorState == EditorState.Editing)
                 return;
 
@@ -665,13 +679,15 @@ namespace EphemereGames.Commander.Simulation
             if (button != GamePadConfiguration.MoveCursor)
                 return;
 
-            if (!EditorMode && State != GameState.Running)
-                return;
-
             delta *= GamePadConfiguration.Speed;
 
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(player);
+
+            EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
+
+            if (!EditorMode && State != GameState.Running)
+                return;
 
             if (simPlayer.PowerUpInUse != PowerUpType.None)
                 PowerUpsController.DoInputMovedDelta(simPlayer, delta);
