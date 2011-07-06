@@ -26,7 +26,7 @@
         private Image[] Lines;
         private Scene Scene;
         private int NbPoints;
-        private int PreviousNbLinesToDraw;
+        private double LengthBefore;
 
 
         public Path(Simulator simulator, Color couleur, TypeBlend melange)
@@ -45,6 +45,7 @@
 
             NbPoints = 0;
             Length = 0;
+            LengthBefore = 0;
 
             Lines = new Image[MaxVisibleLines];
 
@@ -59,7 +60,6 @@
                 Lines[i] = line;
             }
 
-            PreviousNbLinesToDraw = 0;
             Active = true;
         }
 
@@ -83,6 +83,15 @@
             Active = true;
 
             Update();
+        }
+
+
+        public double LengthDelta
+        {
+            get
+            {
+                return Length - LengthBefore;
+            }
         }
 
 
@@ -206,12 +215,14 @@
             
             for (int j = 0; j < nbLines; j++)
             {
-                InnerPath.GetPosition(j * DistanceTwoPoints, ref Lines[j].position);
-                
-                Lines[j].Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
-                Lines[j].Color.G = Lines[j].Color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
-                Lines[j].VisualPriority = Preferences.PrioriteSimulationChemin + InnerPath.GetPercentage(j * DistanceTwoPoints) / 1000f;
-                Scene.Add(Lines[j]);
+                var line = Lines[j];
+
+                InnerPath.GetPosition(j * DistanceTwoPoints, ref line.position);
+
+                line.Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
+                line.Color.G = line.Color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
+                line.VisualPriority = Preferences.PrioriteSimulationChemin + InnerPath.GetPercentage(j * DistanceTwoPoints) / 1000f;
+                Scene.Add(line);
             }
         }
 
@@ -229,6 +240,7 @@
         {
             UpdateInnerPoints();
 
+            LengthBefore = Length;
             Length = 0;
             Times[0] = Length;
 
@@ -270,7 +282,6 @@
                 Vector3.Subtract(ref CelestialBodiesPath[i].position, ref _vecteur1, out _vecteur1);
 
                 //Radius
-                //float radius = CorpsCelestesChemin.Values[i].TurretsZone.Radius + CelestialBodyDistance;
                 float radius = MathHelper.Min(_vecteur1.Length(), CelestialBodiesPath[i].OuterTurretZone.Radius + CelestialBodyDistance);
 
                 //Entry point

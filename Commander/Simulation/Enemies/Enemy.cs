@@ -138,18 +138,6 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        //public void Show()
-        //{
-        //    Simulation.Scene.Add(Image);
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Simulation.Scene.Remove(Image);
-        //}
-
-
         public void Update()
         {
             if (EndOfPathReached)
@@ -164,6 +152,7 @@ namespace EphemereGames.Commander.Simulation
 
             Resistance = Math.Max(Resistance - 0.02f, 0);
 
+            //Displacement += Path.LengthDelta;
             Displacement += Math.Max(this.Speed - this.Resistance, 0);
 
             Path.Position(Displacement, ref position);

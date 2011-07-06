@@ -48,7 +48,7 @@
 
                     line.Start = PathPositions[i];
                     line.End = PathPositions[i+1];
-                    line.VisualPriority = c.VisualPriority + 0.0001f;
+                    line.VisualPriority = Preferences.PrioriteFondEcran - 0.00001;
 
                     Simulator.Scene.Add(line);
                 }

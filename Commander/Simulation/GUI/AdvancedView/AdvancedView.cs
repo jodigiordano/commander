@@ -11,12 +11,14 @@
         private bool visible;
         private Simulator Simulator;
         private EnemiesLives EnemiesLives;
+        private CelestialBodiesPathPreviews CelestialBodiesPaths;
 
 
         public AdvancedView(Simulator simulator)
         {
             Simulator = simulator;
             EnemiesLives = new EnemiesLives(Simulator);
+            CelestialBodiesPaths = new CelestialBodiesPathPreviews(Simulator);
 
             visible = false;
         }
@@ -24,6 +26,7 @@
 
         public void Initialize()
         {
+            CelestialBodiesPaths.CelestialBodies = CelestialBodies;
             EnemiesLives.Enemies = Enemies;
         }
 
@@ -36,6 +39,7 @@
                 visible = value;
 
                 foreach (var celestialBody in CelestialBodies)
+                {
                     foreach (var turret in celestialBody.Turrets)
                     {
                         if (turret.RangeEffect != null)
@@ -44,6 +48,9 @@
                         turret.ShowRange = value;
                         turret.RangeImage.Alpha = turret.RangeAlpha;
                     }
+
+                    celestialBody.ShowPath = value;
+                }
             }
         }
 
@@ -54,6 +61,7 @@
                 return;
 
             EnemiesLives.Draw();
+            CelestialBodiesPaths.Draw();
         }
     }
 }

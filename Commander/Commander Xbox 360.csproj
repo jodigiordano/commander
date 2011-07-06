@@ -150,7 +150,7 @@
     <Compile Include="Simulation\GUI\Controls\PowerUpCheckBox.cs" />
     <Compile Include="Simulation\GUI\Controls\TurretCheckBox.cs" />
     <Compile Include="Simulation\GUI\Controls\WaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\CelestialBodiesPathPreviews.cs" />
+    <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorCelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorGeneralMenu.cs" />
