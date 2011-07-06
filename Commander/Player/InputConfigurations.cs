@@ -15,6 +15,7 @@
         public static Keys Debug = Keys.F1;
         public static Keys Editor = Keys.F2;
         public static Keys Disconnect = Keys.Q;
+        public static Keys Tweaking = Keys.T;
 
         public static List<Keys> ToList
         {
@@ -29,7 +30,8 @@
                     NextWave,
                     Debug,
                     Editor,
-                    Disconnect
+                    Disconnect,
+                    Tweaking
                 };
             }
         }
@@ -79,6 +81,7 @@
         public static Buttons SelectionPrevious = Buttons.LeftTrigger;
         public static Buttons MoveCursor = Buttons.LeftStick;
         public static Buttons Disconnect = Buttons.Back;
+        public static Buttons Tweaking = Buttons.DPadLeft;
         public static float Speed = 15;
 
 
@@ -98,7 +101,8 @@
                     Select,
                     AdvancedView,
                     SelectionNext,
-                    SelectionPrevious
+                    SelectionPrevious,
+                    Tweaking
                 };
             }
         }

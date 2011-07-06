@@ -17,7 +17,12 @@
 
             Availables = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
             All = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
+        }
 
+
+        public void Initialize()
+        {
+            All.Clear();
             All.Add(PowerUpType.Collector, Create(PowerUpType.Collector));
             All.Add(PowerUpType.FinalSolution, Create(PowerUpType.FinalSolution));
             All.Add(PowerUpType.Spaceship, Create(PowerUpType.Spaceship));

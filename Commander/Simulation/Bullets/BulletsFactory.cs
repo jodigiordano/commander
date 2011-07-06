@@ -31,6 +31,12 @@
         }
 
 
+        public void Initialize()
+        {
+
+        }
+
+
         public Bullet Get(BulletType type)
         {
             Bullet b = null;

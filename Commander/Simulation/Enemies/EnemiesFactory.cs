@@ -47,6 +47,13 @@
             Simulator = simulator;
 
             EnemiesPools = new Dictionary<EnemyType, Pool<Enemy>>(EnemyTypeComparer.Default);
+            All = new List<Enemy>();
+        }
+
+
+        public void Initialize()
+        {
+            EnemiesPools.Clear();
             EnemiesPools.Add(EnemyType.Asteroid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Centaur, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Comet, new Pool<Enemy>());
@@ -58,7 +65,7 @@
             EnemiesPools.Add(EnemyType.Vulcanoid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Swarm, new Pool<Enemy>());
 
-            All = new List<Enemy>();
+            All.Clear();
             All.Add(Get(EnemyType.Asteroid, 1, 1, 1));
             All.Add(Get(EnemyType.Centaur, 1, 1, 1));
             All.Add(Get(EnemyType.Comet, 1, 1, 1));

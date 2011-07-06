@@ -18,6 +18,12 @@
 
             Pool = new Pool<Mineral>();
             Minerals = new Dictionary<MineralType, MineralDefinition>(MineralTypeComparer.Default);
+        }
+
+
+        public void Initialize()
+        {
+            Minerals.Clear();
 
             MineralDefinition m;
 

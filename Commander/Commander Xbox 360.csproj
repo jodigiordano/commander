@@ -264,6 +264,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Simulation\Turrets\TurretsFactory.cs" />
+    <Compile Include="Simulation\TweakingController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

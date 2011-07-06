@@ -1,7 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using System;
-    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
@@ -18,13 +16,7 @@ namespace EphemereGames.Commander.Simulation
             Name = "Booster";
             Color = new Color( 71, 190, 255 );
 
-            Levels = new LinkedListWithInit<TurretLevel>()
-            {
-                new TurretLevel(0, 0, 0, 50, Int16.MaxValue, 1, 0, BulletType.Aucun, "", "", 0, 0, 0),
-                new TurretLevel(1, 400, 200, 75, Int16.MaxValue, 1, 5000, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, 0, 0),
-                new TurretLevel(2, 600, 500, 125, Int16.MaxValue, 1, 10000, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, 0, 0),
-                new TurretLevel(3, 800, 1000, 175, Int16.MaxValue, 1, 20000, BulletType.Aucun, "PixelBlanc", "tourelleBooster", 0, 0, 0)
-            };
+            Levels = simulator.TurretsFactory.TurretsLevels[Type];
 
             ActualLevel = Levels.First;
             Upgrade();

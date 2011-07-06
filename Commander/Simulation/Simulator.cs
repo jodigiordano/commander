@@ -24,15 +24,12 @@ namespace EphemereGames.Commander.Simulation
 
         public bool HelpMode { get { return LevelsController.Help.Active; } }
         public PausedGameChoice GameAction;
-        public TurretsFactory TurretsFactory;
-        public PowerUpsFactory PowerUpsFactory;
-        public EnemiesFactory EnemiesFactory;
-        public MineralsFactory MineralsFactory;
-        public BulletsFactory BulletsFactory;
         public PhysicalRectangle Terrain;
         public PhysicalRectangle InnerTerrain;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
         public CelestialBody CelestialBodyPausedGame;
+
+
 
         public PlanetarySystemController PlanetarySystemController;
         public MessagesController MessagesController;
@@ -47,6 +44,12 @@ namespace EphemereGames.Commander.Simulation
         private PowerUpsController PowerUpsController;
         private EditorController EditorController;
         private EditorGUIController EditorGUIController;
+        internal TweakingController TweakingController;
+        internal TurretsFactory TurretsFactory;
+        internal PowerUpsFactory PowerUpsFactory;
+        internal EnemiesFactory EnemiesFactory;
+        internal MineralsFactory MineralsFactory;
+        internal BulletsFactory BulletsFactory;
 
 
         public Simulator(Scene scene, LevelDescriptor descriptor)
@@ -99,17 +102,25 @@ namespace EphemereGames.Commander.Simulation
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
 
-            LevelDescriptor = descriptor;
-            Level = new Level(this, descriptor);
             TurretsFactory = new TurretsFactory(this);
             PowerUpsFactory = new PowerUpsFactory(this);
             EnemiesFactory = new EnemiesFactory(this);
             MineralsFactory = new MineralsFactory(this);
             BulletsFactory = new BulletsFactory(this);
 
+            TurretsFactory.Initialize();
+            PowerUpsFactory.Initialize();
+            EnemiesFactory.Initialize();
+            MineralsFactory.Initialize();
+            BulletsFactory.Initialize();
+
+            LevelDescriptor = descriptor;
+            Level = new Level(this, descriptor);
+
             Terrain = new PhysicalRectangle(-840, -560, 1680, 1120);
             InnerTerrain = new PhysicalRectangle(-640, -360, 1280, 720);
 
+            TweakingController = new TweakingController(this);
             CollisionsController = new CollisionsController(this);
             BulletsController = new BulletsController(this);
             EnemiesController = new EnemiesController(this);
@@ -224,6 +235,11 @@ namespace EphemereGames.Commander.Simulation
             TurretsFactory.Availables = LevelsController.AvailableTurrets;
             PowerUpsFactory.Availables = LevelsController.AvailablePowerUps;
             PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
+            TweakingController.BulletsFactory = BulletsFactory;
+            TweakingController.EnemiesFactory = EnemiesFactory;
+            TweakingController.MineralsFactory = MineralsFactory;
+            TweakingController.PowerUpsFactory = PowerUpsFactory;
+            TweakingController.TurretsFactory = TurretsFactory;
             CollisionsController.Bullets = BulletsController.Bullets;
             CollisionsController.Enemies = EnemiesController.Enemies;
             CollisionsController.Turrets = TurretsController.Turrets;
@@ -266,6 +282,7 @@ namespace EphemereGames.Commander.Simulation
             EditorController.CelestialBodies = LevelsController.CelestialBodies;
             EditorGUIController.CelestialBodies = LevelsController.CelestialBodies;
 
+            TweakingController.Initialize();
             LevelsController.Initialize();
             EnemiesController.Initialize();
             TurretsController.Initialize();
@@ -425,8 +442,14 @@ namespace EphemereGames.Commander.Simulation
                 return;
             }
 
-            if (DebugMode && key == KeyboardConfiguration.Debug)
-                CollisionsController.Debug = true;
+            if (DebugMode)
+            {
+                if (key == KeyboardConfiguration.Debug)
+                    CollisionsController.Debug = true;
+
+                if (key == KeyboardConfiguration.Tweaking)
+                    TweakingController.Sync();
+            }
 
             if (LevelsController.Help.Active)
             {
@@ -578,8 +601,14 @@ namespace EphemereGames.Commander.Simulation
                 return;
             }
 
-            if (DebugMode && button == GamePadConfiguration.Debug)
-                CollisionsController.Debug = true;
+            if (DebugMode)
+            {
+                if (button == GamePadConfiguration.Debug)
+                    CollisionsController.Debug = true;
+
+                if (button == GamePadConfiguration.Tweaking)
+                    TweakingController.Sync();
+            }
 
             if (LevelsController.Help.Active)
             {
