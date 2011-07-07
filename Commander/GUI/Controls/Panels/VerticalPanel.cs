@@ -8,13 +8,14 @@
     {
         public float DistanceBetweenTwoChoices;
 
-        private bool RecalculatePositions;
+        protected bool RecalculatePositions;
 
 
         public VerticalPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
             DistanceBetweenTwoChoices = 30;
+            RecalculatePositions = true;
         }
 
 
@@ -43,8 +44,6 @@
             if (!Visible)
                 return;
 
-            base.Draw();
-
             if (RecalculatePositions)
             {
                 Vector3 upperLeft = base.GetUpperLeftUsableSpace();
@@ -58,6 +57,10 @@
 
                 RecalculatePositions = false;
             }
+
+            base.Draw();
+
+
         }
     }
 }

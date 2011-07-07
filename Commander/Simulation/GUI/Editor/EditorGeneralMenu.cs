@@ -38,13 +38,13 @@
 
             var choices = new List<ContextualMenuChoice>()
             {
+                new EditorTextContextualMenuChoice("New", new EditorCommand("NewLevel")),
                 new EditorTextContextualMenuChoice("Load", new EditorPanelCommand("ShowPanel", EditorPanel.Load, true)),
                 new EditorTextContextualMenuChoice("Save", new EditorCommand("SaveLevel")),
-                new EditorTextContextualMenuChoice("Save as...", new EditorPanelCommand("ShowPanel", EditorPanel.Save, true)),
+                new EditorTextContextualMenuChoice("Delete", new EditorPanelCommand("ShowPanel", EditorPanel.Delete, true)),
                 new EditorToggleContextualMenuChoice(new List<string>() { "Playtest", "Edit" }, new List<EditorCommand>() { new EditorCommand("PlaytestState"), new EditorCommand("EditState") }),
                 new EditorTextContextualMenuChoice("Restart", new EditorCommand("RestartSimulation")),
                 new EditorToggleContextualMenuChoice(new List<string>() { "Pause", "Resume" }, new List<EditorCommand>() { new EditorCommand("PauseSimulation"), new EditorCommand("ResumeSimulation") }),
-                new EditorTextContextualMenuChoice("Delete", new EditorPanelCommand("ShowPanel", EditorPanel.Delete, true))
             };
 
             var menu = new ContextualMenu(simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, Color.White, choices, 5);
@@ -70,10 +70,7 @@
 
             choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Quick generate", new EditorCelestialBodyCommand("QuickGeneratePlanetarySystem")),
-                new EditorTextContextualMenuChoice("Generate", new EditorPanelCommand("ShowPanel", EditorPanel.GeneratePlanetarySystem, true)),
                 new EditorTextContextualMenuChoice("Add a planet", new EditorCelestialBodyCommand("AddPlanet")),
-                new EditorTextContextualMenuChoice("Validate", new EditorCelestialBodyCommand("ValidatePlanetarySystem")),
                 new EditorTextContextualMenuChoice("Clear", new EditorCelestialBodyCommand("Clear")),
             };
 

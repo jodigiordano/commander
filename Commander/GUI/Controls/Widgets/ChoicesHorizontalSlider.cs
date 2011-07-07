@@ -7,9 +7,7 @@
 
 
     class ChoicesHorizontalSlider : PanelWidget
-    {
-        public string Value { get { return ValueText.Data; } }
-        
+    {       
         private Image DecrementRep;
         private Image IncrementRep;
         private Text ValueText;
@@ -99,6 +97,23 @@
         }
 
 
+        public string Value
+        {
+            get { return ValueText.Data; }
+            set
+            {
+                for (int i = 0; i < Choices.Count; i++)
+                    if (Choices[i] == value)
+                    {
+                        ChoiceIndex = i;
+                        ValueText.Data = Choices[ChoiceIndex];
+
+                        return;
+                    }
+            }
+        }
+
+
         protected override bool Click(Circle circle)
         {
             if (Physics.CircleCicleCollision(circle, DecrementCircle) && ChoiceIndex > 0)
@@ -114,6 +129,12 @@
             }
 
             return false;
+        }
+
+
+        protected override bool Hover(Circle circle)
+        {
+            return Physics.CircleCicleCollision(circle, DecrementCircle) || Physics.CircleCicleCollision(circle, IncrementCircle);
         }
 
 

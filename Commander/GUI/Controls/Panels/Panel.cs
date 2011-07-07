@@ -66,13 +66,6 @@
 
             Widgets = new Dictionary<string, PanelWidget>();
 
-
-            if (Title != null)
-            {
-                Title.Position = new Vector3(Position.X, Position.Y + 5, 0);
-                TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.TextSize.Y + 5, 0);
-            }
-
             ShowFrame = true;
 
             Scene = scene;
@@ -105,16 +98,35 @@
         }
 
 
-        public void SetHandler(string widgetName, PanelWidgetHandler handler)
+        public virtual void ClearWidgets()
         {
-            Widgets[widgetName].Handler = handler;
+            Widgets.Clear();
         }
 
 
-        public void SetHandler(PanelWidgetHandler handler)
+        public virtual void SetClickHandler(string widgetName, PanelWidgetHandler handler)
+        {
+            Widgets[widgetName].ClickHandler = handler;
+        }
+
+
+        public virtual void SetClickHandler(PanelWidgetHandler handler)
         {
             foreach (var w in Widgets.Values)
-                w.Handler = handler;
+                w.ClickHandler = handler;
+        }
+
+
+        public void SetHoverHandler(string widgetName, PanelWidgetHandler handler)
+        {
+            Widgets[widgetName].HoverHandler = handler;
+        }
+
+
+        public void SetHoverHandler(PanelWidgetHandler handler)
+        {
+            foreach (var w in Widgets.Values)
+                w.HoverHandler = handler;
         }
 
 
@@ -136,11 +148,24 @@
         }
 
 
+        protected override bool Hover(Circle circle)
+        {
+            return Physics.CircleRectangleCollision(circle, Background.GetRectangle());
+        }
+
+
         public void SetTitle(string title)
         {
             bool adjustDimension = Title == null;
 
-            Title = new Text(title, "Pixelite") { SizeX = 2, VisualPriority = VisualPriority };
+            Title = new Text(title, "Pixelite")
+            {
+                SizeX = 2,
+                VisualPriority = VisualPriority,
+                Position = new Vector3(Position.X, Position.Y + 5, 0)
+            };
+
+            TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.TextSize.Y + 5, 0);
 
             if (adjustDimension)
                 Dimension += new Vector3(0, Title.TextSize.Y + 10, 0);
@@ -165,37 +190,37 @@
             if (!Visible)
                 return;
 
-            Background.Size = new Vector2(Dimension.X + 8, Dimension.Y + 8);
-            Background.Position = new Vector3(Position.X - 4, Position.Y - 4, 0);
-
-            Corners[0].Position = new Vector3(Position.X - 4, Position.Y - 4, 0); //Haut droite
-            Corners[0].Rotation = 0;
-
-            Corners[1].Position = new Vector3(Position.X - 4, Position.Y + Dimension.Y + 4, 0); //Bas droite
-            Corners[1].Rotation = -MathHelper.PiOver2;
-
-            Corners[2].Position = new Vector3(Position.X + Dimension.X + 4, Position.Y - 4, 0); //Haut gauche
-            Corners[2].Rotation = MathHelper.PiOver2;
-
-            Corners[3].Position = new Vector3(Position.X + Dimension.X + 4, Position.Y + Dimension.Y + 4, 0); //Bas gauche
-            Corners[3].Rotation = MathHelper.Pi;
-
-
-            Edges[0].Size = new Vector2(Dimension.X, 4); //Haut
-            Edges[0].Position = new Vector3(Position.X, Position.Y - 8, 0);
-
-            Edges[1].Size = new Vector2(Dimension.X, 4); //Bas
-            Edges[1].Position = new Vector3(Position.X, Position.Y + Dimension.Y + 4, 0);
-
-            Edges[2].Size = new Vector2(4, Dimension.Y); //Gauche
-            Edges[2].Position = new Vector3(Position.X - 8, Position.Y, 0);
-
-            Edges[3].Size = new Vector2(4, Dimension.Y); //Droite
-            Edges[3].Position = new Vector3(Position.X + Dimension.X + 4, Position.Y, 0);
-
-
             if (ShowFrame)
             {
+                Background.Size = new Vector2(Dimension.X + 8, Dimension.Y + 8);
+                Background.Position = new Vector3(Position.X - 4, Position.Y - 4, 0);
+
+                Corners[0].Position = new Vector3(Position.X - 4, Position.Y - 4, 0); //Haut droite
+                Corners[0].Rotation = 0;
+
+                Corners[1].Position = new Vector3(Position.X - 4, Position.Y + Dimension.Y + 4, 0); //Bas droite
+                Corners[1].Rotation = -MathHelper.PiOver2;
+
+                Corners[2].Position = new Vector3(Position.X + Dimension.X + 4, Position.Y - 4, 0); //Haut gauche
+                Corners[2].Rotation = MathHelper.PiOver2;
+
+                Corners[3].Position = new Vector3(Position.X + Dimension.X + 4, Position.Y + Dimension.Y + 4, 0); //Bas gauche
+                Corners[3].Rotation = MathHelper.Pi;
+
+
+                Edges[0].Size = new Vector2(Dimension.X, 4); //Haut
+                Edges[0].Position = new Vector3(Position.X, Position.Y - 8, 0);
+
+                Edges[1].Size = new Vector2(Dimension.X, 4); //Bas
+                Edges[1].Position = new Vector3(Position.X, Position.Y + Dimension.Y + 4, 0);
+
+                Edges[2].Size = new Vector2(4, Dimension.Y); //Gauche
+                Edges[2].Position = new Vector3(Position.X - 8, Position.Y, 0);
+
+                Edges[3].Size = new Vector2(4, Dimension.Y); //Droite
+                Edges[3].Position = new Vector3(Position.X + Dimension.X + 4, Position.Y, 0);
+
+
                 for (int i = 0; i < 4; i++)
                 {
                     Scene.Add(Edges[i]);

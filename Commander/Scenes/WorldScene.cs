@@ -35,7 +35,7 @@
         public void Initialize()
         {
             // Initialize the simulator
-            Simulator = new Simulator(this, LevelsFactory.GetDescriptor(Descriptor.Layout))
+            Simulator = new Simulator(this, Main.LevelsFactory.GetDescriptor(Descriptor.Layout))
             {
                 DemoMode = true,
                 WorldMode = true,
@@ -50,13 +50,13 @@
             // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
             foreach (var level in Descriptor.Levels)
             {
-                LevelDescriptor d = LevelsFactory.GetDescriptor(level);
+                LevelDescriptor d = Main.LevelsFactory.GetDescriptor(level);
                 LevelsDescriptors.Add(d.Infos.Mission, d);
             }
 
             foreach (var level in Descriptor.Warps)
             {
-                LevelDescriptor d = LevelsFactory.GetDescriptor(level.Key);
+                LevelDescriptor d = Main.LevelsFactory.GetDescriptor(level.Key);
                 LevelsDescriptors.Add(d.Infos.Mission, d);
                 Warps.Add(d.Infos.Mission, level.Value);
             }

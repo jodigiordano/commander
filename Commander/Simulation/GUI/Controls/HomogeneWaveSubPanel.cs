@@ -20,9 +20,10 @@
         }
 
 
-        public Distance GetDistance()
+        public Distance Distance
         {
-            return (Distance) Enum.Parse(typeof(Distance), Distances.Value);
+            get { return (Distance) Enum.Parse(typeof(Distance), Distances.Value); }
+            set { Distances.Value = value.ToString("g"); }
         }
     }
 }

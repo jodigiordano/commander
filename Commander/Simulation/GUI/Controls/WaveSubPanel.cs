@@ -10,7 +10,7 @@
         private EnemiesWidget Enemies;
         private NumericHorizontalSlider Level;
         private NumericHorizontalSlider CashValue;
-        private NumericHorizontalSlider Quantity;
+        private NumericHorizontalSlider QuantityWidget;
         private ChoicesHorizontalSlider WavesTypes;
 
         private Dictionary<string, Panel> WavesPanels;
@@ -27,14 +27,14 @@
             Enemies = new EnemiesWidget(simulator.EnemiesFactory.All, (int) size.X, 5);
             Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 50);
             CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 100);
-            Quantity = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 50);
+            QuantityWidget = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 50);
             WavesTypes = new ChoicesHorizontalSlider("Wave type", WaveGenerator.WavesTypesStrings, 0);
 
             AddWidget("StartingTime", StartingTime);
             AddWidget("Enemies", Enemies);
             AddWidget("Level", Level);
             AddWidget("CashValue", CashValue);
-            AddWidget("Quantity", Quantity);
+            AddWidget("Quantity", QuantityWidget);
             AddWidget("WavesTypes", WavesTypes);
 
             WavesPanels = new Dictionary<string, Panel>();
@@ -66,7 +66,56 @@
 
         public int EnemiesCount
         {
-            get { return Enemies.SelectedCount; }
+            get { return Enemies.ClickedCount; }
+        }
+
+
+        public int Quantity
+        {
+            get { return QuantityWidget.Value; }
+        }
+
+
+        public void Sync(WaveDescriptor descriptor)
+        {
+            StartingTime.Value = (int) descriptor.StartingTime / 1000;
+            Enemies.Sync(descriptor.Enemies);
+            Level.Value = descriptor.LivesLevel;
+            CashValue.Value = descriptor.CashValue;
+            QuantityWidget.Value = descriptor.Quantity;
+
+            if (descriptor.SwitchEvery != -1) //must be checked first
+            {
+                WavesTypes.Value = WaveType.PackedH.ToString("g");
+
+                var panel = ((PackedHomogeneWaveSubPanel) WavesPanels[WavesTypes.Value]);
+
+                panel.Delay = (int) descriptor.Delay;
+                panel.SwitchEvery = descriptor.SwitchEvery;
+            }
+
+            else if (descriptor.Delay != -1)
+            {
+                WavesTypes.Value = WaveType.DistinctFollow.ToString("g");
+
+                var panel = ((DistinctFollowWaveSubPanel) WavesPanels[WavesTypes.Value]);
+
+                panel.Distance = descriptor.Distance;
+                panel.Delay = (int) descriptor.Delay;
+            }
+
+            else
+            {
+                WavesTypes.Value = WaveType.Homogene.ToString("g");
+
+                ((HomogeneWaveSubPanel) WavesPanels[WavesTypes.Value]).Distance = descriptor.Distance;
+            }
+
+            // Sync Generator Sub Panel
+            RemoveWidget("SubWaveType");
+            AddWidget("SubWaveType", WavesPanels[WavesTypes.Value]);
+
+            CurrentWaveType = WavesTypes.Value;
         }
 
 
@@ -79,28 +128,28 @@
                 LivesLevel = Level.Value,
                 SpeedLevel = Level.Value,
                 CashValue = CashValue.Value,
-                Quantity = Quantity.Value
+                Quantity = QuantityWidget.Value
             };
 
             if (CurrentWaveType == WaveType.Homogene.ToString("g"))
             {
-                d.Distance = ((HomogeneWaveSubPanel) WavesPanels[CurrentWaveType]).GetDistance();
+                d.Distance = ((HomogeneWaveSubPanel) WavesPanels[CurrentWaveType]).Distance;
             }
 
             else if (CurrentWaveType == WaveType.DistinctFollow.ToString("g"))
             {
                 var panel = ((DistinctFollowWaveSubPanel) WavesPanels[CurrentWaveType]);
 
-                d.Distance = panel.GetDistance();
-                d.Delay = panel.GetDelay();
+                d.Distance = panel.Distance;
+                d.Delay = panel.Delay;
             }
 
             else if (CurrentWaveType == WaveType.PackedH.ToString("g"))
             {
                 var panel = ((PackedHomogeneWaveSubPanel) WavesPanels[CurrentWaveType]);
 
-                d.Delay = panel.GetDelay();
-                d.SwitchEvery = panel.GetSwitchEvery();
+                d.Delay = panel.Delay;
+                d.SwitchEvery = panel.SwitchEvery;
             }
 
 

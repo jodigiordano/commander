@@ -37,6 +37,14 @@
         }
 
 
+        public override void ClearWidgets()
+        {
+            Panels.Clear();
+
+            base.ClearWidgets();
+        }
+
+
         public override void Draw()
         {
             if (!Visible)

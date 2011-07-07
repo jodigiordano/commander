@@ -130,10 +130,16 @@
                 Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteTouche");
             }
 
-            if (celestialBody == CelestialBodyToProtect)
-                CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints; //correct de caster?
+            if (Simulator.EditorMode && celestialBody == CelestialBodyToProtect)
+                celestialBody.LifePoints = CommonStash.Lives;
 
-            if (CommonStash.Lives <= 0 && State == GameState.Running && !Simulator.DemoMode && !Simulator.EditorMode)
+            if (Simulator.EditorMode || Simulator.DemoMode)
+                return;
+
+            if (celestialBody == CelestialBodyToProtect)
+                CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints;
+
+            if (CommonStash.Lives <= 0 && State == GameState.Running)
             {
                 CelestialBodyToProtect.DoDie();
                 Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");

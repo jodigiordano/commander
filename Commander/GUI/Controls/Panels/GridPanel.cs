@@ -19,6 +19,21 @@
         }
 
 
+        public override Vector3 Position
+        {
+            get
+            {
+                return base.Position;
+            }
+
+            set
+            {
+                base.Position = value;
+                RecalculatePositions = true;
+            }
+        }
+
+
         public override void AddWidget(string name, PanelWidget widget)
         {
             base.AddWidget(name, widget);
@@ -35,18 +50,24 @@
         }
 
 
+        public override void ClearWidgets()
+        {
+            base.ClearWidgets();
+
+            RecalculatePositions = true;
+        }
+
+
         public override void Draw()
         {
             if (!Visible)
                 return;
 
-            base.Draw();
-
-            if (RecalculatePositions)
-            {
+            //if (RecalculatePositions)
+            //{
                 Vector3 upperLeft = base.GetUpperLeftUsableSpace();
                 float initialX = upperLeft.X;
-                float distanceColumn = Dimension.Y / NbColumns;
+                float distanceColumn = Dimension.X / NbColumns;
 
                 int columnCounter = 0;
 
@@ -70,7 +91,9 @@
                 }
 
                 RecalculatePositions = false;
-            }
+            //}
+
+            base.Draw();
         }
     }
 }

@@ -3,6 +3,7 @@ namespace EphemereGames.Commander
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Persistence;
@@ -15,11 +16,11 @@ namespace EphemereGames.Commander
     class Main : Game
     {
         public static SaveGame SaveGame;
-        public static GeneratorData GeneratorData;
         public static TrialMode TrialMode;
         public static GameScene GameInProgress;
         public static Main Instance;
         public static string SelectedWorld;
+        public static LevelsFactory LevelsFactory;
 
         private GraphicsDeviceManager Graphics;
         private bool Initializing = true;
@@ -56,13 +57,14 @@ namespace EphemereGames.Commander
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (int) Preferences.TargetElapsedTimeMs);
             Content.RootDirectory = "Content";
             SaveGame = new SaveGame();
-            GeneratorData = new GeneratorData();
             Window.AllowUserResizing = false;
 
             if (Preferences.Target == Core.Utilities.Setting.Xbox360)
                 Components.Add(new GamerServicesComponent(this));
 
             Instance = this;
+
+            LevelsFactory = new LevelsFactory();
         }
 
 
@@ -87,12 +89,13 @@ namespace EphemereGames.Commander
             Audio.Initialize(0, 0);
 
             Persistence.AddData(SaveGame);
-            Persistence.AddData(GeneratorData);
 
             Persistence.LoadPackage("chargement");
 
             SelectedMusic = AvailableMusics[Random.Next(0, AvailableMusics.Count)];
             AvailableMusics.Remove(SelectedMusic);
+
+            LevelsFactory.Initialize();
         }
 
 

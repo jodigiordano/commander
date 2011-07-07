@@ -82,7 +82,6 @@
     <Compile Include="Animations\IntroAnimation.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Editor\Descriptors.cs" />
-    <Compile Include="Editor\GeneratorData.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EqualityComparers.cs" />
     <Compile Include="GUI\Controls\Panels\GridPanel.cs" />
@@ -95,7 +94,9 @@
     <Compile Include="GUI\Controls\Widgets\HorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageCheckBox.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageWidget.cs" />
+    <Compile Include="GUI\Controls\Widgets\Label.cs" />
     <Compile Include="GUI\Controls\Widgets\NewCheckBox.cs" />
+    <Compile Include="GUI\Controls\Widgets\NewPushButton.cs" />
     <Compile Include="GUI\Controls\Widgets\NumericHorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\PanelWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\PushButton.cs" />
@@ -145,10 +146,16 @@
     <Compile Include="Simulation\GUI\Bubbles\TextBubble.cs" />
     <Compile Include="Simulation\GUI\Controls\DistinctFollowWaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\Controls\EnemiesWidget.cs" />
+    <Compile Include="Simulation\GUI\Controls\GeneralPanel.cs" />
     <Compile Include="Simulation\GUI\Controls\HomogeneWaveSubPanel.cs" />
+    <Compile Include="Simulation\GUI\Controls\LevelsPanel.cs" />
     <Compile Include="Simulation\GUI\Controls\PackedHomogeneWaveSubPanel.cs" />
+    <Compile Include="Simulation\GUI\Controls\PlayerPanel.cs" />
     <Compile Include="Simulation\GUI\Controls\PowerUpCheckBox.cs" />
+    <Compile Include="Simulation\GUI\Controls\PowerUpsPanel.cs" />
     <Compile Include="Simulation\GUI\Controls\TurretCheckBox.cs" />
+    <Compile Include="Simulation\GUI\Controls\TurretsPanel.cs" />
+    <Compile Include="Simulation\GUI\Controls\WavesPanel.cs" />
     <Compile Include="Simulation\GUI\Controls\WaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />

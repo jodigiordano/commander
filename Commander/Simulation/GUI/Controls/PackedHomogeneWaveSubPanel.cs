@@ -5,8 +5,8 @@
 
     class PackedHomogeneWaveSubPanel : VerticalPanel
     {
-        private NumericHorizontalSlider Delay;
-        private NumericHorizontalSlider SwitchEvery;
+        private NumericHorizontalSlider DelayWidget;
+        private NumericHorizontalSlider SwitchEveryWidget;
 
 
         public PackedHomogeneWaveSubPanel(Simulator simulator, Vector2 size, double visualPriority, Color color)
@@ -14,23 +14,25 @@
         {
             ShowFrame = false;
 
-            Delay = new NumericHorizontalSlider("Delay", 2000, 10000, 2000, 100, 100);
-            SwitchEvery = new NumericHorizontalSlider("Switch every", 5, 20, 5, 1, 100);
+            DelayWidget = new NumericHorizontalSlider("Delay", 2000, 10000, 2000, 100, 100);
+            SwitchEveryWidget = new NumericHorizontalSlider("Switch every", 5, 20, 5, 1, 100);
 
-            AddWidget("Delay", Delay);
-            AddWidget("SwitchEvery", SwitchEvery);
+            AddWidget("Delay", DelayWidget);
+            AddWidget("SwitchEvery", SwitchEveryWidget);
         }
 
 
-        public int GetDelay()
+        public int Delay
         {
-            return Delay.Value;
+            get { return DelayWidget.Value; }
+            set { DelayWidget.Value = value; }
         }
 
 
-        public int GetSwitchEvery()
+        public int SwitchEvery
         {
-            return SwitchEvery.Value;
+            get { return SwitchEveryWidget.Value; }
+            set { SwitchEveryWidget.Value = value; }
         }
     }
 }

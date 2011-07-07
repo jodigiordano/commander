@@ -8,7 +8,10 @@
 
     class Level
     {
-        //infos
+        // descriptor
+        public LevelDescriptor Descriptor;
+
+        // infos
         public int Id;
         public string Mission;
         public string Difficulty;
@@ -33,7 +36,6 @@
         public int LifePacks;
 
         private Simulator Simulator;
-        private LevelDescriptor Descriptor;
         private float NextCelestialBodyVisualPriority = Preferences.PrioriteSimulationCorpsCeleste;
 
 

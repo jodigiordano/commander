@@ -13,7 +13,6 @@ namespace EphemereGames.Commander.Simulation
     {
         public Scene Scene;
         public Dictionary<string, LevelDescriptor> AvailableLevelsDemoMode;
-        public LevelDescriptor LevelDescriptor;
         public bool DebugMode;
         public bool WorldMode;
         public bool DemoMode;
@@ -28,7 +27,6 @@ namespace EphemereGames.Commander.Simulation
         public PhysicalRectangle InnerTerrain;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
         public CelestialBody CelestialBodyPausedGame;
-
 
 
         public PlanetarySystemController PlanetarySystemController;
@@ -114,7 +112,6 @@ namespace EphemereGames.Commander.Simulation
             MineralsFactory.Initialize();
             BulletsFactory.Initialize();
 
-            LevelDescriptor = descriptor;
             Level = new Level(this, descriptor);
 
             Terrain = new PhysicalRectangle(-840, -560, 1680, 1120);
@@ -293,6 +290,13 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.Initialize();
             EditorGUIController.Initialize();
             EditorController.Initialize();
+        }
+
+
+        public LevelDescriptor LevelDescriptor
+        {
+            get { return Level.Descriptor; }
+            set { Level.Descriptor = value; }
         }
 
 

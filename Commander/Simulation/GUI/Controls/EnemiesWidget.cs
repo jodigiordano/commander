@@ -1,13 +1,16 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class EnemiesWidget : PanelWidget
     {
-        public Enemy SelectedEnemy;
-        public int SelectedCount;
+        public Enemy ClickedEnemy;
+        public int ClickedCount;
+        public Enemy HoverEnemy;
 
         private Dictionary<Enemy, ImageCheckBox> CheckBoxes;
         private ImageCheckBox FirstCheckBox;
@@ -36,11 +39,12 @@
             Width = width;
             NbColumns = nbColumns;
             DistanceBetweenTwoChoices = 20;
-            SelectedCount = 0;
+            ClickedCount = 0;
+            HoverEnemy = null;
         }
 
 
-        public override Core.Visual.Scene Scene
+        public override Scene Scene
         {
             get { return base.Scene; }
             set
@@ -123,16 +127,30 @@
         }
 
 
-        protected override bool Click(Core.Physics.Circle circle)
+        protected override bool Click(Circle circle)
         {
             foreach (var w in CheckBoxes)
                 if (w.Value.DoClick(circle))
                 {
-                    SelectedCount += w.Value.Checked ? 1 : -1;
-                    SelectedEnemy = w.Key;
+                    ClickedCount += w.Value.Checked ? 1 : -1;
+                    ClickedEnemy = w.Key;
                     return true;
                 }
 
+            return false;
+        }
+
+
+        protected override bool Hover(Circle circle)
+        {
+            foreach (var w in CheckBoxes)
+                if (w.Value.DoHover(circle))
+                {
+                    HoverEnemy = w.Key;
+                    return true;
+                }
+
+            HoverEnemy = null;
             return false;
         }
 
@@ -160,6 +178,20 @@
                     enemies.Add(e.Key.Type);
 
             return enemies;
+        }
+
+
+        public void Sync(List<EnemyType> enemies)
+        {
+            ClickedCount = 0;
+
+            foreach (var e in CheckBoxes)
+            {
+                e.Value.Checked = enemies.Contains(e.Key.Type);
+
+                if (e.Value.Checked)
+                    ClickedCount++;
+            }
         }
     }
 }

@@ -110,6 +110,12 @@
         }
 
 
+        protected override bool Hover(Circle circle)
+        {
+            return Physics.CircleCicleCollision(circle, DecrementCircle) || Physics.CircleCicleCollision(circle, IncrementCircle);
+        }
+
+
         public override void Draw()
         {
             ValueText.Data = Value.ToString();

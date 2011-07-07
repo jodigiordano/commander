@@ -40,7 +40,7 @@
 
         public void AddData(Data data)
         {
-            this.Datas.Add(data.Name, data);
+            Datas.Add(data.Name, data);
             data.SaveDevice = SaveDevice;
         }
 

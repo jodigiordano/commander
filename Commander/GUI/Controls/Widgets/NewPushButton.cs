@@ -5,19 +5,15 @@
     using Microsoft.Xna.Framework;
 
 
-    class NewCheckBox : PanelWidget
+    class NewPushButton : PanelWidget
     {
-        public bool Checked;
-
         protected Image Box;
-        private Text CheckedRep;
         private Circle BoxCircle;
 
 
-        public NewCheckBox()
+        public NewPushButton()
         {
             Box = new Image("checkbox") { SizeX = 4, Origin = Vector2.Zero };
-            CheckedRep = new Text("X", "Pixelite") { SizeX = 3 }.CenterIt();
 
             BoxCircle = new Circle(Vector3.Zero, 20);
         }
@@ -33,7 +29,6 @@
             set
             {
                 Box.VisualPriority = value;
-                CheckedRep.VisualPriority = value;
             }
         }
 
@@ -50,8 +45,6 @@
                 Box.Position = value;
 
                 BoxCircle.Position = Box.Position + new Vector3(Box.AbsoluteSize / 2f, 0);
-
-                CheckedRep.Position = BoxCircle.Position;
             }
         }
 
@@ -66,10 +59,7 @@
         protected override bool Click(Circle circle)
         {
             if (Physics.CircleCicleCollision(circle, BoxCircle))
-            {
-                Checked = !Checked;
                 return true;
-            }
 
             return false;
         }
@@ -84,9 +74,6 @@
         public override void Draw()
         {
             Scene.Add(Box);
-
-            if (Checked)
-                Scene.Add(CheckedRep);
         }
 
 
@@ -95,10 +82,8 @@
             var effect = VisualEffects.Fade(from, to, 0, length);
 
             Box.Alpha = (byte) from;
-            CheckedRep.Alpha = (byte) from;
 
             Scene.VisualEffects.Add(Box, effect);
-            Scene.VisualEffects.Add(CheckedRep, effect);
         }
     }
 }

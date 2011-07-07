@@ -4,15 +4,10 @@
     using System.IO;
     using System.Xml.Serialization;
     using EasyStorage;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
 
 
     public abstract class Data
     {
-        [ContentSerializerIgnore]
-        public PlayerIndex IndexJoueur { get; set; }
-
         [XmlIgnore]
         public string Name      { get; set; }
 
@@ -34,9 +29,9 @@
 
         public Data()
         {
-            Name = "donnees";
+            Name = "MyData";
             Folder = "MyGame";
-            File = "data.xml";
+            File = "MyData.xml";
             Loaded = false;
         }
 

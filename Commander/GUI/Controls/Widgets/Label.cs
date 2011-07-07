@@ -5,18 +5,20 @@
     using Microsoft.Xna.Framework;
 
 
-    class ImageWidget : PanelWidget
+    class Label : PanelWidget
     {
-        public Image Image;
-
-        private Circle ImageCircle;
+        private Text Text;
 
 
-        public ImageWidget(string imageName, float size)
+        public Label(string text)
         {
-            Image = new Image(imageName) { SizeX = size, Origin = Vector2.Zero };
+            Text = new Text(text, "Pixelite") { SizeX = 2 };
+        }
 
-            ImageCircle = new Circle(Vector3.Zero, Image.AbsoluteSize.X / 2);
+
+        public void SetData(string data)
+        {
+            Text.Data = data;
         }
 
 
@@ -24,12 +26,12 @@
         {
             get
             {
-                return Image.VisualPriority;
+                return Text.VisualPriority;
             }
 
             set
             {
-                Image.VisualPriority = value;
+                Text.VisualPriority = value;
             }
         }
 
@@ -38,43 +40,42 @@
         {
             get
             {
-                return Image.Position;
+                return Text.Position;
             }
 
             set
             {
-                Image.Position = value;
-
-                ImageCircle.Position = Image.Position + new Vector3(Image.AbsoluteSize / 2f, 0);
+                Text.Position = value;
             }
         }
 
 
         public override Vector3 Dimension
         {
-            get { return new Vector3(Image.AbsoluteSize, 0); }
+            get
+            {
+                return new Vector3(Text.TextSize, 0);
+            }
+
             set { }
         }
 
 
         protected override bool Click(Circle circle)
         {
-            if (Physics.CircleCicleCollision(circle, ImageCircle))
-                return true;
-
             return false;
         }
 
 
         protected override bool Hover(Circle circle)
         {
-            return Physics.CircleCicleCollision(circle, ImageCircle);
+            return false;
         }
 
 
         public override void Draw()
         {
-            Scene.Add(Image);
+            Scene.Add(Text);
         }
 
 
@@ -82,9 +83,9 @@
         {
             var effect = VisualEffects.Fade(from, to, 0, length);
 
-            Image.Alpha = (byte) from;
+            Text.Alpha = (byte) from;
 
-            Scene.VisualEffects.Add(Image, effect);
+            Scene.VisualEffects.Add(Text, effect);
         }
     }
 }

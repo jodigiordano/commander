@@ -19,6 +19,7 @@
 => editor > celestial body > change rotating sens
 => 4 players max									DONE.
 => Placing a turret => same move feel as in the spaceship				DONE.
+=> A save game for each profile on the Xbox 360 / Windows
 
 
 ================================================================================

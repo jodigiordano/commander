@@ -7,7 +7,7 @@
     class DistinctFollowWaveSubPanel : VerticalPanel
     {
         private ChoicesHorizontalSlider Distances;
-        private NumericHorizontalSlider Delay;
+        private NumericHorizontalSlider DelayWidget;
 
 
         public DistinctFollowWaveSubPanel(Simulator simulator, Vector2 size, double visualPriority, Color color)
@@ -16,22 +16,24 @@
             ShowFrame = false;
 
             Distances = new ChoicesHorizontalSlider("Distance", WaveGenerator.DistancesStrings, 0);
-            Delay = new NumericHorizontalSlider("Delay", 2000, 10000, 2000, 100, 100);
+            DelayWidget = new NumericHorizontalSlider("Delay", 2000, 10000, 2000, 100, 100);
 
             AddWidget("Distances", Distances);
-            AddWidget("Delay", Delay);
+            AddWidget("Delay", DelayWidget);
         }
 
 
-        public Distance GetDistance()
+        public Distance Distance
         {
-            return (Distance) Enum.Parse(typeof(Distance), Distances.Value);
+            get { return (Distance) Enum.Parse(typeof(Distance), Distances.Value); }
+            set { Distances.Value = value.ToString("g"); }
         }
 
 
-        public int GetDelay()
+        public int Delay
         {
-            return Delay.Value;
+            get { return DelayWidget.Value; }
+            set { DelayWidget.Value = value; }
         }
     }
 }

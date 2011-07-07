@@ -1,13 +1,95 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
     using Microsoft.Xna.Framework;
 
 
-    static class LevelsFactory
+    class LevelsFactory
     {
+        public Dictionary<int, LevelDescriptor> Descriptors;
+
+
+        public LevelsFactory()
+        {
+            Descriptors = new Dictionary<int, LevelDescriptor>();
+        }
+
+
+        public void Initialize()
+        {
+            string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", "level*.xml");
+
+            XmlSerializer serializer = new XmlSerializer(typeof(LevelDescriptor));
+
+            foreach (var f in levelsFiles)
+            {
+                using (StreamReader reader = new StreamReader(f))
+                {
+                    var descriptor = (LevelDescriptor) serializer.Deserialize(reader.BaseStream);
+                    Descriptors.Add(descriptor.Infos.Id, descriptor);
+                }
+            }
+        }
+
+
+        public LevelDescriptor GetDescriptor(int id)
+        {
+            LevelDescriptor d = null;
+
+            if (id >= 1000 && id < 2000)
+            {
+                switch (id)
+                {
+                    case 1001: d = GetWorld1Descriptor(); break;
+                    case 1002: d = GetWorld2Descriptor(); break;
+                    case 1003: d = GetWorld3Descriptor(); break;
+                }
+            }
+
+            else if (id >= 2000 && id <= 3000)
+            {
+                d = new LevelDescriptor();
+                d.Infos.Id = id;
+                d.Infos.Difficulty = "";
+
+                if (id == 2001)
+                    d.Infos.Mission = "World2";
+                else if (id == 2002)
+                    d.Infos.Mission = "World3";
+                else if (id == 2003)
+                    d.Infos.Mission = "World1";
+                else if (id == 2004)
+                    d.Infos.Mission = "World2";
+            }
+
+            else
+            {
+                d = Descriptors[id];
+            }
+
+            return d;
+        }
+
+
+        public void SaveDescriptorOnDisk(int id)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(LevelDescriptor));
+            
+            using(StreamWriter writer = new StreamWriter(".\\Content\\scenarios\\level" + id + ".xml"))
+                serializer.Serialize(writer.BaseStream, Descriptors[id]);
+        }
+
+
+        public void DeleteDescriptorFromDisk(int id)
+        {
+            if (File.Exists(".\\Content\\scenarios\\level" + id + ".xml"))
+                File.Delete(".\\Content\\scenarios\\level" + id + ".xml");
+        }
+
+
         public static WorldDescriptor GetWorldDescriptor(string name)
         {
             WorldDescriptor wd;
@@ -20,8 +102,8 @@
                     {
                         Name = name,
                         Levels = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
-                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(9, "World2") },
-                        Layout = 101,
+                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
+                        Layout = 1001,
                         UnlockedCondition = new List<int>(),
                         WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level."
                     };
@@ -33,8 +115,8 @@
                         Name = name,
                         //Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
                         Levels = new List<int>() { 0 },
-                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(19, "World3"), new KeyValuePair<int, string>(20, "World1") },
-                        Layout = 102,
+                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
+                        Layout = 1002,
                         UnlockedCondition = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
                         WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world."
                     };
@@ -46,8 +128,8 @@
                         Name = name,
                         //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
                         Levels = new List<int>() { 0 },
-                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(31, "World2") },
-                        Layout = 103,
+                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World2") },
+                        Layout = 1003,
                         UnlockedCondition = new List<int>() { -1 },
                         WarpBlockedMessage = ""
                     };
@@ -56,84 +138,6 @@
 
 
             return wd;
-        }
-
-
-        public static LevelDescriptor GetDescriptor(int id)
-        {
-            LevelDescriptor d;
-
-            if (id == 9)
-            {
-                d = new LevelDescriptor();
-                d.Infos.Id = 9;
-                d.Infos.Mission = "World2";
-                d.Infos.Difficulty = "";
-
-                return d;
-            }
-
-            else if (id == 19)
-            {
-                d = new LevelDescriptor();
-                d.Infos.Id = 19;
-                d.Infos.Mission = "World3";
-                d.Infos.Difficulty = "";
-
-                return d;
-            }
-
-            else if (id == 20)
-            {
-                d = new LevelDescriptor();
-                d.Infos.Id = 20;
-                d.Infos.Mission = "World1";
-                d.Infos.Difficulty = "";
-
-                return d;
-            }
-
-            else if (id == 31)
-            {
-                d = new LevelDescriptor();
-                d.Infos.Id = id;
-                d.Infos.Mission = "World2";
-                d.Infos.Difficulty = "";
-
-                return d;
-            }
-
-            else if (id >= 21 && id <= 30)
-            {
-                d = new LevelDescriptor();
-                d.Infos.Id = id;
-                d.Infos.Mission = "3-" + (id - 20);
-                d.Infos.Difficulty = (id == 10 || id == 17) ? "Easy" : (id == 11 || id == 12 || id == 13 || id == 14) ? "Normal" : "Hard";
-
-                return d;
-            }
-
-            else if (id >= 100 && id <= 200)
-            {
-                switch (id)
-                {
-                    case 101: return GetWorld1Descriptor(); break;
-                    case 102: return GetWorld2Descriptor(); break;
-                    case 103: return GetWorld3Descriptor(); break;
-                }
-            }
-
-            else
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(LevelDescriptor));
-
-                using (StreamReader reader = new StreamReader(".\\Content\\scenarios\\level" + id + ".xml"))
-                    d = (LevelDescriptor) serializer.Deserialize(reader.BaseStream);
-
-                return d;
-            }
-
-            return null;
         }
 
 
@@ -317,17 +321,51 @@
         }
 
 
-        public static LevelDescriptor GetEmptyDescriptor()
+        public LevelDescriptor GetEmptyDescriptor()
         {
             var l = new LevelDescriptor();
 
             l.AddAsteroidBelt();
 
+            l.Infos.Id = GetHighestId() + 1;
+            l.Infos.Mission = "1-" + (GetHighestWorld1Level() + 1).ToString();
+
             return l;
         }
 
 
-        public static LevelDescriptor GetWorld1Descriptor()
+        private int GetHighestId()
+        {
+            int highest = -1;
+
+            foreach (var d in Descriptors.Values)
+            {
+                if (d.Infos.Id > highest)
+                    highest = d.Infos.Id;
+            }
+
+            return highest;
+        }
+
+
+        private int GetHighestWorld1Level()
+        {
+            int highest = -1;
+
+            foreach (var d in Descriptors.Values)
+            {
+                string[] worldLevel = d.Infos.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
+                int level = int.Parse(worldLevel[1]);
+
+                if (worldLevel[0] == "1" && level > highest)
+                    highest = level;
+            }
+
+            return highest;
+        }
+
+
+        private static LevelDescriptor GetWorld1Descriptor()
         {
             LevelDescriptor d = new LevelDescriptor();
 
@@ -415,7 +453,7 @@
         }
 
 
-        public static LevelDescriptor GetWorld2Descriptor()
+        private static LevelDescriptor GetWorld2Descriptor()
         {
             LevelDescriptor d = new LevelDescriptor();
 
@@ -501,7 +539,7 @@
         }
 
 
-        public static LevelDescriptor GetWorld3Descriptor()
+        private static LevelDescriptor GetWorld3Descriptor()
         {
             LevelDescriptor d = new LevelDescriptor();
 

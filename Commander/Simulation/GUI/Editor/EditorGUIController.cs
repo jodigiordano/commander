@@ -33,37 +33,19 @@
             Panels = new Dictionary<EditorPanel, Panel>(EditorPanelComparer.Default);
 
             // Player's panel
-            VerticalPanel playerPanel = new VerticalPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            playerPanel.SetTitle("Player");
-            playerPanel.AddWidget("Lives", new NumericHorizontalSlider("Starting lives", 0, 50, 0, 1, 100));
-            playerPanel.AddWidget("Cash", new NumericHorizontalSlider("Starting money", 0, 50000, 0, 500, 100));
+            PlayerPanel playerPanel = new PlayerPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Player, playerPanel);
 
             // Turrets' panel
-            GridPanel turretsPanel = new GridPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            turretsPanel.SetTitle("Turrets");
-
-            foreach (var turret in Simulator.TurretsFactory.All)
-                turretsPanel.AddWidget(turret.Key.ToString(), new TurretCheckBox(Simulator.TurretsFactory.Create(turret.Key)));
+            TurretsPanel turretsPanel = new TurretsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Turrets, turretsPanel);
 
             // PowerUps' panel
-            GridPanel powerUpsPanel = new GridPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            powerUpsPanel.SetTitle("Power-Ups");
-
-            foreach (var powerUp in Simulator.PowerUpsFactory.All)
-                powerUpsPanel.AddWidget(powerUp.Key.ToString(),
-                    new PowerUpCheckBox(powerUp.Value.Category == PowerUpCategory.Turret ?
-                        Simulator.TurretsFactory.All[powerUp.Value.AssociatedTurret].BaseImage.TextureName : powerUp.Value.BuyImage,
-                        powerUp.Key));
+            PowerUpsPanel powerUpsPanel = new PowerUpsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
             Panels.Add(EditorPanel.PowerUps, powerUpsPanel);
 
             // General panel
-            VerticalPanel generalPanel = new VerticalPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            generalPanel.SetTitle("General");
-            generalPanel.AddWidget("Difficulty", new ChoicesHorizontalSlider("Difficulty", new List<string>() { "Easy", "Normal", "Hard" }, 0));
-            generalPanel.AddWidget("World", new NumericHorizontalSlider("World #", 1, 20, 1, 1, 100));
-            generalPanel.AddWidget("Level", new NumericHorizontalSlider("Level #", 1, 50, 1, 1, 100));
+            GeneralPanel generalPanel = new GeneralPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
             Panels.Add(EditorPanel.General, generalPanel);
 
             // Background panel
@@ -75,13 +57,20 @@
             Panels.Add(EditorPanel.Background, backgroundPanel);
 
             // Waves panel
-            SlideshowPanel wavesPanel = new SlideshowPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
-            wavesPanel.SetTitle("Waves");
-
-            for (int i = 0; i < 20; i++)
-                wavesPanel.AddWidget("wave" + i, new WaveSubPanel(Simulator, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White));
-
+            WavesPanel wavesPanel = new WavesPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Waves, wavesPanel);
+
+            // Load panel
+            LevelsPanel loadPanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White);
+            loadPanel.SetTitle("Load");
+            loadPanel.Initialize();
+            Panels.Add(EditorPanel.Load, loadPanel);
+
+            // Save panel
+            LevelsPanel deletePanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White);
+            deletePanel.SetTitle("Delete - No confirmation!!!");
+            deletePanel.Initialize();
+            Panels.Add(EditorPanel.Delete, deletePanel);
 
             ContextualMenusCollisions = new ContextualMenusCollisions();
         }
@@ -203,14 +192,14 @@
         {
             if (command.Name == "PlaytestState" || command.Name == "EditState")
             {
-                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(3)).Next();
+                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(4)).Next();
                 return;
             }
 
 
             if (command.Name == "PauseSimulation" || command.Name == "ResumeSimulation")
             {
-                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(5)).Next();
+                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(6)).Next();
                 return;
             }
 

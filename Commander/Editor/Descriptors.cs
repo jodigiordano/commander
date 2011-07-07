@@ -352,6 +352,9 @@
             int typeIndex = 0;
             double lastTimeCreated = 0;
 
+            if (Enemies.Count == 0)
+                return results;
+
             for (int i = 0; i < Quantity; i++)
             {
                 if ((i + 1) % SwitchEvery == 0)

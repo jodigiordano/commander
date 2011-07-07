@@ -39,18 +39,21 @@
 
             OpenedPanel = EditorPanel.None;
 
-            Panels[EditorPanel.Player].SetHandler("Lives", DoLives);
-            Panels[EditorPanel.Player].SetHandler("Cash", DoCash);
+            Panels[EditorPanel.Player].SetClickHandler("Lives", DoLives);
+            Panels[EditorPanel.Player].SetClickHandler("Cash", DoCash);
 
-            Panels[EditorPanel.General].SetHandler("Difficulty", DoDifficulty);
-            Panels[EditorPanel.General].SetHandler("World", DoWorld);
-            Panels[EditorPanel.General].SetHandler("Level", DoLevel);
+            Panels[EditorPanel.General].SetClickHandler("Difficulty", DoDifficulty);
+            Panels[EditorPanel.General].SetClickHandler("World", DoWorld);
+            Panels[EditorPanel.General].SetClickHandler("Level", DoLevel);
 
-            Panels[EditorPanel.Turrets].SetHandler(DoTurrets);
-            Panels[EditorPanel.PowerUps].SetHandler(DoPowerUps);
-            Panels[EditorPanel.Background].SetHandler(DoBackgrounds);
+            Panels[EditorPanel.Turrets].SetClickHandler(DoTurrets);
+            Panels[EditorPanel.PowerUps].SetClickHandler(DoPowerUps);
+            Panels[EditorPanel.Background].SetClickHandler(DoBackgrounds);
 
-            Panels[EditorPanel.Waves].SetHandler(DoWaves);
+            Panels[EditorPanel.Waves].SetClickHandler(DoWaves);
+
+            Panels[EditorPanel.Load].SetClickHandler(DoLoad);
+            Panels[EditorPanel.Delete].SetClickHandler(DoDelete);
 
             foreach (var panel in Panels.Values)
                 panel.CloseButtonHandler = DoClosePanel;
@@ -128,6 +131,9 @@
             }
 
             player.Circle.Position = p.Position;
+
+            if (OpenedPanel != EditorPanel.None)
+                Panels[OpenedPanel].DoHover(player.Circle);
         }
 
 
@@ -295,6 +301,29 @@
                 Simulator.State = GameState.Running;
             }
 
+            else if (command.Name == "NewLevel")
+            {
+                Simulator.LevelDescriptor = Main.LevelsFactory.GetEmptyDescriptor();
+                Simulator.Initialize();
+                Simulator.SyncPlayers();
+            }
+
+            else if (command.Name == "SaveLevel")
+            {
+                var descriptor = Simulator.LevelDescriptor;
+
+                if (!Main.LevelsFactory.Descriptors.ContainsKey(descriptor.Infos.Id))
+                {
+                    Main.LevelsFactory.Descriptors.Add(descriptor.Infos.Id, descriptor);
+
+                    ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
+                    ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
+                }
+
+                Main.LevelsFactory.SaveDescriptorOnDisk(descriptor.Infos.Id);
+            }
+
+
             NotifyEditorCommandExecuted(command);
         }
 
@@ -439,7 +468,7 @@
             {
                 var subPanel = (WaveSubPanel) w;
 
-                if (subPanel.EnemiesCount != 0)
+                if (subPanel.EnemiesCount != 0 && subPanel.Quantity != 0)
                     descriptors.Add(subPanel.GenerateDescriptor());
             }
 
@@ -457,6 +486,42 @@
             OpenedPanel = EditorPanel.None;
 
             NotifyEditorCommandExecuted(closeCommand);
+        }
+
+
+        private void DoLoad(PanelWidget widget)
+        {
+            var panel = (LevelsPanel) widget;
+
+            if (panel.ClickedLevel != null)
+            {
+                Simulator.LevelDescriptor = panel.ClickedLevel;
+                Simulator.Initialize();
+                Simulator.SyncPlayers();
+
+                ((PlayerPanel) Panels[EditorPanel.Player]).Initialize();
+                ((TurretsPanel) Panels[EditorPanel.Turrets]).Initialize();
+                ((PowerUpsPanel) Panels[EditorPanel.PowerUps]).Initialize();
+                ((GeneralPanel) Panels[EditorPanel.General]).Initialize();
+                ((WavesPanel) Panels[EditorPanel.Waves]).Initialize();
+            }
+        }
+
+
+        private void DoDelete(PanelWidget widget)
+        {
+            var panel = (LevelsPanel) widget;
+
+            if (panel.ClickedLevel != null)
+            {
+                var descriptor = Simulator.LevelDescriptor;
+
+                Main.LevelsFactory.DeleteDescriptorFromDisk(descriptor.Infos.Id);
+                Main.LevelsFactory.Descriptors.Remove(descriptor.Infos.Id);
+
+                ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
+                ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
+            }
         }
 
 

@@ -17,7 +17,7 @@
         {
             Name = "Editeur";
 
-            Simulator = new Simulator(this, LevelsFactory.GetEmptyDescriptor())
+            Simulator = new Simulator(this, Main.LevelsFactory.GetEmptyDescriptor())
             {
                 EditorMode = true
             };

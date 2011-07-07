@@ -259,10 +259,7 @@
         public override void DoPlayerConnected(Core.Input.Player p)
         {
             if (!Persistence.DataLoaded("savePlayer"))
-            {
                 Persistence.LoadData("savePlayer");
-                Persistence.LoadData("generateurData");
-            }
 
             SceneState = State.LoadSaveGame;
         }
