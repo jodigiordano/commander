@@ -1,65 +1,130 @@
 ================================================================================
                                 TODO GENERAL
+"Keep it funny!" - Evil Frank
 ================================================================================
+=> Pixelate the 3 stars
+=> Put back the funny quotes when the player dies
+=> Change the "level completed" images by something more story-driven (alien spaceship?)
+=> Use the RunningSlowly attribute for some particles (if needed)
+=> Add mouse/gamepad sensitivity in options
+=> Add the enemies data to the TweakingController
+=> Connect the first player in the main menu, then fade out the title
+
+=> editor > celestial body > change rotating sens
 => change GUI for power-ups: space station in the bottom left of the screen		DONE.
-=> se débarasser du bouton de vente: jamais utilisé, really.
 => replugger les power-ups (dont la destruction d'une planete)				DONE.
 => replug the scenarios									DONE.
 => spaceshipcontroller -> powerupscontroller + powerupdestruction			DONE.
 => object created / object destroyed for powerUps					DONE.
 => use object destroyed for powerUps to recheck for powerUp availability		DONE.
 => install and use redgate ants profiler to make this bitch run faster			DONE.
-=> pixeliser les etoiles
-=> remettre les quotes lorsqu'on meurt (rester dans le drole)
-=> changer le "niveau complete" par un petit vaisseau extra-terrestre
-=> Utiliser RunningSlowly pour les particules
 => Si planete a proteger hitted + qu'une fois par x temps, pas jouer x particules	DONE.
-=> Add mouse/gamepad sensitivity in options
-=> Spaceships: Bumping, fire at each others, racing mode
-=> editor > celestial body > change rotating sens
 => 4 players max									DONE.
 => Placing a turret => same move feel as in the spaceship				DONE.
 => A save game for each profile on the Xbox 360 / Windows
 
 
 ================================================================================
+                               TODO MULTIPLAYER
+================================================================================
+=> Don't move the menus if they don't need to be moved
+=> 
+
+================================================================================
+                                 TODO EDITOR
+================================================================================
+=> Toggle the assets
+=> Fix the speed == 0
+
+
+================================================================================
                                  TODO CORE
 ================================================================================
 => Add Windows Phone Mobile 7 support for data persistence.
+=> use a linked list for the pool, not a stack
 
 
 ================================================================================
                                  TODO BUGS
 ================================================================================
-=> 
+=> Fix the connection / deconnection of players
+=> The preview of the paths of the celestial bodies make the game crash
 
 
 
 ================================================================================
                                TODO GRAPHICS
 ================================================================================
-=> text along path effect
-=> drop the pixelate font for a more defined one
-=> drop the pixelate planets for more defined one
+=> Text along path effect
+=> Drop the pixelate font for a more defined one
+=> Drop the pixelate planets for more defined one
+=> Preview of the paths of the celestial bodies
+=> Give a distinct color to aliens
 
+
+================================================================================
+                               TODO STORY
+================================================================================
+=> Only certain power-ups in some levels => because different types of battleships
+
+
+================================================================================
+                               TODO MOBILE
+================================================================================
+=> Do a prequel instead of a port with easier levels
 
 
 ================================================================================
                              TODO OPTIMIZATION
 ================================================================================
-=> check for memory leaks								DONE.
+=> Check for memory leaks								DONE.
 
 
 
 ================================================================================
                                TODO GAMEPLAY
 ================================================================================
-=> the path can include a celestial body more than once
+=> The path can include a celestial body more than once
+=> The spaceship cursors can bump in each other
+=> The spaceship cursors can fire in the menus
+=> A racing mode for the spaceships
 
 
 
 ================================================================================
                                 TODO AUDIO
+  "Play the game without the music and populate the world with sound effects"
+  "Always use headphones to work the sound effects / music"
 ================================================================================
-=>
+=> Add sounds when:
+   - a turret is placed
+   - the shooting stars appears on screen
+   - the moving lifes
+   - the upgrade progress of the turrets
+   - rocket movement
+   - rotation of the turrets
+   - the movement of the enemies
+=> Lounder sound for
+   - the laser turret
+   - the deadly shooting stars
+=> Show the name of the playing song
+=> Possibility to play your own music
+=> Sound for moving spaceship
+=> A more "modern" / less annoying sound for the basic turret
+=> More than one style of music								MAYBE.
+=> Only smoother, slower songs in menus
+=> Switch music in a level
+=> System to keep the count of times a music has been played
+=> A priority system that only play the sounds with the highest priority
 
+
+================================================================================
+                                TODO EXPERTS
+================================================================================
+=> Maxime Doucet
+  - Draft of the story
+  - How to adapt the game interface for mobiles
+
+=> Paul Warner
+  - Learn how to mix sounds together that will play well even if there is a lot
+  - Learn how to add more bass on sfx
