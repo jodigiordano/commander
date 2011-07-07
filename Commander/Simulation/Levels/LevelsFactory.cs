@@ -178,7 +178,7 @@
 
             c = new CelestialBodyDescriptor();
             c.Name = "whatever";
-            c.Position = new Vector3(700, -400, 0);
+            c.Path = new Vector3(700, -400, 0);
             c.Speed = 320000;
             c.Size = Size.Small;
             c.Images.Add("Asteroid");
@@ -227,7 +227,7 @@
             {
                 c = new CelestialBodyDescriptor();
                 c.Name = i.ToString();
-                c.Position = new Vector3(150, 100, 0);
+                c.Path = new Vector3(150, 100, 0);
                 c.StartingPosition = (int) (i * 14f);
                 c.Size = Size.Small;
                 c.Speed = 120000;
@@ -248,7 +248,7 @@
             {
                 c = new CelestialBodyDescriptor();
                 c.Name = (i+8).ToString();
-                c.Position = new Vector3(300, 200, 0);
+                c.Path = new Vector3(300, 200, 0);
                 c.StartingPosition = (int)(i * 11f);
                 c.Size = Size.Small;
                 c.Speed = 120000;
@@ -267,7 +267,7 @@
             {
                 c = new CelestialBodyDescriptor();
                 c.Name = (i+16).ToString();
-                c.Position = new Vector3(450, 300, 0);
+                c.Path = new Vector3(450, 300, 0);
                 c.StartingPosition = (int)(i * 5f);
                 c.Size = Size.Small;
                 c.Speed = 120000;
@@ -285,7 +285,7 @@
 
             c = new CelestialBodyDescriptor();
             c.Name = "1111";
-            c.Position = new Vector3(700, -400, 0);
+            c.Path = new Vector3(700, -400, 0);
             c.Speed = 320000;
             c.Size = Size.Small;
             c.Images.Add("Asteroid");
@@ -421,7 +421,7 @@
 
             c = new CelestialBodyDescriptor();
             c.Name = "Asteroid belt";
-            c.Position = new Vector3(700, -400, 0);
+            c.Path = new Vector3(700, -400, 0);
             c.Speed = 2560000;
             c.StartingPosition = 40;
             c.Size = Size.Small;
@@ -514,7 +514,7 @@
 
             c = new CelestialBodyDescriptor();
             c.Name = "Asteroid belt";
-            c.Position = new Vector3(700, -400, 0);
+            c.Path = new Vector3(700, -400, 0);
             c.Speed = 2560000;
             c.StartingPosition = 75;
             c.Size = Size.Small;
@@ -595,7 +595,7 @@
 
             c = new CelestialBodyDescriptor();
             c.Name = "Asteroid belt";
-            c.Position = new Vector3(700, -400, 0);
+            c.Path = new Vector3(700, -400, 0);
             c.Speed = 2560000;
             c.StartingPosition = 0;
             c.Size = Size.Small;

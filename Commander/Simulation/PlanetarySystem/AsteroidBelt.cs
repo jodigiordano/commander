@@ -72,7 +72,7 @@
                 asteroid.Image.Color.A = 60;
                 asteroid.Image.SizeX = (Main.Random.Next(20, 70) / 30.0f) * 3;
 
-                CelestialBody.Move(Speed, (ActualRotationTime + asteroid.TimeOffset) % Speed, ref BasePosition, ref asteroid.Offset, ref RotationMatrix, ref asteroid.Image.position);
+                CelestialBody.Move(Speed, (ActualRotationTime + asteroid.TimeOffset) % Speed, ref Path, ref asteroid.Offset, ref RotationMatrix, ref asteroid.Image.position);
 
                 Asteroids.Add(asteroid);
             }
@@ -85,7 +85,7 @@
 
             foreach (var a in Asteroids)
             {
-                CelestialBody.Move(Speed, (ActualRotationTime + a.TimeOffset) % Speed, ref BasePosition, ref a.Offset, ref RotationMatrix, ref a.Image.position);
+                CelestialBody.Move(Speed, (ActualRotationTime + a.TimeOffset) % Speed, ref Path, ref a.Offset, ref RotationMatrix, ref a.Image.position);
                 a.Image.Rotation += a.RotationSpeed;
             }
         }

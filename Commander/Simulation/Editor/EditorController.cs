@@ -110,7 +110,7 @@
 
             if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.MovingCB)
             {
-                player.ActualSelection.CelestialBody.Offset += player.SimPlayer.DeltaPosition;
+                player.ActualSelection.CelestialBody.BasePosition += player.SimPlayer.DeltaPosition;
                 player.SimPlayer.NinjaPosition = player.ActualSelection.CelestialBody.Position;
             }
 
@@ -149,8 +149,8 @@
 
             else if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.ShrinkingCB)
             {
-                player.ActualSelection.CelestialBody.BasePosition.X -= delta.Y;
-                player.ActualSelection.CelestialBody.BasePosition.Y += delta.X;
+                player.ActualSelection.CelestialBody.Path.X += delta.X;
+                player.ActualSelection.CelestialBody.Path.Y -= delta.Y;
             }
         }
 

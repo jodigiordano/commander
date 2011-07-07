@@ -14,14 +14,21 @@
         public List<Turret> Turrets = new List<Turret>();
         public Image Image;
         public int PathPriority;
+        
         public Vector3 position;
         public Vector3 Position                                 { get { return position; } set { this.LastPosition = position; position = value; } }
-        public float Speed                                      { get; set; }
+        public Vector3 BasePosition;
+        public Vector3 Path;
+        protected Vector3 LastPosition;
+        public float Speed                                      { get; set; }        
+        protected double ActualRotationTime;
+        private int StartingPourc;
+        
         public float Rotation                                   { get; set; }
         public Vector3 Direction                                { get; set; }
         public Shape Shape                                      { get; set; }
         public Circle Circle                                    { get; set; }
-        public Line Line                                       { get; set; }
+        public Line Line                                        { get; set; }
         public PhysicalRectangle Rectangle                      { get; set; }
         public float LifePoints                                 { get; set; }
         public float AttackPoints                               { get; set; }
@@ -32,7 +39,6 @@
         public bool LastOnPath;
         public bool FirstOnPath;
         public bool ShowPath;
-        public Vector3 Offset;
         public List<Moon> Moons;
         public bool HasGravitationalTurretBypass;
         public double VisualPriorityBackup;
@@ -41,12 +47,9 @@
         public bool ShowTurretsZone;
         public float ZoneImpactDestruction;
         public bool DarkSide;
-        public Vector3 BasePosition;
-
+        
         protected Simulator Simulator;
-        protected Vector3 LastPosition;
-        protected double ActualRotationTime;
-
+        
         private Particle DieEffect1;
         private Particle DieEffect2;
         private Particle DarkSideEffect;
@@ -56,7 +59,6 @@
 
         public string PartialImageName;
         private Size Size;
-        private int StartingPourc;
         public Turret StartingPathTurret;
 
         public SimPlayer PlayerCheckedIn;
@@ -65,8 +67,8 @@
         public CelestialBody(
             Simulator simulator,
             string name,
-            Vector3 startingPosition,
-            Vector3 offset,
+            Vector3 path,
+            Vector3 basePosition,
             float rotationRad,
             Size size,
             float speed,
@@ -99,8 +101,8 @@
             SetImage(partialImageName);
             SetRotation(rotationRad);
 
-            Offset = offset;
-            Position = LastPosition = BasePosition = startingPosition;
+            BasePosition = basePosition;
+            Position = LastPosition = Path = path;
             
             Speed = float.MaxValue;
             SetSpeed(speed);
@@ -127,8 +129,8 @@
         public CelestialBody(Simulator simulator, CelestialBodyDescriptor celestialBodyDescriptor, double visualPriority) : this(
             simulator, 
             celestialBodyDescriptor.Name,
+            celestialBodyDescriptor.Path,
             celestialBodyDescriptor.Position,
-            celestialBodyDescriptor.Offset,
             celestialBodyDescriptor.Rotation,
             celestialBodyDescriptor.Size,
             celestialBodyDescriptor.Speed,
@@ -204,7 +206,6 @@
 
         public void SetSpeed(float speed)
         {
-            //double actualPourc = (Speed == 0) ? 0 : ActualRotationTime / Speed;
             double actualPourc = (Speed == float.MaxValue) ? 0 : ActualRotationTime / Speed;
 
             Speed = speed;
@@ -384,7 +385,7 @@
         {
             Vector3 result = new Vector3();
 
-            Move(Speed, Speed * MathHelper.Clamp(perc, 0, 1), ref BasePosition, ref Offset, ref RotationMatrix, ref result);
+            Move(1, MathHelper.Clamp(perc, 0, 1), ref Path, ref BasePosition, ref RotationMatrix, ref result);
 
             return result;
         }
@@ -394,16 +395,17 @@
         {
             if (rotationTime == float.MaxValue)
             {
-                //Vector3.Add(ref basePosition, ref offset, out result);
-                result = basePosition;
-
-                return;
+                result.X = basePosition.X * (float) Math.Cos(0);
+                result.Y = basePosition.Y * (float) Math.Sin(0);
+                result.Z = 0;
             }
 
-            result.X = basePosition.X * (float) Math.Cos((MathHelper.TwoPi / rotationTime) * actualRotationTime);
-            result.Y = basePosition.Y * (float) Math.Sin((MathHelper.TwoPi / rotationTime) * actualRotationTime);
-            result.Z = 0;
-
+            else
+            {
+                result.X = basePosition.X * (float) Math.Cos((MathHelper.TwoPi / rotationTime) * actualRotationTime);
+                result.Y = basePosition.Y * (float) Math.Sin((MathHelper.TwoPi / rotationTime) * actualRotationTime);
+                result.Z = 0;
+            }
 
             Vector3.Transform(ref result, ref rotationMatrix, out result);
             Vector3.Add(ref result, ref offset, out result);
@@ -419,11 +421,12 @@
                 InBackground = false,
                 Invincible = Invincible,
                 Name = Name,
-                Offset = Offset,
-                PathPriority = PathPriority,
                 Position = BasePosition,
+                PathPriority = PathPriority,
+                Path = Path,
                 Speed = (int) Speed,
                 Size = Size,
+                Rotation = PathRotation,
                 HasGravitationalTurret = StartingPathTurret != null
             };
         }
@@ -433,7 +436,7 @@
         {
             LastPosition = position;
 
-            Move(Speed, ActualRotationTime, ref BasePosition, ref Offset, ref RotationMatrix, ref position);
+            Move(Speed, ActualRotationTime, ref Path, ref BasePosition, ref RotationMatrix, ref position);
         }
 
 

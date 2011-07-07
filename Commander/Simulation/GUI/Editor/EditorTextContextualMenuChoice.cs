@@ -8,8 +8,8 @@
         public EditorCommand Command;
 
 
-        public EditorTextContextualMenuChoice(string name, EditorCommand command)
-            : base(new Text(name, "Pixelite") { SizeX = 2 })
+        public EditorTextContextualMenuChoice(string name, float textSize, EditorCommand command)
+            : base(new Text(name, "Pixelite") { SizeX = textSize })
         {
             Command = command;
         }

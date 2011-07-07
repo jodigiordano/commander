@@ -59,8 +59,8 @@
             {
                 return new LiteCelestialBody
                 (
+                    descriptor.Path,
                     descriptor.Position,
-                    descriptor.Offset,
                     descriptor.Rotation,
                     descriptor.StartingPosition,
                     descriptor.Size,
@@ -80,8 +80,8 @@
         {
             LiteCelestialBody corpsCeleste = new LiteCelestialBody
             (
+                descriptor.Path,
                 descriptor.Position,
-                descriptor.Offset,
                 descriptor.Rotation,
                 descriptor.StartingPosition,
                 descriptor.Size,

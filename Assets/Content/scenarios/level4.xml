@@ -19,16 +19,16 @@
       <Size>Small</Size>
       <Speed>900000</Speed>
       <PathPriority>0</PathPriority>
-      <Position>
+      <Path>
         <X>700</X>
         <Y>-400</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>0</X>
         <Y>0</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>0</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>false</CanSelect>
@@ -41,16 +41,16 @@
       <Size>Small</Size>
       <Speed>120000</Speed>
       <PathPriority>8</PathPriority>
-      <Position>
+      <Path>
         <X>93</X>
         <Y>134</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>-195</X>
         <Y>74</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>226</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -63,16 +63,16 @@
       <Size>Small</Size>
       <Speed>240000</Speed>
       <PathPriority>9</PathPriority>
-      <Position>
+      <Path>
         <X>-51</X>
         <Y>-163</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>-112</X>
         <Y>130</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>-42</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -85,16 +85,16 @@
       <Size>Normal</Size>
       <Speed>10000</Speed>
       <PathPriority>3</PathPriority>
-      <Position>
+      <Path>
         <X>64</X>
         <Y>-6</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>145</X>
         <Y>3</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>-292</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -107,16 +107,16 @@
       <Size>Small</Size>
       <Speed>480000</Speed>
       <PathPriority>6</PathPriority>
-      <Position>
+      <Path>
         <X>-32</X>
         <Y>79</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>-107</X>
         <Y>-154</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>322</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -129,16 +129,16 @@
       <Size>Small</Size>
       <Speed>240000</Speed>
       <PathPriority>1</PathPriority>
-      <Position>
+      <Path>
         <X>37</X>
         <Y>1</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>-320</X>
         <Y>237</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>-1</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -151,16 +151,16 @@
       <Size>Small</Size>
       <Speed>10000</Speed>
       <PathPriority>4</PathPriority>
-      <Position>
+      <Path>
         <X>-3</X>
         <Y>-68</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>368</X>
         <Y>142</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>179</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -173,16 +173,16 @@
       <Size>Small</Size>
       <Speed>120000</Speed>
       <PathPriority>10</PathPriority>
-      <Position>
+      <Path>
         <X>190</X>
         <Y>-29</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>-356</X>
         <Y>55</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>-51</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -195,16 +195,16 @@
       <Size>Small</Size>
       <Speed>1200000</Speed>
       <PathPriority>5</PathPriority>
-      <Position>
+      <Path>
         <X>-3</X>
         <Y>80</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>321</X>
         <Y>-140</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>317</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -217,16 +217,16 @@
       <Size>Small</Size>
       <Speed>10000</Speed>
       <PathPriority>2</PathPriority>
-      <Position>
+      <Path>
         <X>-39</X>
         <Y>-11</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>288</X>
         <Y>-1</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>-276</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
@@ -239,16 +239,16 @@
       <Size>Small</Size>
       <Speed>10000</Speed>
       <PathPriority>2147483647</PathPriority>
-      <Position>
+      <Path>
         <X>28</X>
         <Y>-93</Y>
         <Z>0</Z>
-      </Position>
-      <Offset>
+      </Path>
+      <Position>
         <X>197</X>
         <Y>190</Y>
         <Z>0</Z>
-      </Offset>
+      </Position>
       <Rotation>-223</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>

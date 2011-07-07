@@ -52,6 +52,7 @@
         public float Speed;
         public Size Size;
         public bool ShowPath;
+        public string AssetName;
 
 
         public EditorCelestialBodyCommand(string name)

@@ -14,6 +14,8 @@
         private Simulator Simulator;
         private List<Vector3> PathPositions;
 
+        private const int MaxLines = 200;
+
 
         public CelestialBodiesPathPreviews(Simulator simulator)
         {
@@ -21,7 +23,7 @@
 
             Lines = new List<VisualLine>();
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < MaxLines; i++)
                 Lines.Add(new VisualLine(Vector3.Zero, Vector3.Zero, Color.White));
 
             PathPositions = new List<Vector3>();
@@ -51,6 +53,9 @@
                     line.VisualPriority = Preferences.PrioriteFondEcran - 0.00001;
 
                     Simulator.Scene.Add(line);
+
+                    if (NextVisualLine == MaxLines)
+                        return;
                 }
             }
         }

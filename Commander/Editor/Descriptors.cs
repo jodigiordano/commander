@@ -101,7 +101,7 @@
             CelestialBodyDescriptor d = new CelestialBodyDescriptor();
             d.Name = name;
             d.Invincible = true;
-            d.Position = position;
+            d.Path = position;
             d.StartingPosition = 0;
             d.PathPriority = priority;
             d.Size = Size.Small;
@@ -117,7 +117,7 @@
             var c = new CelestialBodyDescriptor()
             {
                 Name = "Asteroid belt",
-                Position = new Vector3(700, -400, 0),
+                Path = new Vector3(700, -400, 0),
                 Speed = 2560000,
                 StartingPosition = 40,
                 Size = Size.Small,
@@ -252,13 +252,11 @@
 
         public float Speed;
         public int PathPriority;
+        public Vector3 Path;
         public Vector3 Position;
 
         [ContentSerializer(Optional = true)]
-        public Vector3 Offset;
-
-        [ContentSerializer(Optional = true)]
-        public int Rotation;
+        public float Rotation;
 
         [ContentSerializer(Optional = true)]
         public bool InBackground;
@@ -277,8 +275,8 @@
             StartingTurrets = new List<TurretDescriptor>();
             Speed = 0;
             PathPriority = -1;
+            Path = Vector3.Zero;
             Position = Vector3.Zero;
-            Offset = Vector3.Zero;
             CanSelect = true;
             Invincible = false;
             Size = Size.Normal;

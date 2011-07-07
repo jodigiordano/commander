@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Visual;
 
 
     class EditorToggleContextualMenuChoice : ToggleContextualMenuChoice
@@ -9,8 +10,8 @@
         private List<EditorCommand> Commands;
 
 
-        public EditorToggleContextualMenuChoice(List<string> names, List<EditorCommand> commands)
-            : base(names)
+        public EditorToggleContextualMenuChoice(List<string> names, float textSize, List<EditorCommand> commands)
+            : base(names, new Text(names[0], "Pixelite") { SizeX = textSize })
         {
             if (commands.Count != names.Count)
             {

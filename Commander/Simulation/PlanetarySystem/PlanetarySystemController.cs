@@ -242,6 +242,11 @@
                 command.CelestialBody.SetSpeed(command.Speed);
             }
 
+            else if (command.Name == "ToggleAsset")
+            {
+                command.CelestialBody.SetImage(command.AssetName);
+            }
+
             else if (command.Name == "PushFirst")
             {
                 if (!Path.ContainsCelestialBody(command.CelestialBody))

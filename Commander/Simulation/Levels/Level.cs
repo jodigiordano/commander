@@ -164,8 +164,8 @@
                     (
                        Simulator,
                        descriptor.Name,
+                       descriptor.Path,
                        descriptor.Position,
-                       descriptor.Offset,
                        descriptor.Size,
                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                        Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
@@ -182,8 +182,8 @@
                     (
                        Simulator,
                        descriptor.Name,
+                       descriptor.Path,
                        descriptor.Position,
-                       descriptor.Offset,
                        descriptor.Rotation,
                        descriptor.Size,
                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
@@ -200,7 +200,7 @@
                     (
                         Simulator,
                         descriptor.Name,
-                        descriptor.Position,
+                        descriptor.Path,
                         descriptor.Size,
                         descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                         descriptor.Images,

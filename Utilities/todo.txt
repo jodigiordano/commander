@@ -2,10 +2,6 @@
                                 TODO GENERAL
 "Keep it funny!" - Evil Frank
 ================================================================================
-=> Pixelate the 3 stars
-=> Put back the funny quotes when the player dies
-=> Change the "level completed" images by something more story-driven (alien spaceship?)
-=> Use the RunningSlowly attribute for some particles (if needed)
 => Add mouse/gamepad sensitivity in options
 => Add the enemies data to the TweakingController
 => Connect the first player in the main menu, then fade out the title
@@ -33,8 +29,14 @@
 ================================================================================
                                  TODO EDITOR
 ================================================================================
-=> Toggle the assets
-=> Fix the speed == 0
+=> Toggle the assets									DONE.
+=> Fix the speed == 0									DONE.
+=> Synchronize rotation									DONE.
+=> Smaller menus for now								DONE.
+=> Better handlers for the path position / rotation / starting position / etc.
+=> Better way to handle celestial bodies assets
+=> Better way to generate the celestial body menu and sync it
+=> Refactor the editor
 
 
 ================================================================================
@@ -49,6 +51,7 @@
 ================================================================================
 => Fix the connection / deconnection of players
 => The preview of the paths of the celestial bodies make the game crash
+=> How about a week of unit tests?
 
 
 
@@ -60,12 +63,16 @@
 => Drop the pixelate planets for more defined one
 => Preview of the paths of the celestial bodies
 => Give a distinct color to aliens
+=> Pixelate the 3 stars
 
 
 ================================================================================
-                               TODO STORY
+                            TODO STORYTELLING
 ================================================================================
 => Only certain power-ups in some levels => because different types of battleships
+=> Put back the funny quotes when the player dies
+=> Change the "level completed" images by something more story-driven (alien spaceship?)
+=> Make the path start from a celestial body that has a alien ship look
 
 
 ================================================================================
@@ -78,6 +85,7 @@
                              TODO OPTIMIZATION
 ================================================================================
 => Check for memory leaks								DONE.
+=> Use the RunningSlowly attribute for some particles (if needed)
 
 
 
