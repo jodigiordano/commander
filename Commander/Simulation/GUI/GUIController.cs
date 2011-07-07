@@ -489,6 +489,16 @@
                     PlayerLives.CelestialBody = c.CelestialBody;
                 }
             }
+
+            else if (command.Name == "ShowCelestialBodiesPaths")
+            {
+                AdvancedView.Visible = true;
+            }
+
+            else if (command.Name == "HideCelestialBodiesPaths")
+            {
+                AdvancedView.Visible = false;
+            }
         }
 
 

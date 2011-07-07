@@ -71,6 +71,7 @@
             choices = new List<ContextualMenuChoice>()
             {
                 new EditorTextContextualMenuChoice("Add a planet", new EditorCelestialBodyCommand("AddPlanet")),
+                new EditorToggleContextualMenuChoice(new List<string>() { "Show paths", "Hide paths" }, new List<EditorCommand>() { new EditorCommand("ShowCelestialBodiesPaths"), new EditorCommand("HideCelestialBodiesPaths") }),
                 new EditorTextContextualMenuChoice("Clear", new EditorCelestialBodyCommand("Clear")),
             };
 

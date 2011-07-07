@@ -54,7 +54,7 @@
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Big },
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Small },
                     }),
-                new EditorTextContextualMenuChoice("Change Asset", new EditorCelestialBodyCommand("ChangeAsset")),
+                new EditorTextContextualMenuChoice("Toggle Asset", new EditorCelestialBodyCommand("ToggleAsset")),
                 new EditorTextContextualMenuChoice("Verify", new EditorCelestialBodyCommand("Verify")),
                 new EditorTextContextualMenuChoice("Move", new EditorCelestialBodyCommand("Move")),
                 new EditorTextContextualMenuChoice("Rotate", new EditorCelestialBodyCommand("Rotate")),
