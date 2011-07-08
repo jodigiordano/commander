@@ -860,14 +860,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\level0.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level0</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="scenarios\tentacules.png">
       <Name>tentacules</Name>
       <Importer>TextureImporter</Importer>
@@ -1929,6 +1921,31 @@
       <Name>waves</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="planetes\vaisseauAlien11.png">
+      <Name>vaisseauAlien11</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\vaisseauAlien12.png">
+      <Name>vaisseauAlien12</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\vaisseauAlien13.png">
+      <Name>vaisseauAlien13</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level0.xml">
+      <Name>level0</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

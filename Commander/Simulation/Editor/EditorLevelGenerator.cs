@@ -44,7 +44,8 @@
             "planete6",
             "planete7",
             "stationSpatiale1",
-            "stationSpatiale2"
+            "stationSpatiale2",
+            "vaisseauAlien1"
         };
 
 

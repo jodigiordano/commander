@@ -48,6 +48,9 @@
     <Item><Key>stationSpatiale21</Key><Value>planetes/stationSpatiale21.png</Value></Item>
     <Item><Key>stationSpatiale22</Key><Value>planetes/stationSpatiale22.png</Value></Item>
     <Item><Key>stationSpatiale23</Key><Value>planetes/stationSpatiale23.png</Value></Item>
+    <Item><Key>vaisseauAlien11</Key><Value>planetes/vaisseauAlien11.png</Value></Item>
+    <Item><Key>vaisseauAlien12</Key><Value>planetes/vaisseauAlien12.png</Value></Item>
+    <Item><Key>vaisseauAlien13</Key><Value>planetes/vaisseauAlien13.png</Value></Item>
     <Item><Key>lune1</Key><Value>planetes/lune1.png</Value></Item>
     <Item><Key>lune2</Key><Value>planetes/lune2.png</Value></Item>   
     <Item><Key>lune3</Key><Value>planetes/lune3.png</Value></Item>   

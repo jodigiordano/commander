@@ -3,6 +3,7 @@
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
+    using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -10,6 +11,8 @@
 
     class MainMenuScene : Scene
     {
+        private Simulator Simulator;
+
         private Text NewGame;
         private Text Quit;
         private Text ResumeGame;
@@ -18,7 +21,17 @@
         private Text Editor;
         private Text Title;
 
-        private Simulator Simulator;
+        private enum State
+        {
+            ConnectPlayer,
+            ConnectingPlayer,
+            LoadSaveGame,
+            PlayerConnected
+        }
+
+        private State SceneState;
+        private Translator PressStart;
+
 
 
         public MainMenuScene()
@@ -84,16 +97,50 @@
             //Simulation = new Simulation(Main, this, ScenariosFactory.getDescripteurTestsPerformance())
             Simulator = new Simulator(this, levelDescriptor)
             {
-                DemoMode = true
+                DemoMode = true,
+                EnableInputs = false
             };
             Simulator.Initialize();
             Inputs.AddListener(Simulator);
+
+            SceneState = State.ConnectPlayer;
+            InitPressStart();
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
             Simulator.Update(gameTime);
+
+            switch (SceneState)
+            {
+                case State.ConnectPlayer:                    
+                    VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
+                    VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
+                    VisualEffects.Add(Title, Core.Visual.VisualEffects.Fade(Title.Alpha, 255, 0, 1000)); 
+                    SceneState = State.ConnectingPlayer;
+                    break;
+
+                case State.ConnectingPlayer:
+                    PressStart.Update();
+                    break;
+
+
+                case State.LoadSaveGame:
+                    if (Persistence.DataLoaded("savePlayer"))
+                    {
+                        VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
+                        VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
+                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 1000)); 
+
+                        if (!Simulator.EnableInputs)
+                            Simulator.SyncPlayers();
+
+                        Simulator.EnableInputs = true;
+                        SceneState = State.PlayerConnected;
+                    }
+                    break;
+            }
         }
 
 
@@ -129,6 +176,7 @@
 
             Add(Title);
             Simulator.Draw();
+            PressStart.Draw();
         }
 
 
@@ -143,7 +191,17 @@
             else
                 Audio.ResumeMusic(Main.SelectedMusic, true, 1000);
 
-            Simulator.EnableInputs = true;
+            if (Inputs.ConnectedPlayers.Count == 0)
+            {
+                InitPressStart();
+                SceneState = State.ConnectPlayer;
+                Simulator.EnableInputs = false;
+            }
+
+            else
+            {
+                Simulator.EnableInputs = true;
+            }
         }
 
 
@@ -155,7 +213,33 @@
         }
 
 
+        private void InitPressStart()
+        {
+            PressStart = new Translator
+            (this, new Vector3(0, 50, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine", 3, true, 3000, 250, 0.3f);
+            PressStart.Centre = true;
+        }
+
+
         #region Input Handling
+
+        public override void PlayerConnectionRequested(Core.Input.Player p)
+        {
+            if (SceneState != State.ConnectingPlayer)
+                return;
+
+            p.Connect();
+        }
+
+
+        public override void DoPlayerConnected(Core.Input.Player p)
+        {
+            if (!Persistence.DataLoaded("savePlayer"))
+                Persistence.LoadData("savePlayer");
+
+            SceneState = State.LoadSaveGame;
+        }
+
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
@@ -184,7 +268,12 @@
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
             if (Inputs.ConnectedPlayers.Count == 0)
-                TransiteTo("Chargement");
+            {
+                InitPressStart();
+                SceneState = State.ConnectPlayer;
+                Simulator.EnableInputs = false;
+                Simulator.SyncPlayers();
+            }
         }
 
 

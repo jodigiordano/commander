@@ -14,14 +14,14 @@
         public PinkHole(
             Simulator simulator,
             string name,
-            Vector3 startingPosition,
-            Vector3 offset,
+            Vector3 path,
+            Vector3 position,
             Size size,
             float speed,
             Particle effect,
             int startingPourc,
             float visualPriority)
-            : base (simulator, name, startingPosition, offset, 0, size, speed, null, startingPourc, visualPriority)
+            : base (simulator, name, path, position, 0, size, speed, null, startingPourc, visualPriority)
         {
             Moons = new List<Moon>();
 

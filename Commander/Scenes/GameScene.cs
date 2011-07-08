@@ -143,7 +143,7 @@
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
             if (Inputs.ConnectedPlayers.Count == 0)
-                TransiteTo("Chargement");
+                TransiteTo("Menu");
         }
 
 

@@ -44,7 +44,10 @@
             WavesCounter = 0;
             ElapsedTime = 0;
 
-            if (Main.SaveGame.Tutorials.ContainsKey(Level.Id) && Main.SaveGame.Tutorials[Level.Id] > 2)
+            if (Simulator.DemoMode ||
+                Simulator.WorldMode ||
+                Simulator.EditorMode ||
+                Main.SaveGame.Tutorials.ContainsKey(Level.Id) && Main.SaveGame.Tutorials[Level.Id] > 2)
             {
                 Help = new Help(Simulator, new List<string>());
                 HelpSaved = true;

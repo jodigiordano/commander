@@ -68,17 +68,9 @@
         {
             CelestialBodiesPath = new OrderedBag<CelestialBody>();
 
-            for (int i = 0; i < CelestialBodies.Count; i++)
-            {
-                CelestialBody corps = CelestialBodies[i];
-
-                if (corps.PathPriority == int.MinValue)
-                    continue;
-
-                for (int j = 0; j < corps.Turrets.Count; j++)
-                    if (corps.Turrets[j].Type == TurretType.Gravitational)
-                        AddCelestialBody(corps);
-            }
+            foreach (var c in CelestialBodies)
+                if (c.HasGravitationalTurret)
+                    AddCelestialBody(c);
 
             Active = true;
 

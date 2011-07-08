@@ -22,7 +22,7 @@
 
         public Distance Distance
         {
-            get { return (Distance) Enum.Parse(typeof(Distance), Distances.Value); }
+            get { return (Distance) Enum.Parse(typeof(Distance), Distances.Value, false); }
             set { Distances.Value = value.ToString("g"); }
         }
     }

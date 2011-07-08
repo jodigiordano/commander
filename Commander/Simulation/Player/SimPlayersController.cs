@@ -299,7 +299,7 @@
 
         public CelestialBody GetSelectedCelestialBody(Player p)
         {
-            return Players[p].ActualSelection.CelestialBody;
+            return Players.ContainsKey(p) ? Players[p].ActualSelection.CelestialBody : null;
         }
 
 

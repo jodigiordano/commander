@@ -101,7 +101,7 @@
             CelestialBodyDescriptor d = new CelestialBodyDescriptor();
             d.Name = name;
             d.Invincible = true;
-            d.Path = position;
+            d.Position = position;
             d.StartingPosition = 0;
             d.PathPriority = priority;
             d.Size = Size.Small;
@@ -124,7 +124,6 @@
                 Images = new List<string>() { "Asteroid" },
                 PathPriority = int.MinValue + 1
             };
-            c.AddTurret(TurretType.Alien, 1, Vector3.Zero, true, false, false);
             
             PlanetarySystem.Add(c);
         }

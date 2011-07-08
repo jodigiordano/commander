@@ -310,6 +310,8 @@
 
             else if (command.Name == "SaveLevel")
             {
+                Simulator.SyncLevel();
+
                 var descriptor = Simulator.LevelDescriptor;
 
                 if (!Main.LevelsFactory.Descriptors.ContainsKey(descriptor.Infos.Id))
@@ -320,7 +322,7 @@
                     ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
                 }
 
-                Main.LevelsFactory.SaveDescriptorOnDisk(descriptor.Infos.Id);
+                Main.LevelsFactory.SaveLevelDescriptorOnDisk(descriptor.Infos.Id);
             }
 
 

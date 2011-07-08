@@ -35,7 +35,7 @@
         public void Initialize()
         {
             // Initialize the simulator
-            Simulator = new Simulator(this, Main.LevelsFactory.GetDescriptor(Descriptor.Layout))
+            Simulator = new Simulator(this, Main.LevelsFactory.GetLevelDescriptor(Descriptor.Layout))
             {
                 DemoMode = true,
                 WorldMode = true,
@@ -50,13 +50,13 @@
             // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
             foreach (var level in Descriptor.Levels)
             {
-                LevelDescriptor d = Main.LevelsFactory.GetDescriptor(level);
+                LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level);
                 LevelsDescriptors.Add(d.Infos.Mission, d);
             }
 
             foreach (var level in Descriptor.Warps)
             {
-                LevelDescriptor d = Main.LevelsFactory.GetDescriptor(level.Key);
+                LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
                 LevelsDescriptors.Add(d.Infos.Mission, d);
                 Warps.Add(d.Infos.Mission, level.Value);
             }
@@ -164,7 +164,7 @@
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
             if (Inputs.ConnectedPlayers.Count == 0)
-                TransiteTo("Chargement");
+                TransiteTo("Menu");
         }
 
 

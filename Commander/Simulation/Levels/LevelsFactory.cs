@@ -11,10 +11,19 @@
     {
         public Dictionary<int, LevelDescriptor> Descriptors;
 
+        private LevelDescriptor MenuDescriptor;
+        private Dictionary<int, WorldDescriptor> WorldsDescriptors;
+
+        private XmlSerializer LevelSerializer;
+        private XmlSerializer WorldSerializer;
+
 
         public LevelsFactory()
         {
             Descriptors = new Dictionary<int, LevelDescriptor>();
+            WorldsDescriptors = new Dictionary<int, WorldDescriptor>();
+            LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
+            WorldSerializer = new XmlSerializer(typeof(WorldDescriptor));
         }
 
 
@@ -22,20 +31,17 @@
         {
             string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", "level*.xml");
 
-            XmlSerializer serializer = new XmlSerializer(typeof(LevelDescriptor));
-
             foreach (var f in levelsFiles)
             {
-                using (StreamReader reader = new StreamReader(f))
-                {
-                    var descriptor = (LevelDescriptor) serializer.Deserialize(reader.BaseStream);
-                    Descriptors.Add(descriptor.Infos.Id, descriptor);
-                }
+                var descriptor = LoadLevelDescriptor(f);
+                Descriptors.Add(descriptor.Infos.Id, descriptor);
             }
+
+            //MenuDescriptor = LoadLevelDescriptor(".\\Content\\scenarios\\menu.xml");
         }
 
 
-        public LevelDescriptor GetDescriptor(int id)
+        public LevelDescriptor GetLevelDescriptor(int id)
         {
             LevelDescriptor d = null;
 
@@ -74,12 +80,17 @@
         }
 
 
-        public void SaveDescriptorOnDisk(int id)
+        private LevelDescriptor LoadLevelDescriptor(string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(LevelDescriptor));
-            
+            using (StreamReader reader = new StreamReader(path))
+                return (LevelDescriptor) LevelSerializer.Deserialize(reader.BaseStream);
+        }
+
+
+        public void SaveLevelDescriptorOnDisk(int id)
+        {
             using(StreamWriter writer = new StreamWriter(".\\Content\\scenarios\\level" + id + ".xml"))
-                serializer.Serialize(writer.BaseStream, Descriptors[id]);
+                LevelSerializer.Serialize(writer.BaseStream, Descriptors[id]);
         }
 
 
@@ -163,7 +174,7 @@
             d.PlanetarySystem[1].AddTurret(TurretType.Basic, 8, new Vector3(-20, -5, 0), true);
             d.PlanetarySystem[1].AddTurret(TurretType.MultipleLasers, 4, new Vector3(12, 0, 0), true);
 
-            d.AddCelestialBody(Size.Small, new Vector3(-50, 150, 0), "editor", "planete3", 0, 98);
+            d.AddCelestialBody(Size.Small, new Vector3(50, -50, 0), "editor", "planete3", 0, 98);
             d.PlanetarySystem[2].AddTurret(TurretType.Gravitational, 1, new Vector3(4, 2, 0), false);
             d.PlanetarySystem[2].AddTurret(TurretType.Laser, 7, new Vector3(3, -7, 0), true);
             d.PlanetarySystem[2].AddTurret(TurretType.Missile, 3, new Vector3(-8, 0, 0), true);
@@ -172,7 +183,7 @@
             d.AddCelestialBody(Size.Small, new Vector3(-400, 200, 0), "help", "planete6", 0, 97);
             d.PlanetarySystem[3].AddTurret(TurretType.Gravitational, 1, new Vector3(2, 1, 0), false);
 
-            d.AddCelestialBody(Size.Normal, new Vector3(350, 200, 0), "quit", "planete5", 0, 96);
+            d.AddCelestialBody(Size.Normal, new Vector3(350, 200, 0), "quit", "vaisseauAlien1", 0, 96);
             d.PlanetarySystem[4].AddTurret(TurretType.Gravitational, 1, new Vector3(-5, 3, 0), false);
             d.PlanetarySystem[4].AddTurret(TurretType.SlowMotion, 6, new Vector3(-10, -3, 0), true);
 
@@ -419,21 +430,7 @@
 
             d.Objective.CelestialBodyToProtect = d.PlanetarySystem[9].PathPriority;
 
-            c = new CelestialBodyDescriptor();
-            c.Name = "Asteroid belt";
-            c.Path = new Vector3(700, -400, 0);
-            c.Speed = 2560000;
-            c.StartingPosition = 40;
-            c.Size = Size.Small;
-            c.Images.Add("Asteroid");
-            c.Images.Add("Plutoid");
-            c.Images.Add("Comet");
-            c.Images.Add("Centaur");
-            c.Images.Add("Trojan");
-            c.Images.Add("Meteoroid");
-            c.PathPriority = 0;
-            c.AddTurret(TurretType.Alien, 1, Vector3.Zero, true, false, false);
-            d.PlanetarySystem.Add(c);
+            d.AddAsteroidBelt();
 
             DescriptorInfiniteWaves v = new DescriptorInfiniteWaves()
             {

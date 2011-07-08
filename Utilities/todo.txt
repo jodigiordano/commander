@@ -2,11 +2,9 @@
                                 TODO GENERAL
 "Keep it funny!" - Evil Frank
 ================================================================================
-=> Add mouse/gamepad sensitivity in options
 => Add the enemies data to the TweakingController
-=> Connect the first player in the main menu, then fade out the title
 
-=> editor > celestial body > change rotating sens
+=> Connect the first player in the main menu, then fade out the title			DONE.
 => change GUI for power-ups: space station in the bottom left of the screen		DONE.
 => replugger les power-ups (dont la destruction d'une planete)				DONE.
 => replug the scenarios									DONE.
@@ -17,14 +15,29 @@
 => Si planete a proteger hitted + qu'une fois par x temps, pas jouer x particules	DONE.
 => 4 players max									DONE.
 => Placing a turret => same move feel as in the spaceship				DONE.
-=> A save game for each profile on the Xbox 360 / Windows
 
 
 ================================================================================
                                TODO MULTIPLAYER
+"Fow now, drop the multiplayer" - Behrouz Bayat
 ================================================================================
 => Don't move the menus if they don't need to be moved
-=> 
+=> Check how to make Xbox Live multiplayer
+
+
+================================================================================
+                              TODO ACCESSIBILITY
+"Never put the player in a situation where he doesn't know what to do" - Behrouz Bayat
+================================================================================
+=> A save game for each profile on the Xbox 360 / Windows
+=> Add mouse/gamepad sensitivity in options
+=> Pause the game when the tutorial is playing
+=> Have the help/codex directly in the Pause menu
+=> Help system (what to press to do what) at the bottom of the screen
+=> Bigger planet for the New Game / More action around it
+=> Quit button -> very little somewhere not very visible
+=> More indication when the player is connected (spaceship)
+
 
 ================================================================================
                                  TODO EDITOR
@@ -37,6 +50,7 @@
 => Better way to handle celestial bodies assets
 => Better way to generate the celestial body menu and sync it
 => Refactor the editor
+=> A way for players to exchange levels
 
 
 ================================================================================
@@ -54,7 +68,6 @@
 => How about a week of unit tests?
 
 
-
 ================================================================================
                                TODO GRAPHICS
 ================================================================================
@@ -64,6 +77,8 @@
 => Preview of the paths of the celestial bodies
 => Give a distinct color to aliens
 => Pixelate the 3 stars
+=> Upgrade done effect
+=> Have a different representation for each level of a turret
 
 
 ================================================================================
@@ -88,21 +103,22 @@
 => Use the RunningSlowly attribute for some particles (if needed)
 
 
-
 ================================================================================
                                TODO GAMEPLAY
+"In this type of game, it's all about level design and balancing" - Behrouz Bayat
 ================================================================================
 => The path can include a celestial body more than once
 => The spaceship cursors can bump in each other
 => The spaceship cursors can fire in the menus
 => A racing mode for the spaceships
-
+=> Does the player absolutely need to buy a gravitational turret in a level
+   that permits them?
 
 
 ================================================================================
                                 TODO AUDIO
-  "Play the game without the music and populate the world with sound effects"
-  "Always use headphones to work the sound effects / music"
+  "Play the game without the music and populate the world with sound effects" - Paul Warner
+  "Always use headphones to work the sound effects / music" - Paul Warner
 ================================================================================
 => Add sounds when:
    - a turret is placed
@@ -124,6 +140,7 @@
 => Switch music in a level
 => System to keep the count of times a music has been played
 => A priority system that only play the sounds with the highest priority
+=> Change the music (more rapid) when the player is near to die
 
 
 ================================================================================
@@ -136,3 +153,8 @@
 => Paul Warner
   - Learn how to mix sounds together that will play well even if there is a lot
   - Learn how to add more bass on sfx
+
+=> Behrouz Bayat
+  - Make a detailled task list in Excel
+  - The time/work required to make the level editor a feature
+  - Make a workflow of the menus

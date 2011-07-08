@@ -1,24 +1,26 @@
 <?xml version="1.0"?>
-<Level>
+<Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
     <Id>0</Id>
     <Mission>1-1</Mission>
     <Difficulty>Easy</Difficulty>
-    <Background>fondecran1</Background>    
+    <Background>fondecran1</Background>
   </Infos>
   <Objective>
-    <CelestialBodyToProtect>5</CelestialBodyToProtect>
+    <CelestialBodyToProtect>0</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
     <CelestialBody>
+      <Name>Asteroid belt</Name>
       <Images>
         <string>Asteroid</string>
-        <string>Plutoid</string>
+        <string>Asteroid</string>
       </Images>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
       <Size>Small</Size>
-      <Speed>560000</Speed>
-      <PathPriority>0</PathPriority>
+      <Speed>2560000</Speed>
+      <PathPriority>-2147483647</PathPriority>
       <Path>
         <X>700</X>
         <Y>-400</Y>
@@ -31,254 +33,102 @@
       </Position>
       <Rotation>0</Rotation>
       <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete964142732</Name>
+      <Images />
+      <Image>planete7</Image>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Normal</Size>
+      <Speed>600000</Speed>
+      <PathPriority>0</PathPriority>
+      <Path>
+        <X>55.3057175</X>
+        <Y>51.591095</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>-389.05658</X>
+        <Y>-143.856491</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>353</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete561809281</Name>
+      <Images />
+      <Image>vaisseauAlien1</Image>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Big</Size>
+      <Speed>360000</Speed>
+      <PathPriority>-3</PathPriority>
+      <Path>
+        <X>-37.371006</X>
+        <Y>-67.04661</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>420.372559</X>
+        <Y>130.062988</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>127</Rotation>
+      <InBackground>false</InBackground>
       <CanSelect>false</CanSelect>
       <Invincible>true</Invincible>
-      <StartingPosition>29</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <Image>planete6</Image>
-      <Size>Small</Size>
-      <Speed>900000</Speed>
-      <PathPriority>1</PathPriority>
-      <Path>
-        <X>-35</X>
-        <Y>84</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>186</X>
-        <Y>142</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>-169</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>12</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <Image>planete2</Image>
-      <Size>Small</Size>
-      <Speed>1200000</Speed>
-      <PathPriority>2</PathPriority>
-      <Path>
-        <X>-92</X>
-        <Y>-78</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-41</X>
-        <Y>43</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>41</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>53</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <Image>stationSpatiale2</Image>
-      <Size>Normal</Size>
-      <Speed>0</Speed>
-      <PathPriority>3</PathPriority>
-      <Path>
-        <X>219</X>
-        <Y>-168</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-465</X>
-        <Y>600</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>351</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>72</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <Image>planete7</Image>
-      <Size>Small</Size>
-      <Speed>1200000</Speed>
-      <PathPriority>4</PathPriority>
-      <Path>
-        <X>-252</X>
-        <Y>-130</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>158</X>
-        <Y>107</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>-205</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>22</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <Image>planete6</Image>
-      <Size>Small</Size>
-      <Speed>900000</Speed>
-      <PathPriority>5</PathPriority>
-      <Path>
-        <X>-224</X>
-        <Y>124</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-56</X>
-        <Y>97</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>343</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>2</StartingPosition>
+      <StartingPosition>0</StartingPosition>
     </CelestialBody>
   </PlanetarySystem>
   <Waves>
     <Wave>
-      <StartingTime>60000</StartingTime>
-      <Enemies>
-        <EnemyType>Apohele</EnemyType>
-        <EnemyType>Asteroid</EnemyType>
-      </Enemies>
-      <SpeedLevel>3</SpeedLevel>
-      <LivesLevel>3</LivesLevel>
-      <CashValue>14</CashValue>
-      <Quantity>25</Quantity>
-      <Distance>Far</Distance>
-      <Delay>3269</Delay>
-      <ApplyDelayEvery>25</ApplyDelayEvery>
-      <SwitchEvery>25</SwitchEvery>
-    </Wave>
-    <Wave>
-      <StartingTime>60000</StartingTime>
-      <Enemies>
-        <EnemyType>Plutoid</EnemyType>
-      </Enemies>
-      <SpeedLevel>3</SpeedLevel>
-      <LivesLevel>3</LivesLevel>
-      <CashValue>20</CashValue>
-      <Quantity>40</Quantity>
-      <Distance>Far</Distance>
-      <Delay>0</Delay>
-      <ApplyDelayEvery>-1</ApplyDelayEvery>
-      <SwitchEvery>-1</SwitchEvery>
-    </Wave>
-    <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Apohele</EnemyType>
-        <EnemyType>Plutoid</EnemyType>
-      </Enemies>
-      <SpeedLevel>4</SpeedLevel>
-      <LivesLevel>4</LivesLevel>
-      <CashValue>25</CashValue>
-      <Quantity>46</Quantity>
-      <Distance>Normal</Distance>
-      <Delay>2267</Delay>
-      <ApplyDelayEvery>23</ApplyDelayEvery>
-      <SwitchEvery>23</SwitchEvery>
-    </Wave>
-    <Wave>
-      <StartingTime>80000</StartingTime>
-      <Enemies>
-        <EnemyType>Vulcanoid</EnemyType>
         <EnemyType>Asteroid</EnemyType>
       </Enemies>
-      <SpeedLevel>7</SpeedLevel>
-      <LivesLevel>7</LivesLevel>
-      <CashValue>30</CashValue>
-      <Quantity>50</Quantity>
-      <Distance>Far</Distance>
-      <Delay>2768</Delay>
-      <ApplyDelayEvery>25</ApplyDelayEvery>
-      <SwitchEvery>25</SwitchEvery>
+      <SpeedLevel>1</SpeedLevel>
+      <LivesLevel>1</LivesLevel>
+      <CashValue>10</CashValue>
+      <Quantity>20</Quantity>
+      <Distance>Normal</Distance>
+      <Delay>0</Delay>
+      <ApplyDelayEvery>-1</ApplyDelayEvery>
+      <SwitchEvery>-1</SwitchEvery>
     </Wave>
     <Wave>
       <StartingTime>60000</StartingTime>
       <Enemies>
-        <EnemyType>Plutoid</EnemyType>
+        <EnemyType>Asteroid</EnemyType>
       </Enemies>
-      <SpeedLevel>7</SpeedLevel>
-      <LivesLevel>7</LivesLevel>
-      <CashValue>35</CashValue>
-      <Quantity>50</Quantity>
-      <Distance>Far</Distance>
+      <SpeedLevel>1</SpeedLevel>
+      <LivesLevel>1</LivesLevel>
+      <CashValue>10</CashValue>
+      <Quantity>25</Quantity>
+      <Distance>Normal</Distance>
       <Delay>0</Delay>
       <ApplyDelayEvery>-1</ApplyDelayEvery>
       <SwitchEvery>-1</SwitchEvery>
-    </Wave>    
+    </Wave>
   </Waves>
   <Player>
-    <Money>1000</Money>
-    <Lives>5</Lives>
+    <Money>100</Money>
+    <Lives>3</Lives>
   </Player>
   <AvailableTurrets>
     <TurretType>Basic</TurretType>
   </AvailableTurrets>
-  <AvailablePowerUps>
-    <PowerUpType>DeadlyShootingStars</PowerUpType>
-    <PowerUpType>Shield</PowerUpType>
-    <PowerUpType>RailGun</PowerUpType>
-  </AvailablePowerUps>
-  <HelpTexts>
-    <string><![CDATA[Welcome to the battlefield, Commander.
-
-
-To skip this short tutorial, press [Cancel]. You can always checks the help on the main menu for a quick reminder.
-
-
-[Continue]]]></string>
-    <string>
-      <![CDATA[Your mission is simple, Commander: do not let asteroids reach the end of the path.
-
-
-You see the planet with 5 pink moons? It means a maximum of 5 asteroids can reach it before you loose. To avoid this, we're going to build turrets. Lot of them.
-
-
-[Continue]]]>
-    </string>
-    <string>
-      <![CDATA[But before we talk about turrets, look at the sandglass at the top-right of the screen. When the sandglass is depleted, a wave of asteroids will start. The numbers means, in order: the number of waves remaining (5), the amount of cash you have to buy turrets (1000M$) and your score (0!).
-
-
-[Continue]]]>
-    </string>
-    <string>
-      <![CDATA[Here an important tip: you can click on the sandglass to make the next wave start faster!
-
-
-Now the fun part: your main job is to build and upgrade turrets. These two actions cost money and you gain money by killing asteroids. You can buy a turret on a planet.
-
-
-[Continue]]]>
-    </string>
-    <string>
-      <![CDATA[You can only place turrets around planets. Upgrading turrets make them stronger in various ways (range, fire rate, etc). To upgrade a turret, you put your cursor on it and choose the green option.
-
-
-[Continue]]]>
-    </string>
-    <string>
-      <![CDATA[Here's another important tip: Maintain [AdvancedView] to see the range of your turrets (and more!).
-
-
-This is it for now, Commander. You'll receive further instructions in other levels. Oh, one last thing: you better save this system, otherwise you're fired! Good luck.
-
-
-[Continue]]]>
-    </string>
-  </HelpTexts>
+  <AvailablePowerUps />
+  <Minerals>
+    <Cash>0</Cash>
+    <LifePacks>0</LifePacks>
+  </Minerals>
+  <HelpTexts />
 </Level>
