@@ -52,6 +52,12 @@
 => Better way to generate the celestial body menu and sync it
 => Refactor the editor
 => A way for players to exchange levels
+=> Possibility to:
+   - Add starting turrets
+   - Add Pinkholes
+   - Add Infinite Wave
+   - Is a celestial body is selectable
+   - Is a celestial body is invincible
 
 
 ================================================================================
