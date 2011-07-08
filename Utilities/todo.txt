@@ -37,6 +37,7 @@
 => Bigger planet for the New Game / More action around it
 => Quit button -> very little somewhere not very visible
 => More indication when the player is connected (spaceship)
+=> 
 
 
 ================================================================================
@@ -158,3 +159,7 @@
   - Make a detailled task list in Excel
   - The time/work required to make the level editor a feature
   - Make a workflow of the menus
+
+=> Others
+  - Workflow of game + where to display important information
+  - Draft of the story and how it will be told
