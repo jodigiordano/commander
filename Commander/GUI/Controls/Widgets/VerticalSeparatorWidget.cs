@@ -18,11 +18,12 @@
             Image = new Image("PixelBlanc")
             {
                 Size = new Vector2(VisualWidth, 0),
-                Origin = Vector2.Zero
+                Origin = Vector2.Zero,
+                Alpha = 200
             };
 
             VisualWidth = 5;
-            DistanceWidgetBeforeAndAfter = 5;
+            DistanceWidgetBeforeAndAfter = 0;
 
             Image.Size = new Vector2(visualWidth, 30);
         }

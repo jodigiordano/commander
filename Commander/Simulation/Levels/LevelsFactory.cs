@@ -29,6 +29,8 @@
 
         public void Initialize()
         {
+            Descriptors.Clear();
+
             string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", "level*.xml");
 
             foreach (var f in levelsFiles)

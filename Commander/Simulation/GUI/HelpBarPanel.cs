@@ -20,7 +20,7 @@
 
             ShowCloseButton = false;
             ShowFrame = false;
-            Padding = new Vector2(10, 10);
+            Padding = new Vector2(10, 0);
             BackgroundAlpha = 100;
 
             if (Preferences.Target == Core.Utilities.Setting.Xbox360)

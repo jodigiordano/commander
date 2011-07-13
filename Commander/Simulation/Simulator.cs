@@ -620,7 +620,10 @@ namespace EphemereGames.Commander.Simulation
                     CollisionsController.Debug = true;
 
                 if (button == GamePadConfiguration.Tweaking)
+                {
                     TweakingController.Sync();
+                    Main.LevelsFactory.Initialize();
+                }
             }
 
             if (LevelsController.Help.Active)
