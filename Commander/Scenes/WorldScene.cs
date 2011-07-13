@@ -21,7 +21,7 @@
 
 
         public WorldScene(WorldDescriptor descriptor) :
-            base(Vector2.Zero, 1280, 720)
+            base(1280, 720)
         {
             Name = descriptor.Name;
             Descriptor = descriptor;

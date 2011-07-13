@@ -20,7 +20,7 @@
 
 
         public HelpScene()
-            : base(Vector2.Zero, 1280, 720)
+            : base(1280, 720)
         {
             Name = "Aide";
 

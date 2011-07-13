@@ -20,7 +20,7 @@
         public WaveSubPanel(Simulator simulator, Vector2 size, double visualPriority, Color color)
             : base(simulator.Scene, Vector3.Zero, size, visualPriority, color)
         {
-            ShowFrame = false;
+            OnlyShowWidgets = true;
             DistanceBetweenTwoChoices = 15;
                 
             StartingTime = new NumericHorizontalSlider("Starting time", 0, 1000, 0, 10, 50);
@@ -140,6 +140,8 @@
             {
                 var panel = ((DistinctFollowWaveSubPanel) WavesPanels[CurrentWaveType]);
 
+                d.ApplyDelayEvery = d.Quantity / d.Enemies.Count;
+                d.SwitchEvery = d.ApplyDelayEvery;
                 d.Distance = panel.Distance;
                 d.Delay = panel.Delay;
             }
@@ -150,6 +152,8 @@
 
                 d.Delay = panel.Delay;
                 d.SwitchEvery = panel.SwitchEvery;
+                d.ApplyDelayEvery = d.SwitchEvery;
+                d.Distance = Distance.Near;
             }
 
 

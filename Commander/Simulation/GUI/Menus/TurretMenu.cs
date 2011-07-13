@@ -14,24 +14,40 @@
         public ContextualMenu Menu;
         
         private List<ContextualMenuChoice> Choices;
+        
+        private Simulator Simulator;
+
+        private List<KeyValuePair<string, PanelWidget>> HBMessage;
+        private Label InstalledTurretAction;
 
 
         public TurretMenu(Simulator simulator, double visualPriority, Color color)
         {
+            Simulator = simulator;
+
             float textSize = 2f;
 
             Choices = new List<ContextualMenuChoice>()
             {
-                new LogoTextContextualMenuChoice(
-                    new Text("Pixelite") { SizeX = textSize },
-                    new Image("sell") { SizeX = 0.75f, Origin = Vector2.Zero }) { LogoOffet = new Vector3(3, 3, 0), DistanceBetweenNameAndLogo = new Vector2(60, 0) },
                 new UpgradeTurretContextualMenuChoice(
                     new Text("Pixelite") { SizeX = textSize },
                     new Text("Pixelite") { SizeX = textSize },
-                    new Image("upgrade") { SizeX = 0.75f, Origin = Vector2.Zero })
+                    new Image("upgrade") { SizeX = 0.75f, Origin = Vector2.Zero }),
+                new LogoTextContextualMenuChoice(
+                    new Text("Pixelite") { SizeX = textSize },
+                    new Image("sell") { SizeX = 0.75f, Origin = Vector2.Zero }) { LogoOffet = new Vector3(3, 3, 0), DistanceBetweenNameAndLogo = new Vector2(60, 0) }
             };
 
             Menu = new ContextualMenu(simulator, visualPriority, color, Choices, 15);
+
+            HBMessage = new List<KeyValuePair<string, PanelWidget>>();
+            HBMessage.AddRange(HelpBarPanel.PredefinedMessages[HelpBarMessage.ToggleChoices]);
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
+            HBMessage.AddRange(HelpBarPanel.PredefinedMessages[HelpBarMessage.Select]);
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
+
+            InstalledTurretAction = new Label(new Text("Pixelite") { SizeX = 2f });
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("installedTurretAction", InstalledTurretAction));
         }
 
 
@@ -45,6 +61,14 @@
         public Bubble Bubble
         {
             get { return Menu.Bubble; }
+        }
+
+
+        public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(TurretChoice choice)
+        {
+            InstalledTurretAction.SetData(choice == TurretChoice.Sell ? "Sell the turret" : "Upgrade the turret");
+
+            return HBMessage;
         }
 
 
@@ -64,27 +88,34 @@
                 return;
 
 
-            var sell = (LogoTextContextualMenuChoice) Choices[0];
+            var sell = (LogoTextContextualMenuChoice) Choices[1];
             sell.Active = Turret.CanSell;
 
             if (sell.Active)
             {
-                sell.SetText(Turret.SellPrice + "M$");
+                sell.SetText("+" + Turret.SellPrice + "M$");
                 sell.SetColor((AvailableTurretOptions[0]) ? Color.White : Color.Red);
             }
 
 
-            var upgrade = (UpgradeTurretContextualMenuChoice) Choices[1];
+            var upgrade = (UpgradeTurretContextualMenuChoice) Choices[0];
             upgrade.Active = Turret.CanUpdate;
 
             if (upgrade.Active)
             {
-                upgrade.SetPrice(Turret.UpdatePrice + "M$");
+                upgrade.SetPrice(" " + Turret.UpdatePrice + "M$");
                 upgrade.SetLevel((Turret.Level + 1).ToString());
                 upgrade.SetColor((AvailableTurretOptions[TurretChoice.Update]) ? Color.White : Color.Red);
             }
 
-            Menu.SelectedIndex = (int) SelectedOption;
+            else if (Turret.Level == Simulator.TweakingController.TurretsFactory.TurretsLevels[Turret.Type].Count - 1)
+            {
+                upgrade.SetPrice("MAX");
+                upgrade.SetLevel((Turret.Level).ToString());
+                upgrade.SetColor(Color.Red);
+            }
+
+            Menu.SelectedIndex = SelectedOption == TurretChoice.Sell ? 1 : 0;
             Menu.Draw();
         }
     }

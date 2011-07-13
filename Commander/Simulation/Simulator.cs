@@ -226,6 +226,8 @@ namespace EphemereGames.Commander.Simulation
 
         public void Initialize()
         {
+            State = GameState.Running;
+
             Level.Initialize();
 
             LevelsController.Level = Level;
@@ -290,6 +292,7 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.Initialize();
             EditorGUIController.Initialize();
             EditorController.Initialize();
+            BulletsController.Initialize();
         }
 
 
@@ -379,6 +382,12 @@ namespace EphemereGames.Commander.Simulation
                 else if (p.State == PlayerState.Disconnected && SimPlayersController.HasPlayer(player))
                     DoPlayerDisconnected(player);
             }
+        }
+
+
+        public void ShowHelpBarMessage(HelpBarMessage message)
+        {
+            GUIController.ShowHelpBarMessage(message);
         }
 
 
@@ -729,7 +738,19 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void PlayerConnectionRequested(Core.Input.Player player)
+        void InputListener.PlayerKeyboardConnectionRequested(Core.Input.Player player, Keys key)
+        {
+            player.Connect();
+        }
+
+
+        void InputListener.PlayerMouseConnectionRequested(Core.Input.Player player, MouseButton button)
+        {
+            player.Connect();
+        }
+
+
+        void InputListener.PlayerGamePadConnectionRequested(Core.Input.Player player, Buttons button)
         {
             player.Connect();
         }

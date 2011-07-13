@@ -87,7 +87,9 @@
 
         public void Draw()
         {
+            Simulator.Scene.BeginBackground();
             Simulator.Scene.Add(Level.Background);
+            Simulator.Scene.EndBackground();
 
             if (!Simulator.DemoMode && Help.Active)
                 Help.Draw();

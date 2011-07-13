@@ -13,8 +13,9 @@
             : base(simulator)
         {
             Type = TurretType.Laser;
-            Name = "Laser";
-            SfxShooting = "sfxTourelleLaserSimple";
+            Name = @"Laser";
+            Description = @"Shoot a laser that always reach it's target";
+            SfxShooting = @"sfxTourelleLaserSimple";
             Color = new Color(255, 71, 187);
 
             Levels = simulator.TurretsFactory.TurretsLevels[Type];

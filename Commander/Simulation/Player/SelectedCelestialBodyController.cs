@@ -84,7 +84,7 @@
             //    return;
             //}
 
-            if (Turret != null && Physics.CircleCicleCollision(Player.Circle, Turret.Circle))
+            if (Turret != null && Turret.Alive && Physics.CircleCicleCollision(Player.Circle, Turret.Circle))
             {
                 SelectedTurretChanged = false;
                 return;
@@ -136,7 +136,7 @@
 
                 foreach (var t in cb.Turrets)
                 {
-                    if (t.Visible && t.PlayerCheckedIn == null && Physics.CircleCicleCollision(Player.Circle, t.Circle))
+                    if (t.Visible && t.PlayerCheckedIn == null && t.Alive && Physics.CircleCicleCollision(Player.Circle, t.Circle))
                     {
                         CelestialBody = null;
                         Turret = t;

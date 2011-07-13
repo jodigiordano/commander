@@ -233,28 +233,6 @@
 
                 ImagesTurretsPowerUps.Add(p.Type, rgt);
             }
-
-            else if (p.Type == PowerUpType.Sniper)
-            {
-                SniperTurret st = new SniperTurret(Simulator)
-                {
-                    Position = HumanBattleship.Position + new Vector3(60, 80, 0),
-                    VisualPriority = this.VisualPriority + 0.004f,
-                    PlayerControlled = true,
-                    UpdatePosition = false,
-                    Watcher = false,
-                    TimeLastBullet = double.MaxValue,
-                    RangeAlpha = 0,
-                    ShowRange = false,
-                    ShowForm = false
-                };
-
-                p.BuyPosition = st.Position + new Vector3(300, 75, 0);
-                HumanBattleship.Sniper = st;
-                Turrets.Add(st);
-
-                ImagesTurretsPowerUps.Add(p.Type, st);
-            }
         }
 
 

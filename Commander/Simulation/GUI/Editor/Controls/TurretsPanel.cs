@@ -25,8 +25,11 @@
         public void Initialize()
         {
             foreach (var turret in Simulator.TurretsFactory.All)
-                ((TurretCheckBox) Widgets[turret.Key.ToString()]).Checked =
-                    Simulator.TurretsFactory.Availables.ContainsKey(turret.Key);
+            {
+                var widget = (TurretCheckBox) GetWidgetByName(turret.Key.ToString());
+
+                widget.Checked = Simulator.TurretsFactory.Availables.ContainsKey(turret.Key);
+            }
         }
     }
 }

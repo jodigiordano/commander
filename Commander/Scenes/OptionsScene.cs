@@ -29,7 +29,7 @@
 
 
         public OptionsScene()
-            : base(Vector2.Zero, 1280, 720)
+            : base(1280, 720)
         {
             Name = "Options";
 
@@ -241,7 +241,13 @@
         }
 
 
-        public override void PlayerConnectionRequested(Core.Input.Player player)
+        public override void PlayerMouseConnectionRequested(Core.Input.Player player, MouseButton button)
+        {
+            player.Connect();
+        }
+
+
+        public override void PlayerGamePadConnectionRequested(Core.Input.Player player, Buttons button)
         {
             player.Connect();
         }

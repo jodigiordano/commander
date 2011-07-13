@@ -55,7 +55,6 @@
                 case PowerUpType.Miner:                 t = new PowerUpMiner(Simulator, HumanBattleship);              break;
                 case PowerUpType.Pulse:                 t = new PowerUpPulse(Simulator);                               break;
                 case PowerUpType.Shield:                t = new PowerUpShield(Simulator);                              break;
-                case PowerUpType.Sniper:                t = new PowerUpSniper(Simulator, HumanBattleship);             break;
                 default:                                t = new PowerUpCollector(Simulator, HumanBattleship);          break;
             }
 

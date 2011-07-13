@@ -18,7 +18,7 @@
         private double TempsEntreDeuxChangementMusique;
 
         public GameScene(LevelDescriptor level)
-            : base(Vector2.Zero, 1280, 720)
+            : base(1280, 720)
         {
             Level = level;
 
@@ -93,50 +93,104 @@
         }
 
 
-        public void DoNewGameState(GameState nouvelEtat)
+        public void DoNewGameState(GameState newState)
         {
-            if (nouvelEtat == GameState.Won || nouvelEtat == GameState.Lost)
+            if (newState == GameState.Won)
+                Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon);
+            else if (newState == GameState.Lost)
+                Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost);
+
+            if (newState == GameState.Won || newState == GameState.Lost)
             {
                 Audio.StopMusic(SelectedMusic, true, 500);
                 Main.AvailableMusics.Add(SelectedMusic);
-                SelectedMusic = ((nouvelEtat == GameState.Won) ? "win" : "gameover") + Main.Random.Next(1, 3);
+                SelectedMusic = ((newState == GameState.Won) ? "win" : "gameover") + Main.Random.Next(1, 3);
                 Audio.PlayMusic(SelectedMusic, true, 1000, true);
+
+                Simulator.EnableInputs = false;
             }
         }
 
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if ((Simulator.State == GameState.Won || Simulator.State == GameState.Lost) &&
-                (button == MouseConfiguration.Select || button == MouseConfiguration.Back))
-                BeginTransition();
+            if (Simulator.State == GameState.Won)
+            {
+                if (button == MouseConfiguration.Select)
+                {    //todo: go to next level
+                }
+
+                else if (button == MouseConfiguration.Back)
+                    BeginTransition();
+            }
+
+            else if (Simulator.State == GameState.Lost)
+            {
+                if (button == MouseConfiguration.Select)
+                    RetryLevel();
+
+                else if (button == MouseConfiguration.Back)
+                    BeginTransition();
+            }
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if ((key == KeyboardConfiguration.Cancel || key == KeyboardConfiguration.Back) && Simulator.HelpMode)
-                return;
+            if (Simulator.State == GameState.Won || Simulator.State == GameState.Lost)
+            {
+                if (key == KeyboardConfiguration.RetryLevel)
+                    RetryLevel();
 
-            if (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel)
-                BeginTransition();
+                else if (key == KeyboardConfiguration.Back)
+                    BeginTransition();
+            }
 
-            if (key == KeyboardConfiguration.ChangeMusic)
-                BeginChangeMusic();
+            else if (Simulator.State == GameState.Running)
+            {
+                if ((key == KeyboardConfiguration.Cancel || key == KeyboardConfiguration.Back) && Simulator.HelpMode)
+                    return;
+
+                if (key == KeyboardConfiguration.Back)
+                    BeginTransition();
+
+                if (key == KeyboardConfiguration.ChangeMusic)
+                    BeginChangeMusic();
+            }
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Back)
-                BeginTransition();
+            if (Simulator.State == GameState.Won)
+            {
+                if (button == GamePadConfiguration.Select)
+                {
+                    //todo: next level
+                }
 
-            if ((Simulator.State == GameState.Won || Simulator.State == GameState.Lost) &&
-                (button == GamePadConfiguration.Select || button == GamePadConfiguration.Cancel))
-                BeginTransition();
+                else if (button == GamePadConfiguration.RetryLevel)
+                    RetryLevel();
+                else if (button == GamePadConfiguration.Back)
+                    BeginTransition();
+            }
 
-            if (button == GamePadConfiguration.ChangeMusic)
-                BeginChangeMusic();
+            else if (Simulator.State == GameState.Lost)
+            {
+                if (button == GamePadConfiguration.Select)
+                    RetryLevel();
+                else if (button == GamePadConfiguration.Cancel)
+                    BeginTransition();
+            }
+
+            else
+            {
+                if (button == GamePadConfiguration.Back)
+                    BeginTransition();
+
+                if (button == GamePadConfiguration.ChangeMusic)
+                    BeginChangeMusic();
+            }
         }
 
         
@@ -150,6 +204,14 @@
         private void BeginTransition()
         {
             TransiteTo(Main.SelectedWorld);
+        }
+
+
+        private void RetryLevel()
+        {
+            Simulator.Initialize();
+            Simulator.SyncPlayers();
+            Simulator.EnableInputs = true;
         }
 
 

@@ -13,7 +13,7 @@
 
 
         public EditorScene()
-            : base(Vector2.Zero, 1280, 720)
+            : base(1280, 720)
         {
             Name = "Editeur";
 

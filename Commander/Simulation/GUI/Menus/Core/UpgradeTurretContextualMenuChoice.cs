@@ -39,7 +39,6 @@
         public void SetColor(Color color)
         {
             Price.Color = color;
-            Level.Color = color;
         }
 
 

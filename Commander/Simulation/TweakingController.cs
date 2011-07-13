@@ -24,7 +24,7 @@
 
         public void Initialize()
         {
-
+            Sync();
         }
 
 

@@ -16,6 +16,7 @@
         public static Keys Editor = Keys.F2;
         public static Keys Disconnect = Keys.Q;
         public static Keys Tweaking = Keys.T;
+        public static Keys RetryLevel = Keys.R;
 
         public static List<Keys> ToList
         {
@@ -31,7 +32,8 @@
                     Debug,
                     Editor,
                     Disconnect,
-                    Tweaking
+                    Tweaking,
+                    RetryLevel
                 };
             }
         }
@@ -82,6 +84,7 @@
         public static Buttons MoveCursor = Buttons.LeftStick;
         public static Buttons Disconnect = Buttons.Back;
         public static Buttons Tweaking = Buttons.DPadLeft;
+        public static Buttons RetryLevel = Buttons.Y;
         public static float Speed = 15;
 
 
@@ -102,9 +105,27 @@
                     AdvancedView,
                     SelectionNext,
                     SelectionPrevious,
-                    Tweaking
+                    Tweaking,
+                    RetryLevel
                 };
             }
         }
+
+
+        public static Dictionary<Buttons, string> ToImage = new Dictionary<Buttons, string>(ButtonsComparer.Default)
+        {
+            { Buttons.Back, "ButtonBack" },
+            { Buttons.A, "ButtonA" },
+            { Buttons.B, "ButtonB" },
+            { Buttons.X, "ButtonX" },
+            { Buttons.Y, "ButtonY" },
+            { Buttons.LeftShoulder, "BumperLeft" },
+            { Buttons.RightShoulder, "BumperRight" },
+            { Buttons.LeftStick, "ThumbstickLeft" },
+            { Buttons.RightStick, "ThumbstickRight" },
+            { Buttons.LeftTrigger, "TriggerLeft" },
+            { Buttons.RightTrigger, "TriggerRight" },
+            { Buttons.Start, "ButtonStart" }
+        };
     }
 }

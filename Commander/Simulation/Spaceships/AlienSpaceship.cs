@@ -29,20 +29,6 @@
         }
 
 
-        //public void Show()
-        //{
-        //    Scene.Add(Representation);
-        //    Scene.Add(Tentacules);
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Scene.Remove(Representation);
-        //    Scene.Remove(Tentacules);
-        //}
-
-
         public void Update(GameTime gameTime)
         {
             Tentacules.Update();

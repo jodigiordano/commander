@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Core.Visual
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -28,9 +27,6 @@
 
             ScenesController = new ScenesController();
             TransitionsController = new TransitionsController();
-
-            graphicsDeviceManager.PreferMultiSampling = true;
-
 
             Primitives.Initialize(Preferences.Content.Load<Texture2D>("pixelBlanc"));
 

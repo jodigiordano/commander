@@ -158,9 +158,12 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EqualityComparers.cs" />
+    <Compile Include="GUI\Controls\Panels\HorizontalPanel.cs" />
     <Compile Include="GUI\Controls\Panels\SlideshowPanel.cs" />
     <Compile Include="GUI\Controls\Widgets\CloseButton.cs" />
     <Compile Include="GUI\Controls\Widgets\ChoicesHorizontalSlider.cs" />
+    <Compile Include="GUI\Controls\Widgets\VerticalSeparatorWidget.cs" />
+    <Compile Include="GUI\Controls\Widgets\ImageLabel.cs" />
     <Compile Include="GUI\Controls\Widgets\Label.cs" />
     <Compile Include="GUI\Controls\Widgets\NewPushButton.cs" />
     <Compile Include="GUI\Controls\Widgets\NewCheckBox.cs" />
@@ -201,19 +204,19 @@
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
-    <Compile Include="Simulation\GUI\Controls\WavesPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\GeneralPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\PowerUpsPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\TurretsPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\PlayerPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\LevelsPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\PackedHomogeneWaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\DistinctFollowWaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\HomogeneWaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\EnemiesWidget.cs" />
-    <Compile Include="Simulation\GUI\Controls\WaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Controls\PowerUpCheckBox.cs" />
-    <Compile Include="Simulation\GUI\Controls\TurretCheckBox.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\WavesPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\GeneralPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\PowerUpsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\TurretsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\PlayerPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\LevelsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\PackedHomogeneWaveSubPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\DistinctFollowWaveSubPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\HomogeneWaveSubPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\EnemiesWidget.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\WaveSubPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\PowerUpCheckBox.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\TurretCheckBox.cs" />
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorCelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorGeneralMenu.cs" />
@@ -223,6 +226,7 @@
     <Compile Include="Simulation\GUI\Editor\EditorToggleContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
     <Compile Include="Simulation\GUI\GUIPlayer.cs" />
+    <Compile Include="Simulation\GUI\HelpBarPanel.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\UpgradeTurretContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\LogoTextContextualMenuChoice.cs" />
@@ -286,7 +290,6 @@
     <Compile Include="Simulation\PowerUps\PowerUpDarkSide.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpAutomaticCollector.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpMiner.cs" />
-    <Compile Include="Simulation\PowerUps\PowerUpSniper.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpShield.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpPulse.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpRailGun.cs" />
@@ -303,7 +306,6 @@
     <Compile Include="Simulation\Spaceships\SpaceshipSpaceship.cs" />
     <Compile Include="Simulation\Turrets\AlienTurret.cs" />
     <Compile Include="Simulation\Turrets\BoosterTurret.cs" />
-    <Compile Include="Simulation\Turrets\SniperTurret.cs" />
     <Compile Include="Simulation\Turrets\RailGunTurret.cs" />
     <Compile Include="Simulation\Turrets\GunnerTurret.cs" />
     <Compile Include="Simulation\Turrets\NanobotsTurret.cs" />
@@ -349,6 +351,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Simulation\TweakingController.cs" />
+    <Compile Include="VisualPriorities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

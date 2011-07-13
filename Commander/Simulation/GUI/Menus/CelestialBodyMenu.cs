@@ -20,12 +20,24 @@
         private double VisualPriority;
         private Color Color;
 
+        private List<KeyValuePair<string, PanelWidget>> HBMessage;
+        private Label TurretDescription;
+
 
         public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color)
         {
             Simulator = simulator;
             VisualPriority = visualPriority;
             Color = color;
+
+            HBMessage = new List<KeyValuePair<string, PanelWidget>>();
+            HBMessage.AddRange(HelpBarPanel.PredefinedMessages[HelpBarMessage.ToggleChoices]);
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
+            HBMessage.AddRange(HelpBarPanel.PredefinedMessages[HelpBarMessage.Select]);
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
+
+            TurretDescription = new Label(new Text("Pixelite") { SizeX = 2f });
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("turretDescription", TurretDescription));
         }
 
 
@@ -60,6 +72,14 @@
         public Bubble Bubble
         {
             get { return Menu.Bubble; }
+        }
+
+
+        public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(TurretType turretToBuy)
+        {
+            TurretDescription.SetData(Simulator.TurretsFactory.All[turretToBuy].Description);
+
+            return HBMessage;
         }
 
 

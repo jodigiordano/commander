@@ -25,6 +25,12 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
+        public void Initialize()
+        {
+            Bullets.Clear();
+        }
+
+
         public void Update()
         {
             for (int i = Bullets.Count - 1; i > -1; i--)
@@ -37,7 +43,6 @@ namespace EphemereGames.Commander.Simulation
                     else
                         b.DoDie();
                     
-                    //b.Hide();
                     NotifyObjectDestroyed(b);
 
                     Simulator.BulletsFactory.Return(b);
@@ -65,7 +70,6 @@ namespace EphemereGames.Commander.Simulation
                 return;
 
             b.Initialize();
-            //b.Show();
 
             Bullets.Add(b);
         }

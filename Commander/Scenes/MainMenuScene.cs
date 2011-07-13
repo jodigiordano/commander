@@ -33,9 +33,8 @@
         private Translator PressStart;
 
 
-
         public MainMenuScene()
-            : base(Vector2.Zero, 1280, 720)
+            : base(1280, 720)
         {
             Name = "Menu";
 
@@ -94,7 +93,6 @@
             levelDescriptor.PlanetarySystem[5].CanSelect = false;
 #endif
 
-            //Simulation = new Simulation(Main, this, ScenariosFactory.getDescripteurTestsPerformance())
             Simulator = new Simulator(this, levelDescriptor)
             {
                 DemoMode = true,
@@ -138,6 +136,8 @@
 
                         Simulator.EnableInputs = true;
                         SceneState = State.PlayerConnected;
+
+                        Simulator.ShowHelpBarMessage(HelpBarMessage.MoveYourSpaceship);
                     }
                     break;
             }
@@ -223,7 +223,16 @@
 
         #region Input Handling
 
-        public override void PlayerConnectionRequested(Core.Input.Player p)
+        public override void PlayerMouseConnectionRequested(Core.Input.Player p, MouseButton button)
+        {
+            if (SceneState != State.ConnectingPlayer)
+                return;
+
+            p.Connect();
+        }
+
+
+        public override void PlayerGamePadConnectionRequested(Core.Input.Player p, Buttons button)
         {
             if (SceneState != State.ConnectingPlayer)
                 return;

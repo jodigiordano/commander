@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Core.Visual
 {
-    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 

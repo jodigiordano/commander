@@ -9,52 +9,67 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
+    enum DrawMode
+    {
+        Foreground,
+        Background,
+        Default
+    }
+
 
     public abstract class Scene : InputListener
     {
-        public bool EnableVisuals              { get; set; }
-        public bool EnableInputs               { get; set; }
-        public bool EnableUpdate               { get; set; }
+        public bool EnableVisuals { get; set; }
+        public bool EnableInputs { get; set; }
+        public bool EnableUpdate { get; set; }
 
-        internal VisualBuffer Buffer    { get; private set; }
-        public Camera Camera            { get; private set; }
+        internal VisualBuffer Buffer { get; private set; }
+        public Camera Camera { get; private set; }
 
-        internal Texture2D Texture      { get { return Buffer.Texture; } }
-        public int Width                { get { return Buffer.Width; } }
-        public int Height               { get { return Buffer.Height; } }
-        public Vector2 Center           { get { return Buffer.Center; } }
+        internal Texture2D Texture { get { return Buffer.Texture; } }
+        public int Width { get { return Buffer.Width; } }
+        public int Height { get { return Buffer.Height; } }
+        public Vector2 Center { get { return Buffer.Center; } }
 
-        public virtual bool IsFinished                                      { get; protected set; }
-        public virtual AnimationsController Animations                      { get; protected set; }
-        public virtual ParticlesController Particles                        { get; protected set; }
-        public virtual EffectsController<IPhysicalObject> PhysicalEffects   { get; protected set; }
-        public virtual EffectsController<IVisual> VisualEffects             { get; protected set; }
+        public virtual bool IsFinished { get; protected set; }
+        public virtual AnimationsController Animations { get; protected set; }
+        public virtual ParticlesController Particles { get; protected set; }
+        public virtual EffectsController<IPhysicalObject> PhysicalEffects { get; protected set; }
+        public virtual EffectsController<IVisual> VisualEffects { get; protected set; }
 
         private SpriteBatch Batch;
         private TypeBlend LastBlend;
         internal bool UpdatedThisTick;
         private List<IScenable> ToDraw;
+        private List<IScenable> ToDrawWithoutCameraForeground;
+        private List<IScenable> ToDrawWithoutCameraBackground;
         private string name;
+        private Matrix IdentityMatrix;
+        private DrawMode DrawMode;
 
 
-        public Scene(Vector2 position, int width, int height)
+        public Scene(int width, int height)
         {
             Buffer = Visuals.ScenesController.Buffer;
             EnableVisuals = false;
             EnableInputs = false;
             EnableUpdate = false;
             ToDraw = new List<IScenable>();
+            ToDrawWithoutCameraForeground = new List<IScenable>();
+            ToDrawWithoutCameraBackground = new List<IScenable>();
             Batch = new SpriteBatch(Preferences.GraphicsDeviceManager.GraphicsDevice);
             LastBlend = TypeBlend.Alpha;
             UpdatedThisTick = false;
-            Camera = new Camera();
-            Camera.Origin = new Vector2(this.Buffer.Width / 2.0f, this.Buffer.Height / 2.0f);
+            Camera = new Camera(new Vector2(width, height));
+            Camera.Origin = new Vector2(width / 2.0f, height / 2.0f);
             Name = name;
             Animations = new AnimationsController(this);
             PhysicalEffects = new EffectsController<IPhysicalObject>();
             VisualEffects = new EffectsController<IVisual>();
             Particles = new ParticlesController(this);
             EphemereGames.Core.Input.Inputs.AddListener(this);
+            IdentityMatrix = Matrix.CreateTranslation(width / 2, height / 2, 0);
+            DrawMode = DrawMode.Default;
         }
 
 
@@ -84,20 +99,28 @@
 
             UpdatedThisTick = true;
 
-            ToDraw.Sort(IScenableComparer.Default);
-
             Buffer.BeginWriting();
+
+            Draw(ToDrawWithoutCameraBackground, ref IdentityMatrix);
+            Draw(ToDraw, ref Camera.Transform);
+            Draw(ToDrawWithoutCameraForeground, ref IdentityMatrix);
+        }
+
+
+        private void Draw(List<IScenable> toDraw, ref Matrix camera)
+        {
+            toDraw.Sort(IScenableComparer.Default);
 
             BlendState b = SwitchBlendMode(TypeBlend.Alpha);
 
-            Batch.Begin(SpriteSortMode.Deferred, b, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Camera.Transform); //todo
+            Batch.Begin(SpriteSortMode.Deferred, b, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, camera);
 
-            foreach (var scenable in ToDraw)
+            foreach (var scenable in toDraw)
             {
                 if (scenable.Blend != LastBlend)
                 {
                     this.Batch.End();
-                    Batch.Begin(SpriteSortMode.Deferred, SwitchBlendMode(scenable.Blend), SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Camera.Transform); //todo
+                    Batch.Begin(SpriteSortMode.Deferred, SwitchBlendMode(scenable.Blend), SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, camera);
                 }
 
                 scenable.Draw(Batch);
@@ -105,7 +128,7 @@
 
             Batch.End();
 
-            ToDraw.Clear();
+            toDraw.Clear();
         }
 
 
@@ -113,10 +136,10 @@
         {
             spriteBatch.Draw(
                 Texture,
-                new Vector2(Camera.Position.X, Camera.Position.Y),
+                Vector2.Zero,
                 null,
                 Color.White,
-                Camera.Rotation,
+                0,
                 Camera.Origin,
                 1,
                 SpriteEffects.None,
@@ -130,9 +153,30 @@
         }
 
 
-        public void Add(IScenable element)
+        public void BeginForeground()
         {
-            ToDraw.Add(element);
+            DrawMode = DrawMode.Foreground;
+        }
+
+
+        public void EndForeground()
+        {
+            DrawMode = DrawMode.Default;
+
+        }
+
+
+        public void BeginBackground()
+        {
+            DrawMode = DrawMode.Background;
+
+        }
+
+
+        public void EndBackground()
+        {
+            DrawMode = DrawMode.Default;
+
         }
 
 
@@ -157,10 +201,19 @@
         }
 
 
+        public void Add(IScenable element)
+        {
+            switch (DrawMode)
+            {
+                case DrawMode.Default: ToDraw.Add(element); break;
+                case DrawMode.Background: ToDrawWithoutCameraBackground.Add(element); break;
+                case DrawMode.Foreground: ToDrawWithoutCameraForeground.Add(element); break;
+            }
+        }
+
+
         public void Update(GameTime gameTime)
         {
-            Camera.Update(gameTime);
-
             Particles.Update(gameTime);
             Animations.Update(gameTime);
 
@@ -230,8 +283,8 @@
         public virtual void OnFocus() { }
         public virtual void OnFocusLost() { }
 
-        public virtual void DoKeyPressedOnce(Player player, Keys key) {}
-        public virtual void DoKeyReleased(Player player, Keys key) {}
+        public virtual void DoKeyPressedOnce(Player player, Keys key) { }
+        public virtual void DoKeyReleased(Player player, Keys key) { }
         public virtual void DoMouseButtonPressedOnce(Player player, MouseButton button) { }
         public virtual void DoMouseButtonReleased(Player player, MouseButton button) { }
         public virtual void DoMouseScrolled(Player player, int delta) { }
@@ -241,6 +294,8 @@
         public virtual void DoGamePadJoystickMoved(Player player, Buttons button, Vector3 delta) { }
         public virtual void DoPlayerConnected(Player player) { }
         public virtual void DoPlayerDisconnected(Player player) { }
-        public virtual void PlayerConnectionRequested(Player Player) { }
+        public virtual void PlayerKeyboardConnectionRequested(Player Player, Keys key) { }
+        public virtual void PlayerMouseConnectionRequested(Player Player, MouseButton button) { }
+        public virtual void PlayerGamePadConnectionRequested(Player Player, Buttons button) { }
     }
 }

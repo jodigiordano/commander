@@ -9,8 +9,9 @@ namespace EphemereGames.Commander.Simulation
             : base( simulator )
         {
             Type = TurretType.Nanobots;
-            Name = "Nanobots";
-            SfxShooting = "sfxTourelleBase";
+            Name = @"Nanobots";
+            Description = @"Shoot a gaz that does damage over time";
+            SfxShooting = @"sfxTourelleBase";
             Color = new Color( 182, 147, 26 );
 
             Levels = simulator.TurretsFactory.TurretsLevels[Type];

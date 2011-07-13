@@ -112,7 +112,7 @@
                     wd = new WorldDescriptor()
                     {
                         Name = name,
-                        Levels = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
+                        Levels = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
                         Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
                         Layout = 1001,
                         UnlockedCondition = new List<int>(),
@@ -125,7 +125,7 @@
                     {
                         Name = name,
                         //Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
-                        Levels = new List<int>() { 0 },
+                        Levels = new List<int>() { 1 },
                         Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
                         Layout = 1002,
                         UnlockedCondition = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
@@ -138,7 +138,7 @@
                     {
                         Name = name,
                         //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
-                        Levels = new List<int>() { 0 },
+                        Levels = new List<int>() { 1 },
                         Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World2") },
                         Layout = 1003,
                         UnlockedCondition = new List<int>() { -1 },

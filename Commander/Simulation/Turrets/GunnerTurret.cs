@@ -13,8 +13,9 @@ namespace EphemereGames.Commander.Simulation
             : base( simulator )
         {
             Type = TurretType.Gunner;
-            Name = "Gunner";
-            SfxShooting = "sfxTourelleBase";
+            Name = @"Gunner";
+            Description = @"Shoot a lot of bullets at in insane rate";
+            SfxShooting = @"sfxTourelleBase";
             Color = new Color( 57, 216, 17 );
 
             Levels = simulator.TurretsFactory.TurretsLevels[Type];

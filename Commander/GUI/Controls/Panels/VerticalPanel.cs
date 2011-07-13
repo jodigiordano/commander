@@ -8,59 +8,24 @@
     {
         public float DistanceBetweenTwoChoices;
 
-        protected bool RecalculatePositions;
-
 
         public VerticalPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
             DistanceBetweenTwoChoices = 30;
-            RecalculatePositions = true;
         }
 
 
-        public override void AddWidget(string name, PanelWidget widget)
+        protected override void ComputePositions()
         {
-            base.AddWidget(name, widget);
+            Vector3 upperLeft = base.GetUpperLeftUsableSpace();
 
-            RecalculatePositions = true;
-        }
-
-
-        public override Vector3 Position
-        {
-            get { return base.Position; }
-            set
+            foreach (var w in Widgets)
             {
-                base.Position = value;
+                w.Value.Position = upperLeft;
 
-                RecalculatePositions = true;
+                upperLeft.Y += w.Value.Dimension.Y + DistanceBetweenTwoChoices;
             }
-        }
-
-
-        public override void Draw()
-        {
-            if (!Visible)
-                return;
-
-            if (RecalculatePositions)
-            {
-                Vector3 upperLeft = base.GetUpperLeftUsableSpace();
-
-                foreach (var w in Widgets.Values)
-                {
-                    w.Position = upperLeft;
-
-                    upperLeft.Y += w.Dimension.Y + DistanceBetweenTwoChoices;
-                }
-
-                RecalculatePositions = false;
-            }
-
-            base.Draw();
-
-
         }
     }
 }

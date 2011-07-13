@@ -11,8 +11,6 @@
         private NumericHorizontalSlider Slider;
         private List<PanelWidget> Panels;
 
-        private bool RecalculatePositions;
-
 
         public SlideshowPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
@@ -24,8 +22,6 @@
             };
 
             Panels = new List<PanelWidget>();
-
-            RecalculatePositions = true;
         }
 
 
@@ -52,16 +48,6 @@
 
             base.Draw();
             Slider.Draw();
-
-            if (RecalculatePositions)
-            {
-                Slider.Position = base.GetUpperLeftUsableSpace();
-
-                Vector3 upperLeft = base.GetUpperLeftUsableSpace() + new Vector3(0, Slider.Dimension.Y, 0);
-
-                foreach (var w in Widgets.Values)
-                    w.Position = upperLeft;
-            }
         }
 
 
@@ -91,6 +77,17 @@
         protected override bool ClickWidgets(Circle circle)
         {
             return Panels[Slider.Value].DoClick(circle);
+        }
+
+
+        protected override void ComputePositions()
+        {
+            Slider.Position = base.GetUpperLeftUsableSpace();
+
+            Vector3 upperLeft = base.GetUpperLeftUsableSpace() + new Vector3(0, Slider.Dimension.Y, 0);
+
+            foreach (var w in Widgets)
+                w.Value.Position = upperLeft;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Core.Visual
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Xna.Framework;
@@ -9,7 +8,7 @@
     class ScenesController
     {
         private Dictionary<string, Scene> Scenes = new Dictionary<string, Scene>();
-        private Camera Camera = new Camera();
+        private Camera Camera = new Camera(new Vector2(Preferences.WindowWidth, Preferences.WindowHeight));
 
         public SpriteBatch SpriteBatch { get; set; }
         public VisualBuffer Buffer;

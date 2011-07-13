@@ -127,12 +127,12 @@
             switch (type)
             {
                 case EnemyType.Asteroid:   lives = 5 + 10 * (livesLevel - 1); break;
-                case EnemyType.Centaur:    lives = 50 + 25 * (livesLevel - 1); break;
+                case EnemyType.Apohele:    lives = 5 + 10 * (livesLevel - 1); break;
+                case EnemyType.Plutoid:    lives = 10 + 15 * (livesLevel - 1); break;
+                case EnemyType.Centaur:    lives = 20 + 20 * (livesLevel - 1); break;
                 case EnemyType.Comet:      lives = 5 + 2 * (livesLevel - 1); break;
                 case EnemyType.Meteoroid:  lives = 1 + 5 * (livesLevel - 1); break;
-                case EnemyType.Plutoid:    lives = 25 + 15 * (livesLevel - 1); break;
-                case EnemyType.Trojan:     lives = 25 + 10 * (livesLevel - 1); break;
-                case EnemyType.Apohele:    lives = 5 + 10 * (livesLevel - 1); break;
+                case EnemyType.Trojan:     lives = 15 + 10 * (livesLevel - 1); break;
                 case EnemyType.Damacloid:  lives = 5 + 10 * (livesLevel - 1); break;
                 case EnemyType.Vulcanoid:  lives = 5 + 10 * (livesLevel - 1); break;
                 case EnemyType.Swarm:      lives = 1 + 1 * (livesLevel - 1); break;
@@ -150,7 +150,7 @@
             {
                 case EnemyType.Asteroid: speed = 1 + 0 * (speedLevel - 1); break;
                 case EnemyType.Centaur: speed = 0.8f + 0 * (speedLevel - 1); break;
-                case EnemyType.Comet: speed = 4 + 0 * (speedLevel - 1); break;
+                case EnemyType.Comet: speed = 4f + 0 * (speedLevel - 1); break;
                 case EnemyType.Meteoroid: speed = 1.5f + 0 * (speedLevel - 1); break;
                 case EnemyType.Plutoid: speed = 2 + 0 * (speedLevel - 1); break;
                 case EnemyType.Trojan: speed = 2.5f + 0 * (speedLevel - 1); break;
@@ -189,7 +189,9 @@
 
         public static float GetVisualPriority(EnemyType type, float pourcPath)
         {
-            float vp = (pourcPath >= 0.95f) ? Preferences.PrioriteSimulationCorpsCeleste - 0.1f : Preferences.PrioriteSimulationEnnemi;
+            float vp = (pourcPath >= 0.80f) ?
+                Preferences.PrioriteSimulationCorpsCeleste - 0.1f :
+                Preferences.PrioriteSimulationEnnemi;
 
             switch (type)
             {

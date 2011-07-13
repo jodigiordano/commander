@@ -466,9 +466,9 @@
 
             var panel = Panels[EditorPanel.Waves];
 
-            foreach (var w in panel.Widgets.Values)
+            foreach (var w in panel.Widgets)
             {
-                var subPanel = (WaveSubPanel) w;
+                var subPanel = (WaveSubPanel) w.Value;
 
                 if (subPanel.EnemiesCount != 0 && subPanel.Quantity != 0)
                     descriptors.Add(subPanel.GenerateDescriptor());

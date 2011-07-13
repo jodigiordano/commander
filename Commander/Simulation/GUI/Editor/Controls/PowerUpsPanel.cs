@@ -28,8 +28,11 @@
         public void Initialize()
         {
             foreach (var powerUp in Simulator.PowerUpsFactory.All)
-                ((PowerUpCheckBox) Widgets[powerUp.Key.ToString()]).Checked =
-                    Simulator.PowerUpsFactory.Availables.ContainsKey(powerUp.Key);
+            {
+                var widget = (PowerUpCheckBox) GetWidgetByName(powerUp.Key.ToString());
+
+                widget.Checked = Simulator.PowerUpsFactory.Availables.ContainsKey(powerUp.Key);
+            }
         }
     }
 }

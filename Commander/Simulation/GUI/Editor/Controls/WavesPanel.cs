@@ -27,7 +27,10 @@
                 AddWidget("wave" + i, new WaveSubPanel(Simulator, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White));
 
             for (int i = 0; i < Simulator.LevelDescriptor.Waves.Count; i++)
-                ((WaveSubPanel) Widgets["wave" + i]).Sync(Simulator.LevelDescriptor.Waves[i]);
+            {
+                var widget = (WaveSubPanel) GetWidgetByName("wave" + i);
+                widget.Sync(Simulator.LevelDescriptor.Waves[i]);
+            }
         }
     }
 }

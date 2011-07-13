@@ -11,11 +11,12 @@
     {
         public bool Visible;
         public bool ShowFrame;
-        public override Vector3 Position { get; set; }
+        public bool ShowBackground;
+        public bool ShowCloseButton;
         public override Vector3 Dimension { get; set; }
         public override double VisualPriority { get; set; }
 
-        public Dictionary<string, PanelWidget> Widgets { get; private set; }
+        public List<KeyValuePair<string, PanelWidget>> Widgets { get; private set; }
 
         private Image Background;
         private List<Image> Corners;
@@ -24,6 +25,11 @@
         private Text Title;
         private Image TitleSeparator;
         private Vector3 UpperLeftUsablePosition;
+        private byte backgroundAlpha;
+        private Vector2 padding;
+        private Vector3 position;
+
+        protected bool RecomputePositions;
 
 
         public Panel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
@@ -31,14 +37,16 @@
             Position = position - new Vector3(size / 2f, 0);
             VisualPriority = visualPriority;
 
+            RecomputePositions = true;
+
             Background = new Image("PixelBlanc", position)
             {
                 Size = size,
                 Color = Color.Black,
                 VisualPriority = visualPriority + 0.0003,
-                Alpha = 200,
                 Origin = Vector2.Zero
             };
+            BackgroundAlpha = 200;
 
             Corners = new List<Image>();
             Edges = new List<Image>();
@@ -64,11 +72,15 @@
 
             Visible = true;
 
-            Widgets = new Dictionary<string, PanelWidget>();
+            Widgets = new List<KeyValuePair<string, PanelWidget>>();
 
             ShowFrame = true;
+            ShowBackground = true;
+            ShowCloseButton = true;
 
             Scene = scene;
+
+            Padding = Vector2.Zero;
         }
 
 
@@ -83,50 +95,114 @@
         }
 
 
+        public byte BackgroundAlpha
+        {
+            get { return backgroundAlpha; }
+            set
+            {
+                backgroundAlpha = value;
+                Background.Alpha = value;
+            }
+        }
+
+
+        public Vector2 Padding
+        {
+            get { return padding; }
+            set
+            {
+                padding = value;
+                RecomputePositions = true;
+            }
+        }
+
+
+        public override Vector3 Position
+        {
+            get { return position; }
+            set
+            {
+                position = value;
+                RecomputePositions = true;
+            }
+        }
+
+
         public virtual void AddWidget(string name, PanelWidget widget)
         {
             widget.Scene = Scene;
             widget.VisualPriority = VisualPriority;
 
-            Widgets[name] = widget;
+            Widgets.Add(new KeyValuePair<string, PanelWidget>(name, widget));
+
+            RecomputePositions = true;
         }
 
 
         public virtual void RemoveWidget(string name)
         {
-            Widgets.Remove(name);
+            for (int i = Widgets.Count - 1; i > -1; i--)
+                if (Widgets[i].Key == name)
+                {
+                    Widgets.RemoveAt(i);
+                    break;
+                }
+
+            RecomputePositions = true;
+        }
+
+
+        public PanelWidget GetWidgetByName(string name)
+        {
+            foreach (var w in Widgets)
+                if (w.Key == name)
+                    return w.Value;
+
+            return null;
         }
 
 
         public virtual void ClearWidgets()
         {
             Widgets.Clear();
+
+            RecomputePositions = true;
         }
 
 
         public virtual void SetClickHandler(string widgetName, PanelWidgetHandler handler)
         {
-            Widgets[widgetName].ClickHandler = handler;
+            foreach (var w in Widgets)
+                if (w.Key == widgetName)
+                {
+                    w.Value.ClickHandler = handler;
+                    break;
+                }
         }
 
 
         public virtual void SetClickHandler(PanelWidgetHandler handler)
         {
-            foreach (var w in Widgets.Values)
-                w.ClickHandler = handler;
+            foreach (var w in Widgets)
+                w.Value.ClickHandler = handler;
         }
 
 
         public void SetHoverHandler(string widgetName, PanelWidgetHandler handler)
         {
-            Widgets[widgetName].HoverHandler = handler;
+            foreach (var w in Widgets)
+                if (w.Key == widgetName)
+                {
+                    w.Value.HoverHandler = handler;
+                    break;
+                }
         }
 
 
         public void SetHoverHandler(PanelWidgetHandler handler)
         {
-            foreach (var w in Widgets.Values)
-                w.HoverHandler = handler;
+            foreach (var w in Widgets)
+                w.Value.HoverHandler = handler;
         }
 
 
@@ -138,7 +214,7 @@
 
         protected override bool Click(Circle circle)
         {
-            if (ShowFrame && CloseButton.DoClick(circle))
+            if (ShowCloseButton && CloseButton.DoClick(circle))
                 return true;
 
             if (ClickWidgets(circle))
@@ -168,7 +244,22 @@
             TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.TextSize.Y + 5, 0);
 
             if (adjustDimension)
+            {
+                Padding += new Vector2(0, 30);
                 Dimension += new Vector3(0, Title.TextSize.Y + 10, 0);
+            }
+        }
+
+
+        public bool OnlyShowWidgets
+        {
+            get { return !ShowBackground && !ShowCloseButton && !ShowFrame; }
+            set
+            {
+                ShowFrame = !value;
+                ShowBackground = !value;
+                ShowCloseButton = !value;
+            }
         }
 
 
@@ -190,11 +281,22 @@
             if (!Visible)
                 return;
 
-            if (ShowFrame)
+            if (RecomputePositions)
+            {
+                ComputePositions();
+                RecomputePositions = false;
+            }
+
+            if (ShowBackground)
             {
                 Background.Size = new Vector2(Dimension.X + 8, Dimension.Y + 8);
                 Background.Position = new Vector3(Position.X - 4, Position.Y - 4, 0);
 
+                Scene.Add(Background);
+            }
+
+            if (ShowFrame)
+            {
                 Corners[0].Position = new Vector3(Position.X - 4, Position.Y - 4, 0); //Haut droite
                 Corners[0].Rotation = 0;
 
@@ -226,19 +328,20 @@
                     Scene.Add(Edges[i]);
                     Scene.Add(Corners[i]);
                 }
+            }
 
-                Scene.Add(Background);
-
-                if (Title != null)
-                {
-                    Title.Position = new Vector3(Position.X, Position.Y + 5, 0);
-                    TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.TextSize.Y + 5, 0);
-
-                    Scene.Add(TitleSeparator);
-                    Scene.Add(Title);
-                }
-
+            if (ShowCloseButton)
+            {
                 CloseButton.Draw();
+            }
+
+            if (Title != null)
+            {
+                Title.Position = new Vector3(Position.X, Position.Y + 5, 0);
+                TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.TextSize.Y + 5, 0);
+
+                Scene.Add(TitleSeparator);
+                Scene.Add(Title);
             }
 
             DrawWidgets();
@@ -275,30 +378,30 @@
                 Scene.VisualEffects.Add(TitleSeparator, effect);
             }
 
-            effect = VisualEffects.Fade(Math.Min(from, 200), Math.Min(to, 200), 0, length);
+            effect = VisualEffects.Fade(Math.Min(from, BackgroundAlpha), Math.Min(to, BackgroundAlpha), 0, length);
 
-            Background.Alpha = (byte) Math.Min(from, 200);
+            Background.Alpha = (byte) Math.Min(from, BackgroundAlpha);
 
             Scene.VisualEffects.Add(Background, effect);
 
             CloseButton.Fade(from, to, length);
 
-            foreach (var w in Widgets.Values)
-                w.Fade(from, to, length);
+            foreach (var w in Widgets)
+                w.Value.Fade(from, to, length);
         }
 
 
         protected virtual void DrawWidgets()
         {
-            foreach (var w in Widgets.Values)
-                w.Draw();
+            foreach (var w in Widgets)
+                w.Value.Draw();
         }
 
 
         protected virtual bool ClickWidgets(Circle circle)
         {
-            foreach (var w in Widgets.Values)
-                if (w.DoClick(circle))
+            foreach (var w in Widgets)
+                if (w.Value.DoClick(circle))
                     return true;
 
             return false;
@@ -308,9 +411,15 @@
         protected virtual Vector3 GetUpperLeftUsableSpace()
         {
             if (Title != null)
-                return TitleSeparator.Position + new Vector3(0, 30, 0);
+                return TitleSeparator.Position + new Vector3(Padding.X, Padding.Y, 0);
             else
-                return new Vector3(Position.X, Position.Y + 30, 0);
+                return new Vector3(Position.X + Padding.X, Position.Y + Padding.Y, 0);
+        }
+
+
+        protected virtual void ComputePositions()
+        {
+
         }
 
 

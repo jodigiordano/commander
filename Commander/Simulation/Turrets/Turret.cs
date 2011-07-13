@@ -35,6 +35,7 @@
         public bool BackActiveThisTick              { get; private set; }
         public bool BackActiveThisTickOverride;
         public bool Visible;
+        public bool Alive;
         public Shape Shape                          { get; set; }
         public Circle Circle                        { get; set; }
         public CelestialBody CelestialBody;
@@ -46,6 +47,7 @@
         public bool Wander;
         public bool PlayerControlled;
         public bool UpdatePosition;
+        public string Description;
 
         protected LinkedList<TurretLevel> Levels;
         protected string SfxShooting;
@@ -78,6 +80,7 @@
             TimeLastBullet = 0;
             Type = TurretType.None;
             Name = "Unknown";
+            Description = @"Unknown";
             CanSell = true;
             DisabledCounter = 0;
             CanUpdateOverride = true;
@@ -133,6 +136,8 @@
             emitter.ReleaseColour = this.Color.ToVector3();
 
             PlayerCheckedIn = null;
+
+            Alive = true;
         }
 
 
@@ -192,7 +197,10 @@
         }
 
 
-        public void DoDie() { }
+        public void DoDie()
+        {
+            Alive = false;
+        }
 
 
         public virtual void Update()
@@ -484,20 +492,12 @@
 
             if (ActualLevel.Value.BaseImageName != ActualLevel.Next.Value.BaseImageName)
             {
-                //if (BaseImage != null)
-                //    Simulation.Scene.Remove(BaseImage);
-                
                 BaseImage = new Image(ActualLevel.Next.Value.BaseImageName);
-                //Simulation.Scene.Add(BaseImage);
             }
 
             if (ActualLevel.Value.CanonImageName != ActualLevel.Next.Value.CanonImageName)
             {
-                //if (CanonImage != null)
-                //    Simulation.Scene.Remove(CanonImage);
-                
                 CanonImage = new Image(ActualLevel.Next.Value.CanonImageName);
-                //Simulation.Scene.Add(CanonImage);
             }
 
             VisualPriority = this.VisualPriorityBackup;

@@ -8,7 +8,8 @@ namespace EphemereGames.Commander.Simulation
         public AlienTurret(Simulator simulator)
             : base(simulator)
         {
-            Name = "Alien";
+            Name = @"Alien";
+            Description = @"An alien turret";
             Type = TurretType.Alien;
             AntennaRotationSpeed = Main.Random.Next(-50, 50) / 1000f;
             AntennaRotationBase = 0;

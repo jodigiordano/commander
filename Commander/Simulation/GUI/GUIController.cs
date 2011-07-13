@@ -44,6 +44,8 @@
         private GUIPlayer NextWaveCheckedIn;
         private GUIPlayer AdvancedViewCheckedIn;
 
+        private HelpBarPanel HelpBar;
+
 
         public GUIController(Simulator simulator)
         {
@@ -57,6 +59,8 @@
                 AdvancedView = new AdvancedView(Simulator);
 
             ContextualMenusCollisions = new ContextualMenusCollisions();
+
+            HelpBar = new HelpBarPanel(simulator);
         }
 
 
@@ -98,6 +102,8 @@
             GamePausedMenuPlayerCheckedIn = null;
             NextWaveCheckedIn = null;
             AdvancedViewCheckedIn = null;
+
+            HelpBar.Initialize();
         }
 
 
@@ -137,6 +143,8 @@
                 GameMenu.MenuNextWave.Color = p.Color;
                 NextWaveCheckedIn = player;
             }
+
+            HelpBar.ShowMessage(HelpBarMessage.CallNextWave);
         }
 
 
@@ -149,6 +157,8 @@
                 GameMenu.MenuNextWave.Visible = false;
                 NextWaveCheckedIn = null;
             }
+
+            HelpBar.HideMessage(HelpBarMessage.CallNextWave);
         }
 
 
@@ -253,12 +263,12 @@
                 return;
 
             //todo
-            LinkedListNode<Wave> vagueSuivante = Waves.First;
+            LinkedListNode<Wave> nextWave = Waves.First;
 
             for (int i = 0; i < Waves.Count - GameMenu.RemainingWaves; i++)
-                vagueSuivante = vagueSuivante.Next;
+                nextWave = nextWave.Next;
 
-            GameMenu.TimeNextWave = vagueSuivante.Value.StartingTime;
+            GameMenu.TimeNextWave = nextWave.Value.StartingTime;
         }
 
 
@@ -283,6 +293,8 @@
 
             foreach (var turret2 in turret.CelestialBody.Turrets)
                 turret2.ShowForm = true;
+
+            HelpBar.ShowMessage(HelpBarMessage.InstallTurret);
         }
 
 
@@ -293,6 +305,8 @@
             player.Cursor.FadeIn();
             turret.CelestialBody.ShowTurretsZone = false;
             turret.ShowRange = false;
+
+            HelpBar.HideMessage(HelpBarMessage.InstallTurret);
         }
 
 
@@ -303,6 +317,8 @@
             if (PathPreviewing != null &&
                 turret.Type == TurretType.Gravitational)
                 PathPreviewing.Commit(player);
+
+            HelpBar.HideMessage(HelpBarMessage.CelestialBodyMenu);
         }
 
 
@@ -313,6 +329,8 @@
             if (PathPreviewing != null &&
                 turret.Type == TurretType.Gravitational)
                 PathPreviewing.Commit(player);
+
+            HelpBar.HideMessage(HelpBarMessage.TurretMenu);
         }
 
 
@@ -320,6 +338,8 @@
         {
             var selection = p.ActualSelection;
             var player = Players[p];
+
+            BeginHelpMessages(p);
 
             player.CelestialBodyMenu.CelestialBody = selection.CelestialBody;
             player.CelestialBodyMenu.TurretToBuy = selection.TurretToBuy;
@@ -439,6 +459,7 @@
                 player.Draw();
 
             Path.Draw();
+            HelpBar.Draw();
 
             if (Simulator.WorldMode && GamePausedResistance.StartingObject != null)
                 GamePausedResistance.Draw();
@@ -453,6 +474,12 @@
             PlayerLives.Draw();
             MenuPowerUps.Draw();
             PathPreviewing.Draw();
+        }
+
+
+        public void ShowHelpBarMessage(HelpBarMessage message)
+        {
+            HelpBar.ShowMessage(message);
         }
 
 
@@ -498,6 +525,45 @@
             else if (command.Name == "HideCelestialBodiesPaths")
             {
                 AdvancedView.Visible = false;
+            }
+        }
+
+
+        private void BeginHelpMessages(SimPlayer p)
+        {
+            var selection = p.ActualSelection;
+            var player = Players[p];
+
+            if (Simulator.DemoMode)
+            {
+                // Main menu
+                if (player.CelestialBodyMenu.CelestialBody == null && selection.CelestialBody != null)
+                    HelpBar.ShowMessage(HelpBarMessage.Select);
+                else if (player.CelestialBodyMenu.CelestialBody != null && selection.CelestialBody == null)
+                    HelpBar.HideMessage(HelpBarMessage.Select);
+
+                // World Menu
+                if (player.WorldMenu.PausedGameChoice == PausedGameChoice.None && selection.GameChoice != PausedGameChoice.None)
+                    HelpBar.ShowMessage(HelpBarMessage.WorldMenu);
+                else if (player.WorldMenu.PausedGameChoice != PausedGameChoice.None && selection.GameChoice == PausedGameChoice.None)
+                    HelpBar.HideMessage(HelpBarMessage.WorldMenu);
+            }
+
+            else
+            {
+                // Celestial Body Menu
+                if (player.CelestialBodyMenu.TurretToBuy != selection.TurretToBuy && selection.TurretToBuy != TurretType.None)
+                    HelpBar.ShowMessage(HelpBarMessage.CelestialBodyMenu, player.CelestialBodyMenu.GetHelpBarMessage(selection.TurretToBuy));
+                else if (player.CelestialBodyMenu.TurretToBuy != selection.TurretToBuy && selection.TurretToBuy == TurretType.None)
+                    HelpBar.HideMessage(HelpBarMessage.CelestialBodyMenu);
+
+                // Turret Menu
+                if (player.TurretMenu.Turret != selection.Turret && selection.Turret != null && !selection.Turret.Disabled)
+                    HelpBar.ShowMessage(HelpBarMessage.TurretMenu, player.TurretMenu.GetHelpBarMessage(selection.TurretChoice));
+                else if ((selection.Turret != null && selection.Turret.Disabled) || (player.TurretMenu.Turret != selection.Turret && selection.Turret == null))
+                    HelpBar.HideMessage(HelpBarMessage.TurretMenu);
+                else if (selection.Turret != null && !selection.Turret.Disabled && player.TurretMenu.SelectedOption != selection.TurretChoice)
+                    HelpBar.ShowMessage(HelpBarMessage.TurretMenu, player.TurretMenu.GetHelpBarMessage(selection.TurretChoice));
             }
         }
 

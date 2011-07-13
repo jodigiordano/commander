@@ -285,7 +285,7 @@
                 if (GamePadButtonsPressedOnce[button])
                 {
                     Player.InputType = InputType.Gamepad;
-                    listener.PlayerConnectionRequested(Player);
+                    listener.PlayerGamePadConnectionRequested(Player, button);
                     return;
                 }
             }
@@ -299,7 +299,18 @@
                 if (MouseButtonsPressedOnce[button])
                 {
                     Player.InputType = InputType.Mouse;
-                    listener.PlayerConnectionRequested(Player);
+                    listener.PlayerMouseConnectionRequested(Player, button);
+                    return;
+                }
+            }
+
+
+            foreach (var key in MappedKeys)
+            {
+                if (KeysPressedOnce[key])
+                {
+                    Player.InputType = InputType.Mouse;
+                    listener.PlayerKeyboardConnectionRequested(Player, key);
                     return;
                 }
             }

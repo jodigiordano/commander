@@ -75,8 +75,7 @@ namespace EphemereGames.Commander.Simulation
         Booster,
         Gunner,
         Nanobots,
-        RailGun,
-        Sniper
+        RailGun
     };
 
 
@@ -189,4 +188,22 @@ namespace EphemereGames.Commander.Simulation
         ShrinkingCB,
         StartPosCB
     }
+
+
+    enum HelpBarMessage
+    {
+        None,
+        Select,
+        Cancel,
+        ToggleChoices,
+        WorldMenu,
+        CelestialBodyMenu,
+        TurretMenu,
+        InstallTurret,
+        PowerUpMenu,
+        CallNextWave,
+        MoveYourSpaceship,
+        GameLost,
+        GameWon
+    };
 }

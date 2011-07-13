@@ -18,14 +18,14 @@
         public LevelsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
-            SelectedLevelLabel = new Label("Selected level: none");
+            SelectedLevelLabel = new Label(new Text("Selected level: none", "Pixelite") { SizeX = 2 });
             PushButtons = new Dictionary<LevelDescriptor, NewPushButton>();
 
             Levels = new GridPanel(scene, position, size, visualPriority, color)
             {
-                ShowFrame = false,
                 NbColumns = 10
             };
+            Levels.OnlyShowWidgets = true;
 
             AddWidget("SelectedLevel", SelectedLevelLabel);
             AddWidget("Levels", Levels);

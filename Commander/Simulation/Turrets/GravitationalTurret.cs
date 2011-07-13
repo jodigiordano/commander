@@ -13,7 +13,8 @@ namespace EphemereGames.Commander.Simulation
             : base(simulator)
         {
             Type = TurretType.Gravitational;
-            Name = "Gravitational";
+            Name = @"Gravitational";
+            Description = @"Modify the path taken by enemies";
 
             AntennaRotationSpeed = Main.Random.Next(-50, 50) / 1000f;
             AntennaRotationBase = 0;

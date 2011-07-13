@@ -25,14 +25,7 @@
                 List<Image> visuals = new List<Image>();
 
                 for (int j = 1; j < 7; j++)
-                {
-                    Image life = new Image("ViesEnnemis" + j)
-                    {
-                        VisualPriority = Preferences.PrioriteGUIVUeAvanceePointsVieEnnemis
-                    };
-
-                    visuals.Add(life);
-                }
+                    visuals.Add(new Image("ViesEnnemis" + j));
 
                 Lives.Add(visuals);
             }
@@ -51,7 +44,10 @@
 
                 int index = (int)Math.Round((1 - LivesRatio) * 5);
 
-                Lives[livesIndex][index].Position = enemy.Position - new Vector3(0, enemy.Image.AbsoluteSize.Y, 0);
+                var image = Lives[livesIndex][index];
+
+                image.Position = enemy.Position - new Vector3(0, enemy.Image.AbsoluteSize.Y, 0);
+                image.VisualPriority = enemy.VisualPriority - 0.000001f;
 
                 Simulator.Scene.Add(Lives[livesIndex][index]);
                 livesIndex++;

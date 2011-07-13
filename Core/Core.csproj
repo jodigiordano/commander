@@ -188,6 +188,7 @@
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\EffectsController.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />
+    <Compile Include="Utilities\fraction.cs" />
     <Compile Include="Utilities\KeyAndValue.cs" />
     <Compile Include="Utilities\LinkedListWithInit.cs" />
     <Compile Include="Utilities\Pool.cs" />
@@ -202,9 +203,6 @@
     <Compile Include="Visual\Animations\Animation.cs" />
     <Compile Include="Visual\Animations\AnimationsController.cs" />
     <Compile Include="Visual\Camera\Camera.cs" />
-    <Compile Include="Visual\Camera\FollowingCamera.cs" />
-    <Compile Include="Visual\Camera\MovingCamera.cs" />
-    <Compile Include="Visual\Camera\PathFollowingCamera.cs" />
     <Compile Include="Visual\Effects\DrawPartiallyEffect.cs" />
     <Compile Include="Visual\Effects\FadeColorEffect.cs" />
     <Compile Include="Visual\Effects\RecenterEffect.cs" />

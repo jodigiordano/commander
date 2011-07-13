@@ -173,7 +173,7 @@
                     CommonStash.Lives += mineral.Value;
                     CelestialBodyToProtect.LifePoints += mineral.Value;
                 }
-                else
+                else if (!Simulator.EditorMode || Simulator.EditorState == EditorState.Playtest)
                 {
                     CommonStash.Cash += mineral.Value;
                     NotifyCommonStashChanged(CommonStash);
@@ -190,7 +190,9 @@
 
             if (ennemi != null)
             {
-                CommonStash.Cash += ennemi.CashValue;
+                if (!Simulator.EditorMode || Simulator.EditorState == EditorState.Playtest)
+                    CommonStash.Cash += ennemi.CashValue;
+                
                 CommonStash.Score += ennemi.PointsValue;
                 CommonStash.TotalScore += ennemi.PointsValue;
 

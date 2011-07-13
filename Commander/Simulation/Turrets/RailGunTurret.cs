@@ -13,8 +13,9 @@ namespace EphemereGames.Commander.Simulation
             : base(simulator)
         {
             Type = TurretType.RailGun;
-            Name = "RailGun";
-            SfxShooting = "sfxRailGunExplosion1";
+            Name = @"RailGun";
+            Description = @"";
+            SfxShooting = @"sfxRailGunExplosion1";
             Color = new Color(57, 216, 17);
             BackActiveThisTickOverride = true;
 

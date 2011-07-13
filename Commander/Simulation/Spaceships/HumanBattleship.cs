@@ -17,7 +17,6 @@
         public Line Line                       { get; set; }
 
         public RailGunTurret RailGun;
-        public SniperTurret Sniper;
 
         private Simulator Simulator;
         private double VisualPriority;

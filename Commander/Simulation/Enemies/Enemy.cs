@@ -58,7 +58,7 @@ namespace EphemereGames.Commander.Simulation
         private Particle SlowMotionEffect;
         private static int NEXT_ID = 0;
         private Vector3 position;
-        private double VisualPriority;
+        public double VisualPriority;
 
 
         public Enemy()
@@ -186,11 +186,11 @@ namespace EphemereGames.Commander.Simulation
 
             float pourcPath = Path.Pourc(Displacement);
 
-            if (pourcPath > 0.95f)
+            //if (pourcPath > 0.90f)
                 VisualPriority = EnemiesFactory.GetVisualPriority(Type, pourcPath);
 
             Image.Position = Position;
-            Image.VisualPriority = VisualPriority + pourcPath / 1000f;
+            Image.VisualPriority = VisualPriority;
 
             if (MovingEffect != null)
                 MovingEffect.Trigger(ref this.position);

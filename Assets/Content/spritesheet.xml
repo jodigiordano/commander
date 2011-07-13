@@ -59,6 +59,20 @@
     <Item><Key>luneWin</Key><Value>planetes/luneWin.png</Value></Item>   
     <Item><Key>luneLoose</Key><Value>planetes/luneFail.png</Value></Item>
     
+    <!-- Xbox 360 Buttons -->
+    <Item><Key>ButtonBack</Key><Value>GUI/Buttons/back.png</Value></Item>
+    <Item><Key>ButtonA</Key><Value>GUI/Buttons/facebutton_a.png</Value></Item>
+    <Item><Key>ButtonB</Key><Value>GUI/Buttons/facebutton_b.png</Value></Item>
+    <Item><Key>ButtonX</Key><Value>GUI/Buttons/facebutton_x.png</Value></Item>
+    <Item><Key>ButtonY</Key><Value>GUI/Buttons/facebutton_y.png</Value></Item>
+    <Item><Key>BumperLeft</Key><Value>GUI/Buttons/left_bumper.png</Value></Item>
+    <Item><Key>BumperRight</Key><Value>GUI/Buttons/right_bumper.png</Value></Item>
+    <Item><Key>ThumbstickLeft</Key><Value>GUI/Buttons/left_thumbstick.png</Value></Item>
+    <Item><Key>ThumbstickRight</Key><Value>GUI/Buttons/right_thumbstick.png</Value></Item>
+    <Item><Key>TriggerLeft</Key><Value>GUI/Buttons/left_trigger.png</Value></Item>
+    <Item><Key>TriggerRight</Key><Value>GUI/Buttons/right_trigger.png</Value></Item>
+    <Item><Key>ButtonStart</Key><Value>GUI/Buttons/start.png</Value></Item>
+    
     <!-- Power-Ups -->
     <Item><Key>powerUpPlaceHolder</Key><Value>powerups/placeHolder.png</Value></Item>
     <Item><Key>Destruction</Key><Value>powerups/destruction.png</Value></Item>
@@ -88,9 +102,17 @@
     <Item><Key>tourelleBase2</Key><Value>tourelles/tourelleBase2.png</Value></Item>
     <Item><Key>tourelleBase3</Key><Value>tourelles/tourelleBase3.png</Value></Item>
     <Item><Key>tourelleBaseBase</Key><Value>tourelles/tourelleBaseBase.png</Value></Item>
+    <Item><Key>tourelleBaseBase2</Key><Value>tourelles/tourelleBaseBase2.png</Value></Item>
+    <Item><Key>tourelleBaseBase3</Key><Value>tourelles/tourelleBaseBase3.png</Value></Item>
     <Item><Key>tourelleGravitationnelleAntenne</Key><Value>tourelles/tourelleGravitationnelleAntenne.png</Value></Item>
     <Item><Key>tourelleGravitationnelleBase</Key><Value>tourelles/tourelleGravitationnelleBase.png</Value></Item>
     <Item><Key>tourelleLaserBase</Key><Value>tourelles/tourelleLaserBase.png</Value></Item>
+    <Item><Key>tourelleLaserBase2</Key><Value>tourelles/tourelleLaserBase2.png</Value></Item>
+    <Item><Key>tourelleLaserBase3</Key><Value>tourelles/tourelleLaserBase3.png</Value></Item>
+    <Item><Key>tourelleLaserBase4</Key><Value>tourelles/tourelleLaserBase4.png</Value></Item>
+    <Item><Key>tourelleLaserBase5</Key><Value>tourelles/tourelleLaserBase5.png</Value></Item>
+    <Item><Key>tourelleLaserBase6</Key><Value>tourelles/tourelleLaserBase6.png</Value></Item>
+    <Item><Key>tourelleLaserBase7</Key><Value>tourelles/tourelleLaserBase7.png</Value></Item>
     <Item><Key>tourelleLaserCanon1</Key><Value>tourelles/tourelleLaserCanon1.png</Value></Item>
     <Item><Key>tourelleLaserCanon2</Key><Value>tourelles/tourelleLaserCanon2.png</Value></Item>
     <Item><Key>tourelleLaserCanon3</Key><Value>tourelles/tourelleLaserCanon3.png</Value></Item>

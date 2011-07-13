@@ -20,7 +20,10 @@
         void DoGamePadButtonReleased(Player player, Buttons button);
         void DoGamePadJoystickMoved(Player player, Buttons button, Vector3 delta);
 
-        void PlayerConnectionRequested(Player Player);
+        void PlayerKeyboardConnectionRequested(Player Player, Keys key);
+        void PlayerMouseConnectionRequested(Player Player, MouseButton button);
+        void PlayerGamePadConnectionRequested(Player Player, Buttons button);
+
         void DoPlayerConnected(Player player);
         void DoPlayerDisconnected(Player player);
     }

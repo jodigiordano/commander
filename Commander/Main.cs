@@ -86,7 +86,7 @@ namespace EphemereGames.Commander
             Inputs.AddPlayer(new Player());
 
             Physics.Initialize();
-            Audio.Initialize(0, 0);
+            Audio.Initialize(0.5f, 0.5f);
 
             Persistence.AddData(SaveGame);
 

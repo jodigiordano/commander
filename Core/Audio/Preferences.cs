@@ -1,11 +1,4 @@
-﻿//=============================================================================
-//
-// Préférences de la librairie
-// Certaines doivent être settées avant d'utiliser la librairie
-//
-//=============================================================================
-
-namespace EphemereGames.Core.Audio
+﻿namespace EphemereGames.Core.Audio
 {
     using System;
 

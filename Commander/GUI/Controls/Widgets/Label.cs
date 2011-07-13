@@ -10,9 +10,9 @@
         private Text Text;
 
 
-        public Label(string text)
+        public Label(Text text)
         {
-            Text = new Text(text, "Pixelite") { SizeX = 2 };
+            Text = text;
         }
 
 

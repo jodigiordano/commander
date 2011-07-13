@@ -42,6 +42,7 @@
             Enemy e = Enemies[index];
 
             if (!Output.ContainsKey(e) &&
+                CurrentCelestialBody.VisualPriority < e.VisualPriority &&
                 Physics.CircleCicleCollision(CurrentCelestialBody.Circle, e.Circle))
             {
                 Output.Add(e, CurrentCelestialBody);
