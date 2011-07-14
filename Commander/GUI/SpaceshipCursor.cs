@@ -9,6 +9,7 @@
     class SpaceshipCursor : Cursor
     {
         private Particle TrailEffect;
+        private Particle TrailEffect2;
         protected bool ShowTrail;
         private Color Color;
         private Vector3 LastPosition;
@@ -16,21 +17,24 @@
         private ProjectMercury.VariableFloat NotMovingReleaseSpeed;
 
 
-        public SpaceshipCursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority, Color color, string representation)
-            : base(scene, initialPosition, speed, visualPriority)
+        public SpaceshipCursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority, Color color, string image)
+            : base(scene, initialPosition, speed, visualPriority, image, false)
         {
-            SetRepresentation(representation, 4);
-            Circle.Radius = Representation.Size.X / 2;
+            FrontImage.SizeX = 4;
+
+            SetBackImage(image + "Back", 4, color);
+            Circle.Radius = FrontImage.Size.X / 2;
 
             Color = color;
-
-            Representation.Color = new Color(color.R, color.G, color.B, 20);
 
             ShowTrail = true;
 
             TrailEffect = Scene.Particles.Get(@"spaceshipTrail");
             TrailEffect.ParticleEffect[0].ReleaseColour = Color.ToVector3();
-            TrailEffect.VisualPriority = Representation.VisualPriority + 0.00001f;
+            TrailEffect.VisualPriority = BackImage.VisualPriority + 0.00001;
+
+            TrailEffect2 = Scene.Particles.Get(@"spaceshipTrail2");
+            TrailEffect2.VisualPriority = BackImage.VisualPriority + 0.00002;
 
             LastPosition = Position;
 
@@ -47,6 +51,7 @@
             };
 
             TrailEffect.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
+            TrailEffect2.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
 
             FadeIn();
         }
@@ -80,15 +85,20 @@
                 TrailEffect.ParticleEffect[0].ReleaseSpeed = MovingReleaseSpeed;
             }
 
+            //TrailEffect2.ParticleEffect[0].ReleaseSpeed = TrailEffect.ParticleEffect[0].ReleaseSpeed;
+            //((ConeEmitter) TrailEffect2.ParticleEffect[0]).Direction = ((ConeEmitter) TrailEffect.ParticleEffect[0]).Direction;
+
             LastPosition = Position;
 
 
-            Representation.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
+            FrontImage.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
+            BackImage.Rotation = FrontImage.Rotation;
 
             if (ShowTrail)
             {
-                Vector3 p = Representation.Position;
+                Vector3 p = FrontImage.Position;
                 TrailEffect.Trigger(ref p);
+                //TrailEffect2.Trigger(ref p);
             }
 
             base.Draw();

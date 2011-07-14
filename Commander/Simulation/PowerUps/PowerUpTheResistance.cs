@@ -43,13 +43,13 @@ namespace EphemereGames.Commander.Simulation
                 StartingObject = HumanBattleship
             };
 
-            Audio.PlaySfx(@"Partie", TheResistance.SfxIn);
+            Audio.PlaySfx(TheResistance.SfxIn);
         }
 
 
         public override void Stop()
         {
-            Audio.PlaySfx(@"Partie", TheResistance.SfxOut);
+            Audio.PlaySfx(TheResistance.SfxOut);
         }
     }
 }

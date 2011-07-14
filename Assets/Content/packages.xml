@@ -1,191 +1,211 @@
 ﻿<Packages>
-  <Package nom="chargement" temporaire="false" niveau="0">
+  <Package name="loading" volatile="false">
 
     <!-- Textures -->
 
-    <asset nom="VaisseauAlien"        type="Texture2D" chemin="scenarios/vaisseauAlien" />
-    <asset nom="HumanBattleship"      type="Texture2D" chemin="scenarios/humanBattleship" />
-    <asset nom="PixelBlanc"           type="Texture2D" chemin="pixelBlanc" />
+    <asset name="VaisseauAlien"        type="Image" path="scenarios/vaisseauAlien" />
+    <asset name="HumanBattleship"      type="Image" path="scenarios/humanBattleship" />
+    <asset name="PixelBlanc"           type="Image" path="pixelBlanc" />
 
-    <asset nom="fondecran1"                 type="Texture2D" chemin="fonds/fondecran1" />
-    <asset nom="fondecran2"                 type="Texture2D" chemin="fonds/fondecran2" />
-    <asset nom="fondecran3"                 type="Texture2D" chemin="fonds/fondecran3" />
-    <asset nom="fondecran4"                 type="Texture2D" chemin="fonds/fondecran4" />
-    <asset nom="fondecran5"                 type="Texture2D" chemin="fonds/fondecran5" />
-    <asset nom="fondecran6"                 type="Texture2D" chemin="fonds/fondecran6" />
+    <asset name="fondecran1"                 type="Image" path="fonds/fondecran1" />
+    <asset name="fondecran2"                 type="Image" path="fonds/fondecran2" />
+    <asset name="fondecran3"                 type="Image" path="fonds/fondecran3" />
+    <asset name="fondecran4"                 type="Image" path="fonds/fondecran4" />
+    <asset name="fondecran5"                 type="Image" path="fonds/fondecran5" />
+    <asset name="fondecran6"                 type="Image" path="fonds/fondecran6" />
 
     
     <!-- Sprites -->
 
-    <asset nom="tentacules"           type="Sprite" chemin="scenarios/tentacules1" />
+    <asset name="tentacules"           type="Sprite" path="scenarios/tentacules1" />
 
     
     <!-- Polices -->
     
-    <asset nom="Pixelite"             type="Police" chemin="polices/pixelite" />
-    <asset nom="PixelBig"             type="Police" chemin="polices/pixelbig" />
-    <asset nom="Alien"                type="Police" chemin="polices/alien" />
+    <asset name="Pixelite"             type="Font" path="polices/pixelite" />
+    <asset name="PixelBig"             type="Font" path="polices/pixelbig" />
+    <asset name="Alien"                type="Font" path="polices/alien" />
 
     
     <!-- Spritesheets -->
     
-    <asset nom="spritesheet"                  type="SpriteSheet" chemin="spritesheet" />    
+    <asset name="spritesheet"                  type="SpriteSheet" path="spritesheet" />    
     
 
-    <!-- Effets Sonores -->
+    <!-- Sfx -->
+      <!-- Turrets -->
+      <asset name="sfxTourelleBase"                      type="Sfx" path="sfx/story1/turrets/basic/firing"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxTourelleMissile"                   type="Sfx" path="sfx/story1/turrets/missile/firing"><param name="bank" value="Story1" /></asset>    
+      <asset name="sfxTourelleMissileExplosion"          type="Sfx" path="sfx/story1/turrets/missile/explode"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxTourelleLaserSimple"               type="Sfx" path="sfx/story1/turrets/simpleLasers/firing"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxTourelleLaserMultiple"             type="Sfx" path="sfx/story1/turrets/multipleLasers/firing"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxTourelleSlowMotion"                type="Sfx" path="sfx/story1/turrets/slowMotion/firing"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxTourelleGravitationnelleAchetee"   type="Sfx" path="sfx/story1/turrets/gravitational/bought"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxTourelleMiseAJour"                 type="Sfx" path="sfx/story1/turrets/upgraded"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxTourelleVendue"                    type="Sfx" path="sfx/story1/turrets/sold"><param name="bank" value="Story1" /></asset>    
     
-    <asset nom="sfxTourelleBase"                      type="EffetSonore" chemin="sfx/sfxTourelleBase"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxTourelleMissile"                   type="EffetSonore" chemin="sfx/SfxTourelleMissile"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxTourelleLaserSimple"               type="EffetSonore" chemin="sfx/SfxTourelleLaserSimple"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxTourelleLaserMultiple"             type="EffetSonore" chemin="sfx/SfxTourelleLaserMultiple"><param nom="banque" valeur="Partie" /></asset>    
-    <asset nom="sfxTourelleMissileExplosion"          type="EffetSonore" chemin="sfx/sfxTourelleMissileExplosion"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxTourelleSlowMotion"                type="EffetSonore" chemin="sfx/sfxTourelleSlowMotion"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxCorpsCelesteTouche"                type="EffetSonore" chemin="sfx/sfxCorpsCelesteTouche"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxCorpsCelesteExplose"               type="EffetSonore" chemin="sfx/sfxCorpsCelesteExplose"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxLieutenantParle1"                  type="EffetSonore" chemin="sfx/sfxLieutenantParle1"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxLieutenantParle2"                  type="EffetSonore" chemin="sfx/sfxLieutenantParle2"><param nom="banque" valeur="Partie" /></asset>    
-    <asset nom="sfxLieutenantParle3"                  type="EffetSonore" chemin="sfx/sfxLieutenantParle3"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxLieutenantParle4"                  type="EffetSonore" chemin="sfx/sfxLieutenantParle4"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxNouvelleVague"                     type="EffetSonore" chemin="sfx/sfxNouvelleVague"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxTourelleMiseAJour"                 type="EffetSonore" chemin="sfx/sfxTourelleMiseAJour"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxTourelleGravitationnelleAchetee"   type="EffetSonore" chemin="sfx/sfxTourelleGravitationnelleAchetee"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxTourelleVendue"                    type="EffetSonore" chemin="sfx/sfxTourelleVendue"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpResistanceIn"               type="EffetSonore" chemin="sfx/sfxPowerUpResistanceIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpResistanceOut"              type="EffetSonore" chemin="sfx/sfxPowerUpResistanceOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpResistanceTire1"            type="EffetSonore" chemin="sfx/sfxResistanceTire1"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpResistanceTire2"            type="EffetSonore" chemin="sfx/sfxResistanceTire2"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpResistanceTire3"            type="EffetSonore" chemin="sfx/sfxResistanceTire3"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpCollecteurIn"               type="EffetSonore" chemin="sfx/sfxCollecteurIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpCollecteurOut"              type="EffetSonore" chemin="sfx/sfxCollecteurOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpDoItYourselfIn"             type="EffetSonore" chemin="sfx/sfxDoItYourselfIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPowerUpDoItYourselfOut"            type="EffetSonore" chemin="sfx/sfxDoItYourselfOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxMoney1"                            type="EffetSonore" chemin="sfx/sfxMoney1"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxMoney2"                            type="EffetSonore" chemin="sfx/sfxMoney2"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxMoney3"                            type="EffetSonore" chemin="sfx/sfxMoney3"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxLifePack"                          type="EffetSonore" chemin="sfx/sfxLifePack"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxLastSolutionIn"                    type="EffetSonore" chemin="sfx/sfxLastSolutionIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxLastSolutionOut"                   type="EffetSonore" chemin="sfx/sfxLastSolutionOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxShootingStars"                     type="EffetSonore" chemin="sfx/sfxShootingStars"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxDarkSide"                          type="EffetSonore" chemin="sfx/sfxDarkSide"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxAutomaticCollectorIn"              type="EffetSonore" chemin="sfx/sfxAutomaticCollectorIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxAutomaticCollectorOut"             type="EffetSonore" chemin="sfx/sfxAutomaticCollectorOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxMinerIn"                           type="EffetSonore" chemin="sfx/sfxMinerIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxMinerOut"                          type="EffetSonore" chemin="sfx/sfxMinerOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxMineExplose"                       type="EffetSonore" chemin="sfx/sfxMineExplose"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxMineGround"                        type="EffetSonore" chemin="sfx/sfxMineGround"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxRailGunIn"                         type="EffetSonore" chemin="sfx/sfxRailGunIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxRailGunOut"                        type="EffetSonore" chemin="sfx/sfxRailGunOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxRailGunCharging"                   type="EffetSonore" chemin="sfx/sfxRailGunCharging"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxRailGunExplosion1"                 type="EffetSonore" chemin="sfx/sfxRailGunExplosion1"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxRailGunExplosion2"                 type="EffetSonore" chemin="sfx/sfxRailGunExplosion2"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxShieldIn"                          type="EffetSonore" chemin="sfx/sfxShieldIn"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxShieldOut"                         type="EffetSonore" chemin="sfx/sfxShieldOut"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPulse1"                            type="EffetSonore" chemin="sfx/sfxPulse1"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPulse2"                            type="EffetSonore" chemin="sfx/sfxPulse2"><param nom="banque" valeur="Partie" /></asset>
-    <asset nom="sfxPulse3"                            type="EffetSonore" chemin="sfx/sfxPulse3"><param nom="banque" valeur="Partie" /></asset>
+      <!-- Celestial Bodies -->
+      <asset name="sfxCorpsCelesteTouche"                type="Sfx" path="sfx/story1/celestialBodies/hit"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxCorpsCelesteExplose"               type="Sfx" path="sfx/story1/celestialBodies/explode"><param name="bank" value="Story1" /></asset>
+      
+      <!-- Story -->
+      <asset name="sfxLieutenantParle1"                  type="Sfx" path="sfx/story1/story/commodoreTalking1"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxLieutenantParle2"                  type="Sfx" path="sfx/story1/story/commodoreTalking2"><param name="bank" value="Story1" /></asset>    
+      <asset name="sfxLieutenantParle3"                  type="Sfx" path="sfx/story1/story/commodoreTalking3"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxLieutenantParle4"                  type="Sfx" path="sfx/story1/story/commodoreTalking4"><param name="bank" value="Story1" /></asset>
+      
+      <!-- Enemies -->
+      <asset name="sfxNouvelleVague"                     type="Sfx" path="sfx/story1/enemies/newWave"><param name="bank" value="Story1" /></asset>
+
+      <!-- Minerals -->
+      <asset name="sfxMoney1"                            type="Sfx" path="sfx/story1/minerals/money1"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxMoney2"                            type="Sfx" path="sfx/story1/minerals/money2"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxMoney3"                            type="Sfx" path="sfx/story1/minerals/money3"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxLifePack"                          type="Sfx" path="sfx/story1/minerals/lifePack"><param name="bank" value="Story1" /></asset>    
+    
+      <!-- Power Ups -->
+      <asset name="sfxPowerUpResistanceIn"               type="Sfx" path="sfx/story1/powerUps/resistance/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPowerUpResistanceOut"              type="Sfx" path="sfx/story1/powerUps/resistance/out"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPowerUpResistanceTire1"            type="Sfx" path="sfx/story1/powerUps/resistance/firing1"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPowerUpResistanceTire2"            type="Sfx" path="sfx/story1/powerUps/resistance/firing2"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPowerUpResistanceTire3"            type="Sfx" path="sfx/story1/powerUps/resistance/firing3"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxPowerUpCollecteurIn"               type="Sfx" path="sfx/story1/powerUps/collector/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPowerUpCollecteurOut"              type="Sfx" path="sfx/story1/powerUps/collector/out"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxPowerUpDoItYourselfIn"             type="Sfx" path="sfx/story1/powerUps/spaceship/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPowerUpDoItYourselfOut"            type="Sfx" path="sfx/story1/powerUps/spaceship/out"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxLastSolutionIn"                    type="Sfx" path="sfx/story1/powerUps/lastSolution/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxLastSolutionOut"                   type="Sfx" path="sfx/story1/powerUps/lastSolution/out"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxShootingStars"                     type="Sfx" path="sfx/story1/powerUps/shootingStars/activated"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxDarkSide"                          type="Sfx" path="sfx/story1/powerUps/darkSide/activated"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxAutomaticCollectorIn"              type="Sfx" path="sfx/story1/powerUps/automaticCollector/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxAutomaticCollectorOut"             type="Sfx" path="sfx/story1/powerUps/automaticCollector/out"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxMinerIn"                           type="Sfx" path="sfx/story1/powerUps/miner/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxMinerOut"                          type="Sfx" path="sfx/story1/powerUps/miner/out"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxMineExplose"                       type="Sfx" path="sfx/story1/powerUps/miner/mineExploded"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxMineGround"                        type="Sfx" path="sfx/story1/powerUps/miner/mineGround"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxRailGunIn"                         type="Sfx" path="sfx/story1/powerUps/railgun/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxRailGunOut"                        type="Sfx" path="sfx/story1/powerUps/railgun/out"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxRailGunCharging"                   type="Sfx" path="sfx/story1/powerUps/railgun/charging"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxRailGunExplosion1"                 type="Sfx" path="sfx/story1/powerUps/railgun/firing"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxRailGunExplosion2"                 type="Sfx" path="sfx/story1/powerUps/railgun/explosion"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxShieldIn"                          type="Sfx" path="sfx/story1/powerUps/shield/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxShieldOut"                         type="Sfx" path="sfx/story1/powerUps/shield/out"><param name="bank" value="Story1" /></asset>
+    
+      <asset name="sfxPulse1"                            type="Sfx" path="sfx/story1/powerUps/pulse/in"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPulse2"                            type="Sfx" path="sfx/story1/powerUps/pulse/firing"><param name="bank" value="Story1" /></asset>
+      <asset name="sfxPulse3"                            type="Sfx" path="sfx/story1/powerUps/pulse/out"><param name="bank" value="Story1" /></asset>
 
 
     <!-- Particle Effects -->
-    <asset nom="etoilesScintillantes"         type="Particules" chemin="particules/etoilesScintillantes"/>
-    <asset nom="etoileFilante"                type="Particules" chemin="particules/etoileFilante"/>
+    <asset name="etoilesScintillantes"         type="Particles" path="particules/etoilesScintillantes"/>
+    <asset name="etoileFilante"                type="Particles" path="particules/etoileFilante"/>
 
   </Package>
   
   
-  <Package nom="principal" temporaire="false" niveau="0">
+  <Package name="principal" volatile="false">
     
     <!-- Particle Effects -->
     
-    <asset nom="projectileMissileDeplacement" type="Particules" chemin="particules/projectileBaseParticulesDeplacement"/>
-    <asset nom="projectileBaseExplosion"      type="Particules" chemin="particules/projectileBaseParticulesExplosion"/>
-    <asset nom="missileAlien"                 type="Particules" chemin="particules/missileAlien"/>
-    <asset nom="implosionAlien"               type="Particules" chemin="particules/implosionAlien"/>
-    <asset nom="etoile"                       type="Particules" chemin="particules/etoile"/>
-    <asset nom="planeteGazeuse"               type="Particules" chemin="particules/planeteGazeuse"/>
-    <asset nom="etoileBleue"                  type="Particules" chemin="particules/etoileBleue"/>
-    <asset nom="projectileMissileExplosion"   type="Particules" chemin="particules/projectileMissileParticulesExplosion"/>
-    <asset nom="projectileLaserMultiple"      type="Particules" chemin="particules/projectileLaser"/>
-    <asset nom="projectileLaserSimple"        type="Particules" chemin="particules/projectileLaserSimple"/>
-    <asset nom="selectionCorpsCeleste"        type="Particules" chemin="particules/selectionCorpsCeleste"/>
-    <asset nom="traineeMissile"               type="Particules" chemin="particules/traineeMissile"/>
-    <asset nom="etincelleLaser"               type="Particules" chemin="particules/etincelleLaser"/>
-    <asset nom="etincelleLaserSimple"         type="Particules" chemin="particules/etincelleLaserSimple"/>
-    <asset nom="etincelleMissile"             type="Particules" chemin="particules/etincellesMissile"/>
-    <asset nom="etincelleSlowMotion"          type="Particules" chemin="particules/etincelleSlowMotion"/>
-    <asset nom="etincelleSlowMotionTouche"    type="Particules" chemin="particules/etincelleSlowMotionTouche"/>
-    <asset nom="toucherTerre"                 type="Particules" chemin="particules/toucherTerre"/>
-    <asset nom="bouleTerreMeurt"              type="Particules" chemin="particules/bouleTerreMeurt"/>
-    <asset nom="anneauTerreMeurt"             type="Particules" chemin="particules/anneauTerreMeurt"/>
-    <asset nom="explosionEnnemi"              type="Particules" chemin="particules/explosionEnnemi"/>
-    <asset nom="mineral1"                     type="Particules" chemin="particules/mineral1"/>
-    <asset nom="mineral2"                     type="Particules" chemin="particules/mineral2"/>
-    <asset nom="mineral3"                     type="Particules" chemin="particules/mineral3"/>
-    <asset nom="mineralPointsVie"             type="Particules" chemin="particules/mineralPointsVie"/>
-    <asset nom="mineralPris"                  type="Particules" chemin="particules/mineralPris"/>
-    <asset nom="trouRose"                     type="Particules" chemin="particules/trouRose"/>
-    <asset nom="boosterTurret"                type="Particules" chemin="particules/booster"/>
-    <asset nom="gunnerTurret"                 type="Particules" chemin="particules/gunner"/>
-    <asset nom="nanobots"                     type="Particules" chemin="particules/nanobots"/>
-    <asset nom="nanobots2"                    type="Particules" chemin="particules/nanobots2"/>
-    <asset nom="railgun"                      type="Particules" chemin="particules/railgun"/>
-    <asset nom="railgunExplosion"             type="Particules" chemin="particules/railgunExplosion"/>
-    <asset nom="pulseEffect"                  type="Particules" chemin="particules/pulse"/>
-    <asset nom="shieldEffect"                 type="Particules" chemin="particules/shield"/>
-    <asset nom="darkSideEffect"               type="Particules" chemin="particules/darkside"/>
-    <asset nom="spaceshipTrail"               type="Particules" chemin="particules/spaceshipTrail"/>
-    <asset nom="starExplosion"                type="Particules" chemin="particules/starExplosion"/>
+    <asset name="projectileMissileDeplacement" type="Particles" path="particules/projectileBaseParticulesDeplacement"/>
+    <asset name="projectileBaseExplosion"      type="Particles" path="particules/projectileBaseParticulesExplosion"/>
+    <asset name="missileAlien"                 type="Particles" path="particules/missileAlien"/>
+    <asset name="implosionAlien"               type="Particles" path="particules/implosionAlien"/>
+    <asset name="etoile"                       type="Particles" path="particules/etoile"/>
+    <asset name="planeteGazeuse"               type="Particles" path="particules/planeteGazeuse"/>
+    <asset name="etoileBleue"                  type="Particles" path="particules/etoileBleue"/>
+    <asset name="projectileMissileExplosion"   type="Particles" path="particules/projectileMissileParticulesExplosion"/>
+    <asset name="projectileLaserMultiple"      type="Particles" path="particules/projectileLaser"/>
+    <asset name="projectileLaserSimple"        type="Particles" path="particules/projectileLaserSimple"/>
+    <asset name="selectionCorpsCeleste"        type="Particles" path="particules/selectionCorpsCeleste"/>
+    <asset name="traineeMissile"               type="Particles" path="particules/traineeMissile"/>
+    <asset name="etincelleLaser"               type="Particles" path="particules/etincelleLaser"/>
+    <asset name="etincelleLaserSimple"         type="Particles" path="particules/etincelleLaserSimple"/>
+    <asset name="etincelleMissile"             type="Particles" path="particules/etincellesMissile"/>
+    <asset name="etincelleSlowMotion"          type="Particles" path="particules/etincelleSlowMotion"/>
+    <asset name="etincelleSlowMotionTouche"    type="Particles" path="particules/etincelleSlowMotionTouche"/>
+    <asset name="toucherTerre"                 type="Particles" path="particules/toucherTerre"/>
+    <asset name="bouleTerreMeurt"              type="Particles" path="particules/bouleTerreMeurt"/>
+    <asset name="anneauTerreMeurt"             type="Particles" path="particules/anneauTerreMeurt"/>
+    <asset name="explosionEnnemi"              type="Particles" path="particules/explosionEnnemi"/>
+    <asset name="mineral1"                     type="Particles" path="particules/mineral1"/>
+    <asset name="mineral2"                     type="Particles" path="particules/mineral2"/>
+    <asset name="mineral3"                     type="Particles" path="particules/mineral3"/>
+    <asset name="mineralPointsVie"             type="Particles" path="particules/mineralPointsVie"/>
+    <asset name="mineralPris"                  type="Particles" path="particules/mineralPris"/>
+    <asset name="trouRose"                     type="Particles" path="particules/trouRose"/>
+    <asset name="boosterTurret"                type="Particles" path="particules/booster"/>
+    <asset name="gunnerTurret"                 type="Particles" path="particules/gunner"/>
+    <asset name="nanobots"                     type="Particles" path="particules/nanobots"/>
+    <asset name="nanobots2"                    type="Particles" path="particules/nanobots2"/>
+    <asset name="railgun"                      type="Particles" path="particules/railgun"/>
+    <asset name="railgunExplosion"             type="Particles" path="particules/railgunExplosion"/>
+    <asset name="pulseEffect"                  type="Particles" path="particules/pulse"/>
+    <asset name="shieldEffect"                 type="Particles" path="particules/shield"/>
+    <asset name="darkSideEffect"               type="Particles" path="particules/darkside"/>
+    <asset name="spaceshipTrail"               type="Particles" path="particules/spaceshipTrail"/>
+    <asset name="spaceshipTrail2"               type="Particles" path="particules/spaceshipTrail2"/>
+    <asset name="starExplosion"                type="Particles" path="particules/starExplosion"/>
 
     
     <!-- Textures -->
 
-    <asset nom="fondecran7"                 type="Texture2D" chemin="fonds/fondecran7" />
-    <asset nom="fondecran8"                 type="Texture2D" chemin="fonds/fondecran8" />
-    <asset nom="fondecran9"                 type="Texture2D" chemin="fonds/fondecran9" />
-    <asset nom="fondecran10"                type="Texture2D" chemin="fonds/fondecran10" />
-    <asset nom="fondecran11"                type="Texture2D" chemin="fonds/fondecran11" />
-    <asset nom="fondecran12"                type="Texture2D" chemin="fonds/fondecran12" />
-    <asset nom="fondecran13"                type="Texture2D" chemin="fonds/fondecran13" />
-    <asset nom="fondecran14"                type="Texture2D" chemin="fonds/fondecran14" />
-    <asset nom="fondecran15"                type="Texture2D" chemin="fonds/fondecran15" />
-    <asset nom="fondecran16"                type="Texture2D" chemin="fonds/fondecran16" />
+    <asset name="fondecran7"                 type="Image" path="fonds/fondecran7" />
+    <asset name="fondecran8"                 type="Image" path="fonds/fondecran8" />
+    <asset name="fondecran9"                 type="Image" path="fonds/fondecran9" />
+    <asset name="fondecran10"                type="Image" path="fonds/fondecran10" />
+    <asset name="fondecran11"                type="Image" path="fonds/fondecran11" />
+    <asset name="fondecran12"                type="Image" path="fonds/fondecran12" />
+    <asset name="fondecran13"                type="Image" path="fonds/fondecran13" />
+    <asset name="fondecran14"                type="Image" path="fonds/fondecran14" />
+    <asset name="fondecran15"                type="Image" path="fonds/fondecran15" />
+    <asset name="fondecran16"                type="Image" path="fonds/fondecran16" />
 
-    <asset nom="bulle"                            type="Texture2D" chemin="scenarios/bulle" />
-    <asset nom="bulleRenversee"                   type="Texture2D" chemin="scenarios/bulleRenversee" />
-    <asset nom="lieutenant"                       type="Texture2D" chemin="scenarios/lieutenant" />    
+    <asset name="bulle"                            type="Image" path="scenarios/bulle" />
+    <asset name="bulleRenversee"                   type="Image" path="scenarios/bulleRenversee" />
+    <asset name="lieutenant"                       type="Image" path="scenarios/lieutenant" />    
     
     <!-- Promo -->
-    <asset nom="buy"                            type="Texture2D" chemin="GUI/buy" />
-    <asset nom="buy2"                   type="Texture2D" chemin="GUI/buy2" />
+    <asset name="buy"                            type="Image" path="GUI/buy" />
+    <asset name="buy2"                   type="Image" path="GUI/buy2" />
 
     
     <!-- Help stuff -->
     
-    <asset nom="HelpBattlefield"                  type="Texture2D" chemin="help/battlefield" />
-    <asset nom="HelpControls"                     type="Texture2D" chemin="help/controls" />
-    <asset nom="HelpControlsWin"                  type="Texture2D" chemin="help/controlsWin" />
-    <asset nom="HelpMercenaries"                  type="Texture2D" chemin="help/mercenaries" />
-    <asset nom="HelpTheResistance"                type="Texture2D" chemin="help/theResistance" />
-    <asset nom="HelpMercenariesWin"               type="Texture2D" chemin="help/mercenariesWin" />
-    <asset nom="HelpTheResistanceWin"             type="Texture2D" chemin="help/theResistanceWin" />
+    <asset name="HelpBattlefield"                  type="Image" path="help/battlefield" />
+    <asset name="HelpControls"                     type="Image" path="help/controls" />
+    <asset name="HelpControlsWin"                  type="Image" path="help/controlsWin" />
+    <asset name="HelpMercenaries"                  type="Image" path="help/mercenaries" />
+    <asset name="HelpTheResistance"                type="Image" path="help/theResistance" />
+    <asset name="HelpMercenariesWin"               type="Image" path="help/mercenariesWin" />
+    <asset name="HelpTheResistanceWin"             type="Image" path="help/theResistanceWin" />
 
     
     <!-- Sprites -->    
     
-    <asset nom="mine"                       type="Sprite" chemin="projectiles/mine1" />
+    <asset name="mine"                       type="Sprite" path="projectiles/mine1" />
 
 
     <!-- Musics -->
 
-    <asset nom="ingame1"                 type="Musique" chemin="musiques/Chopin1" />
-    <asset nom="ingame2"                 type="Musique" chemin="musiques/Chopin2" />
-    <asset nom="ingame3"                 type="Musique" chemin="musiques/Chopin3" />
-    <asset nom="ingame4"                 type="Musique" chemin="musiques/Chopin4" />
-    <asset nom="win1"                    type="Musique" chemin="musiques/Chopin5-courte" />
-    <asset nom="ingame5"                 type="Musique" chemin="musiques/Chopin6-courte" />
-    <asset nom="win2"                    type="Musique" chemin="musiques/Chopin7-courte" />
-    <asset nom="gameover1"               type="Musique" chemin="musiques/Chopin8-courte" />
-    <asset nom="ingame6"                 type="Musique" chemin="musiques/Chopin9" />
-    <asset nom="gameover2"               type="Musique" chemin="musiques/Chopin11-gameover" />
-    <asset nom="ingame7"                 type="Musique" chemin="musiques/Chopin12" />
+    <asset name="ingame1"                 type="Music" path="musiques/Chopin1" />
+    <asset name="ingame2"                 type="Music" path="musiques/Chopin2" />
+    <asset name="ingame3"                 type="Music" path="musiques/Chopin3" />
+    <asset name="ingame4"                 type="Music" path="musiques/Chopin4" />
+    <asset name="win1"                    type="Music" path="musiques/Chopin5-courte" />
+    <asset name="ingame5"                 type="Music" path="musiques/Chopin6-courte" />
+    <asset name="win2"                    type="Music" path="musiques/Chopin7-courte" />
+    <asset name="gameover1"               type="Music" path="musiques/Chopin8-courte" />
+    <asset name="ingame6"                 type="Music" path="musiques/Chopin9" />
+    <asset name="gameover2"               type="Music" path="musiques/Chopin11-gameover" />
+    <asset name="ingame7"                 type="Music" path="musiques/Chopin12" />
   </Package>
 </Packages>

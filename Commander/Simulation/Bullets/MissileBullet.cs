@@ -127,7 +127,7 @@
         {
             ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
 
-            Audio.PlaySfx(@"Partie", @"sfxTourelleMissileExplosion");
+            Audio.PlaySfx(@"sfxTourelleMissileExplosion");
 
             Scene.Particles.Return(TrailEffect);
 

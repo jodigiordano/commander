@@ -116,7 +116,7 @@
         public void DoPlayerConnected(SimPlayer p)
         {
             GUIPlayer player = 
-                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.Representation);
+                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.ImageName);
 
             player.Cursor.Position = p.Position;
 
@@ -216,7 +216,8 @@
 
                 if (powerUp.Crosshair != "")
                 {
-                    player.Crosshair.SetRepresentation(powerUp.Crosshair, powerUp.CrosshairSize);
+                    player.Crosshair.SetFrontImage(powerUp.Crosshair, powerUp.CrosshairSize, p.Color);
+                    player.Crosshair.Alpha = 0;
                     player.Crosshair.FadeIn();
                 }
 
@@ -257,7 +258,7 @@
             GameMenu.RemainingWaves--;
 
             if (!Simulator.DemoMode)
-                Audio.PlaySfx(@"Partie", @"sfxNouvelleVague");
+                Audio.PlaySfx(@"sfxNouvelleVague");
 
             if (InfiniteWaves != null || GameMenu.RemainingWaves <= 0)
                 return;

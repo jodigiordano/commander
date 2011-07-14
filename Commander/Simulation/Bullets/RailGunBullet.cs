@@ -48,7 +48,7 @@
 
         public override void DoDie()
         {
-            Audio.PlaySfx(@"Partie", @"sfxRailGunExplosion2");
+            Audio.PlaySfx(@"sfxRailGunExplosion2");
             
             base.DoDie();
         }

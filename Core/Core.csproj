@@ -125,7 +125,7 @@
     <Compile Include="Audio\SoundEffectsBank.cs" />
     <Compile Include="Audio\SoundEffect.cs" />
     <Compile Include="Audio\Audio.cs" />
-    <Compile Include="Audio\SoundEffectsController.cs" />
+    <Compile Include="Audio\AudioController.cs" />
     <Compile Include="Audio\AbstractMusical.cs" />
     <Compile Include="Audio\Music.cs" />
     <Compile Include="Audio\Preferences.cs" />

@@ -220,7 +220,7 @@
             if (DisabledAnnounciationCounter < 0 && !Simulator.DemoMode)
             {
                 if (!this.BackActiveThisTickOverride)
-                    Audio.PlaySfx(@"Partie", @"sfxTourelleMiseAJour");
+                    Audio.PlaySfx(@"sfxTourelleMiseAJour");
 
                 DisabledAnnounciationCounter = float.NaN;
                 BackActiveThisTick = true;
@@ -393,7 +393,7 @@
             }
 
             if (Bullets.Count != 0)
-                Audio.PlaySfx(@"Partie", SfxShooting);
+                Audio.PlaySfx(SfxShooting);
 
             return Bullets;
         }

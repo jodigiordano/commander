@@ -44,7 +44,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            Audio.PlaySfx(@"Partie", @"sfxDarkSide");
+            Audio.PlaySfx(@"sfxDarkSide");
         }
     }
 }

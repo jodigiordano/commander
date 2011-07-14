@@ -24,6 +24,14 @@
         Won,
         Lost
     }
+
+
+    enum MusicContext
+    {
+        Won,
+        Lost,
+        Other
+    }
 }
 
 

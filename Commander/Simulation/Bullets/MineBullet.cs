@@ -64,7 +64,7 @@
         {
             ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
 
-            Audio.PlaySfx(@"Partie", @"sfxMineExplose");
+            Audio.PlaySfx(@"sfxMineExplose");
             
             base.DoDie();
         }

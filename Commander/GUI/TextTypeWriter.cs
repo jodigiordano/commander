@@ -128,7 +128,7 @@
                 NbCharWritten++;
 
                 if (PlaySfx)
-                    Audio.PlaySfx(@"Partie", Sfxs[Main.Random.Next(0, Sfxs.Count)]);
+                    Audio.PlaySfx(Sfxs[Main.Random.Next(0, Sfxs.Count)]);
             }
         }
 

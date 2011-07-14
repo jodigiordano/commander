@@ -1,49 +1,10 @@
 ﻿namespace EphemereGames.Core.Utilities
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     public class Fade
     {
-        public static List<int> generateFades(Fade fade)
-        {
-            GameTime gameTime = new GameTime();
-
-            List<int> fades = new List<int>();
-
-            int unSur60 = (int)((1.0f / 60.0f) * 1000);
-
-            while (!fade.Termine)
-            {
-                fades.Add(fade.suivant(gameTime));
-
-                gameTime = new GameTime(
-                    gameTime.TotalGameTime + new TimeSpan(0, 0, 0, 0, unSur60),
-                    new TimeSpan(0, 0, 0, 0, unSur60));
-            }
-
-            fades.Add(fade.Final);
-
-            return fades;
-        }
-
-
-        public static List<byte> generateByteFades(Fade fade)
-        {
-            List<int> intFades = generateFades(fade);
-            List<byte> byteFades = new List<byte>();
-
-            for (int i = 0; i < intFades.Count; i++)
-            {
-                byteFades.Add((byte)intFades[i]);
-            }
-
-            return byteFades;
-        }
-
-
         public enum Type { IN, OUT, INOUT }
 
         protected int fadeActuel;
@@ -233,7 +194,7 @@
         }
 
 
-        public int suivant(GameTime gameTime)
+        public int Next(GameTime gameTime)
         {
             if (!fadeInTermine)
                 fadeIn(gameTime);
@@ -296,7 +257,7 @@
         }
 
 
-        public bool Termine {
+        public bool Finished {
             get { return fadeInTermine && fadeOutTermine; }
         }
 

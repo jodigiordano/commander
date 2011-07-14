@@ -860,176 +860,176 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxCollecteurIn.wav">
-      <Name>sfxCollecteurIn</Name>
+    <Compile Include="sfx\story1\powerUps\collector\in.wav">
+      <Name>in</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxCollecteurOut.wav">
-      <Name>sfxCollecteurOut</Name>
+    <Compile Include="sfx\story1\powerUps\collector\out.wav">
+      <Name>out</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxCorpsCelesteExplose.wav">
-      <Name>sfxCorpsCelesteExplose</Name>
+    <Compile Include="sfx\story1\celestialBodies\explode.wav">
+      <Name>explode</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxCorpsCelesteTouche.wav">
-      <Name>sfxCorpsCelesteTouche</Name>
+    <Compile Include="sfx\story1\celestialBodies\hit.wav">
+      <Name>hit</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxDoItYourselfIn.wav">
-      <Name>sfxDoItYourselfIn</Name>
+    <Compile Include="sfx\story1\powerUps\spaceship\in.wav">
+      <Name>in</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxDoItYourselfOut.wav">
-      <Name>sfxDoItYourselfOut</Name>
+    <Compile Include="sfx\story1\powerUps\spaceship\out.wav">
+      <Name>out</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxLieutenantParle1.wav">
-      <Name>sfxLieutenantParle1</Name>
+    <Compile Include="sfx\story1\story\commodoreTalking1.wav">
+      <Name>commodoreTalking1</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxLieutenantParle2.wav">
-      <Name>sfxLieutenantParle2</Name>
+    <Compile Include="sfx\story1\story\commodoreTalking2.wav">
+      <Name>commodoreTalking2</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxLieutenantParle3.wav">
-      <Name>sfxLieutenantParle3</Name>
+    <Compile Include="sfx\story1\story\commodoreTalking3.wav">
+      <Name>commodoreTalking3</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxLieutenantParle4.wav">
-      <Name>sfxLieutenantParle4</Name>
+    <Compile Include="sfx\story1\story\commodoreTalking4.wav">
+      <Name>commodoreTalking4</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxNouvelleVague.wav">
-      <Name>sfxNouvelleVague</Name>
+    <Compile Include="sfx\story1\enemies\newWave.wav">
+      <Name>newWave</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxPowerUpResistanceIn.wav">
-      <Name>sfxPowerUpResistanceIn</Name>
+    <Compile Include="sfx\story1\powerUps\resistance\in.wav">
+      <Name>in</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxPowerUpResistanceOut.wav">
-      <Name>sfxPowerUpResistanceOut</Name>
+    <Compile Include="sfx\story1\powerUps\resistance\out.wav">
+      <Name>out</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxResistanceTire1.wav">
-      <Name>sfxResistanceTire1</Name>
+    <Compile Include="sfx\story1\powerUps\resistance\firing1.wav">
+      <Name>firing1</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxResistanceTire2.wav">
-      <Name>sfxResistanceTire2</Name>
+    <Compile Include="sfx\story1\powerUps\resistance\firing2.wav">
+      <Name>firing2</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxResistanceTire3.wav">
-      <Name>sfxResistanceTire3</Name>
+    <Compile Include="sfx\story1\powerUps\resistance\firing3.wav">
+      <Name>firing3</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleBase.wav">
-      <Name>sfxTourelleBase</Name>
+    <Compile Include="sfx\story1\turrets\basic\firing.wav">
+      <Name>firing</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleGravitationnelleAchetee.wav">
-      <Name>sfxTourelleGravitationnelleAchetee</Name>
+    <Compile Include="sfx\story1\turrets\gravitational\bought.wav">
+      <Name>bought</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleLaserMultiple.wav">
-      <Name>sfxTourelleLaserMultiple</Name>
+    <Compile Include="sfx\story1\turrets\multipleLasers\firing.wav">
+      <Name>firing</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleLaserSimple.wav">
-      <Name>sfxTourelleLaserSimple</Name>
+    <Compile Include="sfx\story1\turrets\simpleLasers\firing.wav">
+      <Name>firing</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleMiseAJour.wav">
-      <Name>sfxTourelleMiseAJour</Name>
+    <Compile Include="sfx\story1\turrets\upgraded.wav">
+      <Name>upgraded</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleMissile.wav">
-      <Name>sfxTourelleMissile</Name>
+    <Compile Include="sfx\story1\turrets\missile\firing.wav">
+      <Name>firing</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleMissileExplosion.wav">
-      <Name>sfxTourelleMissileExplosion</Name>
+    <Compile Include="sfx\story1\turrets\missile\explode.wav">
+      <Name>explode</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleSlowMotion.wav">
-      <Name>sfxTourelleSlowMotion</Name>
+    <Compile Include="sfx\story1\turrets\slowMotion\firing.wav">
+      <Name>firing</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxTourelleVendue.wav">
-      <Name>sfxTourelleVendue</Name>
+    <Compile Include="sfx\story1\turrets\sold.wav">
+      <Name>sold</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -1634,131 +1634,131 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxMoney1.wav">
-      <Name>sfxMoney1</Name>
+    <Compile Include="sfx\story1\minerals\money1.wav">
+      <Name>money1</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxMoney2.wav">
-      <Name>sfxMoney2</Name>
+    <Compile Include="sfx\story1\minerals\money2.wav">
+      <Name>money2</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxMoney3.wav">
-      <Name>sfxMoney3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="sfx\sfxLifePack.wav">
-      <Name>sfxLifePack</Name>
+    <Compile Include="sfx\story1\minerals\money3.wav">
+      <Name>money3</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxLastSolutionIn.wav">
-      <Name>sfxLastSolutionIn</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="sfx\sfxLastSolutionOut.wav">
-      <Name>sfxLastSolutionOut</Name>
+    <Compile Include="sfx\story1\minerals\lifePack.wav">
+      <Name>lifePack</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxDarkSide.wav">
-      <Name>sfxDarkSide</Name>
+    <Compile Include="sfx\story1\powerUps\lastSolution\in.wav">
+      <Name>in</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxShootingStars.wav">
-      <Name>sfxShootingStars</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="sfx\sfxAutomaticCollectorIn.wav">
-      <Name>sfxAutomaticCollectorIn</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="sfx\sfxAutomaticCollectorOut.wav">
-      <Name>sfxAutomaticCollectorOut</Name>
+    <Compile Include="sfx\story1\powerUps\lastSolution\out.wav">
+      <Name>out</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxMinerIn.wav">
-      <Name>sfxMinerIn</Name>
+    <Compile Include="sfx\story1\powerUps\darkSide\activated.wav">
+      <Name>activated</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxMinerOut.wav">
-      <Name>sfxMinerOut</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="sfx\sfxRailGunIn.wav">
-      <Name>sfxRailGunIn</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="sfx\sfxRailGunOut.wav">
-      <Name>sfxRailGunOut</Name>
+    <Compile Include="sfx\story1\powerUps\shootingStars\activated.wav">
+      <Name>activated</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxShieldIn.wav">
-      <Name>sfxShieldIn</Name>
+    <Compile Include="sfx\story1\powerUps\automaticCollector\in.wav">
+      <Name>in</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxShieldOut.wav">
-      <Name>sfxShieldOut</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="sfx\sfxRailGunCharging.wav">
-      <Name>sfxRailGunCharging</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="sfx\sfxRailGunExplosion1.wav">
-      <Name>sfxRailGunExplosion1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="sfx\sfxRailGunExplosion2.wav">
-      <Name>sfxRailGunExplosion2</Name>
+    <Compile Include="sfx\story1\powerUps\automaticCollector\out.wav">
+      <Name>out</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxPulse1.wav">
-      <Name>sfxPulse1</Name>
+    <Compile Include="sfx\story1\powerUps\miner\in.wav">
+      <Name>in</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxPulse2.wav">
-      <Name>sfxPulse2</Name>
+    <Compile Include="sfx\story1\powerUps\miner\out.wav">
+      <Name>out</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxPulse3.wav">
-      <Name>sfxPulse3</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sfx\story1\powerUps\railgun\in.wav">
+      <Name>in</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="sfx\story1\powerUps\railgun\out.wav">
+      <Name>out</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sfx\story1\powerUps\shield\in.wav">
+      <Name>in</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="sfx\story1\powerUps\shield\out.wav">
+      <Name>out</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sfx\story1\powerUps\railgun\charging.wav">
+      <Name>charging</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="sfx\story1\powerUps\railgun\firing.wav">
+      <Name>firing</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="sfx\story1\powerUps\railgun\explosion.wav">
+      <Name>explosion</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sfx\story1\powerUps\pulse\in.wav">
+      <Name>in</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="sfx\story1\powerUps\pulse\firing.wav">
+      <Name>firing</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="sfx\story1\powerUps\pulse\out.wav">
+      <Name>out</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -1811,13 +1811,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sfx\sfxMineExplose.wav">
-      <Name>sfxMineExplose</Name>
+    <Compile Include="sfx\story1\powerUps\miner\mineExploded.wav">
+      <Name>mineExploded</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sfx\sfxMineGround.wav">
-      <Name>sfxMineGround</Name>
+    <Compile Include="sfx\story1\powerUps\miner\mineGround.wav">
+      <Name>mineGround</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -2024,6 +2024,73 @@
       <Name>start</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="audio_source\cinematics\" />
+    <Folder Include="audio_source\hud\" />
+    <Folder Include="audio_source\menus\" />
+    <Folder Include="audio_source\music\" />
+    <Folder Include="audio_source\objects\" />
+    <Folder Include="audio_source\vo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GUI\Cursors\cursor1.png">
+      <Name>cursor1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor1_back.png">
+      <Name>cursor1_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor2.png">
+      <Name>cursor2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor2_back.png">
+      <Name>cursor2_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor3.png">
+      <Name>cursor3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor3_back.png">
+      <Name>cursor3_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor4.png">
+      <Name>cursor4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor4_back.png">
+      <Name>cursor4_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor5.png">
+      <Name>cursor5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Cursors\cursor5_back.png">
+      <Name>cursor5_back</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="particules\spaceshipTrail2.xml">
+      <Name>spaceshipTrail2</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

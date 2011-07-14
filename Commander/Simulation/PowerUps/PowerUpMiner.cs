@@ -63,7 +63,7 @@ namespace EphemereGames.Commander.Simulation
             {
                 Miner.Fire();
 
-                Audio.PlaySfx(@"Partie", @"sfxMineGround");
+                Audio.PlaySfx(@"sfxMineGround");
 
                 Firing = false;
             }
@@ -88,7 +88,7 @@ namespace EphemereGames.Commander.Simulation
                 Owner = Owner
             };
 
-            Audio.PlaySfx(@"Partie", Miner.SfxIn);
+            Audio.PlaySfx(Miner.SfxIn);
 
             Firing = false;
         }
@@ -96,7 +96,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Stop()
         {
-            Audio.PlaySfx(@"Partie", Miner.SfxOut);
+            Audio.PlaySfx(Miner.SfxOut);
 
             Firing = false;
 

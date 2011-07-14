@@ -7,7 +7,7 @@
 
     public static class Audio
     {
-        internal static SoundEffectsController SoundEffectsController = new SoundEffectsController();
+        internal static AudioController AudioController = new AudioController();
 
 
         public static void Initialize(float volumeMusique, float volumeEffetsSonores)
@@ -15,64 +15,100 @@
             Preferences.VolumeMusique = volumeMusique;
             Preferences.VolumeEffetsSonores = volumeEffetsSonores;
 
-            SoundEffectsController.MusicVolume = volumeMusique;
-            SoundEffectsController.SfxVolume = volumeEffetsSonores;
+            AudioController.MusicVolume = volumeMusique;
+            AudioController.SfxVolume = volumeEffetsSonores;
 
             Persistence.AddAssetType(new SoundEffect());
             Persistence.AddAssetType(new Music());
         }
 
 
-        public static void PlaySfx(string bankName, string sfxName)
+        public static void SetActiveSfxBank(string bankName)
         {
-            SoundEffectsController.PlaySfx(bankName, sfxName);
+            AudioController.ActiveBank = bankName;
         }
 
 
-        public static void StopSfx(string bankName, string sfxName)
+        public static int PlaySfx(string sfxName, bool loop)
         {
-            SoundEffectsController.StopSfx(bankName, sfxName);
+            return AudioController.PlaySfx(sfxName, loop);
         }
+
+
+        //public static void PlaySfx(string bankName, string sfxName)
+        //{
+        //    SoundEffectsController.PlaySfx(bankName, sfxName);
+        //}
+
+
+        public static void PlaySfx(string sfxName)
+        {
+            AudioController.PlaySfx(sfxName);
+        }
+
+
+        public static void StopSfx(string sfxName, int id)
+        {
+            AudioController.StopSfx(sfxName, id);
+        }
+
+
+        public static void StopSfx(string sfxName)
+        {
+            AudioController.StopSfx(sfxName);
+        }
+
+
+        //public static void StopSfx(string bankName, string sfxName)
+        //{
+        //    AudioController.StopSfx(bankName, sfxName);
+        //}
 
         public static bool IsSfxBankInUse(string bankName)
         {
-            return SoundEffectsController.GetSfxBank(bankName).InUse;
+            return AudioController.GetSfxBank(bankName).InUse;
+        }
+
+
+        public static void PlayMusic(string musicName, bool progressive, int fadeTime, NoneHandler callback, double timeBeforeEnd)
+        {
+            AudioController.GetMusic(musicName).Play(progressive, fadeTime, callback, timeBeforeEnd);
         }
 
 
         public static void PlayMusic(string musicName, bool progressive, int fadeTime, bool loop)
         {
-            SoundEffectsController.GetMusic(musicName).jouer(progressive, fadeTime, loop);
+            AudioController.GetMusic(musicName).Play(progressive, fadeTime, loop);
         }
 
 
         public static void Update(GameTime gameTime)
         {
-            SoundEffectsController.Update(gameTime);
+            AudioController.Update(gameTime);
         }
 
 
         public static void SetMaxSimultaneousSfx(int max)
         {
-            SoundEffectsController.MaxSimultaneousSfx = max;
+            AudioController.MaxSimultaneousSfx = max;
         }
 
 
         public static void SetMaxInstancesSfx(string sfxName, int maxInstances)
         {
-            SoundEffectsController.SetMaxActivesSfxInstances(sfxName, maxInstances);
+            AudioController.SetMaxActivesSfxInstances(sfxName, maxInstances);
         }
 
 
         public static void StopMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.GetMusic(musicName).Stop(progressive, fadeTime);
+            AudioController.GetMusic(musicName).Stop(progressive, fadeTime);
         }
 
 
         public static void PauseMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.GetMusic(musicName).Pause(progressive, fadeTime);
+            AudioController.GetMusic(musicName).Pause(progressive, fadeTime);
         }
 
 
@@ -81,7 +117,7 @@
             set
             {
                 Preferences.VolumeMusique = value;
-                SoundEffectsController.MusicVolume = value;
+                AudioController.MusicVolume = value;
             }
         }
 
@@ -91,20 +127,20 @@
             set
             {
                 Preferences.VolumeEffetsSonores = value;
-                SoundEffectsController.SfxVolume = value;
+                AudioController.SfxVolume = value;
             }
         }
 
 
         public static bool IsMusicPlaying(string musicName)
         {
-            return SoundEffectsController.GetMusic(musicName).State == SoundState.Playing;
+            return AudioController.GetMusic(musicName).State == SoundState.Playing;
         }
 
 
         public static void ResumeMusic(string musicName, bool progressive, int fadeTime)
         {
-            SoundEffectsController.GetMusic(musicName).Unpause(progressive, fadeTime);
+            AudioController.GetMusic(musicName).Resume(progressive, fadeTime);
         }
     }
 }

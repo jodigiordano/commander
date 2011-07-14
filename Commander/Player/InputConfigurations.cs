@@ -17,6 +17,10 @@
         public static Keys Disconnect = Keys.Q;
         public static Keys Tweaking = Keys.T;
         public static Keys RetryLevel = Keys.R;
+        public static Keys MoveUp = Keys.W;
+        public static Keys MoveLeft = Keys.A;
+        public static Keys MoveDown = Keys.S;
+        public static Keys MoveRight = Keys.D;
 
         public static List<Keys> ToList
         {
@@ -33,7 +37,11 @@
                     Editor,
                     Disconnect,
                     Tweaking,
-                    RetryLevel
+                    RetryLevel,
+                    MoveDown,
+                    MoveLeft,
+                    MoveRight,
+                    MoveUp
                 };
             }
         }

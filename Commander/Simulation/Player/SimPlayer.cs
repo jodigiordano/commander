@@ -23,7 +23,7 @@
 
         public Circle Circle;
         public Color Color;
-        public string Representation;
+        public string ImageName;
         public PowerUpType PowerUpInUse;
 
         private Vector3 position;
@@ -323,7 +323,7 @@
         {
             if (ActualSelection.TurretToPlace == null &&SpaceshipMove.NextInput == Vector3.Zero &&
                     (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
-                    SpaceshipMove.Friction = 0.05f;
+                    SpaceshipMove.Friction = 0.1f;
 
             SpaceshipMove.Update();
             Position = SpaceshipMove.Position;

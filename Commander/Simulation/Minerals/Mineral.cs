@@ -86,7 +86,7 @@
 
             string sfx = (Type == MineralType.Life1) ? "sfxLifePack" : "sfxMoney" + Main.Random.Next(1, 4);
 
-            Audio.PlaySfx(@"Partie", sfx);
+            Audio.PlaySfx(sfx);
         }
 
 

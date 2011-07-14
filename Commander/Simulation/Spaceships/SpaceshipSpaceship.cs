@@ -178,14 +178,14 @@
             Acceleration.Y = MathHelper.Clamp(Acceleration.Y, -2, 2);
 
             if (Acceleration.X > 0)
-                Acceleration.X = Math.Max(0, Acceleration.X - (0.03f + Friction));
+                Acceleration.X = Math.Max(0, Acceleration.X - (0.02f + Friction));
             else if (Acceleration.X < 0)
-                Acceleration.X = Math.Min(0, Acceleration.X + (0.03f + Friction));
+                Acceleration.X = Math.Min(0, Acceleration.X + (0.02f + Friction));
 
             if (Acceleration.Y > 0)
-                Acceleration.Y = Math.Max(0, Acceleration.Y - (0.03f + Friction));
+                Acceleration.Y = Math.Max(0, Acceleration.Y - (0.02f + Friction));
             else if (Acceleration.Y < 0)
-                Acceleration.Y = Math.Min(0, Acceleration.Y + (0.03f + Friction));
+                Acceleration.Y = Math.Min(0, Acceleration.Y + (0.02f + Friction));
         }
     }
 }

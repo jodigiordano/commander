@@ -73,6 +73,18 @@
     <Item><Key>TriggerRight</Key><Value>GUI/Buttons/right_trigger.png</Value></Item>
     <Item><Key>ButtonStart</Key><Value>GUI/Buttons/start.png</Value></Item>
     
+    <!-- Cursors -->
+    <Item><Key>Cursor1</Key><Value>GUI/Cursors/cursor1.png</Value></Item>
+    <Item><Key>Cursor1Back</Key><Value>GUI/Cursors/cursor1_back.png</Value></Item>
+    <Item><Key>Cursor2</Key><Value>GUI/Cursors/cursor2.png</Value></Item>
+    <Item><Key>Cursor2Back</Key><Value>GUI/Cursors/cursor2_back.png</Value></Item>
+    <Item><Key>Cursor3</Key><Value>GUI/Cursors/cursor3.png</Value></Item>
+    <Item><Key>Cursor3Back</Key><Value>GUI/Cursors/cursor3_back.png</Value></Item>
+    <Item><Key>Cursor4</Key><Value>GUI/Cursors/cursor4.png</Value></Item>
+    <Item><Key>Cursor4Back</Key><Value>GUI/Cursors/cursor4_back.png</Value></Item>
+    <Item><Key>Cursor5</Key><Value>GUI/Cursors/cursor5.png</Value></Item>
+    <Item><Key>Cursor5Back</Key><Value>GUI/Cursors/cursor5_back.png</Value></Item>
+    
     <!-- Power-Ups -->
     <Item><Key>powerUpPlaceHolder</Key><Value>powerups/placeHolder.png</Value></Item>
     <Item><Key>Destruction</Key><Value>powerups/destruction.png</Value></Item>

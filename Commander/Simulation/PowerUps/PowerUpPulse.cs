@@ -40,7 +40,7 @@ namespace EphemereGames.Commander.Simulation
             TravelTime += Bullet.Speed;
 
             if (TravelTime % 1000 == 0)
-                Audio.PlaySfx(@"Partie", @"sfxPulse2");
+                Audio.PlaySfx(@"sfxPulse2");
             
             Path.Position(Path.Length - TravelTime, ref BulletPosition);
 
@@ -59,13 +59,14 @@ namespace EphemereGames.Commander.Simulation
 
             Bullet.Initialize();
 
-            Audio.PlaySfx(@"Partie", @"sfxPulse1");
+            Audio.PlaySfx(@"sfxPulse1");
         }
 
 
         public override void Stop()
         {
-            Audio.PlaySfx(@"Partie", @"sfxPulse3");
+            Audio.StopSfx(@"sfxPulse2");
+            Audio.PlaySfx(@"sfxPulse3");
         }
     }
 }

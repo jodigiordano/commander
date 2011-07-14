@@ -8,13 +8,13 @@
 
     class SoundEffectsBank
     {
-        public Dictionary<string, SoundEffect> EffetsSonores { get; set; }
+        public Dictionary<string, SoundEffect> SoundEffects { get; set; }
 
         public int ActiveInstances;
 
         public SoundEffectsBank()
         {
-            EffetsSonores = new Dictionary<string, SoundEffect>();
+            SoundEffects = new Dictionary<string, SoundEffect>();
             ActiveInstances = 0;
         }
 
@@ -22,7 +22,7 @@
         {
             get
             {
-                foreach (var kvp in EffetsSonores)
+                foreach (var kvp in SoundEffects)
                     if (kvp.Value.State == SoundState.Playing)
                         return true;
 
@@ -35,7 +35,7 @@
         {
             set
             {
-                foreach (var kvp in EffetsSonores)
+                foreach (var kvp in SoundEffects)
                     kvp.Value.Volume = value;
 
                 volume = value;
@@ -51,50 +51,50 @@
         {
             ActiveInstances = 0;
 
-            foreach (var kvp in EffetsSonores)
+            foreach (var kvp in SoundEffects)
             {
                 kvp.Value.Update(gameTime);
                 ActiveInstances += kvp.Value.InstancesActives;
             }
         }
 
-        public void reprendre(bool apparitionProgressive, int tempsFade)
+        public void reprendre(bool progressive, int fadeTime)
         {
-            foreach (var kvp in EffetsSonores)
-                kvp.Value.Unpause(apparitionProgressive, tempsFade);
+            foreach (var kvp in SoundEffects)
+                kvp.Value.Resume(progressive, fadeTime);
         }
 
-        public void Pause(bool disparitionProgressive, int tempsFade)
+        public void Pause(bool progressive, int fadeTime)
         {
-            foreach (var kvp in EffetsSonores)
-                kvp.Value.Pause(disparitionProgressive, tempsFade);
+            foreach (var kvp in SoundEffects)
+                kvp.Value.Pause(progressive, fadeTime);
         }
 
-        public void Stop(bool disparitionProgressive, int tempsFade)
+        public void Stop(bool progressive, int fadeTime)
         {
-            foreach (var kvp in EffetsSonores)
-                kvp.Value.Stop(disparitionProgressive, tempsFade);
+            foreach (var kvp in SoundEffects)
+                kvp.Value.Stop(progressive, fadeTime);
         }
 
-        public void Stop(string nomEffetSonore, bool disparitionProgressive, int tempsFade)
+        public void Stop(string sfxName, bool progressive, int fadeTime)
         {
-            if (EffetsSonores.ContainsKey(nomEffetSonore))
-                EffetsSonores[nomEffetSonore].Stop(disparitionProgressive, tempsFade);
+            if (SoundEffects.ContainsKey(sfxName))
+                SoundEffects[sfxName].Stop(progressive, fadeTime);
         }
 
-        public void Play(string nomEffetSonore)
+        public int Play(string sfxName)
         {
 #if DEBUG
-                if (!EffetsSonores.ContainsKey(nomEffetSonore))
-                        throw new Exception("L'effet sonore ne se trouve pas dans cette banque");
+            if (!SoundEffects.ContainsKey(sfxName))
+                throw new Exception("This bank does not have this sfx");
 #endif
 
-            EffetsSonores[nomEffetSonore].jouer(false, 0, false);
+            return SoundEffects[sfxName].Play(false, 0, false);
         }
 
-        public void Add(string nomEffetSonore, SoundEffect effetSonore)
+        public void Add(string sfxName, SoundEffect sfx)
         {
-            EffetsSonores[nomEffetSonore] = effetSonore;
+            SoundEffects[sfxName] = sfx;
         }
     }
 }

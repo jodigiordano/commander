@@ -4,7 +4,6 @@ namespace EphemereGames.Core.Persistence
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
-    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework.Content;
     using ParallelTasks;
 
@@ -25,16 +24,16 @@ namespace EphemereGames.Core.Persistence
                select new Package
                {
                    AssetsPool = new ContentManager(Preferences.GameServiceContainer, Preferences.ContentFolderPath + "/"),
-                   Name = package.Attribute("nom").Value,
-                   Temporary = Boolean.Parse(package.Attribute("temporaire").Value),
+                   Name = package.Attribute("name").Value,
+                   Temporary = Boolean.Parse(package.Attribute("volatile").Value),
 
                    Assets = (from asset in package.Descendants("asset")
                    select new AssetDescriptor
                    {
-                       Name = asset.Attribute("nom").Value,
+                       Name = asset.Attribute("name").Value,
                        Type = asset.Attribute("type").Value,
-                       Path = asset.Attribute("chemin").Value,
-                       Parameters = asset.Elements("param").ToDictionary(x => x.Attribute("nom").Value, x => x.Attribute("valeur").Value)
+                       Path = asset.Attribute("path").Value,
+                       Parameters = asset.Elements("param").ToDictionary(x => x.Attribute("name").Value, x => x.Attribute("value").Value)
                    }).ToList()
                }).ToList();
 

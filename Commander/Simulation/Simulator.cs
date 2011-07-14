@@ -94,6 +94,7 @@ namespace EphemereGames.Commander.Simulation
                     @"pulseEffect",
                     @"shieldEffect",
                     @"spaceshipTrail",
+                    @"spaceshipTrail2",
                     @"darkSideEffect",
                     @"starExplosion"
                 }, false);
@@ -407,8 +408,6 @@ namespace EphemereGames.Commander.Simulation
         {
             if (state == GameState.Won || state == GameState.Lost)
             {
-                EnemiesController.ObjectDestroyed -= SimPlayersController.DoObjetDestroyed;
-
                 int levelId = LevelsController.Level.Id;
                 int score = LevelsController.Level.CommonStash.TotalScore;
 
@@ -480,7 +479,47 @@ namespace EphemereGames.Commander.Simulation
             {
                 State = GameState.Paused;
                 LevelsController.TriggerNewGameState(State);
+                return;
             }
+        }
+
+
+        void InputListener.DoKeyPressed(Core.Input.Player p, Keys key)
+        {
+            var player = (Player) p;
+            var simPlayer = SimPlayersController.GetPlayer(player);
+
+            // Moving
+            //todo: broken.
+            //todo: to fix: 4 boolean that tell if the player is moving (cummulate) then apply.
+            Vector3 delta = Vector3.Zero;
+
+            if (key == KeyboardConfiguration.MoveLeft)
+                delta.X -= 1;
+
+            if (key == KeyboardConfiguration.MoveRight)
+                delta.X += 1;
+
+            if (key == KeyboardConfiguration.MoveUp)
+                delta.Y -= 1;
+
+            if (key == KeyboardConfiguration.MoveDown)
+                delta.Y += 1;
+
+            if (delta != Vector3.Zero)
+                delta.Normalize();
+
+            delta *= GamePadConfiguration.Speed;
+
+            EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
+
+            if (!EditorMode && State != GameState.Running)
+                return;
+
+            if (simPlayer.PowerUpInUse != PowerUpType.None)
+                PowerUpsController.DoInputMovedDelta(simPlayer, delta);
+
+            SimPlayersController.DoMove(player, ref delta);
         }
 
 
@@ -491,6 +530,8 @@ namespace EphemereGames.Commander.Simulation
 
             if (LevelsController.Help.Active)
                 return;
+
+            // Stop Moving
         }
 
 
@@ -743,19 +784,19 @@ namespace EphemereGames.Commander.Simulation
 
         void InputListener.PlayerKeyboardConnectionRequested(Core.Input.Player player, Keys key)
         {
-            player.Connect();
+
         }
 
 
         void InputListener.PlayerMouseConnectionRequested(Core.Input.Player player, MouseButton button)
         {
-            player.Connect();
+
         }
 
 
         void InputListener.PlayerGamePadConnectionRequested(Core.Input.Player player, Buttons button)
         {
-            player.Connect();
+
         }
 
 

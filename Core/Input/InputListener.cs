@@ -8,6 +8,7 @@
     {
         bool EnableInputs { get; }
 
+        void DoKeyPressed(Player player, Keys key);
         void DoKeyPressedOnce(Player player, Keys key);
         void DoKeyReleased(Player player, Keys key);
 

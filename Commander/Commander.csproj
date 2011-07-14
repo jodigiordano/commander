@@ -175,6 +175,7 @@
     <Compile Include="GUI\Controls\Widgets\PanelWidget.cs" />
     <Compile Include="GUI\Controls\Panels\VerticalPanel.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
+    <Compile Include="MusicController.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\Scores.cs" />
     <Compile Include="Player\TrialMode.cs" />

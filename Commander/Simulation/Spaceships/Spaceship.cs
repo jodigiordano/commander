@@ -200,7 +200,7 @@
             }
 
             if (Bullets.Count != 0)
-                Audio.PlaySfx(@"Partie", @"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
+                Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
 
             return Bullets;
         }

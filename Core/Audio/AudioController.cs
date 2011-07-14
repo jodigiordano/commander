@@ -1,13 +1,13 @@
 namespace EphemereGames.Core.Audio
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.Xna.Framework;
 
 
-    class SoundEffectsController
+    class AudioController
     {
+        public string ActiveBank { get; set; }
+
         private Dictionary<string, SoundEffectsBank> SoundEffects = new Dictionary<string, SoundEffectsBank>();
         private Dictionary<string, Music> Musics = new Dictionary<string, Music>();
 
@@ -16,7 +16,7 @@ namespace EphemereGames.Core.Audio
         private Dictionary<string, int> MaxSfxInstances;
 
 
-        public SoundEffectsController()
+        public AudioController()
         {
             foreach (var kvp in Musics)
                 kvp.Value.Stop(false, 0);
@@ -36,6 +36,7 @@ namespace EphemereGames.Core.Audio
 
             MusicVolume = 0.5f;
             SfxVolume = 0.5f;
+            ActiveBank = @"Default";
         }
 
 
@@ -75,15 +76,39 @@ namespace EphemereGames.Core.Audio
         }
 
 
-        public void PlaySfx(string bankName, string sfxName)
+        public void PlaySfx(string sfxName)
+        {
+            PlaySfx(ActiveBank, sfxName, false);
+        }
+
+
+        public int PlaySfx(string sfxName, bool loop)
+        {
+            return PlaySfx(ActiveBank, sfxName, loop);
+        }
+
+
+        public int PlaySfx(string bankName, string sfxName, bool loop)
         {
             int maxInstancesActives = 0;
 
             if (MaxActivesSfxInstances >= MaxSimultaneousSfx ||
-                (MaxSfxInstances.TryGetValue(sfxName, out maxInstancesActives) && SoundEffects[bankName].EffetsSonores[sfxName].InstancesActives >= maxInstancesActives))
-                return;
+                (MaxSfxInstances.TryGetValue(sfxName, out maxInstancesActives) && SoundEffects[bankName].SoundEffects[sfxName].InstancesActives >= maxInstancesActives))
+                return -1;
 
-            SoundEffects[bankName].Play(sfxName);
+            return SoundEffects[bankName].Play(sfxName);
+        }
+
+
+        public void StopSfx(string sfxName)
+        {
+            StopSfx(ActiveBank, sfxName);
+        }
+
+
+        public void StopSfx(string sfxName, int id)
+        {
+
         }
 
 
@@ -146,26 +171,6 @@ namespace EphemereGames.Core.Audio
                 sfx.Value.Update(gameTime);
                 MaxActivesSfxInstances += SoundEffects[sfx.Key].ActiveInstances;
             }
-
-            //string[] wCles;
-            
-            //wCles = Musics.Keys.ToArray();
-
-            //for (int i = 0; i < wCles.Length; i++)
-            //    Musics[wCles[i]].Update(gameTime);
-
-
-            //// gestion des effets sonores
-
-            //wCles = SoundEffects.Keys.ToArray();
-
-            //MaxActivesSfxInstances = 0;
-
-            //for (int i = 0; i < wCles.Length; i++)
-            //{
-            //    SoundEffects[wCles[i]].Update(gameTime);
-            //    MaxActivesSfxInstances += SoundEffects[wCles[i]].ActiveInstances;
-            //}
         }
 
 

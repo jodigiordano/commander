@@ -1,36 +1,41 @@
 ﻿namespace EphemereGames.Core.Audio
 {
-    using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
-    using EphemereGames.Core.Utilities;
 
-    using System.Linq;
 
     abstract class AbstractMusical
     {
-        public Microsoft.Xna.Framework.Audio.SoundEffect Sound { get; set; }
-        protected List<SoundEffectInstance> Instances { get; set; }
-        protected Fade Fade { get; set; }
-        public SoundState State { get; protected set; }
-        public SoundState ProchainEtat { protected get; set; }
+        public Microsoft.Xna.Framework.Audio.SoundEffect Sound  { get; set; }
+        public SoundState State                                 { get; protected set; }
+        public SoundState NextState                             { protected get; set; }
+
+        protected Dictionary<int, SoundEffectInstance> Instances { get; set; }
+        protected Fade Fade                                     { get; set; }
+        
+        private float volume;
+
+        public int Id;
+        private static int NextId = 0;
+        
 
         public AbstractMusical()
         {
             Sound = null;
             Fade = null;
-            Instances = new List<SoundEffectInstance>();
+            Instances = new Dictionary<int, SoundEffectInstance>();
             State = SoundState.Stopped;
-            ProchainEtat = SoundState.Stopped;
+            NextState = SoundState.Stopped;
         }
 
-        private float volume;
+
         public virtual float Volume
         {
             set
             {
-                foreach (var instance in Instances)
+                foreach (var instance in Instances.Values)
                     instance.Volume = value;
 
                 volume = value;
@@ -38,25 +43,39 @@
 
             private get
             {
-                return volume;
+                if (Instances.Count == 0)
+                    return volume;
+                
+                if (Instances.Count == 1)
+                    return Instances[Id].Volume;
+
+                float averageVolume = 0;
+
+                foreach (var instance in Instances.Values)
+                    averageVolume += instance.Volume;
+
+                averageVolume /= Instances.Count;
+
+                return averageVolume;
             }
         }
+
 
         public virtual void Update(GameTime gameTime)
         {
             if (Fade == null)
                 return;
 
-            if (!Fade.Termine)
-                foreach (var instance in Instances)
-                    instance.Volume = Fade.suivant(gameTime) / 100.0f;
+            if (!Fade.Finished)
+                foreach (var instance in Instances.Values)
+                    instance.Volume = Fade.Next(gameTime) / 100.0f;
             else
             {
                 if (Fade.TypeFade == Fade.Type.OUT)
                 {
-                    foreach (var instance in Instances)
+                    foreach (var instance in Instances.Values)
                     {
-                        if (ProchainEtat == SoundState.Stopped)
+                        if (NextState == SoundState.Stopped)
                         {
                             State = SoundState.Stopped;
                             instance.Stop();
@@ -73,93 +92,100 @@
             }
         }
 
-        public virtual void Unpause(bool apparitionProgressive, int tempsFade)
+
+        public virtual void Resume(bool progressive, int fadeTime)
         {
             if (Instances.Count == 0 || State != SoundState.Paused)
                 return;
 
-            if (apparitionProgressive)
+            if (progressive)
             {
-                Fade = new Fade(0, Fade.Type.IN, tempsFade, 0);
-                Fade.Max = (int)(Volume * 100);
+                Fade = new Fade((int) (Volume * 100), Fade.Type.IN, fadeTime, 0);
+                Fade.Max = (int)(volume * 100);
 
-                foreach (var instance in Instances)
+                foreach (var instance in Instances.Values)
                     instance.Volume = 0;
             }
 
-            foreach (var instance in Instances)
+            foreach (var instance in Instances.Values)
                 instance.Resume();
 
             State = SoundState.Playing;
-            ProchainEtat = SoundState.Playing;
+            NextState = SoundState.Playing;
         }
 
-        public virtual void Pause(bool disparitionProgressive, int tempsFade)
+
+        public virtual void Pause(bool progressive, int fadeTime)
         {
             if (Instances.Count == 0 || State != SoundState.Playing)
                 return;
 
-            if (disparitionProgressive)
+            if (progressive)
             {
-                Fade = new Fade((int)(Volume * 100), Fade.Type.OUT, 0, tempsFade);
+                Fade = new Fade((int)(Volume * 100), Fade.Type.OUT, 0, fadeTime);
 
                 State = SoundState.Playing;
-                ProchainEtat = SoundState.Paused;
+                NextState = SoundState.Paused;
             }
 
             else
             {
-                foreach (var instance in Instances)
+                foreach (var instance in Instances.Values)
                     instance.Pause();
 
                 State = SoundState.Paused;
-                ProchainEtat = SoundState.Paused;
+                NextState = SoundState.Paused;
             }
         }
 
-        public virtual void Stop(bool disparitionProgressive, int tempsFade)
+
+        public virtual void Stop(bool progressive, int fadeTime)
         {
             if (Instances.Count == 0 || State == SoundState.Stopped)
                 return;
 
-            if (disparitionProgressive)
+            if (progressive)
             {
-                Fade = new Fade((int)(Volume * 100), Fade.Type.OUT, 0, tempsFade);
-                //Etat = ...; en pause ou joue
-                ProchainEtat = SoundState.Stopped;
+                Fade = new Fade((int)(Volume * 100), Fade.Type.OUT, 0, fadeTime);
+                NextState = SoundState.Stopped;
             }
             else
             {
-                foreach (var instance in Instances)
+                foreach (var instance in Instances.Values)
                     instance.Stop();
 
                 State = SoundState.Stopped;
-                ProchainEtat = SoundState.Stopped;
+                NextState = SoundState.Stopped;
             }
         }
 
-        public virtual void jouer(bool apparitionProgressive, int tempsFade, bool loop)
+
+        public virtual int Play(bool progressive, int fadeTime, bool loop)
         {
             SoundEffectInstance instance = Sound.CreateInstance();
 
             instance.IsLooped = loop;
 
-            if (apparitionProgressive)
+            if (progressive)
             {
                 instance.Volume = 0;
-                Fade = new Fade(0, Fade.Type.IN, tempsFade, 0);
-                Fade.Max = (int)(Volume * 100);
+                Fade = new Fade(0, Fade.Type.IN, fadeTime, 0);
+                Fade.Max = (int)(volume * 100);
             }
 
             else
-                instance.Volume = Volume;
+                instance.Volume = volume;
 
             instance.Play();
 
-            Instances.Add(instance);
+            Id = NextId++;
+
+            Instances.Add(Id, instance);
 
             State = SoundState.Playing;
-            ProchainEtat = SoundState.Playing;
+            NextState = SoundState.Playing;
+
+            return Id;
         }
     }
 }

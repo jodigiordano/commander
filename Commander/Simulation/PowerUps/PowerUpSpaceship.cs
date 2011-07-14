@@ -58,7 +58,7 @@ namespace EphemereGames.Commander.Simulation
                 AutomaticMode = false
             };
 
-            Audio.PlaySfx(@"Partie", SpaceshipSpaceship.SfxIn);
+            Audio.PlaySfx(SpaceshipSpaceship.SfxIn);
         }
 
 
@@ -70,7 +70,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Stop()
         {
-            Audio.PlaySfx(@"Partie", SpaceshipSpaceship.SfxOut);
+            Audio.PlaySfx(SpaceshipSpaceship.SfxOut);
         }
     }
 }

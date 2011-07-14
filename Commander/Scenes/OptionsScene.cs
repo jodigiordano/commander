@@ -203,7 +203,7 @@
                 BeginTransition();
 
             if (key == KeyboardConfiguration.ChangeMusic)
-                Main.ChangeMusic();
+                Main.MusicController.ChangeMusic(false);
         }
 
 
@@ -228,7 +228,7 @@
                 BeginTransition();
 
             if (button == GamePadConfiguration.ChangeMusic)
-                Main.ChangeMusic();
+                Main.MusicController.ChangeMusic(false);
         }
 
 

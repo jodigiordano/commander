@@ -9,7 +9,7 @@
     {
         public Circle Circle;
         public Color Color;
-        public string Representation;
+        public string ImageName;
 
         private Vector3 position;
 
@@ -34,13 +34,13 @@
         };
 
 
-        private static List<string> AvailablesRepresentations = new List<string>()
+        private static List<string> AvailablesImages = new List<string>()
         {
-            "Vaisseau",
-            "Collecteur",
-            "Resistance1",
-            "Resistance2",
-            "Resistance3"
+            "Cursor1",
+            "Cursor2",
+            "Cursor3",
+            "Cursor4",
+            "Cursor5"
         };
 
 
@@ -55,9 +55,9 @@
             Color = AvailablesColors[index];
             AvailablesColors.RemoveAt(index);
 
-            index = Main.Random.Next(0, AvailablesRepresentations.Count);
-            Representation = AvailablesRepresentations[index];
-            AvailablesRepresentations.RemoveAt(index);
+            index = Main.Random.Next(0, AvailablesImages.Count);
+            ImageName = AvailablesImages[index];
+            AvailablesImages.RemoveAt(index);
 
             index = Main.Random.Next(0, AvailablesInitalPositions.Count);
             Position = AvailablesInitalPositions[index];

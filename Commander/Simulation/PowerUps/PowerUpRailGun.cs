@@ -48,7 +48,7 @@ namespace EphemereGames.Commander.Simulation
                 Turret.StopFire();
                 Firing = false;
 
-                Audio.StopSfx("Partie", "sfxRailGunCharging");
+                Audio.StopSfx(@"sfxRailGunCharging");
             }
         }
 
@@ -66,7 +66,7 @@ namespace EphemereGames.Commander.Simulation
             Turret.Fire();
             Firing = true;
 
-            Audio.PlaySfx(@"Partie", @"sfxRailGunCharging");
+            Audio.PlaySfx(@"sfxRailGunCharging");
         }
 
 
@@ -89,7 +89,7 @@ namespace EphemereGames.Commander.Simulation
             Turret.Owner = Owner;
             Firing = false;
 
-            Audio.PlaySfx(@"Partie", @"sfxRailGunIn");
+            Audio.PlaySfx(@"sfxRailGunIn");
         }
 
 
@@ -99,7 +99,7 @@ namespace EphemereGames.Commander.Simulation
             Firing = false;
             HumanBattleship.RailGun.Wander = true;
 
-            Audio.PlaySfx(@"Partie", @"sfxRailGunOut");
+            Audio.PlaySfx(@"sfxRailGunOut");
         }
     }
 }

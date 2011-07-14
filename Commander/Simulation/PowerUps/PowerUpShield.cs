@@ -56,13 +56,13 @@ namespace EphemereGames.Commander.Simulation
 
             Bullet.Initialize();
 
-            Audio.PlaySfx(@"Partie", @"sfxShieldIn");
+            Audio.PlaySfx(@"sfxShieldIn");
         }
 
 
         public override void Stop()
         {
-            Audio.PlaySfx(@"Partie", @"sfxShieldOut");
+            Audio.PlaySfx(@"sfxShieldOut");
         }
     }
 }

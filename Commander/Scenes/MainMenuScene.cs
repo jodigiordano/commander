@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
     using EphemereGames.Commander.Simulation;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
@@ -186,10 +185,7 @@
 
             Simulator.SyncPlayers();
 
-            if (!Audio.IsMusicPlaying(Main.SelectedMusic))
-                Audio.PlayMusic(Main.SelectedMusic, true, 1000, true);
-            else
-                Audio.ResumeMusic(Main.SelectedMusic, true, 1000);
+            Main.MusicController.PlayMusic(false);
 
             if (Inputs.ConnectedPlayers.Count == 0)
             {
@@ -225,19 +221,15 @@
 
         public override void PlayerMouseConnectionRequested(Core.Input.Player p, MouseButton button)
         {
-            if (SceneState != State.ConnectingPlayer)
-                return;
-
-            p.Connect();
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
         }
 
 
         public override void PlayerGamePadConnectionRequested(Core.Input.Player p, Buttons button)
         {
-            if (SceneState != State.ConnectingPlayer)
-                return;
-
-            p.Connect();
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
         }
 
 
@@ -263,14 +255,14 @@
                 BeginTransition((Player) p);
 
             if (button == GamePadConfiguration.ChangeMusic)
-                Main.ChangeMusic();
+                Main.MusicController.ChangeMusic(false);
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
             if (key == KeyboardConfiguration.ChangeMusic)
-                Main.ChangeMusic();
+                Main.MusicController.ChangeMusic(false);
         }
 
 
@@ -316,7 +308,7 @@
                     if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
                     {
                         Main.GameInProgress.State = GameState.Running;
-                        Audio.PauseMusic(Main.SelectedMusic, true, 1000);
+                        Main.MusicController.PauseMusic();
                         TransiteTo("Partie");
                     }
                     break;

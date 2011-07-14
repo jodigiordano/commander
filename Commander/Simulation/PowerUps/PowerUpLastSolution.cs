@@ -58,7 +58,7 @@ namespace EphemereGames.Commander.Simulation
             terminated = true;
             GoAhead = false;
 
-            Audio.PlaySfx(@"Partie", @"sfxLastSolutionOut");
+            Audio.PlaySfx(@"sfxLastSolutionOut");
         }
 
 
@@ -66,7 +66,7 @@ namespace EphemereGames.Commander.Simulation
         {
             terminated = false;
 
-            Audio.PlaySfx(@"Partie", @"sfxLastSolutionIn");
+            Audio.PlaySfx(@"sfxLastSolutionIn");
         }
     }
 }

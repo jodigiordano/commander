@@ -248,6 +248,9 @@
 
             foreach (var keyboardkey in MappedKeys)
             {
+                if (KeysPressed[keyboardkey])
+                    listener.DoKeyPressed(Player, keyboardkey);
+
                 if (KeysPressedOnce[keyboardkey])
                     listener.DoKeyPressedOnce(Player, keyboardkey);
 

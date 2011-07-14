@@ -40,15 +40,15 @@
         {
             foreach (var asset in Assets)
             {
-                if (asset.Type == "Texture2D")
+                if (asset.Type == "Image")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<Texture2D>(asset.Path));
 #if !WINDOWS_PHONE
                 else if (asset.Type == "Video")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<Video>(asset.Path));
 #endif
-                else if (asset.Type == "EffetFX")
+                else if (asset.Type == "VisualEffect")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<Effect>(asset.Path));
-                else if (asset.Type == "Police")
+                else if (asset.Type == "Font")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<SpriteFont>(asset.Path));
                 else if (asset.Type == "SpriteSheet")
                     LoadedAssets.Add(asset.Name, AssetsPool.Load<SpriteSheet>(asset.Path));

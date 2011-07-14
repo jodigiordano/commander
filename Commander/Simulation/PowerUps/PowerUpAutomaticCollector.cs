@@ -46,13 +46,13 @@ namespace EphemereGames.Commander.Simulation
                 VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
             };
 
-            Audio.PlaySfx(@"Partie", AutomaticCollector.SfxIn);
+            Audio.PlaySfx(AutomaticCollector.SfxIn);
         }
 
 
         public override void Stop()
         {
-            Audio.PlaySfx(@"Partie", AutomaticCollector.SfxOut);
+            Audio.PlaySfx(AutomaticCollector.SfxOut);
         }
     }
 }

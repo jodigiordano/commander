@@ -132,7 +132,7 @@
 
             if (!Simulator.DemoMode && Simulator.State != GameState.Lost)
             {
-                Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteTouche");
+                Audio.PlaySfx(@"sfxCorpsCelesteTouche");
             }
 
             if (Simulator.EditorMode && celestialBody == CelestialBodyToProtect)
@@ -147,7 +147,7 @@
             if (CommonStash.Lives <= 0 && State == GameState.Running)
             {
                 CelestialBodyToProtect.DoDie();
-                Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
+                Audio.PlaySfx(@"sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
                 if (!Main.SaveGame.Progress.ContainsKey(Level.Id))
@@ -173,7 +173,7 @@
             if (celestialBody == null)
                 return;
 
-            Audio.PlaySfx(@"Partie", @"sfxCorpsCelesteExplose");
+            Audio.PlaySfx(@"sfxCorpsCelesteExplose");
 
             if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)
             {

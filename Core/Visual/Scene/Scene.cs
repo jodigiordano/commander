@@ -283,6 +283,7 @@
         public virtual void OnFocus() { }
         public virtual void OnFocusLost() { }
 
+        public virtual void DoKeyPressed(Player player, Keys key) { }
         public virtual void DoKeyPressedOnce(Player player, Keys key) { }
         public virtual void DoKeyReleased(Player player, Keys key) { }
         public virtual void DoMouseButtonPressedOnce(Player player, MouseButton button) { }

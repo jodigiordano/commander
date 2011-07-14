@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
     using EphemereGames.Commander.Simulation;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -11,11 +10,9 @@
     class GameScene : Scene
     {
         public Simulator Simulator;
-        protected LevelDescriptor Level;
-        protected GameTime GameTime = new GameTime();
+        private LevelDescriptor Level;
+        public MusicController MusicController;
 
-        public string SelectedMusic;
-        private double TempsEntreDeuxChangementMusique;
 
         public GameScene(LevelDescriptor level)
             : base(1280, 720)
@@ -24,8 +21,7 @@
 
             Name = "Partie";
 
-            SelectedMusic = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
-            Main.AvailableMusics.Remove(SelectedMusic);
+            MusicController = new MusicController() { SwitchMusicRandomly = false };
 
             Simulator = new Simulator(this, level);
             Simulator.Initialize();
@@ -53,8 +49,7 @@
         protected override void UpdateLogic(GameTime gameTime)
         {
             Simulator.Update(gameTime);
-            this.GameTime = gameTime;
-            TempsEntreDeuxChangementMusique -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            MusicController.Update();
         }
 
 
@@ -72,10 +67,7 @@
 
             EnableUpdate = true;
 
-            if (!Audio.IsMusicPlaying(SelectedMusic))
-                Audio.PlayMusic(SelectedMusic, true, 1000, true);
-            else
-                Audio.ResumeMusic(SelectedMusic, true, 1000);
+            MusicController.PlayMusic(false);
 
             Simulator.EnableInputs = true;
         }
@@ -87,7 +79,7 @@
 
             EnableUpdate = false;
 
-            Audio.PauseMusic(SelectedMusic, true, 1000);
+            MusicController.PauseMusic();
 
             Simulator.EnableInputs = false;
         }
@@ -96,19 +88,19 @@
         public void DoNewGameState(GameState newState)
         {
             if (newState == GameState.Won)
+            {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon);
+                MusicController.SwitchTo(MusicContext.Won);
+            }
+
             else if (newState == GameState.Lost)
+            {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost);
+                MusicController.SwitchTo(MusicContext.Lost);
+            }
 
             if (newState == GameState.Won || newState == GameState.Lost)
-            {
-                Audio.StopMusic(SelectedMusic, true, 500);
-                Main.AvailableMusics.Add(SelectedMusic);
-                SelectedMusic = ((newState == GameState.Won) ? "win" : "gameover") + Main.Random.Next(1, 3);
-                Audio.PlayMusic(SelectedMusic, true, 1000, true);
-
                 Simulator.EnableInputs = false;
-            }
         }
 
 
@@ -155,7 +147,7 @@
                     BeginTransition();
 
                 if (key == KeyboardConfiguration.ChangeMusic)
-                    BeginChangeMusic();
+                    MusicController.ChangeMusic(false);
             }
         }
 
@@ -171,7 +163,7 @@
 
                 else if (button == GamePadConfiguration.RetryLevel)
                     RetryLevel();
-                else if (button == GamePadConfiguration.Back)
+                else if (button == GamePadConfiguration.Cancel)
                     BeginTransition();
             }
 
@@ -189,7 +181,7 @@
                     BeginTransition();
 
                 if (button == GamePadConfiguration.ChangeMusic)
-                    BeginChangeMusic();
+                    MusicController.ChangeMusic(false);
             }
         }
 
@@ -201,6 +193,27 @@
         }
 
 
+        public override void PlayerKeyboardConnectionRequested(Core.Input.Player p, Keys key)
+        {
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
+        }
+
+
+        public override void PlayerMouseConnectionRequested(Core.Input.Player p, MouseButton button)
+        {
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
+        }
+
+
+        public override void PlayerGamePadConnectionRequested(Core.Input.Player p, Buttons button)
+        {
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
+        }
+
+
         private void BeginTransition()
         {
             TransiteTo(Main.SelectedWorld);
@@ -209,25 +222,11 @@
 
         private void RetryLevel()
         {
+            MusicController.ChangeMusic(true);
+
             Simulator.Initialize();
             Simulator.SyncPlayers();
             Simulator.EnableInputs = true;
-        }
-
-
-        private void BeginChangeMusic()
-        {
-            if (TempsEntreDeuxChangementMusique > 0)
-                return;
-
-            Audio.StopMusic(SelectedMusic, true, Preferences.TimeBetweenTwoMusics - 50);
-            string ancienneMusique = SelectedMusic;
-            SelectedMusic = Main.AvailableMusics[Main.Random.Next(0, Main.AvailableMusics.Count)];
-            Main.AvailableMusics.Remove(SelectedMusic);
-            Main.AvailableMusics.Add(ancienneMusique);
-            Audio.PlayMusic(SelectedMusic, true, 1000, true);
-
-            TempsEntreDeuxChangementMusique = Preferences.TimeBetweenTwoMusics;
         }
     }
 }

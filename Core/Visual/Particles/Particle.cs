@@ -140,7 +140,7 @@
 
         public string AssetType
         {
-            get { return "Particules"; }
+            get { return @"Particles"; }
         }
 
 

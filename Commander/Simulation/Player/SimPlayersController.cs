@@ -85,7 +85,7 @@
                 AvailableTurrets = AvailableTurrets,
                 AvailablePowerUps = AvailablePowerUps,
                 Color = player.Color,
-                Representation = player.Representation,
+                ImageName = player.ImageName,
                 UpdateSelectionz = UpdateSelection
             };
 
@@ -190,16 +190,19 @@
 
             if (ennemi != null)
             {
-                if (!Simulator.EditorMode || Simulator.EditorState == EditorState.Playtest)
+                if ( Simulator.State == GameState.Running && (!Simulator.EditorMode || Simulator.EditorState == EditorState.Playtest))
                     CommonStash.Cash += ennemi.CashValue;
-                
-                CommonStash.Score += ennemi.PointsValue;
-                CommonStash.TotalScore += ennemi.PointsValue;
 
-                foreach (var player in Players.Values)
-                    player.UpdateSelection();
-                
-                NotifyCommonStashChanged(CommonStash);
+                if (Simulator.State == GameState.Running)
+                {
+                    CommonStash.Score += ennemi.PointsValue;
+                    CommonStash.TotalScore += ennemi.PointsValue;
+
+                    foreach (var player in Players.Values)
+                        player.UpdateSelection();
+
+                    NotifyCommonStashChanged(CommonStash);
+                }
 
                 return;
             }
@@ -263,7 +266,7 @@
                 p.UpdateSelection();
 
             if (turret.Type == TurretType.Gravitational && !Simulator.DemoMode)
-                Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
+                Audio.PlaySfx(@"sfxTourelleGravitationnelleAchetee");
         }
 
 
@@ -276,9 +279,9 @@
                 p.UpdateSelection();
 
             if (turret.Type == TurretType.Gravitational)
-                Audio.PlaySfx(@"Partie", @"sfxTourelleGravitationnelleAchetee");
+                Audio.PlaySfx(@"sfxTourelleGravitationnelleAchetee");
             else
-                Audio.PlaySfx(@"Partie", @"sfxTourelleVendue");
+                Audio.PlaySfx(@"sfxTourelleVendue");
         }
 
 

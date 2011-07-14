@@ -64,13 +64,13 @@ namespace EphemereGames.Commander.Simulation
                 AutomaticMode = false
             };
 
-            Audio.PlaySfx(@"Partie", Collector.SfxIn);
+            Audio.PlaySfx(Collector.SfxIn);
         }
 
 
         public override void Stop()
         {
-            Audio.PlaySfx(@"Partie", Collector.SfxOut);
+            Audio.PlaySfx(Collector.SfxOut);
         }
     }
 }
