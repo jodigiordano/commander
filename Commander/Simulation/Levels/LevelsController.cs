@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
-    using Microsoft.Xna.Framework;
 
 
     class LevelsController
@@ -61,10 +60,10 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             if (Help.Active)
-                Help.Update(gameTime);
+                Help.Update();
             else if (!HelpSaved)
             {
                 if (!Main.SaveGame.Tutorials.ContainsKey(Level.Id))
@@ -75,7 +74,7 @@
                 HelpSaved = true;
             }
 
-            ElapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            ElapsedTime += Preferences.TargetElapsedTimeMs;
         }
 
 
@@ -173,7 +172,8 @@
             if (celestialBody == null)
                 return;
 
-            Audio.PlaySfx(@"sfxCorpsCelesteExplose");
+            if (!Simulator.CutsceneMode)
+                Audio.PlaySfx(@"sfxCorpsCelesteExplose");
 
             if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)
             {

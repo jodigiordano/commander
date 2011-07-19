@@ -135,5 +135,18 @@
 
             return se;
         }
+
+
+        public static ColorEffect ChangeColor(Color to, double delay, double length)
+        {
+            ColorEffect ce = ColorEffect.Pool.Get();
+
+            ce.FinalColor = to;
+            ce.Progress = Effect<IVisual>.ProgressType.Linear;
+            ce.Delay = delay;
+            ce.Length = length;
+
+            return ce;
+        }
     }
 }

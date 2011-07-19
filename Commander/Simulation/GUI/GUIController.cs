@@ -401,7 +401,7 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             bool fadeGameMenu = false;
 
@@ -425,7 +425,7 @@
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
 
             if (GameMenu.TimeNextWave > 0)
-                GameMenu.TimeNextWave = Math.Max(0, GameMenu.TimeNextWave - gameTime.ElapsedGameTime.TotalMilliseconds);
+                GameMenu.TimeNextWave = Math.Max(0, GameMenu.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
             if (Simulator.DemoMode)
             {
@@ -443,11 +443,11 @@
             else
             {
                 GameMenu.Update();
-                LevelStartedAnnunciation.Update(gameTime);
-                LevelEndedAnnunciation.Update(gameTime);
-                PlayerLives.Update(gameTime);
+                LevelStartedAnnunciation.Update();
+                LevelEndedAnnunciation.Update();
+                PlayerLives.Update();
                 MenuPowerUps.Update();
-                PathPreviewing.Update(gameTime);
+                PathPreviewing.Update();
             }
         }
 
@@ -460,7 +460,9 @@
                 player.Draw();
 
             Path.Draw();
-            HelpBar.Draw();
+
+            if (!Simulator.CutsceneMode)
+                HelpBar.Draw();
 
             if (Simulator.WorldMode && GamePausedResistance.StartingObject != null)
                 GamePausedResistance.Draw();

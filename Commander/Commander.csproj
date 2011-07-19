@@ -180,7 +180,6 @@
     <Compile Include="Player\Scores.cs" />
     <Compile Include="Player\TrialMode.cs" />
     <Compile Include="Animations\AnimationCommodore.cs" />
-    <Compile Include="Animations\IntroAnimation.cs" />
     <Compile Include="Scenes\StoryScene.cs" />
     <Compile Include="Scenes\WorldScene.cs" />
     <Compile Include="Simulation\Bullets\BulletsFactory.cs" />
@@ -198,6 +197,15 @@
     <Compile Include="Simulation\Collisions\EnemyInRange.cs" />
     <Compile Include="Simulation\Collisions\OutOfBounds.cs" />
     <Compile Include="Simulation\Collisions\HiddenEnemies.cs" />
+    <Compile Include="Simulation\Cutscenes\Cutscene.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\CommanderAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\MothershipAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\ProtagonistsAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\LocationAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\DedicationAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\IntroCutscene.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\LogoAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\SimulatorAnimation.cs" />
     <Compile Include="Simulation\Editor\EditorCommands.cs" />
     <Compile Include="Simulation\Editor\EditorController.cs" />
     <Compile Include="Simulation\Editor\EditorPlayerSelection.cs" />
@@ -238,6 +246,7 @@
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
     <Compile Include="Simulation\Levels\LevelsController.cs" />
     <Compile Include="Simulation\PlanetarySystem\PlanetarySystemController.cs" />
+    <Compile Include="Simulation\Spaceships\Mothership.cs" />
     <Compile Include="Simulation\Turrets\TurretsController.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipsController.cs" />
     <Compile Include="Simulation\MessagesController.cs" />

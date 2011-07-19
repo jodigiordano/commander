@@ -53,16 +53,16 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            Directive.Update(gameTime);
+            Directive.Update();
 
             if (!Active)
                 FadeOut();
             
             if (HiddingOverride)
             {
-                EffectTimeRemaining -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                EffectTimeRemaining -= Preferences.TargetElapsedTimeMs;
                 HiddingOverride = EffectTimeRemaining > 0;
             }
         }

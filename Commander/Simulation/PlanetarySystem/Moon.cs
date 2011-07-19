@@ -29,7 +29,7 @@
                 VisualPriority = CelestialBody.VisualPriority + 0.000001f,
             };
 
-            Representation.Color.A = (byte) alpha;
+            Representation.Alpha = (byte) alpha;
 
             Inversed = Main.Random.Next(0, 2) == 0;
             RotationTime = Main.Random.Next(3000, 10000);

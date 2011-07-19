@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Core.Utilities
 {
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
 
 
     public class EffectsController<T>
@@ -28,7 +27,7 @@
         }
 
         
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(float elapsedTime)
         {
             ToDelete.Clear();
 
@@ -36,12 +35,12 @@
             {
                 Effect<T> effect = kvp.Key;
 
-                effect.Update(gameTime);
+                effect.Update(elapsedTime);
 
                 foreach (var obj in kvp.Value)
                 {
                     effect.Obj = obj;
-                    effect.UpdateObj(gameTime);
+                    effect.UpdateObj();
                 }
 
                 if (effect.Terminated)

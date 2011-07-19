@@ -47,7 +47,7 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             for (int i = 0; i < Turrets.Count; i++)
             {

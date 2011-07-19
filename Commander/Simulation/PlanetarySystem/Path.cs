@@ -97,7 +97,7 @@
             set
             {
                 for (int i = 0; i < MaxVisibleLines; i++) //todo: only actually visible
-                    Lines[i].Color.A = value;
+                    Lines[i].Alpha = value;
             }
         }
 
@@ -212,7 +212,7 @@
                 InnerPath.GetPosition(j * DistanceTwoPoints, ref line.position);
 
                 line.Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
-                line.Color.G = line.Color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
+                line.color.G = line.color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
                 line.VisualPriority = Preferences.PrioriteSimulationChemin + InnerPath.GetPercentage(j * DistanceTwoPoints) / 1000f;
                 Scene.Add(line);
             }

@@ -1,8 +1,7 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
-    using Microsoft.Xna.Framework;
 
 
     public class AlienSpaceship
@@ -29,7 +28,7 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             Tentacules.Update();
         }

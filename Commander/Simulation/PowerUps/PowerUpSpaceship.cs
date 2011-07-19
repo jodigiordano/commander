@@ -40,7 +40,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void DoInputMovedDelta(Vector3 delta)
         {
-            SpaceshipSpaceship.NextInput = delta;
+            SpaceshipSpaceship.NextMovement = delta;
         }
 
 

@@ -16,7 +16,6 @@
         public TypeBlend Blend          { get; set; }
         public double VisualPriority    { get; set; }
         public int Id                   { get; private set; }
-        public Color Color;
 
         private SpriteFont Font;
         private bool TextSizeComputed;
@@ -25,6 +24,7 @@
         private PhysicalRectangle rectangle;
         private string data;
         private Vector3 position;
+        private Color color;
 
 
         public Text(string data, string fontName, Color color, Vector3 position)
@@ -63,10 +63,17 @@
         }
 
 
+        public Color Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
+
+
         public byte Alpha
         {
-            get { return Color.A; }
-            set { Color.A = value; }
+            get { return color.A; }
+            set { color.A = value; }
         }
 
 

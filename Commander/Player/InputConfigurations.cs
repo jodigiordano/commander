@@ -56,7 +56,8 @@
         public static MouseButton AdvancedView = MouseButton.Middle;
         public static MouseButton SelectionNext = MouseButton.MiddleDown;
         public static MouseButton SelectionPrevious = MouseButton.MiddleUp;
-        public static float Speed = 1.5f;
+        public static float MovingSpeed = 1.5f;
+        public static float RotatingSpeed = 0.1f;
 
 
         public static List<MouseButton> ToList
@@ -90,9 +91,11 @@
         public static Buttons SelectionNext = Buttons.RightTrigger;
         public static Buttons SelectionPrevious = Buttons.LeftTrigger;
         public static Buttons MoveCursor = Buttons.LeftStick;
+        public static Buttons DirectionCursor = Buttons.RightStick;
         public static Buttons Disconnect = Buttons.Back;
         public static Buttons Tweaking = Buttons.DPadLeft;
         public static Buttons RetryLevel = Buttons.Y;
+        public static Buttons Fire = Buttons.RightTrigger;
         public static float Speed = 15;
 
 
@@ -114,7 +117,8 @@
                     SelectionNext,
                     SelectionPrevious,
                     Tweaking,
-                    RetryLevel
+                    RetryLevel,
+                    Fire
                 };
             }
         }

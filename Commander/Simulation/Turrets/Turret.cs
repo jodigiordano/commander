@@ -285,6 +285,8 @@
                             p.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                             p.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                             p.VisualPriority = this.CanonImage.VisualPriority;
+                            p.ShowMovingEffect = true;
+                            p.Image.SizeX = 1f;
                             
                             Bullets.Add(p);
                         }

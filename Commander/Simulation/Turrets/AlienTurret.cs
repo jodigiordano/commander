@@ -26,8 +26,8 @@ namespace EphemereGames.Commander.Simulation
             if (base.Upgrade())
             {
                 AntennaRotationBase = (AntennaRotationSpeed > 0) ? -0.02f : 0.02f;
-                CanonImage.Color.A = 60;
-                BaseImage.Color.A = 60;
+                CanonImage.Alpha = 60;
+                BaseImage.Alpha = 60;
                 return true;
             }
 

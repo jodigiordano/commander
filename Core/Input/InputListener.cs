@@ -12,6 +12,7 @@
         void DoKeyPressedOnce(Player player, Keys key);
         void DoKeyReleased(Player player, Keys key);
 
+        void DoMouseButtonPressed(Player player, MouseButton button);
         void DoMouseButtonPressedOnce(Player player, MouseButton button);
         void DoMouseButtonReleased(Player player, MouseButton button);
         void DoMouseScrolled(Player player, int delta);

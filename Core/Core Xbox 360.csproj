@@ -140,6 +140,7 @@
     <Compile Include="Visual\Animations\Animation.cs" />
     <Compile Include="Visual\Animations\AnimationsController.cs" />
     <Compile Include="Visual\Camera\Camera.cs" />
+    <Compile Include="Visual\Effects\ColorEffect.cs" />
     <Compile Include="Visual\Effects\DrawPartiallyEffect.cs" />
     <Compile Include="Visual\Effects\FadeColorEffect.cs" />
     <Compile Include="Visual\Effects\RecenterEffect.cs" />

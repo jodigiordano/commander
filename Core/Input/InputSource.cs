@@ -230,6 +230,9 @@
         {
             foreach (var button in MappedMouseButtons)
             {
+                if (MouseButtonsPressed[button])
+                    listener.DoMouseButtonPressed(Player, button);
+
                 if (MouseButtonsPressedOnce[button])
                     listener.DoMouseButtonPressedOnce(Player, button);
 

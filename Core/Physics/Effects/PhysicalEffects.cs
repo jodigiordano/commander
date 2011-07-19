@@ -12,6 +12,20 @@
         private static Random random = new Random();
 
 
+        public static MovePathEffect FollowPath(Path2D path, double delay)
+        {
+            var e = MovePathEffect.Pool.Get();
+
+            e.Delay = delay;
+            e.InnerPath = path;
+            e.Length = path.Length;
+            e.PointAt = true;
+            e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+
+            return e;
+        }
+
+
         public static MoveEffect Move(Vector3 positionEnd, double delay, double length)
         {
             var e = MoveEffect.Pool.Get();

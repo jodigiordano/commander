@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
-    using Microsoft.Xna.Framework;
 
 
     class PathPreview
@@ -154,9 +153,9 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            EffectsController.Update(gameTime);
+            EffectsController.Update(Preferences.TargetElapsedTimeMs);
         }
 
 

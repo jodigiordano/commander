@@ -43,7 +43,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void DoInputMovedDelta(Vector3 delta)
         {
-            Collector.NextInput = delta;
+            Collector.NextMovement = delta;
         }
 
 

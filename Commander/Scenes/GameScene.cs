@@ -48,7 +48,7 @@
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            Simulator.Update(gameTime);
+            Simulator.Update();
             MusicController.Update();
         }
 

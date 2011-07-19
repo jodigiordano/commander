@@ -20,11 +20,6 @@
         {
             Image = new Image("ProjectileBase", Position);
 
-            Vector2 imageSize = Image.AbsoluteSize;
-
-            Rectangle.Width = (int) (imageSize.Y / 2) + 2;
-            Rectangle.Height = (int) (imageSize.Y / 2) + 2;
-
             base.LoadAssets();
         }
 
@@ -32,6 +27,11 @@
         public override void Initialize()
         {
             base.Initialize();
+
+            Vector2 imageSize = Image.AbsoluteSize;
+
+            Rectangle.Width = (int) (imageSize.Y / 2) + 2;
+            Rectangle.Height = (int) (imageSize.Y / 2) + 2;
 
             Rectangle.X = (int) (Position.X - Rectangle.Width);
             Rectangle.Y = (int) (Position.Y - Rectangle.Height);

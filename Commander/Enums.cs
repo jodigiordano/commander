@@ -98,10 +98,9 @@ namespace EphemereGames.Commander.Simulation
         Pulse = 5,
         Miner = 6,
         Shield = 7,
-        Sniper = 8,
-        AutomaticCollector = 9,
-        DarkSide = 10,
-        RailGun = 11
+        AutomaticCollector = 8,
+        DarkSide = 9,
+        RailGun = 10
     };
 
 

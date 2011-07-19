@@ -218,8 +218,8 @@
             Animations.Update(gameTime);
 
             UpdateLogic(gameTime);
-            PhysicalEffects.Update(gameTime);
-            VisualEffects.Update(gameTime);
+            PhysicalEffects.Update((float) gameTime.ElapsedGameTime.TotalMilliseconds);
+            VisualEffects.Update((float) gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
 
@@ -286,6 +286,7 @@
         public virtual void DoKeyPressed(Player player, Keys key) { }
         public virtual void DoKeyPressedOnce(Player player, Keys key) { }
         public virtual void DoKeyReleased(Player player, Keys key) { }
+        public virtual void DoMouseButtonPressed(Player player, MouseButton button) { }
         public virtual void DoMouseButtonPressedOnce(Player player, MouseButton button) { }
         public virtual void DoMouseButtonReleased(Player player, MouseButton button) { }
         public virtual void DoMouseScrolled(Player player, int delta) { }

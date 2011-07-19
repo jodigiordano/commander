@@ -29,7 +29,7 @@
             EffectsController.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 10000, 2000));
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             Term -= Preferences.TargetElapsedTimeMs;
 
@@ -37,7 +37,7 @@
                 return;
 
             TranslatorMission.Update();
-            EffectsController.Update(gameTime);
+            EffectsController.Update(Preferences.TargetElapsedTimeMs);
         }
 
 

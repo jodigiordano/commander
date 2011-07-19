@@ -197,6 +197,7 @@
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
     <Compile Include="Utilities\Path2D.cs" />
     <Compile Include="Utilities\Path3D.cs" />
+    <Compile Include="Visual\Effects\ColorEffect.cs" />
     <Compile Include="Visual\Scenable\IVisual.cs" />
     <Compile Include="Visual\Scene\ITransitionAnimation.cs" />
     <Compile Include="Visual\ScreenSafeZone.cs" />

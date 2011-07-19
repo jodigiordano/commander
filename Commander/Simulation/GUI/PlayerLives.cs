@@ -43,7 +43,7 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             if (CelestialBody == null)
                 return;

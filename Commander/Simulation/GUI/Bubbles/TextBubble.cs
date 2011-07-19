@@ -41,9 +41,9 @@
             get { return TempsAffichage <= 0; }
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            TempsAffichage -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            TempsAffichage -= Preferences.TargetElapsedTimeMs;
 
             if (TempsAffichage <= TempsFadeOut)
             {
@@ -71,7 +71,7 @@
         {
             base.FadeIn(temps);
 
-            Texte.Color.A = 0;
+            Texte.Alpha = 0;
             Simulation.Scene.VisualEffects.Add(Texte, VisualEffects.FadeInFrom0(255, 0, temps));
         }
 

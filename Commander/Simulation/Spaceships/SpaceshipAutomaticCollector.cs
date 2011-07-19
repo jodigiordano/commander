@@ -49,9 +49,9 @@
                     TargetPosition = Minerals[0].Position;
             }
 
-            NextInput = TargetPosition - Position;
-            NextInput.Normalize();
-            NextInput *= 3;
+            NextMovement = TargetPosition - Position;
+            NextMovement.Normalize();
+            NextMovement *= 3;
 
             if ((TargetPosition - Position).LengthSquared() <= 600)
             {
@@ -61,7 +61,7 @@
 
             base.Update();
 
-            Direction = NextInput;
+            Direction = NextMovement;
         }
     }
 }

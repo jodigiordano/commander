@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading;
+    using EphemereGames.Commander.Cutscenes;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
@@ -172,7 +173,7 @@
             ScenesLoaded.Add(new OptionsScene());
             ScenesLoaded.Add(new EditorScene());
             ScenesLoaded.Add(new BuyScene());
-            ScenesLoaded.Add(new StoryScene("Intro", "World1", new IntroAnimation()));
+            ScenesLoaded.Add(new StoryScene("Intro", "World1", new IntroCutscene()));
 
             WorldScene w1 = new WorldScene(LevelsFactory.GetWorldDescriptor("World1"));
             WorldScene w2 = new WorldScene(LevelsFactory.GetWorldDescriptor("World2"));
@@ -220,8 +221,8 @@
             base.OnFocus();
 
             VisualEffects.Clear();
-            LoadingTranslation.PartieTraduite.Color.A = 0;
-            LoadingTranslation.PartieNonTraduite.Color.A = 0;
+            LoadingTranslation.PartieTraduite.Alpha = 0;
+            LoadingTranslation.PartieNonTraduite.Alpha = 0;
             ThreadLoadScenes = new Thread(LoadScenes);
             ScenesAreLoaded = false;
             SandGlass.FadeOut(0);

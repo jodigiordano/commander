@@ -69,7 +69,7 @@
                 };
 
                 asteroid.Image.VisualPriority = Preferences.PrioriteSimulationCeintureAsteroides;
-                asteroid.Image.Color.A = 60;
+                asteroid.Image.Alpha = 60;
                 asteroid.Image.SizeX = (Main.Random.Next(20, 70) / 30.0f) * 3;
 
                 CelestialBody.Move(Speed, (ActualRotationTime + asteroid.TimeOffset) % Speed, ref Path, ref asteroid.Offset, ref RotationMatrix, ref asteroid.Image.position);

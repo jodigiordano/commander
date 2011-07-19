@@ -34,7 +34,6 @@
             All.Add(PowerUpType.Miner, Create(PowerUpType.Miner));
             All.Add(PowerUpType.Pulse, Create(PowerUpType.Pulse));
             All.Add(PowerUpType.Shield, Create(PowerUpType.Shield));
-            All.Add(PowerUpType.Sniper, Create(PowerUpType.Sniper));
         }
 
 

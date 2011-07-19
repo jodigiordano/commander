@@ -144,18 +144,18 @@
 
             foreach (var coin in Corners)
             {
-                coin.Color.A = (byte) from;
+                coin.Alpha = (byte) from;
                 Simulation.Scene.VisualEffects.Add(coin, effect, callback);
             }
 
             foreach (var contour in Edges)
             {
-                contour.Color.A = (byte) from;
+                contour.Alpha = (byte) from;
                 Simulation.Scene.VisualEffects.Add(contour, effect);
             }
 
-            Filter.Color.A = (byte) from;
-            Bla.Color.A = (byte) from;
+            Filter.Alpha = (byte) from;
+            Bla.Alpha = (byte) from;
 
             Simulation.Scene.VisualEffects.Add(Bla, effect);
 

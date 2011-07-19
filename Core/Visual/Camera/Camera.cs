@@ -4,7 +4,7 @@ namespace EphemereGames.Core.Visual
     using Microsoft.Xna.Framework;
 
 
-    public class Camera
+    public class Camera : IVisual
     {
         public string Name;
         public Matrix Transform;
@@ -15,12 +15,12 @@ namespace EphemereGames.Core.Visual
         private Vector3 position;
         private float rotation;
         private float zoom = 1;
-        private Vector2 Size;
+        private Vector2 PhysicalSize;
 
 
         public Camera(Vector2 size)
         {
-            Size = size;
+            PhysicalSize = size;
 
             Initialize();
         }
@@ -104,16 +104,40 @@ namespace EphemereGames.Core.Visual
         }
 
 
+        public Rectangle VisiblePart
+        {
+            set { }
+        }
+
+        public Vector2 Size
+        {
+            get { return new Vector2(Zoom, Zoom); }
+            set { Zoom = value.X; }
+        }
+
+        public byte Alpha
+        {
+            get { return 0; }
+            set { }
+        }
+
+        public Color Color
+        {
+            get { return Color.White; }
+            set { }
+        }
+
+
         private void UpdateTransform()
         {
             Transform =
                 Matrix.CreateScale(zoom) *
                 Matrix.CreateTranslation(origin.X - position.X * zoom, origin.Y - position.Y * zoom, 0);
 
-            Rectangle.X = (int) (position.X - Size.X / zoom / 2);
-            Rectangle.Y = (int) (position.Y - Size.Y / zoom / 2);
-            Rectangle.Width = (int) (Size.X / zoom);
-            Rectangle.Height = (int) (Size.Y / zoom);
+            Rectangle.X = (int) (position.X - PhysicalSize.X / zoom / 2);
+            Rectangle.Y = (int) (position.Y - PhysicalSize.Y / zoom / 2);
+            Rectangle.Width = (int) (PhysicalSize.X / zoom);
+            Rectangle.Height = (int) (PhysicalSize.Y / zoom);
         }
     }
 }

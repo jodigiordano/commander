@@ -10,6 +10,7 @@
     class LevelsFactory
     {
         public Dictionary<int, LevelDescriptor> Descriptors;
+        public Dictionary<int, LevelDescriptor> CutsceneDescriptors;
 
         private LevelDescriptor MenuDescriptor;
         private Dictionary<int, WorldDescriptor> WorldsDescriptors;
@@ -21,7 +22,9 @@
         public LevelsFactory()
         {
             Descriptors = new Dictionary<int, LevelDescriptor>();
+            CutsceneDescriptors = new Dictionary<int, LevelDescriptor>();
             WorldsDescriptors = new Dictionary<int, WorldDescriptor>();
+
             LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
             WorldSerializer = new XmlSerializer(typeof(WorldDescriptor));
         }
@@ -29,15 +32,8 @@
 
         public void Initialize()
         {
-            Descriptors.Clear();
-
-            string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", "level*.xml");
-
-            foreach (var f in levelsFiles)
-            {
-                var descriptor = LoadLevelDescriptor(f);
-                Descriptors.Add(descriptor.Infos.Id, descriptor);
-            }
+            LoadLevels();
+            LoadCutscenes();
 
             //MenuDescriptor = LoadLevelDescriptor(".\\Content\\scenarios\\menu.xml");
         }
@@ -79,6 +75,34 @@
             }
 
             return d;
+        }
+
+
+        private void LoadLevels()
+        {
+            Descriptors.Clear();
+
+            string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", "level*.xml");
+
+            foreach (var f in levelsFiles)
+            {
+                var descriptor = LoadLevelDescriptor(f);
+                Descriptors.Add(descriptor.Infos.Id, descriptor);
+            }
+        }
+
+
+        private void LoadCutscenes()
+        {
+            CutsceneDescriptors.Clear();
+
+            string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", "cutscene*.xml");
+
+            foreach (var f in levelsFiles)
+            {
+                var descriptor = LoadLevelDescriptor(f);
+                CutsceneDescriptors.Add(descriptor.Infos.Id, descriptor);
+            }
         }
 
 

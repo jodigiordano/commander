@@ -62,7 +62,7 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             for (int i = CelestialBodies.Count - 1; i > -1; i--)
             {
@@ -96,7 +96,7 @@
             t1.Wait();
             t2.Wait();
 
-            StarsEmitter += gameTime.ElapsedGameTime.TotalMilliseconds;
+            StarsEmitter += Preferences.TargetElapsedTimeMs;
 
             if (StarsEmitter >= 100)
             {

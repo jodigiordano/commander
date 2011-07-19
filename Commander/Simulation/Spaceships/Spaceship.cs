@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Spaceship : IObjetPhysique
+    class Spaceship : IObjetPhysique, IPhysicalObject
     {
         public static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
 
@@ -44,7 +44,8 @@
         public virtual bool Active              { get; set; }
         public bool GoBackToStartingObject      { get; set; }
         public bool AutomaticMode;
-        public Vector3 NextInput;
+        public Vector3 NextMovement;
+        public Vector3 NextRotation;
 
         protected Matrix RotationMatrix;
 
@@ -83,7 +84,8 @@
             Active = true;
             GoBackToStartingObject = false;
             AutomaticMode = true;
-            NextInput = Vector3.Zero;
+            NextMovement = Vector3.Zero;
+            NextRotation = Vector3.Zero;
 
             ShowTrail = false;
         }
@@ -186,15 +188,17 @@
                 Vector3 directionUnitairePerpendiculaire = Vector3.Transform(Direction, matriceRotation);
                 directionUnitairePerpendiculaire.Normalize();
 
-                Vector3 translation = directionUnitairePerpendiculaire * Main.Random.Next(-17, 17);
+                Vector3 translation = directionUnitairePerpendiculaire * Main.Random.Next(-12, 12);
 
                 BasicBullet p = (BasicBullet) Simulation.BulletsFactory.Get(BulletType.Base);
 
                 p.Position = Position + translation;
                 p.Direction = Direction;
                 p.AttackPoints = BulletHitPoints;
-                p.VisualPriority = Image.VisualPriority + 0.001;
+                p.VisualPriority = Image.VisualPriority + 0.00001;
                 p.Speed = 10;
+                p.Image.SizeX = 0.75f;
+                p.ShowMovingEffect = false;
 
                 Bullets.Add(p);
             }
@@ -209,7 +213,8 @@
         public virtual void Draw()
         {
             Image.Position = Position;
-            Image.Rotation = (MathHelper.PiOver2) + (float)Math.Atan2(Direction.Y, Direction.X);
+
+            Image.Rotation = (MathHelper.PiOver2) + (float) Math.Atan2(Direction.Y, Direction.X);
 
             Simulation.Scene.Add(Image);
 

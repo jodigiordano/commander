@@ -212,11 +212,11 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             if (GameState == GameState.Won)
             {
-                TimeLostState += gameTime.ElapsedGameTime.TotalMilliseconds;
+                TimeLostState += Preferences.TargetElapsedTimeMs;
 
                 if (TimeLostState > 8000)
                 {
@@ -260,7 +260,7 @@
                 }
                         
 
-                AlienShip.Update(gameTime);
+                AlienShip.Update();
             }
 
 
@@ -273,42 +273,6 @@
                 TranslatorTotalScore.Update();
             }
         }
-
-
-        //public void Show()
-        //{
-        //    Simulation.Scene.Add(NewHighscore);
-        //    Simulation.Scene.Add(Stars[0]);
-        //    Simulation.Scene.Add(Stars[1]);
-        //    Simulation.Scene.Add(Stars[2]);
-        //    Simulation.Scene.Add(Filter);
-
-        //    AlienShip.Show();
-
-        //    if (GameState == GameState.Won)
-        //        TranslatorGameWon.Show();
-
-        //    TranslatorScoreExplanations.Show();
-        //    TranslatorTotalScore.Show();
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Simulation.Scene.Remove(NewHighscore);
-        //    Simulation.Scene.Remove(Stars[0]);
-        //    Simulation.Scene.Remove(Stars[1]);
-        //    Simulation.Scene.Remove(Stars[2]);
-        //    Simulation.Scene.Remove(Filter);
-
-        //    AlienShip.Hide();
-
-        //    if (GameState == GameState.Won)
-        //        TranslatorGameWon.Hide();
-
-        //    TranslatorScoreExplanations.Hide();
-        //    TranslatorTotalScore.Hide();
-        //}
 
 
         public void Draw()

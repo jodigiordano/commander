@@ -22,13 +22,13 @@
 
         public Rectangle VisiblePart    { get; set; }
         public SpriteEffects Effect;
-        public Color Color;
         public string TextureName       { get; private set; }
 
         private Texture2D Texture;
 
         private bool RectangleComputed;
         private PhysicalRectangle rectangle;
+        public Color color;
 
 
         public Image(string imageName) : this(imageName, Vector3.Zero) {}
@@ -70,10 +70,18 @@
         }
 
 
+        public Color Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
+
+
+
         public byte Alpha
         {
-            get { return Color.A; }
-            set { Color.A = value; }
+            get { return color.A; }
+            set { color.A = value; }
         }
 
 

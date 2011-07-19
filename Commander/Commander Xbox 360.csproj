@@ -79,7 +79,6 @@
     <Compile Include="Animations\AnimationCommodore.cs" />
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
-    <Compile Include="Animations\IntroAnimation.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Editor\Descriptors.cs" />
     <Compile Include="Enums.cs" />
@@ -134,6 +133,15 @@
     <Compile Include="Simulation\Collisions\HiddenEnemies.cs" />
     <Compile Include="Simulation\Collisions\ObjectsCollisions.cs" />
     <Compile Include="Simulation\Collisions\OutOfBounds.cs" />
+    <Compile Include="Simulation\Cutscenes\Cutscene.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\CommanderAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\LocationAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\MothershipAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\ProtagonistsAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\SimulatorAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\DedicationAnimation.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\IntroCutscene.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\LogoAnimation.cs" />
     <Compile Include="Simulation\Editor\EditorCommands.cs" />
     <Compile Include="Simulation\Editor\EditorController.cs" />
     <Compile Include="Simulation\Editor\EditorLevelGenerator.cs" />
@@ -206,6 +214,7 @@
     <Compile Include="Simulation\PowerUps\PowerUpsFactory.cs" />
     <Compile Include="Simulation\Simulator.cs" />
     <Compile Include="Simulation\Spaceships\AlienSpaceship.cs" />
+    <Compile Include="Simulation\Spaceships\Mothership.cs" />
     <Compile Include="Simulation\Turrets\TurretsController.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipsController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\FinalSolutionPreview.cs" />

@@ -1,10 +1,6 @@
 ﻿namespace EphemereGames.Core.Visual
 {
-    using System;
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     public abstract class Animation
@@ -63,21 +59,13 @@
         public virtual void Start()
         {
             RemainingTime = Length;
-
-            //Show();
         }
 
 
         public virtual void Stop()
         {
             RemainingTime = 0;
-
-            //Hide();
         }
-
-
-        //protected abstract void Show();
-        //protected abstract void Hide();
 
 
         public virtual void Draw() { }

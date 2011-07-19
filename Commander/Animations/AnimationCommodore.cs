@@ -94,10 +94,10 @@ namespace EphemereGames.Commander
         {
             base.Update(gameTime);
 
-            TypeWriter.Update(gameTime);
+            TypeWriter.Update();
 
-            GPE.Update(gameTime);
-            GVE.Update(gameTime);
+            GPE.Update((float) gameTime.ElapsedGameTime.TotalMilliseconds);
+            GVE.Update((float) gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
 

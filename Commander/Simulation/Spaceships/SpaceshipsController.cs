@@ -40,16 +40,16 @@
 
                 if (!spaceship.GoBackToStartingObject)
                 {
-                    List<Bullet> projectiles = spaceship.BulletsThisTick();
+                    List<Bullet> bullets = spaceship.BulletsThisTick();
 
-                    for (int j = 0; j < projectiles.Count; j++)
-                        NotifyObjectCreated(projectiles[j]);
+                    for (int j = 0; j < bullets.Count; j++)
+                        NotifyObjectCreated(bullets[j]);
                 }
 
                 if (spaceship.GoBackToStartingObject && spaceship.TargetReached)
                     Spaceships.RemoveAt(i);
 
-                spaceship.NextInput = Vector3.Zero;
+                spaceship.NextMovement = Vector3.Zero;
             }
         }
 

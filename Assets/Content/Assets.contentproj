@@ -272,8 +272,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="particules\anneauTerreMeurt.xml">
-      <Name>anneauTerreMeurt</Name>
+    <Compile Include="particules\cbDie1.xml">
+      <Name>cbDie1</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Compile>
@@ -1250,6 +1250,7 @@
       <Name>packages</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2027,12 +2028,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="audio_source\cinematics\" />
-    <Folder Include="audio_source\hud\" />
-    <Folder Include="audio_source\menus\" />
-    <Folder Include="audio_source\music\" />
-    <Folder Include="audio_source\objects\" />
-    <Folder Include="audio_source\vo\" />
+    <Compile Include="spaceships\mothership_base.png">
+      <Name>mothership_base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="spaceships\mothership_deadly.png">
+      <Name>mothership_deadly</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="spaceships\mothership_top.png">
+      <Name>mothership_top</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GUI\Cursors\cursor1.png">
@@ -2089,6 +2099,28 @@
   <ItemGroup>
     <Compile Include="particules\spaceshipTrail2.xml">
       <Name>spaceshipTrail2</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\cutscene1.xml">
+      <Name>cutscene1</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="particules\mothership_missile.xml">
+      <Name>mothership_missile</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="particules\cbDie2.xml">
+      <Name>cbDie2</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Compile>

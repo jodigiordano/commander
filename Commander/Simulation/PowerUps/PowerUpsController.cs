@@ -151,7 +151,7 @@
         }
 
 
-        public void DoInputMovedDelta(SimPlayer player, Vector3 delta)
+        public void DoPlayerMovedDelta(SimPlayer player, Vector3 delta)
         {
             foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)

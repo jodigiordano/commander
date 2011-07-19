@@ -25,14 +25,21 @@
         public Color Color;
         public string ImageName;
         public PowerUpType PowerUpInUse;
+        public bool Firing;
 
         private Vector3 position;
         private Vector3 direction;
         private Simulator Simulator;
 
-        private SpaceshipSpaceship SpaceshipMove;
+        public SpaceshipSpaceship SpaceshipMove;
 
         public bool TurretToPlaceChanged;
+
+        // for keyboard
+        public bool MovingLeft;
+        public bool MovingRight;
+        public bool MovingUp;
+        public bool MovingDown;
 
 
         public SimPlayer(Simulator simulator)
@@ -44,7 +51,9 @@
             SpaceshipMove = new SpaceshipSpaceship(simulator)
             {
                 AutomaticMode = false,
-                Speed = 3
+                Speed = 3,
+                ShootingFrequency = 100,
+                BulletHitPoints = 10
             };
 
             TurretToPlaceChanged = false;
@@ -58,6 +67,8 @@
             SelectedCelestialBodyController = new SelectedCelestialBodyController(Simulator, this, CelestialBodies);
             SelectedPowerUpController = new SelectedPowerUpController(Simulator.PowerUpsFactory.Availables, Circle);
             PowerUpInUse = PowerUpType.None;
+
+            MovingLeft = MovingRight = MovingUp = MovingDown = false;
         }
 
 
@@ -108,13 +119,19 @@
 
         public Vector3 NextInput
         {
-            get { return SpaceshipMove.NextInput; }
+            get { return SpaceshipMove.NextMovement; }
         }
 
 
         public void Move(ref Vector3 delta, float speed)
         {
-            SpaceshipMove.NextInput = delta;
+            SpaceshipMove.NextMovement = delta;
+        }
+
+
+        public void Rotate(ref Vector3 delta, float speed)
+        {
+            SpaceshipMove.NextRotation = delta;
         }
 
 
@@ -321,7 +338,7 @@
 
         public void Update()
         {
-            if (ActualSelection.TurretToPlace == null &&SpaceshipMove.NextInput == Vector3.Zero &&
+            if (ActualSelection.TurretToPlace == null &&SpaceshipMove.NextMovement == Vector3.Zero &&
                     (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
                     SpaceshipMove.Friction = 0.1f;
 
@@ -364,7 +381,8 @@
             if (Simulator.DemoMode)
                 UpdateDemoSelection();
 
-            SpaceshipMove.NextInput = Vector3.Zero;
+            SpaceshipMove.NextMovement = Vector3.Zero;
+            SpaceshipMove.NextRotation = Vector3.Zero;
         }
 
 

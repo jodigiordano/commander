@@ -103,21 +103,9 @@
         }
 
 
-        //public void Show()
-        //{
-        //    Scene.Add(Text);
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Scene.Remove(Text);
-        //}
-
-
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            Counter -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            Counter -= Preferences.TargetElapsedTimeMs;
 
             if (Counter <= 0 && NbCharWritten < Raw.Length)
             {

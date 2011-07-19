@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
+    using EphemereGames.Commander.Cutscenes;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -10,30 +11,31 @@
     class StoryScene : Scene
     {
         private string WorldToTransiteTo;
-        private Animation StoryAnimation;
-
         private Text SkipText;
         private double SkipCounter;
         private bool Skipping;
-
         private bool TransitionOutInProgress;
 
-        private static double SkippingTime = 3000;
+        private static double SkippingTime = 1000;
+
+        private Cutscene Cutscene;
 
 
-        public StoryScene(string name, string transiteTo, Animation storyAnimation) :
+        public StoryScene(string name, string transiteTo, Cutscene cutscene) :
             base(1280, 720)
         {
             Name = name;
             ClearColor = Color.White;
             WorldToTransiteTo = transiteTo;
-            StoryAnimation = storyAnimation;
+            Cutscene = cutscene;
 
             SkipText = new Text(
                 "Maintain pressed to skip.",
                 "Pixelite",
                 Color.Transparent,
                 new Vector3(0, 300, 0)) { SizeX = 3 }.CenterIt();
+
+            Cutscene.Scene = this;
 
             Initialize();
         }
@@ -47,15 +49,18 @@
 
             TransitionOutInProgress = false;
 
-            Animations.Clear();
-            Animations.Add(StoryAnimation);
+            VisualEffects.Clear();
+            PhysicalEffects.Clear();
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
             Skip();
-            UpdateAnimation(gameTime);
+            Cutscene.Update();
+
+            if (Cutscene.Terminated)
+                TransiteToWorld();
         }
 
 
@@ -64,12 +69,14 @@
             SkipText.Alpha = (byte) Math.Min(((SkipCounter / (SkippingTime / 2)) * 255), 255);
 
             Add(SkipText);
+            Cutscene.Draw();
         }
 
 
         public override void OnFocus()
         {
             Initialize();
+            Cutscene.Initialize();
         }
 
 
@@ -128,15 +135,6 @@
         }
 
 
-        private void UpdateAnimation(GameTime gameTime)
-        {
-            StoryAnimation.Update(gameTime);
-
-            if (StoryAnimation.IsFinished)
-                TransiteToWorld();
-        }
-
-
         private void Skip()
         {
             if (Skipping)
@@ -145,7 +143,10 @@
                 SkipCounter = Math.Max(SkipCounter - Preferences.TargetElapsedTimeMs, 0);
 
             if (SkipCounter >= SkippingTime)
+            {
+                Cutscene.Stop();
                 TransiteToWorld();
+            }
         }
 
 

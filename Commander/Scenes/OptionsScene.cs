@@ -114,7 +114,7 @@
             Audio.SfxVolume = SoundEffects.Valeur / 10f;
 
             TimeBetweenTwoMusics -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            TypeWriter.Update(gameTime);
+            TypeWriter.Update();
         }
 
 
@@ -174,7 +174,7 @@
         {
             Player player = (Player) p;
 
-            player.Move(ref delta, MouseConfiguration.Speed);
+            player.Move(ref delta, MouseConfiguration.MovingSpeed);
             Cursors[player].Position = player.Position;
         }
 

@@ -57,6 +57,16 @@
         }
 
 
+        public float Size
+        {
+            set
+            {
+                FrontImage.SizeX = value;
+                BackImage.SizeX = value;
+            }
+        }
+
+
         public override void FadeIn()
         {
             ShowTrail = true;
@@ -85,9 +95,6 @@
                 TrailEffect.ParticleEffect[0].ReleaseSpeed = MovingReleaseSpeed;
             }
 
-            //TrailEffect2.ParticleEffect[0].ReleaseSpeed = TrailEffect.ParticleEffect[0].ReleaseSpeed;
-            //((ConeEmitter) TrailEffect2.ParticleEffect[0]).Direction = ((ConeEmitter) TrailEffect.ParticleEffect[0]).Direction;
-
             LastPosition = Position;
 
 
@@ -98,7 +105,6 @@
             {
                 Vector3 p = FrontImage.Position;
                 TrailEffect.Trigger(ref p);
-                //TrailEffect2.Trigger(ref p);
             }
 
             base.Draw();

@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Core.Utilities
 {
     using System;
-    using Microsoft.Xna.Framework;
 
 
     public abstract class Effect<T> : IEquatable<Effect<T>>
@@ -56,36 +55,34 @@
         }
 
 
-        internal void Update(GameTime gameTime)
+        internal void Update(float elapsedTime)
         {
+            if (RemainingBeforeStart > 0)
+            {
+                RemainingBeforeStart -= elapsedTime;
+                return;
+            }
+
             if (!Initialized)
                 return;
 
             if (TerminatedOverride)
                 return;
 
-            Terminated = (RemainingBeforeEnd <= 0 || gameTime == null);
+            Terminated = RemainingBeforeEnd <= 0;
 
-            if (gameTime != null)
-            {
-                if (RemainingBeforeStart > 0)
-                {
-                    RemainingBeforeStart -= gameTime.ElapsedGameTime.TotalMilliseconds;
-                    return;
-                }
-                else
-                {
-                    ElaspedTime = Length - RemainingBeforeEnd;
-                    RemainingBeforeEnd -= gameTime.ElapsedGameTime.TotalMilliseconds;
-                }
+            ElaspedTime = Length - RemainingBeforeEnd;
+            RemainingBeforeEnd -= elapsedTime;
 
-                TimeOneTick = gameTime.ElapsedGameTime.TotalMilliseconds;
-            }
+            TimeOneTick = elapsedTime;
         }
 
 
-        internal void UpdateObj(GameTime gameTime)
+        internal void UpdateObj()
         {
+            if (RemainingBeforeStart > 0)
+                return;
+
             if (!Initialized)
             {
                 InitializeLogic();

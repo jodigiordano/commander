@@ -139,7 +139,7 @@
         {
             Player player = (Player) p;
 
-            player.Move(ref delta, MouseConfiguration.Speed);
+            player.Move(ref delta, MouseConfiguration.MovingSpeed);
             Curseur.Position = player.Position;
         }
 

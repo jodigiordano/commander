@@ -50,7 +50,7 @@
             if (AutomaticMode)
                 DoAutomaticMode();
             else
-                DoManualMode(NextInput);
+                DoManualMode(ref NextMovement, ref NextRotation);
 
             DoBouncing();
             DoFriction();
@@ -67,47 +67,54 @@
         {
             Bouncing = Vector3.Zero;
             Acceleration = Vector3.Zero;
-            NextInput = Vector3.Zero;
+            NextMovement = Vector3.Zero;
+            NextRotation = Vector3.Zero;
         }
 
 
-        private void DoManualMode(Vector3 input)
+        private void DoManualMode(ref Vector3 movement, ref Vector3 rotation)
         {
-            input /= 5;
+            movement /= 5;
 
-            input.X = MathHelper.Clamp(input.X, -1, 1);
-            input.Y = MathHelper.Clamp(input.Y, -1, 1);
+            movement.X = MathHelper.Clamp(movement.X, -1, 1);
+            movement.Y = MathHelper.Clamp(movement.Y, -1, 1);
 
-            if (input.X != 0 || input.Y != 0)
-            {
-                // Trouver la direction visée
-                Vector3 directionVisee = input;
-                Vector3 direction = Direction;
+            if (rotation != Vector3.Zero)
+                ApplyRotation(ref rotation);
+            else
+                ApplyRotation(ref movement);
 
-                // Trouver l'angle d'alignement
-                float angle = SignedAngle(ref directionVisee, ref direction);
-
-                // Trouver la rotation nécessaire pour s'enligner
-                float rotation = MathHelper.Clamp(RotationMaximaleRad, 0, Math.Abs(angle));
-
-                if (angle > 0)
-                    rotation = -rotation;
-
-                // Appliquer la rotation
-                Matrix.CreateRotationZ(rotation, out RotationMatrix);
-                Vector3.Transform(ref direction, ref RotationMatrix, out direction);
-
-                if (direction != Vector3.Zero)
-                    direction.Normalize();
-
-                Direction = direction;
-            }
-
-
-
-            DoAcceleration(ref input);
+            ApplyAcceleration(ref movement);
 
             Position += Speed * Acceleration;
+        }
+
+
+        private void ApplyRotation(ref Vector3 movement)
+        {
+            // Movement direction
+            Vector3 currentDirection = movement;
+            
+            // Current direction
+            Vector3 direction = Direction;
+
+            // Delta, Converted to angle
+            float angle = SignedAngle(ref currentDirection, ref direction);
+
+            // Clamp to maximum allowed by the ship
+            float rotation = MathHelper.Clamp(RotationMaximaleRad, 0, Math.Abs(angle));
+
+            if (angle > 0)
+                rotation = -rotation;
+
+            // Apply
+            Matrix.CreateRotationZ(rotation, out RotationMatrix);
+            Vector3.Transform(ref direction, ref RotationMatrix, out direction);
+
+            if (direction != Vector3.Zero)
+                direction.Normalize();
+
+            Direction = direction;
         }
 
 
@@ -170,7 +177,7 @@
         }
 
 
-        private void DoAcceleration(ref Vector3 input)
+        private void ApplyAcceleration(ref Vector3 input)
         {
             Acceleration += input / 10f;
 

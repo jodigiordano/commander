@@ -29,6 +29,7 @@ namespace EphemereGames.Commander.Simulation
         public Image Image;
         public Particle ExplodingEffect;
         public Particle MovingEffect;
+        public bool ShowMovingEffect;
         public float DeflectZone;
         public BulletType Type;
         public bool AssetsLoaded;
@@ -57,22 +58,6 @@ namespace EphemereGames.Commander.Simulation
             }
 
             OutOfBounds = false;
-
-            //switch (Shape)
-            //{
-            //    case Shape.Rectangle:
-            //        Rectangle.X = (int) Position.X - Rectangle.Width / 2;
-            //        Rectangle.Y = (int) Position.Y - Rectangle.Height / 2;
-            //        break;
-
-            //    case Shape.Circle:
-            //        Circle.Position = this.Position;
-            //        Rectangle.X = (int) (Position.X - Circle.Radius);
-            //        Rectangle.Y = (int) (Position.Y - Circle.Radius);
-            //        Rectangle.Width = (int) (Circle.Radius * 2);
-            //        Rectangle.Height = (int) (Circle.Radius * 2);
-            //        break;
-            //}
         }
 
 
@@ -104,7 +89,7 @@ namespace EphemereGames.Commander.Simulation
 
         public virtual void Draw()
         {
-            if (Alive && MovingEffect != null)
+            if (Alive && ShowMovingEffect && MovingEffect != null)
                 MovingEffect.Trigger(ref this.position);
 
             if (Alive && Image != null)

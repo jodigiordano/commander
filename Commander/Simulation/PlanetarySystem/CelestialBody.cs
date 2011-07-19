@@ -356,13 +356,14 @@
             this.LifePoints = Math.Min(this.LifePoints, 0);
 
             DieEffect1 = Simulator.Scene.Particles.Get(@"bouleTerreMeurt");
-            DieEffect2 = Simulator.Scene.Particles.Get(@"anneauTerreMeurt");
+            DieEffect2 = Simulator.Scene.Particles.Get(Simulator.CutsceneMode ? @"anneauTerreMeurt2" : @"anneauTerreMeurt");
 
             DieEffect1.VisualPriority = VisualPriorityBackup - 0.001f;
             DieEffect2.VisualPriority = VisualPriorityBackup - 0.001f;
 
             DieEffect1.Trigger(ref this.position);
             DieEffect2.Trigger(ref this.position);
+
             Simulator.Scene.Particles.Return(DieEffect1);
             Simulator.Scene.Particles.Return(DieEffect2);
             Simulator.Scene.Particles.Return(DarkSideEffect);

@@ -10,6 +10,7 @@
         public float Speed { get; set; }
         public Circle Circle { get; set; }
         public Shape Shape { get; set; }
+        public double FadeTime = 250;
 
         protected Scene Scene;
         protected Image FrontImage;
@@ -101,7 +102,7 @@
 
         public virtual void FadeIn()
         {
-            var effect = Core.Visual.VisualEffects.Fade(0, 255, 0, 250);
+            var effect = Core.Visual.VisualEffects.Fade(0, 255, 0, FadeTime);
 
             FrontImage.Alpha = 0;
 
@@ -119,7 +120,7 @@
 
         public virtual void FadeOut()
         {
-            var effect = Core.Visual.VisualEffects.Fade(0, 0, 0, 250);
+            var effect = Core.Visual.VisualEffects.Fade(255, 0, 0, FadeTime);
 
             Scene.VisualEffects.Add(FrontImage, effect);
 

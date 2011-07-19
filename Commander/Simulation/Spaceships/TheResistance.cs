@@ -78,7 +78,7 @@
             set
             {
                 foreach (var spaceship in Spaceships)
-                    spaceship.Image.Color.A = value;
+                    spaceship.Image.Alpha = value;
             }
         }
 

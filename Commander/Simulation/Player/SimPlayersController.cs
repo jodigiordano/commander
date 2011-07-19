@@ -35,6 +35,7 @@
         public event SimPlayerHandler HideAdvancedViewAsked;
         public event SimPlayerHandler ShowNextWaveAsked;
         public event SimPlayerHandler HideNextWaveAsked;
+        public event PhysicalObjectHandler ObjectCreated;
 
         private Simulator Simulator;
         private Dictionary<Player, SimPlayer> Players;
@@ -118,15 +119,14 @@
 
         public SimPlayer GetPlayer(Player player)
         {
-            return Players[player];
+            SimPlayer simPlayer = null;
+
+            return Players.TryGetValue(player, out simPlayer) ? simPlayer : null;
         }
 
 
         public void DoPowerUpStarted(PowerUp powerUp, SimPlayer p)
         {
-            //if (powerUp.NeedInput)
-            //    powerUp.Owner.PowerUpInUse = powerUp.Type;
-
             if (powerUp.Type == PowerUpType.FinalSolution)
                 ((PowerUpLastSolution) powerUp).Selection = p.ActualSelection;
 
@@ -145,7 +145,6 @@
             if (powerUp.Type == PowerUpType.FinalSolution && ((PowerUpLastSolution) powerUp).GoAhead)
                 DoPowerUpUse(p);
 
-            //p.PowerUpInUse = PowerUpType.None;
             p.UpdateSelection();
         }
 
@@ -222,22 +221,30 @@
         }
 
 
-        public void DoMove(Player p, ref Vector3 delta)
+        public void DoMoveDelta(Player p, ref Vector3 delta)
         {
             SimPlayer player = Players[p];
 
             if (Simulator.DemoMode)
             {
-                player.Move(ref delta, MouseConfiguration.Speed);
+                player.Move(ref delta, MouseConfiguration.MovingSpeed);
                 return;
             }
 
 
-            player.Move(ref delta, MouseConfiguration.Speed);
+            player.Move(ref delta, MouseConfiguration.MovingSpeed);
 
             if (player.ActualSelection.TurretToPlace != null &&
                 player.ActualSelection.CelestialBody.OuterTurretZone.Outside(player.Position))
                 player.Position = player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(player.Position);
+        }
+
+
+        public void DoDirectionDelta(Player p, ref Vector3 delta)
+        {
+            SimPlayer player = Players[p];
+
+            player.Rotate(ref delta, MouseConfiguration.RotatingSpeed);
         }
 
 
@@ -308,7 +315,7 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             CheckAvailablePowerUps();
             CheckAvailableTurrets();
@@ -321,6 +328,14 @@
             foreach (var player in Players.Values)
             {
                 player.Update();
+
+                if (player.Firing)
+                {
+                    foreach (var b in player.SpaceshipMove.BulletsThisTick())
+                        NotifyObjectCreated(b);
+
+                    player.Firing = false;
+                }
 
                 NotifyPlayerChanged(player);
                 NotifyPlayerMoved(player);
@@ -377,7 +392,7 @@
 
 
             // shop turrets
-            if (player.ActualSelection.CelestialBody != null &&
+            else if (player.ActualSelection.CelestialBody != null &&
                 player.ActualSelection.Turret == null)
             {
                 if (delta > 0)
@@ -387,6 +402,27 @@
 
                 return;
             }
+        }
+
+
+        public void Fire(Player p)
+        {
+            var player = Players[p];
+
+            if (Simulator.DemoMode)
+                Players[p].Firing = true;
+
+            else if (player.ActualSelection.PowerUpToBuy == PowerUpType.None &&
+                    player.ActualSelection.TurretToBuy == TurretType.None &&
+                    player.ActualSelection.TurretToPlace == null &&
+                    !Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
+                Players[p].Firing = true;
+        }
+
+
+        public void StopFire(Player p)
+        {
+            Players[p].Firing = false;
         }
 
 
@@ -715,6 +751,13 @@
         {
             if (HideNextWaveAsked != null)
                 HideNextWaveAsked(player);
+        }
+
+
+        private void NotifyObjectCreated(IObjetPhysique objet)
+        {
+            if (ObjectCreated != null)
+                ObjectCreated(objet);
         }
     }
 }

@@ -134,7 +134,8 @@
     <asset name="etincelleSlowMotionTouche"    type="Particles" path="particules/etincelleSlowMotionTouche"/>
     <asset name="toucherTerre"                 type="Particles" path="particules/toucherTerre"/>
     <asset name="bouleTerreMeurt"              type="Particles" path="particules/bouleTerreMeurt"/>
-    <asset name="anneauTerreMeurt"             type="Particles" path="particules/anneauTerreMeurt"/>
+    <asset name="anneauTerreMeurt"             type="Particles" path="particules/cbDie1"/>
+    <asset name="anneauTerreMeurt2"            type="Particles" path="particules/cbDie2"/>
     <asset name="explosionEnnemi"              type="Particles" path="particules/explosionEnnemi"/>
     <asset name="mineral1"                     type="Particles" path="particules/mineral1"/>
     <asset name="mineral2"                     type="Particles" path="particules/mineral2"/>
@@ -152,8 +153,9 @@
     <asset name="shieldEffect"                 type="Particles" path="particules/shield"/>
     <asset name="darkSideEffect"               type="Particles" path="particules/darkside"/>
     <asset name="spaceshipTrail"               type="Particles" path="particules/spaceshipTrail"/>
-    <asset name="spaceshipTrail2"               type="Particles" path="particules/spaceshipTrail2"/>
+    <asset name="spaceshipTrail2"              type="Particles" path="particules/spaceshipTrail2"/>
     <asset name="starExplosion"                type="Particles" path="particules/starExplosion"/>
+    <asset name="mothershipMissile"            type="Particles" path="particules/mothership_missile"/>
 
     
     <!-- Textures -->
@@ -168,6 +170,7 @@
     <asset name="fondecran14"                type="Image" path="fonds/fondecran14" />
     <asset name="fondecran15"                type="Image" path="fonds/fondecran15" />
     <asset name="fondecran16"                type="Image" path="fonds/fondecran16" />
+    <asset name="introBackground"            type="Image" path="fonds/intro" />
 
     <asset name="bulle"                            type="Image" path="scenarios/bulle" />
     <asset name="bulleRenversee"                   type="Image" path="scenarios/bulleRenversee" />
@@ -207,5 +210,10 @@
     <asset name="ingame6"                 type="Music" path="musiques/Chopin9" />
     <asset name="gameover2"               type="Music" path="musiques/Chopin11-gameover" />
     <asset name="ingame7"                 type="Music" path="musiques/Chopin12" />
+    <asset name="introMusic"                   type="Music" path="musiques/intro" />
+    
+    <!-- Cutscenes -->
+      <!-- Intro -->
+      <asset name="IntroSimBackground"             type="Image" path="fonds/intro" />
   </Package>
 </Packages>

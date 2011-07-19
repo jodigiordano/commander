@@ -47,7 +47,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void DoInputMovedDelta(Vector3 delta)
         {
-            Miner.NextInput = delta;
+            Miner.NextMovement = delta;
         }
 
 

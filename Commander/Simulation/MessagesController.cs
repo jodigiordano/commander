@@ -267,18 +267,18 @@
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            TimeLastQuote += gameTime.ElapsedGameTime.TotalMilliseconds;
+            TimeLastQuote += Preferences.TargetElapsedTimeMs;
 
-            DoQuoteTurret(gameTime);
+            DoQuoteTurret();
 
             
 
             foreach (var kvp in TalkingTurrets)
             {
                 kvp.Value.Position = kvp.Key.Position;
-                kvp.Value.Update(gameTime);
+                kvp.Value.Update();
 
                 if (kvp.Value.Termine)
                     ToDelete.Add(kvp);
@@ -331,7 +331,7 @@
         }
 
 
-        private void DoQuoteTurret(GameTime gameTime)
+        private void DoQuoteTurret()
         {
             if (!Simulator.DemoMode)
                 return;

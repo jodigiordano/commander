@@ -107,7 +107,7 @@
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            Simulator.Update(gameTime);
+            Simulator.Update();
 
             switch (SceneState)
             {
@@ -204,6 +204,8 @@
         public override void OnFocusLost()
         {
             base.OnFocusLost();
+
+            Main.MusicController.PauseMusic();
 
             Simulator.EnableInputs = false;
         }
