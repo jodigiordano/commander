@@ -48,7 +48,7 @@
 
                 Scene.PhysicalEffects.Add(kvp.Key, Core.Physics.PhysicalEffects.Move(kvp.Value, TimeBeforeIn + 3000, 10000));
                 Scene.VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeIn + Main.Random.Next(3000, 5000), 1500));
-                Scene.VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 11000, 3000));
+                Scene.VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 11000, 2000));
             }
         }
 

@@ -2,6 +2,7 @@
 {
     using System;
     using EphemereGames.Commander.Cutscenes;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -11,7 +12,6 @@
     class StoryScene : Scene
     {
         private string WorldToTransiteTo;
-        private Text SkipText;
         private double SkipCounter;
         private bool Skipping;
         private bool TransitionOutInProgress;
@@ -19,6 +19,7 @@
         private static double SkippingTime = 1000;
 
         private Cutscene Cutscene;
+        private HelpBarPanel HelpBar;
 
 
         public StoryScene(string name, string transiteTo, Cutscene cutscene) :
@@ -29,13 +30,10 @@
             WorldToTransiteTo = transiteTo;
             Cutscene = cutscene;
 
-            SkipText = new Text(
-                "Maintain pressed to skip.",
-                "Pixelite",
-                Color.Transparent,
-                new Vector3(0, 300, 0)) { SizeX = 3 }.CenterIt();
-
             Cutscene.Scene = this;
+
+            HelpBar = new HelpBarPanel(this);
+            HelpBar.ShowMessage(HelpBarMessage.HoldToSkip);
 
             Initialize();
         }
@@ -43,7 +41,7 @@
 
         protected void Initialize()
         {
-            SkipText.Alpha = 0;
+            HelpBar.Alpha = 0;
             SkipCounter = 0;
             Skipping = false;
 
@@ -66,9 +64,10 @@
 
         protected override void UpdateVisual()
         {
-            SkipText.Alpha = (byte) Math.Min(((SkipCounter / (SkippingTime / 2)) * 255), 255);
+            HelpBar.Alpha = (byte) Math.Min(((SkipCounter / (SkippingTime / 2)) * 255), 255);
 
-            Add(SkipText);
+            HelpBar.Draw();
+
             Cutscene.Draw();
         }
 
@@ -80,39 +79,51 @@
         }
 
 
+        public override void OnFocusLost()
+        {
+            Inputs.StopAllVibrators();
+        }
+
+
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            DoAction();
+            if (button == GamePadConfiguration.Select)
+                DoAction();
         }
 
 
         public override void DoGamePadButtonReleased(Core.Input.Player p, Buttons button)
         {
-            DoCancel();
+            if (button == GamePadConfiguration.Select)
+                DoCancel();
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            DoAction();
+            if (key == KeyboardConfiguration.MoveUp)
+                DoAction();
         }
 
 
         public override void DoKeyReleased(Core.Input.Player p, Keys key)
         {
-            DoCancel();
+            if (key == KeyboardConfiguration.MoveUp)
+                DoCancel();
         }
 
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            DoAction();
+            if (button == MouseConfiguration.Select)
+                DoAction();
         }
 
 
         public override void DoMouseButtonReleased(Core.Input.Player p, MouseButton button)
         {
-            DoCancel();
+            if (button == MouseConfiguration.Select)
+                DoCancel();
         }
 
 

@@ -87,6 +87,8 @@
     <Compile Include="Persistence\Assets\Package.cs" />
     <Compile Include="Persistence\Data\Data.cs" />
     <Compile Include="Persistence\Data\DataController.cs" />
+    <Compile Include="Persistence\Data\PlayerData.cs" />
+    <Compile Include="Persistence\Data\SharedData.cs" />
     <Compile Include="Persistence\Persistence.cs" />
     <Compile Include="Persistence\Preferences.cs" />
     <Compile Include="Physics\Collisions.cs" />

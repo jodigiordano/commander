@@ -49,6 +49,13 @@
         }
 
 
+        public override byte Alpha
+        {
+            get { return Box.Alpha; }
+            set { Box.Alpha = value; }
+        }
+
+
         public override Vector3 Dimension
         {
             get { return new Vector3(Box.AbsoluteSize, 0); }

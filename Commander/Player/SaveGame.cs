@@ -1,35 +1,19 @@
 ﻿namespace EphemereGames.Commander
 {
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Utilities;
-    using Microsoft.Xna.Framework.Content;
 
 
-    public class SaveGame : Data
+    class SaveGame : PlayerData
     {
-        [ContentSerializer(Optional = false)]
-        public SerializableDictionaryProxy<int, int> Progress { get; set; }
-
-        [ContentSerializer(Optional = false)]
-        public int VolumeMusic                    { get; set; }
-
-        [ContentSerializer(Optional = false)]
-        public int VolumeSfx              { get; set; }
-
-        [ContentSerializer(Optional = false)]
-        public SerializableDictionaryProxy<int, HighScores> HighScores { get; set; }
-
-        [ContentSerializer(Optional = false)]
-        public string ProductKey { get; set; }
-
-        [ContentSerializer(Optional = false)]
-        public SerializableDictionaryProxy<int, int> Tutorials { get; set; }
+        public SerializableDictionaryProxy<int, int> Progress;
+        public SerializableDictionaryProxy<int, int> Tutorials;
 
 
-        public SaveGame()
+        public SaveGame(Player player)
+            : base(player)
         {
-            Name = "savePlayer";
+            Name = "Save";
             Folder = "Commander";
             File = "Save.xml";
         }
@@ -39,29 +23,27 @@
         {
             SaveGame d = donnee as SaveGame;
 
-            this.Progress = d.Progress;
-            this.VolumeMusic = d.VolumeMusic;
-            this.VolumeSfx = d.VolumeSfx;
-            this.ProductKey = d.ProductKey;
-            this.HighScores = d.HighScores;
-            this.Tutorials = d.Tutorials;
-            this.HighScores.Initialize();
-            this.Progress.Initialize();
-            this.Tutorials.Initialize();
+            Progress = d.Progress;
+            Tutorials = d.Tutorials;
+
+            Progress.Initialize();
+            Tutorials.Initialize();
         }
 
 
         public override void DoFileNotFound()
         {
             base.DoFileNotFound();
-            premierChargement();
+
+            FirstLoad();
         }
 
 
         protected override void DoLoadFailed()
         {
             base.DoLoadFailed();
-            premierChargement();
+
+            FirstLoad();
         }
 
 
@@ -69,33 +51,21 @@
         {
             base.DoSaveStarted();
 
-            this.HighScores.InitializeToSave();
-            this.Progress.InitializeToSave();
-            this.Tutorials.InitializeToSave();
+            Progress.InitializeToSave();
+            Tutorials.InitializeToSave();
         }
 
 
         protected override void DoLoadEnded()
         {
             base.DoLoadEnded();
-
-            Audio.MusicVolume = this.VolumeMusic / 10f;
-            Audio.SfxVolume = this.VolumeSfx / 10f;
         }
 
 
-        private void premierChargement()
+        private void FirstLoad()
         {
-            this.VolumeMusic = 5;
-            this.VolumeSfx = 7;
-            this.ProductKey = "";
-
-            this.HighScores = new SerializableDictionaryProxy<int, HighScores>();
-            this.Progress = new SerializableDictionaryProxy<int, int>();
-            this.Tutorials = new SerializableDictionaryProxy<int, int>();
-
-            Audio.MusicVolume = this.VolumeMusic / 10f;
-            Audio.SfxVolume = this.VolumeSfx / 10f;
+            Progress = new SerializableDictionaryProxy<int, int>();
+            Tutorials = new SerializableDictionaryProxy<int, int>();
 
             Persistence.SaveData(this.Name);
             Loaded = true;

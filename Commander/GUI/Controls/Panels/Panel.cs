@@ -106,6 +106,26 @@
         }
 
 
+        public override byte Alpha
+        {
+            get
+            {
+                if (Widgets.Count != 0)
+                    return Widgets[0].Value.Alpha;
+
+                return backgroundAlpha;
+            }
+
+            set
+            {
+                Background.Alpha = Math.Min(value, BackgroundAlpha);
+
+                foreach (var w in Widgets)
+                    w.Value.Alpha = value;
+            }
+        }
+
+
         public Vector2 Padding
         {
             get { return padding; }

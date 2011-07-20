@@ -11,26 +11,24 @@
     [XmlRoot(ElementName = "World")]
     public class WorldDescriptor
     {
+        public int Id;
         public string Name;
         public List<int> Levels;
         public List<KeyValuePair<int, string>> Warps;
         public int Layout;
         public List<int> UnlockedCondition;
         public string WarpBlockedMessage;
-        public string CutsceneBefore;
-        public string CutsceneAfter;
 
 
         public WorldDescriptor()
         {
+            Id = -1;
             Name = "";
             Levels = new List<int>();
             Warps = new List<KeyValuePair<int, string>>();
             Layout = -1;
             UnlockedCondition = new List<int>();
             WarpBlockedMessage = "";
-            CutsceneBefore = "";
-            CutsceneAfter = "";
         }
     }
 
@@ -162,6 +160,16 @@
             return (score >= bestScore) ? 3 :
                    (score >= bestScore * 0.75) ? 2 :
                    (score > -bestScore * 0.5) ? 1 : 0;
+        }
+
+
+        public static CelestialBodyDescriptor GetAsteroidBelt(List<CelestialBodyDescriptor> celestialBodies)
+        {
+            foreach (var c in celestialBodies)
+                if (c.Name == "Asteroid belt" || c.Images.Count != 0 || c.PathPriority == int.MinValue + 1)
+                    return c;
+
+            return null;
         }
     }
 

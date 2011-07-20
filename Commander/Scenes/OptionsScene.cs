@@ -107,8 +107,8 @@
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            Main.SaveGame.VolumeMusic = Music.Valeur;
-            Main.SaveGame.VolumeSfx = SoundEffects.Valeur;
+            Main.SharedSaveGame.VolumeMusic = Music.Valeur;
+            Main.SharedSaveGame.VolumeSfx = SoundEffects.Valeur;
 
             Audio.MusicVolume = Music.Valeur / 10f;
             Audio.SfxVolume = SoundEffects.Valeur / 10f;
@@ -142,8 +142,8 @@
 
             SyncPlayers();
 
-            Music.Valeur = Main.SaveGame.VolumeMusic;
-            SoundEffects.Valeur = Main.SaveGame.VolumeSfx;
+            Music.Valeur = Main.SharedSaveGame.VolumeMusic;
+            SoundEffects.Valeur = Main.SharedSaveGame.VolumeSfx;
         }
 
 

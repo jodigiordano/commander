@@ -7,16 +7,16 @@
 
     class HelpBarPanel : HorizontalPanel
     {
-        public static Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> PredefinedMessages;
+        public Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> PredefinedMessages;
 
         private KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> Current;
-        private Simulator Simulator;
+        private Scene Scene;
 
 
-        public HelpBarPanel(Simulator simulator)
-            : base(simulator.Scene, new Vector3(0, simulator.Scene.Height / 2 - 30, 0), new Vector2(simulator.Scene.Width, 35), VisualPriorities.Foreground.HelpBar, Color.White)
+        public HelpBarPanel(Scene scene)
+            : base(scene, new Vector3(0, scene.Height / 2 - 30, 0), new Vector2(scene.Width, 35), VisualPriorities.Foreground.HelpBar, Color.White)
         {
-            Simulator = simulator;
+            Scene = scene;
 
             ShowCloseButton = false;
             ShowFrame = false;
@@ -94,13 +94,13 @@
 
         private void InitializePredefinedMessages()
         {
-            if (PredefinedMessages != null)
-                return;
-
             PredefinedMessages = new Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessageComparer.Default)
             {
                 { HelpBarMessage.Select, new List<KeyValuePair<string, PanelWidget>>() {
                     new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Select", "Pixelite") { SizeX = 2f }))}},
+
+                { HelpBarMessage.HoldToSkip, new List<KeyValuePair<string, PanelWidget>>() {
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Hold to skip", "Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.Cancel, new List<KeyValuePair<string, PanelWidget>>() {
                     new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Cancel", "Pixelite") { SizeX = 2f }))}},

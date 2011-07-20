@@ -235,19 +235,10 @@
             positions.Add(new Vector2(400, 0));
             positions.Add(new Vector2(300, 100));
 
-            positions.Add(new Vector2(200, 200));
-            positions.Add(new Vector2(100, 100));
-            positions.Add(new Vector2(200, 0));
-            positions.Add(new Vector2(300, 100));
-
             times.Add(21);
-            times.Add(22);
             times.Add(23);
             times.Add(24);
-            times.Add(25);
             times.Add(26);
-            times.Add(27);
-            times.Add(28);
 
             // scared
             positions.Add(new Vector2(Main.Random.Next(300, 500), 200));
@@ -257,7 +248,7 @@
             positions.Add(new Vector2(posX, 100));
             positions.Add(new Vector2(posX, 50));
 
-            times.Add(29);
+            times.Add(27);
             times.Add(43);
 
             // stop wife
@@ -354,19 +345,10 @@
             positions.Add(new Vector2(400, 0));
             positions.Add(new Vector2(300, 100));
 
-            positions.Add(new Vector2(400, 200));
-            positions.Add(new Vector2(500, 100));
-            positions.Add(new Vector2(400, 0));
-            positions.Add(new Vector2(300, 100));
-
             times.Add(21);
-            times.Add(22);
             times.Add(23);
             times.Add(24);
-            times.Add(25);
             times.Add(26);
-            times.Add(27);
-            times.Add(28);
 
             // scared
             positions.Add(new Vector2(Main.Random.Next(300, 500), 200));
@@ -378,7 +360,7 @@
             positions.Add(new Vector2(posX - 150, 80));
             positions.Add(new Vector2(posX - 200, 80));
 
-            times.Add(29);
+            times.Add(27);
             times.Add(41);
             times.Add(42);
             times.Add(43);
@@ -460,9 +442,9 @@
 
 
                 times.Add(22);
+                times.Add(23);
                 times.Add(24);
-                times.Add(26);
-                times.Add(28);
+                times.Add(25);
 
                 // scared
                 positions.Add(new Vector2(Main.Random.Next(300, 500), 300));
@@ -472,7 +454,7 @@
                 positions.Add(new Vector2(posX, 200));
                 positions.Add(new Vector2(posX, 201));
 
-                times.Add(29);
+                times.Add(27);
                 times.Add(40);
 
                 // departure

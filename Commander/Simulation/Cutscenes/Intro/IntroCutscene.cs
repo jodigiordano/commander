@@ -16,7 +16,7 @@
         private MothershipAnimation Mothership;
 
         private double TimeBeforeMusic = 2000;
-        private double Length = 145000;
+        private double Length = 125000;
 
 
         public override void Initialize()
@@ -32,7 +32,7 @@
             Mothership = new MothershipAnimation(Simulator.Simulator);
 
             TimeBeforeMusic = 2000;
-            Length = 145000;
+            Length = 125000;
         }
 
 
@@ -85,12 +85,12 @@
             Timing.Add("DedicationIn", 10000);
             Timing.Add("SimulatorIn", 18000);
             Timing.Add("LocationIn", 24000);
-            Timing.Add("ProtagonistIn", 28000);
-            Timing.Add("MothershipArrival", 56000);
-            Timing.Add("MothershipLights", 90000);
-            Timing.Add("MothershipDestruction", 97000);
-            Timing.Add("CommanderIn", 107000);
-            Timing.Add("MothershipDeparture", 120000);
+            Timing.Add("ProtagonistIn", 27000);
+            Timing.Add("MothershipArrival", 53000);
+            Timing.Add("MothershipLights", 78000);
+            Timing.Add("MothershipDestruction", 86000);
+            Timing.Add("CommanderIn", 96000);
+            Timing.Add("MothershipDeparture", 106000);
 
             //test
             //Timing.Add("LogoIn", 0);

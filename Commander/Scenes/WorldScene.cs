@@ -22,7 +22,7 @@
         public WorldScene(WorldDescriptor descriptor) :
             base(1280, 720)
         {
-            Name = descriptor.Name;
+            Name = "World" + descriptor.Id;
             Descriptor = descriptor;
             Warps = new Dictionary<string, string>();
             LevelsDescriptors = new Dictionary<string, LevelDescriptor>();
@@ -81,7 +81,7 @@
                 bool unlocked = true;
 
                 foreach (var level in Descriptor.UnlockedCondition)
-                    if (!Main.SaveGame.Progress.TryGetValue(level, out save) || save <= 0)
+                    if (!Main.PlayerSaveGame.Progress.TryGetValue(level, out save) || save <= 0)
                     {
                         unlocked = false;
                         break;
@@ -274,7 +274,7 @@
                 var descriptor = LevelsDescriptors[kvp.Key.Name];
 
                 int value = 0;
-                bool done = Main.SaveGame.Progress.TryGetValue(descriptor.Infos.Id, out value) && value > 0;
+                bool done = Main.PlayerSaveGame.Progress.TryGetValue(descriptor.Infos.Id, out value) && value > 0;
 
                 kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone",
                     kvp.Key.Position + new Vector3(kvp.Key.Circle.Radius, kvp.Key.Circle.Radius, 0) +
@@ -286,7 +286,7 @@
 
 
             foreach (var warp in WarpsCelestialBodies)
-                ((PinkHole) warp.Key).Couleur = (((WorldScene) Visuals.GetScene(warp.Value)).Unlocked ? new Color(255, 0, 255) : new Color(255, 0, 0));
+                ((PinkHole) warp.Key).Color = (((WorldScene) Visuals.GetScene(warp.Value)).Unlocked ? new Color(255, 0, 255) : new Color(255, 0, 0));
         }
     }
 }

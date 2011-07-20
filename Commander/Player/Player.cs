@@ -16,11 +16,11 @@
 
         private static List<Vector3> AvailablesInitalPositions = new List<Vector3>()
         {
-            new Vector3(-60, -100, 0),
-            new Vector3(-30, -100, 0),
-            new Vector3(0, -100, 0),
-            new Vector3(30, -100, 0),
-            new Vector3(60, -100, 0)
+            new Vector3(160, 0, 0),
+            new Vector3(190, 0, 0),
+            new Vector3(220, 0, 0),
+            new Vector3(250, 0, 0),
+            new Vector3(280, 0, 0)
         };
 
 

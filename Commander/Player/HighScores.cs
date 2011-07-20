@@ -3,15 +3,12 @@
     using System.Collections.Generic;
     using System.Xml.Serialization;
     using EphemereGames.Core.Utilities;
-    using Microsoft.Xna.Framework.Content;
 
 
     public class HighScores
     {
-        [ContentSerializer(Optional = false)]
         public int Level { get; set; }
 
-        [ContentSerializer(Optional = false)]
         [XmlArrayItem("Scores")]
         public List<KeyAndValue<string, int>> Scores { get; set; }
 

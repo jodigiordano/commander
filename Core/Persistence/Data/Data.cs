@@ -21,17 +21,18 @@
         public bool Loaded      { get; set; }
 
         [XmlIgnore]
-#if WINDOWS_PHONE
-        public IsolatedStorageSaveDevice SaveDevice { get; set; }
-#else
-        public SharedSaveDevice SaveDevice { get; set; }
-#endif
+        public ISaveDevice SaveDevice { get; set; }
+//#if WINDOWS_PHONE
+//        public IsolatedStorageSaveDevice SaveDevice { get; set; }
+//#else
+//        public SharedSaveDevice SaveDevice { get; set; }
+//#endif
 
         public Data()
         {
-            Name = "MyData";
-            Folder = "MyGame";
-            File = "MyData.xml";
+            Name = "Data";
+            Folder = "Data";
+            File = "Data.xml";
             Loaded = false;
         }
 

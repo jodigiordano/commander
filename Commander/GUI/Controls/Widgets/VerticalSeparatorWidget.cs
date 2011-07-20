@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -54,6 +55,13 @@
             {
                 Image.Position = value + new Vector3(DistanceWidgetBeforeAndAfter, 0, 0);
             }
+        }
+
+
+        public override byte Alpha
+        {
+            get { return Image.Alpha; }
+            set { Image.Alpha = Math.Max(value, (byte) 200); }
         }
 
 

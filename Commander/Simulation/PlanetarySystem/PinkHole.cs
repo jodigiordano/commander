@@ -29,7 +29,7 @@
         }
 
 
-        public Color Couleur
+        public Color Color
         {
             set
             {

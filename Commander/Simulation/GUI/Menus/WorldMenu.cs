@@ -134,7 +134,7 @@
             LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
             HighScores highscores = null;
 
-            Main.SaveGame.HighScores.TryGetValue(descriptor.Infos.Id, out highscores);
+            Main.SharedSaveGame.HighScores.TryGetValue(descriptor.Infos.Id, out highscores);
 
             Highscore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
             Highscore.Origin = Highscore.Center;

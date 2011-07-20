@@ -81,6 +81,13 @@
         }
 
 
+        public override byte Alpha
+        {
+            get { return DecrementRep.Alpha; }
+            set { DecrementRep.Alpha = IncrementRep.Alpha = ValueText.Alpha = Label.Alpha = value; }
+        }
+
+
         public override Vector3 Dimension
         {
             get

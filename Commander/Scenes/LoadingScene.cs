@@ -16,6 +16,7 @@
             TransiteToMenu,
             Finished,
             LoadingAssets,
+            LoadSharedSaveGame,
             LoadScenes
         }
 
@@ -127,10 +128,21 @@
 
                     if (Persistence.IsPackageLoaded("principal") && LoadingTranslation.Termine)
                     {
+                        SceneState = State.LoadSharedSaveGame;
+
+                        Persistence.LoadData("SharedSaveGame");
+                    }
+                    break;
+
+                case State.LoadSharedSaveGame:
+
+                    if (Persistence.IsDataLoaded("SharedSaveGame"))
+                    {
                         SceneState = State.LoadScenes;
 
                         ThreadLoadScenes.Start();
                     }
+
                     break;
 
                 case State.LoadScenes:
@@ -173,21 +185,31 @@
             ScenesLoaded.Add(new OptionsScene());
             ScenesLoaded.Add(new EditorScene());
             ScenesLoaded.Add(new BuyScene());
-            ScenesLoaded.Add(new StoryScene("Intro", "World1", new IntroCutscene()));
 
-            WorldScene w1 = new WorldScene(LevelsFactory.GetWorldDescriptor("World1"));
-            WorldScene w2 = new WorldScene(LevelsFactory.GetWorldDescriptor("World2"));
-            WorldScene w3 = new WorldScene(LevelsFactory.GetWorldDescriptor("World3"));
-            
-            ScenesLoaded.Add(w1);
-            ScenesLoaded.Add(w2);
-            ScenesLoaded.Add(w3);
-
-            w1.Initialize();
-            w2.Initialize();
-            w3.Initialize();
+            LoadWorld(1);
+            LoadWorld(2);
+            LoadWorld(3);
 
             ScenesAreLoaded = true;
+        }
+
+
+        private void LoadWorld(int id)
+        {
+            WorldDescriptor wd;
+            WorldScene ws;
+            WorldAnnunciationScene was;
+
+            wd = LevelsFactory.GetWorldDescriptor(id);
+            ws = new WorldScene(wd);
+            was = new WorldAnnunciationScene(wd);
+
+            ScenesLoaded.Add(new StoryScene("Cutscene" + wd.Id, was.Name, new IntroCutscene()));
+            ScenesLoaded.Add(was);
+            ScenesLoaded.Add(ws);
+
+            ws.Initialize();
+            was.Initialize();
         }
 
 

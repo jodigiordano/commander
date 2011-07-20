@@ -46,7 +46,7 @@
             if (Simulator.DemoMode ||
                 Simulator.WorldMode ||
                 Simulator.EditorMode ||
-                Main.SaveGame.Tutorials.ContainsKey(Level.Id) && Main.SaveGame.Tutorials[Level.Id] > 2)
+                Main.PlayerSaveGame.Tutorials.ContainsKey(Level.Id) && Main.PlayerSaveGame.Tutorials[Level.Id] > 2)
             {
                 Help = new Help(Simulator, new List<string>());
                 HelpSaved = true;
@@ -66,10 +66,10 @@
                 Help.Update();
             else if (!HelpSaved)
             {
-                if (!Main.SaveGame.Tutorials.ContainsKey(Level.Id))
-                    Main.SaveGame.Tutorials.Add(new KeyValuePair<int,int>(Level.Id, 0));
+                if (!Main.PlayerSaveGame.Tutorials.ContainsKey(Level.Id))
+                    Main.PlayerSaveGame.Tutorials.Add(new KeyValuePair<int, int>(Level.Id, 0));
 
-                Main.SaveGame.Tutorials[Level.Id]++;
+                Main.PlayerSaveGame.Tutorials[Level.Id]++;
 
                 HelpSaved = true;
             }
@@ -103,13 +103,13 @@
             {
                 State = GameState.Won;
 
-                if (!Main.SaveGame.Progress.ContainsKey(Level.Id))
-                    Main.SaveGame.Progress.Add(Level.Id, 0);
+                if (!Main.PlayerSaveGame.Progress.ContainsKey(Level.Id))
+                    Main.PlayerSaveGame.Progress.Add(Level.Id, 0);
 
-                if (Main.SaveGame.Progress[Level.Id] < 0)
-                    Main.SaveGame.Progress[Level.Id] = Math.Abs(Main.SaveGame.Progress[Level.Id]);
-                else if (Main.SaveGame.Progress[Level.Id] == 0)
-                    Main.SaveGame.Progress[Level.Id] = 1;
+                if (Main.PlayerSaveGame.Progress[Level.Id] < 0)
+                    Main.PlayerSaveGame.Progress[Level.Id] = Math.Abs(Main.PlayerSaveGame.Progress[Level.Id]);
+                else if (Main.PlayerSaveGame.Progress[Level.Id] == 0)
+                    Main.PlayerSaveGame.Progress[Level.Id] = 1;
 
                 ComputeFinalScore();
 
@@ -149,11 +149,11 @@
                 Audio.PlaySfx(@"sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
-                if (!Main.SaveGame.Progress.ContainsKey(Level.Id))
-                    Main.SaveGame.Progress.Add(Level.Id, 0);
+                if (!Main.PlayerSaveGame.Progress.ContainsKey(Level.Id))
+                    Main.PlayerSaveGame.Progress.Add(Level.Id, 0);
 
-                if ((Main.SaveGame.Progress[Level.Id] <= 0))
-                    Main.SaveGame.Progress[Level.Id] -= 1;
+                if ((Main.PlayerSaveGame.Progress[Level.Id] <= 0))
+                    Main.PlayerSaveGame.Progress[Level.Id] -= 1;
 
                 ComputeFinalScore();
 
@@ -179,11 +179,11 @@
             {
                 State = GameState.Lost;
 
-                if (!Main.SaveGame.Progress.ContainsKey(Level.Id))
-                    Main.SaveGame.Progress.Add(Level.Id, 0);
+                if (!Main.PlayerSaveGame.Progress.ContainsKey(Level.Id))
+                    Main.PlayerSaveGame.Progress.Add(Level.Id, 0);
 
-                if ((Main.SaveGame.Progress[Level.Id] <= 0))
-                    Main.SaveGame.Progress[Level.Id] -= 1;
+                if ((Main.PlayerSaveGame.Progress[Level.Id] <= 0))
+                    Main.PlayerSaveGame.Progress[Level.Id] -= 1;
 
                 ComputeFinalScore();
 

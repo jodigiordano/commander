@@ -105,8 +105,9 @@
     <Compile Include="GUI\SandGlass.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
-    <Compile Include="Player\Scores.cs" />
+    <Compile Include="Player\SharedSaveGame.cs" />
     <Compile Include="Player\TrialMode.cs" />
     <Compile Include="Scenes\BuyScene.cs" />
     <Compile Include="Scenes\EditorScene.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Scenes\MainMenuScene.cs" />
     <Compile Include="Scenes\OptionsScene.cs" />
     <Compile Include="Scenes\StoryScene.cs" />
+    <Compile Include="Scenes\WorldAnnunciationScene.cs" />
     <Compile Include="Scenes\WorldScene.cs" />
     <Compile Include="Simulation\Bullets\BulletsFactory.cs" />
     <Compile Include="Simulation\Bullets\MineBullet.cs" />

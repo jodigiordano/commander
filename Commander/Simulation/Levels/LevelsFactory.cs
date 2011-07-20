@@ -12,7 +12,7 @@
         public Dictionary<int, LevelDescriptor> Descriptors;
         public Dictionary<int, LevelDescriptor> CutsceneDescriptors;
 
-        private LevelDescriptor MenuDescriptor;
+        public LevelDescriptor Menu;
         private Dictionary<int, WorldDescriptor> WorldsDescriptors;
 
         private XmlSerializer LevelSerializer;
@@ -34,8 +34,7 @@
         {
             LoadLevels();
             LoadCutscenes();
-
-            //MenuDescriptor = LoadLevelDescriptor(".\\Content\\scenarios\\menu.xml");
+            LoadMenuDescriptor();
         }
 
 
@@ -127,17 +126,18 @@
         }
 
 
-        public static WorldDescriptor GetWorldDescriptor(string name)
+        public static WorldDescriptor GetWorldDescriptor(int id)
         {
             WorldDescriptor wd;
 
-            switch (name)
+            switch (id)
             {
-                case "World1":
+                case 1:
                 default:
                     wd = new WorldDescriptor()
                     {
-                        Name = name,
+                        Id = id,
+                        Name = "The colonies",
                         Levels = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
                         Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
                         Layout = 1001,
@@ -146,10 +146,11 @@
                     };
                     break;
 
-                case "World2":
+                case 2:
                     wd = new WorldDescriptor()
                     {
-                        Name = name,
+                        Id = id,
+                        Name = "Battle for Earth",
                         //Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
                         Levels = new List<int>() { 1 },
                         Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
@@ -159,10 +160,11 @@
                     };
                     break;
 
-                case "World3":
+                case 3:
                     wd = new WorldDescriptor()
                     {
-                        Name = name,
+                        Id = id,
+                        Name = "The invasion",
                         //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
                         Levels = new List<int>() { 1 },
                         Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World2") },
@@ -177,6 +179,58 @@
             return wd;
         }
 
+
+        private void LoadMenuDescriptor()
+        {
+            Menu = LoadLevelDescriptor(".\\Content\\scenarios\\menu.xml");
+
+            var newGame = Menu.PlanetarySystem[6];
+
+            newGame.Name = "save the world";
+            newGame.AddTurret(TurretType.Basic, 5, new Vector3(10, -14, 0), true);
+            newGame.Invincible = true;
+
+            var options = Menu.PlanetarySystem[1];
+            options.Name = "options";
+            options.AddTurret(TurretType.Basic, 2, new Vector3(-20, -5, 0), true);
+            options.AddTurret(TurretType.MultipleLasers, 4, new Vector3(12, 0, 0), true);
+
+            var editor = Menu.PlanetarySystem[2];
+            editor.Name = "editor";
+            editor.AddTurret(TurretType.Laser, 7, new Vector3(3, -7, 0), true);
+            editor.AddTurret(TurretType.Missile, 3, new Vector3(-8, 0, 0), true);
+
+            var quit = Menu.PlanetarySystem[3];
+            quit.Name = "quit";
+
+            var help = Menu.PlanetarySystem[4];
+            help.Name = "how to play";
+            help.AddTurret(TurretType.SlowMotion, 6, new Vector3(-10, -3, 0), true);
+
+            var credits = Menu.PlanetarySystem[5];
+            credits.Name = "credits";
+            credits.AddTurret(TurretType.SlowMotion, 6, new Vector3(-10, -3, 0), true);
+
+
+            DescriptorInfiniteWaves v = new DescriptorInfiniteWaves()
+            {
+                StartingDifficulty = 12,
+                DifficultyIncrement = 0,
+                MineralsPerWave = 0,
+                MinMaxEnemiesPerWave = new Vector2(10, 30),
+                Enemies = new List<EnemyType>() { EnemyType.Asteroid, EnemyType.Comet, EnemyType.Plutoid },
+                FirstOneStartNow = true,
+                Upfront = true,
+                NbWaves = 10
+            };
+
+            var asteroidBelt = LevelDescriptor.GetAsteroidBelt(Menu.PlanetarySystem);
+
+            asteroidBelt.Images = new List<string>() { "Asteroid", "Plutoid", "Comet", "Centaur", "Trojan", "Meteoroid" };
+
+
+            Menu.InfiniteWaves = v;
+        }
 
         public static LevelDescriptor GetMenuDescriptor()
         {

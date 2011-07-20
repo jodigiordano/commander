@@ -13,7 +13,7 @@
         public abstract double VisualPriority   { get; set; }
         public abstract Vector3 Position        { get; set; }
         public abstract Vector3 Dimension       { get; set; }
-
+        public abstract byte Alpha              { get; set; }
         public virtual Scene Scene              { get; set; }
 
 

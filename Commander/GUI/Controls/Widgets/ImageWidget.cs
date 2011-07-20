@@ -50,6 +50,13 @@
         }
 
 
+        public override byte Alpha
+        {
+            get { return Image.Alpha; }
+            set { Image.Alpha = value; }
+        }
+
+
         public override Vector3 Dimension
         {
             get { return new Vector3(Image.AbsoluteSize, 0); }

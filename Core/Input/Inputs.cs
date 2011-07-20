@@ -127,6 +127,12 @@
         }
 
 
+        public static void StopAllVibrators()
+        {
+            Vibrator.Initialize();
+        }
+
+
         public static void AddPlayer(Player player)
         {
             PlayersController.AddPlayer(player);

@@ -1,8 +1,11 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -12,13 +15,9 @@
     {
         private Simulator Simulator;
 
-        private Text NewGame;
-        private Text Quit;
-        private Text ResumeGame;
-        private Text Help;
-        private Text Options;
-        private Text Editor;
-        private Text Title;
+        private Text Title;        
+        private Image Filter;
+
 
         private enum State
         {
@@ -30,6 +29,7 @@
 
         private State SceneState;
         private Translator PressStart;
+        private Dictionary<Text, CelestialBody> Choices;
 
 
         public MainMenuScene()
@@ -37,56 +37,21 @@
         {
             Name = "Menu";
 
-            NewGame = new Text("save the\nworld", "Pixelite", Color.White, new Vector3(-220, -170, 0))
+            Title = new Text("Commander", "PixelBig")
             {
-                SizeX = 4f,
-                VisualPriority = Preferences.PrioriteFondEcran - 0.01f,
-                Origin = Vector2.Zero
-            };
-
-            ResumeGame = new Text("resume game", "Pixelite", Color.White, new Vector3(-460, 75, 0))
-            {
-                SizeX = 4,
-                VisualPriority = Preferences.PrioriteFondEcran - 0.01f,
-                Origin = Vector2.Zero
-            };
-
-            Options = new Text("options\nn'stuff", "Pixelite", Color.White, new Vector3(-50, -200, 0))
-            {
-                SizeX = 4f,
-                VisualPriority = Preferences.PrioriteFondEcran - 0.01f,
-                Origin = Vector2.Zero
-            };
-
-            Help = new Text("help", "Pixelite", Color.White, new Vector3(-350, 120, 0))
-            {
-                SizeX = 4,
-                VisualPriority = Preferences.PrioriteFondEcran - 0.01f,
-                Origin = Vector2.Zero
-            };
-
-            Quit = new Text("quit", "Pixelite", Color.White, new Vector3(140, 160, 0))
-            {
-                SizeX = 4,
-                VisualPriority = Preferences.PrioriteFondEcran - 0.01f,
-                Origin = Vector2.Zero
-            };
-
-            Editor = new Text("editor", "Pixelite", Color.White, new Vector3(-600, 300, 0))
-            {
-                SizeX = 4,
-                VisualPriority = Preferences.PrioriteFondEcran - 0.01f,
-                Origin = Vector2.Zero
-            };
-
-            Title = new Text("Commander", "PixelBig", Color.White, Vector3.Zero)
-            {
-                SizeX = 4,
+                SizeX = 3,
                 VisualPriority = Preferences.PrioriteGUIMenuPrincipal,
-            };
-            Title.Origin = Title.Center;
+            }.CenterIt();
 
-            LevelDescriptor levelDescriptor = LevelsFactory.GetMenuDescriptor();
+            Filter = new Image("PixelBlanc")
+            {
+                Size = new Vector2(1800, 200),
+                Color = new Color(0, 0, 0, 200),
+                VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.00001,
+                Origin = Vector2.Zero
+            };
+
+            LevelDescriptor levelDescriptor = Main.LevelsFactory.Menu;
 
 #if !DEBUG
             levelDescriptor.PlanetarySystem[5].CanSelect = false;
@@ -102,6 +67,22 @@
 
             SceneState = State.ConnectPlayer;
             InitPressStart();
+
+            Choices = new Dictionary<Text, CelestialBody>();
+
+            foreach (var c in Simulator.PlanetarySystemController.CelestialBodies)
+            {
+                if (c is AsteroidBelt)
+                    continue;
+
+                var text = new Text(c.Name, "Pixelite")
+                {
+                    SizeX = 3,
+                    VisualPriority = Preferences.PrioriteFondEcran - 0.01f
+                }.CenterIt();
+
+                Choices.Add(text, c);
+            }
         }
 
 
@@ -114,7 +95,34 @@
                 case State.ConnectPlayer:                    
                     VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
                     VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
-                    VisualEffects.Add(Title, Core.Visual.VisualEffects.Fade(Title.Alpha, 255, 0, 1000)); 
+                    VisualEffects.Add(Title, Core.Visual.VisualEffects.Fade(Title.Alpha, 255, 0, 1000));
+                    VisualEffects.Add(Filter, Core.Visual.VisualEffects.Fade(Filter.Alpha, 100, 0, 500));
+
+                    foreach (var kvp in Choices)
+                        VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.Fade(kvp.Key.Alpha, 0, 0, 500));
+
+                    MovePathEffect mpe = new MovePathEffect()
+                    {
+                        StartAt = 0,
+                        PointAt = false,
+                        Delay = 0,
+                        Length = 10000,
+                        Progress = Core.Utilities.Effect<IPhysicalObject>.ProgressType.Linear,
+                        InnerPath = new Path2D(new List<Vector2>()
+                        {
+                            new Vector2(-1920, -100),
+                            new Vector2(-1000, -100),
+                            new Vector2(-740, -100)
+                        }, new List<double>()
+                        {
+                            0,
+                            600,
+                            1200
+                        })
+                    };
+
+                    PhysicalEffects.Add(Filter, mpe);
+
                     SceneState = State.ConnectingPlayer;
                     break;
 
@@ -124,11 +132,15 @@
 
 
                 case State.LoadSaveGame:
-                    if (Persistence.DataLoaded("savePlayer"))
+                    if (Persistence.IsDataLoaded("Save"))
                     {
                         VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
                         VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
-                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 1000)); 
+                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 1000));
+                        VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 500));
+
+                        foreach (var kvp in Choices)
+                            VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.Fade(kvp.Key.Alpha, 100, Main.Random.Next(0, 500), 500));
 
                         if (!Simulator.EnableInputs)
                             Simulator.SyncPlayers();
@@ -137,6 +149,7 @@
                         SceneState = State.PlayerConnected;
 
                         Simulator.ShowHelpBarMessage(HelpBarMessage.MoveYourSpaceship);
+                        Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
                     }
                     break;
             }
@@ -145,35 +158,30 @@
 
         protected override void UpdateVisual()
         {
+            foreach (var kvp in Choices)
+            {
+                kvp.Key.Position = kvp.Value.Position + new Vector3(0, kvp.Value.Circle.Radius + 10, 0);
+                Add(kvp.Key);
+            }
+
+
             foreach (var player in Inputs.ConnectedPlayers)
             {
                 CelestialBody c = Simulator.GetSelectedCelestialBody(player);
 
                 if (c != null)
                 {
-                    switch (c.Name)
-                    {
-                        case "save the\nworld": Add(NewGame); break;
-                        case "quit": Add(Quit); break;
-                        case "help": Add(Help); break;
-                        case "options": Add(Options); break;
-                        case "editor":
-
-                            if (Preferences.Debug)
-                                Add(Editor);
-
+                    foreach (var kvp in Choices)
+                        if (kvp.Key.Data == c.Name)
+                        {
+                            Add(kvp.Key);
                             break;
-
-                        case "resume game":
-                            if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                                Add(ResumeGame);
-
-                            break;
-                    }
+                        }
                 }
             }
 
             Add(Title);
+            Add(Filter);
             Simulator.Draw();
             PressStart.Draw();
         }
@@ -188,12 +196,7 @@
             Main.MusicController.PlayMusic(false);
 
             if (Inputs.ConnectedPlayers.Count == 0)
-            {
-                InitPressStart();
-                SceneState = State.ConnectPlayer;
-                Simulator.EnableInputs = false;
-            }
-
+                InitConnectFirstPlayer();
             else
             {
                 Simulator.EnableInputs = true;
@@ -214,7 +217,7 @@
         private void InitPressStart()
         {
             PressStart = new Translator
-            (this, new Vector3(0, 50, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine", 3, true, 3000, 250, 0.3f);
+            (this, new Vector3(0, 50, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine", 3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal);
             PressStart.Centre = true;
         }
 
@@ -237,10 +240,8 @@
 
         public override void DoPlayerConnected(Core.Input.Player p)
         {
-            if (!Persistence.DataLoaded("savePlayer"))
-                Persistence.LoadData("savePlayer");
-
-            SceneState = State.LoadSaveGame;
+            if (Inputs.ConnectedPlayers.Count == 1)
+                ReloadPlayerData((Player) p);
         }
 
 
@@ -271,12 +272,31 @@
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
             if (Inputs.ConnectedPlayers.Count == 0)
+                InitConnectFirstPlayer();
+            else if (Main.PlayerSaveGame.Player == player)
             {
-                InitPressStart();
-                SceneState = State.ConnectPlayer;
-                Simulator.EnableInputs = false;
-                Simulator.SyncPlayers();
+                ReloadPlayerData((Player) Inputs.MasterPlayer);
+                SceneState = State.LoadSaveGame;
             }
+        }
+
+
+        private void ReloadPlayerData(Player p)
+        {
+            Main.PlayerSaveGame = new SaveGame(p);
+            Persistence.SetPlayerData(Main.PlayerSaveGame);
+            Persistence.LoadData("Save");
+            SceneState = State.LoadSaveGame;
+        }
+
+
+        private void InitConnectFirstPlayer()
+        {
+            Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 0, 1000);
+            InitPressStart();
+            SceneState = State.ConnectPlayer;
+            Simulator.EnableInputs = false;
+            Simulator.SyncPlayers();
         }
 
 
@@ -294,7 +314,7 @@
 
             switch (c.Name)
             {
-                case "save the\nworld": TransiteTo("Intro"); break;
+                case "save the world": TransiteTo("Cutscene1"); break;
                 case "help": TransiteTo("Aide"); break;
                 case "options": TransiteTo("Options"); break;
                 case "editor": TransiteTo("Editeur"); break;
@@ -304,15 +324,6 @@
                         TransiteTo("Acheter");
                     else
                         Main.Instance.Exit();
-                    break;
-
-                case "resume game":
-                    if (Main.GameInProgress != null && !Main.GameInProgress.IsFinished)
-                    {
-                        Main.GameInProgress.State = GameState.Running;
-                        Main.MusicController.PauseMusic();
-                        TransiteTo("Partie");
-                    }
                     break;
             }
         }

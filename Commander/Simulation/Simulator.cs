@@ -315,6 +315,12 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
+        public HelpBarPanel HelpBar
+        {
+            get { return GUIController.HelpBar; }
+        }
+
+
         public void Update()
         {
             LevelsController.Update();
@@ -420,10 +426,10 @@ namespace EphemereGames.Commander.Simulation
                 int levelId = LevelsController.Level.Id;
                 int score = LevelsController.Level.CommonStash.TotalScore;
 
-                if (!Main.SaveGame.HighScores.ContainsKey(levelId))
-                    Main.SaveGame.HighScores.Add(levelId, new HighScores(levelId));
+                if (!Main.SharedSaveGame.HighScores.ContainsKey(levelId))
+                    Main.SharedSaveGame.HighScores.Add(levelId, new HighScores(levelId));
 
-                Main.SaveGame.HighScores[levelId].Add(Inputs.MasterPlayer.Name, score);
+                Main.SharedSaveGame.HighScores[levelId].Add(Inputs.MasterPlayer.Name, score);
 
                 Persistence.SaveData("savePlayer");
             }
@@ -565,6 +571,9 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(player);
 
+            if (simPlayer == null) // disconnected
+                return;
+
             if (key == KeyboardConfiguration.MoveLeft)
                 simPlayer.MovingLeft = false;
 
@@ -593,6 +602,9 @@ namespace EphemereGames.Commander.Simulation
 
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
+
+            if (simPlayer == null) // disconnected
+                return;
 
             if (simPlayer.PowerUpInUse != PowerUpType.None)
             {
@@ -639,6 +651,9 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
+            if (simPlayer == null) // disconnected
+                return;
+
             if (EditorMode)
             {
                 if (button == MouseConfiguration.Cancel)
@@ -667,6 +682,9 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
+            if (simPlayer == null) // disconnected
+                return;
+
             if (EditorMode)
                 EditorController.DoNextOrPreviousAction(simPlayer, delta);
 
@@ -687,6 +705,9 @@ namespace EphemereGames.Commander.Simulation
 
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
+
+            if (simPlayer == null) // disconnected
+                return;
 
             if (simPlayer.Firing)
                 SimPlayersController.DoDirectionDelta(player, ref delta);
@@ -728,7 +749,7 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
-            if (simPlayer == null)
+            if (simPlayer == null) // disconnected
                 return;
 
             if (EditorMode)
@@ -789,6 +810,9 @@ namespace EphemereGames.Commander.Simulation
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(player);
 
+            if (simPlayer == null) // disconnected
+                return;
+
 
             if (EditorMode)
             {
@@ -815,6 +839,9 @@ namespace EphemereGames.Commander.Simulation
 
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(player);
+
+            if (simPlayer == null) // disconnected
+                return;
 
             if (button == GamePadConfiguration.MoveCursor)
             {

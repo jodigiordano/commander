@@ -44,7 +44,7 @@
         private GUIPlayer NextWaveCheckedIn;
         private GUIPlayer AdvancedViewCheckedIn;
 
-        private HelpBarPanel HelpBar;
+        public HelpBarPanel HelpBar;
 
 
         public GUIController(Simulator simulator)
@@ -60,7 +60,10 @@
 
             ContextualMenusCollisions = new ContextualMenusCollisions();
 
-            HelpBar = new HelpBarPanel(simulator);
+            HelpBar = new HelpBarPanel(simulator.Scene)
+            {
+                Alpha = 0
+            };
         }
 
 

@@ -100,14 +100,6 @@
         {
             GameState = etat;
 
-            //if (GameState != GameState.Won && GameState != GameState.Lost)
-            //{
-            //    AlienShip.Hide();
-            //    return;
-            //}
-
-            //AlienShip.Show();
-
             TranslatorScoreExplanations = new Translator
             (Simulator.Scene, new Vector3(-600, -130, 0), "Alien", Color.White, "Pixelite", new Color(234, 196, 28, 0), Level.CommonStash.Score + " (base) + " +
                 Level.CommonStash.Cash + " (cash) +\n\n" +
@@ -120,7 +112,7 @@
 
 
             HighScores h;
-            Main.SaveGame.HighScores.TryGetValue(Level.Id, out h);
+            Main.SharedSaveGame.HighScores.TryGetValue(Level.Id, out h);
             HighscoreBeaten = h == null || h.Scores.Count <= 0 || Level.CommonStash.TotalScore > h.Scores[0].Value;
             int diff = (h == null || h.Scores.Count <= 0) ? Level.CommonStash.TotalScore : Level.CommonStash.TotalScore - h.Scores[0].Value;
 

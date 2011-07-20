@@ -346,6 +346,9 @@
         {
             SimPlayer player = Players[p];
 
+            if (Simulator.DemoMode || Simulator.WorldMode || Simulator.CutsceneMode || (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing))
+                return;
+
             if (PlayerInNextWave == null &&
                 player.PowerUpInUse == PowerUpType.None &&
                 player.ActualSelection.TurretToPlace == null &&

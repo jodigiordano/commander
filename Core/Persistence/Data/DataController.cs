@@ -7,27 +7,30 @@
 
     class DataController
     {
-        private Dictionary<string, Data> Datas;
+        private Dictionary<string, SharedData> SharedDatas;
+        private PlayerData PlayerData;
+
 #if WINDOWS_PHONE
         private IsolatedStorageSaveDevice SaveDevice;
 #else
-        private SharedSaveDevice SaveDevice;
+        private SharedSaveDevice Everyone;
+
 #endif
         private GameTime GameTime;
 
 
         public DataController()
         {
-            Datas = new Dictionary<string, Data>();
+            SharedDatas = new Dictionary<string, SharedData>();
 
 #if WINDOWS_PHONE
             SaveDevice = new IsolatedStorageSaveDevice();
 #else
-            SaveDevice = new SharedSaveDevice();
-            SaveDevice.DeviceSelectorCanceled += (s, e) => e.Response = SaveDeviceEventResponse.Force;
-            SaveDevice.DeviceDisconnected += (s, e) => e.Response = SaveDeviceEventResponse.Force;
+            Everyone = new SharedSaveDevice();
+            Everyone.DeviceSelectorCanceled += (s, e) => e.Response = SaveDeviceEventResponse.Force;
+            Everyone.DeviceDisconnected += (s, e) => e.Response = SaveDeviceEventResponse.Force;
 
-            SaveDevice.PromptForDevice();
+            Everyone.PromptForDevice();
 #endif
         }
 
@@ -38,36 +41,68 @@
         }
 
 
-        public void AddData(Data data)
+        public void SetPlayerData(PlayerData data)
         {
-            Datas.Add(data.Name, data);
-            data.SaveDevice = SaveDevice;
+            PlayerData = data;
+
+            var device = (PlayerSaveDevice) PlayerData.SaveDevice;
+
+            device.DeviceSelectorCanceled += (s, e) => e.Response = SaveDeviceEventResponse.Force;
+            device.DeviceDisconnected += (s, e) => e.Response = SaveDeviceEventResponse.Force;
+
+            device.PromptForDevice(); 
         }
 
 
-        public void Save(string dataName)
+        public void AddSharedData(SharedData data)
         {
+            SharedDatas.Add(data.Name, data);
+            data.SaveDevice = Everyone;
+        }
+
+
+        public void SaveData(string dataName)
+        {
+            if (SharedDatas.ContainsKey(dataName))
+            {
 #if !WINDOWS_PHONE
-            SaveDevice.Update(GameTime);
+                Everyone.Update(GameTime);
 #endif
 
-            ParallelTasks.Parallel.StartBackground(Datas[dataName].Save);
+                ParallelTasks.Parallel.StartBackground(SharedDatas[dataName].Save);
+            }
+
+            else if (PlayerData != null && PlayerData.Name == dataName)
+            {
+                ParallelTasks.Parallel.StartBackground(PlayerData.Save);
+            }
+
         }
 
 
-        public void Load(string dataName)
+        public void LoadData(string dataName)
         {
+            if (SharedDatas.ContainsKey(dataName))
+            {
 #if !WINDOWS_PHONE
-            SaveDevice.Update(GameTime);
+                Everyone.Update(GameTime);
 #endif
 
-            ParallelTasks.Parallel.StartBackground(Datas[dataName].Load);
+                ParallelTasks.Parallel.StartBackground(SharedDatas[dataName].Load);
+            }
+
+            else if (PlayerData != null && PlayerData.Name == dataName)
+            {
+                ((PlayerSaveDevice) PlayerData.SaveDevice).Update(GameTime);
+
+                ParallelTasks.Parallel.StartBackground(PlayerData.Load);
+            }
         }
 
 
-        public bool DataLoaded(string dataName)
+        public bool IsDataLoaded(string dataName)
         {
-            return (Datas.ContainsKey(dataName) && Datas[dataName].Loaded);
+            return (SharedDatas.ContainsKey(dataName) && SharedDatas[dataName].Loaded || (PlayerData != null && PlayerData.Name == dataName && PlayerData.Loaded));
         }
     }
 }

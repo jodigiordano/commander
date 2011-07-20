@@ -211,6 +211,7 @@ namespace EphemereGames.Commander.Simulation
         CallNextWave,
         MoveYourSpaceship,
         GameLost,
-        GameWon
+        GameWon,
+        HoldToSkip
     };
 }

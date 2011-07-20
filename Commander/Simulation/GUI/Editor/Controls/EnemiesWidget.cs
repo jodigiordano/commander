@@ -113,6 +113,17 @@
         }
 
 
+        public override byte Alpha
+        {
+            get { return FirstCheckBox.Alpha; }
+            set
+            {
+                foreach (var c in CheckBoxes.Values)
+                    c.Alpha = value;
+            }
+        }
+
+
         public override Vector3 Dimension
         {
             get

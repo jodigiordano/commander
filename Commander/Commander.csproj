@@ -176,10 +176,12 @@
     <Compile Include="GUI\Controls\Panels\VerticalPanel.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="Player\SharedSaveGame.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
-    <Compile Include="Player\Scores.cs" />
+    <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\TrialMode.cs" />
     <Compile Include="Animations\AnimationCommodore.cs" />
+    <Compile Include="Scenes\WorldAnnunciationScene.cs" />
     <Compile Include="Scenes\StoryScene.cs" />
     <Compile Include="Scenes\WorldScene.cs" />
     <Compile Include="Simulation\Bullets\BulletsFactory.cs" />

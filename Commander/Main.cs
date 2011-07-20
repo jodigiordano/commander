@@ -14,7 +14,8 @@ namespace EphemereGames.Commander
 
     class Main : Game
     {
-        public static SaveGame SaveGame;
+        public static SharedSaveGame SharedSaveGame;
+        public static SaveGame PlayerSaveGame;
         public static TrialMode TrialMode;
         public static GameScene GameInProgress;
         public static Main Instance;
@@ -43,7 +44,7 @@ namespace EphemereGames.Commander
             IsFixedTimeStep = true;
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (int) Preferences.TargetElapsedTimeMs);
             Content.RootDirectory = "Content";
-            SaveGame = new SaveGame();
+            SharedSaveGame = new SharedSaveGame();
             Window.AllowUserResizing = false;
 
             if (Preferences.Target == Core.Utilities.Setting.Xbox360)
@@ -77,7 +78,7 @@ namespace EphemereGames.Commander
             Physics.Initialize();
             Audio.Initialize(0.5f, 0.5f);
 
-            Persistence.AddData(SaveGame);
+            Persistence.AddSharedData(SharedSaveGame);
 
             Persistence.LoadPackage(@"loading");
 
@@ -122,7 +123,7 @@ namespace EphemereGames.Commander
                 MusicController.Update();
             }
 
-            if (Persistence.DataLoaded("savePlayer"))
+            if (Persistence.IsDataLoaded("Save"))
                 TrialMode.Update(gameTime);
         }
 

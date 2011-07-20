@@ -42,9 +42,9 @@
             switch (Preferences.Target)
             {
                 case Core.Utilities.Setting.WindowsDemo:
-                    EndOfDemo = Main.SaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
-                                Main.SaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
-                                Main.SaveGame.Progress.TryGetValue(2, out level) && level > 0;
+                    EndOfDemo = Main.PlayerSaveGame.Progress.TryGetValue(0, out level) && level > 0 &&
+                                Main.PlayerSaveGame.Progress.TryGetValue(1, out level) && level > 0 &&
+                                Main.PlayerSaveGame.Progress.TryGetValue(2, out level) && level > 0;
                     break;
 
                 case Core.Utilities.Setting.WindowsFull:
@@ -56,7 +56,7 @@
 
                     for (int i = 0; i < 9; i++)
                     {
-                        if (Main.SaveGame.Progress.TryGetValue(i, out level) && level > 0)
+                        if (Main.PlayerSaveGame.Progress.TryGetValue(i, out level) && level > 0)
                             nbTableauxTermines++;
                     }
 
@@ -64,7 +64,7 @@
 
                     for (int i = 0; i < 9; i++)
                     {
-                        Main.SaveGame.Progress.TryGetValue(i, out level);
+                        Main.PlayerSaveGame.Progress.TryGetValue(i, out level);
 
                         nbPartiesJouees += Math.Abs(level);
                     }

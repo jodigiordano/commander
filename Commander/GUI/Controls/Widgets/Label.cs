@@ -50,6 +50,13 @@
         }
 
 
+        public override byte Alpha
+        {
+            get { return Text.Alpha; }
+            set { Text.Alpha = value; }
+        }
+
+
         public override Vector3 Dimension
         {
             get

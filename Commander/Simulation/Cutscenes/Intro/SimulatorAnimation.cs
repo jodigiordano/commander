@@ -20,7 +20,7 @@
 
             Background = new Image("PixelBlanc")
             {
-                Color = Color.Black,
+                Color = Color.White,
                 Size = new Vector2(1280, 720),
                 VisualPriority = VisualPriorities.Default.IntroSimulatorBackground
             };
@@ -34,6 +34,7 @@
             };
             Simulator.Initialize();
 
+            Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.ChangeColor(Color.Black, 0, 2000));
             Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn, 5000));
         }
 

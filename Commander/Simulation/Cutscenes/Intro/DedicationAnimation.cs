@@ -13,7 +13,8 @@
 
         private static List<string> AvailableDedications = new List<string>()
         {
-            "\"To dedication: you\n\nadded drama where I\n\nneeded it. Thank you.\""
+            "\"To dedication: you\n\nadded drama where I\n\nneeded it. Thank you.\"",
+            "\"To big pixels: you\n\nreduced my canvas and\n\ngave me artistic wings.\n\nThank you.\""
         };
 
 

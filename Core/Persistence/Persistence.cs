@@ -1,10 +1,8 @@
 ﻿namespace EphemereGames.Core.Persistence
 {
-    using System;
     using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Utilities;
 
-    
+
     public static class Persistence
     {
         internal static DataController DataController;
@@ -61,27 +59,33 @@
         }
 
 
-        public static void AddData(Data data)
+        public static void SetPlayerData(PlayerData data)
         {
-            DataController.AddData(data);
+            DataController.SetPlayerData(data);
+        }
+
+
+        public static void AddSharedData(SharedData data)
+        {
+            DataController.AddSharedData(data);
         }
 
 
         public static void SaveData(string data)
         {
-            DataController.Save(data);
+            DataController.SaveData(data);
         }
 
 
         public static void LoadData(string data)
         {
-            DataController.Load(data);
+            DataController.LoadData(data);
         }
 
 
-        public static bool DataLoaded(string data)
+        public static bool IsDataLoaded(string data)
         {
-            return DataController.DataLoaded(data);
+            return DataController.IsDataLoaded(data);
         }
 
 

@@ -120,7 +120,7 @@
                 Descriptor.Waves.Add(w.Descriptor);
 
             // Sync Asteroid Belt
-            var asteroidBelt = GetAsteroidBelt(Descriptor.PlanetarySystem);
+            var asteroidBelt = LevelDescriptor.GetAsteroidBelt(Descriptor.PlanetarySystem);
 
             Bag<EnemyType> enemies = new Bag<EnemyType>();
 
@@ -131,7 +131,7 @@
             if (asteroidBelt == null)
             {
                 Descriptor.AddAsteroidBelt();
-                asteroidBelt = GetAsteroidBelt(Descriptor.PlanetarySystem);
+                asteroidBelt = LevelDescriptor.GetAsteroidBelt(Descriptor.PlanetarySystem);
             }
 
             asteroidBelt.Images = new List<string>();
@@ -309,16 +309,6 @@
                     lowest = c;
 
             return lowest;
-        }
-
-
-        private CelestialBodyDescriptor GetAsteroidBelt(List<CelestialBodyDescriptor> celestialBodies)
-        {
-            foreach (var c in celestialBodies)
-                if (c.Name == "Asteroid belt" || c.Images.Count != 0 || c.PathPriority == int.MinValue + 1)
-                    return c;
-
-            return null;
         }
     }
 }

@@ -31,9 +31,9 @@
             Color = color;
 
             HBMessage = new List<KeyValuePair<string, PanelWidget>>();
-            HBMessage.AddRange(HelpBarPanel.PredefinedMessages[HelpBarMessage.ToggleChoices]);
+            HBMessage.AddRange(Simulator.HelpBar.PredefinedMessages[HelpBarMessage.ToggleChoices]);
             HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
-            HBMessage.AddRange(HelpBarPanel.PredefinedMessages[HelpBarMessage.Select]);
+            HBMessage.AddRange(Simulator.HelpBar.PredefinedMessages[HelpBarMessage.Select]);
             HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
 
             TurretDescription = new Label(new Text("Pixelite") { SizeX = 2f });
