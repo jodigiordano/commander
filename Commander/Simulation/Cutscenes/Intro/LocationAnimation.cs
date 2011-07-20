@@ -16,7 +16,7 @@
         {
             Scene = scene;
 
-            Where = new Text("Somewhere in a mining colony", "Pixelite", new Vector3(-600, 260, 0))
+            Where = new Text("Far far away, in a little colony", "Pixelite", new Vector3(-600, 260, 0))
             {
                 SizeX = 3,
                 Alpha = 0,

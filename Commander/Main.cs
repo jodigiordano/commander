@@ -123,7 +123,7 @@ namespace EphemereGames.Commander
                 MusicController.Update();
             }
 
-            if (Persistence.IsDataLoaded("Save"))
+            if (PlayerSaveGame != null && PlayerSaveGame.IsLoaded)
                 TrialMode.Update(gameTime);
         }
 

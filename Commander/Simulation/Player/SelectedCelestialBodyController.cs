@@ -67,6 +67,12 @@
 
         public void Update()
         {
+            if (!Simulator.CanSelectCelestialBodies)
+            {
+                Initialize();
+                return;
+            }
+
             //if (!Simulator.DemoMode && Player.NextInput != Vector3.Zero)
             //{
             //    if (Turret != null)

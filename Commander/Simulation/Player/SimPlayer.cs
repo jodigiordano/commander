@@ -21,15 +21,13 @@
 
         public bool UpdateSelectionz;
 
-        public Circle Circle;
-        public Color Color;
         public string ImageName;
         public PowerUpType PowerUpInUse;
         public bool Firing;
 
-        private Vector3 position;
         private Vector3 direction;
         private Simulator Simulator;
+        private Player Player;
 
         public SpaceshipSpaceship SpaceshipMove;
 
@@ -42,10 +40,10 @@
         public bool MovingDown;
 
 
-        public SimPlayer(Simulator simulator)
+        public SimPlayer(Simulator simulator, Player player)
         {
             Simulator = simulator;
-            Circle = new Circle(Position, 8);
+            Player = player;
             PowerUpInUse = PowerUpType.None;
 
             SpaceshipMove = new SpaceshipSpaceship(simulator)
@@ -74,13 +72,28 @@
 
         public Vector3 Position
         {
-            get { return position; }
+            get { return Player.Position; }
             set
             {
-                position = SpaceshipMove.Position = value;
-                VerifyFrame();
-                Circle.Position = position;
+                Player.Position = SpaceshipMove.Position = value;
             }
+        }
+
+
+        public Circle Circle
+        {
+            get { return Player.Circle; }
+            set
+            {
+                Player.Circle = value;
+            }
+        }
+
+
+        public Color Color
+        {
+            get { return Player.Color; }
+            set { Player.Color = value; }
         }
 
 
@@ -89,7 +102,7 @@
             set
             {
                 SpaceshipMove.NinjaPosition = value;
-                position = SpaceshipMove.Position;
+                Position = SpaceshipMove.Position;
                 VerifyFrame();
             }
         }
@@ -135,7 +148,7 @@
         }
 
 
-        public void UpdateDemoSelection()
+        public void UpdateWorldSelection()
         {
             ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
 
@@ -143,15 +156,31 @@
                 !Main.GameInProgress.IsFinished &&
                 Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == ActualSelection.CelestialBody.Name &&
                 Simulator.Scene.EnableInputs &&
-                ActualSelection.GameChoice == PausedGameChoice.None) //todo: take it from WorldMenu
+                ActualSelection.PausedGameChoice == PausedGameChoice.None) //todo: take it from WorldMenu
             {
-                NextGameAction();
+                NextPausedGameChoice();
             }
 
             else if (Main.GameInProgress == null || ActualSelection.CelestialBody == null)
             {
-                ActualSelection.GameChoice = PausedGameChoice.None;
+                ActualSelection.PausedGameChoice = PausedGameChoice.None;
             }
+        }
+
+
+        public void UpdateMainMenuSelection()
+        {
+            ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
+
+            if (ActualSelection.CelestialBody != null &&
+                ActualSelection.CelestialBody.Name == @"save the world" &&
+                ActualSelection.NewGameChoice == NewGameChoice.None)
+            {
+                NextNewGameChoice();
+            }
+
+            else if (ActualSelection.CelestialBody == null || ActualSelection.CelestialBody.Name != @"save the world")
+                ActualSelection.NewGameChoice = NewGameChoice.None;
         }
 
 
@@ -260,9 +289,9 @@
         }
 
 
-        public void NextGameAction()
+        public void NextPausedGameChoice()
         {
-            int actual = (int) ActualSelection.GameChoice;
+            int actual = (int) ActualSelection.PausedGameChoice;
             int nbChoices = 2;
 
             actual += 1;
@@ -270,13 +299,13 @@
             if (actual >= nbChoices)
                 actual = 0;
 
-            ActualSelection.GameChoice = (PausedGameChoice) actual;
+            ActualSelection.PausedGameChoice = (PausedGameChoice) actual;
         }
 
 
-        public void PreviousGameAction()
+        public void PreviousPausedGameChoice()
         {
-            int actual = (int) ActualSelection.GameChoice;
+            int actual = (int) ActualSelection.PausedGameChoice;
             int nbChoices = 2;
 
             actual -= 1;
@@ -284,7 +313,55 @@
             if (actual < 0)
                 actual = nbChoices - 1;
 
-            ActualSelection.GameChoice = (PausedGameChoice) actual;
+            ActualSelection.PausedGameChoice = (PausedGameChoice) actual;
+        }
+
+
+        public void NextNewGameChoice()
+        {
+            int actual = (int) ActualSelection.NewGameChoice;
+            int nbChoices = ActualSelection.AvailableNewGameChoices.Count;
+            int next = actual;
+
+            for (int i = 1; i < nbChoices; i++)
+            {
+                actual += 1;
+
+                if (actual >= nbChoices)
+                    actual = 0;
+
+                if (ActualSelection.AvailableNewGameChoices[(NewGameChoice) actual])
+                {
+                    next = actual;
+                    break;
+                }
+            }
+
+            ActualSelection.NewGameChoice = (NewGameChoice) next;
+        }
+
+
+        public void PreviousNewGameChoice()
+        {
+            int actual = (int) ActualSelection.NewGameChoice;
+            int nbChoices = ActualSelection.AvailableNewGameChoices.Count;
+            int previous = actual;
+
+            for (int i = 1; i < nbChoices; i++)
+            {
+                actual -= 1;
+
+                if (actual < 0)
+                    actual = nbChoices - 1;
+
+                if (ActualSelection.AvailableNewGameChoices[(NewGameChoice) actual])
+                {
+                    previous = actual;
+                    break;
+                }
+            }
+
+            ActualSelection.NewGameChoice = (NewGameChoice) previous;
         }
 
 
@@ -348,6 +425,11 @@
 
             CheckAvailableTurretOptions();
 
+            if (Simulator.DemoMode)
+            {
+                CheckAvailableNewGameChoices();
+            }
+
             Position += SelectedCelestialBodyController.DoGlueMode();
 
             // Manage turret to place (to always has a valid position)
@@ -355,10 +437,10 @@
             {
                 Turret turretToPlace = ActualSelection.TurretToPlace;
                 CelestialBody celestialBody = ActualSelection.TurretToPlace.CelestialBody;
-                turretToPlace.Position = position;
+                turretToPlace.Position = Position;
 
-                if (celestialBody.OuterTurretZone.Outside(ref position))
-                    Position = celestialBody.OuterTurretZone.NearestPointToCircumference(ref position);
+                if (celestialBody.OuterTurretZone.Outside(Position))
+                    Position = celestialBody.OuterTurretZone.NearestPointToCircumference(Position);
 
                 turretToPlace.CanPlace = celestialBody.InnerTurretZone.Outside(turretToPlace.Position);
 
@@ -378,8 +460,11 @@
             if (UpdateSelectionz)
                 UpdateSelection();
 
+            if (Simulator.WorldMode)
+                UpdateWorldSelection();
+
             if (Simulator.DemoMode)
-                UpdateDemoSelection();
+                UpdateMainMenuSelection();
 
             SpaceshipMove.NextMovement = Vector3.Zero;
             SpaceshipMove.NextRotation = Vector3.Zero;
@@ -395,8 +480,12 @@
 
         private void VerifyFrame()
         {
-            position.X = MathHelper.Clamp(position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius);
-            position.Y = MathHelper.Clamp(position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius);
+            Position = new Vector3
+            (
+                MathHelper.Clamp(Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius),
+                MathHelper.Clamp(Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius),
+                0
+            );
         }
 
 
@@ -422,6 +511,24 @@
             //change automatiquement la selection de cette option quand elle n'est pas disponible
             if (!ActualSelection.AvailableTurretOptions[TurretChoice.Update] && ActualSelection.TurretChoice == TurretChoice.Update)
                 ActualSelection.TurretChoice = TurretChoice.Sell;
+        }
+
+
+        private void CheckAvailableNewGameChoices()
+        {
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.Continue] = Main.PlayerSaveGame.CurrentWorld > 0;
+
+            var maxWorld = Main.PlayerSaveGame.LastUnlockedWorld;
+
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld1] = maxWorld > 1;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld2] = maxWorld >= 2;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld3] = maxWorld >= 3;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld4] = maxWorld >= 4;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld5] = maxWorld >= 5;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld6] = maxWorld >= 6;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld7] = maxWorld >= 7;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld8] = maxWorld >= 8;
+
         }
     }
 }

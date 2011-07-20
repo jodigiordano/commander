@@ -19,18 +19,18 @@
 
     enum GameState
     {
-        Running,
-        Paused,
-        Won,
-        Lost
+        Running = 1,
+        Paused = 2,
+        Won = 3,
+        Lost = 4
     }
 
 
     enum MusicContext
     {
-        Won,
-        Lost,
-        Other
+        Won = 1,
+        Lost = 2,
+        Other = 3
     }
 }
 
@@ -39,51 +39,51 @@ namespace EphemereGames.Commander.Simulation
 {
     enum BulletType
     {
-        Base,
-        Missile,
-        Missile2,
-        LaserMultiple,
-        LaserSimple,
-        Aucun,
-        SlowMotion,
-        Gunner,
-        Nanobots,
-        RailGun,
-        Shield,
-        Pulse,
-        Mine
+        None = -1,
+        Base = 0,
+        Missile = 1,
+        Missile2 = 2,
+        Mine = 3,
+        LaserMultiple = 4,
+        LaserSimple = 5,
+        SlowMotion = 6,
+        Gunner = 7,
+        Nanobots = 8,
+        RailGun = 9,
+        Shield = 10,
+        Pulse = 11
     };
 
 
     public enum EnemyType
     {
-        Asteroid,
-        Comet,
-        Plutoid,
-        Centaur,
-        Trojan,
-        Meteoroid,
-        Apohele,
-        Damacloid,
-        Vulcanoid,
-        Swarm
+        Asteroid = 1,
+        Comet = 2,
+        Plutoid = 3,
+        Centaur = 4,
+        Trojan = 5,
+        Meteoroid = 6,
+        Apohele = 7,
+        Damacloid = 8,
+        Vulcanoid = 9,
+        Swarm = 10
     };
 
 
     public enum TurretType
     {
-        Basic,
-        Missile,
-        Gravitational,
-        MultipleLasers,
-        Laser,
-        None,
-        Alien,
-        SlowMotion,
-        Booster,
-        Gunner,
-        Nanobots,
-        RailGun
+        Basic = 1,
+        Missile = 2,
+        Gravitational = 3,
+        MultipleLasers = 4,
+        Laser = 5,
+        None = 6,
+        Alien = 7,
+        SlowMotion = 8,
+        Booster = 9,
+        Gunner = 10,
+        Nanobots = 11,
+        RailGun = 12
     };
 
 
@@ -106,18 +106,18 @@ namespace EphemereGames.Commander.Simulation
 
     enum PowerUpCategory
     {
-        Spaceship,
-        Turret,
-        Other
+        Spaceship = 1,
+        Turret = 2,
+        Other = 3
     }
 
 
     enum MineralType
     {
-        Cash10,
-        Cash25,
-        Cash150,
-        Life1
+        Cash10 = 1,
+        Cash25 = 2,
+        Cash150 = 3,
+        Life1 = 4
     };
 
 
@@ -137,81 +137,97 @@ namespace EphemereGames.Commander.Simulation
     }
 
 
+    public enum NewGameChoice
+    {
+        None = -1,
+        Continue = 0,
+        WrapToWorld1 = 1,
+        WrapToWorld2 = 2,
+        WrapToWorld3 = 3,
+        WrapToWorld4 = 4,
+        WrapToWorld5 = 5,
+        WrapToWorld6 = 6,
+        WrapToWorld7 = 7,
+        WrapToWorld8 = 8,
+        NewGame = 9,
+    }
+
+
     enum EditorGeneralMenuChoice
     {
-        None,
-        File,
-        Waves,
-        Battlefield,
-        Gameplay
+        None = -1,
+        File = 0,
+        Waves = 1,
+        Battlefield = 2,
+        Gameplay = 3
     }
 
 
     enum EditorPanel
     {
-        Player,
-        Load,
-        Save,
-        Delete,
-        PowerUps,
-        Turrets,
-        General,
-        Background,
-        GeneratePlanetarySystem,
-        Waves,
-        None
+        None = -1,
+        Player = 0,
+        Load = 1,
+        Save = 2,
+        Delete = 3,
+        PowerUps = 4,
+        Turrets = 5,
+        General = 6,
+        Background = 7,
+        GeneratePlanetarySystem = 8,
+        Waves = 9
     }
 
 
     enum EditorState
     {
-        Editing,
-        Playtest
+        Editing = 1,
+        Playtest = 2
     }
 
 
     enum EditorCommandType
     {
-        Basic,
-        Panel,
-        CelestialBody,
-        Player
+        Basic = 1,
+        Panel = 2,
+        CelestialBody = 3,
+        Player = 4
     }
 
 
     enum WaveType
     {
         Homogene = 0,
-        DistinctFollow,
-        PackedH
+        DistinctFollow = 1,
+        PackedH = 2
     }
 
 
     enum EditorEditingState
     {
-        None,
-        MovingCB,
-        RotatingCB,
-        ShrinkingCB,
-        StartPosCB
+        None = -1,
+        MovingCB = 0,
+        RotatingCB = 1,
+        ShrinkingCB = 2,
+        StartPosCB = 3
     }
 
 
     enum HelpBarMessage
     {
-        None,
-        Select,
-        Cancel,
-        ToggleChoices,
-        WorldMenu,
-        CelestialBodyMenu,
-        TurretMenu,
-        InstallTurret,
-        PowerUpMenu,
-        CallNextWave,
-        MoveYourSpaceship,
-        GameLost,
-        GameWon,
-        HoldToSkip
+        None = -1,
+        Select = 0,
+        Cancel = 1,
+        ToggleChoices = 2,
+        WorldMenu = 3,
+        CelestialBodyMenu = 4,
+        TurretMenu = 5,
+        InstallTurret = 6,
+        PowerUpMenu = 7,
+        CallNextWave = 8,
+        MoveYourSpaceship = 9,
+        GameLost = 10,
+        GameWon = 11,
+        HoldToSkip = 12
     };
 }

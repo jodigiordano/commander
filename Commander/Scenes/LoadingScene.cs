@@ -136,7 +136,7 @@
 
                 case State.LoadSharedSaveGame:
 
-                    if (Persistence.IsDataLoaded("SharedSaveGame"))
+                    if (Main.SharedSaveGame.IsLoaded)
                     {
                         SceneState = State.LoadScenes;
 
@@ -200,7 +200,7 @@
             WorldScene ws;
             WorldAnnunciationScene was;
 
-            wd = LevelsFactory.GetWorldDescriptor(id);
+            wd = Main.LevelsFactory.WorldsDescriptors[id];
             ws = new WorldScene(wd);
             was = new WorldAnnunciationScene(wd);
 

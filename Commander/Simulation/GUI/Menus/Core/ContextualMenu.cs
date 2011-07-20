@@ -11,7 +11,7 @@
     {
         public Vector3 Position;
         public int SelectedIndex;
-        public bool Visible;
+        public virtual bool Visible { get; set; }
         public int Layout;
 
         protected Simulator Simulator;
@@ -70,20 +70,12 @@
                 Origin = Vector2.Zero
             };
 
-            Choices = choices;
+            Choices = new List<ContextualMenuChoice>();
 
             foreach (var c in choices)
-            {
-                c.Scene = Simulator.Scene;
-                c.VisualPriority = visualPriority;
-                c.DataChanged += new NoneHandler(DoChoiceDataChanged);
-                c.AvailabilityChanged += new NoneHandler(DoChoiceAvailabilityChanged);
-
-            }
+                AddChoice(c);
 
             Margin = new Vector3(3, 3, 0);
-
-            ComputeSize();
 
             ChoiceDataChanged = false;
             ChoiceAvailabilityChanged = false;
@@ -96,7 +88,11 @@
 
         public void AddChoice(ContextualMenuChoice choice)
         {
-            //Text textChoice = new Text(choice, "Pixelite") { SizeX = 2, VisualPriority = VisualPriority };
+            choice.Scene = Simulator.Scene;
+            choice.VisualPriority = VisualPriority;
+            choice.DataChanged += new NoneHandler(DoChoiceDataChanged);
+            choice.AvailabilityChanged += new NoneHandler(DoChoiceAvailabilityChanged);
+            
             Choices.Add(choice);
 
             if (Choices.Count == 1)
@@ -118,6 +114,16 @@
 
             if (Choices.Count == 0)
                 SelectedIndex = -1;
+
+            ComputeSize();
+        }
+
+
+        public void Clear()
+        {
+            Choices.Clear();
+
+            SelectedIndex = -1;
 
             ComputeSize();
         }

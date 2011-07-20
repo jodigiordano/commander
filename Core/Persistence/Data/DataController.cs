@@ -69,12 +69,12 @@
                 Everyone.Update(GameTime);
 #endif
 
-                ParallelTasks.Parallel.StartBackground(SharedDatas[dataName].Save);
+                ParallelTasks.Parallel.StartBackground(SharedDatas[dataName].SaveData);
             }
 
             else if (PlayerData != null && PlayerData.Name == dataName)
             {
-                ParallelTasks.Parallel.StartBackground(PlayerData.Save);
+                ParallelTasks.Parallel.StartBackground(PlayerData.SaveData);
             }
 
         }
@@ -88,14 +88,14 @@
                 Everyone.Update(GameTime);
 #endif
 
-                ParallelTasks.Parallel.StartBackground(SharedDatas[dataName].Load);
+                ParallelTasks.Parallel.StartBackground(SharedDatas[dataName].LoadData);
             }
 
             else if (PlayerData != null && PlayerData.Name == dataName)
             {
                 ((PlayerSaveDevice) PlayerData.SaveDevice).Update(GameTime);
 
-                ParallelTasks.Parallel.StartBackground(PlayerData.Load);
+                ParallelTasks.Parallel.StartBackground(PlayerData.LoadData);
             }
         }
 

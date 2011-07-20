@@ -66,6 +66,13 @@
         }
 
 
+        public void ApplyChanges()
+        {
+            Audio.MusicVolume = VolumeMusic / 10f;
+            Audio.SfxVolume = VolumeSfx / 10f;
+        }
+
+
         private void FirstLoad()
         {
             VolumeMusic = 5;
@@ -73,10 +80,9 @@
 
             HighScores = new SerializableDictionaryProxy<int, HighScores>();
 
-            Audio.MusicVolume = VolumeMusic / 10f;
-            Audio.SfxVolume = VolumeSfx / 10f;
+            ApplyChanges();
+            Save();
 
-            Persistence.SaveData(Name);
             Loaded = true;
         }
     }

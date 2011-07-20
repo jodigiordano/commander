@@ -176,6 +176,7 @@
     <Compile Include="GUI\Controls\Panels\VerticalPanel.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\HighScores.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Simulation\GUI\GUIController.cs" />
     <Compile Include="Simulation\GUI\GUIPlayer.cs" />
     <Compile Include="Simulation\GUI\HelpBarPanel.cs" />
+    <Compile Include="Simulation\GUI\Menus\NewGameMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\UpgradeTurretContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\LogoTextContextualMenuChoice.cs" />

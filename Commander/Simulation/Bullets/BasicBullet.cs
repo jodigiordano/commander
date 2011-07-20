@@ -44,7 +44,7 @@
 
             Image.VisualPriority = VisualPriority + 0.001f;
             MovingEffect.VisualPriority = VisualPriority + 0.001f;
-            ExplodingEffect.VisualPriority = 0.35f;
+            ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationEnnemi - 0.01f;
 
             LifePoints = 5;
         }

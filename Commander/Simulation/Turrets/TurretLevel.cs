@@ -27,7 +27,7 @@
             FireRate = 1;
             NbCanons = 1;
             BuildingTime = 1;
-            Bullet = BulletType.Aucun;
+            Bullet = BulletType.None;
             CanonImageName = "";
             BaseImageName = "";
             BulletHitPoints = 0;

@@ -136,6 +136,13 @@
         }
 
 
+        public void SyncNewGameMenu()
+        {
+            foreach (var p in Players.Values)
+                p.NewGameMenu.Initialize();
+        }
+
+
         public void DoShowNextWaveAsked(SimPlayer p)
         {
             var player = Players[p];
@@ -181,6 +188,8 @@
         public void DoGameStateChanged(GameState newGameState)
         {
             LevelEndedAnnunciation.DoGameStateChanged(newGameState);
+
+            SyncNewGameMenu();
         }
 
 
@@ -360,7 +369,7 @@
             if (Simulator.WorldMode)
             {
                 player.WorldMenu.CelestialBody = selection.CelestialBody;
-                player.WorldMenu.PausedGameChoice = selection.GameChoice;
+                player.WorldMenu.PausedGameChoice = selection.PausedGameChoice;
 
                 if (GamePausedMenuPlayerCheckedIn == null && player.WorldMenu.PausedGameMenuVisible)
                 {
@@ -373,6 +382,12 @@
                     GamePausedMenuPlayerCheckedIn = null;
                     player.WorldMenu.PausedGameMenuCheckedIn = false;
                 }
+            }
+
+            if (Simulator.DemoMode)
+            {
+                player.NewGameMenu.CelestialBody = selection.CelestialBody;
+                player.NewGameMenu.NewGameChoice = selection.NewGameChoice;
             }
 
             player.SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
@@ -549,9 +564,9 @@
                     HelpBar.HideMessage(HelpBarMessage.Select);
 
                 // World Menu
-                if (player.WorldMenu.PausedGameChoice == PausedGameChoice.None && selection.GameChoice != PausedGameChoice.None)
+                if (player.WorldMenu.PausedGameChoice == PausedGameChoice.None && selection.PausedGameChoice != PausedGameChoice.None)
                     HelpBar.ShowMessage(HelpBarMessage.WorldMenu);
-                else if (player.WorldMenu.PausedGameChoice != PausedGameChoice.None && selection.GameChoice == PausedGameChoice.None)
+                else if (player.WorldMenu.PausedGameChoice != PausedGameChoice.None && selection.PausedGameChoice == PausedGameChoice.None)
                     HelpBar.HideMessage(HelpBarMessage.WorldMenu);
             }
 

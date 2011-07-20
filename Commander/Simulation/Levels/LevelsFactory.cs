@@ -13,7 +13,7 @@
         public Dictionary<int, LevelDescriptor> CutsceneDescriptors;
 
         public LevelDescriptor Menu;
-        private Dictionary<int, WorldDescriptor> WorldsDescriptors;
+        public Dictionary<int, WorldDescriptor> WorldsDescriptors;
 
         private XmlSerializer LevelSerializer;
         private XmlSerializer WorldSerializer;
@@ -33,6 +33,7 @@
         public void Initialize()
         {
             LoadLevels();
+            LoadWorlds();
             LoadCutscenes();
             LoadMenuDescriptor();
         }
@@ -91,6 +92,50 @@
         }
 
 
+        private void LoadWorlds()
+        {
+            WorldDescriptor wd;
+
+            wd = new WorldDescriptor()
+            {
+                Id = 1,
+                Name = "The colonies",
+                Levels = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
+                Layout = 1001,
+                UnlockedCondition = new List<int>(),
+                WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level."
+            };
+            WorldsDescriptors.Add(wd.Id, wd);
+
+            wd = new WorldDescriptor()
+            {
+                Id = 2,
+                Name = "Battle for Earth",
+                //Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
+                Levels = new List<int>() { 1 },
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
+                Layout = 1002,
+                UnlockedCondition = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
+                WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world."
+            };
+            WorldsDescriptors.Add(wd.Id, wd);
+
+            wd = new WorldDescriptor()
+            {
+                Id = 3,
+                Name = "The invasion",
+                //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
+                Levels = new List<int>() { 1 },
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World2") },
+                Layout = 1003,
+                UnlockedCondition = new List<int>() { -1 },
+                WarpBlockedMessage = ""
+            };
+            WorldsDescriptors.Add(wd.Id, wd);
+        }
+
+
         private void LoadCutscenes()
         {
             CutsceneDescriptors.Clear();
@@ -126,57 +171,13 @@
         }
 
 
-        public static WorldDescriptor GetWorldDescriptor(int id)
+        public int GetWorldFromLevelId(int id)
         {
-            WorldDescriptor wd;
+            foreach (var w in WorldsDescriptors.Values)
+                if (w.Levels.Contains(id))
+                    return w.Id;
 
-            switch (id)
-            {
-                case 1:
-                default:
-                    wd = new WorldDescriptor()
-                    {
-                        Id = id,
-                        Name = "The colonies",
-                        Levels = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
-                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
-                        Layout = 1001,
-                        UnlockedCondition = new List<int>(),
-                        WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level."
-                    };
-                    break;
-
-                case 2:
-                    wd = new WorldDescriptor()
-                    {
-                        Id = id,
-                        Name = "Battle for Earth",
-                        //Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
-                        Levels = new List<int>() { 1 },
-                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
-                        Layout = 1002,
-                        UnlockedCondition = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
-                        WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world."
-                    };
-                    break;
-
-                case 3:
-                    wd = new WorldDescriptor()
-                    {
-                        Id = id,
-                        Name = "The invasion",
-                        //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
-                        Levels = new List<int>() { 1 },
-                        Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World2") },
-                        Layout = 1003,
-                        UnlockedCondition = new List<int>() { -1 },
-                        WarpBlockedMessage = ""
-                    };
-                    break;
-            }
-
-
-            return wd;
+            return 1;
         }
 
 

@@ -77,7 +77,7 @@
 
         public void AddPlayer(Commander.Player player)
         {
-            var simPlayer = new SimPlayer(Simulator)
+            var simPlayer = new SimPlayer(Simulator, player)
             {
                 CelestialBodies = CelestialBodies,
                 CommonStash = CommonStash,
@@ -248,7 +248,7 @@
         }
 
 
-        public void DoGameAction(Player p, int delta)
+        public void DoPausedGameChoice(Player p, int delta)
         {
             var player = Players[p];
 
@@ -256,9 +256,25 @@
                 return;
 
             if (delta > 0)
-                player.NextGameAction();
+                player.NextPausedGameChoice();
             else
-                player.PreviousGameAction();
+                player.PreviousPausedGameChoice();
+
+            return;
+        }
+
+
+        public void DoNewGameChoice(Player p, int delta)
+        {
+            var player = Players[p];
+
+            if (player.ActualSelection.CelestialBody == null)
+                return;
+
+            if (delta > 0)
+                player.NextNewGameChoice();
+            else
+                player.PreviousNewGameChoice();
 
             return;
         }

@@ -16,7 +16,10 @@
         public TurretType TurretToBuy;
         public Turret TurretToPlace;
 
-        public PausedGameChoice GameChoice;
+        public PausedGameChoice PausedGameChoice;
+
+        public NewGameChoice NewGameChoice;
+        public Dictionary<NewGameChoice, bool> AvailableNewGameChoices;
 
         public EditorEditingState EditingState;
 
@@ -29,12 +32,25 @@
             TurretToBuy = TurretType.None;
             TurretChoice = TurretChoice.None;
             TurretToPlace = null;
-            GameChoice = PausedGameChoice.None;
+            PausedGameChoice = PausedGameChoice.None;
+            NewGameChoice = NewGameChoice.None;
             EditingState = EditorEditingState.None;
 
             AvailableTurretOptions = new Dictionary<TurretChoice, bool>(TurretActionComparer.Default);
             AvailableTurretOptions.Add(TurretChoice.Sell, false);
             AvailableTurretOptions.Add(TurretChoice.Update, false);
+
+            AvailableNewGameChoices = new Dictionary<NewGameChoice, bool>(NewGameChoiceComparer.Default);
+            AvailableNewGameChoices.Add(NewGameChoice.Continue, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld1, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld2, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld3, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld4, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld5, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld6, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld7, false);
+            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld8, false);
+            AvailableNewGameChoices.Add(NewGameChoice.NewGame, true);
         }
     }
 }

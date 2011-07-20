@@ -113,6 +113,7 @@
 
             InitializeLevelsStates();
             Main.SelectedWorld = Name;
+            Main.PlayerSaveGame.CurrentWorld = Descriptor.Id;
 
             Simulator.SyncPlayers();
 
@@ -195,7 +196,7 @@
                 if (currentGame != null && 
                     !currentGame.IsFinished &&
                     currentGame.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id &&
-                    Simulator.GameAction == PausedGameChoice.Resume)
+                    Simulator.PausedGameChoice == PausedGameChoice.Resume)
                 {
                     currentGame.Simulator.State = GameState.Running;
                     Main.MusicController.PauseMusic();

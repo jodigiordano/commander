@@ -105,6 +105,7 @@
     <Compile Include="GUI\SandGlass.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Simulation\GUI\Menus\Core\ToggleContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\UpgradeTurretContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\GameMenu.cs" />
+    <Compile Include="Simulation\GUI\Menus\NewGameMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\NextWaveMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\PowerUpsMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\TurretMenu.cs" />

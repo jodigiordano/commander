@@ -2,7 +2,6 @@ namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -17,13 +16,15 @@ namespace EphemereGames.Commander.Simulation
         public bool WorldMode;
         public bool DemoMode;
         public bool CutsceneMode;
+        public bool CanSelectCelestialBodies;
         
         public bool EditorMode;
         internal EditorState EditorState;
         internal Level Level;
 
         public bool HelpMode { get { return LevelsController.Help.Active; } }
-        public PausedGameChoice GameAction;
+        public PausedGameChoice PausedGameChoice;
+        public NewGameChoice NewGameChoice;
         public PhysicalRectangle Terrain;
         public PhysicalRectangle InnerTerrain;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
@@ -140,9 +141,11 @@ namespace EphemereGames.Commander.Simulation
             DemoMode = false;
             CutsceneMode = false;
             EditorMode = false;
+            CanSelectCelestialBodies = true;
             EditorState = EditorState.Editing;
             DebugMode = Preferences.Debug;
-            GameAction = PausedGameChoice.None;
+            PausedGameChoice = PausedGameChoice.None;
+            NewGameChoice = NewGameChoice.None;
 
 
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);
@@ -398,6 +401,11 @@ namespace EphemereGames.Commander.Simulation
                 else if (p.State == PlayerState.Disconnected && SimPlayersController.HasPlayer(player))
                     DoPlayerDisconnected(player);
             }
+
+            if (DemoMode)
+            {
+                GUIController.SyncNewGameMenu();
+            }
         }
 
 
@@ -415,7 +423,8 @@ namespace EphemereGames.Commander.Simulation
 
         private void DoPlayerSelectionChanged(SimPlayer player)
         {
-            GameAction = player.ActualSelection.GameChoice;
+            PausedGameChoice = player.ActualSelection.PausedGameChoice;
+            NewGameChoice = player.ActualSelection.NewGameChoice;
         }
 
 
@@ -431,7 +440,8 @@ namespace EphemereGames.Commander.Simulation
 
                 Main.SharedSaveGame.HighScores[levelId].Add(Inputs.MasterPlayer.Name, score);
 
-                Persistence.SaveData("savePlayer");
+                Main.SharedSaveGame.Save();
+                Main.PlayerSaveGame.Save();
             }
         }
 
@@ -691,8 +701,10 @@ namespace EphemereGames.Commander.Simulation
             if (EditorMode && EditorState == EditorState.Editing)
                 return;
 
-            if (DemoMode)
-                SimPlayersController.DoGameAction(player, delta);
+            if (WorldMode)
+                SimPlayersController.DoPausedGameChoice(player, delta);
+            else if (DemoMode)
+                SimPlayersController.DoNewGameChoice(player, delta);
             else
                 SimPlayersController.DoNextOrPreviousAction(player, delta);
         }
@@ -774,12 +786,20 @@ namespace EphemereGames.Commander.Simulation
             }
 
 
-            if (DemoMode)
+            if (WorldMode)
             {
                 if (button == GamePadConfiguration.SelectionNext)
-                    SimPlayersController.DoGameAction(player, 1);
+                    SimPlayersController.DoPausedGameChoice(player, 1);
                 else if (button == GamePadConfiguration.SelectionPrevious)
-                    SimPlayersController.DoGameAction(player, -1);
+                    SimPlayersController.DoPausedGameChoice(player, -1);
+            }
+
+            else if (DemoMode)
+            {
+                if (button == GamePadConfiguration.SelectionNext)
+                    SimPlayersController.DoNewGameChoice(player, 1);
+                else if (button == GamePadConfiguration.SelectionPrevious)
+                    SimPlayersController.DoNewGameChoice(player, -1);
             }
 
             else

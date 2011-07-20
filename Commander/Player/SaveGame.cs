@@ -4,18 +4,55 @@
     using EphemereGames.Core.Utilities;
 
 
-    class SaveGame : PlayerData
+    public class SaveGame : PlayerData
     {
         public SerializableDictionaryProxy<int, int> Progress;
         public SerializableDictionaryProxy<int, int> Tutorials;
+        public int CurrentWorld;
 
 
-        public SaveGame(Player player)
+        // for deserialization only
+        public SaveGame()
+            : base() { }
+
+        
+        public SaveGame(Core.Input.Player player)
             : base(player)
         {
             Name = "Save";
             Folder = "Commander";
             File = "Save.xml";
+        }
+
+
+        public int LevelsFinishedCount
+        {
+            get { return Progress.Count; }
+        }
+
+
+        public int LastUnlockedWorld
+        {
+            get
+            {
+                int highestLevelDone = -1;
+
+                foreach (var l in Progress.Keys)
+                    if (l > highestLevelDone)
+                        highestLevelDone = l;
+
+                return Main.LevelsFactory.GetWorldFromLevelId(highestLevelDone);
+            }
+        }
+
+
+        public void ClearAndSave()
+        {
+            Progress.Clear();
+            Tutorials.Clear();
+            CurrentWorld = 0;
+
+            Save();
         }
 
 
@@ -25,6 +62,7 @@
 
             Progress = d.Progress;
             Tutorials = d.Tutorials;
+            CurrentWorld = d.CurrentWorld;
 
             Progress.Initialize();
             Tutorials.Initialize();
@@ -66,6 +104,8 @@
         {
             Progress = new SerializableDictionaryProxy<int, int>();
             Tutorials = new SerializableDictionaryProxy<int, int>();
+
+            CurrentWorld = 0;
 
             Persistence.SaveData(this.Name);
             Loaded = true;

@@ -30,6 +30,7 @@
         private State SceneState;
         private Translator PressStart;
         private Dictionary<Text, CelestialBody> Choices;
+        private OptionsPanel Options;
 
 
         public MainMenuScene()
@@ -83,11 +84,15 @@
 
                 Choices.Add(text, c);
             }
+
+            Options = new OptionsPanel(this, Vector3.Zero, new Vector2(300, 300), Preferences.PrioriteGUIPanneauGeneral + 0.01, Color.White) { Visible = false };
+            Options.Initialize();
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
+            Simulator.CanSelectCelestialBodies = !Options.Visible;
             Simulator.Update();
 
             switch (SceneState)
@@ -110,9 +115,9 @@
                         Progress = Core.Utilities.Effect<IPhysicalObject>.ProgressType.Linear,
                         InnerPath = new Path2D(new List<Vector2>()
                         {
-                            new Vector2(-1920, -100),
-                            new Vector2(-1000, -100),
-                            new Vector2(-740, -100)
+                            new Vector2(-1920, -85),
+                            new Vector2(-1000, -85),
+                            new Vector2(-740, -85)
                         }, new List<double>()
                         {
                             0,
@@ -132,15 +137,15 @@
 
 
                 case State.LoadSaveGame:
-                    if (Persistence.IsDataLoaded("Save"))
+                    if (Main.PlayerSaveGame.IsLoaded)
                     {
                         VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
                         VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
-                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 1000));
+                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 500));
                         VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 500));
 
                         foreach (var kvp in Choices)
-                            VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.Fade(kvp.Key.Alpha, 100, Main.Random.Next(0, 500), 500));
+                            VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.Fade(kvp.Key.Alpha, 100, 500 + Main.Random.Next(0, 500), 500));
 
                         if (!Simulator.EnableInputs)
                             Simulator.SyncPlayers();
@@ -184,6 +189,7 @@
             Add(Filter);
             Simulator.Draw();
             PressStart.Draw();
+            Options.Draw();
         }
 
 
@@ -247,17 +253,23 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Select)
+            if (button == MouseConfiguration.Select && Options.Visible)
+                Options.DoClick(((Player) p).Circle);
+
+            else if (button == MouseConfiguration.Select)
                 BeginTransition((Player) p);
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Select)
+            if (button == GamePadConfiguration.Select && Options.Visible)
+                Options.DoClick(((Player) p).Circle);
+
+            else if (button == GamePadConfiguration.Select)
                 BeginTransition((Player) p);
 
-            if (button == GamePadConfiguration.ChangeMusic)
+            else if (button == GamePadConfiguration.ChangeMusic)
                 Main.MusicController.ChangeMusic(false);
         }
 
@@ -314,9 +326,46 @@
 
             switch (c.Name)
             {
-                case "save the world": TransiteTo("Cutscene1"); break;
+                case "save the world":
+                    switch (Simulator.NewGameChoice)
+                    {
+                        case NewGameChoice.None:
+                        case NewGameChoice.NewGame:
+                            Main.PlayerSaveGame.ClearAndSave();
+                            TransiteTo("Cutscene1");
+                            break;
+                        case NewGameChoice.Continue:
+                            TransiteTo("World" + Main.PlayerSaveGame.CurrentWorld + "Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld1:
+                            TransiteTo("World1Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld2:
+                            TransiteTo("World2Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld3:
+                            TransiteTo("World3Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld4:
+                            TransiteTo("World4Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld5:
+                            TransiteTo("World5Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld6:
+                            TransiteTo("World6Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld7:
+                            TransiteTo("World7Annunciation");
+                            break;
+                        case NewGameChoice.WrapToWorld8:
+                            TransiteTo("World8Annunciation");
+                            break;
+                    }
+                    break;
+
                 case "help": TransiteTo("Aide"); break;
-                case "options": TransiteTo("Options"); break;
+                case "options": Options.Fade(Options.Alpha, 255, 500); break;
                 case "editor": TransiteTo("Editeur"); break;
 
                 case "quit":

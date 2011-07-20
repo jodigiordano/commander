@@ -151,7 +151,7 @@
         {
             base.OnFocusLost();
 
-            Persistence.SaveData("savePlayer");
+            Persistence.SaveData("Save");
         }
 
 

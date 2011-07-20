@@ -22,6 +22,7 @@
 
         [XmlIgnore]
         public ISaveDevice SaveDevice { get; set; }
+
 //#if WINDOWS_PHONE
 //        public IsolatedStorageSaveDevice SaveDevice { get; set; }
 //#else
@@ -39,6 +40,25 @@
 
         public void Save()
         {
+            Persistence.SaveData(Name);
+        }
+
+
+        public void Load()
+        {
+            Persistence.LoadData(Name);
+        }
+
+
+        [XmlIgnore]
+        public bool IsLoaded
+        {
+            get { return Persistence.IsDataLoaded(Name);  }
+        }
+
+
+        internal void SaveData()
+        {
             DoSaveStarted();
 
             while (!SaveDevice.IsReady) { }
@@ -50,7 +70,7 @@
                 SaveDevice.Save(Folder, File, new FileAction(Serialize));
             }
 
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
                 DoSaveFailed();
                 sauvegardeReussie = false;
@@ -61,7 +81,7 @@
         }
 
 
-        public virtual void Load()
+        internal virtual void LoadData()
         {
             DoLoadStarted();
 
@@ -78,7 +98,9 @@
         {
 //TODO!
 #if !WINDOWS_PHONE
-            XmlSerializer serializer = new XmlSerializer(this.GetType());
+            Type t = GetType();
+
+            XmlSerializer serializer = new XmlSerializer(t);
             serializer.Serialize(stream, this);
 #endif
         }

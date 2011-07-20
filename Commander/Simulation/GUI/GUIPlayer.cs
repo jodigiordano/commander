@@ -15,11 +15,12 @@
         public bool PowerUpInputMode;
         public bool PowerUpFinalSolution;
         public WorldMenu WorldMenu;
+        public NewGameMenu NewGameMenu;
 
         private Simulator Simulator;
 
         
-        public GUIPlayer(Simulator simulator, Dictionary<TurretType, bool> availableTurrets, Dictionary<string, LevelDescriptor> availableLevelsDemoMenu, Color color, string representation)
+        public GUIPlayer(Simulator simulator, Dictionary<TurretType, bool> availableTurrets, Dictionary<string, LevelDescriptor> levelsDescriptors, Color color, string representation)
         {
             Simulator = simulator;
 
@@ -35,7 +36,8 @@
             CelestialBodyMenu.AvailableTurrets = availableTurrets;
             CelestialBodyMenu.Initialize();
 
-            WorldMenu = new WorldMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, availableLevelsDemoMenu, color);
+            WorldMenu = new WorldMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, levelsDescriptors, color);
+            NewGameMenu = new NewGameMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
 
             PowerUpInputMode = false;
             PowerUpFinalSolution = false;
@@ -46,14 +48,21 @@
         {
             get
             {
+                // highest priority
+
+                if (WorldMenu.PausedGameMenuVisible)
+                    return WorldMenu.PausedGameMenu;
+
+                if (NewGameMenu.Visible)
+                    return NewGameMenu;
+
                 if (TurretMenu.Visible)
                     return TurretMenu.Menu;
 
                 if (CelestialBodyMenu.Visible)
                     return CelestialBodyMenu.Menu;
 
-                if (WorldMenu.PausedGameMenuVisible)
-                    return WorldMenu.PausedGameMenu;
+                // lowest priority
 
                 return null;
             }
@@ -65,6 +74,7 @@
             TurretMenu.Update();
             CelestialBodyMenu.Update();
             WorldMenu.Update();
+            NewGameMenu.Update();
         }
 
 
@@ -78,7 +88,10 @@
                 WorldMenu.Draw();
 
             if (Simulator.DemoMode)
+            {
+                NewGameMenu.Draw();
                 return;
+            }
 
             FinalSolutionPreview.Draw();
 
