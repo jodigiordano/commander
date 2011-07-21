@@ -6,8 +6,8 @@
     class Translator
     {
         private string TexteATraduire;
-        public Text PartieNonTraduite;
-        public Text PartieTraduite;
+        public Text ToTranslate;
+        public Text Translated;
         private char[] PartieNonTraduiteTexte;
         private char[] PartieTraduiteTexte;
         private char[] VersionAlien;
@@ -18,13 +18,13 @@
         private Scene Scene;
         private Vector3 Position;
         private double TempsTraduction;
-        private double TempsTraductionEcoule;
+        private double Elapsed;
 
         public bool Centre;
 
         public bool Termine
         {
-            get { return TempsTraduction < TempsTraductionEcoule; }
+            get { return TempsTraduction < Elapsed; }
         }
 
 
@@ -34,17 +34,17 @@
             this.Position = position;
             this.ShowRecherche = showRecherche;
             this.TempsTraduction = tempsTraduction;
-            this.TempsTraductionEcoule = 0;
+            this.Elapsed = 0;
             this.TempsChaqueRecherche = tempsChaqueRecherche;
             this.Centre = false;
             this.TexteATraduire = texteATraduire;
 
-            PartieNonTraduite = new Text(texteATraduire, policeLangueEtrangere, couleurLangueEtrangere, position);
-            PartieNonTraduite.SizeX = taille;
-            PartieNonTraduite.VisualPriority = visualPriority;
-            PartieTraduite = new Text("", policeLangueConnue, couleurLangueConnue, position);
-            PartieTraduite.SizeX = taille;
-            PartieTraduite.VisualPriority = visualPriority;
+            ToTranslate = new Text(texteATraduire, policeLangueEtrangere, couleurLangueEtrangere, position);
+            ToTranslate.SizeX = taille;
+            ToTranslate.VisualPriority = visualPriority;
+            Translated = new Text("", policeLangueConnue, couleurLangueConnue, position);
+            Translated.SizeX = taille;
+            Translated.VisualPriority = visualPriority;
 
             PartieNonTraduiteTexte = new char[texteATraduire.Length];
             PartieTraduiteTexte = new char[texteATraduire.Length];
@@ -74,32 +74,18 @@
 
         public void Update()
         {
-            TempsTraductionEcoule += Preferences.TargetElapsedTimeMs;
+            Elapsed += Preferences.TargetElapsedTimeMs;
 
             for (int i = 0; i < TexteATraduire.Length; i++)
                 ProgressionUneRecherche[i] -= Preferences.TargetElapsedTimeMs;
         }
 
 
-        //public void Show()
-        //{
-        //    Scene.Add(PartieTraduite);
-        //    Scene.Add(PartieNonTraduite);
-        //}
-
-
-        //public void Hide()
-        //{
-        //    Scene.Remove(PartieTraduite);
-        //    Scene.Remove(PartieNonTraduite);
-        //}
-
-
         public void Draw()
         {
             for (int i = 0; i < TexteATraduire.Length; i++)
             {
-                if (TempsLettreTraduction[i] < TempsTraductionEcoule)
+                if (TempsLettreTraduction[i] < Elapsed)
                 {
                     PartieTraduiteTexte[i] = (char)TexteATraduire[i];
                     PartieNonTraduiteTexte[i] = ' ';
@@ -119,23 +105,23 @@
                 }
             }
 
-            PartieTraduite.Data = new string(PartieTraduiteTexte);
-            PartieNonTraduite.Data = new string(PartieNonTraduiteTexte);
+            Translated.Data = new string(PartieTraduiteTexte);
+            ToTranslate.Data = new string(PartieNonTraduiteTexte);
 
             if (Centre)
             {
-                PartieTraduite.Origin = PartieTraduite.Center;
-                PartieNonTraduite.Origin = PartieNonTraduite.Center;
+                Translated.Origin = Translated.Center;
+                ToTranslate.Origin = ToTranslate.Center;
             }
 
             else
             {
-                PartieTraduite.Origin = Vector2.Zero;
-                PartieNonTraduite.Origin = Vector2.Zero;
+                Translated.Origin = Vector2.Zero;
+                ToTranslate.Origin = Vector2.Zero;
             }
 
-            Scene.Add(PartieTraduite);
-            Scene.Add(PartieNonTraduite);
+            Scene.Add(Translated);
+            Scene.Add(ToTranslate);
         }
     }
 }

@@ -15,8 +15,11 @@
         private WorldDescriptor Descriptor;
         private Dictionary<string, string> Warps;
         private Dictionary<string, LevelDescriptor> LevelsDescriptors;
-        private List<KeyAndValue<CelestialBody, Image>> LevelsStates;
+        private Dictionary<int, bool> LevelUnlockedStates;
+        private List<KeyAndValue<CelestialBody, Image>> LevelCompletitionStates;
+        private List<KeyAndValue<CelestialBody, Text>> LevelsNumbers;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
+        private Dictionary<int, CelestialBody> CelestialBodies;
 
 
         public WorldScene(WorldDescriptor descriptor) :
@@ -26,8 +29,11 @@
             Descriptor = descriptor;
             Warps = new Dictionary<string, string>();
             LevelsDescriptors = new Dictionary<string, LevelDescriptor>();
-            LevelsStates = new List<KeyAndValue<CelestialBody, Image>>();
+            LevelUnlockedStates = new Dictionary<int, bool>();
+            LevelCompletitionStates = new List<KeyAndValue<CelestialBody, Image>>();
+            LevelsNumbers = new List<KeyAndValue<CelestialBody, Text>>();
             WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
+            CelestialBodies = new Dictionary<int, CelestialBody>();
         }
 
 
@@ -49,8 +55,10 @@
             // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
             foreach (var level in Descriptor.Levels)
             {
-                LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level);
+                LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
                 LevelsDescriptors.Add(d.Infos.Mission, d);
+
+                LevelUnlockedStates.Add(level.Key, false);
             }
 
             foreach (var level in Descriptor.Warps)
@@ -65,7 +73,21 @@
             foreach (var celestialBody in Simulator.PlanetarySystemController.CelestialBodies)
             {
                 if (LevelsDescriptors.ContainsKey(celestialBody.Name) && !(celestialBody is PinkHole))
-                    LevelsStates.Add(new KeyAndValue<CelestialBody, Image>(celestialBody, null));
+                {
+                    LevelCompletitionStates.Add(new KeyAndValue<CelestialBody, Image>(celestialBody, null));
+                    
+                    LevelsNumbers.Add(
+                        new KeyAndValue<CelestialBody, Text>(
+                            celestialBody,
+                            new Text(LevelsDescriptors[celestialBody.Name].Infos.Mission, "Pixelite")
+                            {
+                                SizeX = 4,
+                                VisualPriority = celestialBody.VisualPriority + 0.00001,
+                                Alpha = 150
+                            }.CenterIt()));
+
+                    CelestialBodies.Add(LevelsDescriptors[celestialBody.Name].Infos.Id, celestialBody);
+                }
 
                 if (celestialBody is PinkHole)
                     WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);
@@ -102,8 +124,20 @@
         {
             Simulator.Draw();
 
-            foreach (var kvp in LevelsStates)
+            // Draw level completition states
+            foreach (var kvp in LevelCompletitionStates)
                 Add(kvp.Value);
+
+            // Draw level numbers
+            foreach (var kvp in LevelsNumbers)
+            {
+                kvp.Value.Position = kvp.Key.Position - new Vector3(0, kvp.Key.Circle.Radius + 20, 0);
+                Add(kvp.Value);
+            }
+
+            // Draw level unlocked states
+            foreach (var kvp in LevelUnlockedStates)
+                CelestialBodies[kvp.Key].Image.Blend = kvp.Value ? TypeBlend.Alpha : TypeBlend.Substract;
         }
 
 
@@ -270,7 +304,8 @@
 
         private void InitializeLevelsStates()
         {
-            foreach (var kvp in LevelsStates)
+            // Level Completition State
+            foreach (var kvp in LevelCompletitionStates)
             {
                 var descriptor = LevelsDescriptors[kvp.Key.Name];
 
@@ -285,9 +320,24 @@
                 kvp.Value.SizeX = (kvp.Key.Circle.Radius < (int) Size.Normal) ? 0.5f : 0.80f;
             }
 
-
+            // Warps
             foreach (var warp in WarpsCelestialBodies)
                 ((PinkHole) warp.Key).Color = (((WorldScene) Visuals.GetScene(warp.Value)).Unlocked ? new Color(255, 0, 255) : new Color(255, 0, 0));
+
+            // Unlock conditions
+            foreach (var level in Descriptor.Levels)
+            {
+                bool unlocked = true;
+
+                foreach (var other in level.Value)
+                    if (!Main.PlayerSaveGame.Progress.ContainsKey(other) || Main.PlayerSaveGame.Progress[other] <= 0)
+                    {
+                        unlocked = false;
+                        break;
+                    }
+
+                LevelUnlockedStates[level.Key] = unlocked;
+            }
         }
     }
 }

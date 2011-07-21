@@ -13,7 +13,7 @@
     {
         public int Id;
         public string Name;
-        public List<int> Levels;
+        public List<KeyValuePair<int, List<int>>> Levels;
         public List<KeyValuePair<int, string>> Warps;
         public int Layout;
         public List<int> UnlockedCondition;
@@ -24,7 +24,7 @@
         {
             Id = -1;
             Name = "";
-            Levels = new List<int>();
+            Levels = new List<KeyValuePair<int, List<int>>>();
             Warps = new List<KeyValuePair<int, string>>();
             Layout = -1;
             UnlockedCondition = new List<int>();

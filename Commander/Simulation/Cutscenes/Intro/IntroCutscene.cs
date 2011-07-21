@@ -53,6 +53,7 @@
                 Simulator.Update();
                 Protagonist.Update();
                 Mothership.Update();
+                Commander.Update();
             }
 
             Terminated = Length <= 0;
@@ -93,16 +94,16 @@
             Timing.Add("MothershipDeparture", 106000);
 
             //test
-            //Timing.Add("LogoIn", 0);
-            //Timing.Add("DedicationIn", 0);
-            //Timing.Add("SimulatorIn", 0);
-            //Timing.Add("LocationIn", 0);
-            //Timing.Add("ProtagonistIn", 0);
-            //Timing.Add("MothershipArrival", 115000);
-            //Timing.Add("MothershipLights", 15000);
-            //Timing.Add("MothershipDestruction", 1125000);
-            //Timing.Add("CommanderIn", 112000);
-            //Timing.Add("MothershipDeparture", 1135000);
+            //Timing.Add("LogoIn", 100000);
+            //Timing.Add("DedicationIn", 100000);
+            //Timing.Add("SimulatorIn", 100000);
+            //Timing.Add("LocationIn", 100000);
+            //Timing.Add("ProtagonistIn", 100000);
+            //Timing.Add("MothershipArrival", 100000);
+            //Timing.Add("MothershipLights", 100000);
+            //Timing.Add("MothershipDestruction", 100000);
+            //Timing.Add("CommanderIn", 3000);
+            //Timing.Add("MothershipDeparture", 100000);
         }
     }
 }

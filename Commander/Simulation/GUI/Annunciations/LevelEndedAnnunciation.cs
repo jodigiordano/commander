@@ -147,15 +147,15 @@
 
                 this.Simulator.Scene.PhysicalEffects.Add(AlienShip.Representation, e);
 
-                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.PartieNonTraduite, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.Translated, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorGameWon.ToTranslate, Core.Visual.VisualEffects.FadeOutTo0(255, 5000, 1000));
 
-                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 5000, 1000));
 
                 int nbStars = Level.NbStars(Level.CommonStash.TotalScore);
 
@@ -167,10 +167,10 @@
 
             else if (GameState == GameState.Lost)
             {
-                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorScoreExplanations.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+                this.Simulator.Scene.VisualEffects.Add(TranslatorTotalScore.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
 
                 int nbStars = Level.NbStars(Level.CommonStash.TotalScore);
 

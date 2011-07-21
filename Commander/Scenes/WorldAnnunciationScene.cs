@@ -39,7 +39,7 @@
 
         public void Initialize()
         {
-            Length = 3000;
+            Length = 2000;
             TransitionInProgress = false;
         }
 

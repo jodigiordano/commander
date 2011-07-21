@@ -98,8 +98,8 @@
             switch (SceneState)
             {
                 case State.ConnectPlayer:                    
-                    VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
-                    VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
+                    VisualEffects.Add(PressStart.Translated, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
+                    VisualEffects.Add(PressStart.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
                     VisualEffects.Add(Title, Core.Visual.VisualEffects.Fade(Title.Alpha, 255, 0, 1000));
                     VisualEffects.Add(Filter, Core.Visual.VisualEffects.Fade(Filter.Alpha, 100, 0, 500));
 
@@ -139,8 +139,8 @@
                 case State.LoadSaveGame:
                     if (Main.PlayerSaveGame.IsLoaded)
                     {
-                        VisualEffects.Add(PressStart.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
-                        VisualEffects.Add(PressStart.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.PartieTraduite.Alpha, 0, 1000));
+                        VisualEffects.Add(PressStart.Translated, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.Translated.Alpha, 0, 1000));
+                        VisualEffects.Add(PressStart.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.Translated.Alpha, 0, 1000));
                         VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 500));
                         VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 500));
 

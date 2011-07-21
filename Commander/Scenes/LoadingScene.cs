@@ -90,8 +90,8 @@
 
             this.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
             this.VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
-            this.VisualEffects.Add(LoadingTranslation.PartieNonTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
-            this.VisualEffects.Add(LoadingTranslation.PartieTraduite, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
+            this.VisualEffects.Add(LoadingTranslation.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
+            this.VisualEffects.Add(LoadingTranslation.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 3000));
             SandGlass.FadeIn(3000);
 
             ThreadLoadScenes = new Thread(LoadScenes);
@@ -151,8 +151,8 @@
 
                     if (ScenesAreLoaded)
                     {
-                        VisualEffects.Add(LoadingTranslation.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
-                        VisualEffects.Add(LoadingTranslation.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
+                        VisualEffects.Add(LoadingTranslation.Translated, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
+                        VisualEffects.Add(LoadingTranslation.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
 
                         SandGlass.FadeOut(1000);
 
@@ -243,8 +243,8 @@
             base.OnFocus();
 
             VisualEffects.Clear();
-            LoadingTranslation.PartieTraduite.Alpha = 0;
-            LoadingTranslation.PartieNonTraduite.Alpha = 0;
+            LoadingTranslation.Translated.Alpha = 0;
+            LoadingTranslation.ToTranslate.Alpha = 0;
             ThreadLoadScenes = new Thread(LoadScenes);
             ScenesAreLoaded = false;
             SandGlass.FadeOut(0);

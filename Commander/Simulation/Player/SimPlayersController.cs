@@ -399,19 +399,19 @@
             var player = Players[p];
 
             // turret's options
-            if (player.ActualSelection.Turret != null)
-            {
-                if (delta > 0)
-                    player.NextTurretOption();
-                else
-                    player.PreviousTurretOption();
+            //if (player.ActualSelection.Turret != null)
+            //{
+            //    if (delta > 0)
+            //        player.NextTurretOption();
+            //    else
+            //        player.PreviousTurretOption();
 
-                return;
-            }
+            //    return;
+            //}
 
 
             // shop turrets
-            else if (player.ActualSelection.CelestialBody != null &&
+            if (player.ActualSelection.CelestialBody != null &&
                 player.ActualSelection.Turret == null)
             {
                 if (delta > 0)
@@ -497,18 +497,18 @@
             }
 
 
-            // upgrade or sell a turret
+            // upgrade a turret
             if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
             {
-                switch (player.ActualSelection.TurretChoice)
-                {
-                    case TurretChoice.Sell:
-                        NotifySellTurretAsked(player.ActualSelection.Turret, player);
-                        break;
-                    case TurretChoice.Update:
+                //switch (player.ActualSelection.TurretChoice)
+                //{
+                //    case TurretChoice.Sell:
+                //        NotifySellTurretAsked(player.ActualSelection.Turret, player);
+                //        break;
+                //    case TurretChoice.Update:
                         NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
-                        break;
-                }
+                //        break;
+                //}
 
                 player.UpdateSelection();
 
@@ -520,6 +520,30 @@
             if (player.PowerUpInUse == PowerUpType.None && Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
             {
                 NotifyNextWaveAsked();
+                return;
+            }
+        }
+
+
+        public void DoAlternateAction(Player p)
+        {
+            var player = Players[p];
+
+            // sell a turret
+            if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
+            {
+                //switch (player.ActualSelection.TurretChoice)
+                //{
+                //    case TurretChoice.Sell:
+                        NotifySellTurretAsked(player.ActualSelection.Turret, player);
+                //        break;
+                //    case TurretChoice.Update:
+                //        NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
+                //        break;
+                //}
+
+                player.UpdateSelection();
+
                 return;
             }
         }

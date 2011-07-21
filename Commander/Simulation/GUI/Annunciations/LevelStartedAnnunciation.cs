@@ -22,11 +22,11 @@
 
             EffectsController = new EffectsController<IVisual>();
 
-            EffectsController.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 1000, 500));
-            EffectsController.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 1000, 500));
+            EffectsController.Add(TranslatorMission.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 1000, 500));
+            EffectsController.Add(TranslatorMission.Translated, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 1000, 500));
 
-            EffectsController.Add(TranslatorMission.PartieNonTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 10000, 2000));
-            EffectsController.Add(TranslatorMission.PartieTraduite, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 10000, 2000));
+            EffectsController.Add(TranslatorMission.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 10000, 2000));
+            EffectsController.Add(TranslatorMission.Translated, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 10000, 2000));
         }
 
         public void Update()

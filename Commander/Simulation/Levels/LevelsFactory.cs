@@ -100,7 +100,18 @@
             {
                 Id = 1,
                 Name = "The colonies",
-                Levels = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+                Levels = new List<KeyValuePair<int, List<int>>>()
+                {
+                    new KeyValuePair<int, List<int>>(1, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(2, new List<int>() { 1 }),
+                    new KeyValuePair<int, List<int>>(3, new List<int>() { 2 }),
+                    new KeyValuePair<int, List<int>>(4, new List<int>() { 3 }),
+                    new KeyValuePair<int, List<int>>(5, new List<int>() { 4 }),
+                    new KeyValuePair<int, List<int>>(6, new List<int>() { 5 }),
+                    new KeyValuePair<int, List<int>>(7, new List<int>() { 6 }),
+                    new KeyValuePair<int, List<int>>(8, new List<int>() { 7 }),
+                    new KeyValuePair<int, List<int>>(9, new List<int>() { 8 })
+                },
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
                 Layout = 1001,
                 UnlockedCondition = new List<int>(),
@@ -112,8 +123,11 @@
             {
                 Id = 2,
                 Name = "Battle for Earth",
+                Levels = new List<KeyValuePair<int, List<int>>>()
+                {
+                    new KeyValuePair<int, List<int>>(1, new List<int>() {})
+                },
                 //Levels = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
-                Levels = new List<int>() { 1 },
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
                 Layout = 1002,
                 UnlockedCondition = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
@@ -126,7 +140,10 @@
                 Id = 3,
                 Name = "The invasion",
                 //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
-                Levels = new List<int>() { 1 },
+                Levels = new List<KeyValuePair<int, List<int>>>()
+                {
+                    new KeyValuePair<int, List<int>>(1, new List<int>() {})
+                },
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World2") },
                 Layout = 1003,
                 UnlockedCondition = new List<int>() { -1 },
@@ -174,8 +191,9 @@
         public int GetWorldFromLevelId(int id)
         {
             foreach (var w in WorldsDescriptors.Values)
-                if (w.Levels.Contains(id))
-                    return w.Id;
+                foreach (var kvp in w.Levels)
+                    if (kvp.Key == id)
+                        return w.Id;
 
             return 1;
         }

@@ -1,7 +1,5 @@
 ﻿namespace EphemereGames.Core.Utilities
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Xml.Serialization;
     using Microsoft.Xna.Framework.Content;
@@ -39,26 +37,6 @@
         [XmlArrayItem("Entry")]
         [ContentSerializer(Optional = false)]
         public List<KeyAndValue<K, V>> KeysAndValues { get; set; }
-
-        //public List<KeyAndValue<K, V>> KeysAndValues
-        //{
-        //    get
-        //    {
-        //        var list = new List<KeyAndValue<K, V>>();
-
-        //        foreach (var kvp in Original)
-        //            list.Add(new KeyAndValue<K, V>(kvp.Key, kvp.Value));
-
-        //        return list;
-        //    }
-
-
-        //    set
-        //    {
-        //        foreach (var kvp in value)
-        //            Original.Add(kvp.Key, kvp.Value);
-        //    }
-        //}
 
 
         #region IDictionary<K,V> Membres

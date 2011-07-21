@@ -116,7 +116,7 @@
             LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
 
             Title.Data = descriptor.Infos.Mission;
-            Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 32, 0);
+            Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 20, 0);
             Title.Origin = Title.Center;
             Difficulty.Data = descriptor.Infos.Difficulty;
             Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);

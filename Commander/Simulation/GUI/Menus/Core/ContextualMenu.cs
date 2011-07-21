@@ -75,7 +75,7 @@
             foreach (var c in choices)
                 AddChoice(c);
 
-            Margin = new Vector3(3, 3, 0);
+            Margin = new Vector3(6, 3, 0);
 
             ChoiceDataChanged = false;
             ChoiceAvailabilityChanged = false;
@@ -254,7 +254,7 @@
 
             int slotCounter = 0;
 
-            float distanceY = Choices[0].Size.Y + DistanceBetweenTwoChoices; //(Title != null) ? (Size.Y - Title.TextSize.Y - 10) / Choices.Count : Size.Y / Choices.Count;
+            float distanceY = Choices[0].Size.Y + DistanceBetweenTwoChoices;
             float startingAt = (Title != null) ? Title.TextSize.Y + 10 : 0;
 
             foreach (var choice in Choices)
@@ -295,10 +295,6 @@
 
         private void DrawBubble()
         {
-            //bool tropADroite = Position.X + Size.X + 30 > 640 - Preferences.Xbox360DeadZoneV2.X;
-            //bool tropBas = Position.Y + Size.Y + 20 > 370 - Preferences.Xbox360DeadZoneV2.Y;
-
-
             switch (Layout)
             {
                 case 0:
