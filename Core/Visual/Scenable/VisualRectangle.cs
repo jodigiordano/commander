@@ -9,7 +9,7 @@ namespace EphemereGames.Core.Visual
         public Vector3 Position                 { get; set; }
         public double VisualPriority            { get; set; }
         public Scene Scene                      { get; set; }
-        public TypeBlend Blend                  { get; set; }
+        public BlendType Blend                  { get; set; }
         public int Id                           { get; private set; }
 
         private Color Color;
@@ -23,7 +23,7 @@ namespace EphemereGames.Core.Visual
         public VisualRectangle(Rectangle rectangle, Color color, bool filled)
         {
             VisualPriority = 0;
-            Blend = TypeBlend.Default;
+            Blend = BlendType.Default;
             Color = color;
             Rectangle = rectangle;
             Id = Visuals.NextHashCode;

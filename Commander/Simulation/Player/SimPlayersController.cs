@@ -345,6 +345,11 @@
             {
                 player.Update();
 
+                if (player.BouncingThisTick)
+                {
+                    Inputs.VibrateController(player.Player, 150f, 0.6f, 0.6f);
+                }
+
                 if (player.Firing)
                 {
                     foreach (var b in player.SpaceshipMove.BulletsThisTick())
@@ -399,19 +404,19 @@
             var player = Players[p];
 
             // turret's options
-            //if (player.ActualSelection.Turret != null)
-            //{
-            //    if (delta > 0)
-            //        player.NextTurretOption();
-            //    else
-            //        player.PreviousTurretOption();
+            if (player.ActualSelection.Turret != null)
+            {
+                if (delta > 0)
+                    player.NextTurretOption();
+                else
+                    player.PreviousTurretOption();
 
-            //    return;
-            //}
+                return;
+            }
 
 
             // shop turrets
-            if (player.ActualSelection.CelestialBody != null &&
+            else if (player.ActualSelection.CelestialBody != null &&
                 player.ActualSelection.Turret == null)
             {
                 if (delta > 0)
@@ -500,15 +505,15 @@
             // upgrade a turret
             if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
             {
-                //switch (player.ActualSelection.TurretChoice)
-                //{
+                switch (player.ActualSelection.TurretChoice)
+                {
                 //    case TurretChoice.Sell:
                 //        NotifySellTurretAsked(player.ActualSelection.Turret, player);
                 //        break;
-                //    case TurretChoice.Update:
+                    case TurretChoice.Update:
                         NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
-                //        break;
-                //}
+                        break;
+                }
 
                 player.UpdateSelection();
 
@@ -532,15 +537,15 @@
             // sell a turret
             if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
             {
-                //switch (player.ActualSelection.TurretChoice)
-                //{
-                //    case TurretChoice.Sell:
+                switch (player.ActualSelection.TurretChoice)
+                {
+                    case TurretChoice.Sell:
                         NotifySellTurretAsked(player.ActualSelection.Turret, player);
-                //        break;
+                        break;
                 //    case TurretChoice.Update:
                 //        NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
                 //        break;
-                //}
+                }
 
                 player.UpdateSelection();
 

@@ -8,9 +8,9 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    class Bubble
+    class Bubble : IVisual
     {
-        protected Simulator Simulation;
+        protected Simulator Simulator;
 
         private List<Image> Corners;
         private List<Image> Edges;
@@ -23,8 +23,8 @@
 
         public Bubble(Simulator simulator, PhysicalRectangle dimension, double visualPriority)
         {
-            this.Simulation = simulator;
-            this.Dimension = dimension;
+            Simulator = simulator;
+            Dimension = dimension;
 
             Bla = new Image("bulleBlabla");
             Bla.VisualPriority = visualPriority;
@@ -50,8 +50,13 @@
         }
 
 
-        public Color Color
+        public virtual Color Color
         {
+            get
+            {
+                return Bla.Color;
+            }
+
             set
             {
                 for (int i = 0; i < 4; i++)
@@ -61,6 +66,60 @@
                 }
 
                 Bla.Color = value;
+            }
+        }
+
+
+        public virtual byte Alpha
+        {
+            get
+            {
+                return Bla.Alpha;
+            }
+            set
+            {
+                foreach (var corner in Corners)
+                    corner.Alpha = value;
+
+                foreach (var edge in Edges)
+                    edge.Alpha = value;
+
+                Filter.Alpha = value;
+                Bla.Alpha = value;
+
+                Filter.Alpha = Math.Min(value, (byte) 128);
+            }
+        }
+
+
+        public Rectangle VisiblePart
+        {
+            set { throw new NotImplementedException(); }
+        }
+
+
+        public Vector2 Origin
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        public Vector2 Size
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -129,41 +188,32 @@
 
             for (int i = 0; i < 4; i++)
             {
-                Simulation.Scene.Add(Edges[i]);
-                Simulation.Scene.Add(Corners[i]);
+                Simulator.Scene.Add(Edges[i]);
+                Simulator.Scene.Add(Corners[i]);
             }
 
-            Simulation.Scene.Add(Filter);
-            Simulation.Scene.Add(Bla);
+            Simulator.Scene.Add(Filter);
+            Simulator.Scene.Add(Bla);
         }
 
 
         public virtual void Fade(int from, int to, double length, Core.NoneHandler callback)
         {
+            Alpha = (byte) from;
+
             var effect = VisualEffects.Fade(from, to, 0, length);
 
-            foreach (var coin in Corners)
-            {
-                coin.Alpha = (byte) from;
-                Simulation.Scene.VisualEffects.Add(coin, effect, callback);
-            }
+            foreach (var corner in Corners)
+                Simulator.Scene.VisualEffects.Add(corner, effect, callback);
 
-            foreach (var contour in Edges)
-            {
-                contour.Alpha = (byte) from;
-                Simulation.Scene.VisualEffects.Add(contour, effect);
-            }
+            foreach (var edge in Edges)
+                Simulator.Scene.VisualEffects.Add(edge, effect);
 
-            Filter.Alpha = (byte) from;
-            Bla.Alpha = (byte) from;
-
-            Simulation.Scene.VisualEffects.Add(Bla, effect);
+            Simulator.Scene.VisualEffects.Add(Bla, effect);
 
             effect = VisualEffects.Fade(Math.Min(from, 128), Math.Min(to, 128), 0, length);
 
-            Filter.Alpha = (byte) Math.Max(from, 128);
-
-            Simulation.Scene.VisualEffects.Add(Filter, effect);
+            Simulator.Scene.VisualEffects.Add(Filter, effect);
         }
 
 

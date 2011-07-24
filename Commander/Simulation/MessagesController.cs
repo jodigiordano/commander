@@ -280,7 +280,7 @@
                 kvp.Value.Position = kvp.Key.Position;
                 kvp.Value.Update();
 
-                if (kvp.Value.Termine)
+                if (kvp.Value.Finished)
                     ToDelete.Add(kvp);
             }
 
@@ -307,8 +307,8 @@
 
             TextBubble bulle = new TextBubble(Simulator, texteInfos, obj.Position, 0, visualPriority);
 
-            bulle.Texte.Data = message;
-            bulle.TempsAffichage = time;
+            bulle.Text.Data = message;
+            bulle.ShowTime = time;
 
             foreach (var kvp in TalkingTurrets)
                 if (kvp.Value.Dimension.Intersects(bulle.Dimension))
@@ -324,9 +324,9 @@
         {
             TextBubble bulle;
 
-            if (objet != null && TalkingTurrets.TryGetValue(objet, out bulle) && !double.IsNaN(bulle.TempsFadeOut))
+            if (objet != null && TalkingTurrets.TryGetValue(objet, out bulle) && !double.IsNaN(bulle.FadeTime))
             {
-                TalkingTurrets[objet].TempsAffichage = TalkingTurrets[objet].TempsFadeOut;
+                TalkingTurrets[objet].ShowTime = TalkingTurrets[objet].FadeTime;
             }
         }
 
@@ -374,7 +374,7 @@
                     }
 
                     TextBubble bulle = new TextBubble(Simulator, texte, tourelle.Position, 0, Preferences.PrioriteSimulationTourelle - 0.02f);
-                    bulle.TempsAffichage = texte.Data.Length * 100;
+                    bulle.ShowTime = texte.Data.Length * 100;
 
                     foreach (var kvp in TalkingTurrets)
                         if (kvp.Value.Dimension.Intersects(bulle.Dimension))
@@ -426,7 +426,7 @@
             TalkingTurrets.Add(obj, bulle);
 
             bulle.FadeIn(250);
-            bulle.TempsFadeOut = 250;
+            bulle.FadeTime = 250;
             //bulle.Show();
         }
     }

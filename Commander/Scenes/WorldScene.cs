@@ -17,7 +17,7 @@
         private Dictionary<string, LevelDescriptor> LevelsDescriptors;
         private Dictionary<int, bool> LevelUnlockedStates;
         private List<KeyAndValue<CelestialBody, Image>> LevelCompletitionStates;
-        private List<KeyAndValue<CelestialBody, Text>> LevelsNumbers;
+        private Dictionary<int, Text> LevelsNumbers;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
         private Dictionary<int, CelestialBody> CelestialBodies;
 
@@ -31,7 +31,7 @@
             LevelsDescriptors = new Dictionary<string, LevelDescriptor>();
             LevelUnlockedStates = new Dictionary<int, bool>();
             LevelCompletitionStates = new List<KeyAndValue<CelestialBody, Image>>();
-            LevelsNumbers = new List<KeyAndValue<CelestialBody, Text>>();
+            LevelsNumbers = new Dictionary<int, Text>();
             WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
             CelestialBodies = new Dictionary<int, CelestialBody>();
         }
@@ -75,22 +75,25 @@
                 if (LevelsDescriptors.ContainsKey(celestialBody.Name) && !(celestialBody is PinkHole))
                 {
                     LevelCompletitionStates.Add(new KeyAndValue<CelestialBody, Image>(celestialBody, null));
-                    
-                    LevelsNumbers.Add(
-                        new KeyAndValue<CelestialBody, Text>(
-                            celestialBody,
-                            new Text(LevelsDescriptors[celestialBody.Name].Infos.Mission, "Pixelite")
-                            {
-                                SizeX = 4,
-                                VisualPriority = celestialBody.VisualPriority + 0.00001,
-                                Alpha = 150
-                            }.CenterIt()));
 
                     CelestialBodies.Add(LevelsDescriptors[celestialBody.Name].Infos.Id, celestialBody);
                 }
 
                 if (celestialBody is PinkHole)
                     WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);
+            }
+
+            // Level numbers
+            foreach (var level in Descriptor.Levels)
+            {
+                var cb = CelestialBodies[level.Key];
+
+                LevelsNumbers.Add(level.Key, new Text(LevelsDescriptors[cb.Name].Infos.Mission, "Pixelite")
+                {
+                    SizeX = 4,
+                    VisualPriority = cb.VisualPriority + 0.00001,
+                    Alpha = 200
+                }.CenterIt());
             }
         }
 
@@ -114,6 +117,12 @@
         }
 
 
+        public int WorldId
+        {
+            get { return Descriptor.Id; }
+        }
+
+
         protected override void UpdateLogic(GameTime gameTime)
         {
             Simulator.Update();
@@ -125,19 +134,28 @@
             Simulator.Draw();
 
             // Draw level completition states
-            foreach (var kvp in LevelCompletitionStates)
-                Add(kvp.Value);
+            //foreach (var kvp in LevelCompletitionStates)
+            //{
+            //    kvp.Value.Position = kvp.Key.Position + new Vector3(kvp.Key.Circle.Radius, kvp.Key.Circle.Radius, 0) +
+            //        ((kvp.Key.Circle.Radius < (int) Size.Normal) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0));
+            //    Add(kvp.Value);
+            //}
 
             // Draw level numbers
             foreach (var kvp in LevelsNumbers)
             {
-                kvp.Value.Position = kvp.Key.Position - new Vector3(0, kvp.Key.Circle.Radius + 20, 0);
+                var cb = CelestialBodies[kvp.Key];
+
+                kvp.Value.Position = cb.Position - new Vector3(0, cb.Circle.Radius + 20, 0);
+                kvp.Value.Alpha = (byte) (LevelUnlockedStates[kvp.Key] ? 200 : 0);
                 Add(kvp.Value);
             }
 
             // Draw level unlocked states
             foreach (var kvp in LevelUnlockedStates)
-                CelestialBodies[kvp.Key].Image.Blend = kvp.Value ? TypeBlend.Alpha : TypeBlend.Substract;
+            {
+                CelestialBodies[kvp.Key].Image.Alpha = (byte) (kvp.Value ? 255 : 100);
+            }
         }
 
 
@@ -145,8 +163,10 @@
         {
             Simulator.EnableInputs = true;
 
+            Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
+
             InitializeLevelsStates();
-            Main.SelectedWorld = Name;
+            Main.SelectedWorld = this;
             Main.PlayerSaveGame.CurrentWorld = Descriptor.Id;
 
             Simulator.SyncPlayers();
@@ -194,6 +214,35 @@
         }
 
 
+        public override void PlayerKeyboardConnectionRequested(Core.Input.Player player, Keys key)
+        {
+            if (player.State == PlayerState.Disconnected)
+                player.Connect();
+        }
+
+
+        public override void PlayerMouseConnectionRequested(Core.Input.Player player, MouseButton button)
+        {
+            if (player.State == PlayerState.Disconnected)
+                player.Connect();
+        }
+
+
+        public override void PlayerGamePadConnectionRequested(Core.Input.Player player, Buttons button)
+        {
+            if (player.State == PlayerState.Disconnected)
+                player.Connect();
+        }
+
+
+        public override void DoPlayerConnected(Core.Input.Player p)
+        {
+            var player = (Player) p;
+
+            player.ChooseAssets();
+        }
+
+
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
             if (Inputs.ConnectedPlayers.Count == 0)
@@ -227,6 +276,7 @@
             {
                 GameScene currentGame = Main.GameInProgress;
 
+                // Resume Game
                 if (currentGame != null && 
                     !currentGame.IsFinished &&
                     currentGame.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id &&
@@ -234,26 +284,25 @@
                 {
                     currentGame.Simulator.State = GameState.Running;
                     Main.MusicController.PauseMusic();
-                    TransiteTo("Partie");
+                    TransiteTo(currentGame.Name);
                     return;
                 }
 
+                // Start a new game
                 if (currentGame != null)
-                {
                     currentGame.MusicController.StopMusic(true);
-                }
 
-                currentGame = new GameScene(level);
+                currentGame = new GameScene("Game1", level);
                 Main.GameInProgress = currentGame;
                 currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
                 Simulator.MessagesController.StopPausedMessage();
 
-                if (Visuals.GetScene("Partie") == null)
+                if (Visuals.GetScene(currentGame.Name) == null)
                     Visuals.AddScene(currentGame);
                 else
-                    Visuals.UpdateScene("Partie", currentGame);
+                    Visuals.UpdateScene(currentGame.Name, currentGame);
 
-                TransiteTo("Partie");
+                TransiteTo(currentGame.Name);
                 Main.MusicController.PauseMusic();
 
                 return;
@@ -261,7 +310,7 @@
         }
 
 
-        private void DoNewGameState(GameState gameState)
+        public void DoNewGameState(GameState gameState)
         {
             InitializeLevelsStates();
         }
@@ -312,9 +361,7 @@
                 int value = 0;
                 bool done = Main.PlayerSaveGame.Progress.TryGetValue(descriptor.Infos.Id, out value) && value > 0;
 
-                kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone",
-                    kvp.Key.Position + new Vector3(kvp.Key.Circle.Radius, kvp.Key.Circle.Radius, 0) +
-                    ((kvp.Key.Circle.Radius < (int) Size.Normal) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0)));
+                kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone");
 
                 kvp.Value.VisualPriority = kvp.Key.Image.VisualPriority - 0.0001f;
                 kvp.Value.SizeX = (kvp.Key.Circle.Radius < (int) Size.Normal) ? 0.5f : 0.80f;
@@ -322,7 +369,13 @@
 
             // Warps
             foreach (var warp in WarpsCelestialBodies)
-                ((PinkHole) warp.Key).Color = (((WorldScene) Visuals.GetScene(warp.Value)).Unlocked ? new Color(255, 0, 255) : new Color(255, 0, 0));
+            {
+                var pinkHole = (PinkHole) warp.Key;
+                var unlocked = ((WorldScene) Visuals.GetScene(warp.Value)).Unlocked;
+
+                pinkHole.BlendType = unlocked ? BlendType.Add : BlendType.Substract;
+                pinkHole.Color = unlocked ? new Color(255, 0, 255) : new Color(0, 0, 0);
+            }
 
             // Unlock conditions
             foreach (var level in Descriptor.Levels)
@@ -337,6 +390,7 @@
                     }
 
                 LevelUnlockedStates[level.Key] = unlocked;
+                CelestialBodies[level.Key].CanSelect = unlocked;
             }
         }
     }

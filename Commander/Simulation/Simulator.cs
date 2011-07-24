@@ -500,6 +500,15 @@ namespace EphemereGames.Commander.Simulation
                 return;
             }
 
+            var player = (Player) p;
+            var simPlayer = SimPlayersController.GetPlayer(player);
+
+            if (simPlayer == null) // disconnected
+                return;
+
+            if (key == KeyboardConfiguration.AdvancedView)
+                SimPlayersController.DoAdvancedViewAction(player, true);
+
             if (!DemoMode && (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel))
             {
                 State = GameState.Paused;
@@ -595,6 +604,9 @@ namespace EphemereGames.Commander.Simulation
 
             if (key == KeyboardConfiguration.MoveDown)
                 simPlayer.MovingDown = false;
+
+            if (!DemoMode && key == KeyboardConfiguration.AdvancedView)
+                SimPlayersController.DoAdvancedViewAction(player, false);
         }
 
 
@@ -638,11 +650,11 @@ namespace EphemereGames.Commander.Simulation
                 if (button == MouseConfiguration.Select)
                     SimPlayersController.DoSelectAction(player);
 
+                if (button == MouseConfiguration.AlternateSelect)
+                    SimPlayersController.DoAlternateAction(player);
+
                 if (button == MouseConfiguration.Cancel)
                     SimPlayersController.DoCancelAction(player);
-
-                if (button == MouseConfiguration.AdvancedView)
-                    SimPlayersController.DoAdvancedViewAction(player, true);
             }
         }
 
@@ -675,9 +687,6 @@ namespace EphemereGames.Commander.Simulation
 
             if (EditorMode && EditorState == EditorState.Editing)
                 return;
-
-            if (!DemoMode && button == MouseConfiguration.AdvancedView)
-                SimPlayersController.DoAdvancedViewAction(player, false);
 
             if (simPlayer.PowerUpInUse != PowerUpType.None && button == MouseConfiguration.Select)
                 PowerUpsController.DoInputReleased(simPlayer);
@@ -768,8 +777,10 @@ namespace EphemereGames.Commander.Simulation
             {
                 if (button == GamePadConfiguration.Select)
                     EditorController.DoSelectAction(simPlayer);
+
                 else if (button == GamePadConfiguration.SelectionNext)
                     EditorController.DoNextOrPreviousAction(simPlayer, 1);
+
                 else if (button == GamePadConfiguration.SelectionPrevious)
                     EditorController.DoNextOrPreviousAction(simPlayer, -1);
             }
@@ -806,10 +817,16 @@ namespace EphemereGames.Commander.Simulation
             {
                 if (button == GamePadConfiguration.Select)
                     SimPlayersController.DoSelectAction(player);
+
+                else if (button == GamePadConfiguration.AlternateSelect)
+                    SimPlayersController.DoAlternateAction(player);
+
                 else if (button == GamePadConfiguration.Cancel)
                     SimPlayersController.DoCancelAction(player);
+
                 else if (button == GamePadConfiguration.SelectionNext)
                     SimPlayersController.DoNextOrPreviousAction(player, 1);
+
                 else if (button == GamePadConfiguration.SelectionPrevious)
                     SimPlayersController.DoNextOrPreviousAction(player, -1);
 

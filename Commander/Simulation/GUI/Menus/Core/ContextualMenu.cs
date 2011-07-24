@@ -70,12 +70,12 @@
                 Origin = Vector2.Zero
             };
 
+            Margin = new Vector3(3, 3, 0);
+
             Choices = new List<ContextualMenuChoice>();
 
             foreach (var c in choices)
                 AddChoice(c);
-
-            Margin = new Vector3(6, 3, 0);
 
             ChoiceDataChanged = false;
             ChoiceAvailabilityChanged = false;

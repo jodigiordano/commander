@@ -45,6 +45,7 @@ namespace EphemereGames.Commander.Simulation
             AssetsLoaded = false;
             Explosive = false;
             ExplosionRange = 0;
+            ShowMovingEffect = true;
         }
 
 

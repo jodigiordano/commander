@@ -38,6 +38,15 @@
         }
 
 
+        public BlendType BlendType
+        {
+            set
+            {
+                Effect.Blend = value;
+            }
+        }
+
+
         public override double VisualPriority
         {
             get

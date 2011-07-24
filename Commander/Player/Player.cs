@@ -13,6 +13,10 @@
 
         private Vector3 position;
 
+        private Vector3 InitialPosition;
+        private Color InitialColor;
+        private string InitialImageName;
+
 
         private static List<Vector3> AvailablesInitalPositions = new List<Vector3>()
         {
@@ -49,10 +53,34 @@
         {
             Circle = new Circle(Position, 8);
 
+            KeysToListenTo = KeyboardConfiguration.ToList;
+            MouseButtonsToListenTo = MouseConfiguration.ToList;
+            GamePadButtonsToListenTo = GamePadConfiguration.ToList;
+
+            InitialColor = Color.Aquamarine;
+            InitialPosition = Vector3.Down;
+            InitialImageName = null;
+        }
+
+
+        public void ChooseAssets()
+        {
+            // put the data back in the available lists
+            if (InitialColor != Color.Aquamarine)
+                AvailablesColors.Add(InitialColor);
+
+            if (InitialPosition != Vector3.Down)
+                AvailablesInitalPositions.Add(InitialPosition);
+
+            if (InitialImageName != null)
+                AvailablesImages.Add(InitialImageName);
+
+
+            // select random data
             int index = 0;
 
             index = Main.Random.Next(0, AvailablesColors.Count);
-            Color = AvailablesColors[index];
+            InitialColor = Color = AvailablesColors[index];
             AvailablesColors.RemoveAt(index);
 
             index = Main.Random.Next(0, AvailablesImages.Count);
@@ -60,12 +88,14 @@
             AvailablesImages.RemoveAt(index);
 
             index = Main.Random.Next(0, AvailablesInitalPositions.Count);
-            Position = AvailablesInitalPositions[index];
+            InitialPosition = Position = AvailablesInitalPositions[index];
             AvailablesInitalPositions.RemoveAt(index);
 
-            KeysToListenTo = KeyboardConfiguration.ToList;
-            MouseButtonsToListenTo = MouseConfiguration.ToList;
-            GamePadButtonsToListenTo = GamePadConfiguration.ToList;
+
+            // keep track of selected data
+            Color = InitialColor;
+            Position = InitialPosition;
+            InitialImageName = ImageName;
         }
 
 

@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    public enum TypeBlend
+    public enum BlendType
     {
         Default,
         Multiply,
@@ -21,7 +21,7 @@
         int Id                      { get; }
         Vector3 Position            { get; set; }
         double VisualPriority       { get; set; }
-        TypeBlend Blend             { get; set; }
+        BlendType Blend             { get; set; }
 
         void Draw(SpriteBatch spriteBatch);
     }

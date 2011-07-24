@@ -137,7 +137,7 @@
 
             foreach (var cb in CelestialBodies)
             {
-                if (!cb.Alive || !cb.Selectionnable)
+                if (!cb.Alive || !cb.CanSelect)
                     continue;
 
                 foreach (var t in cb.Turrets)
@@ -173,7 +173,7 @@
 
             foreach (var cb in CelestialBodies)
             {
-                if (!cb.Alive || !cb.Selectionnable)
+                if (!cb.Alive || !cb.CanSelect)
                     continue;
 
                 if (cb.PlayerCheckedIn == null && Physics.CircleCicleCollision(Player.Circle, cb.Circle))

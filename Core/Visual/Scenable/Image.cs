@@ -16,7 +16,7 @@
         public Vector3 position;
         public Vector3 Position         { get { return position; } set { position = value; RectangleComputed = false; } }
         public float Rotation           { get; set; }
-        public TypeBlend Blend          { get; set; }
+        public BlendType Blend          { get; set; }
         public double VisualPriority    { get; set; }
         public int Id                   { get; private set; }
 
@@ -45,7 +45,7 @@
             Origin = Center;
             Size = Vector2.One;
             Rotation = 0f;
-            Blend = TypeBlend.Alpha;
+            Blend = BlendType.Alpha;
             Color = Color.White;
             Effect = SpriteEffects.None;
             VisualPriority = 0;

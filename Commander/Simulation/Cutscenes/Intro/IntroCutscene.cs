@@ -96,14 +96,14 @@
             //test
             //Timing.Add("LogoIn", 100000);
             //Timing.Add("DedicationIn", 100000);
-            //Timing.Add("SimulatorIn", 100000);
+            //Timing.Add("SimulatorIn", 0);
             //Timing.Add("LocationIn", 100000);
-            //Timing.Add("ProtagonistIn", 100000);
-            //Timing.Add("MothershipArrival", 100000);
-            //Timing.Add("MothershipLights", 100000);
-            //Timing.Add("MothershipDestruction", 100000);
-            //Timing.Add("CommanderIn", 3000);
-            //Timing.Add("MothershipDeparture", 100000);
+            //Timing.Add("ProtagonistIn", 0);
+            //Timing.Add("MothershipArrival", 10000);
+            //Timing.Add("MothershipLights", 10000);
+            //Timing.Add("MothershipDestruction", 10000);
+            //Timing.Add("CommanderIn", 100000);
+            //Timing.Add("MothershipDeparture", 10000);
         }
     }
 }

@@ -20,7 +20,7 @@
         private double TempsTraduction;
         private double Elapsed;
 
-        public bool Centre;
+        public bool CenterText;
 
         public bool Termine
         {
@@ -36,7 +36,7 @@
             this.TempsTraduction = tempsTraduction;
             this.Elapsed = 0;
             this.TempsChaqueRecherche = tempsChaqueRecherche;
-            this.Centre = false;
+            this.CenterText = false;
             this.TexteATraduire = texteATraduire;
 
             ToTranslate = new Text(texteATraduire, policeLangueEtrangere, couleurLangueEtrangere, position);
@@ -108,7 +108,7 @@
             Translated.Data = new string(PartieTraduiteTexte);
             ToTranslate.Data = new string(PartieNonTraduiteTexte);
 
-            if (Centre)
+            if (CenterText)
             {
                 Translated.Origin = Translated.Center;
                 ToTranslate.Origin = ToTranslate.Center;

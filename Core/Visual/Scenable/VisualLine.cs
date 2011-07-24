@@ -10,7 +10,7 @@ namespace EphemereGames.Core.Visual
         public Vector3 Position             { get; set; }
         public double VisualPriority        { get; set; }
         public Scene Scene                  { get; set; }
-        public TypeBlend Blend              { get; set; }
+        public BlendType Blend              { get; set; }
         public int Id                       { get; private set; }
 
         public Color Color                  { get; set; }
@@ -32,7 +32,7 @@ namespace EphemereGames.Core.Visual
         public VisualLine(Vector3 start, Vector3 end, Color color, int tickness)
         {
             VisualPriority = 0;
-            Blend = TypeBlend.Default;
+            Blend = BlendType.Default;
             Color = color;
 
             Start = start;

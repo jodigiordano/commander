@@ -7,6 +7,7 @@
 
     static class KeyboardConfiguration
     {
+        public static Keys AdvancedView = Keys.R;
         public static Keys Next = Keys.Enter;
         public static Keys Back = Keys.Escape;
         public static Keys Cancel = Keys.Escape;
@@ -28,6 +29,7 @@
             {
                 return new List<Keys>()
                 {
+                    AdvancedView,
                     Back,
                     Next,
                     Cancel,
@@ -53,7 +55,7 @@
         public static MouseButton Select = MouseButton.Left;
         public static MouseButton Back = MouseButton.Right;
         public static MouseButton Cancel = MouseButton.Right;
-        public static MouseButton AdvancedView = MouseButton.Middle;
+        public static MouseButton AlternateSelect = MouseButton.Middle;
         public static MouseButton SelectionNext = MouseButton.MiddleDown;
         public static MouseButton SelectionPrevious = MouseButton.MiddleUp;
         public static float MovingSpeed = 1.5f;
@@ -69,7 +71,7 @@
                     Select,
                     Back,
                     Cancel,
-                    AdvancedView,
+                    AlternateSelect,
                     SelectionNext,
                     SelectionPrevious
                 };
@@ -83,11 +85,12 @@
         public static Buttons Back = Buttons.Start;
         public static Buttons Cancel = Buttons.B;
         public static Buttons ChangeMusic = Buttons.DPadUp;
-        public static Buttons NextWave = Buttons.Y;
+        public static Buttons NextWave = Buttons.RightShoulder;
         public static Buttons Debug = Buttons.DPadDown;
         public static Buttons Editor = Buttons.LeftShoulder;
         public static Buttons Select = Buttons.A;
-        public static Buttons AdvancedView = Buttons.X;
+        public static Buttons AlternateSelect = Buttons.X;
+        public static Buttons AdvancedView = Buttons.Y;
         public static Buttons SelectionNext = Buttons.RightTrigger;
         public static Buttons SelectionPrevious = Buttons.LeftTrigger;
         public static Buttons MoveCursor = Buttons.LeftStick;
@@ -112,6 +115,7 @@
                     NextWave,
                     Debug,
                     Editor,
+                    AlternateSelect,
                     Select,
                     AdvancedView,
                     SelectionNext,

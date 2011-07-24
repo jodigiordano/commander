@@ -13,8 +13,8 @@
         public double FadeTime = 250;
 
         protected Scene Scene;
-        protected Image FrontImage;
-        protected Image BackImage;
+        public Image FrontImage;
+        public Image BackImage;
 
         private Vector3 position;
         private Vector2 Size;

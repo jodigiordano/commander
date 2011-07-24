@@ -158,6 +158,7 @@
     <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Annunciations\LevelStartedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\Bubble.cs" />
+    <Compile Include="Simulation\GUI\Bubbles\ManualTextBubble.cs" />
     <Compile Include="Simulation\GUI\Bubbles\TextBubble.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />

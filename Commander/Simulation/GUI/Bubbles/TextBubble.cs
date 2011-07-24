@@ -7,10 +7,27 @@
 
     class TextBubble : Bubble
     {
-        public Text Texte;
-        public double TempsAffichage;
-        public double TempsFadeOut;
+        public Text Text;
+        public double ShowTime;
+        public double FadeTime;
         public bool Visible;
+
+
+        public TextBubble(Simulator simulator, Text text, Vector3 position, double showTime, double visualPriorirty)
+            : base(simulator, new PhysicalRectangle(), visualPriorirty)
+        {
+            Text = text;
+            Text.VisualPriority = visualPriorirty - 0.01f;
+            Position = position;
+            ShowTime = showTime;
+            FadeTime = double.MaxValue;
+
+            ComputeSize();
+            ComputePosition();
+
+            Visible = false;
+        }
+
 
         public Vector3 Position
         {
@@ -21,37 +38,24 @@
             }
         }
 
-        public TextBubble(Simulator simulator, Text texte, Vector3 position, double tempsAffichage, double prioriteAffichage)
-            : base(simulator, new PhysicalRectangle(), prioriteAffichage)
+
+        public bool Finished
         {
-            this.Texte = texte;
-            this.Texte.VisualPriority = prioriteAffichage - 0.01f;
-            this.Position = position;
-            this.TempsAffichage = tempsAffichage;
-            this.TempsFadeOut = double.MaxValue;
-
-            ComputeSize();
-            ComputePosition();
-
-            Visible = false;
+            get { return ShowTime <= 0; }
         }
 
-        public bool Termine
-        {
-            get { return TempsAffichage <= 0; }
-        }
 
         public void Update()
         {
-            TempsAffichage -= Preferences.TargetElapsedTimeMs;
+            ShowTime -= Preferences.TargetElapsedTimeMs;
 
-            if (TempsAffichage <= TempsFadeOut)
+            if (ShowTime <= FadeTime)
             {
-                TempsFadeOut = double.NaN;
-                FadeOut(TempsAffichage);
+                FadeTime = double.NaN;
+                FadeOut(ShowTime);
             }
 
-            Visible = Texte.Color.A != 0; //TempsAffichage > 0;
+            Visible = Text.Color.A != 0;
 
             ComputeSize();
             ComputePosition();
@@ -62,8 +66,8 @@
         {
             base.Draw();
 
-            Texte.Position = new Vector3(Dimension.X, Dimension.Y, 0);
-            Simulation.Scene.Add(Texte);
+            Text.Position = new Vector3(Dimension.X, Dimension.Y, 0);
+            Simulator.Scene.Add(Text);
         }
 
 
@@ -71,8 +75,8 @@
         {
             base.FadeIn(temps);
 
-            Texte.Alpha = 0;
-            Simulation.Scene.VisualEffects.Add(Texte, VisualEffects.FadeInFrom0(255, 0, temps));
+            Text.Alpha = 0;
+            Simulator.Scene.VisualEffects.Add(Text, VisualEffects.FadeInFrom0(255, 0, temps));
         }
 
 
@@ -80,13 +84,13 @@
         {
             base.FadeOut(temps);
 
-            Simulation.Scene.VisualEffects.Add(Texte, VisualEffects.FadeOutTo0(255, 0, temps));
+            Simulator.Scene.VisualEffects.Add(Text, VisualEffects.FadeOutTo0(255, 0, temps));
         }
 
 
         private void ComputeSize()
         {
-            Vector2 size = Texte.TextSize;
+            Vector2 size = Text.TextSize;
 
             this.Dimension.Width = (int) size.X + 4;
             this.Dimension.Height = (int) size.Y + 4;

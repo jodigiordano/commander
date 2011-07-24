@@ -96,17 +96,23 @@
 
         public void AddPinkHole(Vector3 position, string name, int speed, int priority)
         {
-            CelestialBodyDescriptor d = new CelestialBodyDescriptor();
-            d.Name = name;
-            d.Invincible = true;
-            d.Position = position;
-            d.StartingPosition = 0;
-            d.PathPriority = priority;
-            d.Size = Size.Small;
-            d.Speed = speed;
-            d.ParticulesEffect = "trouRose";
+            PlanetarySystem.Add(CreatePinkHole(position, name, speed, priority));
+        }
 
-            PlanetarySystem.Add(d);
+
+        public CelestialBodyDescriptor CreatePinkHole(Vector3 position, string name, int speed, int priority)
+        {
+            return new CelestialBodyDescriptor()
+            {
+                Name = name,
+                Invincible = true,
+                Position = position,
+                StartingPosition = 0,
+                PathPriority = priority,
+                Size = Size.Small,
+                Speed = speed,
+                ParticulesEffect = "trouRose"
+            };
         }
 
 
@@ -296,15 +302,7 @@
 
         public void AddTurret(TurretType type, int level, Vector3 position, bool visible, bool canSell, bool canUpgrade)
         {
-            StartingTurrets.Add(new TurretDescriptor()
-            {
-                Type = type,
-                Level = level,
-                Position = position,
-                Visible = visible,
-                CanSell = canSell,
-                CanUpgrade = canUpgrade
-            });
+            StartingTurrets.Add(CreateTurret(type, level, position, visible, canSell, canUpgrade));
         }
 
 
@@ -317,6 +315,20 @@
         public void AddTurret(TurretType type, int level, Vector3 position, bool visible)
         {
             AddTurret(type, level, position, visible, true, true);
+        }
+
+
+        public TurretDescriptor CreateTurret(TurretType type, int level, Vector3 position, bool visible, bool canSell, bool canUpgrade)
+        {
+            return new TurretDescriptor()
+            {
+                Type = type,
+                Level = level,
+                Position = position,
+                Visible = visible,
+                CanSell = canSell,
+                CanUpgrade = canUpgrade
+            };
         }
     }
 

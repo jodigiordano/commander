@@ -30,14 +30,14 @@
         public SpriteBatchRenderer Renderer;
         internal State State;
 
-        private TypeBlend blend;
+        private BlendType blend;
 
         
         public Particle()
         {
             Name = "";
             Position = Vector3.Zero;
-            Blend = TypeBlend.Add;
+            Blend = BlendType.Add;
             VisualPriority = 0;
             State = State.Idle;
             Id = Visuals.NextHashCode;
@@ -54,7 +54,7 @@
         }
 
 
-        public TypeBlend Blend
+        public BlendType Blend
         {
             get { return blend; }
             set
@@ -100,31 +100,31 @@
         }
 
 
-        private static TypeBlend ToCoreBlend(EmitterBlendMode mercury)
+        private static BlendType ToCoreBlend(EmitterBlendMode mercury)
         {
-            TypeBlend blend;
+            BlendType blend;
 
             switch (mercury)
             {
-                case EmitterBlendMode.Add:          blend = TypeBlend.Add;        break;
-                case EmitterBlendMode.Alpha:        blend = TypeBlend.Alpha;      break;
-                case EmitterBlendMode.None:         blend = TypeBlend.None;       break;
-                default:                            blend = TypeBlend.Add;        break;
+                case EmitterBlendMode.Add:          blend = BlendType.Add;        break;
+                case EmitterBlendMode.Alpha:        blend = BlendType.Alpha;      break;
+                case EmitterBlendMode.None:         blend = BlendType.None;       break;
+                default:                            blend = BlendType.Add;        break;
             }
 
             return blend;
         }
 
 
-        private static EmitterBlendMode ToMercuryBlend(TypeBlend core)
+        private static EmitterBlendMode ToMercuryBlend(BlendType core)
         {
             EmitterBlendMode blend;
 
             switch (core)
             {
-                case TypeBlend.Add:          blend = EmitterBlendMode.Add;       break;
-                case TypeBlend.Alpha:        blend = EmitterBlendMode.Alpha;     break;
-                case TypeBlend.None:         blend = EmitterBlendMode.None;      break;
+                case BlendType.Add:          blend = EmitterBlendMode.Add;       break;
+                case BlendType.Alpha:        blend = EmitterBlendMode.Alpha;     break;
+                case BlendType.None:         blend = EmitterBlendMode.None;      break;
                 default:                     blend = EmitterBlendMode.Add;       break;
             }
 

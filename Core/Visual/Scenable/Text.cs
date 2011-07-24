@@ -13,7 +13,7 @@
         public Vector2 TextureSize;
         public float Rotation           { get; set; }
 
-        public TypeBlend Blend          { get; set; }
+        public BlendType Blend          { get; set; }
         public double VisualPriority    { get; set; }
         public int Id                   { get; private set; }
 

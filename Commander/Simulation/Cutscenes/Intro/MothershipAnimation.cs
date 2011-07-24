@@ -87,7 +87,7 @@
                     {
                         Mothership.DeactivateDeadlyLights(3000);
                         Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, Mothership.Position.Y + 5000, 0), 0, 18000));
-                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(0.7f, 1f, 0, 14000));
+                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(0.7f, 1.5f, 0, 17000));
 
                         foreach (var player in Inputs.Players)
                             Inputs.VibrateController(player, 6000, 0.2f, 0.1f);

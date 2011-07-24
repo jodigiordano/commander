@@ -19,7 +19,7 @@ namespace EphemereGames.Commander
         public static TrialMode TrialMode;
         public static GameScene GameInProgress;
         public static Main Instance;
-        public static string SelectedWorld;
+        public static WorldScene SelectedWorld;
         public static LevelsFactory LevelsFactory;
         public static MusicController MusicController;
 

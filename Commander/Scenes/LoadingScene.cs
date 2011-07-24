@@ -52,7 +52,7 @@
             "Searching my soulmate. Please wait.",
             "Compiling the kernel. Please wait.",
             "Learning quantum physic. Please wait.",
-            "Mastering chinese langage. Please wait.",
+            "Mastering chinese language. Please wait.",
             "Watching a trilogy. Please wait."
         };
 
@@ -255,7 +255,7 @@
         {
             LoadingTranslation = new Translator
             (this, new Vector3(0, 150, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], 3, true, 3000, 250, 0.3f);
-            LoadingTranslation.Centre = true;
+            LoadingTranslation.CenterText = true;
         }
 
 

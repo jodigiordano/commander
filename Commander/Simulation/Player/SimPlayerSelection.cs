@@ -10,7 +10,7 @@
         public PowerUpType PowerUpToBuy;
 
         public Turret Turret;
-        //public TurretChoice TurretChoice;
+        public TurretChoice TurretChoice;
         public Dictionary<TurretChoice, bool> AvailableTurretOptions;
 
         public TurretType TurretToBuy;
@@ -30,7 +30,7 @@
             PowerUpToBuy = PowerUpType.None;
             Turret = null;
             TurretToBuy = TurretType.None;
-            //TurretChoice = TurretChoice.None;
+            TurretChoice = TurretChoice.None;
             TurretToPlace = null;
             PausedGameChoice = PausedGameChoice.None;
             NewGameChoice = NewGameChoice.None;

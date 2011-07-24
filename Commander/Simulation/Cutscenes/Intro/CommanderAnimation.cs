@@ -27,7 +27,7 @@
                 Alpha = 0,
                 Size = new Vector2(1280, 720),
                 VisualPriority = VisualPriorities.Default.IntroCommanderBackground,
-                Blend = TypeBlend.Add
+                Blend = BlendType.Add
             };
 
             Commander = new Text("Commander", "Pixelite")
@@ -44,7 +44,7 @@
                 "Pixelite", new Color(234, 196, 28, 0),
                 "Todo: Subtitle here",
                 5, true, 4000, 250, VisualPriorities.Default.IntroCommanderText);
-            SubTitle.Centre = true;
+            SubTitle.CenterText = true;
 
             TimeBeforeIn = IntroCutscene.Timing["CommanderIn"];
 

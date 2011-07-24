@@ -29,7 +29,7 @@
         private double LengthBefore;
 
 
-        public Path(Simulator simulator, Color couleur, TypeBlend melange)
+        public Path(Simulator simulator, Color couleur, BlendType melange)
         {
             Scene = simulator.Scene;
             

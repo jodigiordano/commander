@@ -12,6 +12,7 @@
         public Image Base;
         public Image Top;
         public Image Lights;
+        public Image Tentacles;
 
         private Simulator Simulator;
         private List<Missile> Missiles;
@@ -45,6 +46,12 @@
             
             };
 
+            Tentacles = new Image("MothershipTentacles")
+            {
+                SizeX = 16,
+                VisualPriority = visualPriority + 0.000001
+            };
+
             Missiles = new List<Missile>();
         }
 
@@ -58,7 +65,7 @@
         public Vector3 Position
         {
             get { return Base.Position; }
-            set { Base.Position = Top.Position = Lights.Position = value; }
+            set { Base.Position = Top.Position = Lights.Position = Tentacles.Position = value; }
         }
 
 
@@ -72,7 +79,7 @@
         public float Rotation
         {
             get { return Base.Rotation; }
-            set { Base.Rotation = Lights.Rotation = value; }
+            set { Base.Rotation = Lights.Rotation = Tentacles.Rotation = value; }
         }
 
 
@@ -85,14 +92,15 @@
 
         public void Draw()
         {
-            Top.Rotation += 0.01f;
+            //Top.Rotation += 0.01f;
 
-            if (Top.Rotation > MathHelper.TwoPi)
-                Top.Rotation -= MathHelper.TwoPi;
+            //if (Top.Rotation > MathHelper.TwoPi)
+            //    Top.Rotation -= MathHelper.TwoPi;
 
             Simulator.Scene.Add(Base);
             Simulator.Scene.Add(Top);
             Simulator.Scene.Add(Lights);
+            Simulator.Scene.Add(Tentacles);
 
             foreach (var m in Missiles)
                 m.Draw();
@@ -102,12 +110,14 @@
         public void ActivateDeadlyLights(double time)
         {
             Simulator.Scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 255, 0, time));
+            Simulator.Scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(Color.Red, 0, time));
         }
 
 
         public void DeactivateDeadlyLights(double time)
         {
             Simulator.Scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 0, 0, time));
+            Simulator.Scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(new Color(255, 200, 0), 0, time));
         }
 
 

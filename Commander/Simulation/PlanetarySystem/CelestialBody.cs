@@ -34,7 +34,7 @@
         public float AttackPoints                               { get; set; }
         public bool AliveOverride;
         public bool Alive                                       { get { return AliveOverride || LifePoints > 0; } }
-        public bool Selectionnable;
+        public bool CanSelect;
         public bool Invincible;
         public bool LastOnPath;
         public bool FirstOnPath;
@@ -83,7 +83,7 @@
 
             LifePoints = float.MaxValue;
             PathPriority = int.MinValue;
-            Selectionnable = true;
+            CanSelect = true;
             Invincible = false;
             LastOnPath = false;
             FirstOnPath = false;
@@ -417,7 +417,7 @@
         {
             return new CelestialBodyDescriptor()
             {
-                CanSelect = Selectionnable,
+                CanSelect = CanSelect,
                 Image = PartialImageName,
                 InBackground = false,
                 Invincible = Invincible,

@@ -8,7 +8,7 @@
     {
         private WorldDescriptor Descriptor;
         private Text WorldId;
-        private Text WorldName;
+        private Translator WorldName;
 
         private double Length;
         private bool TransitionInProgress;
@@ -26,21 +26,19 @@
                 SizeX = 4,
                 Color = Color.Black
             }.CenterIt();
-
-
-            WorldName = new Text(Descriptor.Name, "Pixelite")
-            {
-                Position = new Vector3(0, 50, 0),
-                SizeX = 3,
-                Color = Color.Black
-            }.CenterIt();
         }
 
 
         public void Initialize()
         {
-            Length = 2000;
+            Length = 2500;
             TransitionInProgress = false;
+
+            WorldName = new Translator(this, new Vector3(0, 50, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", Color.Black, Descriptor.Name, 3, true, 1500, 100, Preferences.PrioriteGUIPanneauGeneral);
+            WorldName.CenterText = true;
+
+            VisualEffects.Add(WorldName.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+            VisualEffects.Add(WorldName.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
         }
 
 
@@ -56,13 +54,16 @@
                 TransiteTo("World" + Descriptor.Id);
                 TransitionInProgress = true;
             }
+
+            WorldName.Update();
         }
 
 
         protected override void UpdateVisual()
         {
             Add(WorldId);
-            Add(WorldName);
+
+            WorldName.Draw();
         }
 
 

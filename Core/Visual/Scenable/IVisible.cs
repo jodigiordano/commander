@@ -33,7 +33,7 @@
         public float Speed                        { get; set; }
 
         [ContentSerializer(Optional = true)]
-        public TypeBlend Blend                  { get; set; }
+        public BlendType Blend                  { get; set; }
 
         [ContentSerializer(Optional = true)]
         public double VisualPriority              { get; set; }
@@ -134,7 +134,7 @@
             this.rotation = 0.0f;
             tailleVecteur.X = tailleVecteur.Y = 1;
 
-            this.Blend = TypeBlend.Alpha;
+            this.Blend = BlendType.Alpha;
             this.Couleur = Color.White;
             this.Components = null;
             this.Effets = SpriteEffects.None;

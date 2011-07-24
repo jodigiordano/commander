@@ -38,7 +38,7 @@
         public virtual EffectsController<IVisual> VisualEffects { get; protected set; }
 
         private SpriteBatch Batch;
-        private TypeBlend LastBlend;
+        private BlendType LastBlend;
         internal bool UpdatedThisTick;
         private List<IScenable> ToDraw;
         private List<IScenable> ToDrawWithoutCameraForeground;
@@ -58,7 +58,7 @@
             ToDrawWithoutCameraForeground = new List<IScenable>();
             ToDrawWithoutCameraBackground = new List<IScenable>();
             Batch = new SpriteBatch(Preferences.GraphicsDeviceManager.GraphicsDevice);
-            LastBlend = TypeBlend.Alpha;
+            LastBlend = BlendType.Alpha;
             UpdatedThisTick = false;
             Camera = new Camera(new Vector2(width, height));
             Camera.Origin = new Vector2(width / 2.0f, height / 2.0f);
@@ -111,7 +111,7 @@
         {
             toDraw.Sort(IScenableComparer.Default);
 
-            BlendState b = SwitchBlendMode(TypeBlend.Alpha);
+            BlendState b = SwitchBlendMode(BlendType.Alpha);
 
             Batch.Begin(SpriteSortMode.Deferred, b, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, camera);
 
@@ -246,7 +246,7 @@
         }
 
 
-        private BlendState SwitchBlendMode(TypeBlend blend)
+        private BlendState SwitchBlendMode(BlendType blend)
         {
             LastBlend = blend;
 
@@ -254,21 +254,21 @@
 
             switch (blend)
             {
-                case TypeBlend.Add:
+                case BlendType.Add:
                     newBlend = BlendState.Additive;
                     break;
 
-                case TypeBlend.Multiply:
+                case BlendType.Multiply:
                     newBlend = CustomBlends.Multiply;
                     break;
 
                 default:
-                case TypeBlend.Default:
-                case TypeBlend.Alpha:
+                case BlendType.Default:
+                case BlendType.Alpha:
                     newBlend = CustomBlends.Alpha;
                     break;
 
-                case TypeBlend.Substract:
+                case BlendType.Substract:
                     newBlend = CustomBlends.Substract;
                     break;
             }

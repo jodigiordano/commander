@@ -88,8 +88,8 @@ namespace EphemereGames.Commander
                 v.Representation.Rotation = MathHelper.PiOver2;
                 v.Tentacules.Taille = 16;
                 v.Tentacules.Rotation = MathHelper.PiOver2;
-                v.Representation.Blend = TypeBlend.Substract;
-                v.Tentacules.Blend = TypeBlend.Substract;
+                v.Representation.Blend = BlendType.Substract;
+                v.Tentacules.Blend = BlendType.Substract;
 
                 AlienShips.Add(v);
 

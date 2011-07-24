@@ -209,7 +209,7 @@
                 }
 
                 c.PathPriority = descriptor.PathPriority;
-                c.Selectionnable = descriptor.CanSelect;
+                c.CanSelect = descriptor.CanSelect;
                 c.Invincible = descriptor.Invincible;
 
                 if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)

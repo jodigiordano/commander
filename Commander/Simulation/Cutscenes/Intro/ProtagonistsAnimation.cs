@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -38,6 +39,8 @@
         private double TimeOnPathProtaAndWife;
         private double TimeOnPathBabies;
 
+        private ManualTextBubble ProtagonistText;
+
 
         public ProtagonistsAnimation(Simulator simulator)
         {
@@ -51,6 +54,7 @@
             Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, Color.Pink, "Cursor4") { Size = 2f });
             Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, new Color(255, 115, 40), "Cursor5") { Size = 2f });
 
+            ProtagonistText = new ManualTextBubble(simulator, new Text("I must warn the\n\nother colonies!", "Pixelite") { SizeX = 2 }, Protagonist.Position, VisualPriorities.Default.IntroProtagonist - 0.00001) { Alpha = 0 };
 
             State = ProtagonistState.None;
 
@@ -66,6 +70,9 @@
 
             TimeOnPathProtaAndWife = 0;
             TimeOnPathBabies = 0;
+
+            Simulator.Scene.VisualEffects.Add(Protagonist.FrontImage, Core.Visual.VisualEffects.ChangeColor(Color.Red, IntroCutscene.Timing["MothershipDeparture"] + 10000, 5000));
+            Simulator.Scene.VisualEffects.Add(ProtagonistText, Core.Visual.VisualEffects.FadeInFrom0(255, IntroCutscene.Timing["MothershipDeparture"] + 15000, 1000));
         }
 
 
@@ -136,6 +143,9 @@
 
                     break;
             }
+
+            ProtagonistText.Position = Protagonist.Position;
+            ProtagonistText.Update();
         }
 
 
@@ -182,6 +192,8 @@
 
             foreach (var b in Babies)
                 b.Draw();
+
+            ProtagonistText.Draw();
         }
 
 

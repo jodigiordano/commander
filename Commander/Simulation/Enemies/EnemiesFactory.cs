@@ -12,7 +12,7 @@
         private Simulator Simulator;
 
 
-        public Dictionary<EnemyType, string> ImagesEnemies = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
+        public static readonly Dictionary<EnemyType, string> ImagesEnemies = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
         {
             { EnemyType.Asteroid, @"Asteroid" },
             { EnemyType.Comet, @"Comet" },
@@ -27,7 +27,22 @@
         };
 
 
-        private Dictionary<EnemyType, Color> ColorsEnemies = new Dictionary<EnemyType, Color>(EnemyTypeComparer.Default)
+        public static readonly Dictionary<string, EnemyType> EnemiesImages = new Dictionary<string, EnemyType>()
+        {
+            { @"Asteroid", EnemyType.Asteroid },
+            { @"Comet", EnemyType.Comet },
+            { @"Plutoid", EnemyType.Plutoid },
+            { @"Centaur", EnemyType.Centaur },
+            { @"Trojan", EnemyType.Trojan },
+            { @"Meteoroid", EnemyType.Meteoroid },
+            { @"Apohele", EnemyType.Apohele },
+            { @"Damacloid", EnemyType.Damacloid },
+            { @"Swarm", EnemyType.Swarm },
+            { @"Vulcanoid", EnemyType.Vulcanoid }
+        };
+
+
+        private static readonly Dictionary<EnemyType, Color> ColorsEnemies = new Dictionary<EnemyType, Color>(EnemyTypeComparer.Default)
         {
             { EnemyType.Asteroid, new Color(255, 178, 12) },
             { EnemyType.Comet, new Color(255, 142, 161) },
@@ -214,6 +229,17 @@
         public static string GetTexture(EnemyType type)
         {
             return type.ToString("g");
+        }
+
+
+        public static List<EnemyType> ToEnemyTypeList(List<string> enemiesNames)
+        {
+            var result = new List<EnemyType>();
+
+            foreach (var e in enemiesNames)
+                result.Add(EnemiesImages[e]);
+
+            return result;
         }
     }
 }

@@ -171,6 +171,7 @@
     <asset name="fondecran15"                type="Image" path="fonds/fondecran15" />
     <asset name="fondecran16"                type="Image" path="fonds/fondecran16" />
     <asset name="introBackground"            type="Image" path="fonds/intro" />
+    <asset name="world1"                     type="Image" path="fonds/world1" />
 
     <asset name="bulle"                            type="Image" path="scenarios/bulle" />
     <asset name="bulleRenversee"                   type="Image" path="scenarios/bulleRenversee" />

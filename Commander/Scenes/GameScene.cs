@@ -10,16 +10,19 @@
     class GameScene : Scene
     {
         public Simulator Simulator;
-        private LevelDescriptor Level;
         public MusicController MusicController;
 
+        private LevelDescriptor Level;
+        private string TransitingTo;
 
-        public GameScene(LevelDescriptor level)
+
+        public GameScene(string name, LevelDescriptor level)
             : base(1280, 720)
         {
             Level = level;
 
-            Name = "Partie";
+            Name = name;
+            TransitingTo = "";
 
             MusicController = new MusicController() { SwitchMusicRandomly = false };
 
@@ -65,6 +68,8 @@
 
             Simulator.SyncPlayers();
 
+            Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
+
             EnableUpdate = true;
 
             MusicController.PlayMusic(false);
@@ -79,7 +84,8 @@
 
             EnableUpdate = false;
 
-            MusicController.PauseMusic();
+            if (TransitingTo == Main.SelectedWorld.Name || TransitingTo == "Menu")
+                MusicController.PauseMusic();
 
             Simulator.EnableInputs = false;
         }
@@ -109,11 +115,10 @@
             if (Simulator.State == GameState.Won)
             {
                 if (button == MouseConfiguration.Select)
-                {    //todo: go to next level
-                }
+                    NextLevel();
 
                 else if (button == MouseConfiguration.Back)
-                    BeginTransition();
+                    TransiteToWorld();
             }
 
             else if (Simulator.State == GameState.Lost)
@@ -122,7 +127,7 @@
                     RetryLevel();
 
                 else if (button == MouseConfiguration.Back)
-                    BeginTransition();
+                    TransiteToWorld();
             }
         }
 
@@ -135,7 +140,7 @@
                     RetryLevel();
 
                 else if (key == KeyboardConfiguration.Back)
-                    BeginTransition();
+                    TransiteToWorld();
             }
 
             else if (Simulator.State == GameState.Running)
@@ -144,7 +149,7 @@
                     return;
 
                 if (key == KeyboardConfiguration.Back)
-                    BeginTransition();
+                    TransiteToWorld();
 
                 if (key == KeyboardConfiguration.ChangeMusic)
                     MusicController.ChangeMusic(false);
@@ -157,14 +162,12 @@
             if (Simulator.State == GameState.Won)
             {
                 if (button == GamePadConfiguration.Select)
-                {
-                    //todo: next level
-                }
+                    NextLevel();
 
                 else if (button == GamePadConfiguration.RetryLevel)
                     RetryLevel();
                 else if (button == GamePadConfiguration.Cancel)
-                    BeginTransition();
+                    TransiteToWorld();
             }
 
             else if (Simulator.State == GameState.Lost)
@@ -172,24 +175,35 @@
                 if (button == GamePadConfiguration.Select)
                     RetryLevel();
                 else if (button == GamePadConfiguration.Cancel)
-                    BeginTransition();
+                    TransiteToWorld();
             }
 
             else
             {
                 if (button == GamePadConfiguration.Back)
-                    BeginTransition();
+                    TransiteToWorld();
 
                 if (button == GamePadConfiguration.ChangeMusic)
                     MusicController.ChangeMusic(false);
             }
         }
 
+
+        public override void DoPlayerConnected(Core.Input.Player p)
+        {
+            var player = (Player) p;
+
+            player.ChooseAssets();
+        }
+
         
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
             if (Inputs.ConnectedPlayers.Count == 0)
-                TransiteTo("Menu");
+            {
+                TransitingTo = "Menu";
+                TransiteTo(TransitingTo);
+            }
         }
 
 
@@ -214,19 +228,48 @@
         }
 
 
-        private void BeginTransition()
+        private void RetryLevel()
         {
-            TransiteTo(Main.SelectedWorld);
+            TransiteToNewGame(Level);
         }
 
 
-        private void RetryLevel()
+        private void NextLevel()
         {
-            MusicController.ChangeMusic(true);
+            var nextLevelId = Main.LevelsFactory.GetNextLevel(Main.SelectedWorld.WorldId, Level.Infos.Id);
 
-            Simulator.Initialize();
-            Simulator.SyncPlayers();
-            Simulator.EnableInputs = true;
+            if (nextLevelId == -1)
+            {
+                TransiteToWorld();
+                return;
+            }
+
+            TransiteToNewGame(Main.LevelsFactory.GetLevelDescriptor(nextLevelId));
+        }
+
+
+        private void TransiteToNewGame(LevelDescriptor level)
+        {
+            MusicController.StopMusic(false);
+
+            var newGame = new GameScene(Name == "Game1" ? "Game2" : "Game1", level);
+            Main.GameInProgress = newGame;
+            newGame.Simulator.AddNewGameStateListener(Main.SelectedWorld.DoNewGameState);
+
+            if (Visuals.GetScene(newGame.Name) == null)
+                Visuals.AddScene(newGame);
+            else
+                Visuals.UpdateScene(newGame.Name, newGame);
+
+            TransitingTo = newGame.Name;
+            TransiteTo(TransitingTo);
+        }
+
+
+        private void TransiteToWorld()
+        {
+            TransitingTo = Main.SelectedWorld.Name;
+            TransiteTo(TransitingTo);
         }
     }
 }

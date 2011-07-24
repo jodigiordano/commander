@@ -224,7 +224,7 @@
         {
             PressStart = new Translator
             (this, new Vector3(0, 50, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine", 3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal);
-            PressStart.Centre = true;
+            PressStart.CenterText = true;
         }
 
 
@@ -246,8 +246,12 @@
 
         public override void DoPlayerConnected(Core.Input.Player p)
         {
+            var player = (Player) p;
+
             if (Inputs.ConnectedPlayers.Count == 1)
-                ReloadPlayerData((Player) p);
+                ReloadPlayerData(player);
+
+            player.ChooseAssets();
         }
 
 

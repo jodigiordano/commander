@@ -35,7 +35,7 @@
             RepresentationsQtes = new Dictionary<EnemyType, Text>();
             RepresentationsNiveaux = new Dictionary<EnemyType, Text>();
 
-            foreach (var kvp in Simulator.EnemiesFactory.ImagesEnemies)
+            foreach (var kvp in EnemiesFactory.ImagesEnemies)
             {
                 Image im = new Image(kvp.Value)
                 {
