@@ -255,7 +255,9 @@
 
             for (int i = 0; i < CelestialBodiesPath.Count; i++)
             {
-                if (i == 0 || i == CelestialBodiesPath.Count - 1)
+                var celestialBody = CelestialBodiesPath[i];
+
+                if (i == 0 || i == CelestialBodiesPath.Count - 1 || celestialBody.StraightLine)
                 {
                     Points[NbPoints++] = CelestialBodiesPath[i].Position;
                     continue;
@@ -266,28 +268,28 @@
                     (
                         ref CelestialBodiesPath[i - 1].position,
                         ref CelestialBodiesPath[i + 1].position,
-                        ref CelestialBodiesPath[i].position,
+                        ref celestialBody.position,
                         ref _vecteur1
                     );
 
                 // Vecteur perpendiculaire
-                Vector3.Subtract(ref CelestialBodiesPath[i].position, ref _vecteur1, out _vecteur1);
+                Vector3.Subtract(ref celestialBody.position, ref _vecteur1, out _vecteur1);
 
                 //Radius
-                float radius = MathHelper.Min(_vecteur1.Length(), CelestialBodiesPath[i].OuterTurretZone.Radius + CelestialBodyDistance);
+                float radius = MathHelper.Min(_vecteur1.Length(), celestialBody.OuterTurretZone.Radius + CelestialBodyDistance);
 
                 //Entry point
-                Vector3 vecPO = CelestialBodiesPath[i].position - CelestialBodiesPath[i - 1].position;
+                Vector3 vecPO = celestialBody.position - CelestialBodiesPath[i - 1].position;
                 float POangle = Core.Physics.Utilities.VectorToAngle(ref vecPO);
                 POangle += MathHelper.PiOver2;
-                Vector3 entryVec = CelestialBodiesPath[i].position +
+                Vector3 entryVec = celestialBody.position +
                     Core.Physics.Utilities.AngleToVector(POangle) * radius;
 
                 //Exit point
-                Vector3 vecPD = CelestialBodiesPath[i].position - CelestialBodiesPath[i + 1].position;
+                Vector3 vecPD = celestialBody.position - CelestialBodiesPath[i + 1].position;
                 float PDangle = Core.Physics.Utilities.VectorToAngle(ref vecPD);
                 PDangle -= MathHelper.PiOver2;
-                Vector3 exitVec = CelestialBodiesPath[i].position +
+                Vector3 exitVec = celestialBody.position +
                     Core.Physics.Utilities.AngleToVector(PDangle) * radius;
 
                 Points[NbPoints++] = entryVec;
@@ -308,13 +310,13 @@
                     if (next < 0)
                         next += MathHelper.TwoPi;
 
-                    Points[NbPoints++] = CelestialBodiesPath[i].position +
+                    Points[NbPoints++] = celestialBody.position +
                     Core.Physics.Utilities.AngleToVector(next) * radius;
                 }
 
                 Points[NbPoints++] = exitVec;
 
-                if (CelestialBodiesPath[i].HasLevel2GravitationalTurret)
+                if (celestialBody.HasLevel2GravitationalTurret)
                 {
                     step = MathHelper.TwoPi / 8;
 
@@ -325,7 +327,7 @@
                         if (next < 0)
                             next += MathHelper.TwoPi;
 
-                        Points[NbPoints++] = CelestialBodiesPath[i].position +
+                        Points[NbPoints++] = celestialBody.position +
                         Core.Physics.Utilities.AngleToVector(next) * radius;
                     }
 

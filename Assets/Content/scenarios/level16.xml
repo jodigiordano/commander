@@ -14,10 +14,7 @@
       <Name>Asteroid belt</Name>
       <Images>
         <string>Comet</string>
-        <string>Comet</string>
         <string>Asteroid</string>
-        <string>Asteroid</string>
-        <string>Apohele</string>
       </Images>
       <HasGravitationalTurret>false</HasGravitationalTurret>
       <StartingTurrets />
@@ -199,7 +196,6 @@
       <StartingTime>60000</StartingTime>
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>3</SpeedLevel>
       <LivesLevel>3</LivesLevel>

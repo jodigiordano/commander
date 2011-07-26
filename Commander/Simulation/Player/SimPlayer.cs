@@ -45,7 +45,7 @@
                 AutomaticMode = false,
                 Speed = 4,
                 ShootingFrequency = 100,
-                BulletHitPoints = 10
+                BulletHitPoints = 1
             };
 
             TurretToPlaceChanged = false;
@@ -98,6 +98,15 @@
                 SpaceshipMove.NinjaPosition = value;
                 Position = SpaceshipMove.Position;
                 VerifyFrame();
+            }
+        }
+
+
+        public double BulletDamage
+        {
+            set
+            {
+                SpaceshipMove.BulletHitPoints = (float) value;
             }
         }
 

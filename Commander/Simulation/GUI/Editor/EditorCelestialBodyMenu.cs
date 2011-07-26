@@ -20,8 +20,11 @@
 
             Choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Remove", 1, new EditorCelestialBodyCommand("Remove")),
-                new EditorToggleContextualMenuChoice(
+                new EditorTextContextualMenuChoice("Move", "Move", 1, new EditorCelestialBodyCommand("Move")),
+                new EditorTextContextualMenuChoice("Rotate", "Rotate", 1, new EditorCelestialBodyCommand("Rotate")),
+                new EditorTextContextualMenuChoice("Shrink", "Shrink", 1, new EditorCelestialBodyCommand("Shrink")),
+                new EditorTextContextualMenuChoice("Remove", "Remove", 1, new EditorCelestialBodyCommand("Remove")),
+                new EditorToggleContextualMenuChoice("Speed",
                     new List<string>() { "Speed: 0", "Speed: 1", "Speed: 2", "Speed: 3", "Speed: 4", "Speed: 5", "Speed: 6", "Speed: 7", "Speed: 8", "Speed: 9", "Speed: 10" },
                     1,
                     new List<EditorCommand>()
@@ -38,9 +41,9 @@
                         new EditorCelestialBodyCommand("ToggleSpeed") { Speed = EditorLevelGenerator.PossibleRotationTimes[10] },
                         new EditorCelestialBodyCommand("ToggleSpeed") { Speed = EditorLevelGenerator.PossibleRotationTimes[0] }
                     }),
-                new EditorTextContextualMenuChoice("Push first on path", 1, new EditorCelestialBodyCommand("PushFirst")),
-                new EditorTextContextualMenuChoice("Push last on path", 1, new EditorCelestialBodyCommand("PushLast")),
-                new EditorToggleContextualMenuChoice(
+                new EditorTextContextualMenuChoice("PushFirst", "Push first on path", 1, new EditorCelestialBodyCommand("PushFirst")),
+                new EditorTextContextualMenuChoice("PushLast", "Push last on path", 1, new EditorCelestialBodyCommand("PushLast")),
+                new EditorToggleContextualMenuChoice("AddToPath",
                     new List<string>() { "Add to starting path", "Remove from starting path" },
                     1,
                     new List<EditorCommand>()
@@ -48,7 +51,7 @@
                         new EditorCelestialBodyCommand("AddGravitationalTurret"),
                         new EditorCelestialBodyCommand("RemoveGravitationalTurret")
                     }),
-                new EditorToggleContextualMenuChoice(
+                new EditorToggleContextualMenuChoice("Size",
                     new List<string>() { "Size: small", "Size: medium", "Size: big" },
                     1,
                     new List<EditorCommand>()
@@ -58,12 +61,9 @@
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Small },
                     }),
                 GetToggleAssets(),
-                new EditorTextContextualMenuChoice("Verify", 1, new EditorCelestialBodyCommand("Verify")),
-                new EditorTextContextualMenuChoice("Move", 1, new EditorCelestialBodyCommand("Move")),
-                new EditorTextContextualMenuChoice("Rotate", 1, new EditorCelestialBodyCommand("Rotate")),
-                new EditorTextContextualMenuChoice("Shrink", 1, new EditorCelestialBodyCommand("Shrink")),
-                new EditorTextContextualMenuChoice("Starting Position", 1, new EditorCelestialBodyCommand("StartingPosition")),
-                new EditorToggleContextualMenuChoice(
+                new EditorTextContextualMenuChoice("Verify", "Verify", 1, new EditorCelestialBodyCommand("Verify")),
+                new EditorTextContextualMenuChoice("StartingPosition", "Starting Position", 1, new EditorCelestialBodyCommand("StartingPosition")),
+                new EditorToggleContextualMenuChoice("ShowPath",
                     new List<string>() { "Show path", "Hide path" },
                     1,
                     new List<EditorCommand>()
@@ -71,7 +71,7 @@
                         new EditorCelestialBodyCommand("ShowPathPreview"),
                         new EditorCelestialBodyCommand("HidePathPreview")
                     }),
-                new EditorToggleContextualMenuChoice(
+                new EditorToggleContextualMenuChoice("HasMoons",
                     new List<string>() { "Has moons: true", "Has moons: false" },
                     1,
                     new List<EditorCommand>()
@@ -79,13 +79,29 @@
                         new EditorCelestialBodyCommand("HasMoons") { HasMoons = false },
                         new EditorCelestialBodyCommand("HasMoons") { HasMoons = true }
                     }),
-                new EditorToggleContextualMenuChoice(
+                new EditorToggleContextualMenuChoice("FollowPath",
                     new List<string>() { "Follow path: true", "Follow path: false" },
                     1,
                     new List<EditorCommand>()
                     {
                         new EditorCelestialBodyCommand("FollowPath") { FollowPath = false },
                         new EditorCelestialBodyCommand("FollowPath") { FollowPath = true }
+                    }),
+                new EditorToggleContextualMenuChoice("CanSelect",
+                    new List<string>() { "Can select: true", "Can select: false" },
+                    1,
+                    new List<EditorCommand>()
+                    {
+                        new EditorCelestialBodyCommand("CanSelect") { CanSelect = false },
+                        new EditorCelestialBodyCommand("CanSelect") { CanSelect = true }
+                    }),
+                new EditorToggleContextualMenuChoice("StraightLine",
+                    new List<string>() { "Straight line: true", "Straight line: false" },
+                    1,
+                    new List<EditorCommand>()
+                    {
+                        new EditorCelestialBodyCommand("StraightLine") { StraightLine = false },
+                        new EditorCelestialBodyCommand("StraightLine") { StraightLine = true }
                     }),
             };
 
@@ -110,20 +126,20 @@
             {
                 if (CelestialBody.Speed == EditorLevelGenerator.PossibleRotationTimes[i])
                 {
-                    ((EditorToggleContextualMenuChoice) Choices[1]).SetChoice(i);
+                    ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("Speed")).SetChoice(i);
                     break;
                 }
             }
 
             // sync add to path
-            ((EditorToggleContextualMenuChoice) Choices[4]).SetChoice(CelestialBody.StartingPathTurret == null ? 0 : 1);
+            ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("AddToPath")).SetChoice(CelestialBody.StartingPathTurret == null ? 0 : 1);
 
             // sync sizes
             for (int i = 0; i < EditorLevelGenerator.PossibleSizes.Count; i++)
             {
                 if ((int) CelestialBody.Circle.Radius == (int) EditorLevelGenerator.PossibleSizes[i])
                 {
-                    ((EditorToggleContextualMenuChoice) Choices[5]).SetChoice(i);
+                    ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("Size")).SetChoice(i);
                     break;
                 }
             }
@@ -136,19 +152,25 @@
 
                 if (CelestialBody.PartialImageName == EditorLevelGenerator.PossibleCelestialBodiesAssets[i])
                 {
-                    ((EditorToggleContextualMenuChoice) Choices[6]).SetChoice(i);
+                    ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("ToggleAsset")).SetChoice(i);
                     break;
                 }
             }
 
             // sync show path
-            ((EditorToggleContextualMenuChoice) Choices[12]).SetChoice(CelestialBody.ShowPath ? 1 : 0);
+            ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("ShowPath")).SetChoice(CelestialBody.ShowPath ? 1 : 0);
 
             // sync has moons
-            ((EditorToggleContextualMenuChoice) Choices[13]).SetChoice(CelestialBody.HasMoons ? 0 : 1);
+            ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("HasMoons")).SetChoice(CelestialBody.HasMoons ? 0 : 1);
 
             // sync follow path
-            ((EditorToggleContextualMenuChoice) Choices[14]).SetChoice(CelestialBody.FollowPath ? 0 : 1);
+            ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("FollowPath")).SetChoice(CelestialBody.FollowPath ? 0 : 1);
+
+            // sync can select
+            ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("CanSelect")).SetChoice(CelestialBody.canSelect ? 0 : 1);
+
+            // sync straight line
+            ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("StraightLine")).SetChoice(CelestialBody.StraightLine ? 0 : 1);
         }
 
 
@@ -186,7 +208,7 @@
                 commands.Add(command);
             }
 
-            return new EditorToggleContextualMenuChoice(names, 1, commands);
+            return new EditorToggleContextualMenuChoice("ToggleAsset", names, 1, commands);
         }
     }
 }

@@ -14,7 +14,6 @@
       <Name>Asteroid belt</Name>
       <Images>
         <string>Comet</string>
-        <string>Apohele</string>
         <string>Asteroid</string>
         <string>Plutoid</string>
         <string>Plutoid</string>
@@ -267,7 +266,6 @@
         <EnemyType>Asteroid</EnemyType>
         <EnemyType>Centaur</EnemyType>
         <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>2</SpeedLevel>
       <LivesLevel>2</LivesLevel>

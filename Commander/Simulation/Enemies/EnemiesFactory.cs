@@ -20,7 +20,6 @@
             { EnemyType.Centaur, @"Centaur" },
             { EnemyType.Trojan, @"Trojan" },
             { EnemyType.Meteoroid, @"Meteoroid" },
-            { EnemyType.Apohele, @"Apohele" },
             { EnemyType.Damacloid, @"Damacloid" },
             { EnemyType.Swarm, @"Swarm" },
             { EnemyType.Vulcanoid, @"Vulcanoid" }
@@ -35,7 +34,6 @@
             { @"Centaur", EnemyType.Centaur },
             { @"Trojan", EnemyType.Trojan },
             { @"Meteoroid", EnemyType.Meteoroid },
-            { @"Apohele", EnemyType.Apohele },
             { @"Damacloid", EnemyType.Damacloid },
             { @"Swarm", EnemyType.Swarm },
             { @"Vulcanoid", EnemyType.Vulcanoid }
@@ -50,7 +48,6 @@
             { EnemyType.Centaur, new Color(92, 198, 11) },
             { EnemyType.Trojan, new Color(255, 66, 217) },
             { EnemyType.Meteoroid, new Color(239, 0, 0) },
-            { EnemyType.Apohele, new Color(255, 255, 255) },
             { EnemyType.Damacloid, new Color(255, 0, 170) },
             { EnemyType.Swarm, new Color(255, 0, 170) },
             { EnemyType.Vulcanoid, new Color(0, 76, 255) }
@@ -75,7 +72,6 @@
             EnemiesPools.Add(EnemyType.Meteoroid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Plutoid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Trojan, new Pool<Enemy>());
-            EnemiesPools.Add(EnemyType.Apohele, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Damacloid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Vulcanoid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Swarm, new Pool<Enemy>());
@@ -87,7 +83,6 @@
             All.Add(Get(EnemyType.Meteoroid, 1, 1, 1));
             All.Add(Get(EnemyType.Plutoid, 1, 1, 1));
             All.Add(Get(EnemyType.Trojan, 1, 1, 1));
-            All.Add(Get(EnemyType.Apohele, 1, 1, 1));
             All.Add(Get(EnemyType.Damacloid, 1, 1, 1));
             All.Add(Get(EnemyType.Vulcanoid, 1, 1, 1));
             All.Add(Get(EnemyType.Swarm, 1, 1, 1));
@@ -105,7 +100,6 @@
             e.LifePoints = e.StartingLifePoints = GetLives(type, livesLevel); ;
             e.CashValue = value;
             e.PointsValue = livesLevel;
-            //e.Id = Enemy.NextID;
             e.Color = ColorsEnemies[type];
             e.Level = (speedLevel + livesLevel) / 2;
             e.FadeInTime = (type == EnemyType.Swarm) ? 250 : 1000;
@@ -142,7 +136,6 @@
             switch (type)
             {
                 case EnemyType.Asteroid:   lives = 5 + 10 * (livesLevel - 1); break;
-                case EnemyType.Apohele:    lives = 5 + 10 * (livesLevel - 1); break;
                 case EnemyType.Plutoid:    lives = 10 + 15 * (livesLevel - 1); break;
                 case EnemyType.Centaur:    lives = 20 + 20 * (livesLevel - 1); break;
                 case EnemyType.Comet:      lives = 5 + 2 * (livesLevel - 1); break;
@@ -169,7 +162,6 @@
                 case EnemyType.Meteoroid: speed = 1.5f + 0 * (speedLevel - 1); break;
                 case EnemyType.Plutoid: speed = 2 + 0 * (speedLevel - 1); break;
                 case EnemyType.Trojan: speed = 2.5f + 0 * (speedLevel - 1); break;
-                case EnemyType.Apohele: speed = 1 + 0 * (speedLevel - 1); break;
                 case EnemyType.Damacloid: speed = 1 + 0 * (speedLevel - 1); break;
                 case EnemyType.Vulcanoid: speed = 1 + 0 * (speedLevel - 1); break;
                 case EnemyType.Swarm: speed = 1 + 0 * (speedLevel - 1); break;
@@ -192,7 +184,6 @@
                 case EnemyType.Meteoroid: size = 35; break;
                 case EnemyType.Plutoid: size = 35; break;
                 case EnemyType.Trojan: size = 15; break;
-                case EnemyType.Apohele: size = 20; break;
                 case EnemyType.Damacloid: size = 20; break;
                 case EnemyType.Vulcanoid: size = 20; break;
                 case EnemyType.Swarm: size = 10; break;
@@ -216,10 +207,9 @@
                 case EnemyType.Meteoroid: vp -= 0.00004f; break;
                 case EnemyType.Plutoid: vp -= 0.00005f; break;
                 case EnemyType.Trojan: vp -= 0.00006f; break;
-                case EnemyType.Apohele: vp -= 0.00007f; break;
-                case EnemyType.Damacloid: vp -= 0.00008f; break;
-                case EnemyType.Vulcanoid: vp -= 0.00009f; break;
-                case EnemyType.Swarm: vp -= 0.00010f; break;
+                case EnemyType.Damacloid: vp -= 0.00007f; break;
+                case EnemyType.Vulcanoid: vp -= 0.00008f; break;
+                case EnemyType.Swarm: vp -= 0.00009f; break;
             }
 
             return vp;

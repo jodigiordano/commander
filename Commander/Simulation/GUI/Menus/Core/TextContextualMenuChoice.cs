@@ -6,20 +6,21 @@
 
     class TextContextualMenuChoice : ContextualMenuChoice
     {
-        private Text Name;
+        private Text Label;
 
 
-        public TextContextualMenuChoice(Text name)
+        public TextContextualMenuChoice(string name, Text label)
+            : base(name)
         {
-            Name = name;
+            Label = label;
         }
 
 
         public void SetData(string data)
         {
-            bool dataChanged = Name.Data != data;
+            bool dataChanged = Label.Data != data;
 
-            Name.Data = data;
+            Label.Data = data;
 
             if (dataChanged)
                 NotifyDataChanged();
@@ -28,31 +29,31 @@
 
         public override Vector3 Position
         {
-            set { Name.Position = value; }
+            set { Label.Position = value; }
         }
 
 
         public override Vector2 Size
         {
-            get { return Name.TextSize; }
+            get { return Label.TextSize; }
         }
 
 
         public override double VisualPriority
         {
-            set { Name.VisualPriority = value; }
+            set { Label.VisualPriority = value; }
         }
 
 
         public override void Draw()
         {
-            Scene.Add(Name);
+            Scene.Add(Label);
         }
 
 
         public override void Fade(FadeColorEffect effect)
         {
-            Scene.VisualEffects.Add(Name, effect);
+            Scene.VisualEffects.Add(Label, effect);
         }
     }
 }

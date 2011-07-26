@@ -309,7 +309,6 @@
     <Compile Include="Simulation\PowerUps\PowerUpShield.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpPulse.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpRailGun.cs" />
-    <Compile Include="Simulation\PowerUps\PowerUpTheResistance.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpCollector.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpSpaceship.cs" />
     <Compile Include="Simulation\PowerUps\PowerUp.cs" />

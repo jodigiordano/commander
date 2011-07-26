@@ -39,19 +39,23 @@
 
             OpenedPanel = EditorPanel.None;
 
+            ((PlayerPanel) Panels[EditorPanel.Player]).Initialize();
+            ((TurretsPanel) Panels[EditorPanel.Turrets]).Initialize();
+            ((PowerUpsPanel) Panels[EditorPanel.PowerUps]).Initialize();
+            ((GeneralPanel) Panels[EditorPanel.General]).Initialize();
+            ((WavesPanel) Panels[EditorPanel.Waves]).Initialize();
+
             Panels[EditorPanel.Player].SetClickHandler("Lives", DoLives);
             Panels[EditorPanel.Player].SetClickHandler("Cash", DoCash);
-
+            Panels[EditorPanel.Player].SetClickHandler("Minerals", DoMinerals);
+            Panels[EditorPanel.Player].SetClickHandler("LifePacks", DoLifePacks);
             Panels[EditorPanel.General].SetClickHandler("Difficulty", DoDifficulty);
             Panels[EditorPanel.General].SetClickHandler("World", DoWorld);
             Panels[EditorPanel.General].SetClickHandler("Level", DoLevel);
-
             Panels[EditorPanel.Turrets].SetClickHandler(DoTurrets);
             Panels[EditorPanel.PowerUps].SetClickHandler(DoPowerUps);
             Panels[EditorPanel.Background].SetClickHandler(DoBackgrounds);
-
             Panels[EditorPanel.Waves].SetClickHandler(DoWaves);
-
             Panels[EditorPanel.Load].SetClickHandler(DoLoad);
             Panels[EditorPanel.Delete].SetClickHandler(DoDelete);
 
@@ -399,6 +403,34 @@
         }
 
 
+        private void DoMinerals(PanelWidget widget)
+        {
+            var slider = (NumericHorizontalSlider) widget;
+
+            var command = new EditorPlayerCommand("AddOrRemoveMinerals")
+            {
+                Minerals = slider.Value,
+                Owner = CurrentOpenedPanelPlayer
+            };
+
+            NotifyEditorCommandExecuted(command);
+        }
+
+
+        private void DoLifePacks(PanelWidget widget)
+        {
+            var slider = (NumericHorizontalSlider) widget;
+
+            var command = new EditorPlayerCommand("AddOrRemoveLifePacks")
+            {
+                LifePacks = slider.Value,
+                Owner = CurrentOpenedPanelPlayer
+            };
+
+            NotifyEditorCommandExecuted(command);
+        }
+
+
         private void DoDifficulty(PanelWidget widget)
         {
             var slider = (ChoicesHorizontalSlider) widget;
@@ -500,12 +532,6 @@
                 Simulator.LevelDescriptor = panel.ClickedLevel;
                 Simulator.Initialize();
                 Simulator.SyncPlayers();
-
-                ((PlayerPanel) Panels[EditorPanel.Player]).Initialize();
-                ((TurretsPanel) Panels[EditorPanel.Turrets]).Initialize();
-                ((PowerUpsPanel) Panels[EditorPanel.PowerUps]).Initialize();
-                ((GeneralPanel) Panels[EditorPanel.General]).Initialize();
-                ((WavesPanel) Panels[EditorPanel.Waves]).Initialize();
             }
         }
 

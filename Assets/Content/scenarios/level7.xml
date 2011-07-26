@@ -14,11 +14,7 @@
       <Name>Asteroid belt</Name>
       <Images>
         <string>Plutoid</string>
-        <string>Plutoid</string>
         <string>Asteroid</string>
-        <string>Asteroid</string>
-        <string>Apohele</string>
-        <string>Apohele</string>
         <string>Centaur</string>
       </Images>
       <HasGravitationalTurret>false</HasGravitationalTurret>
@@ -212,7 +208,6 @@
       <StartingTime>50000</StartingTime>
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>6</SpeedLevel>
       <LivesLevel>6</LivesLevel>
@@ -242,7 +237,6 @@
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
         <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Apohele</EnemyType>
       </Enemies>
       <SpeedLevel>6</SpeedLevel>
       <LivesLevel>6</LivesLevel>

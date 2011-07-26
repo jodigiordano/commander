@@ -48,6 +48,12 @@
         {
             ShootingStars.Clear();
 
+            if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)
+            {
+                foreach (var c in CelestialBodies)
+                    c.CanSelectOverride = true;
+            }
+
             Path.CelestialBodies = CelestialBodies;
             Path.Initialize();
 
@@ -80,7 +86,7 @@
 
                     CelestialBodies.RemoveAt(i);
 
-                    NotifyObjetDetruit(c);
+                    NotifyObjectDestroyed(c);
                 }
             }
 
@@ -228,6 +234,7 @@
             {
                 command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
                 command.CelestialBody.AliveOverride = true;
+                command.CelestialBody.CanSelectOverride = true;
                 CelestialBodies.Add(command.CelestialBody);
             }
 
@@ -286,7 +293,19 @@
             {
                 command.CelestialBody.FollowPath = command.FollowPath;
             }
-                
+
+
+            else if (command.Name == "CanSelect")
+            {
+                command.CelestialBody.CanSelect = command.CanSelect;
+            }
+
+
+            else if (command.Name == "StraightLine")
+            {
+                command.CelestialBody.StraightLine = command.StraightLine;
+            }
+
 
             else if (command.Name == "AddGravitationalTurret")
             {
@@ -383,7 +402,7 @@
         }
 
 
-        private void NotifyObjetDetruit(IObjetPhysique obj)
+        private void NotifyObjectDestroyed(IObjetPhysique obj)
         {
             if (ObjectDestroyed != null)
                 ObjectDestroyed(obj);

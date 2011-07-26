@@ -284,6 +284,9 @@
         [ContentSerializer(Optional = true)]
         public bool HasMoons;
 
+        [ContentSerializer(Optional = true)]
+        public bool StraightLine;
+
         
 
         public CelestialBodyDescriptor()
@@ -305,6 +308,7 @@
             InBackground = false;
             FollowPath = false;
             HasMoons = true;
+            StraightLine = false;
             Rotation = 0;
         }
 
@@ -410,6 +414,17 @@
 
 
             return results;
+        }
+
+
+        internal double GetAverageLife(Simulator simulator)
+        {
+            double average = 0;
+
+            foreach (var e in Enemies)
+                average += simulator.TweakingController.EnemiesFactory.GetLives(e, LivesLevel);
+
+            return Enemies.Count == 0 ? average : average / Enemies.Count;
         }
     }
 

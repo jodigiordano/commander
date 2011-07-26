@@ -32,8 +32,11 @@
         public List<string> HelpTexts;
         
         // minerals
-        public int Cash;
+        public int Minerals;
         public int LifePacks;
+
+        // spaceship
+        public double BulletHitPoints;
 
         private Simulator Simulator;
         private float NextCelestialBodyVisualPriority = Preferences.PrioriteSimulationCorpsCeleste;
@@ -59,6 +62,7 @@
             InitializePlanetarySystem();
             InitializeTurrets();
             InitializeWaves();
+            InitializeSpaceship();
             InitializeAvailableTurrets();
             InitializeAvailablePowerUps();
 
@@ -76,7 +80,7 @@
             CommonStash.Lives = Descriptor.Player.Lives;
             CommonStash.Cash = Descriptor.Player.Money;
 
-            Cash = Descriptor.Minerals.Cash;
+            Minerals = Descriptor.Minerals.Cash;
             LifePacks = Descriptor.Minerals.LifePacks;
 
             HelpTexts = Descriptor.HelpTexts;
@@ -108,6 +112,8 @@
             // Sync player
             Descriptor.Player.Lives = CommonStash.Lives;
             Descriptor.Player.Money = CommonStash.Cash;
+            Descriptor.Minerals.Cash = Minerals;
+            Descriptor.Minerals.LifePacks = LifePacks;
 
             // Sync planet to protect
             if (CelestialBodyToProtect != null)
@@ -191,7 +197,7 @@
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001f,
                        descriptor.HasMoons
-                    ) { FollowPath = descriptor.FollowPath };
+                    ) { FollowPath = descriptor.FollowPath, StraightLine = descriptor.StraightLine };
                 }
 
                 // Asteroids belt
@@ -278,6 +284,27 @@
             else
                 for (int i = 0; i < Descriptor.Waves.Count; i++)
                     Waves.AddLast(new Wave(Simulator, Descriptor.Waves[i]));
+        }
+
+
+        private void InitializeSpaceship()
+        {
+            double averageLife = 0;
+
+            if (InfiniteWaves != null)
+            {
+                BulletHitPoints = InfiniteWaves.GetAverageLife();
+            }
+
+            else
+            {
+                foreach (var w in Descriptor.Waves)
+                    averageLife += w.GetAverageLife(Simulator);
+
+                BulletHitPoints = Descriptor.Waves.Count == 0 ? averageLife : averageLife / Descriptor.Waves.Count;
+            }
+
+            BulletHitPoints /= 20;
         }
 
 

@@ -33,8 +33,8 @@
 
             PausedGameChoices = new List<ContextualMenuChoice>()
             {
-                new TextContextualMenuChoice(new Text("resume game", "Pixelite") { SizeX = 2 }),
-                new TextContextualMenuChoice(new Text("new game", "Pixelite") { SizeX = 2 })
+                new TextContextualMenuChoice("resume", new Text("resume game", "Pixelite") { SizeX = 2 }),
+                new TextContextualMenuChoice("new", new Text("new game", "Pixelite") { SizeX = 2 })
             };
 
             PausedGameMenu = new ContextualMenu(simulator, visualPriority, color, PausedGameChoices, 15);

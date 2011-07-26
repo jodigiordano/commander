@@ -87,7 +87,8 @@
                 AvailablePowerUps = AvailablePowerUps,
                 Color = player.Color,
                 ImageName = player.ImageName,
-                UpdateSelectionz = UpdateSelection
+                UpdateSelectionz = UpdateSelection,
+                BulletDamage = Simulator.Level.BulletHitPoints
             };
 
             simPlayer.Initialize();

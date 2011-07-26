@@ -63,10 +63,9 @@ namespace EphemereGames.Commander.Simulation
         Centaur = 4,
         Trojan = 5,
         Meteoroid = 6,
-        Apohele = 7,
-        Damacloid = 8,
-        Vulcanoid = 9,
-        Swarm = 10
+        Damacloid = 7,
+        Vulcanoid = 8,
+        Swarm = 9
     };
 
 

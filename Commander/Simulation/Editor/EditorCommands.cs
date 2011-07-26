@@ -55,6 +55,8 @@
         public string AssetName;
         public bool HasMoons;
         public bool FollowPath;
+        public bool CanSelect;
+        public bool StraightLine;
 
 
         public EditorCelestialBodyCommand(string name)
@@ -69,6 +71,8 @@
     {
         public int LifePoints;
         public int Cash;
+        public int Minerals;
+        public int LifePacks;
 
 
         public EditorPlayerCommand(string name)

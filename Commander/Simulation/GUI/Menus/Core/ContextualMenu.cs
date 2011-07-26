@@ -129,6 +129,16 @@
         }
 
 
+        public ContextualMenuChoice GetChoiceByName(string name)
+        {
+            foreach (var c in Choices)
+                if (c.Name == name)
+                    return c;
+
+            return null;
+        }
+
+
         public ContextualMenuChoice GetChoice(int index)
         {
             return Choices[index];

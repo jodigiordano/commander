@@ -46,7 +46,6 @@
                 case PowerUpType.Collector:             t = new PowerUpCollector(Simulator, HumanBattleship);          break;
                 case PowerUpType.FinalSolution:         t = new PowerUpLastSolution(Simulator);                        break;
                 case PowerUpType.Spaceship:             t = new PowerUpSpaceship(Simulator, HumanBattleship);          break;
-                case PowerUpType.TheResistance:         t = new PowerUpTheResistance(Simulator, HumanBattleship);      break;
                 case PowerUpType.DeadlyShootingStars:   t = new PowerUpDeadlyShootingStars(Simulator);                 break;
                 case PowerUpType.RailGun:               t = new PowerUpRailGun(Simulator, HumanBattleship);            break;
                 case PowerUpType.AutomaticCollector:    t = new PowerUpAutomaticCollector(Simulator, HumanBattleship); break;

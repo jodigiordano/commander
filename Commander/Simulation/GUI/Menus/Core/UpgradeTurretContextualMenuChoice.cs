@@ -11,9 +11,10 @@
         private Image Logo;
 
 
-        public UpgradeTurretContextualMenuChoice(Text name, Text level, Image logo)
+        public UpgradeTurretContextualMenuChoice(string name, Text price, Text level, Image logo)
+            : base(name)
         {
-            Price = name;
+            Price = price;
             Level = level;
             Logo = logo;
         }

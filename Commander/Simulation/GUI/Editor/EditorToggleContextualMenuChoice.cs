@@ -10,14 +10,14 @@
         private List<EditorCommand> Commands;
 
 
-        public EditorToggleContextualMenuChoice(List<string> names, float textSize, List<EditorCommand> commands)
-            : base(names, new Text(names[0], "Pixelite") { SizeX = textSize })
+        public EditorToggleContextualMenuChoice(string name, List<string> labels, float textSize, List<EditorCommand> commands)
+            : base(name, labels, new Text(labels[0], "Pixelite") { SizeX = textSize })
         {
-            if (commands.Count != names.Count)
+            if (commands.Count != labels.Count)
             {
                 Commands = new List<EditorCommand>();
 
-                for (int i = 0; i < names.Count; i++)
+                for (int i = 0; i < labels.Count; i++)
                     Commands.Add(commands[0]);
             }
 

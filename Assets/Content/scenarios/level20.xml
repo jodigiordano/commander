@@ -217,7 +217,7 @@
     <Wave>
       <StartingTime>30000</StartingTime>
       <Enemies>
-        <EnemyType>Apohele</EnemyType>
+        <EnemyType>Asteroid</EnemyType>
       </Enemies>
       <SpeedLevel>16</SpeedLevel>
       <LivesLevel>16</LivesLevel>
@@ -355,7 +355,6 @@
     <PowerUpType>Collector</PowerUpType>
     <PowerUpType>FinalSolution</PowerUpType>
     <PowerUpType>Spaceship</PowerUpType>
-    <PowerUpType>TheResistance</PowerUpType>
     <PowerUpType>DeadlyShootingStars</PowerUpType>
     <PowerUpType>RailGun</PowerUpType>
     <PowerUpType>Pulse</PowerUpType>

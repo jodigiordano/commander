@@ -7,6 +7,7 @@
     abstract class ContextualMenuChoice
     {
         public Scene Scene;
+        public string Name { get; private set; }
 
         public event NoneHandler DataChanged;
         public event NoneHandler AvailabilityChanged;
@@ -14,9 +15,10 @@
         private bool active;
 
 
-        public ContextualMenuChoice()
+        public ContextualMenuChoice(string name)
         {
             active = true;
+            Name = name;
         }
 
 

@@ -9,13 +9,14 @@
         public Vector2 DistanceBetweenNameAndLogo;
         public Vector3 LogoOffet;
 
-        private Text Name;
+        private Text Label;
         private Image Logo;
 
 
-        public LogoTextContextualMenuChoice(Text name, Image logo)
+        public LogoTextContextualMenuChoice(string name, Text label, Image logo)
+            : base(name)
         {
-            Name = name;
+            Label = label;
             Logo = logo;
 
             DistanceBetweenNameAndLogo = new Vector2(Logo.AbsoluteSize.X + 10, 4);
@@ -25,9 +26,9 @@
 
         public void SetText(string text)
         {
-            bool dataChanged = Name.Data != text;
+            bool dataChanged = Label.Data != text;
 
-            Name.Data = text;
+            Label.Data = text;
 
             if (dataChanged)
                 NotifyDataChanged();
@@ -36,7 +37,7 @@
 
         public void SetColor(Color color)
         {
-            Name.Color = color;
+            Label.Color = color;
         }
 
 
@@ -45,14 +46,14 @@
             set
             {
                 Logo.Position = value + LogoOffet;
-                Name.Position = value + new Vector3(DistanceBetweenNameAndLogo, 0);
+                Label.Position = value + new Vector3(DistanceBetweenNameAndLogo, 0);
             }
         }
 
 
         public override Vector2 Size
         {
-            get { return Name.TextSize + new Vector2(DistanceBetweenNameAndLogo.X, 0); }
+            get { return Label.TextSize + new Vector2(DistanceBetweenNameAndLogo.X, 0); }
         }
 
 
@@ -60,7 +61,7 @@
         {
             set
             {
-                Name.VisualPriority = value;
+                Label.VisualPriority = value;
                 Logo.VisualPriority = value;
             }
         }
@@ -68,14 +69,14 @@
 
         public override void Draw()
         {
-            Scene.Add(Name);
+            Scene.Add(Label);
             Scene.Add(Logo);
         }
 
 
         public override void Fade(FadeColorEffect effect)
         {
-            Scene.VisualEffects.Add(Name, effect);
+            Scene.VisualEffects.Add(Label, effect);
             Scene.VisualEffects.Add(Logo, effect);
         }
     }

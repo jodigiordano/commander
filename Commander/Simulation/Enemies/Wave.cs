@@ -23,18 +23,24 @@
             Simulator = simulator;
             Descriptor = descriptor;
 
-            EnemiesToCreate = new List<EnemyDescriptor>();
             NewEnemies = new List<Enemy>();
             Composition = new Dictionary<EnemyType, EnemyDescriptor>();
+        }
 
-            EnemiesToCreate = descriptor.GetEnemiesToCreate(simulator);
+
+        public void Initialize()
+        {
+            NewEnemies.Clear();
+            Composition.Clear();
+
+            EnemiesToCreate = Descriptor.GetEnemiesToCreate(Simulator);
 
             EnemiesToCreate.Sort(delegate(EnemyDescriptor e1, EnemyDescriptor e2)
             {
                 return e2.StartingTime.CompareTo(e1.StartingTime);
             });
 
-            StartingTime = descriptor.StartingTime;
+            StartingTime = Descriptor.StartingTime;
 
             foreach (var enemy in EnemiesToCreate)
             {

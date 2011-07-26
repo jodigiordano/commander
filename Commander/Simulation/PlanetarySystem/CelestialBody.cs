@@ -34,13 +34,15 @@
         public float AttackPoints                               { get; set; }
         public bool AliveOverride;
         public bool Alive                                       { get { return AliveOverride || LifePoints > 0; } }
-        public bool CanSelect;
+        public bool CanSelect                                   { get { return CanSelectOverride || canSelect; } set { canSelect = value; } }
+        public bool CanSelectOverride;
         public bool Invincible;
         public bool LastOnPath;
         public bool FirstOnPath;
         public bool ShowPath;
         public bool FollowPath;
         public bool HasMoons;
+        public bool StraightLine;
         public List<Moon> Moons;
         public bool HasGravitationalTurretBypass;
         public double VisualPriorityBackup;
@@ -61,6 +63,7 @@
 
         public string PartialImageName;
         private Size Size;
+        public bool canSelect; //only for editor
         public Turret StartingPathTurret;
 
         public SimPlayer PlayerCheckedIn;
@@ -87,9 +90,11 @@
             LifePoints = float.MaxValue;
             PathPriority = int.MinValue;
             CanSelect = true;
+            CanSelectOverride = false;
             Invincible = false;
             LastOnPath = false;
             FirstOnPath = false;
+            StraightLine = false;
             DarkSide = false;
             VisualPriorityBackup = visualPriority;
             StartingPourc = startingPourc;
@@ -438,7 +443,7 @@
         {
             return new CelestialBodyDescriptor()
             {
-                CanSelect = CanSelect,
+                CanSelect = canSelect,
                 Image = PartialImageName,
                 InBackground = false,
                 Invincible = Invincible,
@@ -451,7 +456,8 @@
                 Rotation = PathRotation,
                 HasGravitationalTurret = StartingPathTurret != null,
                 HasMoons = HasMoons,
-                FollowPath = FollowPath
+                FollowPath = FollowPath,
+                StraightLine = StraightLine
             };
         }
 

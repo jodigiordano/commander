@@ -39,7 +39,26 @@
 
             NbWavesAsked++;
 
-            return new Wave(Simulator, Generator.Waves[0]);
+            var wave = new Wave(Simulator, Generator.Waves[0]);
+
+            wave.Initialize();
+
+            return wave;
+        }
+
+
+        public double GetAverageLife()
+        {
+            int averageDifficulty = (Generator.DifficultyEnd + Generator.DifficultyStart) / 2;
+
+            double average = 0;
+
+            foreach (var e in Generator.Enemies)
+                average += Simulator.TweakingController.EnemiesFactory.GetLives(e, averageDifficulty);
+
+            average = Generator.Enemies.Count == 0 ? average : average / Generator.Enemies.Count;
+
+            return average;
         }
     }
 }

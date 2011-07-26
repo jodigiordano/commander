@@ -278,6 +278,16 @@
             {
                 CommonStash.Cash = command.Cash;
             }
+
+            else if (command.Name == "AddOrRemoveMinerals")
+            {
+                Level.Minerals = command.Minerals;
+            }
+
+            else if (command.Name == "AddOrRemoveLifePacks")
+            {
+                Level.LifePacks = command.LifePacks;
+            }
         }
 
 

@@ -79,7 +79,10 @@
             int enemiesCnt = 0;
 
             foreach (var wave in Waves)
+            {
+                wave.Initialize();
                 enemiesCnt += wave.EnemiesCount;
+            }
 
             Vector3 unitValue = new Vector3(
                 Simulator.MineralsFactory.GetValue(MineralType.Cash10),

@@ -237,17 +237,18 @@ namespace EphemereGames.Commander.Simulation
         {
             State = GameState.Running;
 
+            TweakingController.BulletsFactory = BulletsFactory;
+            TweakingController.EnemiesFactory = EnemiesFactory;
+            TweakingController.MineralsFactory = MineralsFactory;
+            TweakingController.PowerUpsFactory = PowerUpsFactory;
+            TweakingController.TurretsFactory = TurretsFactory;
+
             Level.Initialize();
 
             LevelsController.Level = Level;
             TurretsFactory.Availables = LevelsController.AvailableTurrets;
             PowerUpsFactory.Availables = LevelsController.AvailablePowerUps;
             PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
-            TweakingController.BulletsFactory = BulletsFactory;
-            TweakingController.EnemiesFactory = EnemiesFactory;
-            TweakingController.MineralsFactory = MineralsFactory;
-            TweakingController.PowerUpsFactory = PowerUpsFactory;
-            TweakingController.TurretsFactory = TurretsFactory;
             CollisionsController.Bullets = BulletsController.Bullets;
             CollisionsController.Enemies = EnemiesController.Enemies;
             CollisionsController.Turrets = TurretsController.Turrets;
@@ -266,7 +267,7 @@ namespace EphemereGames.Commander.Simulation
             EnemiesController.Waves = LevelsController.Waves;
             EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
             EnemiesController.Path = PlanetarySystemController.Path;
-            EnemiesController.MineralsCash = LevelsController.Level.Cash;
+            EnemiesController.MineralsCash = LevelsController.Level.Minerals;
             EnemiesController.LifePacksGiven = LevelsController.Level.LifePacks;
             GUIController.Path = PlanetarySystemController.Path;
             GUIController.PathPreview = PlanetarySystemController.PathPreview;

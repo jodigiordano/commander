@@ -10,8 +10,8 @@
         protected int CurrentIndex;
 
 
-        public ToggleContextualMenuChoice(List<string> names, Text text)
-            : base(text)
+        public ToggleContextualMenuChoice(string name, List<string> names, Text label)
+            : base(name, label)
         {
             Names = names;
             CurrentIndex = 0;

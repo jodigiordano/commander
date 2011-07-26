@@ -55,14 +55,17 @@
             if (SimPlayer.ActualSelection.CelestialBody == null)
                 return;
 
-            if (ActualSelection.CelestialBodyChoice == 8)
-                SimPlayer.ActualSelection.EditingState = EditorEditingState.MovingCB;
-            else if (ActualSelection.CelestialBodyChoice == 9)
-                SimPlayer.ActualSelection.EditingState = EditorEditingState.RotatingCB;
-            else if (ActualSelection.CelestialBodyChoice == 10)
-                SimPlayer.ActualSelection.EditingState = EditorEditingState.ShrinkingCB;
-            else if (ActualSelection.CelestialBodyChoice == 11)
-                SimPlayer.ActualSelection.EditingState = EditorEditingState.StartPosCB;
+            if (Simulator.EditorState == EditorState.Editing)
+            {
+                if (ActualSelection.CelestialBodyChoice == 0)
+                    SimPlayer.ActualSelection.EditingState = EditorEditingState.MovingCB;
+                else if (ActualSelection.CelestialBodyChoice == 1)
+                    SimPlayer.ActualSelection.EditingState = EditorEditingState.RotatingCB;
+                else if (ActualSelection.CelestialBodyChoice == 2)
+                    SimPlayer.ActualSelection.EditingState = EditorEditingState.ShrinkingCB;
+                else if (ActualSelection.CelestialBodyChoice == 10)
+                    SimPlayer.ActualSelection.EditingState = EditorEditingState.StartPosCB;
+            }
 
             if (SimPlayer.ActualSelection.EditingState != EditorEditingState.None)
                 ActualSelection.CelestialBody = SimPlayer.ActualSelection.CelestialBody;
@@ -114,7 +117,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 15;
+            int nbChoices = 17;
 
             actual += 1;
 
@@ -131,7 +134,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 15;
+            int nbChoices = 17;
 
             actual -= 1;
 
