@@ -27,7 +27,7 @@
             NewEnemies = new List<Enemy>();
             Composition = new Dictionary<EnemyType, EnemyDescriptor>();
 
-            EnemiesToCreate = descriptor.GetEnemiesToCreate();
+            EnemiesToCreate = descriptor.GetEnemiesToCreate(simulator);
 
             EnemiesToCreate.Sort(delegate(EnemyDescriptor e1, EnemyDescriptor e2)
             {

@@ -31,7 +31,7 @@ namespace EphemereGames.Commander.Simulation
         public Path Path;
         public Path PathPreview;
         public double Displacement;
-        public Simulator Simulation;
+        public Simulator Simulator;
         public string Name;
         public EnemyType Type;
         public List<Mineral> Minerals;
@@ -85,15 +85,15 @@ namespace EphemereGames.Commander.Simulation
             if (Image == null)
                 LoadAssets();
 
-            MultipleLasersEffect = Simulation.Scene.Particles.Get(@"etincelleLaser");
-            MissileEffect = Simulation.Scene.Particles.Get(@"etincelleMissile");
-            LaserEffect = Simulation.Scene.Particles.Get(@"etincelleLaserSimple");
-            SlowMotionEffect = Simulation.Scene.Particles.Get(@"etincelleSlowMotionTouche");
-            ExplodingEffect = Simulation.Scene.Particles.Get(@"explosionEnnemi");
-            NanobotsInfectionEffect = Simulation.Scene.Particles.Get(@"nanobots");
+            MultipleLasersEffect = Simulator.Scene.Particles.Get(@"etincelleLaser");
+            MissileEffect = Simulator.Scene.Particles.Get(@"etincelleMissile");
+            LaserEffect = Simulator.Scene.Particles.Get(@"etincelleLaserSimple");
+            SlowMotionEffect = Simulator.Scene.Particles.Get(@"etincelleSlowMotionTouche");
+            ExplodingEffect = Simulator.Scene.Particles.Get(@"explosionEnnemi");
+            NanobotsInfectionEffect = Simulator.Scene.Particles.Get(@"nanobots");
             NanobotsInfectionEffect.ParticleEffect[0].ReleaseColour = Color.Red.ToVector3();
 
-            VisualPriority = EnemiesFactory.GetVisualPriority(Type, 0);
+            VisualPriority = Simulator.TweakingController.EnemiesFactory.GetVisualPriority(Type, 0);
             Image.VisualPriority = VisualPriority;
             ExplodingEffect.VisualPriority = VisualPriority - 0.001f;
             MultipleLasersEffect.VisualPriority = VisualPriority - 0.001f;
@@ -106,7 +106,7 @@ namespace EphemereGames.Commander.Simulation
 
             Path.Position(Displacement, ref position);
 
-            Rectangle.Width = Rectangle.Height = EnemiesFactory.GetSize(Type);
+            Rectangle.Width = Rectangle.Height = Simulator.TweakingController.EnemiesFactory.GetSize(Type);
             Circle.Radius = Rectangle.Width / 2;
 
             Rectangle.X = (int)Position.X - Rectangle.Width / 2;
@@ -187,7 +187,7 @@ namespace EphemereGames.Commander.Simulation
             float pourcPath = Path.Pourc(Displacement);
 
             //if (pourcPath > 0.90f)
-                VisualPriority = EnemiesFactory.GetVisualPriority(Type, pourcPath);
+            VisualPriority = Simulator.TweakingController.EnemiesFactory.GetVisualPriority(Type, pourcPath);
 
             Image.Position = Position;
             Image.VisualPriority = VisualPriority;
@@ -209,7 +209,7 @@ namespace EphemereGames.Commander.Simulation
                 NanobotsInfectionEffect.Trigger(ref this.position);
             }
 
-            Simulation.Scene.Add(Image);
+            Simulator.Scene.Add(Image);
         }
 
 
@@ -288,14 +288,14 @@ namespace EphemereGames.Commander.Simulation
                 ExplodingEffect.ParticleEffect[0].ReleaseImpulse = new Vector2(direction.X, direction.Y);
                 ExplodingEffect.Trigger(ref this.position);
 
-                Simulation.Scene.Particles.Return(ExplodingEffect);
+                Simulator.Scene.Particles.Return(ExplodingEffect);
             }
 
-            Simulation.Scene.Particles.Return(MultipleLasersEffect);
-            Simulation.Scene.Particles.Return(MissileEffect);
-            Simulation.Scene.Particles.Return(LaserEffect);
-            Simulation.Scene.Particles.Return(SlowMotionEffect);
-            Simulation.Scene.Particles.Return(NanobotsInfectionEffect);
+            Simulator.Scene.Particles.Return(MultipleLasersEffect);
+            Simulator.Scene.Particles.Return(MissileEffect);
+            Simulator.Scene.Particles.Return(LaserEffect);
+            Simulator.Scene.Particles.Return(SlowMotionEffect);
+            Simulator.Scene.Particles.Return(NanobotsInfectionEffect);
         }
     }
 }

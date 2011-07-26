@@ -100,7 +100,7 @@
 
             e.Name = GetTexture(type);
             e.Type = type;
-            e.Simulation = Simulator;
+            e.Simulator = Simulator;
             e.Speed = GetSpeed(type, speedLevel);
             e.LifePoints = e.StartingLifePoints = GetLives(type, livesLevel); ;
             e.CashValue = value;
@@ -135,7 +135,7 @@
         }
 
 
-        public static float GetLives(EnemyType type, int livesLevel)
+        public float GetLives(EnemyType type, int livesLevel)
         {
             float lives = 0;
 
@@ -157,7 +157,7 @@
         }
 
 
-        public static float GetSpeed(EnemyType type, int speedLevel)
+        public float GetSpeed(EnemyType type, int speedLevel)
         {
             float speed = 0;
 
@@ -180,7 +180,7 @@
         }
 
 
-        public static int GetSize(EnemyType type)
+        public int GetSize(EnemyType type)
         {
             int size = 0;
 
@@ -202,7 +202,7 @@
         }
 
 
-        public static float GetVisualPriority(EnemyType type, float pourcPath)
+        public float GetVisualPriority(EnemyType type, float pourcPath)
         {
             float vp = (pourcPath >= 0.80f) ?
                 Preferences.PrioriteSimulationCorpsCeleste - 0.1f :

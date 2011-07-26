@@ -373,7 +373,7 @@
         }
 
 
-        public List<EnemyDescriptor> GetEnemiesToCreate()
+        internal List<EnemyDescriptor> GetEnemiesToCreate(Simulator simulator)
         {
             var results = new List<EnemyDescriptor>();
             int typeIndex = 0;
@@ -392,8 +392,8 @@
                 double delay = ((i + 1) % ApplyDelayEvery == 0) ? Delay : 0;
 
                 double frequency =
-                    EnemiesFactory.GetSize(type) + (int)Distance /
-                    EnemiesFactory.GetSpeed(type, SpeedLevel) * (1000f / 60f);
+                    simulator.TweakingController.EnemiesFactory.GetSize(type) + (int) Distance /
+                    simulator.TweakingController.EnemiesFactory.GetSpeed(type, SpeedLevel) * (1000f / 60f);
 
                 var e = EnemyDescriptor.Pool.Get();
                 e.Type = type;
