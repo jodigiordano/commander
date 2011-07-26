@@ -91,128 +91,128 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran1.png">
-      <Name>fondecran1</Name>
+    <Compile Include="backgrounds\story1\background01.png">
+      <Name>background01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran10.png">
-      <Name>fondecran10</Name>
+    <Compile Include="backgrounds\story1\background10.png">
+      <Name>background10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran11.png">
-      <Name>fondecran11</Name>
+    <Compile Include="backgrounds\story1\background11.png">
+      <Name>background11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran12.png">
-      <Name>fondecran12</Name>
+    <Compile Include="backgrounds\story1\background12.png">
+      <Name>background12</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran13.png">
-      <Name>fondecran13</Name>
+    <Compile Include="backgrounds\story1\background13.png">
+      <Name>background13</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran14.png">
-      <Name>fondecran14</Name>
+    <Compile Include="backgrounds\story1\background14.png">
+      <Name>background14</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran15.png">
-      <Name>fondecran15</Name>
+    <Compile Include="backgrounds\story1\background15.png">
+      <Name>background15</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran8.png">
-      <Name>fondecran8</Name>
+    <Compile Include="backgrounds\story1\background08.png">
+      <Name>background08</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran6.png">
-      <Name>fondecran6</Name>
+    <Compile Include="backgrounds\story1\background06.png">
+      <Name>background06</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran5.png">
-      <Name>fondecran5</Name>
+    <Compile Include="backgrounds\story1\background05.png">
+      <Name>background05</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran16.png">
-      <Name>fondecran16</Name>
+    <Compile Include="backgrounds\story1\background16.png">
+      <Name>background16</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran2.png">
-      <Name>fondecran2</Name>
+    <Compile Include="backgrounds\story1\background02.png">
+      <Name>background02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran3.png">
-      <Name>fondecran3</Name>
+    <Compile Include="backgrounds\story1\background03.png">
+      <Name>background03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran4.png">
-      <Name>fondecran4</Name>
+    <Compile Include="backgrounds\story1\background04.png">
+      <Name>background04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran7.png">
-      <Name>fondecran7</Name>
+    <Compile Include="backgrounds\story1\background07.png">
+      <Name>background07</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\fondecran9.png">
-      <Name>fondecran9</Name>
+    <Compile Include="backgrounds\story1\background09.png">
+      <Name>background09</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
@@ -314,15 +314,173 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\intro.png">
+    <Compile Include="backgrounds\cutscenes\intro.png">
       <Name>intro</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonds\world1.png">
+    <Compile Include="backgrounds\worlds\world1.png">
       <Name>world1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="backgrounds\story2\background01.png">
+      <Name>background01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background02.png">
+      <Name>background02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background03.png">
+      <Name>background03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background04.png">
+      <Name>background04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background05.png">
+      <Name>background05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background06.png">
+      <Name>background06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background07.png">
+      <Name>background07</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background08.png">
+      <Name>background08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background09.png">
+      <Name>background09</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background10.png">
+      <Name>background10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background11.png">
+      <Name>background11</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background12.png">
+      <Name>background12</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background13.png">
+      <Name>background13</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background14.png">
+      <Name>background14</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background15.png">
+      <Name>background15</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background16.png">
+      <Name>background16</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background17.png">
+      <Name>background17</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background18.png">
+      <Name>background18</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background19.png">
+      <Name>background19</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background20.png">
+      <Name>background20</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background21.png">
+      <Name>background21</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background22.png">
+      <Name>background22</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background23.png">
+      <Name>background23</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background24.png">
+      <Name>background24</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background25.png">
+      <Name>background25</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background26.png">
+      <Name>background26</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background27.png">
+      <Name>background27</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background28.png">
+      <Name>background28</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background29.png">
+      <Name>background29</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background30.png">
+      <Name>background30</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="backgrounds\story2\background31.png">
+      <Name>background31</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

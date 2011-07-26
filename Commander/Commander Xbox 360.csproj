@@ -162,6 +162,7 @@
     <Compile Include="Simulation\GUI\Bubbles\TextBubble.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\BackgroundsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\DistinctFollowWaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\EnemiesWidget.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\GeneralPanel.cs" />

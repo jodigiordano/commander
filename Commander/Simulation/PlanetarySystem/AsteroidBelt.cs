@@ -44,7 +44,8 @@
                 speed,
                 null,
                 startingPourcentage,
-                Preferences.PrioriteSimulationCeintureAsteroides)
+                Preferences.PrioriteSimulationCeintureAsteroides,
+                false)
         {
             List<Image> representations = new List<Image>();
 

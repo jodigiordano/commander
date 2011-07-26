@@ -83,7 +83,7 @@
 
             SceneState = State.LoadingAssets;
 
-            Background = new Image("fondecran" + Main.Random.Next(1, 7), Vector3.Zero)
+            Background = new Image("background" + Main.Random.Next(1, 7), Vector3.Zero)
             {
                 VisualPriority = 1
             };

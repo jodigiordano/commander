@@ -80,6 +80,13 @@
         }
 
 
+        public override void Fade(int from, int to, double length)
+        {
+            HideCurrentMessage();
+            base.Fade(from, to, length);
+        }
+
+
         private void HideCurrentMessage()
         {
             if (Current.Key == HelpBarMessage.None)

@@ -453,7 +453,7 @@
 
         private void DoBackgrounds(PanelWidget widget)
         {
-            var img = (ImageWidget) widget;
+            var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
 
             Simulator.Level.Background = new Image(img.Image.TextureName) { VisualPriority = Preferences.PrioriteFondEcran };
         }

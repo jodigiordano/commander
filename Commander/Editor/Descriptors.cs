@@ -194,7 +194,7 @@
             Id = -1;
             Mission = "1-1";
             Difficulty = "Easy";
-            Background = "fondecran4";
+            Background = "background4";
         }
     }
 
@@ -277,6 +277,13 @@
         public bool CanSelect;
         public bool Invincible;
         public int StartingPosition;
+
+        [ContentSerializer(Optional = true)]
+        public bool FollowPath;
+
+        [ContentSerializer(Optional = true)]
+        public bool HasMoons;
+
         
 
         public CelestialBodyDescriptor()
@@ -296,29 +303,31 @@
             StartingPosition = 0;
             Images = new List<string>();
             InBackground = false;
+            FollowPath = false;
+            HasMoons = true;
             Rotation = 0;
         }
 
 
-        public void AddTurret(TurretType type, int level, Vector3 position, bool visible, bool canSell, bool canUpgrade)
+        public void AddTurret(TurretType type, int level, Vector3 position, bool visible, bool canSell, bool canUpgrade, bool canSelect)
         {
-            StartingTurrets.Add(CreateTurret(type, level, position, visible, canSell, canUpgrade));
+            StartingTurrets.Add(CreateTurret(type, level, position, visible, canSell, canUpgrade, canSelect));
         }
 
 
         public void AddTurret(TurretType type, int level, Vector3 position)
         {
-            AddTurret(type, level, position, true, true, true);
+            AddTurret(type, level, position, true, true, true, true);
         }
 
 
-        public void AddTurret(TurretType type, int level, Vector3 position, bool visible)
+        public void AddTurret(TurretType type, int level, Vector3 position, bool visible, bool canSelect)
         {
-            AddTurret(type, level, position, visible, true, true);
+            AddTurret(type, level, position, visible, true, true, canSelect);
         }
 
 
-        public TurretDescriptor CreateTurret(TurretType type, int level, Vector3 position, bool visible, bool canSell, bool canUpgrade)
+        public TurretDescriptor CreateTurret(TurretType type, int level, Vector3 position, bool visible, bool canSell, bool canUpgrade, bool canSelect)
         {
             return new TurretDescriptor()
             {
@@ -327,7 +336,8 @@
                 Position = position,
                 Visible = visible,
                 CanSell = canSell,
-                CanUpgrade = canUpgrade
+                CanUpgrade = canUpgrade,
+                CanSelect = canSelect
             };
         }
     }
@@ -444,6 +454,19 @@
         public bool Visible;
         public bool CanSell;
         public bool CanUpgrade;
+        public bool CanSelect;
+
+
+        public TurretDescriptor()
+        {
+            Type = TurretType.Basic;
+            Level = 1;
+            Position = Vector3.Zero;
+            Visible = true;
+            CanSell = true;
+            CanUpgrade = true;
+            CanSelect = true;
+        }
     }
 
 

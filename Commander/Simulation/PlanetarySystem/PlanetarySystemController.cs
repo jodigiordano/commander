@@ -275,6 +275,19 @@
                 command.CelestialBody.SetImage(command.CelestialBody.PartialImageName);
             }
 
+
+            else if (command.Name == "HasMoons")
+            {
+                command.CelestialBody.SetHasMoons(command.HasMoons);
+            }
+
+
+            else if (command.Name == "FollowPath")
+            {
+                command.CelestialBody.FollowPath = command.FollowPath;
+            }
+                
+
             else if (command.Name == "AddGravitationalTurret")
             {
                 AddToStartingPath(command.CelestialBody);

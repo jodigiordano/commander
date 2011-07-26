@@ -49,11 +49,7 @@
             Panels.Add(EditorPanel.General, generalPanel);
 
             // Background panel
-            GridPanel backgroundPanel = new GridPanel(Simulator.Scene, Vector3.Zero, new Vector2(600, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false, NbColumns = 4 };
-            backgroundPanel.SetTitle("Background");
-
-            for (int i = 1; i <= 16; i++)
-                backgroundPanel.AddWidget("fondecran" + i, new ImageWidget("fondecran" + i, 0.1f));
+            BackgroundsPanel backgroundPanel = new BackgroundsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Background, backgroundPanel);
 
             // Waves panel

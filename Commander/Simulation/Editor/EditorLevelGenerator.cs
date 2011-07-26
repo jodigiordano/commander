@@ -43,6 +43,16 @@
             "planete5",
             "planete6",
             "planete7",
+            "planete8",
+            "planete9",
+            "planete10",
+            "planete11",
+            "planete12",
+            "battleship1",
+            "battleship2",
+            "battleship3",
+            "battleship4",
+            "battleship5",
             "stationSpatiale1",
             "stationSpatiale2",
             "vaisseauAlien1"
@@ -91,28 +101,18 @@
                 InBackground = false,
                 CanSelect = true,
                 PathPriority = -1,
-                Image = "planete" + Main.Random.Next(1, 8).ToString()
+                Image = "planete" + Main.Random.Next(1, 13).ToString()
             };
 
+            PhysicalRectangle rp = Limits[d.Size];
 
-            PhysicalRectangle rp = null;
-
-            do
-            {
-                int size = Main.Random.Next(0, 3);
-                d.Size = (size == 0) ? Size.Small : (size == 1) ? Size.Normal : Size.Big;
-                d.Speed = PossibleRotationTimes[Main.Random.Next(5, PossibleRotationTimes.Count)]; //to be assured that the planet has a valid path
-
-                rp = Limits[d.Size];
-
-                d.Path = new Vector3(Main.Random.Next(rp.X, rp.X + rp.Width), Main.Random.Next(rp.Y, rp.Y + rp.Height), 0);
-
-                d.Position = new Vector3(Main.Random.Next((int)(rp.X - d.Path.X + 200), (int)(rp.X + rp.Width - d.Path.X - 200)), Main.Random.Next((int)(rp.Y - d.Path.Y + 100), (int)(rp.Y + rp.Width - d.Path.Y - 100)), 0);
-
-                d.Rotation = Main.Random.Next(-360, 360);
-                d.StartingPosition = Main.Random.Next(0, 100);
-            }
-            while (!LiteSimulator.InBorders(d, rp) || LiteSimulator.CollidesWithOthers(d, CelestialBodies));
+            int size = Main.Random.Next(0, 3);
+            d.Size = (size == 0) ? Size.Small : (size == 1) ? Size.Normal : Size.Big;
+            d.Speed = float.MaxValue;
+            d.Path = Vector3.Zero;
+            d.Position = Vector3.Zero;
+            d.Rotation = 0;
+            d.StartingPosition = 0;
 
             return d;
         }

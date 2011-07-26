@@ -44,7 +44,7 @@
 
             Image.VisualPriority = VisualPriority + 0.001f;
             MovingEffect.VisualPriority = VisualPriority + 0.001f;
-            ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationEnnemi - 0.01f;
+            ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.2f;
 
             LifePoints = 5;
         }

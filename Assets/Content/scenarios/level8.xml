@@ -4,7 +4,7 @@
     <Id>8</Id>
     <Mission>1-8</Mission>
     <Difficulty>Easy</Difficulty>
-    <Background>fondecran8</Background>
+    <Background>background8</Background>
   </Infos>
   <Objective>
     <CelestialBodyToProtect>0</CelestialBodyToProtect>

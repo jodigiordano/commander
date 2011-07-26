@@ -142,7 +142,7 @@
 
                 foreach (var t in cb.Turrets)
                 {
-                    if (t.Visible && t.PlayerCheckedIn == null && t.Alive && Physics.CircleCicleCollision(Player.Circle, t.Circle))
+                    if (t.Visible && t.CanSelect && t.PlayerCheckedIn == null && t.Alive && Physics.CircleCicleCollision(Player.Circle, t.Circle))
                     {
                         CelestialBody = null;
                         Turret = t;

@@ -189,8 +189,9 @@
                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                        descriptor.Image,
                        descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001f
-                    );
+                       NextCelestialBodyVisualPriority -= 0.001f,
+                       descriptor.HasMoons
+                    ) { FollowPath = descriptor.FollowPath };
                 }
 
                 // Asteroids belt
@@ -255,6 +256,7 @@
                     t.CelestialBody = celestialBody;
                     t.RelativePosition = Vector3.Multiply(turretDesc.Position, 8);
                     t.Position = celestialBody.Position;
+                    t.CanSelect = turretDesc.CanSelect;
 
                     celestialBody.Turrets.Add(t);
                     Turrets.Add(t);

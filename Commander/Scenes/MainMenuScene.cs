@@ -141,8 +141,8 @@
                     {
                         VisualEffects.Add(PressStart.Translated, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.Translated.Alpha, 0, 1000));
                         VisualEffects.Add(PressStart.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.Translated.Alpha, 0, 1000));
-                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 500));
-                        VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 500));
+                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 1000));
+                        VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 1000));
 
                         foreach (var kvp in Choices)
                             VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.Fade(kvp.Key.Alpha, 100, 500 + Main.Random.Next(0, 500), 500));

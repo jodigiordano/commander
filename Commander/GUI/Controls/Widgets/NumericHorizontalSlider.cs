@@ -148,5 +148,11 @@
             Scene.VisualEffects.Add(IncrementRep, effect);
             Scene.VisualEffects.Add(ValueText, effect);
         }
+
+
+        public void SetLabel(string text)
+        {
+            Label.Data = text;
+        }
     }
 }

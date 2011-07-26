@@ -70,7 +70,23 @@
                     {
                         new EditorCelestialBodyCommand("ShowPathPreview"),
                         new EditorCelestialBodyCommand("HidePathPreview")
-                    })
+                    }),
+                new EditorToggleContextualMenuChoice(
+                    new List<string>() { "Has moons: true", "Has moons: false" },
+                    1,
+                    new List<EditorCommand>()
+                    {
+                        new EditorCelestialBodyCommand("HasMoons") { HasMoons = false },
+                        new EditorCelestialBodyCommand("HasMoons") { HasMoons = true }
+                    }),
+                new EditorToggleContextualMenuChoice(
+                    new List<string>() { "Follow path: true", "Follow path: false" },
+                    1,
+                    new List<EditorCommand>()
+                    {
+                        new EditorCelestialBodyCommand("FollowPath") { FollowPath = false },
+                        new EditorCelestialBodyCommand("FollowPath") { FollowPath = true }
+                    }),
             };
 
             Menu = new ContextualMenu(Simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, color, Choices, 5);
@@ -118,7 +134,7 @@
                 if (CelestialBody.Image == null)
                     break;
 
-                if (CelestialBody.Image.TextureName.StartsWith(EditorLevelGenerator.PossibleCelestialBodiesAssets[i]))
+                if (CelestialBody.PartialImageName == EditorLevelGenerator.PossibleCelestialBodiesAssets[i])
                 {
                     ((EditorToggleContextualMenuChoice) Choices[6]).SetChoice(i);
                     break;
@@ -127,6 +143,12 @@
 
             // sync show path
             ((EditorToggleContextualMenuChoice) Choices[12]).SetChoice(CelestialBody.ShowPath ? 1 : 0);
+
+            // sync has moons
+            ((EditorToggleContextualMenuChoice) Choices[13]).SetChoice(CelestialBody.HasMoons ? 0 : 1);
+
+            // sync follow path
+            ((EditorToggleContextualMenuChoice) Choices[14]).SetChoice(CelestialBody.FollowPath ? 0 : 1);
         }
 
 

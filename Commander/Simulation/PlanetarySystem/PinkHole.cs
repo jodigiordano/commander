@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using ProjectMercury.Modifiers;
@@ -21,10 +20,8 @@
             Particle effect,
             int startingPourc,
             float visualPriority)
-            : base (simulator, name, path, position, 0, size, speed, null, startingPourc, visualPriority)
+            : base (simulator, name, path, position, 0, size, speed, null, startingPourc, visualPriority, false)
         {
-            Moons = new List<Moon>();
-
             Effect = effect;
         }
 

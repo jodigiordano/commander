@@ -217,6 +217,7 @@
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\Bubbles\ManualTextBubble.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\BackgroundsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WavesPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\GeneralPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PowerUpsPanel.cs" />

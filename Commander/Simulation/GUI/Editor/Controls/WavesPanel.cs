@@ -14,6 +14,7 @@
             Simulator = simulator;
 
             SetTitle("Waves");
+            Slider.SetLabel("Wave");
 
             Initialize();
         }

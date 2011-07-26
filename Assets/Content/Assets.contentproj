@@ -587,148 +587,148 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete11.png">
-      <Name>planete11</Name>
+    <None Include="planetes\planet11.png">
+      <Name>planet11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete12.png">
-      <Name>planete12</Name>
+    <None Include="planetes\planet12.png">
+      <Name>planet12</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete13.png">
-      <Name>planete13</Name>
+    <None Include="planetes\planet13.png">
+      <Name>planet13</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete21.png">
-      <Name>planete21</Name>
+    <None Include="planetes\planet21.png">
+      <Name>planet21</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete22.png">
-      <Name>planete22</Name>
+    <None Include="planetes\planet22.png">
+      <Name>planet22</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete23.png">
-      <Name>planete23</Name>
+    <None Include="planetes\planet23.png">
+      <Name>planet23</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete31.png">
-      <Name>planete31</Name>
+    <None Include="planetes\planet31.png">
+      <Name>planet31</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete32.png">
-      <Name>planete32</Name>
+    <None Include="planetes\planet32.png">
+      <Name>planet32</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete33.png">
-      <Name>planete33</Name>
+    <None Include="planetes\planet33.png">
+      <Name>planet33</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete41.png">
-      <Name>planete41</Name>
+    <None Include="planetes\planet41.png">
+      <Name>planet41</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete42.png">
-      <Name>planete42</Name>
+    <None Include="planetes\planet42.png">
+      <Name>planet42</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete43.png">
-      <Name>planete43</Name>
+    <None Include="planetes\planet43.png">
+      <Name>planet43</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete51.png">
-      <Name>planete51</Name>
+    <None Include="planetes\planet51.png">
+      <Name>planet51</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete52.png">
-      <Name>planete52</Name>
+    <None Include="planetes\planet52.png">
+      <Name>planet52</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete53.png">
-      <Name>planete53</Name>
+    <None Include="planetes\planet53.png">
+      <Name>planet53</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete61.png">
-      <Name>planete61</Name>
+    <None Include="planetes\planet61.png">
+      <Name>planet61</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete62.png">
-      <Name>planete62</Name>
+    <None Include="planetes\planet62.png">
+      <Name>planet62</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete63.png">
-      <Name>planete63</Name>
+    <None Include="planetes\planet63.png">
+      <Name>planet63</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete71.png">
-      <Name>planete71</Name>
+    <None Include="planetes\planet71.png">
+      <Name>planet71</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete72.png">
-      <Name>planete72</Name>
+    <None Include="planetes\planet72.png">
+      <Name>planet72</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="planetes\planete73.png">
-      <Name>planete73</Name>
+    <None Include="planetes\planet73.png">
+      <Name>planet73</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
@@ -1769,6 +1769,7 @@
       <Name>spritesheet</Name>
       <Importer>XmlImporter</Importer>
       <Processor>SpriteSheetProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -2146,12 +2147,256 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="scenarios\level10.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level10</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="planetes\planet101.png">
+      <Name>planet101</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet102.png">
+      <Name>planet102</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet103.png">
+      <Name>planet103</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet111.png">
+      <Name>planet111</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet112.png">
+      <Name>planet112</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet113.png">
+      <Name>planet113</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet121.png">
+      <Name>planet121</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet122.png">
+      <Name>planet122</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet123.png">
+      <Name>planet123</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet81.png">
+      <Name>planet81</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet82.png">
+      <Name>planet82</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet83.png">
+      <Name>planet83</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet91.png">
+      <Name>planet91</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet92.png">
+      <Name>planet92</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\planet93.png">
+      <Name>planet93</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="planetes\battleship11.png">
+      <Name>battleship11</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship12.png">
+      <Name>battleship12</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship13.png">
+      <Name>battleship13</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship21.png">
+      <Name>battleship21</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship22.png">
+      <Name>battleship22</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship23.png">
+      <Name>battleship23</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship31.png">
+      <Name>battleship31</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship32.png">
+      <Name>battleship32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship33.png">
+      <Name>battleship33</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship41.png">
+      <Name>battleship41</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship42.png">
+      <Name>battleship42</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship43.png">
+      <Name>battleship43</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship51.png">
+      <Name>battleship51</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship52.png">
+      <Name>battleship52</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="planetes\battleship53.png">
+      <Name>battleship53</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\worldlayout2.xml">
+      <Name>worldlayout2</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level11.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level11</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level20.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level20</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level12.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level12</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level13.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level13</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level14.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level14</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level15.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level15</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level16.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level16</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level17.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level17</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level18.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level18</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level19.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level19</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </None>

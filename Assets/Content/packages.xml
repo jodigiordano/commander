@@ -7,12 +7,12 @@
     <asset name="HumanBattleship"      type="Image" path="scenarios/humanBattleship" />
     <asset name="PixelBlanc"           type="Image" path="pixelBlanc" />
 
-    <asset name="fondecran1"                 type="Image" path="fonds/fondecran1" />
-    <asset name="fondecran2"                 type="Image" path="fonds/fondecran2" />
-    <asset name="fondecran3"                 type="Image" path="fonds/fondecran3" />
-    <asset name="fondecran4"                 type="Image" path="fonds/fondecran4" />
-    <asset name="fondecran5"                 type="Image" path="fonds/fondecran5" />
-    <asset name="fondecran6"                 type="Image" path="fonds/fondecran6" />
+    <asset name="background1"                 type="Image" path="backgrounds/story1/background01" />
+    <asset name="background2"                 type="Image" path="backgrounds/story1/background02" />
+    <asset name="background3"                 type="Image" path="backgrounds/story1/background03" />
+    <asset name="background4"                 type="Image" path="backgrounds/story1/background04" />
+    <asset name="background5"                 type="Image" path="backgrounds/story1/background05" />
+    <asset name="background6"                 type="Image" path="backgrounds/story1/background06" />
 
     
     <!-- Sprites -->
@@ -158,24 +158,66 @@
     <asset name="mothershipMissile"            type="Particles" path="particules/mothership_missile"/>
 
     
-    <!-- Textures -->
+    <!-- Backgrounds -->
+      <!-- Story 1 -->
+      <asset name="background7"                 type="Image" path="backgrounds/story1/background07" />
+      <asset name="background8"                 type="Image" path="backgrounds/story1/background08" />
+      <asset name="background9"                 type="Image" path="backgrounds/story1/background09" />
+      <asset name="background10"                type="Image" path="backgrounds/story1/background10" />
+      <asset name="background11"                type="Image" path="backgrounds/story1/background11" />
+      <asset name="background12"                type="Image" path="backgrounds/story1/background12" />
+      <asset name="background13"                type="Image" path="backgrounds/story1/background13" />
+      <asset name="background14"                type="Image" path="backgrounds/story1/background14" />
+      <asset name="background15"                type="Image" path="backgrounds/story1/background15" />
+      <asset name="background16"                type="Image" path="backgrounds/story1/background16" />
+    
+      <!-- Story 2 -->
+    <asset name="background17"                 type="Image" path="backgrounds/story2/background01" />
+    <asset name="background18"                 type="Image" path="backgrounds/story2/background02" />
+    <asset name="background19"                 type="Image" path="backgrounds/story2/background03" />
+    <asset name="background20"                type="Image" path="backgrounds/story2/background04" />
+    <asset name="background21"                type="Image" path="backgrounds/story2/background05" />
+    <asset name="background22"                type="Image" path="backgrounds/story2/background06" />
+    <asset name="background23"                type="Image" path="backgrounds/story2/background07" />
+    <asset name="background24"                type="Image" path="backgrounds/story2/background08" />
+    <asset name="background25"                type="Image" path="backgrounds/story2/background09" />
+    <asset name="background26"                type="Image" path="backgrounds/story2/background10" />
+    <asset name="background27"                 type="Image" path="backgrounds/story2/background11" />
+    <asset name="background28"                 type="Image" path="backgrounds/story2/background12" />
+    <asset name="background29"                 type="Image" path="backgrounds/story2/background13" />
+    <asset name="background30"                type="Image" path="backgrounds/story2/background14" />
+    <asset name="background31"                type="Image" path="backgrounds/story2/background15" />
+    <asset name="background32"                type="Image" path="backgrounds/story2/background16" />
+    <asset name="background33"                type="Image" path="backgrounds/story2/background17" />
+    <asset name="background34"                type="Image" path="backgrounds/story2/background18" />
+    <asset name="background35"                type="Image" path="backgrounds/story2/background19" />
+    <asset name="background36"                type="Image" path="backgrounds/story2/background20" />
+    <asset name="background37"                 type="Image" path="backgrounds/story2/background21" />
+    <asset name="background38"                 type="Image" path="backgrounds/story2/background22" />
+    <asset name="background39"                 type="Image" path="backgrounds/story2/background23" />
+    <asset name="background40"                type="Image" path="backgrounds/story2/background24" />
+    <asset name="background41"                type="Image" path="backgrounds/story2/background25" />
+    <asset name="background42"                type="Image" path="backgrounds/story2/background26" />
+    <asset name="background43"                type="Image" path="backgrounds/story2/background27" />
+    <asset name="background44"                type="Image" path="backgrounds/story2/background28" />
+    <asset name="background45"                type="Image" path="backgrounds/story2/background29" />
+    <asset name="background46"                type="Image" path="backgrounds/story2/background30" />
+    <asset name="background47"                type="Image" path="backgrounds/story2/background31" />    
+    
+      <!-- Worlds -->
+      <asset name="world1"                     type="Image" path="backgrounds/worlds/world1" />
 
-    <asset name="fondecran7"                 type="Image" path="fonds/fondecran7" />
-    <asset name="fondecran8"                 type="Image" path="fonds/fondecran8" />
-    <asset name="fondecran9"                 type="Image" path="fonds/fondecran9" />
-    <asset name="fondecran10"                type="Image" path="fonds/fondecran10" />
-    <asset name="fondecran11"                type="Image" path="fonds/fondecran11" />
-    <asset name="fondecran12"                type="Image" path="fonds/fondecran12" />
-    <asset name="fondecran13"                type="Image" path="fonds/fondecran13" />
-    <asset name="fondecran14"                type="Image" path="fonds/fondecran14" />
-    <asset name="fondecran15"                type="Image" path="fonds/fondecran15" />
-    <asset name="fondecran16"                type="Image" path="fonds/fondecran16" />
-    <asset name="introBackground"            type="Image" path="fonds/intro" />
-    <asset name="world1"                     type="Image" path="fonds/world1" />
 
+    <!-- Cutscenes -->
+    <!-- Intro -->
+    <asset name="introBackground"             type="Image" path="backgrounds/cutscenes/intro" />
+    
+
+    <!-- GUI -->
     <asset name="bulle"                            type="Image" path="scenarios/bulle" />
     <asset name="bulleRenversee"                   type="Image" path="scenarios/bulleRenversee" />
     <asset name="lieutenant"                       type="Image" path="scenarios/lieutenant" />    
+
     
     <!-- Promo -->
     <asset name="buy"                            type="Image" path="GUI/buy" />
@@ -212,9 +254,5 @@
     <asset name="gameover2"               type="Music" path="musiques/Chopin11-gameover" />
     <asset name="ingame7"                 type="Music" path="musiques/Chopin12" />
     <asset name="introMusic"                   type="Music" path="musiques/intro" />
-    
-    <!-- Cutscenes -->
-      <!-- Intro -->
-      <asset name="IntroSimBackground"             type="Image" path="fonds/intro" />
   </Package>
 </Packages>

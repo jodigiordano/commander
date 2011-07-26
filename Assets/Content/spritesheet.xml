@@ -21,27 +21,42 @@
     
     <!-- Planets -->
     <Item><Key>etoile13</Key><Value>planetes/etoile1.png</Value></Item>
-    <Item><Key>planete11</Key><Value>planetes/planete11.png</Value></Item>
-    <Item><Key>planete12</Key><Value>planetes/planete12.png</Value></Item>
-    <Item><Key>planete13</Key><Value>planetes/planete13.png</Value></Item>
-    <Item><Key>planete21</Key><Value>planetes/planete21.png</Value></Item>
-    <Item><Key>planete22</Key><Value>planetes/planete22.png</Value></Item>
-    <Item><Key>planete23</Key><Value>planetes/planete23.png</Value></Item>
-    <Item><Key>planete31</Key><Value>planetes/planete31.png</Value></Item>
-    <Item><Key>planete32</Key><Value>planetes/planete32.png</Value></Item>
-    <Item><Key>planete33</Key><Value>planetes/planete33.png</Value></Item>
-    <Item><Key>planete41</Key><Value>planetes/planete41.png</Value></Item>
-    <Item><Key>planete42</Key><Value>planetes/planete42.png</Value></Item>
-    <Item><Key>planete43</Key><Value>planetes/planete43.png</Value></Item>
-    <Item><Key>planete51</Key><Value>planetes/planete51.png</Value></Item>
-    <Item><Key>planete52</Key><Value>planetes/planete52.png</Value></Item>
-    <Item><Key>planete53</Key><Value>planetes/planete53.png</Value></Item>
-    <Item><Key>planete61</Key><Value>planetes/planete61.png</Value></Item>
-    <Item><Key>planete62</Key><Value>planetes/planete62.png</Value></Item>
-    <Item><Key>planete63</Key><Value>planetes/planete63.png</Value></Item>
-    <Item><Key>planete71</Key><Value>planetes/planete71.png</Value></Item>
-    <Item><Key>planete72</Key><Value>planetes/planete72.png</Value></Item>
-    <Item><Key>planete73</Key><Value>planetes/planete73.png</Value></Item>
+    <Item><Key>planete11</Key><Value>planetes/planet11.png</Value></Item>
+    <Item><Key>planete12</Key><Value>planetes/planet12.png</Value></Item>
+    <Item><Key>planete13</Key><Value>planetes/planet13.png</Value></Item>
+    <Item><Key>planete21</Key><Value>planetes/planet21.png</Value></Item>
+    <Item><Key>planete22</Key><Value>planetes/planet22.png</Value></Item>
+    <Item><Key>planete23</Key><Value>planetes/planet23.png</Value></Item>
+    <Item><Key>planete31</Key><Value>planetes/planet31.png</Value></Item>
+    <Item><Key>planete32</Key><Value>planetes/planet32.png</Value></Item>
+    <Item><Key>planete33</Key><Value>planetes/planet33.png</Value></Item>
+    <Item><Key>planete41</Key><Value>planetes/planet41.png</Value></Item>
+    <Item><Key>planete42</Key><Value>planetes/planet42.png</Value></Item>
+    <Item><Key>planete43</Key><Value>planetes/planet43.png</Value></Item>
+    <Item><Key>planete51</Key><Value>planetes/planet51.png</Value></Item>
+    <Item><Key>planete52</Key><Value>planetes/planet52.png</Value></Item>
+    <Item><Key>planete53</Key><Value>planetes/planet53.png</Value></Item>
+    <Item><Key>planete61</Key><Value>planetes/planet61.png</Value></Item>
+    <Item><Key>planete62</Key><Value>planetes/planet62.png</Value></Item>
+    <Item><Key>planete63</Key><Value>planetes/planet63.png</Value></Item>
+    <Item><Key>planete71</Key><Value>planetes/planet71.png</Value></Item>
+    <Item><Key>planete72</Key><Value>planetes/planet72.png</Value></Item>
+    <Item><Key>planete73</Key><Value>planetes/planet73.png</Value></Item>
+    <Item><Key>planete81</Key><Value>planetes/planet81.png</Value></Item>
+    <Item><Key>planete82</Key><Value>planetes/planet82.png</Value></Item>
+    <Item><Key>planete83</Key><Value>planetes/planet83.png</Value></Item>
+    <Item><Key>planete91</Key><Value>planetes/planet91.png</Value></Item>
+    <Item><Key>planete92</Key><Value>planetes/planet92.png</Value></Item>
+    <Item><Key>planete93</Key><Value>planetes/planet93.png</Value></Item>
+    <Item><Key>planete101</Key><Value>planetes/planet101.png</Value></Item>
+    <Item><Key>planete102</Key><Value>planetes/planet102.png</Value></Item>
+    <Item><Key>planete103</Key><Value>planetes/planet103.png</Value></Item>
+    <Item><Key>planete111</Key><Value>planetes/planet111.png</Value></Item>
+    <Item><Key>planete112</Key><Value>planetes/planet112.png</Value></Item>
+    <Item><Key>planete113</Key><Value>planetes/planet113.png</Value></Item>
+    <Item><Key>planete121</Key><Value>planetes/planet121.png</Value></Item>
+    <Item><Key>planete122</Key><Value>planetes/planet122.png</Value></Item>
+    <Item><Key>planete123</Key><Value>planetes/planet123.png</Value></Item>
     <Item><Key>stationSpatiale11</Key><Value>planetes/stationSpatiale11.png</Value></Item>
     <Item><Key>stationSpatiale12</Key><Value>planetes/stationSpatiale12.png</Value></Item>
     <Item><Key>stationSpatiale13</Key><Value>planetes/stationSpatiale13.png</Value></Item>
@@ -58,6 +73,21 @@
     <Item><Key>luneVies</Key><Value>planetes/luneVies.png</Value></Item>   
     <Item><Key>luneWin</Key><Value>planetes/luneWin.png</Value></Item>   
     <Item><Key>luneLoose</Key><Value>planetes/luneFail.png</Value></Item>
+    <Item><Key>battleship11</Key><Value>planetes/battleship11.png</Value></Item>
+    <Item><Key>battleship12</Key><Value>planetes/battleship12.png</Value></Item>
+    <Item><Key>battleship13</Key><Value>planetes/battleship13.png</Value></Item>
+    <Item><Key>battleship21</Key><Value>planetes/battleship21.png</Value></Item>
+    <Item><Key>battleship22</Key><Value>planetes/battleship22.png</Value></Item>
+    <Item><Key>battleship23</Key><Value>planetes/battleship23.png</Value></Item>
+    <Item><Key>battleship31</Key><Value>planetes/battleship31.png</Value></Item>
+    <Item><Key>battleship32</Key><Value>planetes/battleship32.png</Value></Item>
+    <Item><Key>battleship33</Key><Value>planetes/battleship33.png</Value></Item>
+    <Item><Key>battleship41</Key><Value>planetes/battleship41.png</Value></Item>
+    <Item><Key>battleship42</Key><Value>planetes/battleship42.png</Value></Item>
+    <Item><Key>battleship43</Key><Value>planetes/battleship43.png</Value></Item>
+    <Item><Key>battleship51</Key><Value>planetes/battleship51.png</Value></Item>
+    <Item><Key>battleship52</Key><Value>planetes/battleship52.png</Value></Item>
+    <Item><Key>battleship53</Key><Value>planetes/battleship53.png</Value></Item>
     
     <!-- Xbox 360 Buttons -->
     <Item><Key>ButtonBack</Key><Value>GUI/Buttons/back.png</Value></Item>

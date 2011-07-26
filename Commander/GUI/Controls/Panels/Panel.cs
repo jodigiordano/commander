@@ -15,6 +15,7 @@
         public bool ShowCloseButton;
         public override Vector3 Dimension { get; set; }
         public override double VisualPriority { get; set; }
+        public PanelWidget LastClickedWidget;
 
         public List<KeyValuePair<string, PanelWidget>> Widgets { get; private set; }
 
@@ -164,6 +165,9 @@
             for (int i = Widgets.Count - 1; i > -1; i--)
                 if (Widgets[i].Key == name)
                 {
+                    if (Widgets[i].Value == LastClickedWidget)
+                        LastClickedWidget = null;
+
                     Widgets.RemoveAt(i);
                     break;
                 }
@@ -185,6 +189,8 @@
         public virtual void ClearWidgets()
         {
             Widgets.Clear();
+
+            LastClickedWidget = null;
 
             RecomputePositions = true;
         }
@@ -422,7 +428,10 @@
         {
             foreach (var w in Widgets)
                 if (w.Value.DoClick(circle))
+                {
+                    LastClickedWidget = w.Value;
                     return true;
+                }
 
             return false;
         }

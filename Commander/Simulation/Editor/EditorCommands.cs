@@ -53,6 +53,8 @@
         public Size Size;
         public bool ShowPath;
         public string AssetName;
+        public bool HasMoons;
+        public bool FollowPath;
 
 
         public EditorCelestialBodyCommand(string name)

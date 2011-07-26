@@ -8,14 +8,14 @@
 
     class SlideshowPanel : Panel
     {
-        private NumericHorizontalSlider Slider;
+        protected NumericHorizontalSlider Slider;
         private List<PanelWidget> Panels;
 
 
         public SlideshowPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
-            Slider = new NumericHorizontalSlider("Wave", 0, 100, 0, 1, 200)
+            Slider = new NumericHorizontalSlider("", 0, 0, 0, 1, 200)
             {
                 Scene = scene,
                 VisualPriority = visualPriority
@@ -29,6 +29,8 @@
         {
             Panels.Add(widget);
 
+            Slider.Max = Panels.Count - 1;
+
             base.AddWidget(name, widget);
         }
 
@@ -36,6 +38,8 @@
         public override void ClearWidgets()
         {
             Panels.Clear();
+
+            Slider.Max = 0;
 
             base.ClearWidgets();
         }

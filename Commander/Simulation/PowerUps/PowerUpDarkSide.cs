@@ -31,7 +31,8 @@ namespace EphemereGames.Commander.Simulation
                     float.MaxValue,
                     null,
                     0,
-                    0);
+                    0,
+                    false);
             CorpsCeleste.AttackPoints = 0.5f;
         }
 

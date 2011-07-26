@@ -35,7 +35,7 @@
             Bulle.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
             Bulle.Origin = Vector2.Zero;
 
-            FondEcran = new Image("fondecran7", Vector3.Zero);
+            FondEcran = new Image("background7", Vector3.Zero);
             FondEcran.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
             TypeWriter = new TextTypeWriter

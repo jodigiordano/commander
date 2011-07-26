@@ -20,6 +20,7 @@
         public double TimeLastBullet;
         public TurretType Type                      { get; protected set; }
         public string Name                          { get; protected set; }
+        public bool CanSelect;
         public bool CanSell;
         public bool CanUpdate                       { get { return CanUpdateOverride && (!Disabled && !ActualLevel.Equals(Levels.Last)); } set { CanUpdateOverride = value; } }
         public int BuyPrice                         { get { return ActualLevel.Value.BuyPrice; } }
@@ -82,6 +83,7 @@
             Name = "Unknown";
             Description = @"Unknown";
             CanSell = true;
+            CanSelect = true;
             DisabledCounter = 0;
             CanUpdateOverride = true;
             DisabledOverride = true;

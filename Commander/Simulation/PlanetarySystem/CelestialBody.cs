@@ -39,6 +39,8 @@
         public bool LastOnPath;
         public bool FirstOnPath;
         public bool ShowPath;
+        public bool FollowPath;
+        public bool HasMoons;
         public List<Moon> Moons;
         public bool HasGravitationalTurretBypass;
         public double VisualPriorityBackup;
@@ -74,7 +76,8 @@
             float speed,
             string partialImageName,
             int startingPourc,
-            double visualPriority)
+            double visualPriority,
+            bool hasMoons)
         {
             Simulator = simulator;
             Name = name;
@@ -123,6 +126,8 @@
             PlayerCheckedIn = null;
             AliveOverride = false;
             ShowPath = false;
+            FollowPath = false;
+            HasMoons = true;
         }
 
 
@@ -136,7 +141,8 @@
             celestialBodyDescriptor.Speed,
             celestialBodyDescriptor.Image,
             celestialBodyDescriptor.StartingPosition,
-            visualPriority) { }
+            visualPriority,
+            celestialBodyDescriptor.HasMoons) { }
 
 
         public virtual double VisualPriority
@@ -220,6 +226,14 @@
             PathRotation = rotationRad;
 
             Matrix.CreateRotationZ(PathRotation, out RotationMatrix);
+        }
+
+
+        public void SetHasMoons(bool value)
+        {
+            HasMoons = value;
+
+            InitMoons();
         }
 
 
@@ -309,10 +323,17 @@
             {
                 Image.position = this.Position;
                 Simulator.Scene.Add(Image);
+
+                if (FollowPath)
+                {
+                    Vector3 diff = Position - LastPosition;
+
+                    Image.Rotation = Core.Physics.Utilities.VectorToAngle(ref diff);
+                }
             }
 
-            foreach (var lune in Moons)
-                lune.Draw();
+            foreach (var moon in Moons)
+                moon.Draw();
 
             if (ShowTurretsZone)
             {
@@ -428,7 +449,9 @@
                 Speed = (int) Speed,
                 Size = Size,
                 Rotation = PathRotation,
-                HasGravitationalTurret = StartingPathTurret != null
+                HasGravitationalTurret = StartingPathTurret != null,
+                HasMoons = HasMoons,
+                FollowPath = FollowPath
             };
         }
 
@@ -444,7 +467,7 @@
         private void InitMoons()
         {
             Moons = new List<Moon>();
-            int nbLunes = Main.Random.Next(0, 3);
+            int nbLunes = HasMoons ? Main.Random.Next(0, 3) : 0;
 
             for (int i = 0; i < nbLunes; i++)
             {

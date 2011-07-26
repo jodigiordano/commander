@@ -75,7 +75,7 @@
             Bubble.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.02f;
             Bubble.Origin = Vector2.Zero;
 
-            Background = new Image("fondecran12", Vector3.Zero);
+            Background = new Image("background12", Vector3.Zero);
             Background.VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.03f;
 
             TypeWriter = new TextTypeWriter
