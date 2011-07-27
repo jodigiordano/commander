@@ -8,9 +8,9 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    class Bubble : IVisual
+    class Bubble : IVisual, IPhysicalObject
     {
-        protected Simulator Simulator;
+        protected Scene Scene;
 
         private List<Image> Corners;
         private List<Image> Edges;
@@ -19,20 +19,24 @@
 
         public PhysicalRectangle Dimension;
         public int BlaPosition;
+        public byte FilterAlpha;
 
 
-        public Bubble(Simulator simulator, PhysicalRectangle dimension, double visualPriority)
+        public Bubble(Scene scene, PhysicalRectangle dimension, double visualPriority)
         {
-            Simulator = simulator;
+            Scene = scene;
             Dimension = dimension;
+            FilterAlpha = 200;
 
-            Bla = new Image("bulleBlabla");
-            Bla.VisualPriority = visualPriority;
-            Bla.Origin = Vector2.Zero;
+            Bla = new Image("bulleBlabla")
+            {
+                VisualPriority = visualPriority,
+                Origin = Vector2.Zero
+            };
 
             Filter = new Image("PixelBlanc")
             {
-                Color = new Color(0, 0, 0, 200),
+                Color = new Color(0, 0, 0, FilterAlpha),
                 VisualPriority = visualPriority + 0.000002,
                 Origin = Vector2.Zero
             };
@@ -87,39 +91,21 @@
                 Filter.Alpha = value;
                 Bla.Alpha = value;
 
-                Filter.Alpha = Math.Min(value, (byte) 128);
+                Filter.Alpha = Math.Min(value, (byte) FilterAlpha);
             }
         }
 
 
-        public Rectangle VisiblePart
-        {
-            set { throw new NotImplementedException(); }
-        }
-
-
-        public Vector2 Origin
+        public virtual Vector3 Position
         {
             get
             {
-                throw new NotImplementedException();
+                return new Vector3(Dimension.X, Dimension.Y, 0);
             }
             set
             {
-                throw new NotImplementedException();
-            }
-        }
-
-
-        public Vector2 Size
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                Dimension.X = (int) value.X;
+                Dimension.Y = (int) value.Y;
             }
         }
 
@@ -188,12 +174,12 @@
 
             for (int i = 0; i < 4; i++)
             {
-                Simulator.Scene.Add(Edges[i]);
-                Simulator.Scene.Add(Corners[i]);
+                Scene.Add(Edges[i]);
+                Scene.Add(Corners[i]);
             }
 
-            Simulator.Scene.Add(Filter);
-            Simulator.Scene.Add(Bla);
+            Scene.Add(Filter);
+            Scene.Add(Bla);
         }
 
 
@@ -204,16 +190,16 @@
             var effect = VisualEffects.Fade(from, to, 0, length);
 
             foreach (var corner in Corners)
-                Simulator.Scene.VisualEffects.Add(corner, effect, callback);
+                Scene.VisualEffects.Add(corner, effect, callback);
 
             foreach (var edge in Edges)
-                Simulator.Scene.VisualEffects.Add(edge, effect);
+                Scene.VisualEffects.Add(edge, effect);
 
-            Simulator.Scene.VisualEffects.Add(Bla, effect);
+            Scene.VisualEffects.Add(Bla, effect);
 
-            effect = VisualEffects.Fade(Math.Min(from, 128), Math.Min(to, 128), 0, length);
+            effect = VisualEffects.Fade(Math.Min(from, FilterAlpha), Math.Min(to, FilterAlpha), 0, length);
 
-            Simulator.Scene.VisualEffects.Add(Filter, effect);
+            Scene.VisualEffects.Add(Filter, effect);
         }
 
 
@@ -226,6 +212,40 @@
         public virtual void FadeOut(double length)
         {
             Fade(Bla.Alpha, 0, length, null);
+        }
+
+
+        public float Speed
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        public float Rotation
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        public Rectangle VisiblePart
+        {
+            set { throw new NotImplementedException(); }
+        }
+
+
+        public Vector2 Origin
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        public Vector2 Size
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
     }
 }

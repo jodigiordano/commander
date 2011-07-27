@@ -194,14 +194,6 @@ namespace EphemereGames.Commander.Simulation
     }
 
 
-    enum WaveType
-    {
-        Homogene = 0,
-        DistinctFollow = 1,
-        PackedH = 2
-    }
-
-
     enum EditorEditingState
     {
         None = -1,
@@ -228,5 +220,5 @@ namespace EphemereGames.Commander.Simulation
         GameLost = 10,
         GameWon = 11,
         HoldToSkip = 12
-    };
+    }
 }

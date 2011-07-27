@@ -193,23 +193,23 @@
         }
 
 
-        public float GetVisualPriority(EnemyType type, float pourcPath)
+        public double GetVisualPriority(EnemyType type, float pourcPath)
         {
-            float vp = (pourcPath >= 0.80f) ?
-                Preferences.PrioriteSimulationCorpsCeleste - 0.1f :
-                Preferences.PrioriteSimulationEnnemi;
-
+            double vp = pourcPath > 0.8 ? Preferences.PrioriteSimulationCorpsCeleste : VisualPriorities.Default.Enemy;
+            
+            vp -= pourcPath / 100;
+                
             switch (type)
             {
-                case EnemyType.Asteroid: vp -= 0.00001f; break;
-                case EnemyType.Centaur: vp -= 0.00002f; break;
-                case EnemyType.Comet: vp -= 0.00003f; break;
-                case EnemyType.Meteoroid: vp -= 0.00004f; break;
-                case EnemyType.Plutoid: vp -= 0.00005f; break;
-                case EnemyType.Trojan: vp -= 0.00006f; break;
-                case EnemyType.Damacloid: vp -= 0.00007f; break;
-                case EnemyType.Vulcanoid: vp -= 0.00008f; break;
-                case EnemyType.Swarm: vp -= 0.00009f; break;
+                case EnemyType.Asteroid: vp -= 0.00001; break;
+                case EnemyType.Centaur: vp -= 0.00002; break;
+                case EnemyType.Comet: vp -= 0.00003; break;
+                case EnemyType.Meteoroid: vp -= 0.00004; break;
+                case EnemyType.Plutoid: vp -= 0.00005; break;
+                case EnemyType.Trojan: vp -= 0.00006; break;
+                case EnemyType.Damacloid: vp -= 0.00007; break;
+                case EnemyType.Vulcanoid: vp -= 0.00008; break;
+                case EnemyType.Swarm: vp -= 0.00009; break;
             }
 
             return vp;

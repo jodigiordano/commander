@@ -304,7 +304,7 @@
                 BulletHitPoints = Descriptor.Waves.Count == 0 ? averageLife : averageLife / Descriptor.Waves.Count;
             }
 
-            BulletHitPoints /= 20;
+            BulletHitPoints /= 15;
         }
 
 

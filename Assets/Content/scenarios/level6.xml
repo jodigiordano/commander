@@ -40,7 +40,7 @@
     <CelestialBody>
       <Name>Planete1877987916</Name>
       <Images />
-      <Image>planete4</Image>
+      <Image>planete7</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Big</Size>
@@ -83,7 +83,7 @@
       </Position>
       <Rotation>-0.04189342</Rotation>
       <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
+      <CanSelect>false</CanSelect>
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>

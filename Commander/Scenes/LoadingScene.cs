@@ -254,7 +254,7 @@
         private void InitLoadingTranslation()
         {
             LoadingTranslation = new Translator
-            (this, new Vector3(0, 150, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], 3, true, 3000, 250, 0.3f);
+            (this, new Vector3(0, 150, 0), "Alien", Colors.Default.AlienBright, "Pixelite", Colors.Default.NeutralBright, LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], 3, true, 3000, 250, 0.3f, false);
             LoadingTranslation.CenterText = true;
         }
 

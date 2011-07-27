@@ -79,7 +79,7 @@
             GamePausedResistance.Initialize();
             
             LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulator, Level);
-            LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, CelestialBodies, Level);
+            LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, Path, Level);
 
             PlayerLives = new PlayerLives(Simulator, new Color(255, 0, 220))
             {
@@ -395,27 +395,30 @@
             player.FinalSolutionPreview.CelestialBody =
                 (player.PowerUpFinalSolution) ? selection.CelestialBody : null;
 
-            if (PathPreviewing != null &&
-                selection.Turret != null &&
-                selection.Turret.Type == TurretType.Gravitational &&
-                selection.Turret.CanSell &&
-                !selection.Turret.Disabled &&
-                selection.TurretChoice == TurretChoice.Sell)
-                PathPreviewing.RemoveCelestialObject(player, selection.Turret.CelestialBody);
-            else if (PathPreviewing != null &&
-                selection.CelestialBody != null &&
-                player.PowerUpFinalSolution &&
-                selection.CelestialBody.HasGravitationalTurret)
-                PathPreviewing.RemoveCelestialObject(player, selection.CelestialBody);
-            else if (PathPreviewing != null &&
-                selection.TurretToBuy == TurretType.Gravitational)
-                PathPreviewing.AddCelestialObject(player, selection.CelestialBody);
-            else if (PathPreviewing != null &&
-                selection.TurretToPlace != null &&
-                selection.TurretToPlace.Type == TurretType.Gravitational)
-                PathPreviewing.AddCelestialObject(player, selection.CelestialBody);
-            else if (PathPreviewing != null)
-                PathPreviewing.RollBack(player);
+            if (!Simulator.EditorMode || (Simulator.EditorMode && Simulator.EditorState == EditorState.Playtest))
+            {
+                if (PathPreviewing != null &&
+                    selection.Turret != null &&
+                    selection.Turret.Type == TurretType.Gravitational &&
+                    selection.Turret.CanSell &&
+                    !selection.Turret.Disabled &&
+                    selection.TurretChoice == TurretChoice.Sell)
+                    PathPreviewing.RemoveCelestialObject(player, selection.Turret.CelestialBody);
+                else if (PathPreviewing != null &&
+                    selection.CelestialBody != null &&
+                    player.PowerUpFinalSolution &&
+                    selection.CelestialBody.HasGravitationalTurret)
+                    PathPreviewing.RemoveCelestialObject(player, selection.CelestialBody);
+                else if (PathPreviewing != null &&
+                    selection.TurretToBuy == TurretType.Gravitational)
+                    PathPreviewing.AddCelestialObject(player, selection.CelestialBody);
+                else if (PathPreviewing != null &&
+                    selection.TurretToPlace != null &&
+                    selection.TurretToPlace.Type == TurretType.Gravitational)
+                    PathPreviewing.AddCelestialObject(player, selection.CelestialBody);
+                else if (PathPreviewing != null)
+                    PathPreviewing.RollBack(player);
+            }
         }
 
 

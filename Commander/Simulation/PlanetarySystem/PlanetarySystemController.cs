@@ -130,8 +130,8 @@
                 celestialBody.PathPriority != int.MinValue &&
                 !Path.ContainsCelestialBody(celestialBody))
             {
-                Path.AddCelestialBody(celestialBody);
-                PathPreview.AddCelestialBody(celestialBody);
+                Path.AddCelestialBody(celestialBody, true);
+                PathPreview.AddCelestialBody(celestialBody, true);
             }
 
             return true;
@@ -261,7 +261,7 @@
 
                 Path.RemoveCelestialBody(command.CelestialBody);
                 command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
-                Path.AddCelestialBody(command.CelestialBody);
+                Path.AddCelestialBody(command.CelestialBody, false);
             }
 
 
@@ -272,7 +272,7 @@
 
                 Path.RemoveCelestialBody(command.CelestialBody);
                 command.CelestialBody.PathPriority = GetHighestPathPriority(CelestialBodies) + 1;
-                Path.AddCelestialBody(command.CelestialBody);
+                Path.AddCelestialBody(command.CelestialBody, false);
             }
 
 
@@ -304,6 +304,12 @@
             else if (command.Name == "StraightLine")
             {
                 command.CelestialBody.StraightLine = command.StraightLine;
+            }
+
+
+            else if (command.Name == "Invincible")
+            {
+                command.CelestialBody.Invincible = command.Invincible;
             }
 
 
@@ -452,8 +458,8 @@
             if (celestialBody.PathPriority == int.MinValue)
                 celestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
 
-            Path.AddCelestialBody(celestialBody);
-            PathPreview.AddCelestialBody(celestialBody);
+            Path.AddCelestialBody(celestialBody, false);
+            PathPreview.AddCelestialBody(celestialBody, false);
         }
 
 

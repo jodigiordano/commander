@@ -1412,28 +1412,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tourelles\tourelleMortarBase.png">
-      <Name>tourelleMortarBase</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-    <None Include="tourelles\tourelleMortarCanon1.png">
-      <Name>tourelleMortarCanon1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-    <None Include="tourelles\tourelleMortarCanon2.png">
-      <Name>tourelleMortarCanon2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-    <None Include="tourelles\tourelleMortarCanon3.png">
-      <Name>tourelleMortarCanon3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="tourelles\tourelleNanobotsBase.png">
       <Name>tourelleNanobotsBase</Name>
       <Importer>TextureImporter</Importer>
@@ -1453,14 +1431,6 @@
       <Name>tourelleNanobotsCanon3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\level9.xml">
-      <Name>level9</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2151,14 +2121,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\level10.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level10</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="planetes\planet101.png">
       <Name>planet101</Name>
       <Importer>TextureImporter</Importer>
@@ -2400,6 +2362,68 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level10.xml">
+      <Name>level10</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="scenarios\level9.xml">
+      <Name>level9</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="tourelles\tourelleLaserMultipleBase2.png">
+      <Name>tourelleLaserMultipleBase2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleLaserMultipleBase3.png">
+      <Name>tourelleLaserMultipleBase3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="tourelles\tourelleMissileBase2.png">
+      <Name>tourelleMissileBase2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleMissileBase3.png">
+      <Name>tourelleMissileBase3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="tourelles\tourelleSlowMotionBase2.png">
+      <Name>tourelleSlowMotionBase2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleSlowMotionBase3.png">
+      <Name>tourelleSlowMotionBase3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="tourelles\tourelleNanobotsBase2.png">
+      <Name>tourelleNanobotsBase2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleNanobotsBase3.png">
+      <Name>tourelleNanobotsBase3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

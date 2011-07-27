@@ -223,7 +223,7 @@
         private void InitPressStart()
         {
             PressStart = new Translator
-            (this, new Vector3(0, 50, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", new Color(255, 255, 255, 0), (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine", 3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal);
+            (this, new Vector3(0, 50, 0), "Alien", Colors.Default.AlienBright, "Pixelite", Colors.Default.NeutralBright, (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine", 3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal, false);
             PressStart.CenterText = true;
         }
 

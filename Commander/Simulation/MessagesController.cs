@@ -305,7 +305,7 @@
 
             visualPriority = (visualPriority == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : visualPriority;
 
-            TextBubble bulle = new TextBubble(Simulator, texteInfos, obj.Position, 0, visualPriority);
+            TextBubble bulle = new TextBubble(Simulator.Scene, texteInfos, obj.Position, 0, visualPriority);
 
             bulle.Text.Data = message;
             bulle.ShowTime = time;
@@ -373,7 +373,7 @@
                         }
                     }
 
-                    TextBubble bulle = new TextBubble(Simulator, texte, tourelle.Position, 0, Preferences.PrioriteSimulationTourelle - 0.02f);
+                    TextBubble bulle = new TextBubble(Simulator.Scene, texte, tourelle.Position, 0, Preferences.PrioriteSimulationTourelle - 0.02f);
                     bulle.ShowTime = texte.Data.Length * 100;
 
                     foreach (var kvp in TalkingTurrets)

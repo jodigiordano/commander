@@ -51,7 +51,7 @@
         {
             set
             {
-                Image = value ? Image2 : Image;
+                Image = value ? Image2 : Image1;
 
                 Vector2 imageSize = Image.AbsoluteSize;
 
@@ -76,7 +76,7 @@
             ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
 
             TrailEffect = Scene.Particles.Get(@"traineeMissile");
-            TrailEffect.VisualPriority = this.Image.VisualPriority - 0.0001f;
+            TrailEffect.VisualPriority = Image.VisualPriority - 0.0001f;
 
             ConeEmitter emitter = (ConeEmitter)TrailEffect.ParticleEffect[0];
             emitter.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;

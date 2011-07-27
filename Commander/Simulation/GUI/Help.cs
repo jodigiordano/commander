@@ -26,13 +26,13 @@
             Lieutenant = new Image("lieutenant", new Vector3(-500, 370, 0));
             Lieutenant.Origin = new Vector2(0, Lieutenant.TextureSize.Y);
             Lieutenant.SizeX = 5;
-            Lieutenant.VisualPriority = Preferences.PrioriteGUIVictoireDefaite - 0.0001;
+            Lieutenant.VisualPriority = VisualPriorities.Default.Tutorial;
 
             Bubble = new Image("bulle", new Vector3(-250, 200, 0));
             Bubble.Origin = new Vector2(0, Bubble.TextureSize.Y);
             Bubble.SizeX = 8;
             //Bubble.Color.A = 150;
-            Bubble.VisualPriority = Preferences.PrioriteGUIVictoireDefaite - 0.0001;
+            Bubble.VisualPriority = VisualPriorities.Default.Tutorial;
 
             ActiveText = 0;
             ActiveOverride = Texts.Count > 0;

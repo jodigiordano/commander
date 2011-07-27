@@ -356,6 +356,7 @@
         public int LivesLevel;
         public int CashValue;
         public int Quantity;
+
         public Distance Distance;
         public double Delay;
         public int ApplyDelayEvery;
@@ -388,17 +389,21 @@
 
             for (int i = 0; i < Quantity; i++)
             {
+                // switch enemy (with SwitchEvery)
                 if ((i + 1) % SwitchEvery == 0)
                     typeIndex = (typeIndex + 1) % Enemies.Count;
 
                 var type = Enemies[typeIndex];
 
+                // compute delay (with Delay and ApplyDelayEvery)
                 double delay = ((i + 1) % ApplyDelayEvery == 0) ? Delay : 0;
 
+                // compute frequency (with Distance)
                 double frequency =
                     simulator.TweakingController.EnemiesFactory.GetSize(type) + (int) Distance /
                     simulator.TweakingController.EnemiesFactory.GetSpeed(type, SpeedLevel) * (1000f / 60f);
 
+                // create enemy
                 var e = EnemyDescriptor.Pool.Get();
                 e.Type = type;
                 e.CashValue = this.CashValue;

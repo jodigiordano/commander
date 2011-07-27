@@ -57,11 +57,12 @@
 
         public void Draw()
         {
-            if (!Visible)
-                return;
+            EnemiesLives.ShowAll = Visible;
 
             EnemiesLives.Draw();
-            CelestialBodiesPaths.Draw();
+
+            if (Visible)
+                CelestialBodiesPaths.Draw();
         }
     }
 }

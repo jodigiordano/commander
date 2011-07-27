@@ -15,17 +15,22 @@
             Waves = new List<Wave>();
             MaxWaves = nbWaves;
 
-            Generator.WavesCount = nbWaves;
-            Generator.DifficultyStart = Descriptor.StartingDifficulty;
-            Generator.DifficultyEnd = Descriptor.StartingDifficulty + Descriptor.DifficultyIncrement * nbWaves;
+            var difficulty = Descriptor.StartingDifficulty;
 
-            Generator.Generate();
+            for (int i = 0; i < nbWaves; i++)
+            {
+                var waveDesc = WaveGenerator.Generate(
+                    difficulty,
+                    Main.Random.Next((int) Descriptor.MinMaxEnemiesPerWave.X, (int) Descriptor.MinMaxEnemiesPerWave.Y),
+                    Descriptor.Enemies);
 
-            if (NbWavesAsked == 0 && Descriptor.FirstOneStartNow)
-                Generator.Waves[0].StartingTime = 0;
+                if (i == 0 && Descriptor.FirstOneStartNow)
+                    waveDesc.StartingTime = 0;
 
-            foreach (var wave in Generator.Waves)
-                Waves.Add(new Wave(simulator, wave));
+                Waves.Add(new Wave(simulator, waveDesc));
+
+                difficulty += Descriptor.DifficultyIncrement;
+            }
         }
 
 

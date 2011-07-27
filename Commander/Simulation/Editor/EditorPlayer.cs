@@ -117,7 +117,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 17;
+            int nbChoices = EditorCelestialBodyMenu.NumberOfChoices;
 
             actual += 1;
 
@@ -134,7 +134,7 @@
                 return;
 
             int actual = (int) ActualSelection.CelestialBodyChoice;
-            int nbChoices = 17;
+            int nbChoices = EditorCelestialBodyMenu.NumberOfChoices;
 
             actual -= 1;
 

@@ -13,6 +13,8 @@
         private Simulator Simulator;
         private List<ContextualMenuChoice> Choices;
 
+        public static int NumberOfChoices;
+
 
         public EditorCelestialBodyMenu(Simulator simulator, Color color)
         {
@@ -103,7 +105,17 @@
                         new EditorCelestialBodyCommand("StraightLine") { StraightLine = false },
                         new EditorCelestialBodyCommand("StraightLine") { StraightLine = true }
                     }),
+                new EditorToggleContextualMenuChoice("Invincible",
+                    new List<string>() { "Invincible: true", "Invincible: false" },
+                    1,
+                    new List<EditorCommand>()
+                    {
+                        new EditorCelestialBodyCommand("Invincible") { Invincible = false },
+                        new EditorCelestialBodyCommand("Invincible") { Invincible = true }
+                    })
             };
+
+            NumberOfChoices = Choices.Count;
 
             Menu = new ContextualMenu(Simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, color, Choices, 5);
         }
@@ -171,6 +183,9 @@
 
             // sync straight line
             ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("StraightLine")).SetChoice(CelestialBody.StraightLine ? 0 : 1);
+
+            // sync invincible
+            ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("Invincible")).SetChoice(CelestialBody.Invincible ? 0 : 1);
         }
 
 

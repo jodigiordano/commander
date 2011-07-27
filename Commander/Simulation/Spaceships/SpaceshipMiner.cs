@@ -39,7 +39,7 @@
 
             mb.Position = Position;
             mb.AttackPoints = BulletHitPoints;
-            mb.VisualPriority = Preferences.PrioriteSimulationChemin - 0.001f;
+            mb.VisualPriority = VisualPriorities.Default.MineBullet;
             mb.Speed = 0;
             mb.ExplosionRange = 70;
             mb.Owner = Owner;

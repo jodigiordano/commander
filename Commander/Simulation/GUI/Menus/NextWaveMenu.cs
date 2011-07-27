@@ -62,7 +62,7 @@
                 RepresentationsNiveaux.Add(kvp.Key, t);
             }
 
-            Bubble = new Bubble(Simulator, new PhysicalRectangle(), this.PrioriteAffichage + 0.0001f);
+            Bubble = new Bubble(Simulator.Scene, new PhysicalRectangle(), this.PrioriteAffichage + 0.0001f);
             Bubble.BlaPosition = 1;
 
             Visible = false;

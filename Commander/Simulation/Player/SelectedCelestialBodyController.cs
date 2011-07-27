@@ -67,28 +67,19 @@
 
         public void Update()
         {
+            // The simulator is in "cannot select celestial bodies mode"
             if (!Simulator.CanSelectCelestialBodies)
             {
                 Initialize();
                 return;
             }
 
-            //if (!Simulator.DemoMode && Player.NextInput != Vector3.Zero)
-            //{
-            //    if (Turret != null)
-            //    {
-            //        Turret.PlayerCheckedIn = null;
-            //        Turret = null;
-            //    }
-
-            //    if (CelestialBody != null)
-            //    {
-            //        CelestialBody.PlayerCheckedIn = null;
-            //        CelestialBody = null;
-            //    }
-
-            //    return;
-            //}
+            // The player is moving (or have the intention to)
+            if (!Simulator.DemoMode && Player.NextInput != Vector3.Zero)
+            {
+                Initialize();
+                return;
+            }
 
             if (Turret != null && Turret.Alive && Physics.CircleCicleCollision(Player.Circle, Turret.Circle))
             {

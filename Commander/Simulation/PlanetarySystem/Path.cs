@@ -29,7 +29,7 @@
         private double LengthBefore;
 
 
-        public Path(Simulator simulator, Color couleur, BlendType melange)
+        public Path(Simulator simulator, Color color, BlendType blend)
         {
             Scene = simulator.Scene;
             
@@ -51,13 +51,12 @@
 
             for (int i = 0; i < MaxVisibleLines; i++)
             {
-                Image line = new Image("LigneTrajet", Vector3.Zero);
-                line.Color = couleur;
-                line.Blend = melange;
-                line.VisualPriority = Preferences.PrioriteSimulationChemin;
-                line.SizeX = 1.5f;
-
-                Lines[i] = line;
+                Lines[i] = new Image("LigneTrajet", Vector3.Zero)
+                {
+                    Color = color,
+                    Blend = blend,
+                    SizeX = 1.5f
+                };
             }
 
             Active = true;
@@ -70,7 +69,7 @@
 
             foreach (var c in CelestialBodies)
                 if (c.HasGravitationalTurret)
-                    AddCelestialBody(c);
+                    AddCelestialBody(c, false);
 
             Active = true;
 
@@ -144,7 +143,7 @@
         }
 
 
-        public void AddCelestialBody(CelestialBody celestialBody)
+        public void AddCelestialBody(CelestialBody celestialBody, bool beforeLast)
         {
             if (ContainsCelestialBody(celestialBody))
                 return;
@@ -160,6 +159,16 @@
                 FirstCelestialBody.FirstOnPath = false;
                 LastCelestialBody.LastOnPath = false;
 
+                if (beforeLast)
+                {
+                    var last = LastCelestialBody;
+
+                    celestialBody.PathPriority = last.PathPriority;
+                    CelestialBodiesPath.Remove(last);
+                    last.PathPriority++;
+                    CelestialBodiesPath.Add(last);
+                }
+
                 CelestialBodiesPath.Add(celestialBody);
 
                 FirstCelestialBody.FirstOnPath = true;
@@ -167,7 +176,9 @@
             }
 
             else
+            {
                 CelestialBodiesPath.Add(celestialBody);
+            }
         }
 
 
@@ -213,7 +224,7 @@
 
                 line.Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
                 line.color.G = line.color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
-                line.VisualPriority = Preferences.PrioriteSimulationChemin + InnerPath.GetPercentage(j * DistanceTwoPoints) / 1000f;
+                line.VisualPriority = VisualPriorities.Default.Path - InnerPath.GetPercentage(j * DistanceTwoPoints) / 100;
                 Scene.Add(line);
             }
         }

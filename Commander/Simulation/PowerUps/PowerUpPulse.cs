@@ -55,7 +55,7 @@ namespace EphemereGames.Commander.Simulation
             Bullet.AttackPoints = 50;
             Bullet.LifePoints = float.MaxValue;
             Bullet.Speed = 10;
-            Bullet.VisualPriority = Preferences.PrioriteSimulationEnnemi - 0.0001f;
+            Bullet.VisualPriority = VisualPriorities.Default.PulseBullet;
 
             Bullet.Initialize();
 

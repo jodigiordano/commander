@@ -101,7 +101,7 @@
 
             if (WavesCounter == Waves.Count && State == GameState.Running && !Simulator.DemoMode && !Simulator.EditorMode)
             {
-                State = GameState.Won;
+                State = CelestialBodyToProtect.Alive ? GameState.Won : GameState.Lost;
 
                 if (!Main.PlayerSaveGame.Progress.ContainsKey(Level.Id))
                     Main.PlayerSaveGame.Progress.Add(Level.Id, 0);

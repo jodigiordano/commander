@@ -42,6 +42,8 @@ namespace EphemereGames.Commander.Simulation
         public double FadeInTime;
         public int WaveId;
         public bool EndOfPathReached;
+        public bool BeingHit                                    { get { return BeingHitCounter > 0; } }
+        public double BeingHitPourc                             { get { return BeingHitCounter / BeingHitShowTime; }}
 
         public float ImpulseSpeed;
         public Vector3 ImpulseDirection;
@@ -59,6 +61,9 @@ namespace EphemereGames.Commander.Simulation
         private static int NEXT_ID = 0;
         private Vector3 position;
         public double VisualPriority;
+
+        private const int BeingHitShowTime = 250;
+        private double BeingHitCounter;
 
 
         public Enemy()
@@ -126,6 +131,8 @@ namespace EphemereGames.Commander.Simulation
             NanobotsInfectionLastPosition = Position;
 
             EndOfPathReached = false;
+
+            BeingHitCounter = 0;
         }
 
 
@@ -176,6 +183,8 @@ namespace EphemereGames.Commander.Simulation
                 LifePoints = Math.Max(0, LifePoints - NanobotsInfectionHitPoints);
                 NanobotsInfectionTime -= Preferences.TargetElapsedTimeMs;
             }
+
+            BeingHitCounter -= Preferences.TargetElapsedTimeMs;
         }
 
 
@@ -186,7 +195,6 @@ namespace EphemereGames.Commander.Simulation
 
             float pourcPath = Path.Pourc(Displacement);
 
-            //if (pourcPath > 0.90f)
             VisualPriority = Simulator.TweakingController.EnemiesFactory.GetVisualPriority(Type, pourcPath);
 
             Image.Position = Position;
@@ -250,6 +258,8 @@ namespace EphemereGames.Commander.Simulation
                     NanobotsInfectionTime = nb.InfectionTime;
                     NanobotsInfectionHitPoints = nb.AttackPoints;
                 }
+
+                BeingHitCounter = BeingHitShowTime;
 
                 return;
             }

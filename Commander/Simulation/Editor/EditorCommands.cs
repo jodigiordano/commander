@@ -57,6 +57,7 @@
         public bool FollowPath;
         public bool CanSelect;
         public bool StraightLine;
+        public bool Invincible;
 
 
         public EditorCelestialBodyCommand(string name)

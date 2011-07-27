@@ -2,7 +2,6 @@
 {
     class InfiniteWave
     {
-        protected WaveGenerator Generator;
         protected int NbWavesAsked;
         protected DescriptorInfiniteWaves Descriptor;
 
@@ -16,12 +15,6 @@
             Descriptor = descriptor;
             NbWavesAsked = 0;
             ActualDifficulty = Descriptor.StartingDifficulty - Descriptor.DifficultyIncrement;
-
-            Generator = new WaveGenerator();
-            Generator.WavesCount = 1;
-            Generator.Enemies = Descriptor.Enemies;
-            Generator.MineralsPerWave = Descriptor.MineralsPerWave;
-            Generator.QtyEnemies = Main.Random.Next((int) Descriptor.MinMaxEnemiesPerWave.X, (int) Descriptor.MinMaxEnemiesPerWave.Y);
         }
 
 
@@ -29,17 +22,19 @@
         {
             ActualDifficulty += Descriptor.DifficultyIncrement;
 
-            Generator.DifficultyStart = ActualDifficulty;
-            Generator.DifficultyEnd = ActualDifficulty;
-
-            Generator.Generate();
+            var descriptor = WaveGenerator.Generate(
+                ActualDifficulty,
+                Main.Random.Next((int) Descriptor.MinMaxEnemiesPerWave.X, (int) Descriptor.MinMaxEnemiesPerWave.Y),
+                Descriptor.Enemies);
 
             if (NbWavesAsked == 0 && Descriptor.FirstOneStartNow)
-                Generator.Waves[0].StartingTime = 0;
+                descriptor.StartingTime = 0;
+            else
+                descriptor.StartingTime = Main.Random.Next(30000, 80000);
 
             NbWavesAsked++;
 
-            var wave = new Wave(Simulator, Generator.Waves[0]);
+            var wave = new Wave(Simulator, descriptor);
 
             wave.Initialize();
 
@@ -49,14 +44,14 @@
 
         public double GetAverageLife()
         {
-            int averageDifficulty = (Generator.DifficultyEnd + Generator.DifficultyStart) / 2;
+            int averageDifficulty = Descriptor.StartingDifficulty + Descriptor.DifficultyIncrement / 2;
 
             double average = 0;
 
-            foreach (var e in Generator.Enemies)
+            foreach (var e in Descriptor.Enemies)
                 average += Simulator.TweakingController.EnemiesFactory.GetLives(e, averageDifficulty);
 
-            average = Generator.Enemies.Count == 0 ? average : average / Generator.Enemies.Count;
+            average = Descriptor.Enemies.Count == 0 ? average : average / Descriptor.Enemies.Count;
 
             return average;
         }

@@ -40,10 +40,10 @@
             SubTitle = new Translator(
                 scene,
                 new Vector3(0, 100, 0),
-                "Alien", new Color(0, 0, 0, 0),
-                "Pixelite", new Color(234, 196, 28, 0),
+                "Alien", Colors.Default.NeutralDark,
+                "Pixelite", Colors.Default.AlienBright,
                 "Todo: Subtitle here",
-                5, true, 4000, 250, VisualPriorities.Default.IntroCommanderText);
+                5, true, 4000, 250, VisualPriorities.Default.IntroCommanderText, false);
             SubTitle.CenterText = true;
 
             TimeBeforeIn = IntroCutscene.Timing["CommanderIn"];

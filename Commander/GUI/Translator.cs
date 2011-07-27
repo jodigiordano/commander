@@ -14,7 +14,7 @@
         private double[] TempsLettreTraduction;
         private double TempsChaqueRecherche;
         private double[] ProgressionUneRecherche;
-        private bool ShowRecherche;
+        private bool ShowTranslation;
         private Scene Scene;
         private Vector3 Position;
         private double TempsTraduction;
@@ -28,35 +28,45 @@
         }
 
 
-        public Translator(Scene scene, Vector3 position, string policeLangueEtrangere, Color couleurLangueEtrangere, string policeLangueConnue, Color couleurLangueConnue, string texteATraduire, float taille, bool showRecherche, int tempsTraduction, int tempsChaqueRecherche, double visualPriority)
+        public Translator(Scene scene, Vector3 position, string alienFontName, Color alienColor, string knownFont, Color knownColor, string text, float size, bool showTranslation, int timeTranslation, int timeBetweenTwoTranslation, double visualPriority, bool visible)
         {
-            this.Scene = scene;
-            this.Position = position;
-            this.ShowRecherche = showRecherche;
-            this.TempsTraduction = tempsTraduction;
-            this.Elapsed = 0;
-            this.TempsChaqueRecherche = tempsChaqueRecherche;
-            this.CenterText = false;
-            this.TexteATraduire = texteATraduire;
+            Scene = scene;
+            Position = position;
+            ShowTranslation = showTranslation;
+            TempsTraduction = timeTranslation;
+            Elapsed = 0;
+            TempsChaqueRecherche = timeBetweenTwoTranslation;
+            CenterText = false;
+            TexteATraduire = text;
 
-            ToTranslate = new Text(texteATraduire, policeLangueEtrangere, couleurLangueEtrangere, position);
-            ToTranslate.SizeX = taille;
-            ToTranslate.VisualPriority = visualPriority;
-            Translated = new Text("", policeLangueConnue, couleurLangueConnue, position);
-            Translated.SizeX = taille;
-            Translated.VisualPriority = visualPriority;
-
-            PartieNonTraduiteTexte = new char[texteATraduire.Length];
-            PartieTraduiteTexte = new char[texteATraduire.Length];
-            TempsLettreTraduction = new double[texteATraduire.Length];
-            ProgressionUneRecherche = new double[texteATraduire.Length];
-            VersionAlien = new char[texteATraduire.Length];
-
-            for (int i = 0; i < texteATraduire.Length; i++)
+            ToTranslate = new Text(text, alienFontName, alienColor, position)
             {
-                if (texteATraduire[i] == '\n')
+                SizeX = size,
+                VisualPriority = visualPriority,
+                Alpha = visible ? alienColor.A : (byte) 0
+            };
+
+
+            Translated = new Text("", knownFont, knownColor, position)
+            {
+                SizeX = size,
+                VisualPriority = visualPriority,
+                Alpha = visible ? knownColor.A : (byte) 0
+            };
+
+
+
+            PartieNonTraduiteTexte = new char[text.Length];
+            PartieTraduiteTexte = new char[text.Length];
+            TempsLettreTraduction = new double[text.Length];
+            ProgressionUneRecherche = new double[text.Length];
+            VersionAlien = new char[text.Length];
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '\n')
                 {
-                    PartieTraduiteTexte[i] = PartieNonTraduiteTexte[i] = texteATraduire[i];
+                    PartieTraduiteTexte[i] = PartieNonTraduiteTexte[i] = text[i];
                     TempsLettreTraduction[i] = 0;
                     ProgressionUneRecherche[i] = 0;
                 }
@@ -64,8 +74,8 @@
                 else
                 {
                     PartieTraduiteTexte[i] = PartieNonTraduiteTexte[i] = VersionAlien[i] = (char)Main.Random.Next(48, 100);
-                    TempsLettreTraduction[i] = Main.Random.Next(0, tempsTraduction);
-                    ProgressionUneRecherche[i] = Main.Random.Next(0, tempsChaqueRecherche);
+                    TempsLettreTraduction[i] = Main.Random.Next(0, timeTranslation);
+                    ProgressionUneRecherche[i] = Main.Random.Next(0, timeBetweenTwoTranslation);
                 }
             }
 
@@ -91,7 +101,7 @@
                     PartieNonTraduiteTexte[i] = ' ';
                 }
                 
-                else if (ShowRecherche && ProgressionUneRecherche[i] <= 0)
+                else if (ShowTranslation && ProgressionUneRecherche[i] <= 0)
                 {
                     PartieTraduiteTexte[i] = ' ';
                     PartieNonTraduiteTexte[i] = VersionAlien[i] = (char)Main.Random.Next(48, 100);

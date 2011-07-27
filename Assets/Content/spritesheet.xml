@@ -164,14 +164,20 @@
     <Item><Key>tourelleLaserCanon2</Key><Value>tourelles/tourelleLaserCanon2.png</Value></Item>
     <Item><Key>tourelleLaserCanon3</Key><Value>tourelles/tourelleLaserCanon3.png</Value></Item>
     <Item><Key>tourelleLaserMultipleBase</Key><Value>tourelles/tourelleLaserMultipleBase.png</Value></Item>
+    <Item><Key>tourelleLaserMultipleBase2</Key><Value>tourelles/tourelleLaserMultipleBase2.png</Value></Item>
+    <Item><Key>tourelleLaserMultipleBase3</Key><Value>tourelles/tourelleLaserMultipleBase3.png</Value></Item>
     <Item><Key>tourelleLaserMultiple1</Key><Value>tourelles/tourelleLaserMultipleCanon1.png</Value></Item>
     <Item><Key>tourelleLaserMultiple2</Key><Value>tourelles/tourelleLaserMultipleCanon2.png</Value></Item>
     <Item><Key>tourelleLaserMultiple3</Key><Value>tourelles/tourelleLaserMultipleCanon3.png</Value></Item>
     <Item><Key>tourelleMissileBase</Key><Value>tourelles/tourelleMissileBase.png</Value></Item>
+    <Item><Key>tourelleMissileBase2</Key><Value>tourelles/tourelleMissileBase2.png</Value></Item>
+    <Item><Key>tourelleMissileBase3</Key><Value>tourelles/tourelleMissileBase3.png</Value></Item>    
     <Item><Key>tourelleMissileCanon1</Key><Value>tourelles/tourelleMissileCanon1.png</Value></Item>
     <Item><Key>tourelleMissileCanon2</Key><Value>tourelles/tourelleMissileCanon2.png</Value></Item>
     <Item><Key>tourelleMissileCanon3</Key><Value>tourelles/tourelleMissileCanon3.png</Value></Item>
     <Item><Key>tourelleSlowMotionBase</Key><Value>tourelles/tourelleSlowMotionBase.png</Value></Item>
+    <Item><Key>tourelleSlowMotionBase2</Key><Value>tourelles/tourelleSlowMotionBase2.png</Value></Item>
+    <Item><Key>tourelleSlowMotionBase3</Key><Value>tourelles/tourelleSlowMotionBase3.png</Value></Item>
     <Item><Key>tourelleSlowMotionCanon1</Key><Value>tourelles/tourelleSlowMotionCanon1.png</Value></Item>
     <Item><Key>tourelleSlowMotionCanon2</Key><Value>tourelles/tourelleSlowMotionCanon2.png</Value></Item>
     <Item><Key>tourelleSlowMotionCanon3</Key><Value>tourelles/tourelleSlowMotionCanon3.png</Value></Item>
@@ -182,14 +188,12 @@
     <Item><Key>tourelleGunner2</Key><Value>tourelles/tourelleGunnerCanon2.png</Value></Item>
     <Item><Key>tourelleGunner3</Key><Value>tourelles/tourelleGunnerCanon3.png</Value></Item>
     <Item><Key>tourelleGunnerBase</Key><Value>tourelles/tourelleGunnerBase.png</Value></Item>
-    <Item><Key>tourelleMortar1</Key><Value>tourelles/tourelleMortarCanon1.png</Value></Item>
-    <Item><Key>tourelleMortar2</Key><Value>tourelles/tourelleMortarCanon2.png</Value></Item>
-    <Item><Key>tourelleMortar3</Key><Value>tourelles/tourelleMortarCanon3.png</Value></Item>
-    <Item><Key>tourelleMortarBase</Key><Value>tourelles/tourelleMortarBase.png</Value></Item>
     <Item><Key>tourelleNanobots1</Key><Value>tourelles/tourelleNanobotsCanon1.png</Value></Item>
     <Item><Key>tourelleNanobots2</Key><Value>tourelles/tourelleNanobotsCanon2.png</Value></Item>
     <Item><Key>tourelleNanobots3</Key><Value>tourelles/tourelleNanobotsCanon3.png</Value></Item>
     <Item><Key>tourelleNanobotsBase</Key><Value>tourelles/tourelleNanobotsBase.png</Value></Item>
+    <Item><Key>tourelleNanobotsBase2</Key><Value>tourelles/tourelleNanobotsBase2.png</Value></Item>
+    <Item><Key>tourelleNanobotsBase3</Key><Value>tourelles/tourelleNanobotsBase3.png</Value></Item>
     <Item><Key>railGunTurretBase</Key><Value>tourelles/tourelleRailGunBase.png</Value></Item>
     <Item><Key>railGunTurretCanon</Key><Value>tourelles/tourelleRailGunCanon.png</Value></Item>
     <Item><Key>sniperTurretBase</Key><Value>tourelles/tourelleSniperBase.png</Value></Item>

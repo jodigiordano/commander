@@ -9,18 +9,23 @@
     class EnemiesLives
     {
         public List<Enemy> Enemies;
+        public bool ShowAll;
 
         private List<List<Image>> Lives;
         private Simulator Simulator;
+
+        private int MaxImages;
 
 
         public EnemiesLives(Simulator simulator)
         {
             Simulator = simulator;
 
+            MaxImages = 100;
+
             Lives = new List<List<Image>>();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < MaxImages; i++)
             {
                 List<Image> visuals = new List<Image>();
 
@@ -29,6 +34,8 @@
 
                 Lives.Add(visuals);
             }
+
+            ShowAll = false;
         }
 
 
@@ -36,25 +43,67 @@
         {
             int livesIndex = 0;
 
+            DoShowIndividual(ref livesIndex);
+
+            if (ShowAll)
+                DoShowAll(ref livesIndex);
+
+
+        }
+
+
+        private void DoShowIndividual(ref int imagesIndex)
+        {
+            if (imagesIndex >= MaxImages)
+                return;
+
             for (int i = 0; i < Enemies.Count; i++)
             {
                 Enemy enemy = Enemies[i];
 
-                float LivesRatio = enemy.LifePoints / enemy.StartingLifePoints;
+                if (enemy.BeingHit)
+                    ShowLife(enemy, imagesIndex);
 
-                int index = (int)Math.Round((1 - LivesRatio) * 5);
+                imagesIndex++;
 
-                var image = Lives[livesIndex][index];
-
-                image.Position = enemy.Position - new Vector3(0, enemy.Image.AbsoluteSize.Y, 0);
-                image.VisualPriority = enemy.VisualPriority - 0.000001f;
-
-                Simulator.Scene.Add(Lives[livesIndex][index]);
-                livesIndex++;
-
-                if (livesIndex >= 100)
+                if (imagesIndex >= MaxImages)
                     return;
             }
+        }
+
+
+        private void DoShowAll(ref int imagesIndex)
+        {
+            if (imagesIndex >= MaxImages)
+                return;
+
+            for (int i = 0; i < Enemies.Count; i++)
+            {
+                Enemy enemy = Enemies[i];
+
+                ShowLife(enemy, imagesIndex);
+
+                imagesIndex++;
+
+                if (imagesIndex >= MaxImages)
+                    return;
+            }
+        }
+
+
+        private void ShowLife(Enemy e, int imagesIndex)
+        {
+            float LivesRatio = e.LifePoints / e.StartingLifePoints;
+
+            int statusIndex = (int) Math.Round((1 - LivesRatio) * 5);
+
+            var image = Lives[imagesIndex][statusIndex];
+
+            image.Position = e.Position - new Vector3(0, e.Image.AbsoluteSize.Y, 0);
+            image.VisualPriority = e.VisualPriority - 0.000001f;
+            image.Alpha = (byte) Math.Max(0, e.BeingHitPourc * 255);
+
+            Simulator.Scene.Add(Lives[imagesIndex][statusIndex]);
         }
     }
 }

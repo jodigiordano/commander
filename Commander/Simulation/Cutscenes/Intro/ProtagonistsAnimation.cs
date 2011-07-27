@@ -54,7 +54,7 @@
             Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, Color.Pink, "Cursor4") { Size = 2f });
             Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, new Color(255, 115, 40), "Cursor5") { Size = 2f });
 
-            ProtagonistText = new ManualTextBubble(simulator, new Text("I must warn the\n\nother colonies!", "Pixelite") { SizeX = 2 }, Protagonist.Position, VisualPriorities.Default.IntroProtagonist - 0.00001) { Alpha = 0 };
+            ProtagonistText = new ManualTextBubble(Simulator.Scene, new Text("I must warn the\n\nother colonies!", "Pixelite") { SizeX = 2 }, Protagonist.Position, VisualPriorities.Default.IntroProtagonist - 0.00001) { Alpha = 0 };
 
             State = ProtagonistState.None;
 

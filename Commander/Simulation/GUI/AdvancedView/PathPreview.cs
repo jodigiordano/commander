@@ -59,7 +59,7 @@
 
             CelestialObject[player] = obj;
             obj.HasGravitationalTurretBypass = true;
-            Path.AddCelestialBody(obj);
+            Path.AddCelestialBody(obj, true);
             State[player] = PathState.ObjectAdded;
 
             //EffectsController.Clear();
@@ -122,7 +122,7 @@
                             State[player] = PathState.None;
                             break;
                         case PathState.ObjectRemoved:
-                            Path.AddCelestialBody(CelestialObject[player]);
+                            Path.AddCelestialBody(CelestialObject[player], false);
                             State[player] = PathState.None;
                             break;
                     }
@@ -178,7 +178,7 @@
                     State[FadePlayer] = PathState.None;
                     break;
                 case PathState.RollbackingObjectRemoved:
-                    Path.AddCelestialBody(CelestialObject[FadePlayer]);
+                    Path.AddCelestialBody(CelestialObject[FadePlayer], false);
                     State[FadePlayer] = PathState.None;
                     break;
             }

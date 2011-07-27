@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="Colors.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EqualityComparers.cs" />
@@ -216,7 +217,9 @@
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
-    <Compile Include="Simulation\GUI\Bubbles\ManualTextBubble.cs" />
+    <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs" />
+    <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
+    <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\BackgroundsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WavesPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\GeneralPanel.cs" />
@@ -224,9 +227,6 @@
     <Compile Include="Simulation\GUI\Editor\Controls\TurretsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PlayerPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\LevelsPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\PackedHomogeneWaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\DistinctFollowWaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\HomogeneWaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\EnemiesWidget.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PowerUpCheckBox.cs" />
@@ -247,6 +247,7 @@
     <Compile Include="Simulation\GUI\Menus\Core\LogoTextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ToggleContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\TextContextualMenuChoice.cs" />
+    <Compile Include="Simulation\GUI\ScoreStars.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
@@ -259,7 +260,7 @@
     <Compile Include="Simulation\Enemies\WaveGenerator.cs" />
     <Compile Include="Scenes\EditorScene.cs" />
     <Compile Include="Simulation\Editor\LiteSimulator.cs" />
-    <Compile Include="Editor\Descriptors.cs" />
+    <Compile Include="Descriptors.cs" />
     <Compile Include="Simulation\Editor\EditorLevelGenerator.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsFactory.cs" />
     <Compile Include="Simulation\Minerals\MineralDefinition.cs" />
@@ -268,8 +269,7 @@
     <Compile Include="Simulation\GUI\AdvancedView\PathPreview.cs" />
     <Compile Include="Simulation\GUI\Animations\MineralTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
-    <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs" />
-    <Compile Include="Simulation\GUI\Bubbles\Bubble.cs" />
+    <Compile Include="GUI\Bubbles\Bubble.cs" />
     <Compile Include="Simulation\GUI\Help.cs" />
     <Compile Include="Simulation\GUI\Menus\TurretMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\CelestialBodyMenu.cs" />
@@ -278,7 +278,7 @@
     <Compile Include="Player\Player.cs" />
     <Compile Include="Simulation\Player\SelectedPowerUpController.cs" />
     <Compile Include="Simulation\Player\SelectedTurretToBuyController.cs" />
-    <Compile Include="Simulation\GUI\Bubbles\TextBubble.cs" />
+    <Compile Include="GUI\Bubbles\TextBubble.cs" />
     <Compile Include="GUI\Controls\Widgets\CheckBox.cs" />
     <Compile Include="Simulation\Player\SimPlayerSelection.cs" />
     <Compile Include="Simulation\Player\SelectedCelestialBodyController.cs" />

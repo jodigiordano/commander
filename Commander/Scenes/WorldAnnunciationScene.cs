@@ -34,7 +34,7 @@
             Length = 2500;
             TransitionInProgress = false;
 
-            WorldName = new Translator(this, new Vector3(0, 50, 0), "Alien", new Color(234, 196, 28, 0), "Pixelite", Color.Black, Descriptor.Name, 3, true, 1500, 100, Preferences.PrioriteGUIPanneauGeneral);
+            WorldName = new Translator(this, new Vector3(0, 50, 0), "Alien", Colors.Default.AlienBright, "Pixelite", Colors.Default.NeutralDark, Descriptor.Name, 3, true, 1500, 100, Preferences.PrioriteGUIPanneauGeneral, false);
             WorldName.CenterText = true;
 
             VisualEffects.Add(WorldName.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));

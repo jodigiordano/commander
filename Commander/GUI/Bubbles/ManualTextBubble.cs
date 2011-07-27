@@ -5,22 +5,18 @@
     using Microsoft.Xna.Framework;
 
 
-    class TextBubble : Bubble
+    class ManualTextBubble : Bubble
     {
         public Text Text;
-        public double ShowTime;
-        public double FadeTime;
         public bool Visible;
 
 
-        public TextBubble(Simulator simulator, Text text, Vector3 position, double showTime, double visualPriorirty)
-            : base(simulator, new PhysicalRectangle(), visualPriorirty)
+        public ManualTextBubble(Scene scene, Text text, Vector3 position, double visualPriority)
+            : base(scene, new PhysicalRectangle(), visualPriority)
         {
             Text = text;
-            Text.VisualPriority = visualPriorirty - 0.01f;
+            Text.VisualPriority = visualPriority - 0.00001;
             Position = position;
-            ShowTime = showTime;
-            FadeTime = double.MaxValue;
 
             ComputeSize();
             ComputePosition();
@@ -29,32 +25,35 @@
         }
 
 
-        public Vector3 Position
+        public override Color Color
         {
+            get { return base.Color; }
+
             set
             {
-                Dimension.X = (int) value.X;
-                Dimension.Y = (int) value.Y;
+                base.Color = value;
+
+                if (Text != null)
+                    Text.Color = value;
             }
         }
 
 
-        public bool Finished
+        public override byte Alpha
         {
-            get { return ShowTime <= 0; }
+            get { return base.Alpha; }
+
+            set
+            {
+                base.Alpha = value;
+
+                Text.Alpha = value;
+            }
         }
 
 
         public void Update()
         {
-            ShowTime -= Preferences.TargetElapsedTimeMs;
-
-            if (ShowTime <= FadeTime)
-            {
-                FadeTime = double.NaN;
-                FadeOut(ShowTime);
-            }
-
             Visible = Text.Color.A != 0;
 
             ComputeSize();
@@ -67,24 +66,24 @@
             base.Draw();
 
             Text.Position = new Vector3(Dimension.X, Dimension.Y, 0);
-            Simulator.Scene.Add(Text);
+            Scene.Add(Text);
         }
 
 
-        public override void FadeIn(double temps)
+        public override void FadeIn(double time)
         {
-            base.FadeIn(temps);
+            base.FadeIn(time);
 
             Text.Alpha = 0;
-            Simulator.Scene.VisualEffects.Add(Text, VisualEffects.FadeInFrom0(255, 0, temps));
+            Scene.VisualEffects.Add(Text, VisualEffects.FadeInFrom0(255, 0, time));
         }
 
 
-        public override void FadeOut(double temps)
+        public override void FadeOut(double time)
         {
-            base.FadeOut(temps);
+            base.FadeOut(time);
 
-            Simulator.Scene.VisualEffects.Add(Text, VisualEffects.FadeOutTo0(255, 0, temps));
+            Scene.VisualEffects.Add(Text, VisualEffects.FadeOutTo0(255, 0, time));
         }
 
 
