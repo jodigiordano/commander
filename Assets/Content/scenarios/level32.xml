@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <Level>
   <Infos>
-    <Id>20</Id>
-    <Mission>2-5</Mission>
+    <Id>32</Id>
+    <Mission>3-2</Mission>
     <Difficulty>Normal</Difficulty>
     <Background>background3</Background>
   </Infos>
   <Objective>
-    <CelestialBodyToProtect>2147483647</CelestialBodyToProtect>
+    <CelestialBodyToProtect>9</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
     <CelestialBody>
@@ -195,7 +195,7 @@
       <Image>planete6</Image>
       <Size>Small</Size>
       <Speed>1200000</Speed>
-      <PathPriority>2147483647</PathPriority>
+      <PathPriority>9</PathPriority>
       <Path>
         <X>-14</X>
         <Y>35</Y>

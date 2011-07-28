@@ -206,6 +206,7 @@
     
       <!-- Worlds -->
       <asset name="world1"                     type="Image" path="backgrounds/worlds/world1" />
+      <asset name="world2"                     type="Image" path="backgrounds/worlds/world2" />
 
 
     <!-- Cutscenes -->

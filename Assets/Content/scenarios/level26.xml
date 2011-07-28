@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
-    <Id>15</Id>
-    <Mission>1-15</Mission>
+    <Id>26</Id>
+    <Mission>2-11</Mission>
     <Difficulty>Easy</Difficulty>
     <Background>background12</Background>
   </Infos>

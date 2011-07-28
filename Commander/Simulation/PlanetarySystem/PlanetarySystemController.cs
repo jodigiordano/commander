@@ -116,7 +116,14 @@
         public void Draw()
         {
             foreach (var c in CelestialBodies)
+            {
+                if (c.FirstOnPath && c.Image != null)
+                {
+                    c.Image.Rotation = Path.GetRotation(0) + MathHelper.PiOver2;
+                }
+
                 c.Draw();
+            }
         }
 
 

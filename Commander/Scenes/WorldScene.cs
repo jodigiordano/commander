@@ -90,9 +90,9 @@
 
                 LevelsNumbers.Add(level.Key, new Text(LevelsDescriptors[cb.Name].Infos.Mission, "Pixelite")
                 {
-                    SizeX = 4,
+                    SizeX = 3,
                     VisualPriority = cb.VisualPriority + 0.00001,
-                    Alpha = 200
+                    Alpha = 150
                 }.CenterIt());
             }
         }
@@ -382,12 +382,12 @@
             {
                 bool unlocked = true;
 
-                foreach (var other in level.Value)
-                    if (!Main.PlayerSaveGame.Progress.ContainsKey(other) || Main.PlayerSaveGame.Progress[other] <= 0)
-                    {
-                        unlocked = false;
-                        break;
-                    }
+                //foreach (var other in level.Value)
+                //    if (!Main.PlayerSaveGame.Progress.ContainsKey(other) || Main.PlayerSaveGame.Progress[other] <= 0)
+                //    {
+                //        unlocked = false;
+                //        break;
+                //    }
 
                 LevelUnlockedStates[level.Key] = unlocked;
                 CelestialBodies[level.Key].CanSelect = unlocked;

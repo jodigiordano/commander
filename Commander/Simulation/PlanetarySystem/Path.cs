@@ -182,15 +182,21 @@
         }
 
 
-        public void Position(double deplacement, ref Vector3 position)
+        public void Position(double offset, ref Vector3 position)
         {
-            InnerPath.GetPosition(deplacement, ref position);
+            InnerPath.GetPosition(offset, ref position);
         }
 
 
-        public float Pourc(double deplacement)
+        public float GetPourc(double offset)
         {
-            return InnerPath.GetPercentage(deplacement);
+            return InnerPath.GetPercentage(offset);
+        }
+
+
+        public float GetRotation(double offset)
+        {
+            return InnerPath.GetRotation(offset);
         }
 
 

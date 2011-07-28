@@ -62,7 +62,7 @@
                 Enemy enemy = Enemies[i];
 
                 if (enemy.BeingHit)
-                    ShowLife(enemy, imagesIndex);
+                    ShowLife(enemy, imagesIndex, true);
 
                 imagesIndex++;
 
@@ -81,7 +81,7 @@
             {
                 Enemy enemy = Enemies[i];
 
-                ShowLife(enemy, imagesIndex);
+                ShowLife(enemy, imagesIndex, false);
 
                 imagesIndex++;
 
@@ -91,7 +91,7 @@
         }
 
 
-        private void ShowLife(Enemy e, int imagesIndex)
+        private void ShowLife(Enemy e, int imagesIndex, bool applyApha)
         {
             float LivesRatio = e.LifePoints / e.StartingLifePoints;
 
@@ -101,7 +101,11 @@
 
             image.Position = e.Position - new Vector3(0, e.Image.AbsoluteSize.Y, 0);
             image.VisualPriority = e.VisualPriority - 0.000001f;
-            image.Alpha = (byte) Math.Max(0, e.BeingHitPourc * 255);
+
+            if (applyApha)
+                image.Alpha = (byte) Math.Max(0, e.BeingHitPourc * 255);
+            else
+                image.Alpha = 255;
 
             Simulator.Scene.Add(Lives[imagesIndex][statusIndex]);
         }

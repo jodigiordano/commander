@@ -43,7 +43,7 @@ namespace EphemereGames.Commander.Simulation
         public int WaveId;
         public bool EndOfPathReached;
         public bool BeingHit                                    { get { return BeingHitCounter > 0; } }
-        public double BeingHitPourc                             { get { return BeingHitCounter / BeingHitShowTime; }}
+        public double BeingHitPourc                             { get { return Math.Max(0, BeingHitCounter / BeingHitShowTime); }}
 
         public float ImpulseSpeed;
         public Vector3 ImpulseDirection;
@@ -193,7 +193,7 @@ namespace EphemereGames.Commander.Simulation
             if (!Alive)
                 return;
 
-            float pourcPath = Path.Pourc(Displacement);
+            float pourcPath = Path.GetPourc(Displacement);
 
             VisualPriority = Simulator.TweakingController.EnemiesFactory.GetVisualPriority(Type, pourcPath);
 

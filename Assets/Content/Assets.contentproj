@@ -2112,15 +2112,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\worldlayout1.xml">
-      <Name>worldlayout1</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="planetes\planet101.png">
       <Name>planet101</Name>
       <Importer>TextureImporter</Importer>
@@ -2275,8 +2266,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\worldlayout2.xml">
-      <Name>worldlayout2</Name>
+    <None Include="scenarios\worldlayout3.xml">
+      <Name>worldlayout3</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -2424,6 +2415,184 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\worldlayout1.xml">
+      <Name>worldlayout1</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level21.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level21</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level30.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level30</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level22.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level22</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level23.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level23</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level24.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level24</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level25.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level25</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level26.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level26</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level27.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level27</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level28.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level28</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level29.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level29</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\worldlayout2.xml">
+      <Name>worldlayout2</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level31.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level31</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level39.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level39</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level32.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level32</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level33.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level33</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level34.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level34</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level35.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level35</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level36.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level36</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level37.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level37</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level38.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level38</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level40.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level40</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

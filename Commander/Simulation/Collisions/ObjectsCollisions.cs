@@ -86,7 +86,7 @@
 
             foreach (var kvp in HiddenEnemies.Output)
             {
-                if (kvp.Value.FirstOnPath || (kvp.Value.LastOnPath && kvp.Key.Path.Pourc(kvp.Key.Displacement) > 0.98))
+                if (kvp.Value.FirstOnPath || (kvp.Value.LastOnPath && kvp.Key.Path.GetPourc(kvp.Key.Displacement) > 0.98))
                     continue;
 
                 Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(kvp.Key, ((PowerUpDarkSide) Simulator.PowerUpsFactory.Availables[PowerUpType.DarkSide]).CorpsCeleste));

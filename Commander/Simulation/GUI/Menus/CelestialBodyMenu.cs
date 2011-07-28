@@ -112,6 +112,9 @@
                 slotCounter++;
             }
 
+            if (TurretToBuy == TurretType.None)
+                Menu.SelectedIndex = -1;
+
             Menu.Draw();
         }
     }

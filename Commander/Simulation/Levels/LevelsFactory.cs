@@ -107,7 +107,12 @@
                     new KeyValuePair<int, List<int>>(7, new List<int>() { 6 }),
                     new KeyValuePair<int, List<int>>(8, new List<int>() { 7 }),
                     new KeyValuePair<int, List<int>>(9, new List<int>() { 8 }),
-                    new KeyValuePair<int, List<int>>(10, new List<int>() { 9 })
+                    new KeyValuePair<int, List<int>>(10, new List<int>() { 9 }),
+                    new KeyValuePair<int, List<int>>(11, new List<int>() { 10 }),
+                    new KeyValuePair<int, List<int>>(12, new List<int>() { 11 }),
+                    new KeyValuePair<int, List<int>>(13, new List<int>() { 12 }),
+                    new KeyValuePair<int, List<int>>(14, new List<int>() { 13 }),
+                    new KeyValuePair<int, List<int>>(15, new List<int>() { 14 })
                 },
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
                 Layout = 1001,
@@ -119,23 +124,28 @@
             wd = new WorldDescriptor()
             {
                 Id = 2,
-                Name = "Battle for Earth",
+                Name = "The invasion",
                 Levels = new List<KeyValuePair<int, List<int>>>()
                 {
-                    new KeyValuePair<int, List<int>>(11, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(12, new List<int>() { 11 }),
-                    new KeyValuePair<int, List<int>>(13, new List<int>() { 12 }),
-                    new KeyValuePair<int, List<int>>(14, new List<int>() { 13 }),
-                    new KeyValuePair<int, List<int>>(15, new List<int>() { 14 }),
                     new KeyValuePair<int, List<int>>(16, new List<int>() { 15 }),
                     new KeyValuePair<int, List<int>>(17, new List<int>() { 16 }),
                     new KeyValuePair<int, List<int>>(18, new List<int>() { 17 }),
                     new KeyValuePair<int, List<int>>(19, new List<int>() { 18 }),
-                    new KeyValuePair<int, List<int>>(20, new List<int>() { 19 })
+                    new KeyValuePair<int, List<int>>(20, new List<int>() { 19 }),
+                    new KeyValuePair<int, List<int>>(21, new List<int>() { 20 }),
+                    new KeyValuePair<int, List<int>>(22, new List<int>() { 21 }),
+                    new KeyValuePair<int, List<int>>(23, new List<int>() { 22 }),
+                    new KeyValuePair<int, List<int>>(24, new List<int>() { 23 }),
+                    new KeyValuePair<int, List<int>>(25, new List<int>() { 24 }),
+                    new KeyValuePair<int, List<int>>(26, new List<int>() { 25 }),
+                    new KeyValuePair<int, List<int>>(27, new List<int>() { 26 }),
+                    new KeyValuePair<int, List<int>>(28, new List<int>() { 27 }),
+                    new KeyValuePair<int, List<int>>(29, new List<int>() { 28 }),
+                    new KeyValuePair<int, List<int>>(30, new List<int>() { 29 })
                 },
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
                 Layout = 1002,
-                UnlockedCondition = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+                UnlockedCondition = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
                 WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world."
             };
             WorldsDescriptors.Add(wd.Id, wd);
@@ -143,14 +153,22 @@
             wd = new WorldDescriptor()
             {
                 Id = 3,
-                Name = "The invasion",
-                //Levels = new List<int>() { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 },
+                Name = "Battle for Earth",
                 Levels = new List<KeyValuePair<int, List<int>>>()
                 {
-                    new KeyValuePair<int, List<int>>(1, new List<int>() {})
+                    new KeyValuePair<int, List<int>>(31, new List<int>() { 30 }),
+                    new KeyValuePair<int, List<int>>(32, new List<int>() { 31 }),
+                    new KeyValuePair<int, List<int>>(33, new List<int>() { 32 }),
+                    new KeyValuePair<int, List<int>>(34, new List<int>() { 33 }),
+                    new KeyValuePair<int, List<int>>(35, new List<int>() { 34 }),
+                    new KeyValuePair<int, List<int>>(36, new List<int>() { 35 }),
+                    new KeyValuePair<int, List<int>>(37, new List<int>() { 36 }),
+                    new KeyValuePair<int, List<int>>(38, new List<int>() { 37 }),
+                    new KeyValuePair<int, List<int>>(39, new List<int>() { 38 }),
+                    new KeyValuePair<int, List<int>>(40, new List<int>() { 39 })
                 },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World2") },
-                Layout = 1001,
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World3") },
+                Layout = 1003,
                 UnlockedCondition = new List<int>() { -1 },
                 WarpBlockedMessage = ""
             };

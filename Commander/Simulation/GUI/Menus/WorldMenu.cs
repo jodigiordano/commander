@@ -40,7 +40,7 @@
             PausedGameMenu = new ContextualMenu(simulator, visualPriority, color, PausedGameChoices, 15);
 
             Title = new Text("Pixelite");
-            Title.SizeX = 4;
+            Title.SizeX = 3;
             Title.VisualPriority = Preferences.PrioriteFondEcran - 0.00001;
             Title.Alpha = 200;
 
@@ -118,13 +118,13 @@
             Title.Data = descriptor.Infos.Mission;
             Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 20, 0);
             Title.Origin = Title.Center;
-            Difficulty.Data = descriptor.Infos.Difficulty;
-            Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
-            Difficulty.Origin = Difficulty.Center;
+            //Difficulty.Data = descriptor.Infos.Difficulty;
+            //Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
+            //Difficulty.Origin = Difficulty.Center;
 
 
             Simulator.Scene.Add(Title);
-            Simulator.Scene.Add(Difficulty);
+            //Simulator.Scene.Add(Difficulty);
 
         }
 
@@ -136,20 +136,22 @@
 
             Main.SharedSaveGame.HighScores.TryGetValue(descriptor.Infos.Id, out highscores);
 
-            Highscore.Data = (highscores == null) ? "highscore: 0" : "highscore: " + highscores.Scores[0].Value;
-            Highscore.Origin = Highscore.Center;
-            Highscore.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 40, 0);
+            //Highscore.Data = (highscores == null) ? "0" : highscores.Scores[0].Value.ToString();
+            //Highscore.Origin = Highscore.Center;
+            //Highscore.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 40, 0);
+            //Highscore.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
 
             int nbStars = (highscores == null) ? 0 : descriptor.NbStars(highscores.Scores[0].Value);
 
             for (int i = 0; i < 3; i++)
             {
-                HighscoreStars[i].Position = new Vector3(CelestialBody.Position.X - 50 + i * 50, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 70, 0);
+                //HighscoreStars[i].Position = new Vector3(CelestialBody.Position.X - 50 + i * 50, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 70, 0);
+                HighscoreStars[i].Position = new Vector3(CelestialBody.Position.X - 50 + i * 50, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
                 HighscoreStars[i].Alpha = (i < nbStars) ? (byte) 200 : (byte) 50;
             }
 
 
-            Simulator.Scene.Add(Highscore);
+            //Simulator.Scene.Add(Highscore);
             Simulator.Scene.Add(HighscoreStars[0]);
             Simulator.Scene.Add(HighscoreStars[1]);
             Simulator.Scene.Add(HighscoreStars[2]);

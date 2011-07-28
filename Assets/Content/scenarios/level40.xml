@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Level>
   <Infos>
-    <Id>20</Id>
-    <Mission>2-5</Mission>
+    <Id>40</Id>
+    <Mission>3-10</Mission>
     <Difficulty>Normal</Difficulty>
     <Background>background3</Background>
   </Infos>
