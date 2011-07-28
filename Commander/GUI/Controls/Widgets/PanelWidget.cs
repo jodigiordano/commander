@@ -15,6 +15,7 @@
         public abstract Vector3 Dimension       { get; set; }
         public abstract byte Alpha              { get; set; }
         public virtual Scene Scene              { get; set; }
+        public bool Sticky                      { get; set; }
 
 
         public bool DoClick(Circle circle)

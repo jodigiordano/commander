@@ -513,7 +513,7 @@
         }
 
 
-        private void DoClosePanel()
+        private void DoClosePanel(PanelWidget widget)
         {
             var closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false) { Owner = CurrentOpenedPanelPlayer };
 

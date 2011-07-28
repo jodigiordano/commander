@@ -68,8 +68,11 @@
                 Size = new Vector2(size.X, 5)
             };
 
-            CloseButton = new CloseButton(
-                new Vector3(Position.X + Dimension.X - 20, Position.Y + 15, 0), visualPriority);
+            CloseButton = new CloseButton(new Vector3(Position.X + Dimension.X - 20, Position.Y + 15, 0), visualPriority)
+            {
+                Scene = scene,
+                Sticky = true
+            };
 
             Visible = true;
 
@@ -232,9 +235,9 @@
         }
 
 
-        public NoneHandler CloseButtonHandler
+        public PanelWidgetHandler CloseButtonHandler
         {
-            set { CloseButton.Handler = value; }
+            set { CloseButton.ClickHandler = value; }
         }
 
 

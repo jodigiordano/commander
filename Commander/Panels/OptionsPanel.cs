@@ -48,7 +48,7 @@
         }
 
 
-        public void DoClose()
+        private void DoClose(PanelWidget widget)
         {
             Main.SharedSaveGame.Save();
             Fade(Alpha, 0, 500);
