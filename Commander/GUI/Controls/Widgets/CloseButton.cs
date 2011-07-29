@@ -3,31 +3,31 @@
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using ProjectMercury.Emitters;
 
 
     class CloseButton : PanelWidget
     {
         private Image Button;
-        private Text ButtonX;
         private Circle ButtonCircle;
+        private Particle Selection;
 
 
-        public CloseButton(Vector3 position, double visualPriority)
+        public CloseButton(Scene scene, Vector3 position, double visualPriority)
         {
-            Button = new Image("checkbox")
+            Button = new Image("WidgetClose")
             {
-                SizeX = 3
+                SizeX = 4
             };
 
-            ButtonX = new Text("X", "Pixelite")
-            {
-                SizeX = 2
-            }.CenterIt();
+            Selection = scene.Particles.Get(@"selectionCorpsCeleste");
 
             VisualPriority = visualPriority;
             Position = position;
 
-            ButtonCircle = new Circle(position, 8);
+            ButtonCircle = new Circle(position, Button.AbsoluteSize.X / 2);
+
+            ((CircleEmitter) Selection.ParticleEffect[0]).Radius = ButtonCircle.Radius + 5;
         }
 
 
@@ -40,7 +40,7 @@
             set
             {
                 Button.VisualPriority = value + 0.0000001;
-                ButtonX.VisualPriority = value;
+                Selection.VisualPriority = value + 0.0000002;
             }
         }
 
@@ -54,7 +54,6 @@
             set
             {
                 Button.Position = value;
-                ButtonX.Position = value;
             }
         }
 
@@ -81,7 +80,6 @@
             set
             {
                 Button.Alpha = value;
-                ButtonX.Alpha = value;
             }
         }
 
@@ -94,7 +92,13 @@
 
         protected override bool Hover(Circle circle)
         {
-            return Physics.CircleCicleCollision(circle, ButtonCircle);
+            if (Physics.CircleCicleCollision(circle, ButtonCircle))
+            {
+                Selection.Trigger(ref Button.position);
+                return true;
+            }
+
+            return false;
         }
 
 
@@ -102,18 +106,15 @@
         {
             var effect = VisualEffects.Fade(from, to, 0, length);
 
-            Button.Alpha = (byte) from;
-            ButtonX.Alpha = (byte) from;
+            Alpha = (byte) from;
 
-            Scene.VisualEffects.Add(Button, effect);
-            Scene.VisualEffects.Add(ButtonX, effect);
+            Scene.VisualEffects.Add(this, effect);
         }
 
 
         public override void Draw()
         {
             Scene.Add(Button);
-            Scene.Add(ButtonX);
         }
     }
 }

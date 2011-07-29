@@ -16,13 +16,15 @@
         {
             SetTitle("Options");
 
-            Music = new NumericHorizontalSlider("Music", 0, 10, 5, 1, 50);
-            Sfx = new NumericHorizontalSlider("Sfx  ", 0, 10, 5, 1, 50);
+            Music = new NumericHorizontalSlider("Music", 0, 10, 5, 1, 100);
+            Sfx = new NumericHorizontalSlider("Sfx  ", 0, 10, 5, 1, 100);
 
             AddWidget("Music", Music);
             AddWidget("Sfx", Sfx);
 
             CloseButtonHandler = DoClose;
+
+            Alpha = 0;
         }
 
 

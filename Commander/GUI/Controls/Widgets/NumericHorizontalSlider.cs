@@ -4,6 +4,8 @@
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using ProjectMercury.Emitters;
 
 
     class NumericHorizontalSlider : PanelWidget
@@ -22,6 +24,9 @@
         private Circle IncrementCircle;
 
         private int MinimalSpaceForValue;
+        private Particle Selection;
+
+        private Vector3 position;
 
 
         public NumericHorizontalSlider(string label, int min, int max, int startingValue, int increment, int minimalSpaceForValue)
@@ -31,16 +36,24 @@
             Max = max;
             Increment = increment;
 
-            DecrementRep = new Image("Gauche") { Origin = Vector2.Zero };
-            IncrementRep = new Image("Droite") { Origin = Vector2.Zero };
+            DecrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, Effect = SpriteEffects.FlipHorizontally, SizeX = 4 };
+            IncrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, SizeX = 4 };
 
-            ValueText = new Text(Value.ToString(), "Pixelite") { SizeX = 2 };
+            ValueText = new Text(Value.ToString(), "Pixelite") { SizeX = 2 }.CenterIt();
             Label = new Text(label, "Pixelite") { SizeX = 2 };
 
-            DecrementCircle = new Circle(Vector3.Zero, 20);
-            IncrementCircle = new Circle(Vector3.Zero, 20);
+            DecrementCircle = new Circle(Vector3.Zero, DecrementRep.AbsoluteSize.X / 2);
+            IncrementCircle = new Circle(Vector3.Zero, IncrementRep.AbsoluteSize.X / 2);
 
             MinimalSpaceForValue = minimalSpaceForValue;
+        }
+
+
+        public override void Initialize()
+        {
+            Selection = Scene.Particles.Get(@"selectionCorpsCeleste");
+
+            ((CircleEmitter) Selection.ParticleEffect[0]).Radius = DecrementCircle.Radius + 5;
         }
 
 
@@ -57,6 +70,7 @@
                 DecrementRep.VisualPriority = value;
                 IncrementRep.VisualPriority = value;
                 ValueText.VisualPriority = value;
+                Selection.VisualPriority = value + 0.0000001;
             }
         }
 
@@ -65,18 +79,35 @@
         {
             get
             {
-                return Label.Position;
+                return position;
             }
 
             set
             {
+                position = value;
+
                 Label.Position = value;
                 DecrementRep.Position = Label.Position + new Vector3(Label.TextSize.X + 50, 0, 0);
-                ValueText.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + 20, 0, 0);
-                IncrementRep.Position = ValueText.Position + new Vector3(Math.Max(MinimalSpaceForValue, ValueText.TextSize.X) + 20, 0, 0);
 
+                if (ValueText.TextSize.X < MinimalSpaceForValue)
+                {
+                    ValueText.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + MinimalSpaceForValue / 2, DecrementRep.AbsoluteSize.Y / 2, 0);
+                    IncrementRep.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + MinimalSpaceForValue, 0, 0);
+                }
+
+                else
+                {
+                    ValueText.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + 20, 0, 0);
+                    IncrementRep.Position = ValueText.Position + new Vector3(Math.Max(MinimalSpaceForValue, ValueText.TextSize.X) + 20, 0, 0);
+                }
+                
+                // Sync circles
                 DecrementCircle.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize / 2f, 0);
                 IncrementCircle.Position = IncrementRep.Position + new Vector3(IncrementRep.AbsoluteSize / 2f, 0);
+
+                // Center text
+                Label.Position += new Vector3(0, (DecrementRep.AbsoluteSize.Y - Label.TextSize.Y) / 2, 0);
+                ValueText.CenterIt();
             }
         }
 
@@ -104,12 +135,14 @@
             if (Physics.CircleCicleCollision(circle, DecrementCircle) && Value > Min)
             {
                 Value = Math.Max(Min, Value - Increment);
+                Position = Position;
                 return true;
             }
 
             if (Physics.CircleCicleCollision(circle, IncrementCircle) && Value < Max)
             {
                 Value = Math.Min(Max, Value + Increment);
+                Position = Position;
                 return true;
             }
 
@@ -119,7 +152,25 @@
 
         protected override bool Hover(Circle circle)
         {
-            return Physics.CircleCicleCollision(circle, DecrementCircle) || Physics.CircleCicleCollision(circle, IncrementCircle);
+            if (Physics.CircleCicleCollision(circle, DecrementCircle))
+            {
+                Selection.Trigger(ref DecrementCircle.Position);
+
+                Sticky = true;
+                return true;
+            }
+
+
+            if (Physics.CircleCicleCollision(circle, IncrementCircle))
+            {
+                Selection.Trigger(ref IncrementCircle.Position);
+
+                Sticky = true;
+                return true;
+            }
+
+            Sticky = false;
+            return false;
         }
 
 

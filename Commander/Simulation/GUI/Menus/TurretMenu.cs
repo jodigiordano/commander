@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -21,7 +22,7 @@
         private List<KeyValuePair<string, PanelWidget>> SellTurretHBMessage;
 
 
-        public TurretMenu(Simulator simulator, double visualPriority, Color color)
+        public TurretMenu(Simulator simulator, double visualPriority, Color color, InputType inputType)
         {
             Simulator = simulator;
 
@@ -40,15 +41,8 @@
 
             Menu = new ContextualMenu(simulator, visualPriority, color, Choices, 15);
 
-            UpgradeTurretHBMessage = new List<KeyValuePair<string, PanelWidget>>();
-            UpgradeTurretHBMessage.AddRange(Simulator.HelpBar.PredefinedMessages[HelpBarMessage.ToggleChoices]);
-            UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
-            UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Upgrade", "Pixelite") { SizeX = 2f })));
 
-            SellTurretHBMessage = new List<KeyValuePair<string, PanelWidget>>();
-            SellTurretHBMessage.AddRange(Simulator.HelpBar.PredefinedMessages[HelpBarMessage.ToggleChoices]);
-            SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
-            SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.AlternateSelect]), new Text("Sell", "Pixelite") { SizeX = 2f })));
+            InitializeHelpBarMessages(inputType);
         }
 
 
@@ -116,6 +110,31 @@
 
             Menu.SelectedIndex = SelectedOption == TurretChoice.Sell ? 1 : 0;
             Menu.Draw();
+        }
+
+
+        private void InitializeHelpBarMessages(InputType inputType)
+        {
+            UpgradeTurretHBMessage = new List<KeyValuePair<string, PanelWidget>>();
+            SellTurretHBMessage = new List<KeyValuePair<string, PanelWidget>>();
+
+            UpgradeTurretHBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
+            UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
+
+            SellTurretHBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
+            SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
+
+            if (inputType == InputType.Gamepad)
+            {
+                UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Upgrade", "Pixelite") { SizeX = 2f })));
+                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.AlternateSelect]), new Text("Sell", "Pixelite") { SizeX = 2f })));
+            }
+
+            else
+            {
+                UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Upgrade", "Pixelite") { SizeX = 2f })));
+                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.AlternateSelect]), new Text("Sell", "Pixelite") { SizeX = 2f })));
+            }
         }
     }
 }

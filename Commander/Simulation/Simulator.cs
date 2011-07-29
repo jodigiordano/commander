@@ -290,6 +290,7 @@ namespace EphemereGames.Commander.Simulation
             EditorController.EditorGUIPlayers = EditorGUIController.Players;
             EditorController.CelestialBodies = LevelsController.CelestialBodies;
             EditorGUIController.CelestialBodies = LevelsController.CelestialBodies;
+            SimPlayersController.OptionsPanel = GUIController.OptionsPanel;
 
             TweakingController.Initialize();
             LevelsController.Initialize();
@@ -410,9 +411,15 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void ShowHelpBarMessage(HelpBarMessage message)
+        public void ShowHelpBarMessage(HelpBarMessage message, InputType type)
         {
-            GUIController.ShowHelpBarMessage(message);
+            GUIController.ShowHelpBarMessage(message, type);
+        }
+
+
+        public void ShowOptionsPanel()
+        {
+            GUIController.OptionsPanel.Fade(GUIController.OptionsPanel.Alpha, 255, 500);
         }
 
 
@@ -629,6 +636,14 @@ namespace EphemereGames.Commander.Simulation
             if (simPlayer == null) // disconnected
                 return;
 
+            if (GUIController.OptionsPanel.Visible)
+            {
+                if (button == MouseConfiguration.Select)
+                    SimPlayersController.DoPanelAction(player);
+
+                return;
+            }
+
             if (simPlayer.PowerUpInUse != PowerUpType.None)
             {
                 if (button == MouseConfiguration.Cancel)
@@ -773,6 +788,14 @@ namespace EphemereGames.Commander.Simulation
 
             if (simPlayer == null) // disconnected
                 return;
+
+            if (GUIController.OptionsPanel.Visible)
+            {
+                if (button == GamePadConfiguration.Select)
+                    SimPlayersController.DoPanelAction(player);
+
+                return;
+            }
 
             if (EditorMode)
             {

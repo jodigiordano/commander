@@ -1842,52 +1842,52 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleBaseBase2.png">
+    <None Include="tourelles\tourelleBaseBase2.png">
       <Name>tourelleBaseBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleBaseBase3.png">
+    <None Include="tourelles\tourelleBaseBase3.png">
       <Name>tourelleBaseBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleLaserBase2.png">
+    <None Include="tourelles\tourelleLaserBase2.png">
       <Name>tourelleLaserBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleLaserBase3.png">
+    </None>
+    <None Include="tourelles\tourelleLaserBase3.png">
       <Name>tourelleLaserBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleLaserBase4.png">
+    <None Include="tourelles\tourelleLaserBase4.png">
       <Name>tourelleLaserBase4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleLaserBase5.png">
+    </None>
+    <None Include="tourelles\tourelleLaserBase5.png">
       <Name>tourelleLaserBase5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleLaserBase6.png">
+    </None>
+    <None Include="tourelles\tourelleLaserBase6.png">
       <Name>tourelleLaserBase6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleLaserBase7.png">
+    </None>
+    <None Include="tourelles\tourelleLaserBase7.png">
       <Name>tourelleLaserBase7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="scenarios\level2.xml">
@@ -1937,135 +1937,135 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\Buttons\back.png">
+    <None Include="GUI\Buttons\Xbox\back.png">
       <Name>back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\facebutton_a.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\facebutton_a.png">
       <Name>facebutton_a</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\facebutton_b.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\facebutton_b.png">
       <Name>facebutton_b</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\facebutton_x.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\facebutton_x.png">
       <Name>facebutton_x</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\facebutton_y.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\facebutton_y.png">
       <Name>facebutton_y</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\left_bumper.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\left_bumper.png">
       <Name>left_bumper</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\left_thumbstick.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\left_thumbstick.png">
       <Name>left_thumbstick</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\left_trigger.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\left_trigger.png">
       <Name>left_trigger</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\right_bumper.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\right_bumper.png">
       <Name>right_bumper</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\right_thumbstick.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\right_thumbstick.png">
       <Name>right_thumbstick</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\right_trigger.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\right_trigger.png">
       <Name>right_trigger</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Buttons\start.png">
+    </None>
+    <None Include="GUI\Buttons\Xbox\start.png">
       <Name>start</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spaceships\mothership_base.png">
+    <None Include="spaceships\mothership_base.png">
       <Name>mothership_base</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="spaceships\mothership_deadly.png">
+    </None>
+    <None Include="spaceships\mothership_deadly.png">
       <Name>mothership_deadly</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="spaceships\mothership_top.png">
+    </None>
+    <None Include="spaceships\mothership_top.png">
       <Name>mothership_top</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\Cursors\cursor1.png">
+    <None Include="GUI\Cursors\cursor1.png">
       <Name>cursor1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor1_back.png">
+    </None>
+    <None Include="GUI\Cursors\cursor1_back.png">
       <Name>cursor1_back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor2.png">
+    </None>
+    <None Include="GUI\Cursors\cursor2.png">
       <Name>cursor2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor2_back.png">
+    </None>
+    <None Include="GUI\Cursors\cursor2_back.png">
       <Name>cursor2_back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor3.png">
+    </None>
+    <None Include="GUI\Cursors\cursor3.png">
       <Name>cursor3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor3_back.png">
+    </None>
+    <None Include="GUI\Cursors\cursor3_back.png">
       <Name>cursor3_back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor4.png">
+    </None>
+    <None Include="GUI\Cursors\cursor4.png">
       <Name>cursor4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor4_back.png">
+    </None>
+    <None Include="GUI\Cursors\cursor4_back.png">
       <Name>cursor4_back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor5.png">
+    </None>
+    <None Include="GUI\Cursors\cursor5.png">
       <Name>cursor5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GUI\Cursors\cursor5_back.png">
+    </None>
+    <None Include="GUI\Cursors\cursor5_back.png">
       <Name>cursor5_back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="particules\spaceshipTrail2.xml">
@@ -2105,11 +2105,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spaceships\mothership_tentacles.png">
+    <None Include="spaceships\mothership_tentacles.png">
       <Name>mothership_tentacles</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="planetes\planet101.png">
@@ -2369,52 +2369,52 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleLaserMultipleBase2.png">
+    <None Include="tourelles\tourelleLaserMultipleBase2.png">
       <Name>tourelleLaserMultipleBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleLaserMultipleBase3.png">
+    </None>
+    <None Include="tourelles\tourelleLaserMultipleBase3.png">
       <Name>tourelleLaserMultipleBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleMissileBase2.png">
+    <None Include="tourelles\tourelleMissileBase2.png">
       <Name>tourelleMissileBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleMissileBase3.png">
+    </None>
+    <None Include="tourelles\tourelleMissileBase3.png">
       <Name>tourelleMissileBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleSlowMotionBase2.png">
+    <None Include="tourelles\tourelleSlowMotionBase2.png">
       <Name>tourelleSlowMotionBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleSlowMotionBase3.png">
+    </None>
+    <None Include="tourelles\tourelleSlowMotionBase3.png">
       <Name>tourelleSlowMotionBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleNanobotsBase2.png">
+    <None Include="tourelles\tourelleNanobotsBase2.png">
       <Name>tourelleNanobotsBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleNanobotsBase3.png">
+    </None>
+    <None Include="tourelles\tourelleNanobotsBase3.png">
       <Name>tourelleNanobotsBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="scenarios\worldlayout1.xml">
@@ -2592,6 +2592,60 @@
       <Name>level40</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GUI\Widgets\close.png">
+      <Name>close</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Widgets\next.png">
+      <Name>next</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GUI\Buttons\Windows\keyA.png">
+      <Name>keyA</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Buttons\Windows\keyD.png">
+      <Name>keyD</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Buttons\Windows\keyS.png">
+      <Name>keyS</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Buttons\Windows\keyW.png">
+      <Name>keyW</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Buttons\Windows\mouseLeftPress.png">
+      <Name>mouseLeftPress</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Buttons\Windows\mouseMiddlePress.png">
+      <Name>mouseMiddlePress</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Buttons\Windows\mouseMiddleRoll.png">
+      <Name>mouseMiddleRoll</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="GUI\Buttons\Windows\mouseRightPress.png">
+      <Name>mouseRightPress</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

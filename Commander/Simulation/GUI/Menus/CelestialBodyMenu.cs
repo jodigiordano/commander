@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -24,19 +25,19 @@
         private Label TurretDescription;
 
 
-        public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color)
+        public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color, InputType inputType)
         {
             Simulator = simulator;
             VisualPriority = visualPriority;
             Color = color;
 
-            HBMessage = new List<KeyValuePair<string, PanelWidget>>();
-            HBMessage.AddRange(Simulator.HelpBar.PredefinedMessages[HelpBarMessage.ToggleChoices]);
-            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
-            HBMessage.AddRange(Simulator.HelpBar.PredefinedMessages[HelpBarMessage.Select]);
-            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
-
             TurretDescription = new Label(new Text("Pixelite") { SizeX = 2f });
+            
+            HBMessage = new List<KeyValuePair<string, PanelWidget>>();
+            HBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
+            HBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.Select, inputType));
+            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
             HBMessage.Add(new KeyValuePair<string, PanelWidget>("turretDescription", TurretDescription));
         }
 

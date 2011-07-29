@@ -16,6 +16,7 @@
         public override Vector3 Dimension { get; set; }
         public override double VisualPriority { get; set; }
         public PanelWidget LastClickedWidget;
+        public PanelWidget LastHoverWidget;
 
         public List<KeyValuePair<string, PanelWidget>> Widgets { get; private set; }
 
@@ -27,6 +28,7 @@
         private Image TitleSeparator;
         private Vector3 UpperLeftUsablePosition;
         private byte backgroundAlpha;
+        private byte alpha;
         private Vector2 padding;
         private Vector3 position;
 
@@ -68,9 +70,8 @@
                 Size = new Vector2(size.X, 5)
             };
 
-            CloseButton = new CloseButton(new Vector3(Position.X + Dimension.X - 20, Position.Y + 15, 0), visualPriority)
+            CloseButton = new CloseButton(scene, new Vector3(Position.X + Dimension.X - 20, Position.Y + 15, 0), visualPriority)
             {
-                Scene = scene,
                 Sticky = true
             };
 
@@ -82,9 +83,10 @@
             ShowBackground = true;
             ShowCloseButton = true;
 
-            Scene = scene;
-
             Padding = Vector2.Zero;
+            Alpha = 255;
+
+            Scene = scene; //after created CloseButton
         }
 
 
@@ -114,10 +116,7 @@
         {
             get
             {
-                if (Widgets.Count != 0)
-                    return Widgets[0].Value.Alpha;
-
-                return backgroundAlpha;
+                return alpha;
             }
 
             set
@@ -126,6 +125,22 @@
 
                 foreach (var w in Widgets)
                     w.Value.Alpha = value;
+
+                foreach (var corner in Corners)
+                    corner.Alpha = value;
+
+                foreach (var edge in Edges)
+                    edge.Alpha = value;
+
+                if (Title != null)
+                {
+                    Title.Alpha = value;
+                    TitleSeparator.Alpha = value;
+                }
+
+                CloseButton.Alpha = value;
+
+                alpha = value;
             }
         }
 
@@ -155,6 +170,7 @@
         public virtual void AddWidget(string name, PanelWidget widget)
         {
             widget.Scene = Scene;
+            widget.Initialize();
             widget.VisualPriority = VisualPriority;
 
             Widgets.Add(new KeyValuePair<string, PanelWidget>(name, widget));
@@ -170,6 +186,9 @@
                 {
                     if (Widgets[i].Value == LastClickedWidget)
                         LastClickedWidget = null;
+
+                    if (Widgets[i].Value == LastHoverWidget)
+                        LastHoverWidget = null;
 
                     Widgets.RemoveAt(i);
                     break;
@@ -194,6 +213,7 @@
             Widgets.Clear();
 
             LastClickedWidget = null;
+            LastHoverWidget = null;
 
             RecomputePositions = true;
         }
@@ -244,7 +264,10 @@
         protected override bool Click(Circle circle)
         {
             if (ShowCloseButton && CloseButton.DoClick(circle))
+            {
+                LastClickedWidget = CloseButton;
                 return true;
+            }
 
             if (ClickWidgets(circle))
                 return true;
@@ -255,7 +278,16 @@
 
         protected override bool Hover(Circle circle)
         {
-            return Physics.CircleRectangleCollision(circle, Background.GetRectangle());
+            if (ShowCloseButton && CloseButton.DoHover(circle))
+            {
+                LastHoverWidget = CloseButton;
+                return true;
+            }
+
+            if (HoverWidgets(circle))
+                return true;
+
+            return false;
         }
 
 
@@ -381,42 +413,7 @@
         {
             Visible = true;
 
-            var effect = VisualEffects.Fade(from, to, 0, length);
-
-            if (ShowFrame)
-            {
-                foreach (var corner in Corners)
-                {
-                    corner.Alpha = (byte) from;
-                    Scene.VisualEffects.Add(corner, effect, FadeTerminated);
-                }
-
-                foreach (var edge in Edges)
-                {
-                    edge.Alpha = (byte) from;
-                    Scene.VisualEffects.Add(edge, effect);
-                }
-            }
-
-            if (Title != null)
-            {
-                Title.Alpha = (byte) from;
-                TitleSeparator.Alpha = (byte) from;
-
-                Scene.VisualEffects.Add(Title, effect);
-                Scene.VisualEffects.Add(TitleSeparator, effect);
-            }
-
-            effect = VisualEffects.Fade(Math.Min(from, BackgroundAlpha), Math.Min(to, BackgroundAlpha), 0, length);
-
-            Background.Alpha = (byte) Math.Min(from, BackgroundAlpha);
-
-            Scene.VisualEffects.Add(Background, effect);
-
-            CloseButton.Fade(from, to, length);
-
-            foreach (var w in Widgets)
-                w.Value.Fade(from, to, length);
+            Scene.VisualEffects.Add(this, VisualEffects.Fade(from, to, 0, length), FadeTerminated);
         }
 
 
@@ -433,6 +430,19 @@
                 if (w.Value.DoClick(circle))
                 {
                     LastClickedWidget = w.Value;
+                    return true;
+                }
+
+            return false;
+        }
+
+
+        protected virtual bool HoverWidgets(Circle circle)
+        {
+            foreach (var w in Widgets)
+                if (w.Value.DoHover(circle))
+                {
+                    LastHoverWidget = w.Value;
                     return true;
                 }
 

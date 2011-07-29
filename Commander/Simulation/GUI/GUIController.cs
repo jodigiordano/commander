@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Audio;
+    using EphemereGames.Core.Input;
     using Microsoft.Xna.Framework;
 
 
@@ -20,7 +21,7 @@
         public Path PathPreview;
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
-
+        public OptionsPanel OptionsPanel;
         public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
 
         private Simulator Simulator;
@@ -64,6 +65,8 @@
             {
                 Alpha = 0
             };
+
+            OptionsPanel = new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 300), Preferences.PrioriteGUIPanneauGeneral + 0.01, Color.White) { Visible = false };
         }
 
 
@@ -107,6 +110,7 @@
             AdvancedViewCheckedIn = null;
 
             HelpBar.Initialize();
+            OptionsPanel.Initialize();
         }
 
 
@@ -119,7 +123,7 @@
         public void DoPlayerConnected(SimPlayer p)
         {
             GUIPlayer player = 
-                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.ImageName);
+                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.ImageName, p.Player.InputType);
 
             player.Cursor.Position = p.Position;
 
@@ -154,7 +158,7 @@
                 NextWaveCheckedIn = player;
             }
 
-            HelpBar.ShowMessage(HelpBarMessage.CallNextWave);
+            HelpBar.ShowMessage(HelpBarMessage.CallNextWave, p.Player.InputType);
         }
 
 
@@ -307,7 +311,7 @@
             foreach (var turret2 in turret.CelestialBody.Turrets)
                 turret2.ShowForm = true;
 
-            HelpBar.ShowMessage(HelpBarMessage.InstallTurret);
+            HelpBar.ShowMessage(HelpBarMessage.InstallTurret, p.Player.InputType);
         }
 
 
@@ -426,6 +430,8 @@
         {
             bool fadeGameMenu = false;
 
+            Simulator.CanSelectCelestialBodies = !OptionsPanel.Visible;
+
             foreach (var player in Players.Values)
             {
                 var menu = player.OpenedMenu;
@@ -481,6 +487,7 @@
                 player.Draw();
 
             Path.Draw();
+            OptionsPanel.Draw();
 
             if (!Simulator.CutsceneMode)
                 HelpBar.Draw();
@@ -501,9 +508,9 @@
         }
 
 
-        public void ShowHelpBarMessage(HelpBarMessage message)
+        public void ShowHelpBarMessage(HelpBarMessage message, InputType type)
         {
-            HelpBar.ShowMessage(message);
+            HelpBar.ShowMessage(message, type);
         }
 
 
@@ -562,13 +569,13 @@
             {
                 // Main menu
                 if (player.CelestialBodyMenu.CelestialBody == null && selection.CelestialBody != null)
-                    HelpBar.ShowMessage(HelpBarMessage.Select);
+                    HelpBar.ShowMessage(HelpBarMessage.Select, p.Player.InputType);
                 else if (player.CelestialBodyMenu.CelestialBody != null && selection.CelestialBody == null)
                     HelpBar.HideMessage(HelpBarMessage.Select);
 
                 // World Menu
                 if (player.WorldMenu.PausedGameChoice == PausedGameChoice.None && selection.PausedGameChoice != PausedGameChoice.None)
-                    HelpBar.ShowMessage(HelpBarMessage.WorldMenu);
+                    HelpBar.ShowMessage(HelpBarMessage.WorldMenu, p.Player.InputType);
                 else if (player.WorldMenu.PausedGameChoice != PausedGameChoice.None && selection.PausedGameChoice == PausedGameChoice.None)
                     HelpBar.HideMessage(HelpBarMessage.WorldMenu);
             }

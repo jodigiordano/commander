@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    class PlayerIndexComparer : IEqualityComparer<PlayerIndex>
+    public class PlayerIndexComparer : IEqualityComparer<PlayerIndex>
     {
         private static PlayerIndexComparer instance;
         public static PlayerIndexComparer Default
@@ -32,7 +32,7 @@
     }
 
 
-    class ButtonsComparer : IEqualityComparer<Buttons>
+    public class ButtonsComparer : IEqualityComparer<Buttons>
     {
         private static ButtonsComparer instance;
         public static ButtonsComparer Default
@@ -59,7 +59,7 @@
     }
 
 
-    class KeysComparer : IEqualityComparer<Keys>
+    public class KeysComparer : IEqualityComparer<Keys>
     {
         private static KeysComparer instance;
         public static KeysComparer Default
@@ -86,7 +86,7 @@
     }
 
 
-    class MouseButtonComparer : IEqualityComparer<MouseButton>
+    public class MouseButtonComparer : IEqualityComparer<MouseButton>
     {
         private static MouseButtonComparer instance;
         public static MouseButtonComparer Default

@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
     using Microsoft.Xna.Framework;
 
 
@@ -20,7 +21,7 @@
         private Simulator Simulator;
 
         
-        public GUIPlayer(Simulator simulator, Dictionary<TurretType, bool> availableTurrets, Dictionary<string, LevelDescriptor> levelsDescriptors, Color color, string representation)
+        public GUIPlayer(Simulator simulator, Dictionary<TurretType, bool> availableTurrets, Dictionary<string, LevelDescriptor> levelsDescriptors, Color color, string representation, InputType inputType)
         {
             Simulator = simulator;
 
@@ -28,8 +29,8 @@
 
             Cursor = new SpaceshipCursor(Simulator.Scene, Vector3.Zero, 2, VisualPriorities.Default.PlayerCursor, color, representation);
             Crosshair = new Cursor(Simulator.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
-            TurretMenu = new TurretMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
-            CelestialBodyMenu = new CelestialBodyMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
+            TurretMenu = new TurretMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color, inputType);
+            CelestialBodyMenu = new CelestialBodyMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color, inputType);
 
             FinalSolutionPreview = new FinalSolutionPreview(Simulator);
 

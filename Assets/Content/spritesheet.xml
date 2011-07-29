@@ -90,18 +90,34 @@
     <Item><Key>battleship53</Key><Value>planetes/battleship53.png</Value></Item>
     
     <!-- Xbox 360 Buttons -->
-    <Item><Key>ButtonBack</Key><Value>GUI/Buttons/back.png</Value></Item>
-    <Item><Key>ButtonA</Key><Value>GUI/Buttons/facebutton_a.png</Value></Item>
-    <Item><Key>ButtonB</Key><Value>GUI/Buttons/facebutton_b.png</Value></Item>
-    <Item><Key>ButtonX</Key><Value>GUI/Buttons/facebutton_x.png</Value></Item>
-    <Item><Key>ButtonY</Key><Value>GUI/Buttons/facebutton_y.png</Value></Item>
-    <Item><Key>BumperLeft</Key><Value>GUI/Buttons/left_bumper.png</Value></Item>
-    <Item><Key>BumperRight</Key><Value>GUI/Buttons/right_bumper.png</Value></Item>
-    <Item><Key>ThumbstickLeft</Key><Value>GUI/Buttons/left_thumbstick.png</Value></Item>
-    <Item><Key>ThumbstickRight</Key><Value>GUI/Buttons/right_thumbstick.png</Value></Item>
-    <Item><Key>TriggerLeft</Key><Value>GUI/Buttons/left_trigger.png</Value></Item>
-    <Item><Key>TriggerRight</Key><Value>GUI/Buttons/right_trigger.png</Value></Item>
-    <Item><Key>ButtonStart</Key><Value>GUI/Buttons/start.png</Value></Item>
+    <Item><Key>ButtonBack</Key><Value>GUI/Buttons/Xbox/back.png</Value></Item>
+    <Item><Key>ButtonA</Key><Value>GUI/Buttons/Xbox/facebutton_a.png</Value></Item>
+    <Item><Key>ButtonB</Key><Value>GUI/Buttons/Xbox/facebutton_b.png</Value></Item>
+    <Item><Key>ButtonX</Key><Value>GUI/Buttons/Xbox/facebutton_x.png</Value></Item>
+    <Item><Key>ButtonY</Key><Value>GUI/Buttons/Xbox/facebutton_y.png</Value></Item>
+    <Item><Key>BumperLeft</Key><Value>GUI/Buttons/Xbox/left_bumper.png</Value></Item>
+    <Item><Key>BumperRight</Key><Value>GUI/Buttons/Xbox/right_bumper.png</Value></Item>
+    <Item><Key>ThumbstickLeft</Key><Value>GUI/Buttons/Xbox/left_thumbstick.png</Value></Item>
+    <Item><Key>ThumbstickRight</Key><Value>GUI/Buttons/Xbox/right_thumbstick.png</Value></Item>
+    <Item><Key>TriggerLeft</Key><Value>GUI/Buttons/Xbox/left_trigger.png</Value></Item>
+    <Item><Key>TriggerRight</Key><Value>GUI/Buttons/Xbox/right_trigger.png</Value></Item>
+    <Item><Key>ButtonStart</Key><Value>GUI/Buttons/Xbox/start.png</Value></Item>
+    
+    <!-- Windows Buttons -->
+    <Item><Key>KeyW</Key><Value>GUI/Buttons/Windows/keyW.png</Value></Item>
+    <Item><Key>KeyA</Key><Value>GUI/Buttons/Windows/keyA.png</Value></Item>
+    <Item><Key>KeyS</Key><Value>GUI/Buttons/Windows/keyS.png</Value></Item>
+    <Item><Key>KeyD</Key><Value>GUI/Buttons/Windows/keyD.png</Value></Item>
+    <Item><Key>MouseLeft</Key><Value>GUI/Buttons/Windows/mouseLeftPress.png</Value></Item>
+    <Item><Key>MouseRight</Key><Value>GUI/Buttons/Windows/mouseRightPress.png</Value></Item>
+    <Item><Key>MouseMiddle</Key><Value>GUI/Buttons/Windows/mouseMiddlePress.png</Value></Item>
+    <Item><Key>MouseMiddleRoll</Key><Value>GUI/Buttons/Windows/mouseMiddleRoll.png</Value></Item>
+    
+    
+    <!-- Widgets -->
+    <Item><Key>WidgetClose</Key><Value>GUI/Widgets/close.png</Value></Item>
+    <Item><Key>WidgetNext</Key><Value>GUI/Widgets/next.png</Value></Item>
+    
     
     <!-- Cursors -->
     <Item><Key>Cursor1</Key><Value>GUI/Cursors/cursor1.png</Value></Item>

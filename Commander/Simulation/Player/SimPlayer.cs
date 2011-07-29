@@ -19,6 +19,7 @@
         public Player Player;
         public SpaceshipSpaceship SpaceshipMove;
         public bool TurretToPlaceChanged;
+        public OptionsPanel OptionsPanel;
 
         // for keyboard
         public bool MovingLeft;
@@ -45,7 +46,8 @@
                 AutomaticMode = false,
                 Speed = 4,
                 ShootingFrequency = 100,
-                BulletHitPoints = 1
+                BulletHitPoints = 1,
+                VisualPriority = VisualPriorities.Default.PlayerCursor
             };
 
             TurretToPlaceChanged = false;
@@ -425,9 +427,15 @@
         public void Update()
         {
             // More friction on a celestial body and a turret
-            if (ActualSelection.TurretToPlace == null && SpaceshipMove.NextMovement == Vector3.Zero &&
-                    (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
+            if (SpaceshipMove.NextMovement == Vector3.Zero)
+            {
+                if (ActualSelection.TurretToPlace == null && (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
                     SpaceshipMove.Friction = 0.1f;
+
+                if (OptionsPanel.Visible && OptionsPanel.DoHover(Circle) && OptionsPanel.LastHoverWidget.Sticky)
+                    SpaceshipMove.Friction = 0.1f;
+            }
+
 
             SpaceshipMove.Update();
             Position = SpaceshipMove.Position;

@@ -221,4 +221,13 @@ namespace EphemereGames.Commander.Simulation
         GameWon = 11,
         HoldToSkip = 12
     }
+
+
+    enum PanelType
+    {
+        None = -1,
+        Options = 0,
+        Help = 1,
+        Pause = 2
+    }
 }

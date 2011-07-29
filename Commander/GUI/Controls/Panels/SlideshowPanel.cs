@@ -17,9 +17,11 @@
         {
             Slider = new NumericHorizontalSlider("", 0, 0, 0, 1, 200)
             {
-                Scene = scene,
-                VisualPriority = visualPriority
+                Scene = scene
             };
+
+            Slider.Initialize();
+            Slider.VisualPriority = visualPriority;
 
             Panels = new List<PanelWidget>();
         }

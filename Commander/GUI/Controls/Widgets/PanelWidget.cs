@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    abstract class PanelWidget
+    abstract class PanelWidget : IVisual
     {
         public PanelWidgetHandler ClickHandler;
         public PanelWidgetHandler HoverHandler;
@@ -50,5 +50,35 @@
         protected abstract bool Hover(Circle circle);
         public abstract void Draw();
         public abstract void Fade(int from, int to, double length);
+
+
+        public virtual void Initialize() { }
+
+
+        public Rectangle VisiblePart
+        {
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        public Vector2 Origin
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        public Vector2 Size
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        public Color Color
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
     }
 }

@@ -95,13 +95,13 @@
         {
             if (newState == GameState.Won)
             {
-                Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon);
+                Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon, Inputs.MasterPlayer.InputType);
                 MusicController.SwitchTo(MusicContext.Won);
             }
 
             else if (newState == GameState.Lost)
             {
-                Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost);
+                Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost, Inputs.MasterPlayer.InputType);
                 MusicController.SwitchTo(MusicContext.Lost);
             }
 

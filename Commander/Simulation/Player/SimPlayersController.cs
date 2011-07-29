@@ -14,6 +14,7 @@
         public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public SandGlass SandGlass;
+        public OptionsPanel OptionsPanel;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
@@ -88,7 +89,8 @@
                 Color = player.Color,
                 ImageName = player.ImageName,
                 UpdateSelectionz = UpdateSelection,
-                BulletDamage = Simulator.Level.BulletHitPoints
+                BulletDamage = Simulator.Level.BulletHitPoints,
+                OptionsPanel = OptionsPanel
             };
 
             simPlayer.Initialize();
@@ -450,6 +452,14 @@
         public void StopFire(Player p)
         {
             Players[p].Firing = false;
+        }
+
+
+        public void DoPanelAction(Player pl)
+        {
+            var player = Players[pl];
+
+            OptionsPanel.DoClick(player.Circle);
         }
 
 

@@ -47,6 +47,15 @@
                 };
             }
         }
+
+
+        public static Dictionary<Keys, string> ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
+        {
+            { Keys.W, "KeyW" },
+            { Keys.A, "KeyA" },
+            { Keys.S, "KeyS" },
+            { Keys.D, "KeyD" }
+        };
     }
 
 
@@ -77,6 +86,16 @@
                 };
             }
         }
+
+
+        public static Dictionary<MouseButton, string> ToImage = new Dictionary<MouseButton, string>(MouseButtonComparer.Default)
+        {
+            { MouseButton.Left, "MouseLeft" },
+            { MouseButton.Right, "MouseRight" },
+            { MouseButton.Middle, "MouseMiddle" },
+            { MouseButton.MiddleUp, "MouseMiddleRoll" },
+            { MouseButton.MiddleDown, "MouseMiddleRoll" }
+        };
     }
 
 

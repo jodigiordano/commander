@@ -30,7 +30,6 @@
         private State SceneState;
         private Translator PressStart;
         private Dictionary<Text, CelestialBody> Choices;
-        private OptionsPanel Options;
 
 
         public MainMenuScene()
@@ -84,15 +83,11 @@
 
                 Choices.Add(text, c);
             }
-
-            Options = new OptionsPanel(this, Vector3.Zero, new Vector2(300, 300), Preferences.PrioriteGUIPanneauGeneral + 0.01, Color.White) { Visible = false };
-            Options.Initialize();
         }
 
 
         protected override void UpdateLogic(GameTime gameTime)
         {
-            Simulator.CanSelectCelestialBodies = !Options.Visible;
             Simulator.Update();
 
             switch (SceneState)
@@ -153,7 +148,7 @@
                         Simulator.EnableInputs = true;
                         SceneState = State.PlayerConnected;
 
-                        Simulator.ShowHelpBarMessage(HelpBarMessage.MoveYourSpaceship);
+                        Simulator.ShowHelpBarMessage(HelpBarMessage.MoveYourSpaceship, Inputs.MasterPlayer.InputType);
                         Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
                     }
                     break;
@@ -189,7 +184,6 @@
             Add(Filter);
             Simulator.Draw();
             PressStart.Draw();
-            Options.Draw();
         }
 
 
@@ -257,20 +251,14 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Select && Options.Visible)
-                Options.DoClick(((Player) p).Circle);
-
-            else if (button == MouseConfiguration.Select)
+            if (button == MouseConfiguration.Select)
                 BeginTransition((Player) p);
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Select && Options.Visible)
-                Options.DoClick(((Player) p).Circle);
-
-            else if (button == GamePadConfiguration.Select)
+            if (button == GamePadConfiguration.Select)
                 BeginTransition((Player) p);
 
             else if (button == GamePadConfiguration.ChangeMusic)
@@ -369,7 +357,7 @@
                     break;
 
                 case "help": TransiteTo("Aide"); break;
-                case "options": Options.Fade(Options.Alpha, 255, 500); break;
+                case "options": Simulator.ShowOptionsPanel(); break;
                 case "editor": TransiteTo("Editeur"); break;
 
                 case "quit":

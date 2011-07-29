@@ -20,6 +20,7 @@
 
         private Cutscene Cutscene;
         private HelpBarPanel HelpBar;
+        private InputType InputType;
 
 
         public StoryScene(string name, string transiteTo, Cutscene cutscene) :
@@ -32,8 +33,10 @@
 
             Cutscene.Scene = this;
 
+            Particles.Add(@"selectionCorpsCeleste");
+
             HelpBar = new HelpBarPanel(this);
-            HelpBar.ShowMessage(HelpBarMessage.HoldToSkip);
+            HelpBar.ShowMessage(HelpBarMessage.HoldToSkip, InputType.Gamepad);
 
             Initialize();
         }
@@ -88,7 +91,10 @@
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
             if (button == GamePadConfiguration.Select)
+            {
+                VerifyInputType(p.InputType);
                 DoAction();
+            }
         }
 
 
@@ -102,7 +108,10 @@
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
             if (key == KeyboardConfiguration.MoveUp)
+            {
+                VerifyInputType(p.InputType);
                 DoAction();
+            }
         }
 
 
@@ -116,7 +125,10 @@
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
             if (button == MouseConfiguration.Select)
+            {
+                VerifyInputType(p.InputType);
                 DoAction();
+            }
         }
 
 
@@ -143,6 +155,19 @@
         private void DoCancel()
         {
             Skipping = false;
+        }
+
+
+        private void VerifyInputType(InputType input)
+        {
+            if (InputType != input)
+            {
+                InputType = input;
+
+                HelpBar.HideMessage(HelpBarMessage.HoldToSkip);
+                HelpBar.ShowMessage(HelpBarMessage.HoldToSkip, input);
+                HelpBar.Alpha = 0;
+            }
         }
 
 
