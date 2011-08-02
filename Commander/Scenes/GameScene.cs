@@ -105,6 +105,16 @@
                 MusicController.SwitchTo(MusicContext.Lost);
             }
 
+            else if (newState == GameState.Restart)
+            {
+                RetryLevel();
+            }
+
+            else if (newState == GameState.PausedToWorld)
+            {
+                TransiteToWorld();
+            }
+
             if (newState == GameState.Won || newState == GameState.Lost)
                 Simulator.EnableInputs = false;
         }
@@ -145,12 +155,6 @@
 
             else if (Simulator.State == GameState.Running)
             {
-                if ((key == KeyboardConfiguration.Cancel || key == KeyboardConfiguration.Back) && Simulator.HelpMode)
-                    return;
-
-                if (key == KeyboardConfiguration.Back)
-                    TransiteToWorld();
-
                 if (key == KeyboardConfiguration.ChangeMusic)
                     MusicController.ChangeMusic(false);
             }
@@ -180,9 +184,6 @@
 
             else
             {
-                if (button == GamePadConfiguration.Back)
-                    TransiteToWorld();
-
                 if (button == GamePadConfiguration.ChangeMusic)
                     MusicController.ChangeMusic(false);
             }

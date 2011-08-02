@@ -161,12 +161,15 @@
 
         public void DoNewGameState(GameState state)
         {
-            foreach (var kvp in PowerUps)
+            if (state == GameState.Lost || state == GameState.Won)
             {
-                kvp.Key.PowerUpInUse = PowerUpType.None;
+                foreach (var kvp in PowerUps)
+                {
+                    kvp.Key.PowerUpInUse = PowerUpType.None;
 
-                foreach (var p in kvp.Value)
-                    p.TerminatedOverride = true;
+                    foreach (var p in kvp.Value)
+                        p.TerminatedOverride = true;
+                }
             }
         }
 

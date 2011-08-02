@@ -367,7 +367,7 @@
         private void DoExecuteEditorCelestialBodyCommand(EditorCelestialBodyCommand command)
         {
             if (command.Name == "AddPlanet")
-                command.CelestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, CelestialBodies, Preferences.PrioriteSimulationCorpsCeleste);
+                command.CelestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, CelestialBodies, VisualPriorities.Default.CelestialBody);
             else
                 command.CelestialBody = command.Owner.SimPlayer.ActualSelection.CelestialBody;
 

@@ -357,7 +357,7 @@
                     break;
 
                 case "help": TransiteTo("Aide"); break;
-                case "options": Simulator.ShowOptionsPanel(); break;
+                case "options": Simulator.ShowOptionsPanel(true); break;
                 case "editor": TransiteTo("Editeur"); break;
 
                 case "quit":

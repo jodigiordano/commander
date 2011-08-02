@@ -19,7 +19,7 @@
             float speed,
             Particle effect,
             int startingPourc,
-            float visualPriority)
+            double visualPriority)
             : base (simulator, name, path, position, 0, size, speed, null, startingPourc, visualPriority, false)
         {
             Effect = effect;

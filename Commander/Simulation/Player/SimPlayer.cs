@@ -16,10 +16,10 @@
         public string ImageName;
         public PowerUpType PowerUpInUse;
         public bool Firing;
-        public Player Player;
+        public Player BasePlayer;
+        public PausePlayer PausePlayer;
         public SpaceshipSpaceship SpaceshipMove;
         public bool TurretToPlaceChanged;
-        public OptionsPanel OptionsPanel;
 
         // for keyboard
         public bool MovingLeft;
@@ -38,7 +38,7 @@
         public SimPlayer(Simulator simulator, Player player)
         {
             Simulator = simulator;
-            Player = player;
+            BasePlayer = player;
             PowerUpInUse = PowerUpType.None;
 
             SpaceshipMove = new SpaceshipSpaceship(simulator)
@@ -68,28 +68,28 @@
 
         public Vector3 Position
         {
-            get { return Player.Position; }
+            get { return BasePlayer.Position; }
             set
             {
-                Player.Position = SpaceshipMove.Position = value;
+                BasePlayer.Position = SpaceshipMove.Position = value;
             }
         }
 
 
         public Circle Circle
         {
-            get { return Player.Circle; }
+            get { return BasePlayer.Circle; }
             set
             {
-                Player.Circle = value;
+                BasePlayer.Circle = value;
             }
         }
 
 
         public Color Color
         {
-            get { return Player.Color; }
-            set { Player.Color = value; }
+            get { return BasePlayer.Color; }
+            set { BasePlayer.Color = value; }
         }
 
 
@@ -430,9 +430,6 @@
             if (SpaceshipMove.NextMovement == Vector3.Zero)
             {
                 if (ActualSelection.TurretToPlace == null && (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
-                    SpaceshipMove.Friction = 0.1f;
-
-                if (OptionsPanel.Visible && OptionsPanel.DoHover(Circle) && OptionsPanel.LastHoverWidget.Sticky)
                     SpaceshipMove.Friction = 0.1f;
             }
 

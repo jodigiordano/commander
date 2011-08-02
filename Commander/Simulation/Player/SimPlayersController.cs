@@ -15,6 +15,7 @@
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public SandGlass SandGlass;
         public OptionsPanel OptionsPanel;
+        public PausePanel PausePanel;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
@@ -28,6 +29,7 @@
         public event CommonStashHandler CommonStashChanged;
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
+        public event PausePlayerHandler PausePlayerMoved;
         public event PowerUpTypeSimPlayerHandler ActivatePowerUpAsked;
         public event PowerUpTypeSimPlayerHandler DesactivatePowerUpAsked;
         public event SimPlayerHandler PlayerConnected;
@@ -72,6 +74,10 @@
 
             UpdateSelection = true;
 
+            PausePanel.CloseButtonHandler = DoPausePanelClosed;
+            OptionsPanel.CloseButtonHandler = DoOptionsPanelClosed;
+            PausePanel.SetClickHandler(DoPausePanelClicked);
+
             NotifyCommonStashChanged(CommonStash);
         }
 
@@ -90,7 +96,11 @@
                 ImageName = player.ImageName,
                 UpdateSelectionz = UpdateSelection,
                 BulletDamage = Simulator.Level.BulletHitPoints,
-                OptionsPanel = OptionsPanel
+                PausePlayer = new PausePlayer(Simulator)
+                {
+                    OptionsPanel = OptionsPanel,
+                    PausePanel = PausePanel
+                }
             };
 
             simPlayer.Initialize();
@@ -125,6 +135,16 @@
             SimPlayer simPlayer = null;
 
             return Players.TryGetValue(player, out simPlayer) ? simPlayer : null;
+        }
+
+
+        public void SyncPausePlayers()
+        {
+            foreach (var p in Players.Values)
+            {
+                p.PausePlayer.NinjaPosition = p.Position;
+                p.PausePlayer.Direction = p.Direction;
+            }
         }
 
 
@@ -186,7 +206,7 @@
         }
 
 
-        public void DoObjetDestroyed(IObjetPhysique obj)
+        public void DoObjectDestroyed(IObjetPhysique obj)
         {
             Enemy ennemi = obj as Enemy;
 
@@ -228,6 +248,14 @@
         {
             SimPlayer player = Players[p];
 
+            if (Simulator.State == GameState.Paused || OptionsPanel.Visible)
+            {
+                player.PausePlayer.Move(ref delta, MouseConfiguration.MovingSpeed);
+
+                return;
+            }
+
+
             if (Simulator.DemoMode)
             {
                 player.Move(ref delta, MouseConfiguration.MovingSpeed);
@@ -246,6 +274,13 @@
         public void DoDirectionDelta(Player p, ref Vector3 delta)
         {
             SimPlayer player = Players[p];
+
+            if (Simulator.State == GameState.Paused || OptionsPanel.Visible)
+            {
+                player.PausePlayer.Rotate(ref delta, MouseConfiguration.RotatingSpeed);
+
+                return;
+            }
 
             player.Rotate(ref delta, MouseConfiguration.RotatingSpeed);
         }
@@ -336,35 +371,51 @@
 
         public void Update()
         {
-            CheckAvailablePowerUps();
-            CheckAvailableTurrets();
-
-            foreach (var player in Players.Keys)
+            if (Simulator.State == GameState.Paused || OptionsPanel.Visible)
             {
-                CheckNextWaveAsked(player);
+                foreach (var player in Players.Values)
+                {
+                    player.PausePlayer.Update();
+
+                    NotifyPausePlayerMoved(player.PausePlayer);
+                }
+
+                return;
             }
 
-            foreach (var player in Players.Values)
+
+            if (Simulator.State == GameState.Running)
             {
-                player.Update();
+                CheckAvailablePowerUps();
+                CheckAvailableTurrets();
 
-                if (player.BouncingThisTick)
+                foreach (var player in Players.Keys)
                 {
-                    Inputs.VibrateController(player.Player, 150f, 0.5f, 0.5f);
+                    CheckNextWaveAsked(player);
                 }
 
-                if (player.Firing)
+                foreach (var player in Players.Values)
                 {
-                    //Inputs.VibrateController(player.Player, Preferences.TargetElapsedTimeMs * 2, 0.2f, 0f); TODO: vibrate with little pauses between
+                    player.Update();
 
-                    foreach (var b in player.SpaceshipMove.BulletsThisTick())
-                        NotifyObjectCreated(b);
+                    if (player.BouncingThisTick)
+                    {
+                        Inputs.VibrateController(player.BasePlayer, 150f, 0.5f, 0.5f);
+                    }
 
-                    player.Firing = false;
+                    if (player.Firing)
+                    {
+                        //Inputs.VibrateController(player.Player, Preferences.TargetElapsedTimeMs * 2, 0.2f, 0f); TODO: vibrate with little pauses between
+
+                        foreach (var b in player.SpaceshipMove.BulletsThisTick())
+                            NotifyObjectCreated(b);
+
+                        player.Firing = false;
+                    }
+
+                    NotifyPlayerChanged(player);
+                    NotifyPlayerMoved(player);
                 }
-
-                NotifyPlayerChanged(player);
-                NotifyPlayerMoved(player);
             }
         }
 
@@ -457,9 +508,12 @@
 
         public void DoPanelAction(Player pl)
         {
-            var player = Players[pl];
+            var player = Players[pl].PausePlayer;
 
-            OptionsPanel.DoClick(player.Circle);
+            if (OptionsPanel.Visible)
+                OptionsPanel.DoClick(player.Circle);
+            else if (PausePanel.Visible)
+                PausePanel.DoClick(player.Circle);
         }
 
 
@@ -505,6 +559,7 @@
             if (player.ActualSelection.TurretToPlace != null &&
                 player.ActualSelection.TurretToPlace.CanPlace)
             {
+                player.ActualSelection.TurretToPlace.SetCanPlaceColor();
                 player.ActualSelection.TurretToPlace.ToPlaceMode = false;
                 NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace, player);
                 NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
@@ -679,6 +734,55 @@
         }
 
 
+        private void DoPausePanelClosed(PanelWidget widget)
+        {
+            Simulator.TriggerNewGameState(GameState.Running);
+        }
+        
+
+        private void DoOptionsPanelClosed(PanelWidget widget)
+        {
+            if (!Simulator.DemoMode)
+                Simulator.ShowPausedGamePanel();
+            else
+                Simulator.TriggerNewGameState(GameState.Running);
+        }
+
+
+        private void DoPausePanelClicked(PanelWidget widget)
+        {
+            if (widget.Name == "Help")
+            {
+
+            }
+
+            else if (widget.Name == "Controls")
+            {
+
+            }
+
+            else if (widget.Name == "Restart")
+            {
+                Simulator.TriggerNewGameState(GameState.Restart);
+            }
+
+            else if (widget.Name == "Options")
+            {
+                Simulator.ShowOptionsPanel(false);
+            }
+
+            else if (widget.Name == "GoBackToWorld")
+            {
+                Simulator.TriggerNewGameState(GameState.PausedToWorld);
+            }
+
+            else if (widget.Name == "Resume")
+            {
+                Simulator.TriggerNewGameState(GameState.Running);
+            }
+        }
+
+
         private void CheckAvailablePowerUps()
         {
             foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Values)
@@ -770,6 +874,13 @@
         {
             if (PlayerMoved != null)
                 PlayerMoved(player);
+        }
+
+
+        private void NotifyPausePlayerMoved(PausePlayer player)
+        {
+            if (PausePlayerMoved != null)
+                PausePlayerMoved(player);
         }
 
 

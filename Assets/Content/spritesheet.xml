@@ -117,6 +117,8 @@
     <!-- Widgets -->
     <Item><Key>WidgetClose</Key><Value>GUI/Widgets/close.png</Value></Item>
     <Item><Key>WidgetNext</Key><Value>GUI/Widgets/next.png</Value></Item>
+    <Item><Key>WidgetPush</Key><Value>GUI/Widgets/push.png</Value></Item>
+    <Item><Key>WidgetChecked</Key><Value>GUI/Widgets/checked.png</Value></Item>
     
     
     <!-- Cursors -->

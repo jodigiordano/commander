@@ -21,7 +21,7 @@
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             ClearWidgets();
 

@@ -176,7 +176,7 @@
                 Simulator.Scene.Add(PowerUpPriceTitleAndCost);
                 Simulator.Scene.Add(PowerUpDescription);
 
-                PowerUpPriceBubble.Dimension.Width = (int) MathHelper.Max(PowerUpPriceTitleAndCost.TextSize.X, PowerUpDescription.TextSize.X) + 10;
+                PowerUpPriceBubble.Dimension.Width = (int) MathHelper.Max(PowerUpPriceTitleAndCost.AbsoluteSize.X, PowerUpDescription.AbsoluteSize.X) + 10;
                 PowerUpPriceBubble.Draw();
             }
 

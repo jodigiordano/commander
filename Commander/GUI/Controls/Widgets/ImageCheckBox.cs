@@ -4,14 +4,17 @@
     using Microsoft.Xna.Framework;
 
 
-    class ImageCheckBox : NewCheckBox
+    class ImageCheckBox : CheckBox
     {
         private Image Label;
 
+        private Vector3 position;
 
-        public ImageCheckBox(string label)
+
+        public ImageCheckBox(Image label)
         {
-            Label = new Image(label) { SizeX = 3, Origin = Vector2.Zero };
+            Label = label;
+            Label.Origin = Vector2.Zero;
         }
 
 
@@ -30,14 +33,18 @@
         {
             get
             {
-                return Label.Position;
+                return position;
             }
 
             set
             {
+                position = value;
+
                 Label.Position = value;
 
                 base.Position = Label.Position + new Vector3(Label.AbsoluteSize.X + 30, 0, 0);
+
+                Label.Position += new Vector3(0, (Box.AbsoluteSize.Y - Label.AbsoluteSize.Y) / 2, 0);
             }
         }
 

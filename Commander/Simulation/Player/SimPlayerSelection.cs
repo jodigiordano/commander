@@ -26,16 +26,6 @@
 
         public SimPlayerSelection()
         {
-            CelestialBody = null;
-            PowerUpToBuy = PowerUpType.None;
-            Turret = null;
-            TurretToBuy = TurretType.None;
-            TurretChoice = TurretChoice.None;
-            TurretToPlace = null;
-            PausedGameChoice = PausedGameChoice.None;
-            NewGameChoice = NewGameChoice.None;
-            EditingState = EditorEditingState.None;
-
             AvailableTurretOptions = new Dictionary<TurretChoice, bool>(TurretActionComparer.Default);
             AvailableTurretOptions.Add(TurretChoice.Sell, false);
             AvailableTurretOptions.Add(TurretChoice.Update, false);
@@ -51,6 +41,22 @@
             AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld7, false);
             AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld8, false);
             AvailableNewGameChoices.Add(NewGameChoice.NewGame, true);
+
+            Initialize();
+        }
+
+
+        public void Initialize()
+        {
+            CelestialBody = null;
+            PowerUpToBuy = PowerUpType.None;
+            Turret = null;
+            TurretToBuy = TurretType.None;
+            TurretChoice = TurretChoice.None;
+            TurretToPlace = null;
+            PausedGameChoice = PausedGameChoice.None;
+            NewGameChoice = NewGameChoice.None;
+            EditingState = EditorEditingState.None;
         }
     }
 }

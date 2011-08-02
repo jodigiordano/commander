@@ -25,7 +25,7 @@
                 Image = new Image("Resistance1")
                 {
                     SizeX = 4,
-                    VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
+                    VisualPriority = VisualPriorities.Default.DefaultSpaceship
                 },
                 AutomaticMode = true
             });
@@ -38,7 +38,7 @@
                 Image = new Image("Resistance2")
                 {
                     SizeX = 4,
-                    VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
+                    VisualPriority = VisualPriorities.Default.DefaultSpaceship
                 },
                 AutomaticMode = true
             });
@@ -51,7 +51,7 @@
                 Image = new Image("Resistance3")
                 {
                     SizeX = 4,
-                    VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
+                    VisualPriority = VisualPriorities.Default.DefaultSpaceship
                 },
                 AutomaticMode = true
             });

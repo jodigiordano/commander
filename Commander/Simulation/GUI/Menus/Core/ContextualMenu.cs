@@ -265,7 +265,7 @@
             int slotCounter = 0;
 
             float distanceY = Choices[0].Size.Y + DistanceBetweenTwoChoices;
-            float startingAt = (Title != null) ? Title.TextSize.Y + 10 : 0;
+            float startingAt = (Title != null) ? Title.AbsoluteSize.Y + 10 : 0;
 
             foreach (var choice in Choices)
             {
@@ -295,7 +295,7 @@
             if (Title != null)
             {
                 Title.Position = ActualPosition;
-                TitleSeparator.Position = ActualPosition + new Vector3(0, Title.TextSize.Y + 3, 0);
+                TitleSeparator.Position = ActualPosition + new Vector3(0, Title.AbsoluteSize.Y + 3, 0);
 
                 Simulator.Scene.Add(Title);
                 Simulator.Scene.Add(TitleSeparator);
@@ -368,8 +368,8 @@
                 if (c.Size.X > width)
                     width = c.Size.X;
 
-            if (Title != null && Title.TextSize.X > width)
-                width = Title.TextSize.X;
+            if (Title != null && Title.AbsoluteSize.X > width)
+                width = Title.AbsoluteSize.X;
 
             width += Margin.X * 2;
 

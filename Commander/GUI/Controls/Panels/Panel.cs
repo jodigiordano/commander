@@ -23,7 +23,7 @@
         private Image Background;
         private List<Image> Corners;
         private List<Image> Edges;
-        private CloseButton CloseButton;
+        protected CloseButton CloseButton;
         private Text Title;
         private Image TitleSeparator;
         private Vector3 UpperLeftUsablePosition;
@@ -46,7 +46,7 @@
             {
                 Size = size,
                 Color = Color.Black,
-                VisualPriority = visualPriority + 0.0003,
+                VisualPriority = visualPriority + 0.03,
                 Origin = Vector2.Zero
             };
             BackgroundAlpha = 200;
@@ -169,6 +169,7 @@
 
         public virtual void AddWidget(string name, PanelWidget widget)
         {
+            widget.Name = name;
             widget.Scene = Scene;
             widget.Initialize();
             widget.VisualPriority = VisualPriority;
@@ -302,12 +303,12 @@
                 Position = new Vector3(Position.X, Position.Y + 5, 0)
             };
 
-            TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.TextSize.Y + 5, 0);
+            TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.AbsoluteSize.Y + 5, 0);
 
             if (adjustDimension)
             {
                 Padding += new Vector2(0, 30);
-                Dimension += new Vector3(0, Title.TextSize.Y + 10, 0);
+                Dimension += new Vector3(0, Title.AbsoluteSize.Y + 10, 0);
             }
         }
 
@@ -399,7 +400,7 @@
             if (Title != null)
             {
                 Title.Position = new Vector3(Position.X, Position.Y + 5, 0);
-                TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.TextSize.Y + 5, 0);
+                TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.AbsoluteSize.Y + 5, 0);
 
                 Scene.Add(TitleSeparator);
                 Scene.Add(Title);

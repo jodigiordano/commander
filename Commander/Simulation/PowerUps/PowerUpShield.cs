@@ -52,7 +52,7 @@ namespace EphemereGames.Commander.Simulation
             Bullet.AttackPoints = float.MaxValue;
             Bullet.LifePoints = float.MaxValue;
             Bullet.Speed = 0;
-            Bullet.VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.0001f;
+            Bullet.VisualPriority = VisualPriorities.Default.PowerUpShield;
 
             Bullet.Initialize();
 

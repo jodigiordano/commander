@@ -303,7 +303,7 @@
             Text texteInfos = new Text(message, "Pixelite", Color.White, Vector3.Zero);
             texteInfos.SizeX = 1;
 
-            visualPriority = (visualPriority == -1) ? Preferences.PrioriteSimulationTourelle - 0.02f : visualPriority;
+            visualPriority = (visualPriority == -1) ? VisualPriorities.Default.TurretMessage : visualPriority;
 
             TextBubble bulle = new TextBubble(Simulator.Scene, texteInfos, obj.Position, 0, visualPriority);
 
@@ -373,7 +373,7 @@
                         }
                     }
 
-                    TextBubble bulle = new TextBubble(Simulator.Scene, texte, tourelle.Position, 0, Preferences.PrioriteSimulationTourelle - 0.02f);
+                    TextBubble bulle = new TextBubble(Simulator.Scene, texte, tourelle.Position, 0, VisualPriorities.Default.TurretMessage);
                     bulle.ShowTime = texte.Data.Length * 100;
 
                     foreach (var kvp in TalkingTurrets)

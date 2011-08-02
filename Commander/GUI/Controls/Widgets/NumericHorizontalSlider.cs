@@ -87,9 +87,9 @@
                 position = value;
 
                 Label.Position = value;
-                DecrementRep.Position = Label.Position + new Vector3(Label.TextSize.X + 50, 0, 0);
+                DecrementRep.Position = Label.Position + new Vector3(Label.AbsoluteSize.X + 50, 0, 0);
 
-                if (ValueText.TextSize.X < MinimalSpaceForValue)
+                if (ValueText.AbsoluteSize.X < MinimalSpaceForValue)
                 {
                     ValueText.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + MinimalSpaceForValue / 2, DecrementRep.AbsoluteSize.Y / 2, 0);
                     IncrementRep.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + MinimalSpaceForValue, 0, 0);
@@ -98,7 +98,7 @@
                 else
                 {
                     ValueText.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + 20, 0, 0);
-                    IncrementRep.Position = ValueText.Position + new Vector3(Math.Max(MinimalSpaceForValue, ValueText.TextSize.X) + 20, 0, 0);
+                    IncrementRep.Position = ValueText.Position + new Vector3(Math.Max(MinimalSpaceForValue, ValueText.AbsoluteSize.X) + 20, 0, 0);
                 }
                 
                 // Sync circles
@@ -106,7 +106,7 @@
                 IncrementCircle.Position = IncrementRep.Position + new Vector3(IncrementRep.AbsoluteSize / 2f, 0);
 
                 // Center text
-                Label.Position += new Vector3(0, (DecrementRep.AbsoluteSize.Y - Label.TextSize.Y) / 2, 0);
+                Label.Position += new Vector3(0, (DecrementRep.AbsoluteSize.Y - Label.AbsoluteSize.Y) / 2, 0);
                 ValueText.CenterIt();
             }
         }
@@ -123,7 +123,7 @@
         {
             get
             {
-                return IncrementRep.Position + new Vector3(IncrementRep.AbsoluteSize, 0) - Label.Position;
+                return new Vector3(Label.AbsoluteSize.X + 50 + IncrementRep.AbsoluteSize.X + DecrementRep.AbsoluteSize.X + Math.Max(MinimalSpaceForValue, ValueText.AbsoluteSize.X), IncrementRep.AbsoluteSize.Y, 0);
             }
 
             set { }

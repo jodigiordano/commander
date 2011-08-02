@@ -76,6 +76,12 @@
         }
 
 
+        public Vector3 Position
+        {
+            set { Menu.Position = value; }
+        }
+
+
         public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(TurretType turretToBuy)
         {
             TurretDescription.SetData(Simulator.TurretsFactory.All[turretToBuy].Description);
@@ -86,8 +92,8 @@
 
         public void Update()
         {
-            if (CelestialBody != null)
-                Menu.Position = CelestialBody.Position;
+            //if (CelestialBody != null)
+            //    Menu.Position = CelestialBody.Position;
         }
 
 

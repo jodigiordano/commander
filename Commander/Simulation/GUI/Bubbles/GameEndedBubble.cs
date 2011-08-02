@@ -112,8 +112,8 @@
             base.Draw();
 
             Quote.Position = new Vector3(Dimension.X, Dimension.Y, 0);
-            Score.Position = new Vector3(Dimension.X, Quote.Position.Y + Quote.TextSize.Y + DistanceY, 0);
-            Stars.Position = new Vector3(Dimension.X, Score.Position.Y + Score.TextSize.Y + DistanceY, 0);
+            Score.Position = new Vector3(Dimension.X, Quote.Position.Y + Quote.AbsoluteSize.Y + DistanceY, 0);
+            Stars.Position = new Vector3(Dimension.X, Score.Position.Y + Score.AbsoluteSize.Y + DistanceY, 0);
 
             Scene.Add(Quote);
             Scene.Add(Score);
@@ -124,15 +124,15 @@
         private void ComputeSize()
         {
             // find the max X
-            float sizeX = Quote.TextSize.X;
+            float sizeX = Quote.AbsoluteSize.X;
 
             if (Stars.Size.X > sizeX)
                 sizeX = Stars.Size.X;
 
-            if (Score.TextSize.X > sizeX)
-                sizeX = Score.TextSize.X;
+            if (Score.AbsoluteSize.X > sizeX)
+                sizeX = Score.AbsoluteSize.X;
 
-            float sizeY = Quote.TextSize.Y + Stars.Size.Y + Score.TextSize.Y + 2 * DistanceY;
+            float sizeY = Quote.AbsoluteSize.Y + Stars.Size.Y + Score.AbsoluteSize.Y + 2 * DistanceY;
 
             Dimension.Width = (int) sizeX + 4;
             Dimension.Height = (int) sizeY + 4;

@@ -25,7 +25,7 @@
             ClearWidgets();
 
             for (int i = 0; i < 20; i++)
-                AddWidget("wave" + i, new WaveSubPanel(Simulator, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White));
+                AddWidget("wave" + i, new WaveSubPanel(Simulator, new Vector2(Dimension.X, Dimension.Y), Preferences.PrioriteGUIPanneauGeneral, Color.White));
 
             for (int i = 0; i < Simulator.LevelDescriptor.Waves.Count; i++)
             {

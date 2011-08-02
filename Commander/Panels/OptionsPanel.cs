@@ -28,7 +28,7 @@
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             Music.Value = Main.SharedSaveGame.VolumeMusic;
             Sfx.Value = Main.SharedSaveGame.VolumeSfx;

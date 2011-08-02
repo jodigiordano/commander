@@ -31,7 +31,7 @@
             CheckBoxes = new Dictionary<Enemy, ImageCheckBox>();
 
             foreach (var e in enemies)
-                CheckBoxes.Add(e, new ImageCheckBox(e.Name));
+                CheckBoxes.Add(e, new ImageCheckBox(new Image(e.Name) { SizeX = 5 } ));
 
             FirstCheckBox = CheckBoxes[Enemies[0]];
             LastCheckBox = CheckBoxes[Enemies[Enemies.Count - 1]];
@@ -41,6 +41,13 @@
             DistanceBetweenTwoChoices = 20;
             ClickedCount = 0;
             HoverEnemy = null;
+        }
+
+
+        public override void Initialize()
+        {
+            foreach (var c in CheckBoxes.Values)
+                c.Initialize();
         }
 
 

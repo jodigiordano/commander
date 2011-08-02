@@ -35,7 +35,7 @@
 
         public override Vector2 Size
         {
-            get { return Label.TextSize; }
+            get { return Label.AbsoluteSize; }
         }
 
 

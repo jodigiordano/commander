@@ -61,7 +61,7 @@
         {
             get
             {
-                return new Vector3(Text.TextSize, 0);
+                return new Vector3(Text.AbsoluteSize, 0);
             }
 
             set { }

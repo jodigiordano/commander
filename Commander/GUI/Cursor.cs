@@ -68,7 +68,7 @@
         }
 
 
-        public byte Alpha
+        public virtual byte Alpha
         {
             get { return FrontImage.Alpha; }
             set
@@ -100,36 +100,33 @@
         }
 
 
-        public virtual void FadeIn()
+        public virtual void Fade(int from, int to, double time)
         {
-            var effect = Core.Visual.VisualEffects.Fade(0, 255, 0, FadeTime);
+            var effect = Core.Visual.VisualEffects.Fade(from, to, 0, time);
 
-            FrontImage.Alpha = 0;
+            FrontImage.Alpha = (byte) from;
 
             Scene.VisualEffects.Add(FrontImage, effect);
 
             if (BackImage != null)
             {
-                BackImage.Alpha = 0;
+                BackImage.Alpha = (byte) from;
                 Scene.VisualEffects.Add(BackImage, effect);
             }
 
-            Active = true;
+            Active = to < from || to == 0;
+        }
+
+
+        public virtual void FadeIn()
+        {
+            Fade(Alpha, 255, FadeTime);
         }
 
 
         public virtual void FadeOut()
         {
-            var effect = Core.Visual.VisualEffects.Fade(255, 0, 0, FadeTime);
-
-            Scene.VisualEffects.Add(FrontImage, effect);
-
-            if (BackImage != null)
-            {
-                Scene.VisualEffects.Add(BackImage, effect);
-            }
-            
-            Active = false;
+            Fade(Alpha, 0, FadeTime);
         }
 
 

@@ -18,7 +18,7 @@
             Simulator = simulator;
 
             Selection = Simulator.Scene.Particles.Get(@"selectionCorpsCeleste");
-            Selection.VisualPriority = Preferences.PrioriteGUISelectionCorpsCeleste;
+            Selection.VisualPriority = VisualPriorities.Default.CelestialBodySelection;
         }
 
 

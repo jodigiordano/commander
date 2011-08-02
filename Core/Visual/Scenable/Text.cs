@@ -57,7 +57,7 @@
         }
 
 
-        public Vector2 TextSize
+        public Vector2 AbsoluteSize
         {
             get { return Vector2.Multiply(RelativeTextSize, Size); }
         }
@@ -120,7 +120,7 @@
                 return rectangle;
 
             var upperLeft = GetUpperLeft();
-            var size = TextSize;
+            var size = AbsoluteSize;
             
             rectangle.X = (int) upperLeft.X;
             rectangle.Y = (int) upperLeft.Y;

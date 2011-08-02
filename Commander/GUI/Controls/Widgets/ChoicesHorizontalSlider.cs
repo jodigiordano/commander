@@ -4,6 +4,8 @@
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using ProjectMercury.Emitters;
 
 
     class ChoicesHorizontalSlider : PanelWidget
@@ -20,14 +22,20 @@
         private Circle DecrementCircle;
         private Circle IncrementCircle;
 
+        private Particle Selection;
+        private Vector3 position;
+
+        private int SpaceForLabel;
+        private int SpaceForValue;
+
 
         public ChoicesHorizontalSlider(string label, List<string> choices, int startingIndex)
         {
             Choices = choices;
             ChoiceIndex = startingIndex;
 
-            DecrementRep = new Image("Gauche") { Origin = Vector2.Zero };
-            IncrementRep = new Image("Droite") { Origin = Vector2.Zero };
+            DecrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, Effect = SpriteEffects.FlipHorizontally, SizeX = 4 };
+            IncrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, SizeX = 4 };
 
             ValueText = new Text(Choices[ChoiceIndex], "Pixelite") { SizeX = 2 };
             Label = new Text(label, "Pixelite") { SizeX = 2 };
@@ -40,8 +48,19 @@
                     LongestChoice.Data = choice;
             }
 
-            DecrementCircle = new Circle(Vector3.Zero, 20);
-            IncrementCircle = new Circle(Vector3.Zero, 20);
+            DecrementCircle = new Circle(Vector3.Zero, DecrementRep.AbsoluteSize.X / 2);
+            IncrementCircle = new Circle(Vector3.Zero, IncrementRep.AbsoluteSize.X / 2);
+
+            SpaceForLabel = 200;
+            SpaceForValue = 200;
+        }
+
+
+        public override void Initialize()
+        {
+            Selection = Scene.Particles.Get(@"selectionCorpsCeleste");
+
+            ((CircleEmitter) Selection.ParticleEffect[0]).Radius = DecrementCircle.Radius + 5;
         }
 
 
@@ -58,6 +77,7 @@
                 DecrementRep.VisualPriority = value;
                 IncrementRep.VisualPriority = value;
                 ValueText.VisualPriority = value;
+                Selection.VisualPriority = value + 0.0000001;
             }
         }
 
@@ -66,18 +86,27 @@
         {
             get
             {
-                return Label.Position;
+                return position;
             }
 
             set
             {
-                Label.Position = value;
-                DecrementRep.Position = Label.Position + new Vector3(Label.TextSize.X + 50, 0, 0);
-                ValueText.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + 20, 0, 0);
-                IncrementRep.Position = ValueText.Position + new Vector3(LongestChoice.TextSize.X + 20, 0, 0);
+                position = value;
 
+                Label.Position = value;
+                DecrementRep.Position = Label.Position + new Vector3(SpaceForLabel, 0, 0);
+                IncrementRep.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + SpaceForValue, 0, 0);
+                ValueText.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize.X + SpaceForValue / 2, 0, 0);
+
+                // Sync circles
                 DecrementCircle.Position = DecrementRep.Position + new Vector3(DecrementRep.AbsoluteSize / 2f, 0);
                 IncrementCircle.Position = IncrementRep.Position + new Vector3(IncrementRep.AbsoluteSize / 2f, 0);
+
+                // Center text
+                Label.Position += new Vector3(0, (DecrementRep.AbsoluteSize.Y - Label.AbsoluteSize.Y) / 2, 0);
+
+                ValueText.Position += new Vector3(0, (DecrementRep.AbsoluteSize.Y - ValueText.AbsoluteSize.Y), 0);
+                ValueText.CenterIt();
             }
         }
 
@@ -141,7 +170,25 @@
 
         protected override bool Hover(Circle circle)
         {
-            return Physics.CircleCicleCollision(circle, DecrementCircle) || Physics.CircleCicleCollision(circle, IncrementCircle);
+            if (Physics.CircleCicleCollision(circle, DecrementCircle))
+            {
+                Selection.Trigger(ref DecrementCircle.Position);
+
+                Sticky = true;
+                return true;
+            }
+
+
+            if (Physics.CircleCicleCollision(circle, IncrementCircle))
+            {
+                Selection.Trigger(ref IncrementCircle.Position);
+
+                Sticky = true;
+                return true;
+            }
+
+            Sticky = false;
+            return false;
         }
 
 

@@ -21,8 +21,8 @@
         public Path PathPreview;
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
-        public OptionsPanel OptionsPanel;
         public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
+        public HelpBarPanel HelpBar;
 
         private Simulator Simulator;
         private Dictionary<SimPlayer, GUIPlayer> Players;
@@ -44,9 +44,7 @@
         private GUIPlayer GamePausedMenuPlayerCheckedIn;
         private GUIPlayer NextWaveCheckedIn;
         private GUIPlayer AdvancedViewCheckedIn;
-
-        public HelpBarPanel HelpBar;
-
+        
 
         public GUIController(Simulator simulator)
         {
@@ -65,8 +63,6 @@
             {
                 Alpha = 0
             };
-
-            OptionsPanel = new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 300), Preferences.PrioriteGUIPanneauGeneral + 0.01, Color.White) { Visible = false };
         }
 
 
@@ -110,7 +106,6 @@
             AdvancedViewCheckedIn = null;
 
             HelpBar.Initialize();
-            OptionsPanel.Initialize();
         }
 
 
@@ -123,7 +118,7 @@
         public void DoPlayerConnected(SimPlayer p)
         {
             GUIPlayer player = 
-                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.ImageName, p.Player.InputType);
+                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.ImageName, p.BasePlayer.InputType);
 
             player.Cursor.Position = p.Position;
 
@@ -158,7 +153,7 @@
                 NextWaveCheckedIn = player;
             }
 
-            HelpBar.ShowMessage(HelpBarMessage.CallNextWave, p.Player.InputType);
+            HelpBar.ShowMessage(HelpBarMessage.CallNextWave, p.BasePlayer.InputType);
         }
 
 
@@ -194,6 +189,22 @@
             LevelEndedAnnunciation.DoGameStateChanged(newGameState);
 
             SyncNewGameMenu();
+        }
+
+
+        public void DoPanelOpened()
+        {
+            foreach (var p in Players.Values)
+                if (p.Cursor.Alpha != 0)
+                    p.Cursor.FadeOut();
+        }
+
+
+        public void DoPanelClosed()
+        {
+            foreach (var p in Players)
+                if (p.Key.ActualSelection.TurretToPlace == null)
+                    p.Value.Cursor.FadeIn();
         }
 
 
@@ -311,7 +322,7 @@
             foreach (var turret2 in turret.CelestialBody.Turrets)
                 turret2.ShowForm = true;
 
-            HelpBar.ShowMessage(HelpBarMessage.InstallTurret, p.Player.InputType);
+            HelpBar.ShowMessage(HelpBarMessage.InstallTurret, p.BasePlayer.InputType);
         }
 
 
@@ -430,8 +441,7 @@
         {
             bool fadeGameMenu = false;
 
-            Simulator.CanSelectCelestialBodies = !OptionsPanel.Visible;
-
+            
             foreach (var player in Players.Values)
             {
                 var menu = player.OpenedMenu;
@@ -467,7 +477,7 @@
                 }
             }
 
-            else
+            else if (Simulator.State != GameState.Paused)
             {
                 GameMenu.Update();
                 LevelStartedAnnunciation.Update();
@@ -487,7 +497,6 @@
                 player.Draw();
 
             Path.Draw();
-            OptionsPanel.Draw();
 
             if (!Simulator.CutsceneMode)
                 HelpBar.Draw();
@@ -569,13 +578,13 @@
             {
                 // Main menu
                 if (player.CelestialBodyMenu.CelestialBody == null && selection.CelestialBody != null)
-                    HelpBar.ShowMessage(HelpBarMessage.Select, p.Player.InputType);
+                    HelpBar.ShowMessage(HelpBarMessage.Select, p.BasePlayer.InputType);
                 else if (player.CelestialBodyMenu.CelestialBody != null && selection.CelestialBody == null)
                     HelpBar.HideMessage(HelpBarMessage.Select);
 
                 // World Menu
                 if (player.WorldMenu.PausedGameChoice == PausedGameChoice.None && selection.PausedGameChoice != PausedGameChoice.None)
-                    HelpBar.ShowMessage(HelpBarMessage.WorldMenu, p.Player.InputType);
+                    HelpBar.ShowMessage(HelpBarMessage.WorldMenu, p.BasePlayer.InputType);
                 else if (player.WorldMenu.PausedGameChoice != PausedGameChoice.None && selection.PausedGameChoice == PausedGameChoice.None)
                     HelpBar.HideMessage(HelpBarMessage.WorldMenu);
             }

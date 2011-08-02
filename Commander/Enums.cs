@@ -22,7 +22,9 @@
         Running = 1,
         Paused = 2,
         Won = 3,
-        Lost = 4
+        Lost = 4,
+        Restart = 5,
+        PausedToWorld = 6
     }
 
 
@@ -92,14 +94,13 @@ namespace EphemereGames.Commander.Simulation
         Collector = 0,
         FinalSolution = 1,
         Spaceship = 2,
-        TheResistance = 3,
-        DeadlyShootingStars = 4,
-        Pulse = 5,
-        Miner = 6,
-        Shield = 7,
-        AutomaticCollector = 8,
-        DarkSide = 9,
-        RailGun = 10
+        DeadlyShootingStars = 3,
+        Pulse = 4,
+        Miner = 5,
+        Shield = 6,
+        AutomaticCollector = 7,
+        DarkSide = 8,
+        RailGun = 9
     };
 
 

@@ -14,6 +14,7 @@
             Simulator = simulator;
 
             SetTitle("Availables Turrets");
+            NbColumns = 4;
 
             foreach (var turret in Simulator.TurretsFactory.All)
                 AddWidget(turret.Key.ToString(), new TurretCheckBox(Simulator.TurretsFactory.Create(turret.Key)));
@@ -22,7 +23,7 @@
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             foreach (var turret in Simulator.TurretsFactory.All)
             {

@@ -166,8 +166,8 @@
     <Compile Include="GUI\Controls\Widgets\VerticalSeparatorWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageLabel.cs" />
     <Compile Include="GUI\Controls\Widgets\Label.cs" />
-    <Compile Include="GUI\Controls\Widgets\NewPushButton.cs" />
-    <Compile Include="GUI\Controls\Widgets\NewCheckBox.cs" />
+    <Compile Include="GUI\Controls\Widgets\PushButton.cs" />
+    <Compile Include="GUI\Controls\Widgets\CheckBox.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageWidget.cs" />
     <Compile Include="GUI\Controls\Panels\GridPanel.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageCheckBox.cs" />
@@ -177,6 +177,7 @@
     <Compile Include="GUI\Controls\Panels\VerticalPanel.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
@@ -248,6 +249,9 @@
     <Compile Include="Simulation\GUI\Menus\Core\ToggleContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\TextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\ScoreStars.cs" />
+    <Compile Include="Simulation\Pause\PausedGameController.cs" />
+    <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
+    <Compile Include="Simulation\Player\PausePlayer.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
@@ -279,11 +283,9 @@
     <Compile Include="Simulation\Player\SelectedPowerUpController.cs" />
     <Compile Include="Simulation\Player\SelectedTurretToBuyController.cs" />
     <Compile Include="GUI\Bubbles\TextBubble.cs" />
-    <Compile Include="GUI\Controls\Widgets\CheckBox.cs" />
     <Compile Include="Simulation\Player\SimPlayerSelection.cs" />
     <Compile Include="Simulation\Player\SelectedCelestialBodyController.cs" />
     <Compile Include="Simulation\GUI\Menus\NextWaveMenu.cs" />
-    <Compile Include="GUI\Controls\Widgets\PushButton.cs" />
     <Compile Include="GUI\Controls\Widgets\HorizontalSlider.cs" />
     <Compile Include="Simulation\GUI\Menus\PowerUpsMenu.cs" />
     <Compile Include="GUI\Cursor.cs" />

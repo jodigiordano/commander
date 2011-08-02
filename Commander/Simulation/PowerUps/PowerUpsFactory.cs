@@ -26,7 +26,6 @@
             All.Add(PowerUpType.Collector, Create(PowerUpType.Collector));
             All.Add(PowerUpType.FinalSolution, Create(PowerUpType.FinalSolution));
             All.Add(PowerUpType.Spaceship, Create(PowerUpType.Spaceship));
-            All.Add(PowerUpType.TheResistance, Create(PowerUpType.TheResistance));
             All.Add(PowerUpType.DeadlyShootingStars, Create(PowerUpType.DeadlyShootingStars));
             All.Add(PowerUpType.RailGun, Create(PowerUpType.RailGun));
             All.Add(PowerUpType.AutomaticCollector, Create(PowerUpType.AutomaticCollector));

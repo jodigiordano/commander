@@ -80,7 +80,7 @@
 
         private void ComputeSize()
         {
-            Vector2 size = Text.TextSize;
+            Vector2 size = Text.AbsoluteSize;
 
             this.Dimension.Width = (int) size.X + 4;
             this.Dimension.Height = (int) size.Y + 4;

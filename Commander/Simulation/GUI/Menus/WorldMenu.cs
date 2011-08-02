@@ -83,10 +83,16 @@
         }
 
 
+        public Vector3 Position
+        {
+            set { PausedGameMenu.Position = value; }
+        }
+
+
         public void Update()
         {
-            if (CelestialBody != null)
-                PausedGameMenu.Position = CelestialBody.Position;
+            //if (CelestialBody != null)
+            //    PausedGameMenu.Position = CelestialBody.Position;
         }
 
 

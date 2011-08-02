@@ -36,7 +36,7 @@
             Rectangle.set(ref r);
 
             ExplodingEffect = Scene.Particles.Get(@"etincelleSlowMotion");
-            ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
+            ExplodingEffect.VisualPriority = VisualPriorities.Default.DefaultBullet;
 
             LifePoints = Int16.MaxValue;
             LifeSpan = 1;

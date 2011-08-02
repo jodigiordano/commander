@@ -98,7 +98,7 @@
             get
             {
                 return new Vector3(
-                    Text.Position.X + Text.TextSize.X - Images[0].Position.X,
+                    Text.Position.X + Text.AbsoluteSize.X - Images[0].Position.X,
                     Images[0].AbsoluteSize.Y,
                     0);
             }

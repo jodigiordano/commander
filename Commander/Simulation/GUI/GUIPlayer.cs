@@ -27,18 +27,18 @@
 
             SelectedCelestialBodyAnimation = new SelectedCelestialBodyAnimation(Simulator);
 
-            Cursor = new SpaceshipCursor(Simulator.Scene, Vector3.Zero, 2, VisualPriorities.Default.PlayerCursor, color, representation);
-            Crosshair = new Cursor(Simulator.Scene, Vector3.Zero, 2, Preferences.PrioriteGUIPanneauGeneral, "crosshairRailGun", false);
-            TurretMenu = new TurretMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color, inputType);
-            CelestialBodyMenu = new CelestialBodyMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color, inputType);
+            Cursor = new SpaceshipCursor(Simulator.Scene, Vector3.Zero, 2, VisualPriorities.Default.PlayerCursor, color, representation, true);
+            Crosshair = new Cursor(Simulator.Scene, Vector3.Zero, 2, VisualPriorities.Default.PlayerCursor, "crosshairRailGun", false);
+            TurretMenu = new TurretMenu(Simulator, VisualPriorities.Default.TurretMenu, color, inputType);
+            CelestialBodyMenu = new CelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, color, inputType);
 
             FinalSolutionPreview = new FinalSolutionPreview(Simulator);
 
             CelestialBodyMenu.AvailableTurrets = availableTurrets;
             CelestialBodyMenu.Initialize();
 
-            WorldMenu = new WorldMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, levelsDescriptors, color);
-            NewGameMenu = new NewGameMenu(Simulator, Preferences.PrioriteGUIPanneauCorpsCeleste, color);
+            WorldMenu = new WorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, levelsDescriptors, color);
+            NewGameMenu = new NewGameMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, color);
 
             PowerUpInputMode = false;
             PowerUpFinalSolution = false;
@@ -72,6 +72,11 @@
 
         public void Update()
         {
+            CelestialBodyMenu.Position = Cursor.Position;
+            TurretMenu.Position = Cursor.Position;
+            WorldMenu.Position = Cursor.Position;
+            NewGameMenu.Position = Cursor.Position;
+
             TurretMenu.Update();
             CelestialBodyMenu.Update();
             WorldMenu.Update();

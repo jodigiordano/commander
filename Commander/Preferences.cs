@@ -40,18 +40,13 @@
         public const float PrioriteGUIPanneauDebug = 0f;
         public const float PrioriteGUIConsoleEditeur = 0f;
         public const float PrioriteGUIMenuPrincipal = 0.03f;
-        public const float PrioriteSimulationCorpsCeleste = 0.7f; //(Sous-composants, + [0.0 .. 0.01]) donc [0.9 .. 0.91]
         public const float PrioriteFondEcran = 1f;
         public const float PrioriteTransitionScene = 0f;
-
-        public const float PrioriteSimulationTourelle = PrioriteSimulationCorpsCeleste - 0.2f; // 0.6
 
         public const float PrioriteGUIEtoiles = PrioriteFondEcran - 0.01f;
         public const float PrioriteGUIVueAvanceeTrajectoiresCorpsCeleste = PrioriteFondEcran - 0.03f;
         public const float PrioriteGUIVUeAvanceeZonesActivations = PrioriteFondEcran - 0.04f;
         public const float PrioriteSimulationCeintureAsteroides = PrioriteFondEcran - 0.05f;
-
-        public const float PrioriteGUISelectionCorpsCeleste = PrioriteSimulationCorpsCeleste + 0.01f;
         public const float PrioriteGUIPointsVieJoueur = PrioriteGUIPanneauGeneral + 0.01f;
     }
 }

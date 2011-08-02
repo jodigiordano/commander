@@ -55,7 +55,7 @@
             TimeFrontStart = step * 1;
             TimeFrontEnd = step * 4;
             Representation.VisualPriority = (ActualRotationTime >= TimeFrontStart && ActualRotationTime <= TimeFrontEnd) ?
-                Preferences.PrioriteSimulationTourelle - 0.01f :
+                VisualPriorities.Default.Moon :
                 CelestialBody.VisualPriority + 0.01f;
 
             float rotation = MathHelper.ToRadians(Main.Random.Next(0, 180));
@@ -73,7 +73,7 @@
             base.Update();
 
             Representation.VisualPriority = (ActualRotationTime >= TimeFrontStart && ActualRotationTime <= TimeFrontEnd) ?
-                Preferences.PrioriteSimulationTourelle - 0.01f :
+                VisualPriorities.Default.Moon :
                 CelestialBody.VisualPriority + 0.01f;
 
             InnerPath.GetPosition(ActualRotationTime, ref Position);

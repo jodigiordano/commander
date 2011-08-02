@@ -56,7 +56,7 @@
 
         public override Vector2 Size
         {
-            get { return Logo.AbsoluteSize + new Vector2(Price.TextSize.X + 60, 0); }
+            get { return Logo.AbsoluteSize + new Vector2(Price.AbsoluteSize.X + 60, 0); }
         }
 
 

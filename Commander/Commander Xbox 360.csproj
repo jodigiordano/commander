@@ -92,7 +92,9 @@
     <Compile Include="GUI\Controls\Panels\Panel.cs" />
     <Compile Include="GUI\Controls\Panels\SlideshowPanel.cs" />
     <Compile Include="GUI\Controls\Panels\VerticalPanel.cs" />
-    <Compile Include="GUI\Controls\Widgets\CheckBox.cs" />
+    <Compile Include="GUI\Controls\Widgets\CheckBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GUI\Controls\Widgets\ChoicesHorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\CloseButton.cs" />
     <Compile Include="GUI\Controls\Widgets\HorizontalSlider.cs" />
@@ -100,8 +102,6 @@
     <Compile Include="GUI\Controls\Widgets\ImageLabel.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\Label.cs" />
-    <Compile Include="GUI\Controls\Widgets\NewCheckBox.cs" />
-    <Compile Include="GUI\Controls\Widgets\NewPushButton.cs" />
     <Compile Include="GUI\Controls\Widgets\NumericHorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\PanelWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\PushButton.cs" />
@@ -110,6 +110,9 @@
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
+    <Compile Include="Panels\PausePanel.cs" />
+    <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
+    <Compile Include="Simulation\Pause\PausedGameController.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
@@ -200,9 +203,15 @@
     <Compile Include="Simulation\GUI\Menus\TurretMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\WorldMenu.cs" />
     <Compile Include="Simulation\GUI\ScoreStars.cs" />
-    <Compile Include="Simulation\Levels\Level.cs" />
-    <Compile Include="Simulation\Levels\LevelsController.cs" />
-    <Compile Include="Simulation\Levels\LevelsFactory.cs" />
+    <Compile Include="Simulation\Levels\Level.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Simulation\Levels\LevelsController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Simulation\Levels\LevelsFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Simulation\MessagesController.cs" />
     <Compile Include="Simulation\Minerals\Mineral.cs" />
     <Compile Include="Simulation\Minerals\MineralDefinition.cs" />
@@ -214,6 +223,7 @@
     <Compile Include="Simulation\PlanetarySystem\Path.cs" />
     <Compile Include="Simulation\PlanetarySystem\PinkHole.cs" />
     <Compile Include="Simulation\PlanetarySystem\ShootingStar.cs" />
+    <Compile Include="Simulation\Player\PausePlayer.cs" />
     <Compile Include="Simulation\Player\SimPlayerSelection.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />

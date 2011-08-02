@@ -3,9 +3,11 @@
     using Microsoft.Xna.Framework;
 
 
-    class TurretCheckBox : NewCheckBox
+    class TurretCheckBox : CheckBox
     {
         public Turret Turret;
+
+        private Vector3 position;
 
 
         public TurretCheckBox(Turret turret)
@@ -30,18 +32,27 @@
 
         public override Vector3 Position
         {
+            get
+            {
+                return position;
+            }
+
             set
             {
+                position = value;
+
                 Turret.Position = value + new Vector3(Turret.BaseImage.AbsoluteSize, 0);
 
-                base.Position = Turret.Position + new Vector3(Turret.BaseImage.AbsoluteSize.X + 30, 0, 0);
+                base.Position = Turret.Position + new Vector3(Turret.BaseImage.AbsoluteSize.X + 15, 0, 0);
+
+                Turret.Position += new Vector3(0, Box.AbsoluteSize.Y / 2, 0);
             }
         }
 
 
         public override Vector3 Dimension
         {
-            get { return Box.Position + base.Dimension - Turret.Position; }
+            get { return Box.Position + base.Dimension - position; }
         }
 
 

@@ -102,7 +102,7 @@
             Letters = new List<KeyValuePair<Text,Vector3>>();
 
             var text = Commander.Data;
-            var letterSizeX = Commander.TextSize.X / text.Length;
+            var letterSizeX = Commander.AbsoluteSize.X / text.Length;
             var centerLetterIndex = text.Length / 2;
 
             Text t = null;

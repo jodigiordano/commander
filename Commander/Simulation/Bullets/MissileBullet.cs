@@ -73,7 +73,7 @@
             Image.VisualPriority = VisualPriority + 0.001f;
 
             ExplodingEffect = Scene.Particles.Get(@"projectileMissileExplosion");
-            ExplodingEffect.VisualPriority = Preferences.PrioriteSimulationTourelle - 0.001f;
+            ExplodingEffect.VisualPriority = VisualPriorities.Default.DefaultBullet;
 
             TrailEffect = Scene.Particles.Get(@"traineeMissile");
             TrailEffect.VisualPriority = Image.VisualPriority - 0.0001f;

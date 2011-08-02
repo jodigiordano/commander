@@ -14,6 +14,7 @@ namespace EphemereGames.Commander.Simulation
     delegate void PhysicalObjectHandler(IObjetPhysique o);
     delegate void PhysicalObjectPhysicalObjectHandler(IObjetPhysique o1, IObjetPhysique o2);
     delegate void SimPlayerHandler(SimPlayer p);
+    delegate void PausePlayerHandler(PausePlayer p);
     delegate void CommonStashHandler(CommonStash s);
     delegate void CelestialObjectHandler(CelestialBody c);
     delegate void NewGameStateHandler(GameState s);

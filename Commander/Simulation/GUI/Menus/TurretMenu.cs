@@ -59,6 +59,12 @@
         }
 
 
+        public Vector3 Position
+        {
+            set { Menu.Position = value; }
+        }
+
+
         public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(TurretChoice choice)
         {
             return choice == TurretChoice.Sell ? SellTurretHBMessage : UpgradeTurretHBMessage;
@@ -67,8 +73,8 @@
 
         public void Update()
         {
-            if (Turret != null)
-                Menu.Position = Turret.Position;
+            //if (Turret != null)
+            //    Menu.Position = Turret.Position;
         }
 
 

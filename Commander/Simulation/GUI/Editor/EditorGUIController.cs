@@ -24,7 +24,7 @@
         {
             Simulator = simulator;
 
-            GeneralMenu = new EditorGeneralMenu(simulator, new Vector3(400, 300, 0), Preferences.PrioriteSimulationCorpsCeleste);
+            GeneralMenu = new EditorGeneralMenu(simulator, new Vector3(400, 300, 0), VisualPriorities.Default.EditorGeneralMenu);
 
             Players = new Dictionary<EditorPlayer, EditorGUIPlayer>();
 
@@ -33,37 +33,37 @@
             Panels = new Dictionary<EditorPanel, Panel>(EditorPanelComparer.Default);
 
             // Player's panel
-            PlayerPanel playerPanel = new PlayerPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            PlayerPanel playerPanel = new PlayerPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Player, playerPanel);
 
             // Turrets' panel
-            TurretsPanel turretsPanel = new TurretsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            TurretsPanel turretsPanel = new TurretsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Turrets, turretsPanel);
 
             // PowerUps' panel
-            PowerUpsPanel powerUpsPanel = new PowerUpsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            PowerUpsPanel powerUpsPanel = new PowerUpsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.PowerUps, powerUpsPanel);
 
             // General panel
-            GeneralPanel generalPanel = new GeneralPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            GeneralPanel generalPanel = new GeneralPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.General, generalPanel);
 
             // Background panel
-            BackgroundsPanel backgroundPanel = new BackgroundsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            BackgroundsPanel backgroundPanel = new BackgroundsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Background, backgroundPanel);
 
             // Waves panel
-            WavesPanel wavesPanel = new WavesPanel(Simulator, Vector3.Zero, new Vector2(500, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White) { Visible = false };
+            WavesPanel wavesPanel = new WavesPanel(Simulator, Vector3.Zero, new Vector2(1000, 600), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Waves, wavesPanel);
 
             // Load panel
-            LevelsPanel loadPanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White);
+            LevelsPanel loadPanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
             loadPanel.SetTitle("Load");
             loadPanel.Initialize();
             Panels.Add(EditorPanel.Load, loadPanel);
 
             // Save panel
-            LevelsPanel deletePanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), Preferences.PrioriteGUIPanneauGeneral, Color.White);
+            LevelsPanel deletePanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
             deletePanel.SetTitle("Delete - No confirmation!!!");
             deletePanel.Initialize();
             Panels.Add(EditorPanel.Delete, deletePanel);

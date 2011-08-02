@@ -99,7 +99,7 @@
             };
             DisabledAnnounciationCounter = float.NaN;
             Watcher = true;
-            VisualPriorityBackup = Preferences.PrioriteSimulationTourelle;
+            VisualPriorityBackup = VisualPriorities.Default.Turret;
             BackActiveThisTickOverride = false;
             BackActiveThisTick = false;
             Visible = true;
@@ -118,7 +118,7 @@
             FormImage = new Image("CercleBlanc", Vector3.Zero)
             {
                 Color = new Color(Color.R, Color.G, Color.B, 100),
-                VisualPriority = Preferences.PrioriteSimulationTourelle + 0.001f
+                VisualPriority = VisualPriorities.Default.Turret + 0.001f
             };
             ShowForm = true;
             BoostMultiplier = 0;
@@ -416,6 +416,22 @@
         }
 
 
+        public void SetCanPlaceColor()
+        {
+            CanonImage.Color = Color.White;
+            BaseImage.Color = Color.White;
+            RangeImage.Color = new Color(Color.R, Color.G, Color.B, RangeAlpha);
+        }
+
+
+        public void SetCannotPlaceColor()
+        {
+            CanonImage.Color = new Color(255, 0, 0, 100);
+            BaseImage.Color = new Color(255, 0, 0, 100);
+            RangeImage.Color = new Color(255, 0, 0, RangeAlpha);
+        }
+
+
         public virtual void Draw()
         {
             CanonImage.position = this.Position;
@@ -471,9 +487,10 @@
 
             if (ToPlaceMode)
             {
-                CanonImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
-                BaseImage.Color = (CanPlace) ? Color.White : new Color(255, 0, 0, 100);
-                RangeImage.Color = (CanPlace) ? new Color(Color.R, Color.G, Color.B, RangeAlpha) : new Color(255, 0, 0, RangeAlpha);
+                if (CanPlace)
+                    SetCanPlaceColor();
+                else
+                    SetCannotPlaceColor();
             }
 
 

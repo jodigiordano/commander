@@ -16,7 +16,7 @@
 
 
         public HelpBarPanel(Scene scene)
-            : base(scene, new Vector3(0, scene.Height / 2 - 30, 0), new Vector2(scene.Width, 35), VisualPriorities.Foreground.HelpBar, Color.White)
+            : base(scene, new Vector3(0, scene.Height / 2 - 30, 0), new Vector2(scene.Width, 35), VisualPriorities.Default.HelpBar, Color.White)
         {
             Scene = scene;
 
@@ -76,9 +76,9 @@
 
         public override void Draw()
         {
-            Scene.BeginForeground();
+            //Scene.BeginForeground();
             base.Draw();
-            Scene.EndForeground();
+            //Scene.EndForeground();
         }
 
 

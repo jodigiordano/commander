@@ -183,9 +183,6 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Cancel)
-                DoCancelAction();
-
             if (button == MouseConfiguration.Select)
                 DoSelectAction((Player) p);
         }
@@ -193,8 +190,8 @@
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (key == KeyboardConfiguration.Cancel)
-                DoCancelAction();
+            if (key == KeyboardConfiguration.Back)
+                DoBackAction();
 
             if (key == KeyboardConfiguration.ChangeMusic)
                 Main.MusicController.ChangeMusic(false);
@@ -203,8 +200,8 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Cancel)
-                DoCancelAction();
+            if (button == GamePadConfiguration.Back)
+                DoBackAction();
 
             if (button == GamePadConfiguration.ChangeMusic)
                 Main.MusicController.ChangeMusic(false);
@@ -250,7 +247,7 @@
         }
 
 
-        private void DoCancelAction()
+        private void DoBackAction()
         {
             TransiteTo("Menu");
         }

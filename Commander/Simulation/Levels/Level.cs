@@ -39,7 +39,7 @@
         public double BulletHitPoints;
 
         private Simulator Simulator;
-        private float NextCelestialBodyVisualPriority = Preferences.PrioriteSimulationCorpsCeleste;
+        private double NextCelestialBodyVisualPriority = VisualPriorities.Default.CelestialBody;
 
 
         public Level(Simulator simulator, LevelDescriptor descriptor)
@@ -176,7 +176,7 @@
                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                        Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
                        descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001f
+                       NextCelestialBodyVisualPriority -= 0.001
                     );
 
                 }

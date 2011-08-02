@@ -43,7 +43,7 @@ namespace EphemereGames.Commander.Simulation
                 Speed = 8,
                 Bouncing = new Vector3(Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], 0),
                 StartingObject = HumanBattleship,
-                VisualPriority = Preferences.PrioriteSimulationCorpsCeleste - 0.1f
+                VisualPriority = VisualPriorities.Default.PlayerCursor
             };
 
             Audio.PlaySfx(AutomaticCollector.SfxIn);

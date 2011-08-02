@@ -55,7 +55,7 @@
 
             Text iv = new Text("a", police, Color.White, Vector3.Zero);
             iv.SizeX = this.Size;
-            CharWidth = (int) iv.TextSize.X;
+            CharWidth = (int) iv.AbsoluteSize.X;
 
             NbCharPerLine = (int) (canvasSize.X / CharWidth);
 

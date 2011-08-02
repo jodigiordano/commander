@@ -195,7 +195,7 @@
                 p.Position = Position + translation;
                 p.Direction = Direction;
                 p.AttackPoints = BulletHitPoints;
-                p.VisualPriority = Image.VisualPriority + 0.00001;
+                p.VisualPriority = VisualPriorities.Default.DefaultBullet;
                 p.Speed = 10;
                 p.Image.SizeX = 0.75f;
                 p.ShowMovingEffect = false;

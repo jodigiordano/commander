@@ -57,6 +57,36 @@
         }
 
 
+        protected override bool Hover(Circle circle)
+        {
+            if (ShowCloseButton && CloseButton.DoHover(circle))
+            {
+                LastHoverWidget = CloseButton;
+                return true;
+            }
+
+            if (Slider.DoHover(circle))
+            {
+                LastHoverWidget = Slider;
+
+                Sticky = true;
+                return true;
+            }
+
+
+            if (Panels[Slider.Value].DoHover(circle))
+            {
+                LastHoverWidget = Panels[Slider.Value];
+
+                Sticky = true;
+                return true;
+            }
+
+            Sticky = false;
+            return false;
+        }
+
+
         public override void Fade(int from, int to, double length)
         {
             Slider.Fade(from, to, length);
@@ -88,9 +118,9 @@
 
         protected override void ComputePositions()
         {
-            Slider.Position = base.GetUpperLeftUsableSpace();
+            Slider.Position = base.GetUpperLeftUsableSpace() + new Vector3(Dimension.X / 2 - Slider.Dimension.X / 2, 0, 0);
 
-            Vector3 upperLeft = base.GetUpperLeftUsableSpace() + new Vector3(0, Slider.Dimension.Y, 0);
+            Vector3 upperLeft = base.GetUpperLeftUsableSpace() + new Vector3(0, Slider.Dimension.Y + 30, 0);
 
             foreach (var w in Widgets)
                 w.Value.Position = upperLeft;

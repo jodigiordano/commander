@@ -54,8 +54,8 @@
 
         public void Update()
         {
-            if (CelestialBody != null)
-                Position = CelestialBody.Position;
+            //if (CelestialBody != null)
+            //    Position = CelestialBody.Position;
         }
 
 

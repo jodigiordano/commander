@@ -17,7 +17,7 @@
         private ProjectMercury.VariableFloat NotMovingReleaseSpeed;
 
 
-        public SpaceshipCursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority, Color color, string image)
+        public SpaceshipCursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority, Color color, string image, bool visible)
             : base(scene, initialPosition, speed, visualPriority, image, false)
         {
             FrontImage.SizeX = 4;
@@ -53,7 +53,8 @@
             TrailEffect.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
             TrailEffect2.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
 
-            FadeIn();
+            if (visible)
+                FadeIn();
         }
 
 
@@ -67,17 +68,27 @@
         }
 
 
+        public override void Fade(int from, int to, double time)
+        {
+            base.Fade(from, to, time);
+
+            ShowTrail = !(to < from || to == 0);
+        }
+
+
         public override void FadeIn()
         {
-            ShowTrail = true;
             base.FadeIn();
+
+            ShowTrail = true;
         }
 
 
         public override void FadeOut()
         {
-            ShowTrail = false;
             base.FadeOut();
+
+            ShowTrail = false;
         }
 
 
