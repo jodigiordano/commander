@@ -3,29 +3,24 @@
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
-    class Translator
+    class Translator : IVisual
     {
-        private string TexteATraduire;
+        private string TextToTranslate;
         public Text ToTranslate;
         public Text Translated;
-        private char[] PartieNonTraduiteTexte;
-        private char[] PartieTraduiteTexte;
-        private char[] VersionAlien;
-        private double[] TempsLettreTraduction;
-        private double TempsChaqueRecherche;
-        private double[] ProgressionUneRecherche;
+        private char[] PartNotTranslated;
+        private char[] PartTranslated;
+        private char[] AlienVersion;
+        private double[] TimeTranslateALetter;
+        private double TimeEachTranslation;
+        private double[] TimeTranslationElapsed;
         private bool ShowTranslation;
         private Scene Scene;
         private Vector3 Position;
-        private double TempsTraduction;
-        private double Elapsed;
+        private double TotalTimeTranslation;
+        private double TotalTimeElapsed;
 
         public bool CenterText;
-
-        public bool Termine
-        {
-            get { return TempsTraduction < Elapsed; }
-        }
 
 
         public Translator(Scene scene, Vector3 position, string alienFontName, Color alienColor, string knownFont, Color knownColor, string text, float size, bool showTranslation, int timeTranslation, int timeBetweenTwoTranslation, double visualPriority, bool visible)
@@ -33,11 +28,11 @@
             Scene = scene;
             Position = position;
             ShowTranslation = showTranslation;
-            TempsTraduction = timeTranslation;
-            Elapsed = 0;
-            TempsChaqueRecherche = timeBetweenTwoTranslation;
+            TotalTimeTranslation = timeTranslation;
+            TotalTimeElapsed = 0;
+            TimeEachTranslation = timeBetweenTwoTranslation;
             CenterText = false;
-            TexteATraduire = text;
+            TextToTranslate = text;
 
             ToTranslate = new Text(text, alienFontName, alienColor, position)
             {
@@ -56,67 +51,114 @@
 
 
 
-            PartieNonTraduiteTexte = new char[text.Length];
-            PartieTraduiteTexte = new char[text.Length];
-            TempsLettreTraduction = new double[text.Length];
-            ProgressionUneRecherche = new double[text.Length];
-            VersionAlien = new char[text.Length];
+            PartNotTranslated = new char[text.Length];
+            PartTranslated = new char[text.Length];
+            TimeTranslateALetter = new double[text.Length];
+            TimeTranslationElapsed = new double[text.Length];
+            AlienVersion = new char[text.Length];
 
             for (int i = 0; i < text.Length; i++)
             {
                 if (text[i] == '\n')
                 {
-                    PartieTraduiteTexte[i] = PartieNonTraduiteTexte[i] = text[i];
-                    TempsLettreTraduction[i] = 0;
-                    ProgressionUneRecherche[i] = 0;
+                    PartTranslated[i] = PartNotTranslated[i] = text[i];
+                    TimeTranslateALetter[i] = 0;
+                    TimeTranslationElapsed[i] = 0;
                 }
 
                 else
                 {
-                    PartieTraduiteTexte[i] = PartieNonTraduiteTexte[i] = VersionAlien[i] = (char)Main.Random.Next(48, 100);
-                    TempsLettreTraduction[i] = Main.Random.Next(0, timeTranslation);
-                    ProgressionUneRecherche[i] = Main.Random.Next(0, timeBetweenTwoTranslation);
+                    PartTranslated[i] = PartNotTranslated[i] = AlienVersion[i] = (char)Main.Random.Next(48, 100);
+                    TimeTranslateALetter[i] = Main.Random.Next(0, timeTranslation);
+                    TimeTranslationElapsed[i] = Main.Random.Next(0, timeBetweenTwoTranslation);
                 }
             }
 
+        }
+
+
+        public bool Finished
+        {
+            get { return TotalTimeTranslation < TotalTimeElapsed; }
+        }
+
+
+        public Rectangle VisiblePart
+        {
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        public Vector2 Origin
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        public Vector2 Size
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        public Color Color
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        public byte Alpha
+        {
+            get
+            {
+                return ToTranslate.Alpha;
+            }
+            set
+            {
+                ToTranslate.Alpha = value;
+                Translated.Alpha = value;
+            }
         }
 
 
         public void Update()
         {
-            Elapsed += Preferences.TargetElapsedTimeMs;
+            TotalTimeElapsed += Preferences.TargetElapsedTimeMs;
 
-            for (int i = 0; i < TexteATraduire.Length; i++)
-                ProgressionUneRecherche[i] -= Preferences.TargetElapsedTimeMs;
+            for (int i = 0; i < TextToTranslate.Length; i++)
+                TimeTranslationElapsed[i] -= Preferences.TargetElapsedTimeMs;
         }
 
 
         public void Draw()
         {
-            for (int i = 0; i < TexteATraduire.Length; i++)
+            for (int i = 0; i < TextToTranslate.Length; i++)
             {
-                if (TempsLettreTraduction[i] < Elapsed)
+                if (TimeTranslateALetter[i] < TotalTimeElapsed)
                 {
-                    PartieTraduiteTexte[i] = (char)TexteATraduire[i];
-                    PartieNonTraduiteTexte[i] = ' ';
+                    PartTranslated[i] = (char)TextToTranslate[i];
+                    PartNotTranslated[i] = ' ';
                 }
                 
-                else if (ShowTranslation && ProgressionUneRecherche[i] <= 0)
+                else if (ShowTranslation && TimeTranslationElapsed[i] <= 0)
                 {
-                    PartieTraduiteTexte[i] = ' ';
-                    PartieNonTraduiteTexte[i] = VersionAlien[i] = (char)Main.Random.Next(48, 100);
-                    ProgressionUneRecherche[i] = TempsChaqueRecherche;
+                    PartTranslated[i] = ' ';
+                    PartNotTranslated[i] = AlienVersion[i] = (char)Main.Random.Next(48, 100);
+                    TimeTranslationElapsed[i] = TimeEachTranslation;
                 }
 
                 else
                 {
-                    PartieTraduiteTexte[i] = ' ';
-                    PartieNonTraduiteTexte[i] = VersionAlien[i];
+                    PartTranslated[i] = ' ';
+                    PartNotTranslated[i] = AlienVersion[i];
                 }
             }
 
-            Translated.Data = new string(PartieTraduiteTexte);
-            ToTranslate.Data = new string(PartieNonTraduiteTexte);
+            Translated.Data = new string(PartTranslated);
+            ToTranslate.Data = new string(PartNotTranslated);
 
             if (CenterText)
             {

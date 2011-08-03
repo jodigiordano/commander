@@ -99,7 +99,7 @@
             {
                 Image iv = new Image("PixelBlanc")
                 {
-                    Color = new Color(255, 0, 220, 255),
+                    Color = Colors.Default.Pink,
                     SizeX = SIZE_PIXEL,
                     Position = this.Position + (RelativePositions[i] - new Vector3(Image.Origin.X, Image.Origin.Y, 0)) * SIZE_PIXEL,
                     VisualPriority = Image.VisualPriority - 0.01f
@@ -122,6 +122,15 @@
                 (int) (Image.Position.Y - representationSize.Y / 2),
                 (int) representationSize.X,
                 (int) representationSize.Y);
+        }
+
+
+        public Color Color
+        {
+            set
+            {
+                Image.Color = value;
+            }
         }
 
 
@@ -197,22 +206,34 @@
 
         public void FadeOut(double time)
         {
-            Fade(0, time);
+            FadeOut(0, time);
+        }
+
+
+        public void FadeOut(double delay, double time)
+        {
+            Fade(0, delay, time);
         }
 
 
         public void FadeIn(double time)
         {
-            Fade(255, time);
+            FadeIn(0, time);
         }
 
 
-        public void Fade(int to, double time)
+        public void FadeIn(double delay, double time)
         {
-            Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.Fade(Image.Alpha, to, 0, time));
+            Fade(255, delay, time);
+        }
+
+
+        public void Fade(int to, double delay, double time)
+        {
+            Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.Fade(Image.Alpha, to, delay, time));
 
             foreach (var pixel in Pixels)
-                Scene.VisualEffects.Add(pixel, Core.Visual.VisualEffects.Fade(pixel.Alpha, to, 0, time));
+                Scene.VisualEffects.Add(pixel, Core.Visual.VisualEffects.Fade(pixel.Alpha, to, delay, time));
         }
 
 

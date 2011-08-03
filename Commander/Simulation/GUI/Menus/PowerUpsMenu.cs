@@ -236,7 +236,7 @@
         }
 
 
-        private void HumanBattleshipArrived()
+        private void HumanBattleshipArrived(int id)
         {
             HumanBattleshipHasArrived = true;
         }

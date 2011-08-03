@@ -30,7 +30,7 @@
         private Simulator Simulator;
         private LinkedListNode<Wave> NextWave;
         private List<Wave> ActiveWaves;
-        private double WaveCounter;
+        private double TimeElapsedLastWave;
         private int EnemiesCreatedCounter;
 
         private Action SyncRemoveEnemies;
@@ -67,7 +67,7 @@
             NextWave = Waves.First;
             ActiveWaves.Clear();
 
-            WaveCounter = 0;
+            TimeElapsedLastWave = 0;
             EnemiesCreatedCounter = 0;
 
             RecalculateCompositionNextWave();
@@ -287,12 +287,12 @@
 
         private void AddWave()
         {
-            WaveCounter += Preferences.TargetElapsedTimeMs;
+            TimeElapsedLastWave += Preferences.TargetElapsedTimeMs;
 
-            if (NextWave == null || NextWave.Value.StartingTime >= WaveCounter)
+            if (NextWave == null || NextWave.Value.StartingTime >= TimeElapsedLastWave)
                 return;
 
-            WaveCounter = 0;
+            TimeElapsedLastWave = 0;
 
             ActiveWaves.Add(NextWave.Value);
 
@@ -340,16 +340,18 @@
 
         private void ExtractSwarm(Enemy enemy)
         {
-            var e = EnemyDescriptor.Pool.Get();
-            
-            e.Type = EnemyType.Swarm;
-            e.CashValue = enemy.CashValue / 10;
-            e.LivesLevel = enemy.Level;
-            e.SpeedLevel = enemy.Level;
-            e.StartingPosition = enemy.Displacement;
-
             for (int j = 0; j < 3; j++)
+            {
+                var e = EnemyDescriptor.Pool.Get();
+
+                e.Type = EnemyType.Swarm;
+                e.CashValue = enemy.CashValue / 10;
+                e.LivesLevel = enemy.Level;
+                e.SpeedLevel = enemy.Level;
+                e.StartingPosition = enemy.Displacement;
+
                 ActiveWaves[0].AddEnemy(e);
+            }
         }
 
 

@@ -5,15 +5,17 @@
 
     public class EffectsController<T>
     {
-        private Dictionary<Effect<T>, List<T>> Effects;
-        private List<KeyValuePair<Effect<T>, List<T>>> ToDelete;
+        private Dictionary<int, Effect<T>> Effects;
+        private Dictionary<int, List<T>> Objects;
+        private List<int> ToDelete;
         private Pool<List<T>> PoolOfLists;
 
 
         public EffectsController()
         {
-            Effects = new Dictionary<Effect<T>, List<T>>();
-            ToDelete = new List<KeyValuePair<Effect<T>,List<T>>>();
+            Effects = new Dictionary<int,Effect<T>>();
+            Objects = new Dictionary<int,List<T>>();
+            ToDelete = new List<int>();
             PoolOfLists = new Pool<List<T>>();
         }
 
@@ -33,64 +35,71 @@
 
             foreach (var kvp in Effects)
             {
-                Effect<T> effect = kvp.Key;
+                Effect<T> effect = kvp.Value;
+                List<T> objects = Objects[kvp.Key];
 
                 effect.Update(elapsedTime);
 
-                foreach (var obj in kvp.Value)
+                foreach (var obj in objects)
                 {
                     effect.Obj = obj;
                     effect.UpdateObj();
                 }
 
                 if (effect.Terminated)
-                    ToDelete.Add(kvp);
+                    ToDelete.Add(kvp.Key);
             }
 
-            foreach (var kvp in ToDelete)
+            foreach (var effectId in ToDelete)
             {
-                Effect<T> effect = kvp.Key;
+                Effect<T> effect = Effects[effectId];
 
                 if (effect.TerminatedCallback != null && !effect.TerminatedOverride)
-                    effect.TerminatedCallback();
+                    effect.TerminatedCallback(effect.Id);
 
                 effect.Return();
-                PoolOfLists.Return(kvp.Value);
+                PoolOfLists.Return(Objects[effectId]);
 
-                Effects.Remove(effect);
+                Effects.Remove(effectId);
+                Objects.Remove(effectId);
             }
         }
 
 
-        public Effect<T> Add(T obj, Effect<T> effect, NoneHandler callback)
+        public int Add(T obj, Effect<T> effect, IntegerHandler callback)
         {
-            if (Effects.ContainsKey(effect))
-                Effects[effect].Add(obj);
+            if (Effects.ContainsKey(effect.Id))
+                Objects[effect.Id].Add(obj);
             else
             {
                 var l = PoolOfLists.Get();
                 l.Clear();
                 l.Add(obj);
-                Effects.Add(effect, l);
+                Effects.Add(effect.Id, effect);
+                Objects.Add(effect.Id, l);
 
                 effect.TerminatedCallback = callback;
                 effect.Initialize();
             }
 
-            return effect;
+            return effect.Id;
         }
 
 
-        public Effect<T> Add(T obj, Effect<T> effect)
+        public int Add(T obj, Effect<T> effect)
         {
             return Add(obj, effect, null);
         }
 
 
-        public void Add(T obj, List<Effect<T>> effects)
+        public List<int> Add(T obj, List<Effect<T>> effects)
         {
+            List<int> ids = new List<int>();
+
             for (int i = 0; i < effects.Count; i++)
-                Add(obj, effects[i], null);
+                ids.Add(Add(obj, effects[i], null));
+
+            return ids;
         }
 
 
@@ -98,15 +107,50 @@
         {
             foreach (var kvp in Effects)
             {
-                if (kvp.Key.TerminatedCallback != null && !kvp.Key.TerminatedOverride)
-                    kvp.Key.TerminatedCallback();
+                var effect = kvp.Value;
 
-                kvp.Key.Return();
-                PoolOfLists.Return(kvp.Value);
+                if (effect.TerminatedCallback != null && !effect.TerminatedOverride)
+                    effect.TerminatedCallback(effect.Id);
+
+                effect.Return();
+                PoolOfLists.Return(Objects[kvp.Key]);
             }
 
             Effects.Clear();
             ToDelete.Clear();
+        }
+
+
+        public void CancelEffect(int id)
+        {
+            Effect<T> effect;
+
+            if (!Effects.TryGetValue(id, out effect))
+                return;
+
+            effect.Return();
+            PoolOfLists.Return(Objects[id]);
+
+            Effects.Remove(id);
+            Objects.Remove(id);
+        }
+
+
+        public void CancelEffect(List<int> ids)
+        {
+            foreach (var id in ids)
+                CancelEffect(id);
+        }
+
+
+        public void CancelCallback(int id)
+        {
+            Effect<T> effect;
+
+            if (!Effects.TryGetValue(id, out effect))
+                return;
+
+            effect.TerminatedOverride = true;
         }
     }
 }

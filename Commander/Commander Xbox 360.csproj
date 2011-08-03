@@ -111,6 +111,9 @@
     <Compile Include="MusicController.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Panels\PausePanel.cs" />
+    <Compile Include="Scenes\Menu\Choices.cs" />
+    <Compile Include="Scenes\Menu\Logo.cs" />
+    <Compile Include="Scenes\Menu\Title.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Simulation\Pause\PausedGameController.cs" />
     <Compile Include="Player\HighScores.cs" />

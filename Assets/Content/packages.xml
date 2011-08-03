@@ -14,6 +14,10 @@
     <asset name="background5"                 type="Image" path="backgrounds/story1/background05" />
     <asset name="background6"                 type="Image" path="backgrounds/story1/background06" />
 
+
+    <asset name="LogoBack"                type="Image" path="GUI/Logo/ephemereBack" />
+    <asset name="LogoFront"               type="Image" path="GUI/Logo/ephemereFront" />
+    <asset name="LogoGames"               type="Image" path="GUI/Logo/games" />
     
     <!-- Sprites -->
 

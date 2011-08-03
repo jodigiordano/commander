@@ -195,7 +195,7 @@
 
         public double GetVisualPriority(EnemyType type, float pourcPath)
         {
-            double vp = pourcPath > 0.8 ? VisualPriorities.Default.CelestialBody : VisualPriorities.Default.Enemy;
+            double vp = pourcPath > 0.8 ? VisualPriorities.Default.EnemyNearCelestialBodyToProtect : VisualPriorities.Default.Enemy;
             
             vp -= pourcPath / 100;
                 

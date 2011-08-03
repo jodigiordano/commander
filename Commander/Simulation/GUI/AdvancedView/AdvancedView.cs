@@ -42,8 +42,8 @@
                 {
                     foreach (var turret in celestialBody.Turrets)
                     {
-                        if (turret.RangeEffect != null)
-                            turret.RangeEffect.TerminatedOverride = true;
+                        if (turret.RangeEffect != -1)
+                            Simulator.Scene.VisualEffects.CancelCallback(turret.RangeEffect);
 
                         turret.ShowRange = value;
                         turret.RangeImage.Alpha = turret.RangeAlpha;

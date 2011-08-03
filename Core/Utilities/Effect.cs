@@ -22,7 +22,7 @@
         public T Obj                        { get; set; }
         public int Id;
 
-        public NoneHandler TerminatedCallback;
+        public IntegerHandler TerminatedCallback;
 
         private double RemainingBeforeStart;
         protected double RemainingBeforeEnd;
@@ -30,15 +30,13 @@
         protected double TimeOneTick;
         private bool Initialized;
 
-        private static int NextId = 0;
-
 
         public Effect()
         {
             Progress = ProgressType.Linear;
             Delay = 0;
             Length = 0;
-            Id = NextId++;
+            Id = Ids.NextEffectId++;
 
             Initialize();
         }

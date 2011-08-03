@@ -168,7 +168,7 @@
         }
 
 
-        private void FadeCompleted()
+        private void FadeCompleted(int id)
         {
             switch (State[FadePlayer])
             {

@@ -32,6 +32,8 @@
         public const double Tutorial = 0.08;
         public const double GameEndedAnimation = 0.1;
 
+        public const double Title = 0.2;
+
         public const double PlayerPanelCursor = 0.3;
 
         public const double PausePanel = 0.35;
@@ -55,6 +57,8 @@
 
         public const double Moon = 0.65;
 
+        public const double EnemyNearCelestialBodyToProtect = 0.65;
+
         public const double PowerUpShield = 0.69;
 
         public const double CelestialBody = 0.7;
@@ -67,5 +71,7 @@
         public const double Path = 0.9; // between 0.8 and 0.9
 
         public const double HelpBar = 0.95;
+
+        public const double MenuChoices = 0.99;
     }
 }

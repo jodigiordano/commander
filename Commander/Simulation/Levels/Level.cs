@@ -245,7 +245,7 @@
 
                 if (descriptor.HasGravitationalTurret)
                 {
-                    celestialBody.AddToStartingPath();
+                    celestialBody.AddToStartingPath(false);
 
                     Turrets.Add(celestialBody.StartingPathTurret);
                 }

@@ -236,7 +236,7 @@
         }
 
 
-        public void Fade(int start, int end, EffectsController<IVisual> ec, Core.NoneHandler callback)
+        public void Fade(int start, int end, EffectsController<IVisual> ec, Core.IntegerHandler callback)
         {
             var effect = VisualEffects.Fade(start, end, 0, 500);
 

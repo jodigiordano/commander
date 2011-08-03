@@ -1238,13 +1238,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GUI\EphemereLogo.png">
-      <Name>EphemereLogo</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>packages</Name>
@@ -2274,14 +2267,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\level11.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level11</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="scenarios\level20.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level20</Name>
@@ -2658,6 +2643,38 @@
   <ItemGroup>
     <Compile Include="GUI\Widgets\checked.png">
       <Name>checked</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level11.xml">
+      <Name>level11</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tourelles\tourelleGravitationnelleAntenne2.png">
+      <Name>tourelleGravitationnelleAntenne2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GUI\Logo\ephemereBack.png">
+      <Name>ephemereBack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Logo\ephemereFront.png">
+      <Name>ephemereFront</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GUI\Logo\games.png">
+      <Name>games</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

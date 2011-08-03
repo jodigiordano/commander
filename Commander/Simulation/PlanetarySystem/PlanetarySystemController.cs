@@ -460,7 +460,7 @@
 
         private void AddToStartingPath(CelestialBody celestialBody)
         {
-            celestialBody.AddToStartingPath();
+            celestialBody.AddToStartingPath(false);
 
             if (celestialBody.PathPriority == int.MinValue)
                 celestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;

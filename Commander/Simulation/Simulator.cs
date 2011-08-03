@@ -603,7 +603,7 @@ namespace EphemereGames.Commander.Simulation
         {
             var simPlayer = SimPlayersController.GetPlayer(player);
 
-            if (simPlayer == null)
+            if (simPlayer == null) //disconnected
                 return;
 
             Vector3 delta = Vector3.Zero;
@@ -627,13 +627,20 @@ namespace EphemereGames.Commander.Simulation
 
             EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
 
-            //if (!EditorMode && State != GameState.Running)
-            //    return;
-
             if (simPlayer.PowerUpInUse != PowerUpType.None)
                 PowerUpsController.DoPlayerMovedDelta(simPlayer, delta);
 
             SimPlayersController.DoMoveDelta(player, ref delta);
+
+            if (simPlayer.Firing)
+            {
+                SimPlayersController.DoDirectionDelta(player, ref simPlayer.LastMouseDirection);
+            }
+
+            else
+            {
+                simPlayer.LastMouseDirection = Vector3.Zero;
+            }
 
             simPlayer.MovingLeft = simPlayer.MovingRight = simPlayer.MovingUp = simPlayer.MovingDown = false;
         }
@@ -802,7 +809,10 @@ namespace EphemereGames.Commander.Simulation
                 return;
 
             if (simPlayer.Firing)
+            {
+                simPlayer.LastMouseDirection = delta;
                 SimPlayersController.DoDirectionDelta(player, ref delta);
+            }
         }
 
 

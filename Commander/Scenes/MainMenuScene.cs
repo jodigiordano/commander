@@ -1,11 +1,8 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Persistence;
-    using EphemereGames.Core.Physics;
-    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -15,12 +12,9 @@
     {
         private Simulator Simulator;
 
-        private Text Title;        
-        private Image Filter;
-
-
         private enum State
         {
+            Transition,
             ConnectPlayer,
             ConnectingPlayer,
             LoadSaveGame,
@@ -28,8 +22,8 @@
         }
 
         private State SceneState;
-        private Translator PressStart;
-        private Dictionary<Text, CelestialBody> Choices;
+        private Choices Choices;
+        private Title Title;
 
 
         public MainMenuScene()
@@ -37,19 +31,8 @@
         {
             Name = "Menu";
 
-            Title = new Text("Commander", "PixelBig")
-            {
-                SizeX = 3,
-                VisualPriority = Preferences.PrioriteGUIMenuPrincipal,
-            }.CenterIt();
-
-            Filter = new Image("PixelBlanc")
-            {
-                Size = new Vector2(1800, 200),
-                Color = new Color(0, 0, 0, 200),
-                VisualPriority = Preferences.PrioriteGUIMenuPrincipal + 0.00001,
-                Origin = Vector2.Zero
-            };
+            Title = new Title(this, new Vector3(0, -10, 0), VisualPriorities.Default.Title);
+            Title.Initialize();
 
             LevelDescriptor levelDescriptor = Main.LevelsFactory.Menu;
 
@@ -65,24 +48,9 @@
             Simulator.Initialize();
             Inputs.AddListener(Simulator);
 
-            SceneState = State.ConnectPlayer;
-            InitPressStart();
+            SceneState = State.Transition;
 
-            Choices = new Dictionary<Text, CelestialBody>();
-
-            foreach (var c in Simulator.PlanetarySystemController.CelestialBodies)
-            {
-                if (c is AsteroidBelt)
-                    continue;
-
-                var text = new Text(c.Name, "Pixelite")
-                {
-                    SizeX = 3,
-                    VisualPriority = Preferences.PrioriteFondEcran - 0.01f
-                }.CenterIt();
-
-                Choices.Add(text, c);
-            }
+            Choices = new Choices(Simulator, VisualPriorities.Default.MenuChoices);
         }
 
 
@@ -92,55 +60,23 @@
 
             switch (SceneState)
             {
-                case State.ConnectPlayer:                    
-                    VisualEffects.Add(PressStart.Translated, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
-                    VisualEffects.Add(PressStart.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));
-                    VisualEffects.Add(Title, Core.Visual.VisualEffects.Fade(Title.Alpha, 255, 0, 1000));
-                    VisualEffects.Add(Filter, Core.Visual.VisualEffects.Fade(Filter.Alpha, 100, 0, 500));
-
-                    foreach (var kvp in Choices)
-                        VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.Fade(kvp.Key.Alpha, 0, 0, 500));
-
-                    MovePathEffect mpe = new MovePathEffect()
-                    {
-                        StartAt = 0,
-                        PointAt = false,
-                        Delay = 0,
-                        Length = 10000,
-                        Progress = Core.Utilities.Effect<IPhysicalObject>.ProgressType.Linear,
-                        InnerPath = new Path2D(new List<Vector2>()
-                        {
-                            new Vector2(-1920, -85),
-                            new Vector2(-1000, -85),
-                            new Vector2(-740, -85)
-                        }, new List<double>()
-                        {
-                            0,
-                            600,
-                            1200
-                        })
-                    };
-
-                    PhysicalEffects.Add(Filter, mpe);
+                case State.ConnectPlayer:
+                    Title.Show();
+                    Choices.Hide();
 
                     SceneState = State.ConnectingPlayer;
                     break;
 
                 case State.ConnectingPlayer:
-                    PressStart.Update();
+                    Title.UpdatePressStart();
                     break;
 
 
                 case State.LoadSaveGame:
                     if (Main.PlayerSaveGame.IsLoaded)
                     {
-                        VisualEffects.Add(PressStart.Translated, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.Translated.Alpha, 0, 1000));
-                        VisualEffects.Add(PressStart.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(PressStart.Translated.Alpha, 0, 1000));
-                        VisualEffects.Add(Title, Core.Visual.VisualEffects.FadeOutTo0(Title.Alpha, 0, 1000));
-                        VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 1000));
-
-                        foreach (var kvp in Choices)
-                            VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.Fade(kvp.Key.Alpha, 100, 500 + Main.Random.Next(0, 500), 500));
+                        Title.Hide();
+                        Choices.Show();
 
                         if (!Simulator.EnableInputs)
                             Simulator.SyncPlayers();
@@ -158,32 +94,9 @@
 
         protected override void UpdateVisual()
         {
-            foreach (var kvp in Choices)
-            {
-                kvp.Key.Position = kvp.Value.Position + new Vector3(0, kvp.Value.Circle.Radius + 10, 0);
-                Add(kvp.Key);
-            }
-
-
-            foreach (var player in Inputs.ConnectedPlayers)
-            {
-                CelestialBody c = Simulator.GetSelectedCelestialBody(player);
-
-                if (c != null)
-                {
-                    foreach (var kvp in Choices)
-                        if (kvp.Key.Data == c.Name)
-                        {
-                            Add(kvp.Key);
-                            break;
-                        }
-                }
-            }
-
-            Add(Title);
-            Add(Filter);
+            Choices.Draw();
+            Title.Draw();
             Simulator.Draw();
-            PressStart.Draw();
         }
 
 
@@ -211,14 +124,6 @@
             Main.MusicController.PauseMusic();
 
             Simulator.EnableInputs = false;
-        }
-
-
-        private void InitPressStart()
-        {
-            PressStart = new Translator
-            (this, new Vector3(0, 50, 0), "Alien", Colors.Default.AlienBright, "Pixelite", Colors.Default.NeutralBright, (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine", 3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal, false);
-            PressStart.CenterText = true;
         }
 
 
@@ -297,7 +202,7 @@
         private void InitConnectFirstPlayer()
         {
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 0, 1000);
-            InitPressStart();
+            Title.Initialize();
             SceneState = State.ConnectPlayer;
             Simulator.EnableInputs = false;
             Simulator.SyncPlayers();

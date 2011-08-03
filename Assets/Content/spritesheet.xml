@@ -170,6 +170,7 @@
     <Item><Key>tourelleBaseBase2</Key><Value>tourelles/tourelleBaseBase2.png</Value></Item>
     <Item><Key>tourelleBaseBase3</Key><Value>tourelles/tourelleBaseBase3.png</Value></Item>
     <Item><Key>tourelleGravitationnelleAntenne</Key><Value>tourelles/tourelleGravitationnelleAntenne.png</Value></Item>
+    <Item><Key>tourelleGravitationnelleAntenne2</Key><Value>tourelles/tourelleGravitationnelleAntenne2.png</Value></Item>
     <Item><Key>tourelleGravitationnelleBase</Key><Value>tourelles/tourelleGravitationnelleBase.png</Value></Item>
     <Item><Key>tourelleLaserBase</Key><Value>tourelles/tourelleLaserBase.png</Value></Item>
     <Item><Key>tourelleLaserBase2</Key><Value>tourelles/tourelleLaserBase2.png</Value></Item>
@@ -239,7 +240,6 @@
     <Item><Key>ViesEnnemis4</Key><Value>GUI/viesEnnemis04.png</Value></Item>
     <Item><Key>ViesEnnemis5</Key><Value>GUI/viesEnnemis05.png</Value></Item>
     <Item><Key>ViesEnnemis6</Key><Value>GUI/viesEnnemis06.png</Value></Item>
-    <Item><Key>Logo</Key><Value>GUI/EphemereLogo.png</Value></Item>
     <Item><Key>sablier</Key><Value>GUI/sablier.png</Value></Item>
     <Item><Key>Curseur</Key><Value>GUI/Curseur.png</Value></Item>
     <Item><Key>checkbox</Key><Value>GUI/checkbox.png</Value></Item>

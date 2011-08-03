@@ -390,13 +390,13 @@
             for (int i = 0; i < Quantity; i++)
             {
                 // switch enemy (with SwitchEvery)
-                if ((i + 1) % SwitchEvery == 0)
+                if (SwitchEvery != 0 && (i + 1) % SwitchEvery == 0)
                     typeIndex = (typeIndex + 1) % Enemies.Count;
 
                 var type = Enemies[typeIndex];
 
                 // compute delay (with Delay and ApplyDelayEvery)
-                double delay = ((i + 1) % ApplyDelayEvery == 0) ? Delay : 0;
+                double delay = (ApplyDelayEvery != 0 && (i + 1) % ApplyDelayEvery == 0) ? Delay : 0;
 
                 // compute frequency (with Distance)
                 double frequency =

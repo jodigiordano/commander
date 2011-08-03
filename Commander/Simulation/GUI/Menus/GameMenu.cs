@@ -101,7 +101,7 @@
             Simulator.Scene.VisualEffects.Add(WidgetScore, Core.Visual.VisualEffects.Fade(WidgetScore.Alpha, to, 0, length));
             Simulator.Scene.VisualEffects.Add(WidgetCash, Core.Visual.VisualEffects.Fade(WidgetCash.Alpha, to, 0, length));
             Simulator.Scene.VisualEffects.Add(WidgetRemainingWaves, Core.Visual.VisualEffects.Fade(WidgetRemainingWaves.Alpha, to, 0, length));
-            SandGlass.Fade(to, length);
+            SandGlass.Fade(to, 0, length);
             Faded = false;
         }
 
@@ -114,7 +114,7 @@
             Simulator.Scene.VisualEffects.Add(WidgetScore, Core.Visual.VisualEffects.Fade(WidgetScore.Alpha, to, 0, length));
             Simulator.Scene.VisualEffects.Add(WidgetCash, Core.Visual.VisualEffects.Fade(WidgetCash.Alpha, to, 0, length));
             Simulator.Scene.VisualEffects.Add(WidgetRemainingWaves, Core.Visual.VisualEffects.Fade(WidgetRemainingWaves.Alpha, to, 0, length));
-            SandGlass.Fade(to, length);
+            SandGlass.Fade(to, 0, length);
             Faded = true;
         }
 

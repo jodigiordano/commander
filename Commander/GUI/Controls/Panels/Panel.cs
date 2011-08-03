@@ -466,7 +466,7 @@
         }
 
 
-        private void FadeTerminated()
+        private void FadeTerminated(int id)
         {
             Visible = Background.Alpha != 0;
         }

@@ -21,11 +21,12 @@
         public SpaceshipSpaceship SpaceshipMove;
         public bool TurretToPlaceChanged;
 
-        // for keyboard
+        // for keyboard/mouse
         public bool MovingLeft;
         public bool MovingRight;
         public bool MovingUp;
         public bool MovingDown;
+        public Vector3 LastMouseDirection;
 
         private Vector3 direction;
         private Simulator Simulator;
@@ -63,6 +64,7 @@
             PowerUpInUse = PowerUpType.None;
 
             MovingLeft = MovingRight = MovingUp = MovingDown = false;
+            LastMouseDirection = Vector3.Zero;
         }
 
 

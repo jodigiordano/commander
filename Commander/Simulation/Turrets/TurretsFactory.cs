@@ -96,7 +96,7 @@
             {
                 new TurretLevel(0, 0, 0, 1, Int16.MaxValue, 1, 0, BulletType.None, "", "", 0, 0, 0),
                 new TurretLevel(1, 1000, 500, 1, Int16.MaxValue, 1, 500, BulletType.None, "tourelleGravitationnelleAntenne", "tourelleGravitationnelleBase", 0, 0, 0),
-                new TurretLevel(2, 500, 750, 1, Int16.MaxValue, 1, 500, BulletType.None, "tourelleGravitationnelleAntenne", "tourelleGravitationnelleBase", 0, 0, 0)
+                new TurretLevel(2, 500, 750, 1, Int16.MaxValue, 1, 500, BulletType.None, "tourelleGravitationnelleAntenne2", "tourelleGravitationnelleBase", 0, 0, 0)
             });
             TurretsLevels.Add(TurretType.Gunner, new LinkedListWithInit<TurretLevel>()
             {

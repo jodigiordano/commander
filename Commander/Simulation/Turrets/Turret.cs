@@ -66,7 +66,7 @@
         private List<Bullet> Bullets = new List<Bullet>();
         public Image RangeImage;
         public byte RangeAlpha;
-        public FadeColorEffect RangeEffect;
+        public int RangeEffect;
         private Image FormImage;
         private Particle BoostGlow;
 
@@ -531,7 +531,7 @@
 
             if (!Simulator.DemoMode && !Simulator.WorldMode && ActualLevel.Value.Level != 1)
             {
-                RangeEffect = (FadeColorEffect) Simulator.Scene.VisualEffects.Add(RangeImage, VisualEffects.FadeOutTo0(RangeImage.Alpha, 300, 500), UpgradeFadeCompleted);
+                RangeEffect = Simulator.Scene.VisualEffects.Add(RangeImage, VisualEffects.FadeOutTo0(RangeImage.Alpha, 300, 500), UpgradeFadeCompleted);
                 ShowRange = true;
             }
 
@@ -539,9 +539,9 @@
         }
 
 
-        private void UpgradeFadeCompleted()
+        private void UpgradeFadeCompleted(int id)
         {
-            RangeEffect = null;
+            RangeEffect = -1;
             RangeImage.Alpha = RangeAlpha;
             ShowRange = false;
         }

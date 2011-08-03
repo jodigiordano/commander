@@ -197,7 +197,7 @@
         }
 
 
-        public virtual void Fade(int from, int to, double length, Core.NoneHandler callback)
+        public virtual void Fade(int from, int to, double length, Core.IntegerHandler callback)
         {
             Bubble.Fade(from, to, length, callback);
 

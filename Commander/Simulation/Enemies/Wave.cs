@@ -5,12 +5,13 @@
 
     class Wave
     {
+        public double TimeElapsed;
         public double StartingTime;
+
         public List<Enemy> NewEnemies;
         public Dictionary<EnemyType, EnemyDescriptor> Composition;
         public int EnemiesCount;
 
-        private double TempsDebut;
         private List<EnemyDescriptor> EnemiesToCreate;
         private Simulator Simulator;
         private int EnemiesAlive;
@@ -65,7 +66,7 @@
 
         public void Update()
         {
-            TempsDebut += Preferences.TargetElapsedTimeMs;
+            TimeElapsed += Preferences.TargetElapsedTimeMs;
 
             NewEnemies.Clear();
 
@@ -74,7 +75,7 @@
 
             int i = EnemiesToCreate.Count - 1;
 
-            while (i >= 0 && EnemiesToCreate[i].StartingTime <= TempsDebut)
+            while (i >= 0 && EnemiesToCreate[i].StartingTime <= TimeElapsed)
             {
                 var desc = EnemiesToCreate[i];
 
@@ -115,7 +116,7 @@
 
         public void AddEnemy(EnemyDescriptor e)
         {
-            e.StartingTime = TempsDebut;
+            e.StartingTime = TimeElapsed;
 
             EnemiesToCreate.Add(e);
             EnemiesCount++;

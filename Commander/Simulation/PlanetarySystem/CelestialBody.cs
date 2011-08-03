@@ -242,20 +242,21 @@
         }
 
 
-        public void AddToStartingPath()
+        public void AddToStartingPath(bool visible)
         {
             if (StartingPathTurret != null)
                 return;
 
             var t = Simulator.TurretsFactory.Create(TurretType.Gravitational);
 
-            t.CanSell = false;
-            t.CanUpdate = false;
+            t.CanSell = visible;
+            t.CanUpdate = visible;
             t.Level = 1;
             t.BackActiveThisTickOverride = true;
-            t.Visible = false;
+            t.Visible = visible;
             t.CelestialBody = this;
-            t.Position = this.Position;
+            t.RelativePosition = Circle.NearestPointToCircumference(
+                new Vector3(Main.Random.Next((int) -Circle.Radius * 2, (int) Circle.Radius * 2), Main.Random.Next((int) -Circle.Radius * 2, (int) Circle.Radius * 2), 0));
 
             Turrets.Add(t);
 

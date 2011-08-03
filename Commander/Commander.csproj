@@ -155,6 +155,9 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="Scenes\Menu\Choices.cs" />
+    <Compile Include="Scenes\Menu\Title.cs" />
+    <Compile Include="Scenes\Menu\Logo.cs" />
     <Compile Include="Colors.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Enums.cs" />
