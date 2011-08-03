@@ -19,7 +19,7 @@
             LoadScenes
         }
 
-        private Logo Logo;
+        private EphemereGamesLogo Logo;
         private Image Background;
         private Translator LoadingTranslation;
 
@@ -62,7 +62,7 @@
             };
 
 
-            Logo = new Logo(this, Vector3.Zero, 0.3);
+            Logo = new EphemereGamesLogo(this, Vector3.Zero, 0.3);
 
             Persistence.LoadPackage("principal");
 
@@ -79,7 +79,7 @@
 
             VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 500));
             VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
-            VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeOutTo0(255, 2500, 500));
+            VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeTranslation - 500, 500));
             VisualEffects.Add(LoadingTranslation.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeTranslation, 1000));
             VisualEffects.Add(LoadingTranslation.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeTranslation, 1000));
             SandGlass.FadeIn(TimeBeforeTranslation, 1000);

@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Title
+    class CommanderTitle
     {
         private Text Commander;
         private Image Filter;
@@ -18,7 +18,7 @@
         private List<int> PhysicalEffectsIds;
 
 
-        public Title(Scene scene, Vector3 position, double visualPriority)
+        public CommanderTitle(Scene scene, Vector3 position, double visualPriority)
         {
             Scene = scene;
 

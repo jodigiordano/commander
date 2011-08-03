@@ -22,8 +22,8 @@
         }
 
         private State SceneState;
-        private Choices Choices;
-        private Title Title;
+        private MainMenuChoices Choices;
+        private CommanderTitle Title;
 
 
         public MainMenuScene()
@@ -31,7 +31,7 @@
         {
             Name = "Menu";
 
-            Title = new Title(this, new Vector3(0, -10, 0), VisualPriorities.Default.Title);
+            Title = new CommanderTitle(this, new Vector3(0, -10, 0), VisualPriorities.Default.Title);
             Title.Initialize();
 
             LevelDescriptor levelDescriptor = Main.LevelsFactory.Menu;
@@ -50,7 +50,7 @@
 
             SceneState = State.Transition;
 
-            Choices = new Choices(Simulator, VisualPriorities.Default.MenuChoices);
+            Choices = new MainMenuChoices(Simulator, VisualPriorities.Default.MenuChoices);
         }
 
 

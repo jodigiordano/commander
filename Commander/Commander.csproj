@@ -16,8 +16,9 @@
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <ManifestCertificateThumbprint>F904B111315BF05CCD96B4D0E7951DCCC6F9EECF</ManifestCertificateThumbprint>
-    <ManifestKeyFile>TDA_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestCertificateThumbprint>69CE875ADF4DB895B0CA570592D31A7B5036F141</ManifestCertificateThumbprint>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
     <XnaUpgrade>
@@ -29,7 +30,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <PublishUrl>http://www.ephemeregames.com/commander/</PublishUrl>
+    <PublishUrl>http://www.ephemeregames.com/commander/beta/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -45,8 +46,8 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>62</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -155,9 +156,9 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
-    <Compile Include="Scenes\Menu\Choices.cs" />
-    <Compile Include="Scenes\Menu\Title.cs" />
-    <Compile Include="Scenes\Menu\Logo.cs" />
+    <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
+    <Compile Include="Scenes\Menu\CommanderTitle.cs" />
+    <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Colors.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Enums.cs" />

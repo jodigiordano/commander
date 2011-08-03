@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Logo : IVisual
+    class EphemereGamesLogo : IVisual
     {
         private Scene Scene;
         private Image EphemereBack;
@@ -18,14 +18,14 @@
         private double TimeBeforeFadeColour;
         private bool FadeColourDone;
 
-        public Logo(Scene scene, Vector3 position, double visualPriority)
+        public EphemereGamesLogo(Scene scene, Vector3 position, double visualPriority)
         {
             Scene = scene;
 
-            MaxBackAlpha = 210;
+            MaxBackAlpha = 170;
             MaxFrontAlpha = 190;
 
-            EphemereBack = new Image("LogoBack", position);
+            EphemereBack = new Image("LogoBack", position) { Alpha = 0 };
             EphemereFront = new Image("LogoFront", position);
             Games = new Image("LogoGames", position + new Vector3(0, 75, 0));
 
@@ -38,11 +38,11 @@
         {
             get
             {
-                return EphemereBack.Alpha;
+                return EphemereFront.Alpha;
             }
             set
             {
-                if (!FadeColourDone)
+                if (FadeColourDone)
                     EphemereBack.Alpha = Math.Min(value, MaxBackAlpha);
                 
                 EphemereFront.Alpha = Math.Min(value, MaxFrontAlpha);
@@ -58,7 +58,7 @@
             if (!FadeColourDone && TimeBeforeFadeColour < 0)
             {
                 FadeColour();
-                FadeColourDone = true;
+                TimeBeforeFadeColour = double.MaxValue;
             }
         }
 
@@ -98,7 +98,13 @@
 
         private void FadeColour()
         {
-            Scene.VisualEffects.Add(EphemereBack, Core.Visual.VisualEffects.FadeOutTo0(MaxBackAlpha, 0, 1000));
+            Scene.VisualEffects.Add(EphemereBack, Core.Visual.VisualEffects.Fade(EphemereBack.Alpha, MaxBackAlpha, 0, 1000), FadeColourEffectDone);
+        }
+
+
+        private void FadeColourEffectDone(int id)
+        {
+            FadeColourDone = true;
         }
     }
 }

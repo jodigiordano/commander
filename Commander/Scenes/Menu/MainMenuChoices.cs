@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Choices
+    class MainMenuChoices
     {
         private Dictionary<Text, CelestialBody> Texts;
         private Simulator Simulator;
@@ -15,7 +15,7 @@
         private List<int> VisualEffectsIds;
 
 
-        public Choices(Simulator simulator, double visualPriority)
+        public MainMenuChoices(Simulator simulator, double visualPriority)
         {
             Simulator = simulator;
 
