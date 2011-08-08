@@ -15,8 +15,8 @@
         private Scene Scene;
 
 
-        public HelpBarPanel(Scene scene)
-            : base(scene, new Vector3(0, scene.Height / 2 - 30, 0), new Vector2(scene.Width, 35), VisualPriorities.Default.HelpBar, Color.White)
+        public HelpBarPanel(Scene scene, double visualPriority)
+            : base(scene, new Vector3(0, scene.Height / 2 - 30, 0), new Vector2(scene.Width, 35), visualPriority, Color.White)
         {
             Scene = scene;
 

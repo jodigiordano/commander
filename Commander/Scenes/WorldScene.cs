@@ -133,14 +133,6 @@
         {
             Simulator.Draw();
 
-            // Draw level completition states
-            //foreach (var kvp in LevelCompletitionStates)
-            //{
-            //    kvp.Value.Position = kvp.Key.Position + new Vector3(kvp.Key.Circle.Radius, kvp.Key.Circle.Radius, 0) +
-            //        ((kvp.Key.Circle.Radius < (int) Size.Normal) ? new Vector3(-10, -10, 0) : new Vector3(-30, -30, 0));
-            //    Add(kvp.Value);
-            //}
-
             // Draw level numbers
             foreach (var kvp in LevelsNumbers)
             {

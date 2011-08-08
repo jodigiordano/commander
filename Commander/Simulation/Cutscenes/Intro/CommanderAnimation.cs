@@ -26,7 +26,7 @@
                 Color = Color.White,
                 Alpha = 0,
                 Size = new Vector2(1280, 720),
-                VisualPriority = VisualPriorities.Default.IntroCommanderBackground,
+                VisualPriority = VisualPriorities.Cutscenes.IntroCommanderBackground,
                 Blend = BlendType.Add
             };
 
@@ -34,7 +34,7 @@
             {
                 Color = Color.Black,
                 SizeX = 12,
-                VisualPriority = VisualPriorities.Default.IntroCommanderText
+                VisualPriority = VisualPriorities.Cutscenes.IntroCommanderText
             };
 
             SubTitle = new Translator(
@@ -43,7 +43,7 @@
                 "Alien", Colors.Default.NeutralDark,
                 "Pixelite", Colors.Default.AlienBright,
                 "Todo: Subtitle here",
-                5, true, 4000, 250, VisualPriorities.Default.IntroCommanderText, false);
+                5, true, 4000, 250, VisualPriorities.Cutscenes.IntroCommanderText, false);
             SubTitle.CenterText = true;
 
             TimeBeforeIn = IntroCutscene.Timing["CommanderIn"];

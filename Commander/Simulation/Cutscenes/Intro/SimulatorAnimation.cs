@@ -22,7 +22,7 @@
             {
                 Color = Color.White,
                 Size = new Vector2(1280, 720),
-                VisualPriority = VisualPriorities.Default.IntroSimulatorBackground
+                VisualPriority = VisualPriorities.Cutscenes.IntroSimulatorBackground
             };
 
             TimeBeforeIn = IntroCutscene.Timing["SimulatorIn"];

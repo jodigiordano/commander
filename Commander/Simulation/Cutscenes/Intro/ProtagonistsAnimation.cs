@@ -46,15 +46,15 @@
         {
             Simulator = simulator;
 
-            Protagonist = new SpaceshipCursor(simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroProtagonist, new Color(95, 71, 255), "Cursor1", true);
-            Wife = new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, new Color(255, 0, 136), "Cursor2", true);
+            Protagonist = new SpaceshipCursor(simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroProtagonist, new Color(95, 71, 255), "Cursor1", true);
+            Wife = new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroWife, new Color(255, 0, 136), "Cursor2", true);
             Babies = new List<SpaceshipCursor>();
 
-            Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, new Color(255, 227, 48), "Cursor3", true) { Size = 2f });
-            Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, Color.Pink, "Cursor4", true) { Size = 2f });
-            Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Default.IntroWife, new Color(255, 115, 40), "Cursor5", true) { Size = 2f });
+            Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroWife, new Color(255, 227, 48), "Cursor3", true) { Size = 2f });
+            Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroWife, Color.Pink, "Cursor4", true) { Size = 2f });
+            Babies.Add(new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroWife, new Color(255, 115, 40), "Cursor5", true) { Size = 2f });
 
-            ProtagonistText = new ManualTextBubble(Simulator.Scene, new Text("I must warn the\n\nother colonies!", "Pixelite") { SizeX = 2 }, Protagonist.Position, VisualPriorities.Default.IntroProtagonist - 0.00001) { Alpha = 0 };
+            ProtagonistText = new ManualTextBubble(Simulator.Scene, new Text("I must warn the\n\nother colonies!", "Pixelite") { SizeX = 2 }, Protagonist.Position, VisualPriorities.Cutscenes.IntroProtagonist - 0.00001) { Alpha = 0 };
 
             State = ProtagonistState.None;
 

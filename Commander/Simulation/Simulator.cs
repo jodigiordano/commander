@@ -238,6 +238,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PausePlayerMoved += new PausePlayerHandler(PausedGameController.DoPausePlayerMoved);
             PausedGameController.PanelOpened += new NoneHandler(GUIController.DoPanelOpened);
             PausedGameController.PanelClosed += new NoneHandler(GUIController.DoPanelClosed);
+            EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(GUIController.DoObjectDestroyed);
         }
 
 
@@ -300,6 +301,7 @@ namespace EphemereGames.Commander.Simulation
             EditorGUIController.CelestialBodies = LevelsController.CelestialBodies;
             SimPlayersController.OptionsPanel = PausedGameController.OptionsPanel;
             SimPlayersController.PausePanel = PausedGameController.PausePanel;
+            GUIController.CommonStash = LevelsController.CommonStash;
 
             TweakingController.Initialize();
             LevelsController.Initialize();
@@ -310,8 +312,13 @@ namespace EphemereGames.Commander.Simulation
             PowerUpsController.Initialize();
             SimPlayersController.Initialize(); // Must be done after the PowerUpsController
             CollisionsController.Initialize();
-            EditorGUIController.Initialize();
-            EditorController.Initialize();
+
+            if (EditorMode)
+            {
+                EditorGUIController.Initialize();
+                EditorController.Initialize();
+            }
+
             BulletsController.Initialize();
             PausedGameController.Initialize();
         }
@@ -625,7 +632,8 @@ namespace EphemereGames.Commander.Simulation
 
             delta *= GamePadConfiguration.Speed;
 
-            EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
+            if (EditorMode)
+                EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
 
             if (simPlayer.PowerUpInUse != PowerUpType.None)
                 PowerUpsController.DoPlayerMovedDelta(simPlayer, delta);
@@ -988,10 +996,8 @@ namespace EphemereGames.Commander.Simulation
             {
                 delta *= GamePadConfiguration.Speed;
 
-                EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
-
-                //if (!EditorMode && State != GameState.Running)
-                //    return;
+                if (EditorMode)
+                    EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
 
                 if (simPlayer.PowerUpInUse != PowerUpType.None)
                     PowerUpsController.DoPlayerMovedDelta(simPlayer, delta);

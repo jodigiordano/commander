@@ -35,7 +35,7 @@
 
             Particles.Add(@"selectionCorpsCeleste");
 
-            HelpBar = new HelpBarPanel(this);
+            HelpBar = new HelpBarPanel(this, VisualPriorities.Cutscenes.HelpBar);
             HelpBar.ShowMessage(HelpBarMessage.HoldToSkip, InputType.Gamepad);
 
             Initialize();

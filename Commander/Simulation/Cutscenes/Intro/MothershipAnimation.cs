@@ -31,7 +31,7 @@
         {
             Simulator = simulator;
 
-            Mothership = new Mothership(simulator, VisualPriorities.Default.IntroMothership);
+            Mothership = new Mothership(simulator, VisualPriorities.Cutscenes.IntroMothership);
             Mothership.Position = new Vector3(0, -Mothership.Size.Y/2 - 360, 0);
 
             State = MothershipState.None;

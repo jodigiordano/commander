@@ -20,7 +20,7 @@
             {
                 SizeX = 3,
                 Alpha = 0,
-                VisualPriority = VisualPriorities.Default.IntroLocation
+                VisualPriority = VisualPriorities.Cutscenes.IntroLocation
             };
 
 
@@ -28,7 +28,7 @@
             {
                 SizeX = 3,
                 Alpha = 0,
-                VisualPriority = VisualPriorities.Default.IntroLocation
+                VisualPriority = VisualPriorities.Cutscenes.IntroLocation
             };
 
             TimeIn = IntroCutscene.Timing["LocationIn"];

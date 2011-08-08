@@ -21,7 +21,7 @@
 
         private EphemereGamesLogo Logo;
         private Image Background;
-        private Translator LoadingTranslation;
+        private Text LoadingQuote;
 
         private SandGlass SandGlass;
         private State SceneState;
@@ -75,13 +75,16 @@
                 Color = Color.White
             };
 
-            InitLoadingTranslation();
+            LoadingQuote = new Text(LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], "Pixelite", new Vector3(0, 150, 0))
+            {
+                Color = Color.Transparent,
+                SizeX = 3
+            }.CenterIt();
 
             VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 500));
             VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
             VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeTranslation - 500, 500));
-            VisualEffects.Add(LoadingTranslation.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeTranslation, 1000));
-            VisualEffects.Add(LoadingTranslation.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeTranslation, 1000));
+            VisualEffects.Add(LoadingQuote, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeTranslation, 1000));
             SandGlass.FadeIn(TimeBeforeTranslation, 1000);
 
             ThreadLoadScenes = new Thread(LoadScenes);
@@ -102,10 +105,9 @@
                     if (TimeBeforeTranslation < 0)
                     {
                         UpdateSandGlass(gameTime);
-                        LoadingTranslation.Update();
                     }
 
-                    if (Persistence.IsPackageLoaded("principal") && LoadingTranslation.Finished)
+                    if (Persistence.IsPackageLoaded("principal"))
                     {
                         SceneState = State.LoadSharedSaveGame;
 
@@ -126,15 +128,9 @@
 
                 case State.LoadScenes:
                     UpdateSandGlass(gameTime);
-                    LoadingTranslation.Update();
 
                     if (ScenesAreLoaded)
                     {
-                        VisualEffects.Add(LoadingTranslation.Translated, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
-                        VisualEffects.Add(LoadingTranslation.ToTranslate, EphemereGames.Core.Visual.VisualEffects.FadeOutTo0(255, 0, 1000));
-
-                        SandGlass.FadeOut(1000);
-
                         foreach (var scene in ScenesLoaded)
                             Visuals.AddScene(scene);
 
@@ -211,8 +207,9 @@
         {
             Add(Background);
 
+            Add(LoadingQuote);
+
             Logo.Draw();
-            LoadingTranslation.Draw();
             SandGlass.Draw();
         }
 
@@ -222,26 +219,12 @@
             base.OnFocus();
 
             VisualEffects.Clear();
-            LoadingTranslation.Translated.Alpha = 0;
-            LoadingTranslation.ToTranslate.Alpha = 0;
+            LoadingQuote.Alpha = 0;
             ThreadLoadScenes = new Thread(LoadScenes);
             ScenesAreLoaded = false;
             SandGlass.FadeOut(0);
             TimeBeforeTransition = 2000;
             TimeBeforeTranslation = 3500;
-        }
-
-
-        private void InitLoadingTranslation()
-        {
-            LoadingTranslation = new Translator(
-                this, new Vector3(0, 150, 0),
-                "Alien", Colors.Default.AlienBright,
-                "Pixelite", Colors.Default.NeutralDark,
-                LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], 3, true, 3000, 250, 0.3f, false)
-                {
-                    CenterText = true
-                };
         }
     }
 }

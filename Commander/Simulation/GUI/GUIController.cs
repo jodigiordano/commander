@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
+    using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
 
@@ -23,6 +24,7 @@
         public Dictionary<TurretType, bool> AvailableTurrets;
         public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
         public HelpBarPanel HelpBar;
+        public CommonStash CommonStash;
 
         private Simulator Simulator;
         private Dictionary<SimPlayer, GUIPlayer> Players;
@@ -37,6 +39,7 @@
         private LevelStartedAnnunciation LevelStartedAnnunciation;
         private LevelEndedAnnunciation LevelEndedAnnunciation;
         private PlayerLives PlayerLives;
+        //private PlayerCash PlayerCash;
         private TheResistance GamePausedResistance;
 
         private ContextualMenusCollisions ContextualMenusCollisions;
@@ -59,7 +62,7 @@
 
             ContextualMenusCollisions = new ContextualMenusCollisions();
 
-            HelpBar = new HelpBarPanel(simulator.Scene)
+            HelpBar = new HelpBarPanel(simulator.Scene, VisualPriorities.Default.HelpBar)
             {
                 Alpha = 0
             };
@@ -80,10 +83,16 @@
             LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulator, Level);
             LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, Path, Level);
 
-            PlayerLives = new PlayerLives(Simulator, new Color(255, 0, 220))
+            PlayerLives = new PlayerLives(Simulator)
             {
                 CelestialBody = Level.CelestialBodyToProtect
             };
+
+            //PlayerCash = new PlayerCash(Simulator, CommonStash)
+            //{
+            //    CelestialBody = Level.CelestialBodyToProtect
+            //};
+
             PathPreviewing = new PathPreview(PathPreview, Path);
 
             MenuPowerUps.Turrets = Turrets;
@@ -117,7 +126,7 @@
 
         public void DoPlayerConnected(SimPlayer p)
         {
-            GUIPlayer player = 
+            GUIPlayer player =
                 new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.ImageName, p.BasePlayer.InputType);
 
             player.Cursor.Position = p.Position;
@@ -139,6 +148,12 @@
         {
             foreach (var p in Players.Values)
                 p.NewGameMenu.Initialize();
+        }
+
+
+        public void DoObjectDestroyed(IObjetPhysique obj)
+        {
+
         }
 
 
@@ -512,6 +527,7 @@
             LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();
             PlayerLives.Draw();
+            //PlayerCash.Draw();
             MenuPowerUps.Draw();
             PathPreviewing.Draw();
         }

@@ -66,6 +66,9 @@
 
         public void DoPlayerConnected(SimPlayer player)
         {
+            if (!Simulator.EditorMode)
+                return; 
+            
             var editorPlayer = new EditorPlayer(Simulator)
             {
                 SimPlayer = player,
@@ -83,6 +86,9 @@
 
         public void DoPlayerDisconnected(SimPlayer player)
         {
+            if (!Simulator.EditorMode)
+                return;
+
             var editorPlayer = Players[player];
 
             Players.Remove(player);
@@ -110,6 +116,9 @@
 
         public void DoPlayerMoved(SimPlayer p)
         {
+            if (!Simulator.EditorMode)
+                return;
+
             var player = Players[p];
 
             if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.MovingCB)
@@ -143,6 +152,9 @@
 
         public void DoPlayerMovedDelta(SimPlayer p, ref Vector3 delta)
         {
+            if (!Simulator.EditorMode)
+                return;
+
             var player = Players[p];
 
             if (player.SimPlayer.ActualSelection.EditingState == EditorEditingState.RotatingCB)
@@ -161,6 +173,9 @@
 
         public void DoNextOrPreviousAction(SimPlayer p, int delta)
         {
+            if (!Simulator.EditorMode)
+                return;
+
             var player = Players[p];
 
             if (player.ActualSelection.GeneralMenuChoice != EditorGeneralMenuChoice.None)
@@ -183,6 +198,9 @@
 
         public void DoSelectAction(SimPlayer p)
         {
+            if (!Simulator.EditorMode)
+                return;
+
             var player = Players[p];
 
             player.DoSelectAction();
@@ -235,6 +253,9 @@
 
         public void DoCancelAction(SimPlayer p)
         {
+            if (!Simulator.EditorMode)
+                return;
+
             var player = Players[p];
 
             //tmp

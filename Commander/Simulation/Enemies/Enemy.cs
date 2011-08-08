@@ -64,6 +64,7 @@ namespace EphemereGames.Commander.Simulation
 
         private const int BeingHitShowTime = 250;
         private double BeingHitCounter;
+        private Text CashValueText;
 
 
         public Enemy()
@@ -82,6 +83,8 @@ namespace EphemereGames.Commander.Simulation
             Level = 0;
             WaveId = -1;
             EndOfPathReached = false;
+
+            CashValueText = new Text("Pixelite") { SizeX = 2 };
         }
 
 
@@ -157,13 +160,13 @@ namespace EphemereGames.Commander.Simulation
                 ImpulseTime -= Preferences.TargetElapsedTimeMs;
             }
 
-            Resistance = Math.Max(Resistance - 0.02f, 0);
+            Resistance = Math.Max(Resistance - 0.01f, 0);
 
             //Displacement += Path.LengthDelta;
-            Displacement += Math.Max(this.Speed - this.Resistance, 0);
+            Displacement += Math.Max(Speed - Resistance, 0);
 
             Path.Position(Displacement, ref position);
-            Vector3.Add(ref position, ref this.Translation, out position);
+            Vector3.Add(ref position, ref Translation, out position);
 
             if (Displacement > Path.Length)
             {
@@ -248,7 +251,7 @@ namespace EphemereGames.Commander.Simulation
                 {
                     float pointsAttaqueEffectif = (this.Type == EnemyType.Comet) ? p.AttackPoints * 3 : p.AttackPoints;
 
-                    this.Resistance = (float)Math.Min(this.Resistance + pointsAttaqueEffectif, 0.75 * this.Speed);
+                    this.Resistance = (float)Math.Min(this.Resistance + pointsAttaqueEffectif, 0.95 * this.Speed);
                     SlowMotionEffect.Trigger(ref this.position);
                 }
                 else if (p is NanobotsBullet)
@@ -306,6 +309,10 @@ namespace EphemereGames.Commander.Simulation
             Simulator.Scene.Particles.Return(LaserEffect);
             Simulator.Scene.Particles.Return(SlowMotionEffect);
             Simulator.Scene.Particles.Return(NanobotsInfectionEffect);
+
+
+            if (!Simulator.DebugMode && CashValue > 0)
+                Simulator.Scene.Animations.Add(new CashTakenAnimation(CashValue, Position, VisualPriority - 0.0000001));
         }
     }
 }

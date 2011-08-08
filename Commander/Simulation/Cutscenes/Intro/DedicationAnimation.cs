@@ -29,7 +29,7 @@
                 Data = AvailableDedications[Main.Random.Next(0, AvailableDedications.Count)],
                 Alpha = 0,
                 SizeX = 2,
-                VisualPriority = VisualPriorities.Default.IntroDedication
+                VisualPriority = VisualPriorities.Cutscenes.IntroDedication
             };
 
             TimeIn = IntroCutscene.Timing["DedicationIn"];

@@ -114,6 +114,8 @@
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
+    <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
+    <Compile Include="Simulation\GUI\PlayerCash.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Simulation\Pause\PausedGameController.cs" />
     <Compile Include="Player\HighScores.cs" />

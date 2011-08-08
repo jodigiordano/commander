@@ -13,6 +13,7 @@
         public string Name;
         public List<Turret> Turrets = new List<Turret>();
         public Image Image;
+        public Image NearHitImage;
         public int PathPriority;
         
         public Vector3 position;
@@ -107,6 +108,7 @@
 
             SetSize(size);
             SetImage(partialImageName);
+            SetNearHitMask();
             SetRotation(rotationRad);
 
             BasePosition = basePosition;
@@ -192,13 +194,13 @@
 
             else if (size <= (int) Size.Normal)
             {
-                InnerTurretZone.Radius = size * 0.8f;
+                InnerTurretZone.Radius = size * 0.9f;
                 OuterTurretZone.Radius = size * 1.2f;
             }
 
             else
             {
-                InnerTurretZone.Radius = size * 0.5f;
+                InnerTurretZone.Radius = size * 0.9f;
                 OuterTurretZone.Radius = size * 1.0f;
             }
         }
@@ -212,6 +214,12 @@
             {
                 Image = new Image(GetImageName(Size, PartialImageName)) { SizeX = 6, VisualPriority = VisualPriorityBackup };
             }
+        }
+
+
+        public void SetNearHitMask()
+        {
+
         }
 
 

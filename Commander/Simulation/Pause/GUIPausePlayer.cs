@@ -22,6 +22,9 @@
 
         public void Draw()
         {
+            if (Cursor.Alpha == 0)
+                return;
+
             Cursor.Draw();
         }
     }

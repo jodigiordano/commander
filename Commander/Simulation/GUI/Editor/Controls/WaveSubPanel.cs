@@ -87,7 +87,7 @@
 
             Distance = descriptor.Distance;
             Delay = (int) (descriptor.Delay / 1000);
-            ApplyDelayEvery = descriptor.ApplyDelayEvery / 1000;
+            ApplyDelayEvery = descriptor.ApplyDelayEvery;
             SwitchEvery = descriptor.SwitchEvery;
         }
 
@@ -104,7 +104,7 @@
                 Quantity = QuantityWidget.Value,
                 Distance = Distance,
                 Delay = Delay * 1000,
-                ApplyDelayEvery = ApplyDelayEvery * 1000,
+                ApplyDelayEvery = ApplyDelayEvery,
                 SwitchEvery = SwitchEvery
             };
         }

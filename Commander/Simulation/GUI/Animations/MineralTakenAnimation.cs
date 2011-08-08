@@ -29,18 +29,6 @@
         }
 
 
-        //protected override void Show()
-        //{
-        //    Scene.Add(Value);
-        //}
-
-
-        //protected override void Hide()
-        //{
-        //    Scene.Remove(Value);
-        //}
-
-
         public override void Draw()
         {
             Scene.Add(Value);

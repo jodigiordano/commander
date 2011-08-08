@@ -19,7 +19,7 @@
             Logo = new Text("Ephemere Games", "Pixelite")
             {
                 Alpha = 0,
-                VisualPriority = VisualPriorities.Default.IntroLogo,
+                VisualPriority = VisualPriorities.Cutscenes.IntroLogo,
                 SizeX = 6
             };
             Logo.CenterIt();
@@ -27,7 +27,7 @@
             Presents = new Text("Presents", "Pixelite", new Vector3(0, 60, 0))
             {
                 Alpha = 0,
-                VisualPriority = VisualPriorities.Default.IntroLogo,
+                VisualPriority = VisualPriorities.Cutscenes.IntroLogo,
                 SizeX = 4
             };
             Presents.CenterIt();

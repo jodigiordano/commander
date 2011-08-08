@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
 
 
     class PlayerLives
@@ -13,7 +12,7 @@
         private List<Moon> Moons;
 
 
-        public PlayerLives(Simulator simulator, Color color)
+        public PlayerLives(Simulator simulator)
         {
             Simulator = simulator;
 
