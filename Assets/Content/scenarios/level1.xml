@@ -43,7 +43,7 @@
       <Image>planete7</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
-      <Size>Normal</Size>
+      <Size>Big</Size>
       <Speed>600000</Speed>
       <PathPriority>0</PathPriority>
       <Path>

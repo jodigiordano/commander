@@ -48,7 +48,7 @@
         {
             get
             {
-                return VisualPriorityBackup;
+                return base.VisualPriority;
             }
 
             set
@@ -56,9 +56,6 @@
                 VisualPriorityBackup = Effect.VisualPriority;
 
                 Effect.VisualPriority = value;
-
-                for (int i = 0; i < Turrets.Count; i++)
-                    Turrets[i].VisualPriority = value;
             }
         }
 

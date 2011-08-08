@@ -60,7 +60,7 @@
             );
         }
 
-        public Vector2 positionFin()
+        public Vector2 GetEndingPosition()
         {
             return new Vector2(
                 Curves[0].Keys[Curves[0].Keys.Count - 1].Value,
@@ -69,37 +69,37 @@
         }
 
 
-        public Vector2 GetPosition(double temps)
-        {
-            return new Vector2( // On ajoute un tick au temps (si tu ne comprends pas pourquoi, demande-moi, car j'ai pas le goût d'écrire l'explication ici lol)
-                Curves[0].Evaluate((float) temps + 1000 / 60.0f),
-                Curves[1].Evaluate((float) temps + 1000 / 60.0f)
-            );
-        }
-
-
-        public Vector2 positionRelative(double temps)
+        public Vector2 GetPosition(double time)
         {
             return new Vector2(
-                Curves[0].Evaluate((float) temps) - Curves[0].Evaluate(0f),
-                Curves[1].Evaluate((float) temps) - Curves[1].Evaluate(0f)
+                Curves[0].Evaluate((float) time + 1000 / 60.0f),
+                Curves[1].Evaluate((float) time + 1000 / 60.0f)
             );
         }
 
 
-        public float GetRotation(double temps) {
-            Vector2 directionActuelle = direction(temps);
-
-            return (MathHelper.PiOver2) + (float)Math.Atan2(directionActuelle.Y, directionActuelle.X);
+        public Vector2 GetRelativePosition(double time)
+        {
+            return new Vector2(
+                Curves[0].Evaluate((float) time) - Curves[0].Evaluate(0f),
+                Curves[1].Evaluate((float) time) - Curves[1].Evaluate(0f)
+            );
         }
 
 
-        public Vector2 direction(double temps)
-        {
-            Vector2 positionAvant = GetPosition(temps);
-            Vector2 positionApres = GetPosition(temps + 1);
+        public float GetRotation(double time) {
+            Vector2 actualDirection = GetDirection(time);
 
-            Vector2 direction = positionApres - positionAvant;
+            return (MathHelper.PiOver2) + (float)Math.Atan2(actualDirection.Y, actualDirection.X);
+        }
+
+
+        public Vector2 GetDirection(double time)
+        {
+            Vector2 positionBefore = GetPosition(time);
+            Vector2 positionAfter = GetPosition(time + 1);
+
+            Vector2 direction = positionAfter - positionBefore;
 
             direction.Normalize();
 
@@ -107,21 +107,21 @@
         }
 
 
-        public static Path2D CreerVitesse(EphemereGames.Core.Utilities.Path3D.CurveType type, double time)
+        public static Path2D CreateCurve(CurveType type, double time)
         {
             Path2D path = new Path2D();
 
             switch (type)
             {
-                case EphemereGames.Core.Utilities.Path3D.CurveType.Linear:
+                case CurveType.Linear:
                     path.Initialize(new List<Vector2>() { Vector2.Zero, Vector2.One }, new List<double> { 0, time });
                     break;
 
-                case EphemereGames.Core.Utilities.Path3D.CurveType.Exponential:
+                case CurveType.Exponential:
                     path.Initialize(new List<Vector2>() { Vector2.Zero, new Vector2(0.8f, 0.1f), Vector2.One }, new List<double> { 0, time / 2, time });
                     break;
 
-                case EphemereGames.Core.Utilities.Path3D.CurveType.Log:
+                case CurveType.Log:
                     path.Initialize(new List<Vector2>() { Vector2.Zero, new Vector2(0.1f, 0.8f), Vector2.One }, new List<double> { 0, time / 2, time });
                     break;
             }

@@ -196,7 +196,7 @@ namespace EphemereGames.Commander.Simulation
             if (!Alive)
                 return;
 
-            float pourcPath = Path.GetPourc(Displacement);
+            float pourcPath = Path.GetPercentage(Displacement);
 
             VisualPriority = Simulator.TweakingController.EnemiesFactory.GetVisualPriority(Type, pourcPath);
 

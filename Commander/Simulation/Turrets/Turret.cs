@@ -181,12 +181,12 @@
         {
             get
             {
-                return this.VisualPriorityBackup;
+                return VisualPriorityBackup;
             }
 
             set
             {
-                this.VisualPriorityBackup = value;
+                VisualPriorityBackup = value;
 
                 BaseImage.VisualPriority = value;
                 CanonImage.VisualPriority = value + 0.00001;

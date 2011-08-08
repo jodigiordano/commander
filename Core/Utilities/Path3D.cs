@@ -124,14 +124,6 @@
         }
 
 
-        public enum CurveType
-        {
-            Linear,
-            Exponential,
-            Log
-        }
-
-
         public static Path3D CreerVitesse(CurveType type, double time)
         {
             Path3D path = new Path3D();

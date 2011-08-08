@@ -74,6 +74,8 @@
         public const double Enemy = 0.89; // between 0.79 and 0.89
         public const double Path = 0.9; // between 0.8 and 0.9
 
+        public const double TurretRange = 0.94;
+
         public const double HelpBar = 0.95;
 
         public const double MenuChoices = 0.99;

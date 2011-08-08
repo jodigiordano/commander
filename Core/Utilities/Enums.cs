@@ -6,4 +6,13 @@
         WindowsFull,
         Xbox360
     }
+
+
+    public enum CurveType
+    {
+        Linear,
+        Exponential,
+        Log,
+        Sine
+    }
 }

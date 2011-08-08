@@ -127,7 +127,7 @@
 
             double relativeTime = Length - RemainingTime;
 
-            TrailDirection = Path.direction(relativeTime);
+            TrailDirection = Path.GetDirection(relativeTime);
             ((ConeEmitter) Effect.ParticleEffect[0]).Direction = (float) Math.Atan2(TrailDirection.Y, TrailDirection.X) - MathHelper.Pi;
 
             Vector2 p = Path.GetPosition(relativeTime);

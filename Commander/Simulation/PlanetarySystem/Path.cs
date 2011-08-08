@@ -188,7 +188,7 @@
         }
 
 
-        public float GetPourc(double offset)
+        public float GetPercentage(double offset)
         {
             return InnerPath.GetPercentage(offset);
         }

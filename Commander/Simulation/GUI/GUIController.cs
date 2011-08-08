@@ -40,6 +40,7 @@
         private LevelEndedAnnunciation LevelEndedAnnunciation;
         private PlayerLives PlayerLives;
         //private PlayerCash PlayerCash;
+        private CelestialBodyNearHitAnimation CelestialBodyNearHit;
         private TheResistance GamePausedResistance;
 
         private ContextualMenusCollisions ContextualMenusCollisions;
@@ -115,6 +116,11 @@
             AdvancedViewCheckedIn = null;
 
             HelpBar.Initialize();
+
+            CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator, Enemies, Path)
+            {
+                CelestialBody = Level.CelestialBodyToProtect
+            };
         }
 
 
@@ -530,6 +536,7 @@
             //PlayerCash.Draw();
             MenuPowerUps.Draw();
             PathPreviewing.Draw();
+            CelestialBodyNearHit.Draw();
         }
 
 

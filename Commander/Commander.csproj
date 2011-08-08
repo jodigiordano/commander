@@ -223,6 +223,7 @@
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
     <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />

@@ -151,6 +151,8 @@
     <Compile Include="Utilities\Ids.cs" />
     <Compile Include="Utilities\KeyAndValue.cs" />
     <Compile Include="Utilities\LinkedListWithInit.cs" />
+    <Compile Include="Utilities\Metronome.cs" />
+    <Compile Include="Utilities\Path.cs" />
     <Compile Include="Utilities\Pool.cs" />
     <Compile Include="Utilities\Curve\Curve.cs" />
     <Compile Include="Utilities\Curve\CurveKey.cs" />

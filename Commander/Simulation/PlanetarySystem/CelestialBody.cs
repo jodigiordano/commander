@@ -13,9 +13,8 @@
         public string Name;
         public List<Turret> Turrets = new List<Turret>();
         public Image Image;
-        public Image NearHitImage;
         public int PathPriority;
-        
+        public Size Size;
         public Vector3 position;
         public Vector3 Position                                 { get { return position; } set { this.LastPosition = position; position = value; } }
         public Vector3 BasePosition;
@@ -46,14 +45,18 @@
         public bool StraightLine;
         public List<Moon> Moons;
         public bool HasGravitationalTurretBypass;
-        public double VisualPriorityBackup;
         public Circle InnerTurretZone;
         public Circle OuterTurretZone;
         public bool ShowTurretsZone;
         public float ZoneImpactDestruction;
         public bool DarkSide;
-        
+        public string PartialImageName;
+        public bool canSelect; //only for editor
+        public Turret StartingPathTurret;
+        public SimPlayer PlayerCheckedIn;        
+
         protected Simulator Simulator;
+        protected double VisualPriorityBackup;
         
         private Particle DieEffect1;
         private Particle DieEffect2;
@@ -61,13 +64,6 @@
         private float PathRotation;
         protected Matrix RotationMatrix;
         private Image TurretsZoneImage;
-
-        public string PartialImageName;
-        private Size Size;
-        public bool canSelect; //only for editor
-        public Turret StartingPathTurret;
-
-        public SimPlayer PlayerCheckedIn;
 
 
         public CelestialBody(
@@ -108,7 +104,6 @@
 
             SetSize(size);
             SetImage(partialImageName);
-            SetNearHitMask();
             SetRotation(rotationRad);
 
             BasePosition = basePosition;
@@ -121,13 +116,13 @@
 
             TurretsZoneImage = new Image("CercleBlanc", Vector3.Zero);
             TurretsZoneImage.Color = new Color(255, 255, 255, 100);
-            TurretsZoneImage.VisualPriority = Preferences.PrioriteGUIEtoiles - 0.002f;
+            TurretsZoneImage.VisualPriority = VisualPriorities.Default.TurretRange;
             ShowTurretsZone = false;
 
             ZoneImpactDestruction = 0;
 
             DarkSideEffect = Simulator.Scene.Particles.Get(@"darkSideEffect");
-            DarkSideEffect.VisualPriority = VisualPriority + 0.0001f;
+            DarkSideEffect.VisualPriority = VisualPriority + 0.000001;
             ((CircleEmitter) DarkSideEffect.ParticleEffect[0]).Radius = Circle.Radius;
 
             PlayerCheckedIn = null;
@@ -166,8 +161,8 @@
                 if (Image != null)
                     Image.VisualPriority = value;
 
-                for (int i = 0; i < Turrets.Count; i++)
-                    Turrets[i].VisualPriority = value;
+                if (DarkSideEffect != null)
+                    DarkSideEffect.VisualPriority = value + 0.000001;
             }
         }
 
@@ -214,12 +209,6 @@
             {
                 Image = new Image(GetImageName(Size, PartialImageName)) { SizeX = 6, VisualPriority = VisualPriorityBackup };
             }
-        }
-
-
-        public void SetNearHitMask()
-        {
-
         }
 
 
@@ -366,14 +355,14 @@
 
         public void DoHit(ILivingObject par)
         {
-            Particle toucherTerre = Simulator.Scene.Particles.Get(@"toucherTerre");
+            Particle hitEffect = Simulator.Scene.Particles.Get(@"toucherTerre");
 
-            if (toucherTerre != null)
+            if (hitEffect != null)
             {
-                toucherTerre.VisualPriority = VisualPriorityBackup - 0.001f;
+                hitEffect.VisualPriority = VisualPriority - 0.000001;
 
-                toucherTerre.Trigger(ref this.position);
-                Simulator.Scene.Particles.Return(toucherTerre);
+                hitEffect.Trigger(ref position);
+                Simulator.Scene.Particles.Return(hitEffect);
             }
 
             if (Invincible)
@@ -388,16 +377,16 @@
             if (Invincible)
                 return;
 
-            this.LifePoints = Math.Min(this.LifePoints, 0);
+            this.LifePoints = Math.Min(LifePoints, 0);
 
             DieEffect1 = Simulator.Scene.Particles.Get(@"bouleTerreMeurt");
             DieEffect2 = Simulator.Scene.Particles.Get(Simulator.CutsceneMode ? @"anneauTerreMeurt2" : @"anneauTerreMeurt");
 
-            DieEffect1.VisualPriority = VisualPriorityBackup - 0.001f;
-            DieEffect2.VisualPriority = VisualPriorityBackup - 0.001f;
+            DieEffect1.VisualPriority = VisualPriority - 0.000001;
+            DieEffect2.VisualPriority = VisualPriority - 0.000001;
 
-            DieEffect1.Trigger(ref this.position);
-            DieEffect2.Trigger(ref this.position);
+            DieEffect1.Trigger(ref position);
+            DieEffect2.Trigger(ref position);
 
             Simulator.Scene.Particles.Return(DieEffect1);
             Simulator.Scene.Particles.Return(DieEffect2);

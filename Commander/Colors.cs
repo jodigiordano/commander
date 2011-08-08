@@ -10,5 +10,6 @@
         public static readonly Color AlienBright = new Color(234, 196, 28);
         public static readonly Color HumansBright = new Color(53, 171, 255);
         public static readonly Color Pink = new Color(255, 0, 220, 255);
+        public static readonly Color PlanetNearHit = new Color(255, 0, 0, 255);
     }
 }

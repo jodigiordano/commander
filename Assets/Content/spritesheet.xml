@@ -89,6 +89,12 @@
     <Item><Key>battleship52</Key><Value>planetes/battleship52.png</Value></Item>
     <Item><Key>battleship53</Key><Value>planetes/battleship53.png</Value></Item>
     
+    <!-- Masks -->
+    <Item><Key>CBMask11</Key><Value>planetes/masks/mask11.png</Value></Item>
+    <Item><Key>CBMask12</Key><Value>planetes/masks/mask12.png</Value></Item>
+    <Item><Key>CBMask13</Key><Value>planetes/masks/mask13.png</Value></Item>
+    
+    
     <!-- Xbox 360 Buttons -->
     <Item><Key>ButtonBack</Key><Value>GUI/Buttons/Xbox/back.png</Value></Item>
     <Item><Key>ButtonA</Key><Value>GUI/Buttons/Xbox/facebutton_a.png</Value></Item>
