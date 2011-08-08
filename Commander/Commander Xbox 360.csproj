@@ -114,6 +114,7 @@
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
+    <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
     <Compile Include="Simulation\GUI\PlayerCash.cs" />

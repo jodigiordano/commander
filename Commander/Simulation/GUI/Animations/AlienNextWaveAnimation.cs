@@ -7,29 +7,26 @@
     using Microsoft.Xna.Framework;
 
 
-    class CelestialBodyNearHitAnimation
+    class AlienNextWaveAnimation
     {
-        private double EnemyPerc;
+        public double TimeNextWave;
 
         private CelestialBody celestialBody;
         private Simulator Simulator;
-        private List<Enemy> Enemies;
-        private Path Path;
 
         private Dictionary<Size, Image> NearHitMasks;
         private Image SelectedMask;
         private Metronome Metronome;
 
-        private double MinEnemyPerc;
+        private double MinTimeKickIn;
+        private double MinTimeFlash;
         private Vector2 MinMaxFrequencyMs;
         private double Alpha;
 
 
-        public CelestialBodyNearHitAnimation(Simulator simulator, List<Enemy> enemies, Path path)
+        public AlienNextWaveAnimation(Simulator simulator)
         {
             Simulator = simulator;
-            Enemies = enemies;
-            Path = path;
 
             NearHitMasks = new Dictionary<Size, Image>()
             {
@@ -38,9 +35,10 @@
                 { Size.Big, CreateMaskImage(GetMaskName(Size.Big)) },
             };
 
-            EnemyPerc = 0;
             Alpha = 0;
-            MinEnemyPerc = 0.7;
+            MinTimeKickIn = 10000;
+            MinTimeFlash = 3000;
+            TimeNextWave = double.MaxValue;
             MinMaxFrequencyMs = new Vector2(500, 2000);
             Metronome = Metronome.Create(CurveType.Sine, Preferences.TargetElapsedTimeMs, Preferences.TargetElapsedTimeMs);
         }
@@ -64,7 +62,7 @@
 
         public bool Visible
         {
-            get { return EnemyPerc >= MinEnemyPerc; }
+            get { return TimeNextWave < MinTimeKickIn; }
         }
 
 
@@ -73,30 +71,25 @@
             if (celestialBody == null || !celestialBody.Alive)
                 return;
 
-            ComputeNearestEnemyPerc();
-
             if (!Visible)
             {
-                Alpha = Math.Max(0, Alpha - 0.01);
+                Alpha = Math.Max(0, Alpha - 0.001);
 
                 SelectedMask.Alpha = (byte) (Alpha * 255);
                 Metronome.Initialize();
                 return;
             }
 
-            double enemyPerc = GetEnemyRelativePerc();
-
-            if (enemyPerc < 0.6)
+            if (TimeNextWave > MinTimeFlash)
             {
-                double current = enemyPerc / 0.6;
-                double delta = MathHelper.Clamp((float) (current - Alpha), -0.01f, 0.01f);
-
-                Alpha += delta;
+                double percent = 1 - ((TimeNextWave - MinTimeFlash) / (MinTimeKickIn - MinTimeFlash));
+                
+                Alpha = percent;
             }
 
             else
             {
-                Metronome.FrequencyMs = Math.Max(MinMaxFrequencyMs.X, MinMaxFrequencyMs.Y * (1 - enemyPerc));
+                Metronome.FrequencyMs = Math.Max(MinMaxFrequencyMs.X, MinMaxFrequencyMs.Y * (TimeNextWave / MinTimeKickIn));
                 Metronome.Update();
 
                 Alpha = Metronome.CurvePercThisTick;
@@ -104,6 +97,7 @@
 
             SelectedMask.Alpha = (byte) (Alpha * 255);
             SelectedMask.Position = CelestialBody.Position;
+            SelectedMask.Rotation = CelestialBody.Image.Rotation;
 
             Simulator.Scene.Add(SelectedMask);
         }
@@ -111,7 +105,7 @@
 
         private string GetMaskName(Size size)
         {
-            return "CBMask1" + ((size == Size.Small) ? 1 : (size == Size.Normal) ? 2 : 3).ToString();
+            return "CBMask2" + ((size == Size.Small) ? 1 : (size == Size.Normal) ? 2 : 3).ToString();
         }
 
 
@@ -121,31 +115,8 @@
             {
                 SizeX = 6,
                 Color = Colors.Default.PlanetNearHit,
-                Blend = BlendType.Add,
                 Alpha = 0
             };
-        }
-
-
-        private void ComputeNearestEnemyPerc()
-        {
-            EnemyPerc = 0;
-
-            for (int i = 0; i < Enemies.Count; i++)
-            {
-                Enemy e = Enemies[i];
-
-                double displacementPerc = Path.GetPercentage(e.Displacement);
-
-                if (displacementPerc > EnemyPerc)
-                    EnemyPerc = displacementPerc;
-            }
-        }
-
-
-        private double GetEnemyRelativePerc()
-        {
-            return (EnemyPerc - MinEnemyPerc) / (1 - MinEnemyPerc);
         }
     }
 }

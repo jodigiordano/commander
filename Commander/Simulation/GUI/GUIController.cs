@@ -41,6 +41,7 @@
         private PlayerLives PlayerLives;
         //private PlayerCash PlayerCash;
         private CelestialBodyNearHitAnimation CelestialBodyNearHit;
+        private AlienNextWaveAnimation AlienNextWaveAnimation;
         private TheResistance GamePausedResistance;
 
         private ContextualMenusCollisions ContextualMenusCollisions;
@@ -120,6 +121,11 @@
             CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator, Enemies, Path)
             {
                 CelestialBody = Level.CelestialBodyToProtect
+            };
+
+            AlienNextWaveAnimation = new AlienNextWaveAnimation(Simulator)
+            {
+                CelestialBody = Path.FirstCelestialBody
             };
         }
 
@@ -318,6 +324,7 @@
                 nextWave = nextWave.Next;
 
             GameMenu.TimeNextWave = nextWave.Value.StartingTime;
+            AlienNextWaveAnimation.TimeNextWave = nextWave.Value.StartingTime;
         }
 
 
@@ -482,8 +489,7 @@
             if (PowerUpsToBuyCount == 0)
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
 
-            if (GameMenu.TimeNextWave > 0)
-                GameMenu.TimeNextWave = Math.Max(0, GameMenu.TimeNextWave - Preferences.TargetElapsedTimeMs);
+            AlienNextWaveAnimation.TimeNextWave = GameMenu.TimeNextWave = Math.Max(0, GameMenu.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
             if (Simulator.DemoMode)
             {
@@ -537,6 +543,7 @@
             MenuPowerUps.Draw();
             PathPreviewing.Draw();
             CelestialBodyNearHit.Draw();
+            AlienNextWaveAnimation.Draw();
         }
 
 

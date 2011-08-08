@@ -88,8 +88,8 @@
 
         public void Update()
         {
-            this.SandGlass.RemainingTime = this.TimeNextWave;
-            this.SandGlass.Update();
+            SandGlass.RemainingTime = TimeNextWave;
+            SandGlass.Update();
         }
 
 
