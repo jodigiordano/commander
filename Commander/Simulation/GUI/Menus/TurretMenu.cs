@@ -33,10 +33,10 @@
                 new UpgradeTurretContextualMenuChoice("upgrade",
                     new Text("Pixelite") { SizeX = textSize },
                     new Text("Pixelite") { SizeX = textSize },
-                    new Image("upgrade") { SizeX = 0.75f, Origin = Vector2.Zero }),
+                    new Image("upgrade") { SizeX = 3, Origin = Vector2.Zero }),
                 new LogoTextContextualMenuChoice("sell",
                     new Text("Pixelite") { SizeX = textSize },
-                    new Image("sell") { SizeX = 0.75f, Origin = Vector2.Zero }) { LogoOffet = new Vector3(3, 3, 0), DistanceBetweenNameAndLogo = new Vector2(60, 0) }
+                    new Image("sell") { SizeX = 3, Origin = Vector2.Zero }) { LogoOffet = new Vector3(3, 3, 0), DistanceBetweenNameAndLogo = new Vector2(60, 0) }
             };
 
             Menu = new ContextualMenu(simulator, visualPriority, color, Choices, 15);
