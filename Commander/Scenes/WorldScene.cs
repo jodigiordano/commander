@@ -105,12 +105,12 @@
                 int save = 0;
                 bool unlocked = true;
 
-                //foreach (var level in Descriptor.UnlockedCondition)
-                //    if (!Main.PlayerSaveGame.Progress.TryGetValue(level, out save) || save <= 0)
-                //    {
-                //        unlocked = false;
-                //        break;
-                //    }
+                foreach (var level in Descriptor.UnlockedCondition)
+                    if (!Main.PlayerSaveGame.Progress.TryGetValue(level, out save) || save <= 0)
+                    {
+                        unlocked = false;
+                        break;
+                    }
 
                 return unlocked;
             }
@@ -371,12 +371,12 @@
             {
                 bool unlocked = true;
 
-                //foreach (var other in level.Value)
-                //    if (!Main.PlayerSaveGame.Progress.ContainsKey(other) || Main.PlayerSaveGame.Progress[other] <= 0)
-                //    {
-                //        unlocked = false;
-                //        break;
-                //    }
+                foreach (var other in level.Value)
+                    if (!Main.PlayerSaveGame.Progress.ContainsKey(other) || Main.PlayerSaveGame.Progress[other] <= 0)
+                    {
+                        unlocked = false;
+                        break;
+                    }
 
                 LevelUnlockedStates[level.Key] = unlocked;
                 CelestialBodies[level.Key].CanSelect = unlocked;
