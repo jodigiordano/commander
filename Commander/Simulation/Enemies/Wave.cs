@@ -9,7 +9,6 @@
         public double StartingTime;
 
         public List<Enemy> NewEnemies;
-        public Dictionary<EnemyType, EnemyDescriptor> Composition;
         public int EnemiesCount;
 
         private List<EnemyDescriptor> EnemiesToCreate;
@@ -25,14 +24,12 @@
             Descriptor = descriptor;
 
             NewEnemies = new List<Enemy>();
-            Composition = new Dictionary<EnemyType, EnemyDescriptor>();
         }
 
 
         public void Initialize()
         {
             NewEnemies.Clear();
-            Composition.Clear();
 
             EnemiesToCreate = Descriptor.GetEnemiesToCreate(Simulator);
 
@@ -42,22 +39,6 @@
             });
 
             StartingTime = Descriptor.StartingTime;
-
-            foreach (var enemy in EnemiesToCreate)
-            {
-                if (Composition.ContainsKey(enemy.Type))
-                    Composition[enemy.Type].CashValue++;
-                else
-                {
-                    EnemyDescriptor desc = new EnemyDescriptor();
-                    desc.Type = enemy.Type;
-                    desc.CashValue = 1;
-                    desc.LivesLevel = enemy.LivesLevel;
-                    desc.SpeedLevel = enemy.SpeedLevel;
-
-                    Composition.Add(enemy.Type, desc);
-                }
-            }
 
             EnemiesCount = EnemiesToCreate.Count;
             EnemiesAlive = 0;
@@ -96,6 +77,12 @@
 
                 i--;
             }
+        }
+
+
+        public int EnemiesToCreateCount
+        {
+            get { return EnemiesToCreate.Count; }
         }
 
 

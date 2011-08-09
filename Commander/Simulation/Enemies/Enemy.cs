@@ -311,8 +311,8 @@ namespace EphemereGames.Commander.Simulation
             Simulator.Scene.Particles.Return(NanobotsInfectionEffect);
 
 
-            if (!Simulator.DebugMode && CashValue > 0)
-                Simulator.Scene.Animations.Add(new CashTakenAnimation(CashValue, Position, VisualPriority - 0.0000001));
+            if (!Simulator.DemoMode && CashValue > 0)
+                Simulator.Scene.Animations.Add(new CashTakenAnimation(CashValue, Position, VisualPriorities.Default.EnemyCashAnimation));
         }
     }
 }

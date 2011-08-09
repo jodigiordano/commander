@@ -29,4 +29,5 @@ namespace EphemereGames.Commander.Simulation
     delegate void EnemyBulletHandler(Enemy e, Bullet b);
     delegate void EditorPlayerHandler(EditorPlayer e);
     delegate void EditorCommandHandler(EditorCommand e);
+    delegate void NextWaveHandler(WaveDescriptor d);
 }

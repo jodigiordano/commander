@@ -12,7 +12,11 @@
         public CashTakenAnimation(int value, Vector3 position, double visualPriority)
             : base(1000, visualPriority)
         {
-            Value = new Text(value + "M$", "Pixelite", position) { SizeX = 2 }.CenterIt();
+            Value = new Text(value + "M$", "Pixelite", position)
+            {
+                SizeX = 2,
+                VisualPriority = visualPriority
+            }.CenterIt();
         }
 
 

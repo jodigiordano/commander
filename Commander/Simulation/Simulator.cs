@@ -177,7 +177,6 @@ namespace EphemereGames.Commander.Simulation
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(LevelsController.DoObjectDestroyed);
             EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.DoEnemyReachedEndOfPath);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.DoCelestialBodyDestroyed);
-            EnemiesController.WaveStarted += new NoneHandler(GUIController.DoNextWave);
             SimPlayersController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
             LevelsController.NewGameState += new NewGameStateHandler(GUIController.DoGameStateChanged);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.DoPlayerSelectionChanged);
@@ -218,8 +217,6 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PlayerDisconnected += new SimPlayerHandler(PausedGameController.DoPlayerDisconnected);
             SimPlayersController.ShowAdvancedViewAsked += new SimPlayerHandler(GUIController.DoShowAdvancedViewAsked);
             SimPlayersController.HideAdvancedViewAsked += new SimPlayerHandler(GUIController.DoHideAdvancedViewAsked);
-            SimPlayersController.ShowNextWaveAsked += new SimPlayerHandler(GUIController.DoShowNextWaveAsked);
-            SimPlayersController.HideNextWaveAsked += new SimPlayerHandler(GUIController.DoHideNextWaveAsked);
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(SimPlayersController.DoObjectHit);
             SimPlayersController.PlayerConnected += new SimPlayerHandler(EditorController.DoPlayerConnected);
             SimPlayersController.PlayerDisconnected += new SimPlayerHandler(EditorController.DoPlayerDisconnected);
@@ -239,6 +236,7 @@ namespace EphemereGames.Commander.Simulation
             PausedGameController.PanelOpened += new NoneHandler(GUIController.DoPanelOpened);
             PausedGameController.PanelClosed += new NoneHandler(GUIController.DoPanelClosed);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(GUIController.DoObjectDestroyed);
+            EnemiesController.NextWaveCompositionChanged += new NextWaveHandler(GUIController.DoNextWaveCompositionChanged);
         }
 
 
@@ -267,7 +265,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
             SimPlayersController.CommonStash = LevelsController.CommonStash;
             SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
-            SimPlayersController.SandGlass = GUIController.SandGlass;
+            SimPlayersController.StartingPathMenu = GUIController.StartingPathMenu;
             SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
             PlanetarySystemController.CelestialBodies = LevelsController.CelestialBodies;
             TurretsController.PlanetarySystemController = PlanetarySystemController;
@@ -280,7 +278,6 @@ namespace EphemereGames.Commander.Simulation
             EnemiesController.LifePacksGiven = LevelsController.Level.LifePacks;
             GUIController.Path = PlanetarySystemController.Path;
             GUIController.PathPreview = PlanetarySystemController.PathPreview;
-            GUIController.CompositionNextWave = EnemiesController.NextWaveData;
             GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
             GUIController.Level = LevelsController.Level;
             GUIController.Enemies = EnemiesController.Enemies;
@@ -302,6 +299,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.OptionsPanel = PausedGameController.OptionsPanel;
             SimPlayersController.PausePanel = PausedGameController.PausePanel;
             GUIController.CommonStash = LevelsController.CommonStash;
+            GUIController.ActiveWaves = EnemiesController.ActiveWaves;
 
             TweakingController.Initialize();
             LevelsController.Initialize();

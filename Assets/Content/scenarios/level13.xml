@@ -64,7 +64,7 @@
       </Position>
       <Rotation>-0.731884658</Rotation>
       <InBackground>false</InBackground>
-      <CanSelect>false</CanSelect>
+      <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
       <FollowPath>false</FollowPath>

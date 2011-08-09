@@ -62,7 +62,7 @@
       </Position>
       <Rotation>152</Rotation>
       <InBackground>false</InBackground>
-      <CanSelect>false</CanSelect>
+      <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>

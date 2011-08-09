@@ -62,7 +62,7 @@
 
         public bool Visible
         {
-            get { return TimeNextWave < MinTimeKickIn; }
+            get { return TimeNextWave < MinTimeKickIn && TimeNextWave > 0; }
         }
 
 

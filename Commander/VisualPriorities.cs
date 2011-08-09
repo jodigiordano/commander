@@ -43,10 +43,13 @@
 
         public const double TurretMenu = 0.38;
         public const double CelestialBodyMenu = 0.39;
+        public const double StartingPathMenu = 0.39;
 
         public const double PlayerCursor = 0.4; //Back == 0.4 - 0.00001; Trail == 0.4 - 0.00002, Trail2 == 0.4 - 0.00003
 
         public const double DefaultSpaceship = 0.41;
+
+        public const double PowerUpsMenu = 0.42;
 
         public const double PlayerCash = 0.42;
 
@@ -73,6 +76,8 @@
 
         public const double Enemy = 0.89; // between 0.79 and 0.89
         public const double Path = 0.9; // between 0.8 and 0.9
+
+        public const double EnemyCashAnimation = 0.92;
 
         public const double TurretRange = 0.94;
 

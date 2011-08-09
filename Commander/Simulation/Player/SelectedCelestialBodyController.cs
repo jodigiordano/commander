@@ -81,6 +81,14 @@
                 return;
             }
 
+            // The player is firing
+            if (!Simulator.DemoMode && Player.Firing)
+            {
+                Initialize();
+                return;
+            }
+
+
             if (Turret != null && Turret.Alive && Physics.CircleCicleCollision(Player.Circle, Turret.Circle))
             {
                 SelectedTurretChanged = false;

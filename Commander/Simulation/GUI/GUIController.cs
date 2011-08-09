@@ -12,7 +12,6 @@
     {
         public List<CelestialBody> CelestialBodies;
         public List<Turret> Turrets;
-        public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave;
         public Level Level;
         public Dictionary<string, LevelDescriptor> AvailableLevelsDemoMode;
         public List<Enemy> Enemies;
@@ -25,21 +24,22 @@
         public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
         public HelpBarPanel HelpBar;
         public CommonStash CommonStash;
+        public List<Wave> ActiveWaves;
 
         private Simulator Simulator;
         private Dictionary<SimPlayer, GUIPlayer> Players;
 
         //one
-        private GameMenu GameMenu;
         private AdvancedView AdvancedView;
         private PowerUpsMenu MenuPowerUps;
         private PathPreview PathPreviewing;
+        public StartingPathMenu StartingPathMenu;
 
         //not player-related
+        private GameMenu GameMenu;
         private LevelStartedAnnunciation LevelStartedAnnunciation;
         private LevelEndedAnnunciation LevelEndedAnnunciation;
         private PlayerLives PlayerLives;
-        //private PlayerCash PlayerCash;
         private CelestialBodyNearHitAnimation CelestialBodyNearHit;
         private AlienNextWaveAnimation AlienNextWaveAnimation;
         private TheResistance GamePausedResistance;
@@ -47,16 +47,18 @@
         private ContextualMenusCollisions ContextualMenusCollisions;
 
         private GUIPlayer GamePausedMenuPlayerCheckedIn;
-        private GUIPlayer NextWaveCheckedIn;
         private GUIPlayer AdvancedViewCheckedIn;
+
+        private int lastEnemiesToReleaseCount;
         
 
         public GUIController(Simulator simulator)
         {
             Simulator = simulator;
 
-            GameMenu = new GameMenu(Simulator, new Vector3(400, -260, 0));
-            MenuPowerUps = new PowerUpsMenu(Simulator, new Vector3(-550, 200, 0), Preferences.PrioriteGUIPanneauGeneral + 0.03f);
+            StartingPathMenu = new StartingPathMenu(Simulator, VisualPriorities.Default.StartingPathMenu);
+            GameMenu = new Simulation.GameMenu(Simulator, new Vector3(450, -320, 0));
+            MenuPowerUps = new PowerUpsMenu(Simulator, new Vector3(-550, 200, 0), VisualPriorities.Default.PowerUpsMenu);
             Players = new Dictionary<SimPlayer, GUIPlayer>();
 
             if (!Simulator.DemoMode)
@@ -90,20 +92,15 @@
                 CelestialBody = Level.CelestialBodyToProtect
             };
 
-            //PlayerCash = new PlayerCash(Simulator, CommonStash)
-            //{
-            //    CelestialBody = Level.CelestialBodyToProtect
-            //};
-
             PathPreviewing = new PathPreview(PathPreview, Path);
 
             MenuPowerUps.Turrets = Turrets;
             MenuPowerUps.AvailablePowerUps = AvailablePowerUps;
             MenuPowerUps.Initialize();
 
-            GameMenu.CompositionNextWave = CompositionNextWave;
-            GameMenu.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
-            GameMenu.TimeNextWave = Waves.Count == 0 ? 0 : Waves.First.Value.StartingTime;
+            StartingPathMenu.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
+            StartingPathMenu.TimeNextWave = (InfiniteWaves == null && Waves.Count != 0) ? Waves.First.Value.StartingTime : 0;
+
 
             if (!Simulator.DemoMode)
             {
@@ -113,7 +110,6 @@
             }
 
             GamePausedMenuPlayerCheckedIn = null;
-            NextWaveCheckedIn = null;
             AdvancedViewCheckedIn = null;
 
             HelpBar.Initialize();
@@ -127,19 +123,16 @@
             {
                 CelestialBody = Path.FirstCelestialBody
             };
-        }
 
-
-        public SandGlass SandGlass
-        {
-            get { return GameMenu.SandGlass; }
+            lastEnemiesToReleaseCount = -1;
         }
 
 
         public void DoPlayerConnected(SimPlayer p)
         {
-            GUIPlayer player =
-                new GUIPlayer(Simulator, AvailableTurrets, AvailableLevelsDemoMode, p.Color, p.ImageName, p.BasePlayer.InputType);
+            GUIPlayer player = new GUIPlayer(
+                Simulator, AvailableTurrets, AvailableLevelsDemoMode,
+                p.Color, p.ImageName, p.BasePlayer.InputType);
 
             player.Cursor.Position = p.Position;
 
@@ -169,44 +162,15 @@
         }
 
 
-        public void DoShowNextWaveAsked(SimPlayer p)
+        public void DoNextWaveCompositionChanged(WaveDescriptor composition)
         {
-            var player = Players[p];
-
-            if (NextWaveCheckedIn == null)
-            {
-                GameMenu.MenuNextWave.Visible = true;
-                GameMenu.MenuNextWave.Color = p.Color;
-                NextWaveCheckedIn = player;
-            }
-
-            HelpBar.ShowMessage(HelpBarMessage.CallNextWave, p.BasePlayer.InputType);
-        }
-
-
-        public void DoHideNextWaveAsked(SimPlayer p)
-        {
-            var player = Players[p];
-
-            if (NextWaveCheckedIn == player)
-            {
-                GameMenu.MenuNextWave.Visible = false;
-                NextWaveCheckedIn = null;
-            }
-
-            HelpBar.HideMessage(HelpBarMessage.CallNextWave);
-        }
-
-
-        public void DoNextWave()
-        {
-            GameMenu.SandGlass.Flip();
+            StartingPathMenu.NextWaveComposition = composition;
         }
 
 
         public void DoCommonStashChanged(CommonStash stash)
         {
-            GameMenu.Score = stash.TotalScore;
+            //GameMenu.Score = stash.TotalScore;
             GameMenu.Cash = stash.Cash;
         }
 
@@ -308,22 +272,25 @@
 
         public void DoWaveStarted()
         {
-            GameMenu.TimeNextWave = double.MaxValue;
-            GameMenu.RemainingWaves--;
+            StartingPathMenu.RemainingWaves--;
 
             if (!Simulator.DemoMode)
                 Audio.PlaySfx(@"sfxNouvelleVague");
 
-            if (InfiniteWaves != null || GameMenu.RemainingWaves <= 0)
+            if (InfiniteWaves != null || StartingPathMenu.RemainingWaves <= 0)
+            {
+                StartingPathMenu.TimeNextWave = 0;
+                AlienNextWaveAnimation.TimeNextWave = 0;
                 return;
+            }
 
             //todo
             LinkedListNode<Wave> nextWave = Waves.First;
 
-            for (int i = 0; i < Waves.Count - GameMenu.RemainingWaves; i++)
+            for (int i = 0; i < Waves.Count - StartingPathMenu.RemainingWaves; i++)
                 nextWave = nextWave.Next;
 
-            GameMenu.TimeNextWave = nextWave.Value.StartingTime;
+            StartingPathMenu.TimeNextWave = nextWave.Value.StartingTime;
             AlienNextWaveAnimation.TimeNextWave = nextWave.Value.StartingTime;
         }
 
@@ -397,9 +364,33 @@
 
             BeginHelpMessages(p);
 
-            player.CelestialBodyMenu.CelestialBody = selection.CelestialBody;
-            player.CelestialBodyMenu.TurretToBuy = selection.TurretToBuy;
-            player.CelestialBodyMenu.Visible = selection.TurretToPlace == null && selection.CelestialBody != null;
+            // Check in the starting path menu
+            if (StartingPathMenu.CheckedIn == null && selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
+            {
+                StartingPathMenu.CelestialBody = selection.CelestialBody;
+                StartingPathMenu.Visible = true;
+                StartingPathMenu.CheckedIn = p;
+                StartingPathMenu.Color = p.Color;
+                StartingPathMenu.Position = p.Position;
+
+                player.CelestialBodyMenu.Visible = false;
+            }
+
+            // Check out the starting path menu
+            if (StartingPathMenu.CheckedIn == p && (selection.CelestialBody == null || !selection.CelestialBody.FirstOnPath))
+            {
+                StartingPathMenu.Visible = false;
+                StartingPathMenu.CheckedIn = null;
+            }
+
+            // Open the celestial body menu
+            if (StartingPathMenu.CheckedIn != p)
+            {
+                player.CelestialBodyMenu.CelestialBody = selection.CelestialBody;
+                player.CelestialBodyMenu.TurretToBuy = selection.TurretToBuy;
+                player.CelestialBodyMenu.Visible = selection.TurretToPlace == null && selection.CelestialBody != null;
+            }
+
 
             if (selection.PowerUpToBuy != PowerUpType.None)
                 MenuPowerUps.PowerUpToBuy = selection.PowerUpToBuy;
@@ -467,29 +458,12 @@
 
         public void Update()
         {
-            bool fadeGameMenu = false;
-
-            
-            foreach (var player in Players.Values)
-            {
-                var menu = player.OpenedMenu;
-
-                if (menu == null)
-                    continue;
-
-                if (Core.Physics.Physics.RectangleRectangleCollision(menu.Bubble.Dimension, GameMenu.Rectangle))
-                    fadeGameMenu = true;
-            }
-
-            if (fadeGameMenu)
-                GameMenu.FadeOut(100, 250);
-            else
-                GameMenu.FadeIn(255, 250);
+            SyncStartingPathMenu();
 
             if (PowerUpsToBuyCount == 0)
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
 
-            AlienNextWaveAnimation.TimeNextWave = GameMenu.TimeNextWave = Math.Max(0, GameMenu.TimeNextWave - Preferences.TargetElapsedTimeMs);
+            AlienNextWaveAnimation.TimeNextWave = Math.Max(0, AlienNextWaveAnimation.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
             if (Simulator.DemoMode)
             {
@@ -506,12 +480,13 @@
 
             else if (Simulator.State != GameState.Paused)
             {
-                GameMenu.Update();
+                StartingPathMenu.Update();
                 LevelStartedAnnunciation.Update();
                 LevelEndedAnnunciation.Update();
                 PlayerLives.Update();
                 MenuPowerUps.Update();
                 PathPreviewing.Update();
+                GameMenu.Update();
             }
         }
 
@@ -534,16 +509,16 @@
             if (Simulator.DemoMode)
                 return;
 
-            GameMenu.Draw();
+            StartingPathMenu.Draw();
             LevelStartedAnnunciation.Draw();
             LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();
             PlayerLives.Draw();
-            //PlayerCash.Draw();
             MenuPowerUps.Draw();
             PathPreviewing.Draw();
             CelestialBodyNearHit.Draw();
             AlienNextWaveAnimation.Draw();
+            GameMenu.Draw();
         }
 
 
@@ -596,6 +571,24 @@
             {
                 AdvancedView.Visible = false;
             }
+        }
+
+
+        private void SyncStartingPathMenu()
+        {
+            // Sync enemies to release
+            int enemiesToReleaseCount = 0;
+
+            foreach (var w in ActiveWaves)
+                enemiesToReleaseCount += w.EnemiesToCreateCount;
+
+            if (enemiesToReleaseCount != lastEnemiesToReleaseCount)
+                StartingPathMenu.RemainingEnemies = enemiesToReleaseCount;
+
+            lastEnemiesToReleaseCount = enemiesToReleaseCount;
+
+            // Sync remaining time for next wave
+            StartingPathMenu.TimeNextWave = Math.Max(0, StartingPathMenu.TimeNextWave - Preferences.TargetElapsedTimeMs);
         }
 
 
@@ -657,12 +650,14 @@
         {
             ContextualMenusCollisions.Menus.Clear();
 
-            foreach (var p in Players.Values)
+            foreach (var p in Players)
             {
-                p.Update();
+                p.Value.Update();
 
-                if (p.OpenedMenu != null)
-                    ContextualMenusCollisions.Menus.Add(p.OpenedMenu);
+                if (p.Value.OpenedMenu != null)
+                    ContextualMenusCollisions.Menus.Add(p.Value.OpenedMenu);
+                else if (StartingPathMenu.CheckedIn == p.Key)
+                    ContextualMenusCollisions.Menus.Add(StartingPathMenu.Menu);
             }
 
             ContextualMenusCollisions.Sync();

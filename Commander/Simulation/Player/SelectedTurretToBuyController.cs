@@ -42,31 +42,13 @@
         }
 
 
-        //public TurretType FirstAvailable
-        //{
-        //    get { return (AvailableTurretsToBuy.First != null) ? AvailableTurretsToBuy.First.Value : null; }
-        //}
-
-
-        //public TurretType LastAvailable
-        //{
-        //    get { return (AvailableTurretsToBuy.Last != null) ? AvailableTurretsToBuy.Last.Value : null; }
-        //}
-
-
-        //public void SetSelectedTurret(Turret turret)
-        //{
-        //    SelectedTurret = AvailableTurretsToBuy.Find(turret);
-        //}
-
-
         public void Update(CelestialBody celestialBody)
         {
             bool previousSelection = SelectedTurret != null;
 
             AvailableTurretsToBuy.Clear();
 
-            if (celestialBody == null)
+            if (celestialBody == null || celestialBody.FirstOnPath)
             {
                 SelectedTurret = null;
                 return;

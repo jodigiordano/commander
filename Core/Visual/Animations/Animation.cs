@@ -16,8 +16,8 @@
         public Animation(double length, double visualPriority)
         {
             Length = length;
-            this.Paused = false;
-            this.VisualPriority = visualPriority;
+            Paused = false;
+            VisualPriority = visualPriority;
         }
 
 
@@ -34,7 +34,7 @@
 
         protected double RelativeTime
         {
-            get { return this.Length - this.RemainingTime; }
+            get { return Length - RemainingTime; }
         }
 
 

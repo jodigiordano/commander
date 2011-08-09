@@ -83,8 +83,8 @@
       </Position>
       <Rotation>127</Rotation>
       <InBackground>false</InBackground>
-      <CanSelect>false</CanSelect>
-      <Invincible>false</Invincible>
+      <CanSelect>true</CanSelect>
+      <Invincible>true</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
   </PlanetarySystem>

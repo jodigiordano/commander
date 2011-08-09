@@ -13,7 +13,7 @@
         public List<CelestialBody> CelestialBodies;
         public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
-        public SandGlass SandGlass;
+        public StartingPathMenu StartingPathMenu;
         public OptionsPanel OptionsPanel;
         public PausePanel PausePanel;
 
@@ -36,8 +36,6 @@
         public event SimPlayerHandler PlayerDisconnected;
         public event SimPlayerHandler ShowAdvancedViewAsked;
         public event SimPlayerHandler HideAdvancedViewAsked;
-        public event SimPlayerHandler ShowNextWaveAsked;
-        public event SimPlayerHandler HideNextWaveAsked;
         public event PhysicalObjectHandler ObjectCreated;
 
         private Simulator Simulator;
@@ -116,7 +114,6 @@
             var simPlayer = Players[player];
 
             DoAdvancedViewAction(player, false);
-            CheckNextWaveAsked(player);
 
             Players.Remove(player);
 
@@ -389,11 +386,6 @@
                 CheckAvailablePowerUps();
                 CheckAvailableTurrets();
 
-                foreach (var player in Players.Keys)
-                {
-                    CheckNextWaveAsked(player);
-                }
-
                 foreach (var player in Players.Values)
                 {
                     player.Update();
@@ -416,33 +408,6 @@
                     NotifyPlayerChanged(player);
                     NotifyPlayerMoved(player);
                 }
-            }
-        }
-
-        private void CheckNextWaveAsked(Player p)
-        {
-            SimPlayer player = Players[p];
-
-            if (Simulator.DemoMode || Simulator.WorldMode || Simulator.CutsceneMode || (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing))
-                return;
-
-            if (PlayerInNextWave == null &&
-                player.PowerUpInUse == PowerUpType.None &&
-                player.ActualSelection.TurretToPlace == null &&
-                Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
-            {
-                PlayerInNextWave = player;
-                NotifyShowNextWaveAsked(player);
-                return;
-            }
-
-            if (PlayerInNextWave == player &&
-                (p.State == PlayerState.Disconnected ||
-                !Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle)))
-            {
-                PlayerInNextWave = null;
-                NotifyHideNextWaveAsked(player);
-                return;
             }
         }
 
@@ -494,8 +459,7 @@
 
             else if (player.ActualSelection.PowerUpToBuy == PowerUpType.None &&
                     player.ActualSelection.TurretToBuy == TurretType.None &&
-                    player.ActualSelection.TurretToPlace == null &&
-                    !Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
+                    player.ActualSelection.TurretToPlace == null)
                 Players[p].Firing = true;
         }
 
@@ -590,7 +554,7 @@
 
 
             // call next wave
-            if (player.PowerUpInUse == PowerUpType.None && Physics.CircleRectangleCollision(player.Circle, SandGlass.Rectangle))
+            if (player.PowerUpInUse == PowerUpType.None && StartingPathMenu.CheckedIn == player)
             {
                 NotifyNextWaveAsked();
                 return;
@@ -909,20 +873,6 @@
         {
             if (HideAdvancedViewAsked != null)
                 HideAdvancedViewAsked(player);
-        }
-
-
-        private void NotifyShowNextWaveAsked(SimPlayer player)
-        {
-            if (ShowNextWaveAsked != null)
-                ShowNextWaveAsked(player);
-        }
-
-
-        private void NotifyHideNextWaveAsked(SimPlayer player)
-        {
-            if (HideNextWaveAsked != null)
-                HideNextWaveAsked(player);
         }
 
 

@@ -15,9 +15,9 @@
         public Path PathPreview;
         public int MineralsCash;
         public int LifePacksGiven;
-
+        public List<Wave> ActiveWaves;
+        
         public List<Enemy> Enemies;
-        public Dictionary<EnemyType, EnemyDescriptor> NextWaveData;
         public List<Mineral> Minerals;
 
         public event NoneHandler WaveEnded;
@@ -25,11 +25,11 @@
         public event PhysicalObjectHandler ObjectDestroyed;
         public event PhysicalObjectHandler ObjectCreated;
         public event EnemyCelestialBodyHandler EnemyReachedEndOfPath;
+        public event NextWaveHandler NextWaveCompositionChanged;
 
         private List<KeyValuePair<int, MineralType>> MineralsDistribution;
         private Simulator Simulator;
         private LinkedListNode<Wave> NextWave;
-        private List<Wave> ActiveWaves;
         private double TimeElapsedLastWave;
         private int EnemiesCreatedCounter;
 
@@ -48,7 +48,6 @@
             ActiveWaves = new List<Wave>();
             Minerals = new List<Mineral>();
             MineralsDistribution = new List<KeyValuePair<int, MineralType>>();
-            NextWaveData = new Dictionary<EnemyType, EnemyDescriptor>(EnemyTypeComparer.Default);
 
             SyncRemoveEnemies = new Action(RemoveEnemies);
             SyncRemoveMinerals = new Action(RemoveMinerals);
@@ -61,7 +60,6 @@
         public void Initialize()
         {
             Enemies.Clear();
-            NextWaveData.Clear();
             Minerals.Clear();
             MineralsDistribution.Clear();
             NextWave = Waves.First;
@@ -70,7 +68,7 @@
             TimeElapsedLastWave = 0;
             EnemiesCreatedCounter = 0;
 
-            RecalculateCompositionNextWave();
+            NotifyNextWaveCompositionChanged();
 
             if (InfiniteWaves != null)
                 return;
@@ -275,16 +273,6 @@
         }
 
 
-        private void RecalculateCompositionNextWave()
-        {
-            NextWaveData.Clear();
-
-            if (NextWave != null)
-                foreach (var kvp in NextWave.Value.Composition)
-                    NextWaveData.Add(kvp.Key, kvp.Value);
-        }
-
-
         private void AddWave()
         {
             TimeElapsedLastWave += Preferences.TargetElapsedTimeMs;
@@ -301,7 +289,7 @@
             else
                 NextWave.Value = InfiniteWaves.GetNextWave();
 
-            RecalculateCompositionNextWave();
+            NotifyNextWaveCompositionChanged();
 
             NotifyWaveStarted();
         }
@@ -414,6 +402,13 @@
         {
             if (EnemyReachedEndOfPath != null)
                 EnemyReachedEndOfPath(enemy, celestialBody);
+        }
+
+
+        private void NotifyNextWaveCompositionChanged()
+        {
+            if (NextWaveCompositionChanged != null)
+                NextWaveCompositionChanged(NextWave != null ? NextWave.Value.Descriptor : new WaveDescriptor());
         }
     }
 }

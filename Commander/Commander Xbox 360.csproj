@@ -117,6 +117,8 @@
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
+    <Compile Include="Simulation\GUI\Menus\NextWaveContextualMenuChoice.cs" />
+    <Compile Include="Simulation\GUI\Menus\StartingPathMenu.cs" />
     <Compile Include="Simulation\GUI\PlayerCash.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Simulation\Pause\PausedGameController.cs" />

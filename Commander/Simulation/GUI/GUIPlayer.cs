@@ -21,7 +21,13 @@
         private Simulator Simulator;
 
         
-        public GUIPlayer(Simulator simulator, Dictionary<TurretType, bool> availableTurrets, Dictionary<string, LevelDescriptor> levelsDescriptors, Color color, string representation, InputType inputType)
+        public GUIPlayer(
+            Simulator simulator,
+            Dictionary<TurretType, bool> availableTurrets,
+            Dictionary<string, LevelDescriptor> levelsDescriptors,
+            Color color,
+            string representation,
+            InputType inputType)
         {
             Simulator = simulator;
 
