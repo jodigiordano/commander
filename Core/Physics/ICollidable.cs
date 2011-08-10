@@ -9,16 +9,13 @@ namespace EphemereGames.Core.Physics
         Line
     }
 
-    public interface IObjetPhysique
+    public interface ICollidable : IPhysical
     {
-        Vector3 Position            { get; set; }
-        float Speed                 { get; set; }
         Vector3 Direction           { get; set; }
-        float Rotation              { get; set; }
 
         Shape Shape                 { get; set; }
         Circle Circle               { get; set; }
         PhysicalRectangle Rectangle { get; set; }
-        Line Line                  { get; set; }
+        Line Line                   { get; set; }
     }
 }

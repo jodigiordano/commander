@@ -20,7 +20,7 @@
             e.InnerPath = path;
             e.Length = path.Length;
             e.PointAt = true;
-            e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            e.Progress = Effect<IPhysical>.ProgressType.Linear;
 
             return e;
         }
@@ -33,7 +33,7 @@
             e.Delay = delay;
             e.Length = length;
             e.PositionEnd = positionEnd;
-            e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            e.Progress = Effect<IPhysical>.ProgressType.Linear;
 
             return e;
         }
@@ -46,7 +46,7 @@
             e.Delay = delay;
             e.Length = length;
             e.PositionEnd = positionEnd;
-            e.Progress = Effect<IPhysicalObject>.ProgressType.Logarithmic;
+            e.Progress = Effect<IPhysical>.ProgressType.Logarithmic;
 
             return e;
         }
@@ -58,7 +58,7 @@
 
             e.Delay = 0;
             e.PositionEnd = position;
-            e.Progress = Effect<IPhysicalObject>.ProgressType.Now;
+            e.Progress = Effect<IPhysical>.ProgressType.Now;
             e.Length = 500;
 
             return e;
@@ -86,7 +86,7 @@
             eDt.PointAt = false;
             eDt.StartAt = 0;
             eDt.InnerPath = t;
-            eDt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            eDt.Progress = Effect<IPhysical>.ProgressType.Linear;
             eDt.Delay = timeStart;
             eDt.Length = length;
 
@@ -110,7 +110,7 @@
             e.Direction = direction;
             e.Length = time;
             e.Speed = (float) (time / impulse);
-            e.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            e.Progress = Effect<IPhysical>.ProgressType.Linear;
 
             return e;
         }
@@ -157,7 +157,7 @@
                 mpe.InnerPath = path;
                 mpe.RotationRad = rotationRad;
                 mpe.Delay = 0;
-                mpe.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+                mpe.Progress = Effect<IPhysical>.ProgressType.Linear;
 
                 result.Add(new KeyValuePair<MovePathEffect, Text>(mpe, letters[i]));
             }

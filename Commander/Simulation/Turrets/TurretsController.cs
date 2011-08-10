@@ -139,7 +139,7 @@
         }
 
 
-        public void DoInRangeTurret(Turret turret, IObjetPhysique obj)
+        public void DoInRangeTurret(Turret turret, ICollidable obj)
         {
             Enemy enemy = obj as Enemy;
 
@@ -165,7 +165,7 @@
         }
 
 
-        public void DoObjectDestroyed(IObjetPhysique obj)
+        public void DoObjectDestroyed(ICollidable obj)
         {
             CelestialBody corpsCeleste = obj as CelestialBody;
 
@@ -221,7 +221,7 @@
         }
 
 
-        private void NotifyObjectCreated(IObjetPhysique obj)
+        private void NotifyObjectCreated(ICollidable obj)
         {
             if (ObjectCreated != null)
                 ObjectCreated(obj);

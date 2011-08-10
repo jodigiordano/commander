@@ -504,7 +504,7 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        private void DoCelestialBodyDestroyed(IObjetPhysique obj)
+        private void DoCelestialBodyDestroyed(ICollidable obj)
         {
             foreach (var player in Inputs.Players)
                 Inputs.VibrateController(player, 300, 0.5f, 0.5f);

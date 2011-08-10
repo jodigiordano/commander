@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    public class Text : IScenable, IPhysicalObject, IVisual
+    public class Text : IScenable, IPhysical, IVisual
     {
         public Vector2 Origin           { get; set; }
         public Vector2 Size             { get; set; }

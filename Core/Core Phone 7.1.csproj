@@ -117,13 +117,13 @@
     <Compile Include="Physics\Effects\PhysicalEffects.cs" />
     <Compile Include="Physics\Effects\FollowEffect.cs" />
     <Compile Include="Physics\Effects\SpeedPathEffect.cs" />
+    <Compile Include="Physics\ICollidable.cs" />
+    <Compile Include="Physics\IPhysical.cs" />
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Shapes\Circle.cs" />
     <Compile Include="Physics\Shapes\Line.cs" />
     <Compile Include="Physics\Shapes\Rectangle.cs" />
     <Compile Include="Physics\Shapes\Triangle.cs" />
-    <Compile Include="Physics\IObjetPhysique.cs" />
-    <Compile Include="Physics\IPhysicalObject.cs" />
     <Compile Include="Physics\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Effect.cs" />

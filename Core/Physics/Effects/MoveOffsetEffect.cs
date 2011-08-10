@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework;
 
 
-    public class MoveOffsetEffect : Effect<IPhysicalObject>
+    public class MoveOffsetEffect : Effect<IPhysical>
     {
         public Vector3 Offset { get; set; }
 

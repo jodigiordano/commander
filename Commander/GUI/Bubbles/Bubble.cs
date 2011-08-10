@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    class Bubble : IVisual, IPhysicalObject
+    class Bubble : IVisual, IPhysical
     {
         protected Scene Scene;
 

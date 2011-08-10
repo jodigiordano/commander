@@ -8,7 +8,7 @@
     using ProjectMercury.Emitters;
 
 
-    class CelestialBody : ILivingObject, IObjetPhysique, IComparable<CelestialBody>
+    class CelestialBody : ILivingObject, ICollidable, IComparable<CelestialBody>
     {
         public string Name;
         public List<Turret> Turrets = new List<Turret>();

@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Spaceship : IObjetPhysique, IPhysicalObject
+    class Spaceship : ICollidable, IPhysical
     {
         public static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
 
@@ -23,7 +23,7 @@
         public PhysicalRectangle Rectangle      { get; set; }
         public Line Line                       { get; set; }
 
-        public IObjetPhysique StartingObject    { get; set; }
+        public ICollidable StartingObject    { get; set; }
         public virtual bool TargetReached       { get; set; }
 
         private Vector3 targetPosition;

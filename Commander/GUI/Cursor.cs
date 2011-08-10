@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Cursor : IObjetPhysique
+    class Cursor : ICollidable
     {
         public float Speed { get; set; }
         public Circle Circle { get; set; }

@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    public class MoveEffect : Effect<IPhysicalObject>
+    public class MoveEffect : Effect<IPhysical>
     {
         public Vector3 PositionEnd      { get; set; }
         private Vector3 PositionStart   { get; set; }

@@ -7,7 +7,7 @@
 
     class ObjectsCollisions
     {
-        public List<KeyValuePair<IObjetPhysique, IObjetPhysique>> Output;
+        public List<KeyValuePair<ICollidable, ICollidable>> Output;
 
         public Simulator Simulator;
         public HiddenEnemies HiddenEnemies;
@@ -35,7 +35,7 @@
 
         public ObjectsCollisions()
         {
-            Output = new List<KeyValuePair<IObjetPhysique, IObjetPhysique>>();
+            Output = new List<KeyValuePair<ICollidable, ICollidable>>();
             HandlerBulletEnemy = new IntegerHandler(CheckBulletEnemy);
             HandlerBulletExplosion = new IntegerHandler(CheckBulletExplosion);
             HandlerShootingStars = new IntegerHandler(CheckShootingStars);
@@ -89,7 +89,7 @@
                 if (kvp.Value.FirstOnPath || (kvp.Value.LastOnPath && kvp.Key.Path.GetPercentage(kvp.Key.Displacement) > 0.98))
                     continue;
 
-                Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(kvp.Key, ((PowerUpDarkSide) Simulator.PowerUpsFactory.Availables[PowerUpType.DarkSide]).CorpsCeleste));
+                Output.Add(new KeyValuePair<ICollidable, ICollidable>(kvp.Key, ((PowerUpDarkSide) Simulator.PowerUpsFactory.Availables[PowerUpType.DarkSide]).CorpsCeleste));
             }
         }
 
@@ -105,8 +105,8 @@
 
                 if (Physics.CircleCicleCollision(mineral.Circle, Collector.Circle))
                 {
-                    Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(mineral, Collector));
-                    Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(Collector, mineral));
+                    Output.Add(new KeyValuePair<ICollidable, ICollidable>(mineral, Collector));
+                    Output.Add(new KeyValuePair<ICollidable, ICollidable>(Collector, mineral));
                 }
             }
         }
@@ -146,7 +146,7 @@
 
             if (collision)
             {
-                Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, CurrentShootingStar));
+                Output.Add(new KeyValuePair<ICollidable, ICollidable>(e, CurrentShootingStar));
 
                 Circle.Position = CurrentShootingStar.Position;
                 Circle.Radius = CurrentShootingStar.ZoneImpact;
@@ -202,7 +202,7 @@
 
             if (collision)
             {
-                Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, CurrentBullet));
+                Output.Add(new KeyValuePair<ICollidable, ICollidable>(e, CurrentBullet));
 
                 if (CurrentBullet.Type == BulletType.LaserMultiple || CurrentBullet.Type == BulletType.SlowMotion)
                     return true;
@@ -234,7 +234,7 @@
             Enemy e = Enemies[index];
 
             if (Physics.CircleCicleCollision(Circle, e.Circle))
-                Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, CurrentBullet));
+                Output.Add(new KeyValuePair<ICollidable, ICollidable>(e, CurrentBullet));
 
             return true;
         }
@@ -250,7 +250,7 @@
             Enemy e = Enemies[index];
 
             if (Physics.CircleCicleCollision(Circle, e.Circle))
-                Output.Add(new KeyValuePair<IObjetPhysique, IObjetPhysique>(e, CurrentShootingStar));
+                Output.Add(new KeyValuePair<ICollidable, ICollidable>(e, CurrentShootingStar));
 
             return true;
         }

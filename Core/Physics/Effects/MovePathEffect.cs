@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    public class MovePathEffect : Effect<IPhysicalObject>
+    public class MovePathEffect : Effect<IPhysical>
     {
         public Path2D InnerPath     { private get; set; }
         public bool PointAt         { private get; set; }

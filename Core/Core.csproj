@@ -165,8 +165,8 @@
     <Compile Include="Physics\Shapes\Line.cs" />
     <Compile Include="Physics\Shapes\Rectangle.cs" />
     <Compile Include="Physics\Shapes\Triangle.cs" />
-    <Compile Include="Physics\IObjetPhysique.cs" />
-    <Compile Include="Physics\IPhysicalObject.cs" />
+    <Compile Include="Physics\ICollidable.cs" />
+    <Compile Include="Physics\IPhysical.cs" />
     <Compile Include="Physics\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Path.cs" />

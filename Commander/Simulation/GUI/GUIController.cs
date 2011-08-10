@@ -159,7 +159,7 @@
         }
 
 
-        public void DoObjectDestroyed(IObjetPhysique obj)
+        public void DoObjectDestroyed(ICollidable obj)
         {
 
         }

@@ -34,7 +34,7 @@
         public virtual bool IsFinished { get; protected set; }
         public virtual AnimationsController Animations { get; protected set; }
         public virtual ParticlesController Particles { get; protected set; }
-        public virtual EffectsController<IPhysicalObject> PhysicalEffects { get; protected set; }
+        public virtual EffectsController<IPhysical> PhysicalEffects { get; protected set; }
         public virtual EffectsController<IVisual> VisualEffects { get; protected set; }
 
         private SpriteBatch Batch;
@@ -64,7 +64,7 @@
             Camera.Origin = new Vector2(width / 2.0f, height / 2.0f);
             Name = name;
             Animations = new AnimationsController(this);
-            PhysicalEffects = new EffectsController<IPhysicalObject>();
+            PhysicalEffects = new EffectsController<IPhysical>();
             VisualEffects = new EffectsController<IVisual>();
             Particles = new ParticlesController(this);
             EphemereGames.Core.Input.Inputs.AddListener(this);

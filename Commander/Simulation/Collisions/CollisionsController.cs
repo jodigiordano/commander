@@ -183,7 +183,7 @@
         }
 
 
-        private void DrawRectangle(IObjetPhysique objet, Color couleur)
+        private void DrawRectangle(ICollidable objet, Color couleur)
         {
             if (objet.Shape == Shape.Rectangle)
                 Simulator.Scene.Add(new VisualRectangle(objet.Rectangle.RectanglePrimitif, couleur));
@@ -207,7 +207,7 @@
         }
 
 
-        public void DoObjectDestroyed(IObjetPhysique obj)
+        public void DoObjectDestroyed(ICollidable obj)
         {
             CelestialBody celestialBody = obj as CelestialBody;
 
@@ -244,7 +244,7 @@
         }
 
 
-        public void DoObjectCreated(IObjetPhysique obj)
+        public void DoObjectCreated(ICollidable obj)
         {
             if (obj is SpaceshipCollector)
                 ObjectsCollisions.Collector = (Spaceship) obj;
@@ -263,21 +263,21 @@
         }
 
 
-        private void NotifyObjectOutOfBounds(IObjetPhysique obj)
+        private void NotifyObjectOutOfBounds(ICollidable obj)
         {
             if (ObjectOutOfBounds != null)
                 ObjectOutOfBounds(obj);
         }
 
 
-        private void NotifyObjectHit(IObjetPhysique obj, IObjetPhysique by)
+        private void NotifyObjectHit(ICollidable obj, ICollidable by)
         {
             if (ObjectHit != null)
                 ObjectHit(obj, by);
         }
 
 
-        private void NotifyInTurretRange(Turret turret, IObjetPhysique obj)
+        private void NotifyInTurretRange(Turret turret, ICollidable obj)
         {
             if (InTurretRange != null)
                 InTurretRange(turret, obj);

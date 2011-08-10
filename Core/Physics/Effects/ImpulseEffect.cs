@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework;
 
 
-    public class ImpulseEffect : Effect<IPhysicalObject>
+    public class ImpulseEffect : Effect<IPhysical>
     {
         public Vector3 Direction;
         public float Speed;

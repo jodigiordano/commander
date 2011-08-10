@@ -6,7 +6,7 @@ namespace EphemereGames.Commander.Simulation
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
-    class Enemy : IObjetPhysique, IPhysicalObject, ILivingObject
+    class Enemy : ICollidable, IPhysical, ILivingObject
     {
         public Vector3 Position                                     { get { return position; } set { position = value; } }
         public float Speed                                          { get; set; }

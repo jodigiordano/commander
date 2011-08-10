@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework.Graphics;
 
 
-    public class IVisible : IScenable, IPhysicalObject
+    public class IVisible : IScenable, IPhysical
     {
         protected enum TypeInterne
         {

@@ -5,9 +5,9 @@
     using Microsoft.Xna.Framework;
 
 
-    public class FollowEffect : Effect<IPhysicalObject>
+    public class FollowEffect : Effect<IPhysical>
     {
-        public IObjetPhysique FollowedObject    { get; set; }
+        public ICollidable FollowedObject    { get; set; }
         public float Speed                { get; set; }
 
         public static Pool<FollowEffect> Pool = new Pool<FollowEffect>();

@@ -38,7 +38,7 @@
         }
 
 
-        public void Add(int id, IObjetPhysique obj)
+        public void Add(int id, ICollidable obj)
         {
             if (!Space.Includes(obj.Position))
                 return;

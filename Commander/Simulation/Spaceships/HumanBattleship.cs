@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class HumanBattleship : IObjetPhysique, IPhysicalObject
+    class HumanBattleship : ICollidable, IPhysical
     {
         public Vector3 Position                 { get; set; }
         public float Speed                      { get; set; }

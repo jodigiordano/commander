@@ -140,7 +140,7 @@
         }
 
 
-        public void DoObjectHit(IObjetPhysique obj, IObjetPhysique by)
+        public void DoObjectHit(ICollidable obj, ICollidable by)
         {
             Enemy enemy = obj as Enemy;
 
@@ -385,13 +385,13 @@
         }
 
 
-        private void NotifyObjectDestroyed(IObjetPhysique obj)
+        private void NotifyObjectDestroyed(ICollidable obj)
         {
             if (ObjectDestroyed != null)
                 ObjectDestroyed(obj);
         }
 
-        private void NotifyObjectCreated(IObjetPhysique obj)
+        private void NotifyObjectCreated(ICollidable obj)
         {
             if (ObjectCreated != null)
                 ObjectCreated(obj);

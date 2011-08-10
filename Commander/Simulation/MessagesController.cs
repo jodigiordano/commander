@@ -11,9 +11,9 @@
         public List<Turret> Turrets;
 
         private Simulator Simulator;
-        private Dictionary<IObjetPhysique, TextBubble> TalkingTurrets;
+        private Dictionary<ICollidable, TextBubble> TalkingTurrets;
         private double TimeLastQuote;
-        private List<KeyValuePair<IObjetPhysique, TextBubble>> ToDelete;
+        private List<KeyValuePair<ICollidable, TextBubble>> ToDelete;
 
 
         private static List<string> QuotesEnnui = new List<string>()
@@ -259,11 +259,11 @@
         public MessagesController(Simulator simulator)
         {
             Simulator = simulator;
-            TalkingTurrets = new Dictionary<IObjetPhysique, TextBubble>();
+            TalkingTurrets = new Dictionary<ICollidable, TextBubble>();
 
             TimeLastQuote = 0;
 
-            ToDelete = new List<KeyValuePair<IObjetPhysique, TextBubble>>();
+            ToDelete = new List<KeyValuePair<ICollidable, TextBubble>>();
         }
 
 
@@ -295,7 +295,7 @@
         }
 
 
-        public void ShowMessage(IObjetPhysique obj, string message, double time, double visualPriority)
+        public void ShowMessage(ICollidable obj, string message, double time, double visualPriority)
         {
             if (obj == null || TalkingTurrets.ContainsKey(obj))
                 return;
@@ -320,7 +320,7 @@
         }
 
 
-        public void StopMessage(IObjetPhysique objet)
+        public void StopMessage(ICollidable objet)
         {
             TextBubble bulle;
 
@@ -421,7 +421,7 @@
         }
 
 
-        private void AddTalkingTurret(IObjetPhysique obj, TextBubble bulle)
+        private void AddTalkingTurret(ICollidable obj, TextBubble bulle)
         {
             TalkingTurrets.Add(obj, bulle);
 

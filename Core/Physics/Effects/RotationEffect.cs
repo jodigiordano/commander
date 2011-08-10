@@ -3,7 +3,7 @@
     using EphemereGames.Core.Utilities;
 
 
-    public class RotationEffect : Effect<IPhysicalObject>
+    public class RotationEffect : Effect<IPhysical>
     {
         public float Quantity;
 

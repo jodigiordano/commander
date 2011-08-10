@@ -169,7 +169,7 @@
         }
 
 
-        public void DoObjectCreated(IObjetPhysique obj)
+        public void DoObjectCreated(ICollidable obj)
         {
             var rgb = obj as RailGunBullet;
 
@@ -181,7 +181,7 @@
         }
 
 
-        public void DoObjectHit(IObjetPhysique obj, IObjetPhysique by)
+        public void DoObjectHit(ICollidable obj, ICollidable by)
         {
             Mineral mineral = obj as Mineral;
 
@@ -203,7 +203,7 @@
         }
 
 
-        public void DoObjectDestroyed(IObjetPhysique obj)
+        public void DoObjectDestroyed(ICollidable obj)
         {
             Enemy ennemi = obj as Enemy;
 
@@ -884,7 +884,7 @@
         }
 
 
-        private void NotifyObjectCreated(IObjetPhysique objet)
+        private void NotifyObjectCreated(ICollidable objet)
         {
             if (ObjectCreated != null)
                 ObjectCreated(objet);

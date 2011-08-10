@@ -162,7 +162,7 @@
         }
         
 
-        public void DoObjectDestroyed(IObjetPhysique obj)
+        public void DoObjectDestroyed(ICollidable obj)
         {
             if (State == GameState.Won || State == GameState.Lost)
                 return;

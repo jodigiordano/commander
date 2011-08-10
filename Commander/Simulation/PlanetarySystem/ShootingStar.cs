@@ -10,7 +10,7 @@
     using ProjectMercury.Modifiers;
 
 
-    class ShootingStar : IObjetPhysique, ILivingObject
+    class ShootingStar : ICollidable, ILivingObject
     {
         public Scene Scene;
         public PhysicalRectangle Terrain;

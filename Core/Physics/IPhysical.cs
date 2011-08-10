@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    public interface IPhysicalObject
+    public interface IPhysical
     {
         Vector3 Position    { get; set; }
         float Speed         { get; set; }

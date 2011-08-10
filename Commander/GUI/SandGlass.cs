@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class SandGlass : IObjetPhysique
+    class SandGlass : ICollidable
     {
         public double RemainingTime;
 
@@ -197,7 +197,7 @@
 
             RotationEffect = new RotationEffect();
             RotationEffect.Length = 500;
-            RotationEffect.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            RotationEffect.Progress = Effect<IPhysical>.ProgressType.Linear;
             RotationEffect.Quantity = MathHelper.Pi;
 
             Scene.PhysicalEffects.Add(Image, RotationEffect);

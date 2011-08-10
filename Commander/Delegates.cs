@@ -11,8 +11,8 @@ namespace EphemereGames.Commander.Simulation
     using EphemereGames.Core.Physics;
 
 
-    delegate void PhysicalObjectHandler(IObjetPhysique o);
-    delegate void PhysicalObjectPhysicalObjectHandler(IObjetPhysique o1, IObjetPhysique o2);
+    delegate void PhysicalObjectHandler(ICollidable o);
+    delegate void PhysicalObjectPhysicalObjectHandler(ICollidable o1, ICollidable o2);
     delegate void SimPlayerHandler(SimPlayer p);
     delegate void PausePlayerHandler(PausePlayer p);
     delegate void CommonStashHandler(CommonStash s);
@@ -25,7 +25,7 @@ namespace EphemereGames.Commander.Simulation
     delegate void PowerUpSimPlayerHandler(PowerUp p, SimPlayer pl);
     delegate void TurretTurretHandler(Turret t1, Turret t2);
     delegate void EnemyCelestialBodyHandler(Enemy e, CelestialBody c);
-    delegate void TurretPhysicalObjectHandler(Turret t, IObjetPhysique o);
+    delegate void TurretPhysicalObjectHandler(Turret t, ICollidable o);
     delegate void EnemyBulletHandler(Enemy e, Bullet b);
     delegate void EditorPlayerHandler(EditorPlayer e);
     delegate void EditorCommandHandler(EditorCommand e);

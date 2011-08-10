@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class ScoreStars : IVisual, IPhysicalObject
+    class ScoreStars : IVisual, IPhysical
     {
         private List<Image> Images;
         private int BrightCount;

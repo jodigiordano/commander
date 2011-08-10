@@ -415,7 +415,7 @@
         }
 
 
-        private void NotifyObjectDestroyed(IObjetPhysique obj)
+        private void NotifyObjectDestroyed(ICollidable obj)
         {
             if (ObjectDestroyed != null)
                 ObjectDestroyed(obj);

@@ -8,7 +8,7 @@
     using ProjectMercury.Modifiers;
 
 
-    class Mineral : IObjetPhysique, ILivingObject
+    class Mineral : ICollidable, ILivingObject
     {
         public Vector3 Position                     { get { return position; } set { position = value; } }
         public float Speed                          { get; set; }

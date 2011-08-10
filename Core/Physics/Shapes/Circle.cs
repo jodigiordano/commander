@@ -6,7 +6,7 @@
     public class Circle
     {
         public float Radius { get; set; }
-        private IObjetPhysique Obj;
+        private ICollidable Obj;
         public Vector3 Position;
 
 
@@ -17,7 +17,7 @@
         }
 
 
-        public Circle(IObjetPhysique objet, float radius)
+        public Circle(ICollidable objet, float radius)
         {
             Obj = objet;
             Position = objet.Position;

@@ -62,7 +62,7 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void DoObjectCreated(IObjetPhysique objet)
+        public void DoObjectCreated(ICollidable objet)
         {
             Bullet b = objet as Bullet;
 
@@ -75,7 +75,7 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void DoObjectHit(IObjetPhysique obj, IObjetPhysique by)
+        public void DoObjectHit(ICollidable obj, ICollidable by)
         {
             Bullet b = by as Bullet;
 
@@ -86,7 +86,7 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void DoObjectOutOfBounds(IObjetPhysique obj)
+        public void DoObjectOutOfBounds(ICollidable obj)
         {
             Bullet b = obj as Bullet;
 

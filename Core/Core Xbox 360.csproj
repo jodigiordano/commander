@@ -100,8 +100,8 @@
     <Compile Include="Physics\Effects\PhysicalEffects.cs" />
     <Compile Include="Physics\Effects\RotationEffect.cs" />
     <Compile Include="Physics\Effects\SpeedPathEffect.cs" />
-    <Compile Include="Physics\IObjetPhysique.cs" />
-    <Compile Include="Physics\IPhysicalObject.cs" />
+    <Compile Include="Physics\ICollidable.cs" />
+    <Compile Include="Physics\IPhysical.cs" />
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Shapes\Circle.cs" />
     <Compile Include="Physics\Shapes\Line.cs" />

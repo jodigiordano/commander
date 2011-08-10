@@ -81,7 +81,7 @@
                 PointAt = false,
                 Delay = 0,
                 Length = 10000,
-                Progress = Core.Utilities.Effect<IPhysicalObject>.ProgressType.Linear,
+                Progress = Core.Utilities.Effect<IPhysical>.ProgressType.Linear,
                 InnerPath = new Path2D(new List<Vector2>()
                         {
                             new Vector2(-1920, -85),

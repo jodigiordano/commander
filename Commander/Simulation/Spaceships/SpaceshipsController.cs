@@ -95,7 +95,7 @@
         }
 
 
-        private void NotifyObjectCreated(IObjetPhysique objet)
+        private void NotifyObjectCreated(ICollidable objet)
         {
             if (ObjectCreated != null)
                 ObjectCreated(objet);

@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Mothership : IPhysicalObject
+    class Mothership : IPhysical
     {
         public Image Base;
         public Image Top;
@@ -162,7 +162,7 @@
                     Length = 10000,
                     FollowedObject = CelestialBody,
                     Speed = 2,
-                    Progress = Core.Utilities.Effect<IPhysicalObject>.ProgressType.Linear
+                    Progress = Core.Utilities.Effect<IPhysical>.ProgressType.Linear
                 };
 
                 simulator.Scene.PhysicalEffects.Add(this.Image, follow);

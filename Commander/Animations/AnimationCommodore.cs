@@ -12,7 +12,7 @@ namespace EphemereGames.Commander
         private Image Bubble;
         private Image TheLieutenant;
         private TextTypeWriter TypeWriter;
-        private EffectsController<IPhysicalObject> GPE;
+        private EffectsController<IPhysical> GPE;
         private EffectsController<IVisual> GVE;
 
 
@@ -55,13 +55,13 @@ namespace EphemereGames.Commander
             );
             TypeWriter.Text.VisualPriority = Preferences.PrioriteGUIMenuPrincipal;
 
-            GPE = new EffectsController<IPhysicalObject>();
+            GPE = new EffectsController<IPhysical>();
             GVE = new EffectsController<IVisual>();
 
             MovePathEffect edt = new MovePathEffect();
             edt.Delay = 0;
             edt.Length = this.Length;
-            edt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            edt.Progress = Effect<IPhysical>.ProgressType.Linear;
             edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-300, 500), new Vector2(-300, 275), new Vector2(-300, 275), new Vector2(-300, 700) },
              new List<double> { 0, 1000, this.Length - 1000, this.Length });
@@ -71,7 +71,7 @@ namespace EphemereGames.Commander
             edt = new MovePathEffect();
             edt.Delay = 0;
             edt.Length = this.Length;
-            edt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            edt.Progress = Effect<IPhysical>.ProgressType.Linear;
             edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-100, 300), new Vector2(-100, -100), new Vector2(-100, -100), new Vector2(-100, 500) },
              new List<double> { 0, 1000, this.Length - 1000, this.Length });
@@ -81,7 +81,7 @@ namespace EphemereGames.Commander
             edt = new MovePathEffect();
             edt.Delay = 0;
             edt.Length = this.Length;
-            edt.Progress = Effect<IPhysicalObject>.ProgressType.Linear;
+            edt.Progress = Effect<IPhysical>.ProgressType.Linear;
             edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-75, 325), new Vector2(-75, -75), new Vector2(-75, -75), new Vector2(-75, 500) },
              new List<double> { 0, 1000, this.Length - 1000, this.Length });
@@ -115,24 +115,6 @@ namespace EphemereGames.Commander
             GVE.Add(TheLieutenant, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
             GVE.Add(TypeWriter.Text, Core.Visual.VisualEffects.FadeOutTo0(255, 0, 250));
         }
-
-
-        //protected override void Show()
-        //{
-        //    Scene.Add(Bubble);
-        //    Scene.Add(TheLieutenant);
-
-        //    TypeWriter.Show();
-        //}
-
-
-        //protected override void Hide()
-        //{
-        //    Scene.Remove(Bubble);
-        //    Scene.Remove(TheLieutenant);
-
-        //    TypeWriter.Hide();
-        //}
 
 
         public override void Draw()

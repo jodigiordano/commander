@@ -5,7 +5,7 @@ namespace EphemereGames.Commander.Simulation
     using Microsoft.Xna.Framework;
 
 
-    class Bullet : IObjetPhysique, ILivingObject
+    class Bullet : ICollidable, ILivingObject
     {
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }

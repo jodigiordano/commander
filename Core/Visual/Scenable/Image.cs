@@ -6,7 +6,7 @@
     using SpriteSheetRuntime;
 
 
-    public class Image : IScenable, IPhysicalObject, IVisual
+    public class Image : IScenable, IPhysical, IVisual
     {
         public Vector2 Origin           { get; set; }
         public Vector2 Size             { get; set; }

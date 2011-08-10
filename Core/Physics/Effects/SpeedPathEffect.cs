@@ -3,7 +3,7 @@
     using EphemereGames.Core.Utilities;
 
 
-    public class SpeedPathEffect : Effect<IPhysicalObject>
+    public class SpeedPathEffect : Effect<IPhysical>
     {
         public Path2D InnerPath;
         public float StartingSpeed;
