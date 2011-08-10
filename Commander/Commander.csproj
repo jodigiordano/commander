@@ -263,6 +263,8 @@
     <Compile Include="Simulation\Pause\PausedGameController.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Simulation\Player\PausePlayer.cs" />
+    <Compile Include="Simulation\Player\TurretToBuy\SelectedTurretToBuyOnlyAvailablesController.cs" />
+    <Compile Include="Simulation\Player\TurretToBuy\SelectedTurretToBuyAllController.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
@@ -292,7 +294,7 @@
     <Compile Include="Simulation\Player\CommonStash.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Simulation\Player\SelectedPowerUpController.cs" />
-    <Compile Include="Simulation\Player\SelectedTurretToBuyController.cs" />
+    <Compile Include="Simulation\Player\TurretToBuy\SelectedTurretToBuyController.cs" />
     <Compile Include="GUI\Bubbles\TextBubble.cs" />
     <Compile Include="Simulation\Player\SimPlayerSelection.cs" />
     <Compile Include="Simulation\Player\SelectedCelestialBodyController.cs" />

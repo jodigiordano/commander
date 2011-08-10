@@ -60,7 +60,7 @@
         public void Initialize()
         {
             ActualSelection = new SimPlayerSelection();
-            TurretToBuyController = new SelectedTurretToBuyController(AvailableTurrets);
+            TurretToBuyController = new SelectedTurretToBuyAllController(AvailableTurrets);
             SelectedCelestialBodyController = new SelectedCelestialBodyController(Simulator, this, CelestialBodies);
             SelectedPowerUpController = new SelectedPowerUpController(Simulator.PowerUpsFactory.Availables, Circle);
             PowerUpInUse = PowerUpType.None;
