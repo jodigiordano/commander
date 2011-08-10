@@ -1008,10 +1008,7 @@ namespace EphemereGames.Commander.Simulation
             {
                 SimPlayersController.DoDirectionDelta(player, ref delta);
 
-                if (State == GameState.Running)
-                {
-                    simPlayer.Firing = true;
-                }
+                SimPlayersController.Fire((Player) p);
             }
         }
 
