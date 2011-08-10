@@ -16,7 +16,6 @@
             RotationMaximaleRad = 0.2f;
             BuyPrice = 0;
             ShootingFrequency = double.NaN;
-            ActiveTime = double.MaxValue;
             Active = true;
             SfxOut = "sfxPowerUpCollecteurOut";
             SfxIn = "sfxPowerUpCollecteurIn";

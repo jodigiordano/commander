@@ -21,7 +21,6 @@
             RotationMaximaleRad = 0.3f;
             BuyPrice = 0;
             ShootingFrequency = double.NaN;
-            ActiveTime = double.MaxValue;
             Active = true;
             SfxOut = "sfxAutomaticCollectorOut";
             SfxIn = "sfxAutomaticCollectorIn";
@@ -42,8 +41,8 @@
             {
                 if (Minerals.Count == 0)
                     TargetPosition = new Vector3(
-                        Main.Random.Next(Simulation.InnerTerrain.Left + 50, Simulation.InnerTerrain.Right - 50),
-                        Main.Random.Next(Simulation.InnerTerrain.Top + 50, Simulation.InnerTerrain.Bottom - 50),
+                        Main.Random.Next(Simulator.InnerTerrain.Left + 50, Simulator.InnerTerrain.Right - 50),
+                        Main.Random.Next(Simulator.InnerTerrain.Top + 50, Simulator.InnerTerrain.Bottom - 50),
                         0);
                 else
                     TargetPosition = Minerals[0].Position;

@@ -22,7 +22,6 @@
             RotationMaximaleRad = 0.2f;
             BuyPrice = 0;
             ShootingFrequency = double.NaN;
-            ActiveTime = double.MaxValue;
             Active = true;
             SfxOut = "sfxMinerOut";
             SfxIn = "sfxMinerIn";
@@ -35,7 +34,7 @@
 
         public void Fire()
         {
-            MineBullet mb = (MineBullet) Simulation.BulletsFactory.Get(BulletType.Mine);
+            MineBullet mb = (MineBullet) Simulator.BulletsFactory.Get(BulletType.Mine);
 
             mb.Position = Position;
             mb.AttackPoints = BulletHitPoints;

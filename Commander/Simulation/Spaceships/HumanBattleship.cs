@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class HumanBattleship : ICollidable, IPhysical
+    class HumanBattleship : ICollidable
     {
         public Vector3 Position                 { get; set; }
         public float Speed                      { get; set; }
@@ -14,7 +14,7 @@
         public Shape Shape                      { get; set; }
         public Circle Circle                    { get; set; }
         public PhysicalRectangle Rectangle      { get; set; }
-        public Line Line                       { get; set; }
+        public Line Line                        { get; set; }
 
         public RailGunTurret RailGun;
 
