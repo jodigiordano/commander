@@ -639,15 +639,10 @@ namespace EphemereGames.Commander.Simulation
 
             SimPlayersController.DoMoveDelta(player, ref delta);
 
-            if (simPlayer.Firing)
-            {
-                SimPlayersController.DoDirectionDelta(player, ref simPlayer.LastMouseDirection);
-            }
-
-            else
-            {
+            if (!simPlayer.Firing)
                 simPlayer.LastMouseDirection = Vector3.Zero;
-            }
+
+            SimPlayersController.DoDirectionDelta(player, ref simPlayer.LastMouseDirection);
 
             simPlayer.MovingLeft = simPlayer.MovingRight = simPlayer.MovingUp = simPlayer.MovingDown = false;
         }

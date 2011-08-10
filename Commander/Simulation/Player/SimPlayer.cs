@@ -15,7 +15,6 @@
         public bool UpdateSelectionz;
         public string ImageName;
         public PowerUpType PowerUpInUse;
-        public bool Firing;
         public Player BasePlayer;
         public PausePlayer PausePlayer;
         public SpaceshipSpaceship SpaceshipMove;
@@ -35,6 +34,8 @@
         private SelectedCelestialBodyController SelectedCelestialBodyController;
         private SelectedTurretToBuyController TurretToBuyController;
         private SelectedPowerUpController SelectedPowerUpController;
+
+        private bool firing;
 
 
         public SimPlayer(Simulator simulator, Player player)
@@ -69,6 +70,7 @@
             LastMouseDirection = Vector3.Zero;
 
             GameOver = false;
+            Firing = false;
         }
 
 
@@ -106,6 +108,22 @@
                 SpaceshipMove.NinjaPosition = value;
                 Position = SpaceshipMove.Position;
                 VerifyFrame();
+            }
+        }
+
+
+        public bool Firing
+        {
+            get { return firing; }
+
+            set
+            {
+                if (!firing && value && BasePlayer.InputType == Core.Input.InputType.Mouse)
+                {
+                    LastMouseDirection = SpaceshipMove.Direction;
+                }
+
+                firing = value;
             }
         }
 
