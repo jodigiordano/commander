@@ -52,6 +52,7 @@
                 BulletHitPoints = 1,
                 VisualPriority = VisualPriorities.Default.PlayerCursor
             };
+            SpaceshipMove.Bounced += new NoneHandler(DoBouncing);
 
             TurretToPlaceChanged = false;
             GameOver = false;
@@ -134,12 +135,6 @@
             {
                 SpaceshipMove.BulletHitPoints = (float) value;
             }
-        }
-
-
-        public bool BouncingThisTick
-        {
-            get { return SpaceshipMove.BouncingThisTick; }
         }
 
 
@@ -555,6 +550,12 @@
             ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld7] = maxWorld >= 7;
             ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld8] = maxWorld >= 8;
 
+        }
+
+
+        private void DoBouncing()
+        {
+            Core.Input.Inputs.VibrateController(BasePlayer, 150f, 0.5f, 0.5f);
         }
     }
 }

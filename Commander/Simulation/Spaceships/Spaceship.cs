@@ -10,6 +10,8 @@
 
     class Spaceship : ICollidable
     {
+        public event NoneHandler Bounced;
+
         private static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
 
         // Movement
@@ -23,8 +25,7 @@
         public float Rotation                   { get; set; }
         private Vector3 Acceleration;
         public Vector3 LastPosition;
-        public Vector3 Bouncing;
-        public bool BouncingThisTick;
+        private Vector3 Bouncing;
         public float Friction;
 
         // Visual
@@ -141,8 +142,6 @@
             Circle.Position = Position;
 
             LastFireCounter += Preferences.TargetElapsedTimeMs;
-
-            BouncingThisTick = false;
 
             if (ApplyAutomaticBehavior)
                 AutomaticBehavior.Update();
@@ -276,6 +275,8 @@
 
         private void ApplyBouncing()
         {
+            bool bouncing = false;
+
             if (Position.X > 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius)
             {
                 Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Acceleration.X) * Speed * 2f;
@@ -284,7 +285,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                BouncingThisTick = true;
+                bouncing = true;
             }
 
             if (Position.X < -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius)
@@ -295,7 +296,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                BouncingThisTick = true;
+                bouncing = true;
             }
 
             if (Position.Y > 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius)
@@ -306,7 +307,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                BouncingThisTick = true;
+                bouncing = true;
             }
 
             if (Position.Y < -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius)
@@ -317,7 +318,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                BouncingThisTick = true;
+                bouncing = true;
             }
 
             Position += Bouncing;
@@ -331,6 +332,9 @@
                 Bouncing.Y = Math.Max(0, Bouncing.Y - 0.8f);
             else if (Bouncing.Y < 0)
                 Bouncing.Y = Math.Min(0, Bouncing.Y + 0.8f);
+
+            if (bouncing)
+                NotifyBounced();
         }
 
 
@@ -356,6 +360,13 @@
         public void ApplySafeBouncing()
         {
             Bouncing = new Vector3(Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], 0);
+        }
+
+
+        private void NotifyBounced()
+        {
+            if (Bounced != null)
+                Bounced();
         }
     }
 }

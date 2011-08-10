@@ -399,11 +399,6 @@
                 {
                     player.Update();
 
-                    if (player.BouncingThisTick)
-                    {
-                        Inputs.VibrateController(player.BasePlayer, 150f, 0.5f, 0.5f);
-                    }
-
                     if (player.Firing)
                     {
                         //Inputs.VibrateController(player.Player, Preferences.TargetElapsedTimeMs * 2, 0.2f, 0f); TODO: vibrate with little pauses between

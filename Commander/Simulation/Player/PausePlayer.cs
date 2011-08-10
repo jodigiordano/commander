@@ -68,12 +68,6 @@
         }
 
 
-        public bool BouncingThisTick
-        {
-            get { return SpaceshipMove.BouncingThisTick; }
-        }
-
-
         public Vector3 DeltaPosition
         {
             get { return SpaceshipMove.DeltaPosition; }
