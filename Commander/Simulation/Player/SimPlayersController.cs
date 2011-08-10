@@ -523,13 +523,22 @@
             // buy a turret
             if (player.ActualSelection.TurretToBuy != TurretType.None)
             {
-                player.ActualSelection.TurretToPlace = Simulator.TurretsFactory.Create(player.ActualSelection.TurretToBuy);
-                player.ActualSelection.TurretToPlace.CelestialBody = player.ActualSelection.CelestialBody;
-                player.ActualSelection.TurretToPlace.Position = player.Position;
-                player.ActualSelection.TurretToPlace.ToPlaceMode = true;
-                player.TurretToPlaceChanged = true;
-                player.UpdateSelection();
-                NotifyTurretToPlaceSelected(player.ActualSelection.TurretToPlace, player);
+                if (!AvailableTurrets[player.ActualSelection.TurretToBuy])
+                {
+                    // cannot buy turret here
+                }
+
+                else
+                {
+                    player.ActualSelection.TurretToPlace = Simulator.TurretsFactory.Create(player.ActualSelection.TurretToBuy);
+                    player.ActualSelection.TurretToPlace.CelestialBody = player.ActualSelection.CelestialBody;
+                    player.ActualSelection.TurretToPlace.Position = player.Position;
+                    player.ActualSelection.TurretToPlace.ToPlaceMode = true;
+                    player.TurretToPlaceChanged = true;
+                    player.UpdateSelection();
+
+                    NotifyTurretToPlaceSelected(player.ActualSelection.TurretToPlace, player);
+                }
 
                 return;
             }
