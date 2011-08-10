@@ -393,23 +393,13 @@
         {
             int actual = (int) ActualSelection.TurretChoice;
             int nbChoices = ActualSelection.AvailableTurretOptions.Count;
-            int next = actual;
 
-            for (int i = 1; i < nbChoices; i++)
-            {
-                actual += 1;
+            actual += 1;
 
-                if (actual >= nbChoices)
-                    actual = 0;
+            if (actual >= nbChoices)
+                actual = 0;
 
-                if (ActualSelection.AvailableTurretOptions[(TurretChoice) actual])
-                {
-                    next = actual;
-                    break;
-                }
-            }
-
-            ActualSelection.TurretChoice = (TurretChoice) next;
+            ActualSelection.TurretChoice = (TurretChoice) actual;
         }
 
 
@@ -417,23 +407,13 @@
         {
             int actual = (int) ActualSelection.TurretChoice;
             int nbChoices = ActualSelection.AvailableTurretOptions.Count;
-            int previous = actual;
 
-            for (int i = 1; i < nbChoices; i++)
-            {
-                actual -= 1;
+            actual -= 1;
 
-                if (actual < 0)
-                    actual = nbChoices - 1;
+            if (actual < 0)
+                actual = nbChoices - 1;
 
-                if (ActualSelection.AvailableTurretOptions[(TurretChoice) actual])
-                {
-                    previous = actual;
-                    break;
-                }
-            }
-
-            ActualSelection.TurretChoice = (TurretChoice) previous;
+            ActualSelection.TurretChoice = (TurretChoice) actual;
         }
 
 
@@ -533,12 +513,12 @@
                 ActualSelection.Turret.UpdatePrice <= CommonStash.Cash;
 
             //des que l'option de maj redevient disponible, elle est selectionnee
-            if (majEtaitIndisponible && ActualSelection.AvailableTurretOptions[TurretChoice.Update])
-                ActualSelection.TurretChoice = TurretChoice.Update;
+            //if (majEtaitIndisponible && ActualSelection.AvailableTurretOptions[TurretChoice.Update])
+            //    ActualSelection.TurretChoice = TurretChoice.Update;
 
             //change automatiquement la selection de cette option quand elle n'est pas disponible
-            if (!ActualSelection.AvailableTurretOptions[TurretChoice.Update] && ActualSelection.TurretChoice == TurretChoice.Update)
-                ActualSelection.TurretChoice = TurretChoice.Sell;
+            //if (!ActualSelection.AvailableTurretOptions[TurretChoice.Update] && ActualSelection.TurretChoice == TurretChoice.Update)
+            //    ActualSelection.TurretChoice = TurretChoice.Sell;
         }
 
 

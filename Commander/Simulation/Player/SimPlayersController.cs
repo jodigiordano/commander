@@ -558,7 +558,15 @@
                 //        NotifySellTurretAsked(player.ActualSelection.Turret, player);
                 //        break;
                     case TurretChoice.Update:
-                        NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
+                        if (!player.ActualSelection.AvailableTurretOptions[TurretChoice.Update])
+                        {
+                            // cannot upgrade here (sound, shake that menu, etc.)
+                        }
+
+                        else
+                        {
+                            NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
+                        }
                         break;
                 }
 
