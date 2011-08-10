@@ -43,5 +43,13 @@
             vector.Y = -(float) Math.Cos(angle);
             vector.Z = 0;
         }
+
+
+        public static float SignedAngle(ref Vector3 vec1, ref Vector3 vec2)
+        {
+            float perpDot = vec1.X * vec2.Y - vec1.Y * vec2.X;
+
+            return (float) Math.Atan2(perpDot, Vector3.Dot(vec1, vec2));
+        }
     }
 }

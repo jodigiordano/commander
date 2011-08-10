@@ -148,7 +148,7 @@
             Vector3 direction = Direction;
 
             // Trouver l'angle d'alignement
-            float angle = SignedAngle(ref directionVisee, ref direction);
+            float angle = Core.Physics.Utilities.SignedAngle(ref directionVisee, ref direction);
 
             // Trouver la rotation nécessaire pour s'enligner
             float rotation = MathHelper.Clamp(RotationMaximaleRad, 0, Math.Abs(angle));
@@ -233,14 +233,6 @@
             double tempsRequis = (distance / Speed) * 16.33f;
 
             Simulation.Scene.VisualEffects.Add(Image, Core.Visual.VisualEffects.FadeOutTo0(Image.Color.A, 0, tempsRequis));
-        }
-
-
-        protected static float SignedAngle(ref Vector3 vecteur1, ref Vector3 vecteur2)
-        {
-            float perpDot = vecteur1.X * vecteur2.Y - vecteur1.Y * vecteur2.X;
-
-            return (float)Math.Atan2(perpDot, Vector3.Dot(vecteur1, vecteur2));
         }
     }
 }

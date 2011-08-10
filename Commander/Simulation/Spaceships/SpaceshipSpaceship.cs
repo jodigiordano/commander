@@ -102,7 +102,7 @@
             Vector3 direction = Direction;
 
             // Delta, Converted to angle
-            float angle = SignedAngle(ref currentDirection, ref direction);
+            float angle = Core.Physics.Utilities.SignedAngle(ref currentDirection, ref direction);
 
             // Clamp to maximum allowed by the ship
             float rotation = MathHelper.Clamp(RotationMaximaleRad, 0, Math.Abs(angle));
