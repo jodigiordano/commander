@@ -57,7 +57,8 @@
         protected override void UpdateLogic(GameTime gameTime)
         {
             Simulator.Update();
-
+            Title.Update();
+            
             switch (SceneState)
             {
                 case State.ConnectPlayer:
@@ -68,7 +69,6 @@
                     break;
 
                 case State.ConnectingPlayer:
-                    Title.UpdatePressStart();
                     break;
 
 

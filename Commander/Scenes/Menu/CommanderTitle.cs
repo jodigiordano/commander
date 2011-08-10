@@ -50,6 +50,13 @@
         }
 
 
+        public void Update()
+        {
+            if (PressStart.Alpha > 0)
+                PressStart.Update();
+        }
+
+
         public void Draw()
         {
             Scene.Add(Commander);
@@ -99,12 +106,6 @@
             VisualEffectsIds.Add(Scene.VisualEffects.Add(PressStart, EphemereGames.Core.Visual.VisualEffects.Fade(PressStart.Alpha, 0, 0, 1000), VisualEffectTerminated));
             VisualEffectsIds.Add(Scene.VisualEffects.Add(Commander, Core.Visual.VisualEffects.FadeOutTo0(Commander.Alpha, 0, 1000), VisualEffectTerminated));
             VisualEffectsIds.Add(Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 1000), VisualEffectTerminated));
-        }
-
-
-        public void UpdatePressStart()
-        {
-            PressStart.Update();
         }
 
 
