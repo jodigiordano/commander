@@ -554,9 +554,9 @@
             {
                 switch (player.ActualSelection.TurretChoice)
                 {
-                //    case TurretChoice.Sell:
-                //        NotifySellTurretAsked(player.ActualSelection.Turret, player);
-                //        break;
+                    case TurretChoice.Sell:
+                        NotifySellTurretAsked(player.ActualSelection.Turret, player);
+                        break;
                     case TurretChoice.Update:
                         if (!player.ActualSelection.AvailableTurretOptions[TurretChoice.Update])
                         {
@@ -587,25 +587,7 @@
 
         public void DoAlternateAction(Player p)
         {
-            var player = Players[p];
 
-            // sell a turret
-            if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
-            {
-                switch (player.ActualSelection.TurretChoice)
-                {
-                    case TurretChoice.Sell:
-                        NotifySellTurretAsked(player.ActualSelection.Turret, player);
-                        break;
-                //    case TurretChoice.Update:
-                //        NotifyUpgradeTurretAsked(player.ActualSelection.Turret, player);
-                //        break;
-                }
-
-                player.UpdateSelection();
-
-                return;
-            }
         }
 
 

@@ -133,13 +133,13 @@
             if (inputType == InputType.Gamepad)
             {
                 UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Upgrade", "Pixelite") { SizeX = 2f })));
-                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.AlternateSelect]), new Text("Sell", "Pixelite") { SizeX = 2f })));
+                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Sell", "Pixelite") { SizeX = 2f })));
             }
 
             else
             {
                 UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Upgrade", "Pixelite") { SizeX = 2f })));
-                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.AlternateSelect]), new Text("Sell", "Pixelite") { SizeX = 2f })));
+                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Sell", "Pixelite") { SizeX = 2f })));
             }
         }
     }
