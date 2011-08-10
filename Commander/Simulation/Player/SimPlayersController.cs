@@ -248,19 +248,13 @@
             if (Simulator.State == GameState.Paused || OptionsPanel.Visible)
             {
                 player.PausePlayer.Move(ref delta, MouseConfiguration.MovingSpeed);
-
                 return;
             }
-
-
-            if (Simulator.DemoMode)
-            {
-                player.Move(ref delta, MouseConfiguration.MovingSpeed);
-                return;
-            }
-
 
             player.Move(ref delta, MouseConfiguration.MovingSpeed);
+
+            if (Simulator.DemoMode)
+                return;
 
             if (player.ActualSelection.TurretToPlace != null &&
                 player.ActualSelection.CelestialBody.OuterTurretZone.Outside(player.Position))
