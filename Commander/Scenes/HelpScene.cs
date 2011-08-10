@@ -130,7 +130,7 @@
             if (button == MouseConfiguration.Select)
                 SlidesSlider.DoClick(((Player) p).Circle);
 
-            if (button == MouseConfiguration.Back)
+            if (button == MouseConfiguration.Cancel)
                 BeginTransition();
         }
 
@@ -164,7 +164,7 @@
                 return;
             }
 
-            if (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel)
+            if (key == KeyboardConfiguration.Back)
                 BeginTransition();
 
             if (key == KeyboardConfiguration.ChangeMusic)

@@ -535,11 +535,11 @@ namespace EphemereGames.Commander.Simulation
 
             if (LevelsController.Help.Active)
             {
-                if (key == KeyboardConfiguration.Cancel)
+                if (key == KeyboardConfiguration.Back)
                     LevelsController.Help.Skip();
                 if (key == KeyboardConfiguration.Next)
                     LevelsController.Help.NextDirective();
-                if (key == KeyboardConfiguration.Back)
+                if (key == KeyboardConfiguration.Previous)
                     LevelsController.Help.PreviousDirective();
 
                 return;
@@ -689,9 +689,9 @@ namespace EphemereGames.Commander.Simulation
         {
             if (LevelsController.Help.Active)
             {
-                if (button == MouseConfiguration.Select)
+                if (button == MouseConfiguration.Next)
                     LevelsController.Help.NextDirective();
-                else if (button == MouseConfiguration.Back)
+                else if (button == MouseConfiguration.Previous)
                     LevelsController.Help.PreviousDirective();
 
                 return;

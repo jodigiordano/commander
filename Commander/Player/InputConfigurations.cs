@@ -8,11 +8,10 @@
     static class KeyboardConfiguration
     {
         public static Keys AdvancedView = Keys.R;
-        public static Keys Next = Keys.Enter;
+        public static Keys Next = Keys.D;
+        public static Keys Previous = Keys.A;
         public static Keys Back = Keys.Escape;
-        public static Keys Cancel = Keys.Escape;
         public static Keys ChangeMusic = Keys.RightShift;
-        public static Keys NextWave = Keys.RightControl;
         public static Keys Debug = Keys.F1;
         public static Keys Editor = Keys.F2;
         public static Keys Disconnect = Keys.Q;
@@ -32,9 +31,8 @@
                     AdvancedView,
                     Back,
                     Next,
-                    Cancel,
+                    Previous,
                     ChangeMusic,
-                    NextWave,
                     Debug,
                     Editor,
                     Disconnect,
@@ -62,11 +60,13 @@
     static class MouseConfiguration
     {
         public static MouseButton Select = MouseButton.Left;
-        public static MouseButton Back = MouseButton.Right;
         public static MouseButton Cancel = MouseButton.Right;
         public static MouseButton AlternateSelect = MouseButton.Middle;
         public static MouseButton SelectionNext = MouseButton.MiddleDown;
         public static MouseButton SelectionPrevious = MouseButton.MiddleUp;
+        public static MouseButton Fire = MouseButton.Middle;
+        public static MouseButton Previous = MouseButton.Left;
+        public static MouseButton Next = MouseButton.Right;
         public static float MovingSpeed = 1.5f;
         public static float RotatingSpeed = 0.1f;
 
@@ -78,11 +78,13 @@
                 return new List<MouseButton>()
                 {
                     Select,
-                    Back,
                     Cancel,
                     AlternateSelect,
                     SelectionNext,
-                    SelectionPrevious
+                    SelectionPrevious,
+                    Fire,
+                    Previous,
+                    Next
                 };
             }
         }
@@ -104,7 +106,6 @@
         public static Buttons Back = Buttons.Start;
         public static Buttons Cancel = Buttons.B;
         public static Buttons ChangeMusic = Buttons.DPadUp;
-        public static Buttons NextWave = Buttons.RightShoulder;
         public static Buttons Debug = Buttons.DPadDown;
         public static Buttons Editor = Buttons.LeftShoulder;
         public static Buttons Select = Buttons.A;
@@ -131,7 +132,6 @@
                     Disconnect,
                     Cancel,
                     ChangeMusic,
-                    NextWave,
                     Debug,
                     Editor,
                     AlternateSelect,

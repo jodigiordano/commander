@@ -137,7 +137,7 @@
                 if (button == MouseConfiguration.Select)
                     NextLevel();
 
-                else if (button == MouseConfiguration.Back)
+                else if (button == MouseConfiguration.Cancel)
                     TransiteToWorld();
             }
 
@@ -146,7 +146,7 @@
                 if (button == MouseConfiguration.Select)
                     RetryLevel();
 
-                else if (button == MouseConfiguration.Back)
+                else if (button == MouseConfiguration.Cancel)
                     TransiteToWorld();
             }
         }

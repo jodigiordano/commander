@@ -164,9 +164,6 @@
                 Music.DoClick(player.Circle);
                 SoundEffects.DoClick(player.Circle);
             }
-
-            if (button == MouseConfiguration.Back)
-                BeginTransition();
         }
 
 
@@ -199,7 +196,7 @@
                 return;
             }
 
-            if (key == KeyboardConfiguration.Back || key == KeyboardConfiguration.Cancel)
+            if (key == KeyboardConfiguration.Back)
                 BeginTransition();
 
             if (key == KeyboardConfiguration.ChangeMusic)
