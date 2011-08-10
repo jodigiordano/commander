@@ -1,0 +1,69 @@
+﻿namespace EphemereGames.Commander.Simulation
+{
+    using System;
+    using Microsoft.Xna.Framework;
+
+    
+    class SpaceshipChasingBehavior : SpaceshipBehavior
+    {
+        public Vector3 TargetPosition   { get { return targetPosition; } set { targetPosition = value; Targeting = true; TargetReached = false; } }
+        public bool TargetReached       { get; protected set; }
+        public bool Targeting           { get; protected set; }
+
+        private Vector3 targetPosition;
+        private Matrix RotationMatrix;
+
+
+        public SpaceshipChasingBehavior(Spaceship spaceship, Vector3 targetPosition)
+            : base(spaceship)
+        {
+            TargetPosition = targetPosition;
+            TargetReached = false;
+            Targeting = true;
+        }
+
+
+        public override bool Active
+        {
+            get { return Targeting && !TargetReached; }
+        }
+
+
+        public override void Update()
+        {
+            if (TargetReached || !Targeting)
+                return;
+
+            // Find the targeted direction
+            Vector3 targetedDirection = TargetPosition - Spaceship.Position;
+            Vector3 direction = Spaceship.Direction;
+
+            // Find angle to align to
+            float angle = Core.Physics.Utilities.SignedAngle(ref targetedDirection, ref direction);
+
+            // Find rotation needed to get aligned
+            float rotation = MathHelper.Clamp(Spaceship.MaxRotationRad, 0, Math.Abs(angle));
+
+            if (angle > 0)
+                rotation = -rotation;
+
+            // Apply rotation
+            Matrix.CreateRotationZ(rotation, out RotationMatrix);
+            Vector3.Transform(ref direction, ref RotationMatrix, out direction);
+
+            if (direction != Vector3.Zero)
+                direction.Normalize();
+
+            Spaceship.Direction = direction;
+
+            // Apply movement
+            Spaceship.Position += Spaceship.Direction * Spaceship.Speed;
+
+            if ((TargetPosition - Spaceship.Position).LengthSquared() <= 600)
+            {
+                Targeting = false;
+                TargetReached = true;
+            }
+        }
+    }
+}

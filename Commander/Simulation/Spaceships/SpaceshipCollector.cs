@@ -13,7 +13,7 @@
                 SizeX = 4
             };
 
-            RotationMaximaleRad = 0.2f;
+            MaxRotationRad = 0.2f;
             BuyPrice = 0;
             ShootingFrequency = double.NaN;
             Active = true;

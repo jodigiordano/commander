@@ -5,7 +5,7 @@
         public SpaceshipSpaceship(Simulator simulator)
             : base(simulator)
         {
-            RotationMaximaleRad = 0.2f;
+            MaxRotationRad = 0.2f;
             BuyPrice = 50;
             SfxOut = "sfxPowerUpDoItYourselfOut";
             SfxIn = "sfxPowerUpDoItYourselfIn";

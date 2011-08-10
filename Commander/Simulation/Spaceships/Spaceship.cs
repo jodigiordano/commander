@@ -12,68 +12,52 @@
     {
         public static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
 
-        //keep
+        // Movement
+        public float MaxRotationRad;
+        protected Matrix RotationMatrix;
+        public Vector3 NextMovement;
+        public Vector3 NextRotation;
         public Vector3 Position                 { get; set; }
         public float Speed                      { get; set; }
         public Vector3 Direction                { get; set; }
         public float Rotation                   { get; set; }
+        private Vector3 Acceleration;
+        public Vector3 LastPosition;
+        public Vector3 Bouncing;
+        public bool BouncingThisTick;
+        public float Friction;
+
+        // Visual
+        public Image Image;
+        private Particle TrailEffect;
+        protected bool ShowTrail;
+
+        // Collision
         public Shape Shape                      { get; set; }
         public Circle Circle                    { get; set; }
         public PhysicalRectangle Rectangle      { get; set; }
         public Line Line                        { get; set; }
 
-        public Image Image;
-        private Particle TrailEffect;
-        protected bool ShowTrail;
-
+        // Power-Up
         public string SfxOut                    { get; protected set; }
         public string SfxIn                     { get; protected set; }
-
-
-        public Vector3 LastPosition;
-
+        public int BuyPrice;
 
         protected Simulator Simulator;
 
+        // Automatic mode
+        public bool ApplyAutomaticBehavior;
+        public SpaceshipBehavior AutomaticBehavior;
 
-        //
-
-        //dunno
-        public ICollidable StartingObject       { get; set; }
-        public virtual bool TargetReached       { get; set; }
-        private Vector3 targetPosition;
-        public Vector3 TargetPosition           { get { return targetPosition; } set { targetPosition = value; InCombat = true; TargetReached = false; } }
-        public bool GoBackToStartingObject      { get; set; }
-
-        public bool InCombat;
-
+        // Weapon
         protected List<Bullet> Bullets;
         public float BulletHitPoints;
         public double ShootingFrequency;
         private double LastFireCounter;
 
-        public float RotationMaximaleRad;
-        protected Matrix RotationMatrix;
-
-        public bool AutomaticMode;
-        public Vector3 NextMovement;
-        public Vector3 NextRotation;
-
-
-
         public virtual bool Active              { get; set; }
 
-
-        // From SpaceshipSpaceship
-        private Vector3 Acceleration;
-
-        public Vector3 Bouncing;
-        public bool BouncingThisTick;
-        public float Friction;
-        public int BuyPrice;
-
-
-
+        public IPhysical StartingObject;
 
 
         public Spaceship(Simulator simulator)
@@ -91,7 +75,7 @@
             Shape = Shape.Circle;
             Circle = new Circle(Position, Image.TextureSize.X * Image.SizeX / 2);
 
-            RotationMaximaleRad = 0.10f;
+            MaxRotationRad = 0.10f;
             ShootingFrequency = 300;
             LastFireCounter = 0;
 
@@ -100,8 +84,7 @@
             SfxOut = "";
             SfxIn = "";
             Active = true;
-            GoBackToStartingObject = false;
-            AutomaticMode = true;
+            ApplyAutomaticBehavior = true;
             NextMovement = Vector3.Zero;
             NextRotation = Vector3.Zero;
 
@@ -114,9 +97,6 @@
 
         public virtual void Initialize()
         {
-            if (StartingObject != null)
-                Position = StartingObject.Position;
-
             TrailEffect = Simulator.Scene.Particles.Get(@"spaceshipTrail");
             TrailEffect.VisualPriority = Image.VisualPriority + 0.00001f;
         }
@@ -158,62 +138,25 @@
         {
             LastPosition = Position;
 
-            if (StartingObject != null && GoBackToStartingObject)
-                TargetPosition = StartingObject.Position;
-
             Circle.Position = Position;
 
             LastFireCounter += Preferences.TargetElapsedTimeMs;
 
             BouncingThisTick = false;
 
-            if (AutomaticMode)
-                DoAutomaticMode();
+            if (ApplyAutomaticBehavior)
+                AutomaticBehavior.Update();
             else
                 DoManualMode(ref NextMovement, ref NextRotation);
 
-            DoBouncing();
-            DoFriction();
+            ApplyBouncing();
+            ApplyFriction();
         }
 
 
         public double VisualPriority
         {
             set { Image.VisualPriority = value; }
-        }
-
-
-        public virtual void DoAutomaticMode()
-        {
-            // Trouver la direction visée
-            Vector3 directionVisee = TargetPosition - Position;
-            Vector3 direction = Direction;
-
-            // Trouver l'angle d'alignement
-            float angle = Core.Physics.Utilities.SignedAngle(ref directionVisee, ref direction);
-
-            // Trouver la rotation nécessaire pour s'enligner
-            float rotation = MathHelper.Clamp(RotationMaximaleRad, 0, Math.Abs(angle));
-
-            if (angle > 0)
-                rotation = -rotation;
-
-            // Appliquer la rotation
-            Matrix.CreateRotationZ(rotation, out RotationMatrix);
-            Vector3.Transform(ref direction, ref RotationMatrix, out direction);
-
-            if (direction != Vector3.Zero)
-                direction.Normalize();
-
-            Direction = direction;
-
-            Position += Direction * Speed;
-
-            if ((TargetPosition - Position).LengthSquared() <= 600)
-            {
-                InCombat = false;
-                TargetReached = true;
-            }
         }
 
 
@@ -308,7 +251,7 @@
             float angle = Core.Physics.Utilities.SignedAngle(ref currentDirection, ref direction);
 
             // Clamp to maximum allowed by the ship
-            float rotation = MathHelper.Clamp(RotationMaximaleRad, 0, Math.Abs(angle));
+            float rotation = MathHelper.Clamp(MaxRotationRad, 0, Math.Abs(angle));
 
             if (angle > 0)
                 rotation = -rotation;
@@ -324,14 +267,14 @@
         }
 
 
-        private void DoFriction()
+        private void ApplyFriction()
         {
             if (Friction > 0)
                 Friction = Math.Max(0, Friction - 0.01f); //lower == less on planets
         }
 
 
-        private void DoBouncing()
+        private void ApplyBouncing()
         {
             if (Position.X > 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius)
             {

@@ -31,23 +31,29 @@
 
                 spaceship.Update();
 
-                if (!spaceship.Active && !spaceship.GoBackToStartingObject)
+                if (spaceship.AutomaticBehavior is SpaceshipGoHomeBehavior)
                 {
-                    spaceship.GoBackToStartingObject = true;
-                    spaceship.AutomaticMode = true;
-                    spaceship.DoHide();
+                    if (!spaceship.AutomaticBehavior.Active)
+                        Spaceships.RemoveAt(i);
                 }
 
-                if (!spaceship.GoBackToStartingObject)
+                else
                 {
-                    List<Bullet> bullets = spaceship.BulletsThisTick();
+                    if (!spaceship.Active)
+                    {
+                        spaceship.AutomaticBehavior = new SpaceshipGoHomeBehavior(spaceship);
+                        spaceship.ApplyAutomaticBehavior = true;
+                        spaceship.DoHide();
+                    }
 
-                    for (int j = 0; j < bullets.Count; j++)
-                        NotifyObjectCreated(bullets[j]);
+                    else
+                    {
+                        List<Bullet> bullets = spaceship.BulletsThisTick();
+
+                        for (int j = 0; j < bullets.Count; j++)
+                            NotifyObjectCreated(bullets[j]);
+                    }
                 }
-
-                if (spaceship.GoBackToStartingObject && spaceship.TargetReached)
-                    Spaceships.RemoveAt(i);
 
                 spaceship.NextMovement = Vector3.Zero;
             }
@@ -81,8 +87,8 @@
 
         public void DoAddSpaceshipAsked(Spaceship spaceship)
         {
-            if (spaceship is TheResistance)
-                ((TheResistance) spaceship).Enemies = Enemies;
+            //if (spaceship is TheResistance)
+            //    ((TheResistance) spaceship).Enemies = Enemies;
 
             if (spaceship is SpaceshipAutomaticCollector)
                 ((SpaceshipAutomaticCollector) spaceship).Minerals = Minerals;

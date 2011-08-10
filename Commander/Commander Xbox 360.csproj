@@ -244,6 +244,9 @@
     <Compile Include="Simulation\PlanetarySystem\PlanetarySystemController.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsFactory.cs" />
     <Compile Include="Simulation\Simulator.cs" />
+    <Compile Include="Simulation\Spaceships\AI\SpaceshipBehavior.cs" />
+    <Compile Include="Simulation\Spaceships\AI\SpaceshipChasingBehavior.cs" />
+    <Compile Include="Simulation\Spaceships\AI\SpaceshipGoHomeBehavior.cs" />
     <Compile Include="Simulation\Spaceships\AlienSpaceship.cs" />
     <Compile Include="Simulation\Spaceships\Mothership.cs" />
     <Compile Include="Simulation\Turrets\TurretsController.cs" />

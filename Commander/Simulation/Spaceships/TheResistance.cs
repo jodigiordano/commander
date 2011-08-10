@@ -2,10 +2,9 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
-    using Microsoft.Xna.Framework;
 
 
-    class TheResistance : Spaceship
+    class TheResistance
     {
         public double ActiveTime;
         public List<Enemy> Enemies;
@@ -13,7 +12,6 @@
 
 
         public TheResistance(Simulator simulator)
-            : base(simulator)
         {
             Spaceships = new List<Spaceship>();
 
@@ -21,55 +19,46 @@
             {
                 ShootingFrequency = 100,
                 BulletHitPoints = 10,
-                RotationMaximaleRad = 0.15f,
+                MaxRotationRad = 0.15f,
                 Image = new Image("Resistance1")
                 {
                     SizeX = 4,
                     VisualPriority = VisualPriorities.Default.DefaultSpaceship
                 },
-                AutomaticMode = true
+                ApplyAutomaticBehavior = true
             });
 
             Spaceships.Add(new Spaceship(simulator)
             {
                 ShootingFrequency = 200,
                 BulletHitPoints = 30,
-                RotationMaximaleRad = 0.05f,
+                MaxRotationRad = 0.05f,
                 Image = new Image("Resistance2")
                 {
                     SizeX = 4,
                     VisualPriority = VisualPriorities.Default.DefaultSpaceship
                 },
-                AutomaticMode = true
+                ApplyAutomaticBehavior = true
             });
 
             Spaceships.Add(new Spaceship(simulator)
             {
                 ShootingFrequency = 500,
                 BulletHitPoints = 100,
-                RotationMaximaleRad = 0.2f,
+                MaxRotationRad = 0.2f,
                 Image = new Image("Resistance3")
                 {
                     SizeX = 4,
                     VisualPriority = VisualPriorities.Default.DefaultSpaceship
                 },
-                AutomaticMode = true
+                ApplyAutomaticBehavior = true
             });
-
-            SfxOut = "sfxPowerUpResistanceOut";
-            SfxIn = "sfxPowerUpResistanceIn";
         }
 
 
-        public override void Initialize()
+        public void Initialize()
         {
-            foreach (var spaceship in Spaceships)
-            {
-                spaceship.StartingObject = StartingObject;
 
-                if (StartingObject != null)
-                    spaceship.Position = StartingObject.Position;
-            }
         }
 
 
@@ -83,44 +72,20 @@
         }
 
 
-        public override bool Active
+        public bool Active
         {
             get { return ActiveTime > 0; }
         }
 
 
-        public override bool TargetReached
+        public void Update()
         {
-            get { return Spaceships[0].TargetReached && Spaceships[1].TargetReached && Spaceships[2].TargetReached; }
-        }
 
-
-        public override void Update()
-        {
-            ActiveTime -= Preferences.TargetElapsedTimeMs;
-
-            for (int i = 0; i < Spaceships.Count; i++)
-            {
-                if (!Spaceships[i].InCombat)
-                {
-                    Vector3 direction = ((Enemies.Count > i) ? Enemies[i].Position : StartingObject.Position) - Spaceships[i].Position;
-                    direction.Normalize();
-
-                    Spaceships[i].TargetPosition = ((Enemies.Count > i) ? Enemies[i].Position : StartingObject.Position) + direction * 100;
-                }
-            }
-
-            foreach (var vaisseau in Spaceships)
-            {
-
-                vaisseau.DoAutomaticMode();
-                vaisseau.Update();
-            }
         }
 
 
         private List<Bullet> projectilesCeTick = new List<Bullet>();
-        public override List<Bullet> BulletsThisTick()
+        public List<Bullet> BulletsThisTick()
         {
             projectilesCeTick.Clear();
 
@@ -131,18 +96,15 @@
         }
 
 
-        public override void DoHide()
+        public void DoHide()
         {
 
             foreach (var vaisseau in Spaceships)
-            {
-                vaisseau.TargetPosition = StartingObject.Position;
                 vaisseau.DoHide();
-            }
         }
 
 
-        public override void Draw()
+        public void Draw()
         {
             foreach (var vaisseau in Spaceships)
                 vaisseau.Draw();

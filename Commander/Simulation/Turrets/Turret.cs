@@ -9,7 +9,7 @@
     using ProjectMercury.Emitters;
 
 
-    abstract class Turret : ICollidable, IPhysical
+    abstract class Turret : ICollidable
     {
         public Vector3 RelativePosition;
         public Vector3 Position                     { get; set; }

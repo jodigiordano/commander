@@ -84,7 +84,7 @@ namespace EphemereGames.Commander.Simulation
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
                 Bouncing = new Vector3(Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], 0),
                 StartingObject = HumanBattleship,
-                AutomaticMode = false,
+                ApplyAutomaticBehavior = false,
                 Owner = Owner
             };
 

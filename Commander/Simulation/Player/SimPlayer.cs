@@ -46,7 +46,7 @@
 
             SpaceshipMove = new SpaceshipSpaceship(simulator)
             {
-                AutomaticMode = false,
+                ApplyAutomaticBehavior = false,
                 Speed = 4,
                 ShootingFrequency = 100,
                 BulletHitPoints = 1,

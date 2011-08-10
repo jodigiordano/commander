@@ -470,15 +470,15 @@
 
             if (Simulator.DemoMode)
             {
-                GamePausedResistance.StartingObject = null;
+                //GamePausedResistance.StartingObject = null;
 
-                if (Main.GameInProgress != null && Main.GameInProgress.State == GameState.Paused)
-                {
-                    GamePausedResistance.StartingObject = Simulator.CelestialBodyPausedGame;
+                //if (Main.GameInProgress != null && Main.GameInProgress.State == GameState.Paused)
+                //{
+                //    GamePausedResistance.StartingObject = Simulator.CelestialBodyPausedGame;
 
-                    if (GamePausedResistance.StartingObject != null)
-                        GamePausedResistance.Update();
-                }
+                //    if (GamePausedResistance.StartingObject != null)
+                //        GamePausedResistance.Update();
+                //}
             }
 
             else if (Simulator.State != GameState.Paused)
@@ -506,8 +506,8 @@
             if (!Simulator.CutsceneMode)
                 HelpBar.Draw();
 
-            if (Simulator.WorldMode && GamePausedResistance.StartingObject != null)
-                GamePausedResistance.Draw();
+            //if (Simulator.WorldMode && GamePausedResistance.StartingObject != null)
+            //    GamePausedResistance.Draw();
 
             if (Simulator.DemoMode)
                 return;
