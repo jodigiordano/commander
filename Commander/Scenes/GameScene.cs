@@ -14,6 +14,7 @@
 
         private LevelDescriptor Level;
         private string TransitingTo;
+        private FutureJobsController FutureJobs;
 
 
         public GameScene(string name, LevelDescriptor level)
@@ -30,6 +31,8 @@
             Simulator.Initialize();
             Simulator.AddNewGameStateListener(DoNewGameState);
             Inputs.AddListener(Simulator);
+
+            FutureJobs = new FutureJobsController();
         }
 
 
@@ -53,6 +56,7 @@
         {
             Simulator.Update();
             MusicController.Update();
+            FutureJobs.Update();
         }
 
 
@@ -97,12 +101,18 @@
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon, Inputs.MasterPlayer.InputType);
                 MusicController.SwitchTo(MusicContext.Won);
+                Inputs.Active = false;
+
+                FutureJobs.Add(ReactiveInputs, 500);
             }
 
             else if (newState == GameState.Lost)
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost, Inputs.MasterPlayer.InputType);
                 MusicController.SwitchTo(MusicContext.Lost);
+                Inputs.Active = false;
+
+                FutureJobs.Add(ReactiveInputs, 500);
             }
 
             else if (newState == GameState.Restart)
@@ -271,6 +281,12 @@
         {
             TransitingTo = Main.SelectedWorld.Name;
             TransiteTo(TransitingTo);
+        }
+
+
+        private void ReactiveInputs()
+        {
+            Inputs.Active = true;
         }
     }
 }

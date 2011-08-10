@@ -20,6 +20,7 @@
         public PausePlayer PausePlayer;
         public SpaceshipSpaceship SpaceshipMove;
         public bool TurretToPlaceChanged;
+        public bool GameOver;
 
         // for keyboard/mouse
         public bool MovingLeft;
@@ -52,6 +53,7 @@
             };
 
             TurretToPlaceChanged = false;
+            GameOver = false;
         }
 
 
@@ -65,6 +67,8 @@
 
             MovingLeft = MovingRight = MovingUp = MovingDown = false;
             LastMouseDirection = Vector3.Zero;
+
+            GameOver = false;
         }
 
 
@@ -199,6 +203,13 @@
 
         public void UpdateSelection()
         {
+            if (GameOver)
+            {
+                ActualSelection.Initialize();
+
+                return;
+            }
+
             // In a power-up
             if (PowerUpInUse != PowerUpType.None)
             {

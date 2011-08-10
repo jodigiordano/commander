@@ -84,6 +84,7 @@
     <Compile Include="Descriptors.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EqualityComparers.cs" />
+    <Compile Include="FutureJobsController.cs" />
     <Compile Include="GUI\Bubbles\Bubble.cs" />
     <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />
     <Compile Include="GUI\Bubbles\TextBubble.cs" />

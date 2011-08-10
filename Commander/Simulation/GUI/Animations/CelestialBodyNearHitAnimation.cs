@@ -77,10 +77,14 @@
 
             if (!Visible)
             {
-                Alpha = Math.Max(0, Alpha - 0.01);
+                Alpha = Math.Max(0, Alpha - 0.005);
 
                 SelectedMask.Alpha = (byte) (Alpha * 255);
                 Metronome.Initialize();
+
+                if (Alpha != 0)
+                    AddToScene();
+
                 return;
             }
 
@@ -89,7 +93,7 @@
             if (enemyPerc < 0.6)
             {
                 double current = enemyPerc / 0.6;
-                double delta = MathHelper.Clamp((float) (current - Alpha), -0.01f, 0.01f);
+                double delta = MathHelper.Clamp((float) (current - Alpha), -0.005f, 0.005f);
 
                 Alpha += delta;
             }
@@ -102,6 +106,12 @@
                 Alpha = Metronome.CurvePercThisTick;
             }
 
+            AddToScene();
+        }
+
+
+        private void AddToScene()
+        {
             SelectedMask.Alpha = (byte) (Alpha * 255);
             SelectedMask.Position = CelestialBody.Position;
 

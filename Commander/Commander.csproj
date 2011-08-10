@@ -156,6 +156,7 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="FutureJobsController.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />

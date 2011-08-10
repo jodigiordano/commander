@@ -9,7 +9,7 @@
 
     class Panel : PanelWidget
     {
-        public bool Visible;
+        public virtual bool Visible { get; set; }
         public bool ShowFrame;
         public bool ShowBackground;
         public bool ShowCloseButton;
@@ -26,7 +26,6 @@
         protected CloseButton CloseButton;
         private Text Title;
         private Image TitleSeparator;
-        private Vector3 UpperLeftUsablePosition;
         private byte backgroundAlpha;
         private byte alpha;
         private Vector2 padding;

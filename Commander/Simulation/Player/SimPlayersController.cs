@@ -315,6 +315,21 @@
         }
 
 
+        public void DoNewGameState(GameState state)
+        {
+            if (state == GameState.Won || state == GameState.Lost)
+            {
+                foreach (var p in Players.Values)
+                {
+                    p.GameOver = true;
+                    p.UpdateSelection();
+
+                    NotifyPlayerChanged(p);
+                }
+            }
+        }
+
+
         public void DoTurretBought(Turret turret, SimPlayer player)
         {
             CommonStash.Cash -= turret.BuyPrice;

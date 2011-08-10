@@ -472,8 +472,12 @@
 
         private void UpdateCelestialBodies()
         {
-            foreach (var c in CelestialBodies)
+            for (int i = 0; i < CelestialBodies.Count; i++)
+            {
+                var c = CelestialBodies[i];
+
                 c.Update();
+            }
         }
     }
 }

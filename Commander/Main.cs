@@ -111,7 +111,8 @@ namespace EphemereGames.Commander
                 Initializing = false;
             }
 
-            Inputs.Active = this.IsActive;
+            if (!IsActive)
+                return;
 
             Persistence.Update(gameTime);
             Visuals.Update(gameTime);

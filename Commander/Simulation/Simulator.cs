@@ -237,6 +237,7 @@ namespace EphemereGames.Commander.Simulation
             PausedGameController.PanelClosed += new NoneHandler(GUIController.DoPanelClosed);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(GUIController.DoObjectDestroyed);
             EnemiesController.NextWaveCompositionChanged += new NextWaveHandler(GUIController.DoNextWaveCompositionChanged);
+            LevelsController.NewGameState += new NewGameStateHandler(SimPlayersController.DoNewGameState);
         }
 
 

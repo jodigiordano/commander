@@ -14,6 +14,8 @@
         private KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> Current;
         private Scene Scene;
 
+        public bool Active;
+
 
         public HelpBarPanel(Scene scene, double visualPriority)
             : base(scene, new Vector3(0, scene.Height / 2 - 30, 0), new Vector2(scene.Width, 35), visualPriority, Color.White)
@@ -34,6 +36,8 @@
             InitializePredefinedMessages();
 
             Current = new KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessage.None, null);
+
+            Active = true;
         }
 
 
@@ -76,9 +80,10 @@
 
         public override void Draw()
         {
-            //Scene.BeginForeground();
+            if (!Active)
+                return;
+
             base.Draw();
-            //Scene.EndForeground();
         }
 
 

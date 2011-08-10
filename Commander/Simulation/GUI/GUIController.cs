@@ -121,7 +121,8 @@
 
             AlienNextWaveAnimation = new AlienNextWaveAnimation(Simulator)
             {
-                CelestialBody = Path.FirstCelestialBody
+                CelestialBody = Path.FirstCelestialBody,
+                TimeNextWave = StartingPathMenu.TimeNextWave
             };
 
             lastEnemiesToReleaseCount = -1;
@@ -139,6 +140,8 @@
             Players.Add(p, player);
 
             PathPreviewing.DoPlayerConnected(player);
+
+            HelpBar.Active = Players.Count <= 1;
         }
 
 
