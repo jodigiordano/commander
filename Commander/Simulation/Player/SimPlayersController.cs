@@ -472,8 +472,8 @@
             if (Simulator.DemoMode)
                 Players[p].Firing = true;
 
-            else if (player.ActualSelection.PowerUpToBuy == PowerUpType.None &&
-                    player.ActualSelection.TurretToBuy == TurretType.None &&
+            else if (/* player.ActualSelection.PowerUpToBuy == PowerUpType.None &&
+                    player.ActualSelection.TurretToBuy == TurretType.None && */
                     player.ActualSelection.TurretToPlace == null)
                 Players[p].Firing = true;
         }
