@@ -10,7 +10,7 @@
 
     class Spaceship : ICollidable
     {
-        public static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
+        private static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
 
         // Movement
         public float MaxRotationRad;
@@ -350,6 +350,12 @@
                 Acceleration.Y = Math.Max(0, Acceleration.Y - (0.03f + Friction));
             else if (Acceleration.Y < 0)
                 Acceleration.Y = Math.Min(0, Acceleration.Y + (0.03f + Friction));
+        }
+
+
+        public void ApplySafeBouncing()
+        {
+            Bouncing = new Vector3(Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], 0);
         }
     }
 }

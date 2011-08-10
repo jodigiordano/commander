@@ -52,10 +52,10 @@ namespace EphemereGames.Commander.Simulation
                 BulletHitPoints = 50,
                 Position = Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
-                Bouncing = new Vector3(Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], 0),
                 StartingObject = HumanBattleship,
                 ApplyAutomaticBehavior = false
             };
+            SpaceshipSpaceship.ApplySafeBouncing();
 
             Audio.PlaySfx(SpaceshipSpaceship.SfxIn);
         }

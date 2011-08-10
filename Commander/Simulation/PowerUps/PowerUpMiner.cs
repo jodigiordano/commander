@@ -82,11 +82,11 @@ namespace EphemereGames.Commander.Simulation
             {
                 Position = HumanBattleship.Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
-                Bouncing = new Vector3(Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], Spaceship.SafeBouncing[Main.Random.Next(0, Spaceship.SafeBouncing.Count)], 0),
                 StartingObject = HumanBattleship,
                 ApplyAutomaticBehavior = false,
                 Owner = Owner
             };
+            Miner.ApplySafeBouncing();
 
             Audio.PlaySfx(Miner.SfxIn);
 
