@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
 
 
@@ -36,6 +37,7 @@
         private SelectedPowerUpController SelectedPowerUpController;
 
         private bool firing;
+        private Metronome VibrationMetronome;
 
 
         public SimPlayer(Simulator simulator, Player player)
@@ -54,6 +56,7 @@
 
             TurretToPlaceChanged = false;
             GameOver = false;
+            VibrationMetronome = new Metronome(Preferences.TargetElapsedTimeMs, 100);
         }
 
 
@@ -495,6 +498,14 @@
 
             if (Simulator.DemoMode)
                 UpdateMainMenuSelection();
+
+            if (Firing)
+            {
+                VibrationMetronome.Update();
+            
+                //if (VibrationMetronome.CyclesCountThisTick != 0)
+                //    Core.Input.Inputs.VibrateController(BasePlayer, Preferences.TargetElapsedTimeMs * 10, 0.5f, 0.5f);
+            }   
         }
 
 

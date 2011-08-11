@@ -401,8 +401,6 @@
 
                     if (player.Firing)
                     {
-                        //Inputs.VibrateController(player.Player, Preferences.TargetElapsedTimeMs * 2, 0.2f, 0f); TODO: vibrate with little pauses between
-                        
                         var bullets = player.SpaceshipMove.Fire();
 
                         if (bullets.Count != 0)
