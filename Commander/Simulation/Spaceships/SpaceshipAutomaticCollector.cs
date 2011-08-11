@@ -20,7 +20,6 @@
 
             MaxRotationRad = 0.3f;
             BuyPrice = 0;
-            ShootingFrequency = double.NaN;
             Active = true;
             SfxOut = "sfxAutomaticCollectorOut";
             SfxIn = "sfxAutomaticCollectorIn";

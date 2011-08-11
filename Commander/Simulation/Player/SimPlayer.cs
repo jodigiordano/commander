@@ -48,8 +48,6 @@
             {
                 ApplyAutomaticBehavior = false,
                 Speed = 4,
-                ShootingFrequency = 100,
-                BulletHitPoints = 1,
                 VisualPriority = VisualPriorities.Default.PlayerCursor
             };
             SpaceshipMove.Bounced += new NoneHandler(DoBouncing);
@@ -129,11 +127,11 @@
         }
 
 
-        public double BulletDamage
+        public float BulletAttackPoints
         {
             set
             {
-                SpaceshipMove.BulletHitPoints = (float) value;
+                SpaceshipMove.BulletAttackPoints = value;
             }
         }
 

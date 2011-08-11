@@ -274,6 +274,10 @@
     <Compile Include="Simulation\Spaceships\AI\SpaceshipBehavior.cs" />
     <Compile Include="Simulation\Spaceships\AI\SpaceshipChasingBehavior.cs" />
     <Compile Include="Simulation\Spaceships\Mothership.cs" />
+    <Compile Include="Simulation\Spaceships\Weapons\BasicBulletWeapon.cs" />
+    <Compile Include="Simulation\Spaceships\Weapons\MineWeapon.cs" />
+    <Compile Include="Simulation\Spaceships\Weapons\NoWeapon.cs" />
+    <Compile Include="Simulation\Spaceships\Weapons\SpaceshipWeapon.cs" />
     <Compile Include="Simulation\Turrets\TurretsController.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipsController.cs" />
     <Compile Include="Simulation\MessagesController.cs" />

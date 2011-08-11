@@ -17,8 +17,6 @@
 
             Spaceships.Add(new Spaceship(simulator)
             {
-                ShootingFrequency = 100,
-                BulletHitPoints = 10,
                 MaxRotationRad = 0.15f,
                 Image = new Image("Resistance1")
                 {
@@ -30,8 +28,6 @@
 
             Spaceships.Add(new Spaceship(simulator)
             {
-                ShootingFrequency = 200,
-                BulletHitPoints = 30,
                 MaxRotationRad = 0.05f,
                 Image = new Image("Resistance2")
                 {
@@ -43,8 +39,6 @@
 
             Spaceships.Add(new Spaceship(simulator)
             {
-                ShootingFrequency = 500,
-                BulletHitPoints = 100,
                 MaxRotationRad = 0.2f,
                 Image = new Image("Resistance3")
                 {
@@ -90,7 +84,7 @@
             projectilesCeTick.Clear();
 
             foreach (var vaisseau in Spaceships)
-                projectilesCeTick.AddRange(vaisseau.BulletsThisTick());
+                projectilesCeTick.AddRange(vaisseau.Fire());
 
             return projectilesCeTick;
         }

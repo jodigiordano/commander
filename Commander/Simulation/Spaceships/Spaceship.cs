@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -16,7 +15,7 @@
 
         // Movement
         public float MaxRotationRad;
-        protected Matrix RotationMatrix;
+        private Matrix RotationMatrix;
         public Vector3 NextMovement;
         public Vector3 NextRotation;
         public Vector3 Position                 { get; set; }
@@ -51,10 +50,7 @@
         public SpaceshipBehavior AutomaticBehavior;
 
         // Weapon
-        protected List<Bullet> Bullets;
-        public float BulletHitPoints;
-        public double ShootingFrequency;
-        private double LastFireCounter;
+        public SpaceshipWeapon Weapon;
 
         public virtual bool Active              { get; set; }
 
@@ -77,10 +73,7 @@
             Circle = new Circle(Position, Image.TextureSize.X * Image.SizeX / 2);
 
             MaxRotationRad = 0.10f;
-            ShootingFrequency = 300;
-            LastFireCounter = 0;
-
-            Bullets = new List<Bullet>();
+            Weapon = new NoWeapon(Simulator, this);
 
             SfxOut = "";
             SfxIn = "";
@@ -141,7 +134,8 @@
 
             Circle.Position = Position;
 
-            LastFireCounter += Preferences.TargetElapsedTimeMs;
+            if (Weapon != null)
+                Weapon.Update();
 
             if (ApplyAutomaticBehavior)
                 AutomaticBehavior.Update();
@@ -159,38 +153,9 @@
         }
 
 
-        public virtual List<Bullet> BulletsThisTick()
+        public List<Bullet> Fire()
         {
-            Bullets.Clear();
-
-
-            if (LastFireCounter >= ShootingFrequency)
-            {
-                LastFireCounter = 0;
-
-                Matrix matriceRotation = Matrix.CreateRotationZ(MathHelper.PiOver2);
-                Vector3 directionUnitairePerpendiculaire = Vector3.Transform(Direction, matriceRotation);
-                directionUnitairePerpendiculaire.Normalize();
-
-                Vector3 translation = directionUnitairePerpendiculaire * Main.Random.Next(-12, 12);
-
-                BasicBullet p = (BasicBullet) Simulator.BulletsFactory.Get(BulletType.Base);
-
-                p.Position = Position + translation;
-                p.Direction = Direction;
-                p.AttackPoints = BulletHitPoints;
-                p.VisualPriority = VisualPriorities.Default.DefaultBullet;
-                p.Speed = 10;
-                p.Image.SizeX = 0.75f;
-                p.ShowMovingEffect = false;
-
-                Bullets.Add(p);
-            }
-
-            if (Bullets.Count != 0)
-                Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
-
-            return Bullets;
+            return Weapon.Fire();
         }
 
 

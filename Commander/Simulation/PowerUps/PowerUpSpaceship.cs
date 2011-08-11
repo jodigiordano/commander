@@ -49,7 +49,7 @@ namespace EphemereGames.Commander.Simulation
             SpaceshipSpaceship = new SpaceshipSpaceship(Simulation)
             {
                 ShootingFrequency = 100,
-                BulletHitPoints = 50,
+                BulletAttackPoints = 50,
                 Position = Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
                 StartingObject = HumanBattleship,

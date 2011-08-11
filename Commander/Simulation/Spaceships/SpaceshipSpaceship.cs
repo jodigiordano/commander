@@ -12,6 +12,20 @@
             ShowTrail = true;
 
             Friction = 0;
+
+            Weapon = new BasicBulletWeapon(Simulator, this, 100, 1);
+        }
+
+
+        public double ShootingFrequency
+        {
+            set { Weapon.ShootingFrequency = value; }
+        }
+
+
+        public float BulletAttackPoints
+        {
+            set { Weapon.AttackPoints = value; }
         }
     }
 }

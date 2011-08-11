@@ -31,8 +31,6 @@
             {
                 ApplyAutomaticBehavior = false,
                 Speed = 4,
-                ShootingFrequency = 100,
-                BulletHitPoints = 1,
                 VisualPriority = VisualPriorities.Default.PlayerPanelCursor
             };
 

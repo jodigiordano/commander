@@ -48,7 +48,7 @@
 
                     else
                     {
-                        List<Bullet> bullets = spaceship.BulletsThisTick();
+                        List<Bullet> bullets = spaceship.Fire();
 
                         for (int j = 0; j < bullets.Count; j++)
                             NotifyObjectCreated(bullets[j]);

@@ -61,7 +61,7 @@ namespace EphemereGames.Commander.Simulation
         {
             if (Firing)
             {
-                Miner.Fire();
+                Miner.Weapon.FireOnceNow();
 
                 Audio.PlaySfx(@"sfxMineGround");
 

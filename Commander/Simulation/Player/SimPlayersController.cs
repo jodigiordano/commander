@@ -93,7 +93,7 @@
                 Color = player.Color,
                 ImageName = player.ImageName,
                 UpdateSelectionz = UpdateSelection,
-                BulletDamage = Simulator.Level.BulletHitPoints,
+                BulletAttackPoints = (float) Simulator.Level.BulletHitPoints,
                 PausePlayer = new PausePlayer(Simulator)
                 {
                     OptionsPanel = OptionsPanel,
@@ -402,8 +402,13 @@
                     if (player.Firing)
                     {
                         //Inputs.VibrateController(player.Player, Preferences.TargetElapsedTimeMs * 2, 0.2f, 0f); TODO: vibrate with little pauses between
+                        
+                        var bullets = player.SpaceshipMove.Fire();
 
-                        foreach (var b in player.SpaceshipMove.BulletsThisTick())
+                        if (bullets.Count != 0)
+                            Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
+
+                        foreach (var b in bullets)
                             NotifyObjectCreated(b);
 
                         player.Firing = false;
