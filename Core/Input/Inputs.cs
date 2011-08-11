@@ -118,12 +118,21 @@
         }
 
 
-        public static void VibrateController(Player player, float length, float left, float right)
+        public static void VibrateControllerLowFrequency(Player player, double length, float amount)
         {
             if (player.InputType != InputType.Gamepad)
                 return;
 
-            Vibrator.Vibrate(player.Index, length, left, right);
+            Vibrator.VibrateLowFrequency(player.Index, length, amount);
+        }
+
+
+        public static void VibrateControllerHighFrequency(Player player, double length, float amount)
+        {
+            if (player.InputType != InputType.Gamepad)
+                return;
+
+            Vibrator.VibrateHighFrequency(player.Index, length, amount);
         }
 
 

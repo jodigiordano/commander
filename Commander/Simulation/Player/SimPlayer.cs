@@ -503,8 +503,8 @@
             {
                 VibrationMetronome.Update();
             
-                //if (VibrationMetronome.CyclesCountThisTick != 0)
-                //    Core.Input.Inputs.VibrateController(BasePlayer, Preferences.TargetElapsedTimeMs * 10, 0.5f, 0.5f);
+                if (VibrationMetronome.CyclesCountThisTick != 0)
+                    Core.Input.Inputs.VibrateControllerHighFrequency(BasePlayer, 80, 0.4f);
             }   
         }
 
@@ -572,7 +572,7 @@
 
         private void DoBouncing()
         {
-            Core.Input.Inputs.VibrateController(BasePlayer, 150f, 0.5f, 0.5f);
+            Core.Input.Inputs.VibrateControllerLowFrequency(BasePlayer, 150, 0.7f);
         }
     }
 }

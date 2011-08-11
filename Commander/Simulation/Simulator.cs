@@ -499,7 +499,10 @@ namespace EphemereGames.Commander.Simulation
             if (!this.DemoMode && this.State != GameState.Lost)
             {
                 foreach (var player in Inputs.Players)
-                    Inputs.VibrateController(player, 300, 0.5f, 0.5f);
+                {
+                    Inputs.VibrateControllerHighFrequency(player, 300, 0.5f);
+                    Inputs.VibrateControllerLowFrequency(player, 300, 0.5f);
+                }
             }
         }
 
@@ -507,7 +510,10 @@ namespace EphemereGames.Commander.Simulation
         private void DoCelestialBodyDestroyed(ICollidable obj)
         {
             foreach (var player in Inputs.Players)
-                Inputs.VibrateController(player, 300, 0.5f, 0.5f);
+            {
+                Inputs.VibrateControllerHighFrequency(player, 300, 0.5f);
+                Inputs.VibrateControllerLowFrequency(player, 300, 0.5f);
+            }
         }
 
 

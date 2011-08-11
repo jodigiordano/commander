@@ -58,9 +58,12 @@
                     {
                         Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, -Mothership.Size.Y/2, 0), 0, 5000));
                         Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(1f, 0.7f, 0, 5000));
-                        
+
                         foreach (var player in Inputs.Players)
-                            Inputs.VibrateController(player, 5000, 0.2f, 0.1f);
+                        {
+                            Inputs.VibrateControllerHighFrequency(player, 5000, 0.1f);
+                            Inputs.VibrateControllerLowFrequency(player, 5000, 0.2f);
+                        }
 
                         State = MothershipState.Arrival;
                     }
@@ -90,7 +93,10 @@
                         Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(0.7f, 1.5f, 0, 17000));
 
                         foreach (var player in Inputs.Players)
-                            Inputs.VibrateController(player, 6000, 0.2f, 0.1f);
+                        {
+                            Inputs.VibrateControllerHighFrequency(player, 6000, 0.1f);
+                            Inputs.VibrateControllerLowFrequency(player, 6000, 0.2f);
+                        }
 
                         State = MothershipState.Departure;
                     }
