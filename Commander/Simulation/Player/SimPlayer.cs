@@ -46,10 +46,10 @@
 
             SpaceshipMove = new SpaceshipSpaceship(simulator)
             {
-                ApplyAutomaticBehavior = false,
                 Speed = 4,
                 VisualPriority = VisualPriorities.Default.PlayerCursor
             };
+
             SpaceshipMove.Bounced += new NoneHandler(DoBouncing);
 
             TurretToPlaceChanged = false;
@@ -70,6 +70,17 @@
 
             GameOver = false;
             Firing = false;
+
+            if (BasePlayer.InputType == Core.Input.InputType.Mouse)
+            {
+                SpaceshipMove.SteeringBehavior = new SpaceshipMouseMBehavior(SpaceshipMove);
+                PausePlayer.SpaceshipMove.SteeringBehavior = new SpaceshipMouseMBehavior(PausePlayer.SpaceshipMove);
+            }
+            else if (BasePlayer.InputType == Core.Input.InputType.Gamepad)
+            {
+                SpaceshipMove.SteeringBehavior = new SpaceshipGamePadMBehavior(SpaceshipMove);
+                PausePlayer.SpaceshipMove.SteeringBehavior = new SpaceshipGamePadMBehavior(PausePlayer.SpaceshipMove);
+            }
         }
 
 
@@ -154,25 +165,25 @@
 
         public Vector3 CurrentSpeed
         {
-            get { return SpaceshipMove.CurrentSpeed; }
+            get { return SpaceshipMove.SteeringBehavior.CurrentSpeed; }
         }
 
 
         public Vector3 NextInput
         {
-            get { return SpaceshipMove.NextMovement; }
+            get { return SpaceshipMove.SteeringBehavior.NextMovement; }
         }
 
 
         public void Move(ref Vector3 delta, float speed)
         {
-            SpaceshipMove.NextMovement = delta;
+            SpaceshipMove.SteeringBehavior.NextMovement = delta;
         }
 
 
         public void Rotate(ref Vector3 delta, float speed)
         {
-            SpaceshipMove.NextRotation = delta;
+            SpaceshipMove.SteeringBehavior.NextRotation = delta;
         }
 
 
@@ -431,10 +442,10 @@
         public void Update()
         {
             // More friction on a celestial body and a turret
-            if (SpaceshipMove.NextMovement == Vector3.Zero)
+            if (SpaceshipMove.SteeringBehavior.NextMovement == Vector3.Zero)
             {
                 if (ActualSelection.TurretToPlace == null && (ActualSelection.CelestialBody != null || ActualSelection.Turret != null))
-                    SpaceshipMove.Friction = 0.1f;
+                    SpaceshipMove.SteeringBehavior.Friction = 0.1f;
             }
 
 
@@ -484,9 +495,6 @@
 
             if (Simulator.DemoMode)
                 UpdateMainMenuSelection();
-
-            SpaceshipMove.NextMovement = Vector3.Zero;
-            SpaceshipMove.NextRotation = Vector3.Zero;
         }
 
 

@@ -43,7 +43,7 @@ namespace EphemereGames.Commander.Simulation
                 StartingObject = HumanBattleship,
                 VisualPriority = VisualPriorities.Default.PlayerCursor
             };
-            AutomaticCollector.ApplySafeBouncing();
+            AutomaticCollector.SteeringBehavior.ApplySafeBouncing();
 
             Audio.PlaySfx(AutomaticCollector.SfxIn);
         }

@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    class SpaceshipGoHomeBehavior : SpaceshipChasingBehavior
+    class SpaceshipGoHomeABehavior : SpaceshipChasingABehavior
     {
-        public SpaceshipGoHomeBehavior(Spaceship spaceship)
+        public SpaceshipGoHomeABehavior(Spaceship spaceship)
             : base(spaceship, spaceship.StartingObject.Position)
         {
             Spaceship.Position = Spaceship.StartingObject.Position;
@@ -10,7 +10,7 @@
         }
 
 
-        public override void Update()
+        protected override void DoUpdate()
         {
             if (Targeting)
                 TargetPosition = Spaceship.StartingObject.Position;

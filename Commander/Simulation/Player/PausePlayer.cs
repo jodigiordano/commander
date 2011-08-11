@@ -29,7 +29,6 @@
 
             SpaceshipMove = new SpaceshipSpaceship(simulator)
             {
-                ApplyAutomaticBehavior = false,
                 Speed = 4,
                 VisualPriority = VisualPriorities.Default.PlayerPanelCursor
             };
@@ -84,25 +83,25 @@
 
         public Vector3 CurrentSpeed
         {
-            get { return SpaceshipMove.CurrentSpeed; }
+            get { return SpaceshipMove.SteeringBehavior.CurrentSpeed; }
         }
 
 
         public Vector3 NextInput
         {
-            get { return SpaceshipMove.NextMovement; }
+            get { return SpaceshipMove.SteeringBehavior.NextMovement; }
         }
 
 
         public void Move(ref Vector3 delta, float speed)
         {
-            SpaceshipMove.NextMovement = delta;
+            SpaceshipMove.SteeringBehavior.NextMovement = delta;
         }
 
 
         public void Rotate(ref Vector3 delta, float speed)
         {
-            SpaceshipMove.NextRotation = delta;
+            SpaceshipMove.SteeringBehavior.NextRotation = delta;
         }
 
 
@@ -110,13 +109,13 @@
         public void Update()
         {
             // More friction on a celestial body and a turret
-            if (SpaceshipMove.NextMovement == Vector3.Zero)
+            if (SpaceshipMove.SteeringBehavior.NextMovement == Vector3.Zero)
             {
                 if (OptionsPanel.Visible && OptionsPanel.DoHover(Circle) && OptionsPanel.LastHoverWidget.Sticky)
-                    SpaceshipMove.Friction = 0.1f;
+                    SpaceshipMove.SteeringBehavior.Friction = 0.1f;
 
                 if (PausePanel.Visible && PausePanel.DoHover(Circle) && PausePanel.LastHoverWidget.Sticky)
-                    SpaceshipMove.Friction = 0.1f;
+                    SpaceshipMove.SteeringBehavior.Friction = 0.1f;
             }
 
 
@@ -125,8 +124,8 @@
             Direction = SpaceshipMove.Direction;
 
 
-            SpaceshipMove.NextMovement = Vector3.Zero;
-            SpaceshipMove.NextRotation = Vector3.Zero;
+            SpaceshipMove.SteeringBehavior.NextMovement = Vector3.Zero;
+            SpaceshipMove.SteeringBehavior.NextRotation = Vector3.Zero;
         }
 
 

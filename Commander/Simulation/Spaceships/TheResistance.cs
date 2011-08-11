@@ -17,35 +17,29 @@
 
             Spaceships.Add(new Spaceship(simulator)
             {
-                MaxRotationRad = 0.15f,
                 Image = new Image("Resistance1")
                 {
                     SizeX = 4,
                     VisualPriority = VisualPriorities.Default.DefaultSpaceship
-                },
-                ApplyAutomaticBehavior = true
+                }
             });
 
             Spaceships.Add(new Spaceship(simulator)
             {
-                MaxRotationRad = 0.05f,
                 Image = new Image("Resistance2")
                 {
                     SizeX = 4,
                     VisualPriority = VisualPriorities.Default.DefaultSpaceship
-                },
-                ApplyAutomaticBehavior = true
+                }
             });
 
             Spaceships.Add(new Spaceship(simulator)
             {
-                MaxRotationRad = 0.2f,
                 Image = new Image("Resistance3")
                 {
                     SizeX = 4,
                     VisualPriority = VisualPriorities.Default.DefaultSpaceship
-                },
-                ApplyAutomaticBehavior = true
+                }
             });
         }
 

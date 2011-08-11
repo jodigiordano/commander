@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
-    using Microsoft.Xna.Framework;
 
 
     class SpaceshipsController
@@ -31,9 +30,9 @@
 
                 spaceship.Update();
 
-                if (spaceship.AutomaticBehavior is SpaceshipGoHomeBehavior)
+                if (spaceship.SteeringBehavior is SpaceshipGoHomeABehavior)
                 {
-                    if (!spaceship.AutomaticBehavior.Active)
+                    if (!spaceship.SteeringBehavior.Active)
                         Spaceships.RemoveAt(i);
                 }
 
@@ -41,8 +40,7 @@
                 {
                     if (!spaceship.Active)
                     {
-                        spaceship.AutomaticBehavior = new SpaceshipGoHomeBehavior(spaceship);
-                        spaceship.ApplyAutomaticBehavior = true;
+                        spaceship.SteeringBehavior = new SpaceshipGoHomeABehavior(spaceship);
                         spaceship.DoHide();
                     }
 
@@ -54,8 +52,6 @@
                             NotifyObjectCreated(bullets[j]);
                     }
                 }
-
-                spaceship.NextMovement = Vector3.Zero;
             }
         }
 

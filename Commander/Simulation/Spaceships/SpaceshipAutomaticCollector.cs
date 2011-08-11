@@ -18,26 +18,24 @@
                 SizeX = 4
             };
 
-            MaxRotationRad = 0.3f;
             BuyPrice = 0;
             Active = true;
             SfxOut = "sfxAutomaticCollectorOut";
             SfxIn = "sfxAutomaticCollectorIn";
             Active = true;
-            ApplyAutomaticBehavior = false;
         }
 
 
         public void Initialize()
         {
-            AutomaticBehavior = new SpaceshipChasingBehavior(this, NextPosition());
+            SteeringBehavior = new SpaceshipChasingABehavior(this, NextPosition());
         }
 
 
         public override void Update()
         {
-            if (!AutomaticBehavior.Active)
-                ((SpaceshipChasingBehavior) AutomaticBehavior).TargetPosition = NextPosition();
+            if (!SteeringBehavior.Active)
+                ((SpaceshipChasingABehavior) SteeringBehavior).TargetPosition = NextPosition();
 
             base.Update();
         }

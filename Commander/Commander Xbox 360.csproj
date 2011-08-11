@@ -244,11 +244,14 @@
     <Compile Include="Simulation\PlanetarySystem\PlanetarySystemController.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsFactory.cs" />
     <Compile Include="Simulation\Simulator.cs" />
-    <Compile Include="Simulation\Spaceships\AI\SpaceshipBehavior.cs" />
-    <Compile Include="Simulation\Spaceships\AI\SpaceshipChasingBehavior.cs" />
-    <Compile Include="Simulation\Spaceships\AI\SpaceshipGoHomeBehavior.cs" />
     <Compile Include="Simulation\Spaceships\AlienSpaceship.cs" />
     <Compile Include="Simulation\Spaceships\Mothership.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipChasingABehavior.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipGoHomeABehavior.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipGamePadMBehavior.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipMouseMBehavior.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\SpaceshipNoneBehavior.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\SpaceshipSteeringBehavior.cs" />
     <Compile Include="Simulation\Spaceships\Weapons\BasicBulletWeapon.cs" />
     <Compile Include="Simulation\Spaceships\Weapons\MineWeapon.cs" />
     <Compile Include="Simulation\Spaceships\Weapons\NoWeapon.cs" />

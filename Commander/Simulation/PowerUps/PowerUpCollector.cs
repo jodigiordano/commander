@@ -43,7 +43,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void DoInputMovedDelta(Vector3 delta)
         {
-            Collector.NextMovement = delta;
+            Collector.SteeringBehavior.NextMovement = delta;
         }
 
 
@@ -59,10 +59,9 @@ namespace EphemereGames.Commander.Simulation
             {
                 Position = HumanBattleship.Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
-                StartingObject = HumanBattleship,
-                ApplyAutomaticBehavior = false
+                StartingObject = HumanBattleship
             };
-            Collector.ApplySafeBouncing();
+            Collector.SteeringBehavior.ApplySafeBouncing();
 
             Audio.PlaySfx(Collector.SfxIn);
         }

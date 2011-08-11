@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework;
 
     
-    class SpaceshipChasingBehavior : SpaceshipBehavior
+    class SpaceshipChasingABehavior : SpaceshipSteeringBehavior
     {
         public Vector3 TargetPosition   { get { return targetPosition; } set { targetPosition = value; Targeting = true; TargetReached = false; } }
         public bool TargetReached       { get; protected set; }
@@ -14,7 +14,7 @@
         private Matrix RotationMatrix;
 
 
-        public SpaceshipChasingBehavior(Spaceship spaceship, Vector3 targetPosition)
+        public SpaceshipChasingABehavior(Spaceship spaceship, Vector3 targetPosition)
             : base(spaceship)
         {
             TargetPosition = targetPosition;
@@ -29,7 +29,7 @@
         }
 
 
-        public override void Update()
+        protected override void DoUpdate()
         {
             if (TargetReached || !Targeting)
                 return;
@@ -42,7 +42,7 @@
             float angle = Core.Physics.Utilities.SignedAngle(ref targetedDirection, ref direction);
 
             // Find rotation needed to get aligned
-            float rotation = MathHelper.Clamp(Spaceship.MaxRotationRad, 0, Math.Abs(angle));
+            float rotation = MathHelper.Clamp(MaxRotationPerUpdateRad, 0, Math.Abs(angle));
 
             if (angle > 0)
                 rotation = -rotation;

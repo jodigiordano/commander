@@ -47,7 +47,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void DoInputMovedDelta(Vector3 delta)
         {
-            Miner.NextMovement = delta;
+            Miner.SteeringBehavior.NextMovement = delta;
         }
 
 
@@ -83,10 +83,9 @@ namespace EphemereGames.Commander.Simulation
                 Position = HumanBattleship.Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
                 StartingObject = HumanBattleship,
-                ApplyAutomaticBehavior = false,
                 Owner = Owner
             };
-            Miner.ApplySafeBouncing();
+            Miner.SteeringBehavior.ApplySafeBouncing();
 
             Audio.PlaySfx(Miner.SfxIn);
 
