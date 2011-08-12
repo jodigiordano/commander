@@ -10,7 +10,6 @@
     {
         public CelestialBody CelestialBody;
         public ContextualMenu Menu;
-        public SimPlayer CheckedIn;
         
         
         private Simulator Simulator;
@@ -18,12 +17,14 @@
 
         private TextContextualMenuChoice CallTheNextWave;
         private NextWaveContextualMenuChoice NextWaveCompositionChoice;
-        private TextContextualMenuChoice RemainingWavesChoice;
+        private ColoredTextContextualMenuChoice RemainingWavesChoice;
         //private TextContextualMenuChoice RemainingEnemiesChoice;
         private TextContextualMenuChoice TimeNextWaveChoice;
 
         private int remainingWaves;
         private double timeNextWave;
+
+        private SimPlayer checkedIn;
 
 
         public StartingPathMenu(Simulator simulator, double visualPriority)
@@ -32,7 +33,7 @@
             VisualPriority = visualPriority;
 
             
-            RemainingWavesChoice = new TextContextualMenuChoice("RemainingWaves", new Text("Pixelite") { SizeX = 2 });
+            RemainingWavesChoice = new ColoredTextContextualMenuChoice("RemainingWaves", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
             //RemainingEnemiesChoice = new TextContextualMenuChoice("RemainingEnemies", new Text("Pixelite") { SizeX = 2 });
             NextWaveCompositionChoice = new NextWaveContextualMenuChoice("NextWaveComposition");
             TimeNextWaveChoice = new TextContextualMenuChoice("TimeRemainingChoice", new Text("Pixelite") { SizeX = 2 });
@@ -62,6 +63,20 @@
                 Menu.Color = value;
             }
         }
+
+
+        public SimPlayer CheckedIn
+        {
+            get { return checkedIn; }
+            set
+            {
+                checkedIn = value;
+
+                if (value != null)
+                    RemainingWavesChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
+            }
+        }
+
 
 
         public bool Visible
@@ -101,7 +116,7 @@
             {
                 remainingWaves = value;
 
-                RemainingWavesChoice.SetData("Reporting " + remainingWaves + " remaining waves.");
+                RemainingWavesChoice.SetData(new List<string>(){"Reporting ", remainingWaves.ToString(), " remaining waves."});
             }
         }
 

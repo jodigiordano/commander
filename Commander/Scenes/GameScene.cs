@@ -104,6 +104,7 @@
                 Inputs.Active = false;
 
                 FutureJobs.Add(ReactiveInputs, 500);
+                FutureJobs.Add(StopVibrations, 250);
             }
 
             else if (newState == GameState.Lost)
@@ -113,6 +114,7 @@
                 Inputs.Active = false;
 
                 FutureJobs.Add(ReactiveInputs, 500);
+                FutureJobs.Add(StopVibrations, 250);
             }
 
             else if (newState == GameState.Restart)
@@ -287,6 +289,12 @@
         private void ReactiveInputs()
         {
             Inputs.Active = true;
+        }
+
+
+        private void StopVibrations()
+        {
+            Inputs.StopAllVibrators();
         }
     }
 }

@@ -155,6 +155,7 @@
     <Compile Include="Visual\Particles\ParticlesController.cs" />
     <Compile Include="Visual\Preferences.cs" />
     <Compile Include="Visual\Primitives.cs" />
+    <Compile Include="Visual\Scenable\ColoredText.cs" />
     <Compile Include="Visual\Scenable\Image.cs" />
     <Compile Include="Visual\Scenable\IScenable.cs" />
     <Compile Include="Visual\Scenable\IScenableComparer.cs" />
