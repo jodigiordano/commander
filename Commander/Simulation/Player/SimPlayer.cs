@@ -172,9 +172,9 @@
         }
 
 
-        public Vector3 NextInput
+        public bool MovementInputThisTick
         {
-            get { return SpaceshipMove.SteeringBehavior.NextMovement; }
+            get { return SpaceshipMove.SteeringBehavior.ManualMovementInputThisTick; }
         }
 
 

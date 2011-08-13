@@ -75,7 +75,7 @@
             }
 
             // The player is moving (or have the intention to)
-            if (!Simulator.DemoMode && Player.NextInput != Vector3.Zero)
+            if (!Simulator.DemoMode && Player.MovementInputThisTick)
             {
                 Initialize();
                 return;

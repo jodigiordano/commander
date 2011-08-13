@@ -8,6 +8,7 @@
     abstract class SpaceshipSteeringBehavior
     {
         // for manual steering
+        public bool ManualMovementInputThisTick;
         public Vector3 NextMovement;
         public Vector3 NextRotation;
         public float Speed;
@@ -30,6 +31,7 @@
             Spaceship = spaceship;
             MaxRotationPerUpdateRad = 0.2f;
             Acceleration = Vector3.Zero;
+            ManualMovementInputThisTick = false;
             NextMovement = Vector3.Zero;
             NextRotation = Vector3.Zero;
             Speed = 4;
@@ -38,6 +40,8 @@
 
         public void Update()
         {
+            ManualMovementInputThisTick = NextMovement != Vector3.Zero;
+
             DoUpdate();
             ApplyBouncing();
             ApplyFriction();
