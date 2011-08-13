@@ -61,9 +61,6 @@
             MenuPowerUps = new PowerUpsMenu(Simulator, new Vector3(-550, 200, 0), VisualPriorities.Default.PowerUpsMenu);
             Players = new Dictionary<SimPlayer, GUIPlayer>();
 
-            if (!Simulator.DemoMode)
-                AdvancedView = new AdvancedView(Simulator);
-
             ContextualMenusCollisions = new ContextualMenusCollisions();
 
             HelpBar = new HelpBarPanel(simulator.Scene, VisualPriorities.Default.HelpBar)
@@ -104,6 +101,7 @@
 
             if (!Simulator.DemoMode)
             {
+                AdvancedView = new AdvancedView(Simulator);
                 AdvancedView.Enemies = Enemies;
                 AdvancedView.CelestialBodies = CelestialBodies;
                 AdvancedView.Initialize();
@@ -204,6 +202,9 @@
 
         public void DoShowAdvancedViewAsked(SimPlayer p)
         {
+            if (Simulator.DemoMode)
+                return;
+
             var player = Players[p];
 
             if (AdvancedViewCheckedIn == null)
@@ -216,6 +217,9 @@
 
         public void DoHideAdvancedViewAsked(SimPlayer p)
         {
+            if (Simulator.DemoMode)
+                return;
+
             var player = Players[p];
 
             if (AdvancedViewCheckedIn == player)
