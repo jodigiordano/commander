@@ -345,6 +345,14 @@
                 PathPreviewing.Commit(player);
 
             HelpBar.HideMessage(HelpBarMessage.CelestialBodyMenu);
+
+            Simulator.Scene.Animations.Add(new TurretMoneyAnimation(turret.BuyPrice, false, turret.Position, VisualPriorities.Default.TurretUpgradedAnimation));
+        }
+
+
+        public void DoTurretUpgraded(Turret turret, SimPlayer p)
+        {
+            Simulator.Scene.Animations.Add(new TurretMoneyAnimation(turret.BuyPrice, false, turret.Position, VisualPriorities.Default.TurretUpgradedAnimation));
         }
 
 
@@ -357,6 +365,8 @@
                 PathPreviewing.Commit(player);
 
             HelpBar.HideMessage(HelpBarMessage.TurretMenu);
+
+            Simulator.Scene.Animations.Add(new TurretMoneyAnimation(turret.SellPrice, true, turret.Position, VisualPriorities.Default.TurretUpgradedAnimation));
         }
 
 

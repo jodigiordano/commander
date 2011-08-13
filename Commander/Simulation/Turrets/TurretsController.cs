@@ -14,7 +14,7 @@
 
         public event TurretSimPlayerHandler TurretBought;
         public event TurretSimPlayerHandler TurretSold;
-        public event TurretSimPlayerHandler TurretUpdated;
+        public event TurretSimPlayerHandler TurretUpgraded;
         public event TurretHandler TurretReactivated;
         public event PhysicalObjectHandler ObjectCreated;
 
@@ -167,12 +167,12 @@
 
         public void DoObjectDestroyed(ICollidable obj)
         {
-            CelestialBody corpsCeleste = obj as CelestialBody;
+            CelestialBody celestialBody = obj as CelestialBody;
 
-            if (corpsCeleste != null)
+            if (celestialBody != null)
             {
 
-                foreach (var turret in corpsCeleste.Turrets)
+                foreach (var turret in celestialBody.Turrets)
                     Turrets.Remove(turret);
 
                 return;
@@ -216,8 +216,8 @@
 
         private void NotifyTurretUpgraded(Turret turret, SimPlayer player)
         {
-            if (TurretUpdated != null)
-                TurretUpdated(turret, player);
+            if (TurretUpgraded != null)
+                TurretUpgraded(turret, player);
         }
 
 

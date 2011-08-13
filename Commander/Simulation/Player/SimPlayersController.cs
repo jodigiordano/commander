@@ -352,7 +352,7 @@
         }
 
 
-        public void DoTurretUpdated(Turret turret, SimPlayer player)
+        public void DoTurretUpgraded(Turret turret, SimPlayer player)
         {
             CommonStash.Cash -= turret.BuyPrice; //parce qu'effectue une fois la tourelle mise a jour
             NotifyCommonStashChanged(CommonStash);

@@ -164,7 +164,8 @@ namespace EphemereGames.Commander.Simulation
             TurretsController.TurretSold += new TurretSimPlayerHandler(SimPlayersController.DoTurretSold);
             TurretsController.TurretBought += new TurretSimPlayerHandler(SimPlayersController.DoTurretBought);
             EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(LevelsController.DoEnemyReachedEnd);
-            TurretsController.TurretUpdated += new TurretSimPlayerHandler(SimPlayersController.DoTurretUpdated);
+            TurretsController.TurretUpgraded += new TurretSimPlayerHandler(SimPlayersController.DoTurretUpgraded);
+            TurretsController.TurretUpgraded += new TurretSimPlayerHandler(GUIController.DoTurretUpgraded);
             SimPlayersController.UpgradeTurretAsked += new TurretSimPlayerHandler(TurretsController.DoUpgradeTurret);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjectDestroyed);

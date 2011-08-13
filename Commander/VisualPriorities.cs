@@ -60,6 +60,8 @@
 
         public const double TurretMessage = 0.59;
 
+        public const double TurretUpgradedAnimation = 0.595;
+
         public const double Turret = 0.6;
 
         public const double Moon = 0.65;

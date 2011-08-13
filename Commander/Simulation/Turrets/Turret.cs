@@ -24,7 +24,7 @@
         public bool CanSell;
         public bool CanUpdate                       { get { return CanUpdateOverride && (!Disabled && !ActualLevel.Equals(Levels.Last)); } set { CanUpdateOverride = value; } }
         public int BuyPrice                         { get { return ActualLevel.Value.BuyPrice; } }
-        public int UpdatePrice                      { get { return (ActualLevel.Equals(Levels.Last)) ? ActualLevel.Value.BuyPrice : ActualLevel.Next.Value.BuyPrice; } }
+        public int UpgradePrice                     { get { return (ActualLevel.Equals(Levels.Last)) ? ActualLevel.Value.BuyPrice : ActualLevel.Next.Value.BuyPrice; } }
         public int SellPrice                        { get { return ActualLevel.Value.SellPrice; } }
         public float Range                          { get { return ActualLevel.Value.Range * Simulator.TurretsFactory.BoostLevels[BoostMultiplier].RangeMultiplier; } }
         public double FireRate                      { get { return ActualLevel.Value.FireRate * Simulator.TurretsFactory.BoostLevels[BoostMultiplier].FireRateMultiplier; } }

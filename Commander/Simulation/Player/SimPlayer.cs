@@ -540,7 +540,7 @@
 
             ActualSelection.AvailableTurretOptions[TurretChoice.Update] =
                 ActualSelection.Turret.CanUpdate &&
-                ActualSelection.Turret.UpdatePrice <= CommonStash.Cash;
+                ActualSelection.Turret.UpgradePrice <= CommonStash.Cash;
 
             //des que l'option de maj redevient disponible, elle est selectionnee
             //if (majEtaitIndisponible && ActualSelection.AvailableTurretOptions[TurretChoice.Update])
