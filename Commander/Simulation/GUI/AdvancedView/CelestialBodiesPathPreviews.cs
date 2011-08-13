@@ -8,25 +8,30 @@
 
     class CelestialBodiesPathPreviews
     {
-        public List<CelestialBody> CelestialBodies;
+        private List<CelestialBody> celestialBodies;
 
-        private List<Image> Lines;
-        private int NextVisualLine;
+        private Dictionary<CelestialBody, double> Highlights;
+
+        private List<Image> NormalLines;
+        private List<Image> HighlightLines;
+        private int NextNormalLine;
+        private int NextHighlightLine;
         private Simulator Simulator;
-        private List<Vector3> PathPositions;
+        private List<KeyValuePair<Vector3, float>> PathPositions;
 
         private float LineSizeX;
-        private const int MaxLines = 200;
+        private const int MaxNormalLines = 200;
+        private const int MaxHighlightLines = 30;
 
 
         public CelestialBodiesPathPreviews(Simulator simulator)
         {
             Simulator = simulator;
 
-            Lines = new List<Image>();
+            NormalLines = new List<Image>();
 
-            for (int i = 0; i < MaxLines; i++)
-                Lines.Add(new Image("LigneTrajet")
+            for (int i = 0; i < MaxNormalLines; i++)
+                NormalLines.Add(new Image("LigneTrajet")
                 {
                     Blend = BlendType.Add,
                     SizeX = 1,
@@ -34,15 +39,57 @@
                     VisualPriority = VisualPriorities.Default.CelestialBodiePath
                 });
 
-            LineSizeX = Lines[0].AbsoluteSize.X;
+            HighlightLines = new List<Image>();
 
-            PathPositions = new List<Vector3>();
+            for (int i = 0; i < MaxHighlightLines; i++)
+                HighlightLines.Add(new Image("LigneTrajet")
+                {
+                    Blend = BlendType.Add,
+                    SizeX = 1f,
+                    Alpha = 150,
+                    VisualPriority = VisualPriorities.Default.CelestialBodiePath - 0.000001
+                });
+
+            LineSizeX = NormalLines[0].AbsoluteSize.X;
+
+            PathPositions = new List<KeyValuePair<Vector3, float>>();
+
+            Highlights = new Dictionary<CelestialBody, double>();
+        }
+
+
+        public bool Visible
+        {
+            set
+            {
+                if (!value)
+                    return;
+
+                foreach (var c in CelestialBodies)
+                    Highlights[c] = c.ActualRotationTime;
+            }
+        }
+
+
+        public List<CelestialBody> CelestialBodies
+        {
+            get { return celestialBodies; }
+            set
+            {
+                celestialBodies = value;
+
+                Highlights.Clear();
+
+                foreach (var c in CelestialBodies)
+                    Highlights.Add(c, c.ActualRotationTime);
+            }
         }
 
 
         public void Draw()
         {
-            NextVisualLine = 0;
+            NextNormalLine = 0;
+            NextHighlightLine = 0;
 
             foreach (var c in CelestialBodies)
             {
@@ -52,29 +99,59 @@
                 if (c is AsteroidBelt)
                     continue;
 
+                if (c.Speed == float.MaxValue)
+                    continue;
+
                 PathPositions.Clear();
 
                 var maxXY = Math.Max(Math.Abs(c.Path.X), Math.Abs(c.Path.Y));
 
                 int nbLines = (int) (maxXY / (LineSizeX / 10));
 
+                var highLightPerc = UpdateHighlight(c);
+                bool hightlightShown = false;
 
                 for (int i = 0; i < nbLines + 1; i++)
-                    PathPositions.Add(c.GetPositionAtPerc(i * (1f / nbLines)));
+                {
+                    float perc = i * (1f / nbLines);
+                    PathPositions.Add(new KeyValuePair<Vector3, float>(c.GetPositionAtPerc(perc), perc)); //todo: can be removed
+                }
 
                 for (int i = 0; i < nbLines; i++)
                 {
-                    var line = Lines[NextVisualLine++];
+                    var line = NormalLines[NextNormalLine++];
 
-                    line.Position = PathPositions[i];
-                    line.Rotation = Core.Physics.Utilities.VectorToAngle(PathPositions[i + 1] - PathPositions[i]);
+                    line.Position = PathPositions[i].Key;
+                    line.Rotation = Core.Physics.Utilities.VectorToAngle(PathPositions[i + 1].Key - PathPositions[i].Key);
 
                     Simulator.Scene.Add(line);
 
-                    if (NextVisualLine == MaxLines)
+                    if (!hightlightShown && PathPositions[i].Value >= highLightPerc)
+                    {
+                        var highlightLine = HighlightLines[NextHighlightLine++];
+
+                        highlightLine.Position = line.Position;
+                        highlightLine.Rotation = line.Rotation;
+
+                        Simulator.Scene.Add(highlightLine);
+
+                        hightlightShown = true;
+                    }
+
+                    if (NextNormalLine == MaxNormalLines)
                         return;
                 }
             }
+        }
+
+
+        private double UpdateHighlight(CelestialBody c)
+        {
+            var current = (Highlights[c] + Preferences.TargetElapsedTimeMs * 5) % c.Speed;
+
+            Highlights[c] = current;
+
+            return current / c.Speed;
         }
     }
 }

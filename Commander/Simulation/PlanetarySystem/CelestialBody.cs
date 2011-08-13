@@ -21,7 +21,7 @@
         public Vector3 Path;
         protected Vector3 LastPosition;
         public float Speed                                      { get; set; }        
-        protected double ActualRotationTime;
+        public double ActualRotationTime;
         private int StartingPourc;
         
         public float Rotation                                   { get; set; }

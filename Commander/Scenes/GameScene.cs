@@ -103,7 +103,7 @@
                 MusicController.SwitchTo(MusicContext.Won);
                 Inputs.Active = false;
 
-                FutureJobs.Add(ReactiveInputs, 500);
+                FutureJobs.Add(ReactiveInputs, 750);
                 FutureJobs.Add(StopVibrations, 250);
             }
 
@@ -113,7 +113,7 @@
                 MusicController.SwitchTo(MusicContext.Lost);
                 Inputs.Active = false;
 
-                FutureJobs.Add(ReactiveInputs, 500);
+                FutureJobs.Add(ReactiveInputs, 750);
                 FutureJobs.Add(StopVibrations, 250);
             }
 

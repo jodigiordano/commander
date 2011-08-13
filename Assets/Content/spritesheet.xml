@@ -230,6 +230,7 @@
     
     <!-- GUI -->
     <Item><Key>LigneTrajet</Key><Value>GUI/ligne_trajet.png</Value></Item>
+    <Item><Key>LigneTrajet2</Key><Value>GUI/ligne_trajet2.png</Value></Item>
     <Item><Key>Star</Key><Value>GUI/star.png</Value></Item>
     <Item><Key>crosshairRailGun</Key><Value>GUI/crosshair.png</Value></Item>
     <Item><Key>crosshairDestruction</Key><Value>GUI/nuclearTarget.png</Value></Item>

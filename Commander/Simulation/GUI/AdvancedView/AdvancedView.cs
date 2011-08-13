@@ -51,6 +51,8 @@
 
                     celestialBody.ShowPath = value;
                 }
+
+                CelestialBodiesPaths.Visible = value;
             }
         }
 
