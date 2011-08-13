@@ -12,6 +12,12 @@
         }
 
 
+        public static float VectorToAngle(Vector3 vector)
+        {
+            return (float) Math.Atan2(vector.X, -vector.Y);
+        }
+
+
         public static float VectorToAngle(ref Vector3 vector)
         {
             return (float) Math.Atan2(vector.X, -vector.Y);

@@ -83,6 +83,8 @@
 
         public const double TurretRange = 0.94;
 
+        public const double CelestialBodiePath = 0.945;
+
         public const double HelpBar = 0.95;
 
         public const double MenuChoices = 0.99;

@@ -2703,21 +2703,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tourelles\tourelleBoosterBase2.png">
+    <None Include="tourelles\tourelleBoosterBase2.png">
       <Name>tourelleBoosterBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleBoosterBase3.png">
+    </None>
+    <None Include="tourelles\tourelleBoosterBase3.png">
       <Name>tourelleBoosterBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tourelles\tourelleGunnerBase2.png">
+    </None>
+    <None Include="tourelles\tourelleGunnerBase2.png">
       <Name>tourelleGunnerBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
