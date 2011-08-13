@@ -1535,18 +1535,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tourelles\tourelleSniperBase.png">
-      <Name>tourelleSniperBase</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-    <None Include="tourelles\tourelleSniperCanon.png">
-      <Name>tourelleSniperCanon</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="GUI\sniperTarget.png">
       <Name>sniperTarget</Name>
       <Importer>TextureImporter</Importer>
@@ -2710,6 +2698,23 @@
     </Compile>
     <Compile Include="planetes\masks\mask23.png">
       <Name>mask23</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="tourelles\tourelleBoosterBase2.png">
+      <Name>tourelleBoosterBase2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleBoosterBase3.png">
+      <Name>tourelleBoosterBase3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="tourelles\tourelleGunnerBase2.png">
+      <Name>tourelleGunnerBase2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

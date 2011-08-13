@@ -212,10 +212,13 @@
     <Item><Key>tourelleAlienBase</Key><Value>tourelles/tourelleAlienBase.png</Value></Item>
     <Item><Key>tourelleAlien</Key><Value>tourelles/tourelleAlien.png</Value></Item>
     <Item><Key>tourelleBooster</Key><Value>tourelles/tourelleBoosterBase.png</Value></Item>
+    <Item><Key>tourelleBooster2</Key><Value>tourelles/tourelleBoosterBase2.png</Value></Item>
+    <Item><Key>tourelleBooster3</Key><Value>tourelles/tourelleBoosterBase3.png</Value></Item>
     <Item><Key>tourelleGunner1</Key><Value>tourelles/tourelleGunnerCanon1.png</Value></Item>
     <Item><Key>tourelleGunner2</Key><Value>tourelles/tourelleGunnerCanon2.png</Value></Item>
     <Item><Key>tourelleGunner3</Key><Value>tourelles/tourelleGunnerCanon3.png</Value></Item>
     <Item><Key>tourelleGunnerBase</Key><Value>tourelles/tourelleGunnerBase.png</Value></Item>
+    <Item><Key>tourelleGunnerBase2</Key><Value>tourelles/tourelleGunnerBase2.png</Value></Item>
     <Item><Key>tourelleNanobots1</Key><Value>tourelles/tourelleNanobotsCanon1.png</Value></Item>
     <Item><Key>tourelleNanobots2</Key><Value>tourelles/tourelleNanobotsCanon2.png</Value></Item>
     <Item><Key>tourelleNanobots3</Key><Value>tourelles/tourelleNanobotsCanon3.png</Value></Item>
@@ -224,8 +227,6 @@
     <Item><Key>tourelleNanobotsBase3</Key><Value>tourelles/tourelleNanobotsBase3.png</Value></Item>
     <Item><Key>railGunTurretBase</Key><Value>tourelles/tourelleRailGunBase.png</Value></Item>
     <Item><Key>railGunTurretCanon</Key><Value>tourelles/tourelleRailGunCanon.png</Value></Item>
-    <Item><Key>sniperTurretBase</Key><Value>tourelles/tourelleSniperBase.png</Value></Item>
-    <Item><Key>sniperTurretCanon</Key><Value>tourelles/tourelleSniperCanon.png</Value></Item> 
     
     <!-- GUI -->
     <Item><Key>LigneTrajet</Key><Value>GUI/ligne_trajet.png</Value></Item>

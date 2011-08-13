@@ -89,8 +89,8 @@
             {
                 new TurretLevel(0, 0, 0, 50, Int16.MaxValue, 1, 0, BulletType.None, "", "", 0, 0, 0),
                 new TurretLevel(1, 400, 200, 75, Int16.MaxValue, 1, 5000, BulletType.None, "PixelBlanc", "tourelleBooster", 0, 0, 0),
-                new TurretLevel(2, 600, 500, 125, Int16.MaxValue, 1, 10000, BulletType.None, "PixelBlanc", "tourelleBooster", 0, 0, 0),
-                new TurretLevel(3, 800, 1000, 175, Int16.MaxValue, 1, 20000, BulletType.None, "PixelBlanc", "tourelleBooster", 0, 0, 0)
+                new TurretLevel(2, 600, 500, 125, Int16.MaxValue, 1, 10000, BulletType.None, "PixelBlanc", "tourelleBooster2", 0, 0, 0),
+                new TurretLevel(3, 800, 1000, 175, Int16.MaxValue, 1, 20000, BulletType.None, "PixelBlanc", "tourelleBooster3", 0, 0, 0)
             });
             TurretsLevels.Add(TurretType.Gravitational, new LinkedListWithInit<TurretLevel>()
             {
@@ -102,15 +102,12 @@
             {
                 new TurretLevel(0, 0, 0, 150, 1000, 1, 0, BulletType.Gunner, "", "", 0, 0, 0),
                 new TurretLevel(1, 150, 75, 150, 300, 1, 3000, BulletType.Gunner, "tourelleGunner1", "tourelleGunnerBase", 5, 0, 0),
-                new TurretLevel(2, 100, 125, 200, 275, 1, 5000, BulletType.Gunner, "tourelleGunner1", "tourelleGunnerBase", 7, 0, 0),
+                new TurretLevel(2, 100, 125, 200, 275, 1, 5000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase2", 7, 0, 0),
                 new TurretLevel(3, 150, 200, 250, 250, 1, 7000, BulletType.Gunner, "tourelleGunner1", "tourelleGunnerBase", 10, 0, 0),
-                new TurretLevel(4, 200, 300, 275, 225, 1, 9000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase", 7, 0, 0),
-                new TurretLevel(5, 250, 425, 300, 200, 1, 11000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase", 10, 0, 0),
-                new TurretLevel(6, 300, 575, 325, 175, 1, 13000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase", 12, 0, 0),
-                new TurretLevel(7, 350, 750, 350, 150, 1, 15000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase", 14, 0, 0),
-                new TurretLevel(8, 400, 950, 400, 125, 1, 17000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase", 9, 0, 0),
-                new TurretLevel(9, 450, 1175, 425, 100, 1, 19000, BulletType.Gunner, "tourelleGunner3", "tourelleGunnerBase", 11, 0, 0),
-                new TurretLevel(10, 500, 1425, 450, 75, 1, 21000, BulletType.Gunner, "tourelleGunner3", "tourelleGunnerBase", 12, 0, 0)
+                new TurretLevel(4, 200, 300, 275, 225, 1, 9000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase2", 7, 0, 0),
+                new TurretLevel(5, 250, 425, 300, 200, 1, 11000, BulletType.Gunner, "tourelleGunner1", "tourelleGunnerBase", 10, 0, 0),
+                new TurretLevel(6, 300, 575, 325, 175, 1, 13000, BulletType.Gunner, "tourelleGunner2", "tourelleGunnerBase2", 12, 0, 0),
+                new TurretLevel(7, 350, 750, 350, 150, 1, 15000, BulletType.Gunner, "tourelleGunner3", "tourelleGunnerBase", 14, 0, 0)
             });
             TurretsLevels.Add(TurretType.Laser, new LinkedListWithInit<TurretLevel>()
             {
