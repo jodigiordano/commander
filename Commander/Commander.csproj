@@ -230,6 +230,7 @@
     <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
     <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
+    <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuLayout.cs" />
     <Compile Include="Simulation\GUI\Menus\NextWaveContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\StartingPathMenu.cs" />
     <Compile Include="Simulation\GUI\PlayerCash.cs" />

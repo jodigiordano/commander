@@ -35,8 +35,8 @@
         private Vector3 ActualPosition;
         private Vector3 Margin;
 
-        private List<PhysicalRectangle> Layouts;
-        private List<PhysicalRectangle> PossibleLayouts;
+        private List<ContextualMenuLayout> Layouts;
+        private List<ContextualMenuLayout> PossibleLayouts;
 
 
         public ContextualMenu(Simulator simulator, double visualPriority, Color color, List<ContextualMenuChoice> choices, int distanceBetweenTwoChoices)
@@ -81,8 +81,15 @@
             ChoiceAvailabilityChanged = false;
 
             Layout = 0;
-            Layouts = new List<PhysicalRectangle>() { new PhysicalRectangle(), new PhysicalRectangle(), new PhysicalRectangle(), new PhysicalRectangle() };
-            PossibleLayouts = new List<PhysicalRectangle>();
+            Layouts = new List<ContextualMenuLayout>()
+            {
+                new ContextualMenuLayout(0, 0, new Vector2(30, -20)),
+                new ContextualMenuLayout(1, 3, new Vector2(0, -20)) { SubstractSizeY = true },
+                new ContextualMenuLayout(2, 1, new Vector2(-30, 0)) { SubstractSizeX = true },
+                new ContextualMenuLayout(3, 2, new Vector2(-30, -20)) { SubstractSizeX = true, SubstractSizeY = true }
+            };
+
+            PossibleLayouts = new List<ContextualMenuLayout>();
         }
 
 
@@ -218,42 +225,65 @@
         }
 
 
-        public List<PhysicalRectangle> GetPossibleLayouts()
+        public List<ContextualMenuLayout> GetPossibleLayouts()
         {
             PossibleLayouts.Clear();
 
-            Layouts[0].X = (int) Position.X;
-            Layouts[0].Y = (int) Position.Y - 30;
-            Layouts[0].Width = (int) Size.X + 40;
-            Layouts[0].Height = (int) Size.Y + 20;
+            AddPossibleLayout1(0);
+            AddPossibleLayout2(1);
+            AddPossibleLayout3(2);
+            AddPossibleLayout4(3);
 
-            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[0]) ? Layouts[0] : null);
-
-
-            Layouts[1].X = (int) Position.X - 10;
-            Layouts[1].Y = (int) (Position.Y - Size.Y - 30);
-            Layouts[1].Width = (int) Size.X + 20;
-            Layouts[1].Height = (int) Size.Y + 40;
-
-            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[1]) ? Layouts[1] : null);
-
-
-            Layouts[2].X = (int) (Position.X - Size.X - 40);
-            Layouts[2].Y = (int) Position.Y - 10;
-            Layouts[2].Width = (int) Size.X + 40;
-            Layouts[2].Height = (int) Size.Y + 20;
-
-            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[2]) ? Layouts[2] : null);
-
-
-            Layouts[3].X = (int) (Position.X - Size.X - 40);
-            Layouts[3].Y = (int) (Position.Y - Size.Y - 30);
-            Layouts[3].Width = (int) Size.X + 40;
-            Layouts[3].Height = (int) Size.Y + 30;
-
-            PossibleLayouts.Add(Layouts[3]);
+            //Put the last used layout as the first choice
+            ContextualMenuLayout toMove = PossibleLayouts[0];
+            PossibleLayouts[0] = PossibleLayouts[Layout];
+            PossibleLayouts[Layout] = toMove;
 
             return PossibleLayouts;
+        }
+
+
+        private void AddPossibleLayout4(int index)
+        {
+            Layouts[index].Rectangle.X = (int) (Position.X - Size.X - 40);
+            Layouts[index].Rectangle.Y = (int) (Position.Y - Size.Y - 30);
+            Layouts[index].Rectangle.Width = (int) Size.X + 40;
+            Layouts[index].Rectangle.Height = (int) Size.Y + 30;
+
+            PossibleLayouts.Add(Layouts[index]);
+        }
+
+
+        private void AddPossibleLayout3(int index)
+        {
+            Layouts[index].Rectangle.X = (int) (Position.X - Size.X - 40);
+            Layouts[index].Rectangle.Y = (int) Position.Y - 10;
+            Layouts[index].Rectangle.Width = (int) Size.X + 40;
+            Layouts[index].Rectangle.Height = (int) Size.Y + 20;
+
+            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
+        }
+
+
+        private void AddPossibleLayout2(int index)
+        {
+            Layouts[index].Rectangle.X = (int) Position.X - 10;
+            Layouts[index].Rectangle.Y = (int) (Position.Y - Size.Y - 30);
+            Layouts[index].Rectangle.Width = (int) Size.X + 20;
+            Layouts[index].Rectangle.Height = (int) Size.Y + 40;
+
+            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
+        }
+
+
+        private void AddPossibleLayout1(int index)
+        {
+            Layouts[index].Rectangle.X = (int) Position.X;
+            Layouts[index].Rectangle.Y = (int) Position.Y - 30;
+            Layouts[index].Rectangle.Width = (int) Size.X + 40;
+            Layouts[index].Rectangle.Height = (int) Size.Y + 20;
+
+            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
         }
 
 
@@ -305,48 +335,22 @@
 
         private void DrawBubble()
         {
-            switch (Layout)
-            {
-                case 0:
-                    Bubble.BlaPosition = 0;
-                    Bubble.Dimension.X = (int) Position.X + 30;
-                    Bubble.Dimension.Y = (int) Position.Y - 20;
-                    Bubble.Dimension.Width = (int) Size.X;
-                    Bubble.Dimension.Height = (int) Size.Y;
-                    break;
+            var layout = Layouts[Layout];
 
-                case 1:
-                    Bubble.BlaPosition = 3;
-                    Bubble.Dimension.X = (int) Position.X;
-                    Bubble.Dimension.Y = (int) (Position.Y - Size.Y - 20);
-                    Bubble.Dimension.Width = (int) Size.X;
-                    Bubble.Dimension.Height = (int) Size.Y;
-                    break;
+            Bubble.BlaPosition = layout.BubbleTailId;
+            Bubble.Dimension.X = (int) (Position.X + layout.BubblePositionCorrection.X);
+            Bubble.Dimension.Y = (int) (Position.Y + layout.BubblePositionCorrection.Y);
+            Bubble.Dimension.Width = (int) Size.X;
+            Bubble.Dimension.Height = (int) Size.Y;
 
-                case 2:
-                    Bubble.BlaPosition = 1;
-                    Bubble.Dimension.X = (int) (Position.X - Size.X - 30);
-                    Bubble.Dimension.Y = (int) Position.Y;
-                    Bubble.Dimension.Width = (int) Size.X;
-                    Bubble.Dimension.Height = (int) Size.Y;
-                    break;
+            if (layout.SubstractSizeX)
+                Bubble.Dimension.X -= (int) Size.X;
 
-                case 3:
-                    Bubble.BlaPosition = 2;
-                    Bubble.Dimension.X = (int) (Position.X - Size.X - 30);
-                    Bubble.Dimension.Y = (int) (Position.Y - Size.Y - 20);
-                    Bubble.Dimension.Width = (int) Size.X;
-                    Bubble.Dimension.Height = (int) Size.Y;
-                    break;
-            }
+            if (layout.SubstractSizeY)
+                Bubble.Dimension.Y -= (int) Size.Y;
 
             ActualPosition.X = Bubble.Dimension.X;
             ActualPosition.Y = Bubble.Dimension.Y;
-
-            //if (Simulator.DebugMode)
-            //{
-            //    Simulator.Scene.Add(new VisualRectangle(Layouts[Layout].RectanglePrimitif, Color.Red));
-            //}
 
             Bubble.Draw();
         }

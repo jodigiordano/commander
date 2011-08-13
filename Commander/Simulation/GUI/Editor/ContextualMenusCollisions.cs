@@ -8,13 +8,13 @@
     {
         public List<ContextualMenu> Menus;
 
-        private List<List<PhysicalRectangle>> PossibleLayouts;
+        private List<List<ContextualMenuLayout>> PossibleLayouts;
 
 
         public ContextualMenusCollisions()
         {
             Menus = new List<ContextualMenu>();
-            PossibleLayouts = new List<List<PhysicalRectangle>>();
+            PossibleLayouts = new List<List<ContextualMenuLayout>>();
         }
 
 
@@ -23,7 +23,7 @@
             if (Menus.Count == 0)
                 return;
 
-            PossibleLayouts = new List<List<PhysicalRectangle>>(); //to delete
+            PossibleLayouts = new List<List<ContextualMenuLayout>>(); //to delete
             PossibleLayouts.Clear();
 
             // Find the possible layouts for a menu (always 4)
@@ -74,7 +74,7 @@
         }
 
 
-        private PossibleLayout FindBestLayout1(List<List<PhysicalRectangle>> layouts)
+        private PossibleLayout FindBestLayout1(List<List<ContextualMenuLayout>> layouts)
         {
             PossibleLayout bestLayout = new PossibleLayout() { NbCollisions = int.MaxValue };
 
@@ -83,7 +83,7 @@
                 if (layouts[0][i] == null)
                     continue;
 
-                bestLayout.P1 = i;
+                bestLayout.P1 = layouts[0][i].Id;
                 break;
             }
 
@@ -91,7 +91,7 @@
         }
 
 
-        private PossibleLayout FindBestLayout2(List<List<PhysicalRectangle>> layouts)
+        private PossibleLayout FindBestLayout2(List<List<ContextualMenuLayout>> layouts)
         {
             PossibleLayout bestLayout = new PossibleLayout() { NbCollisions = int.MaxValue };
 
@@ -107,13 +107,13 @@
 
                     int nbCollisions = 0;
 
-                    if (Physics.RectangleRectangleCollision(layouts[0][i], layouts[1][j]))
+                    if (Physics.RectangleRectangleCollision(layouts[0][i].Rectangle, layouts[1][j].Rectangle))
                         nbCollisions++;
 
                     if (nbCollisions < bestLayout.NbCollisions)
                     {
-                        bestLayout.P1 = i;
-                        bestLayout.P2 = j;
+                        bestLayout.P1 = layouts[0][i].Id;
+                        bestLayout.P2 = layouts[1][j].Id;
                         bestLayout.NbCollisions = nbCollisions;
                     }
 
@@ -126,7 +126,7 @@
         }
 
 
-        private PossibleLayout FindBestLayout3(List<List<PhysicalRectangle>> layouts)
+        private PossibleLayout FindBestLayout3(List<List<ContextualMenuLayout>> layouts)
         {
             PossibleLayout bestLayout = new PossibleLayout() { NbCollisions = int.MaxValue };
 
@@ -147,20 +147,20 @@
 
                         int nbCollisions = 0;
 
-                        if (Physics.RectangleRectangleCollision(layouts[0][i], layouts[1][j]))
+                        if (Physics.RectangleRectangleCollision(layouts[0][i].Rectangle, layouts[1][j].Rectangle))
                             nbCollisions++;
 
-                        if (Physics.RectangleRectangleCollision(layouts[0][i], layouts[2][k]))
+                        if (Physics.RectangleRectangleCollision(layouts[0][i].Rectangle, layouts[2][k].Rectangle))
                             nbCollisions++;
 
-                        if (Physics.RectangleRectangleCollision(layouts[1][j], layouts[2][k]))
+                        if (Physics.RectangleRectangleCollision(layouts[1][j].Rectangle, layouts[2][k].Rectangle))
                             nbCollisions++;
 
                         if (nbCollisions < bestLayout.NbCollisions)
                         {
-                            bestLayout.P1 = i;
-                            bestLayout.P2 = j;
-                            bestLayout.P3 = k;
+                            bestLayout.P1 = layouts[0][i].Id;
+                            bestLayout.P2 = layouts[1][j].Id;
+                            bestLayout.P3 = layouts[2][k].Id;
                             bestLayout.NbCollisions = nbCollisions;
                         }
 
@@ -174,7 +174,7 @@
         }
 
 
-        private PossibleLayout FindBestLayout4(List<List<PhysicalRectangle>> layouts)
+        private PossibleLayout FindBestLayout4(List<List<ContextualMenuLayout>> layouts)
         {
             PossibleLayout bestLayout = new PossibleLayout() { NbCollisions = int.MaxValue };
 
@@ -200,30 +200,30 @@
 
                             int nbCollisions = 0;
 
-                            if (Physics.RectangleRectangleCollision(layouts[0][i], layouts[1][j]))
+                            if (Physics.RectangleRectangleCollision(layouts[0][i].Rectangle, layouts[1][j].Rectangle))
                                 nbCollisions++;
 
-                            if (Physics.RectangleRectangleCollision(layouts[0][i], layouts[2][k]))
+                            if (Physics.RectangleRectangleCollision(layouts[0][i].Rectangle, layouts[2][k].Rectangle))
                                 nbCollisions++;
 
-                            if (Physics.RectangleRectangleCollision(layouts[0][i], layouts[3][l]))
+                            if (Physics.RectangleRectangleCollision(layouts[0][i].Rectangle, layouts[3][l].Rectangle))
                                 nbCollisions++;
 
-                            if (Physics.RectangleRectangleCollision(layouts[1][j], layouts[2][k]))
+                            if (Physics.RectangleRectangleCollision(layouts[1][j].Rectangle, layouts[2][k].Rectangle))
                                 nbCollisions++;
 
-                            if (Physics.RectangleRectangleCollision(layouts[1][j], layouts[3][l]))
+                            if (Physics.RectangleRectangleCollision(layouts[1][j].Rectangle, layouts[3][l].Rectangle))
                                 nbCollisions++;
 
-                            if (Physics.RectangleRectangleCollision(layouts[2][k], layouts[3][l]))
+                            if (Physics.RectangleRectangleCollision(layouts[2][k].Rectangle, layouts[3][l].Rectangle))
                                 nbCollisions++;
 
                             if (nbCollisions < bestLayout.NbCollisions)
                             {
-                                bestLayout.P1 = i;
-                                bestLayout.P2 = j;
-                                bestLayout.P3 = k;
-                                bestLayout.P4 = l;
+                                bestLayout.P1 = layouts[0][i].Id;
+                                bestLayout.P2 = layouts[1][j].Id;
+                                bestLayout.P3 = layouts[2][k].Id;
+                                bestLayout.P4 = layouts[3][l].Id;
                                 bestLayout.NbCollisions = nbCollisions;
                             }
 
