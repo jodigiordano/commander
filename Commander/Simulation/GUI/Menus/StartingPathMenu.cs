@@ -19,7 +19,7 @@
         private NextWaveContextualMenuChoice NextWaveCompositionChoice;
         private ColoredTextContextualMenuChoice RemainingWavesChoice;
         //private TextContextualMenuChoice RemainingEnemiesChoice;
-        private TextContextualMenuChoice TimeNextWaveChoice;
+        private ColoredTextContextualMenuChoice TimeNextWaveChoice;
 
         private int remainingWaves;
         private double timeNextWave;
@@ -36,7 +36,7 @@
             RemainingWavesChoice = new ColoredTextContextualMenuChoice("RemainingWaves", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
             //RemainingEnemiesChoice = new TextContextualMenuChoice("RemainingEnemies", new Text("Pixelite") { SizeX = 2 });
             NextWaveCompositionChoice = new NextWaveContextualMenuChoice("NextWaveComposition");
-            TimeNextWaveChoice = new TextContextualMenuChoice("TimeRemainingChoice", new Text("Pixelite") { SizeX = 2 });
+            TimeNextWaveChoice = new ColoredTextContextualMenuChoice("TimeRemainingChoice", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
             CallTheNextWave = new TextContextualMenuChoice("CallTheNextWave", new Text("I'm ready! Bring it on!", "Pixelite") { SizeX = 2 });
 
             var choices = new List<ContextualMenuChoice>();
@@ -73,7 +73,10 @@
                 checkedIn = value;
 
                 if (value != null)
+                {
                     RemainingWavesChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
+                    TimeNextWaveChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
+                }
             }
         }
 
@@ -132,7 +135,7 @@
             {
                 timeNextWave = value;
 
-                TimeNextWaveChoice.SetData("Next one due in " + String.Format("{0:0.00}", value / 1000.0) + " seconds.");
+                TimeNextWaveChoice.SetData(new List<string>() { "Next one due in ", String.Format("{0:0.00}", value / 1000.0), " seconds." });
             }
         }
 
