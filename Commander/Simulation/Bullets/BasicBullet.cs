@@ -30,8 +30,8 @@
 
             Vector2 imageSize = Image.AbsoluteSize;
 
-            Rectangle.Width = (int) (imageSize.Y / 2) + 2;
-            Rectangle.Height = (int) (imageSize.Y / 2) + 2;
+            Rectangle.Width = (int) (imageSize.Y / 2) + 4; //dimension == rectangle
+            Rectangle.Height = (int) (imageSize.Y / 2) + 4;
 
             Rectangle.X = (int) (Position.X - Rectangle.Width);
             Rectangle.Y = (int) (Position.Y - Rectangle.Height);
