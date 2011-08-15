@@ -168,6 +168,8 @@
     <Item><Key>TheResistance</Key><Value>spaceships/TheResistance.png</Value></Item>
     <Item><Key>Vaisseau</Key><Value>spaceships/Vaisseau.png</Value></Item>
     
+    <Item><Key>FiringDirection</Key><Value>spaceships/firingDirection.png</Value></Item>
+    
     <Item><Key>MothershipBase</Key><Value>spaceships/mothership_base.png</Value></Item>
     <Item><Key>MothershipTop</Key><Value>spaceships/mothership_top.png</Value></Item>
     <Item><Key>MothershipLights</Key><Value>spaceships/mothership_deadly.png</Value></Item>

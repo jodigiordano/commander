@@ -411,6 +411,9 @@
 
             BeginHelpMessages(p);
 
+            // Firing
+            player.Cursor.ShowFiringCursor = p.Firing;
+
             // Check in the starting path menu
             if (StartingPathMenu.CheckedIn == null && selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
             {

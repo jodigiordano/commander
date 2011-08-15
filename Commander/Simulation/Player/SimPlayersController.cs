@@ -378,12 +378,12 @@
 
                         foreach (var b in bullets)
                             NotifyObjectCreated(b);
-
-                        player.Firing = false;
                     }
 
                     NotifyPlayerChanged(player);
                     NotifyPlayerMoved(player);
+
+                    player.Firing = false;
                 }
             }
         }

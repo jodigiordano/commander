@@ -14,7 +14,7 @@
         public static Keys ChangeMusic = Keys.RightShift;
         public static Keys Debug = Keys.F1;
         public static Keys Editor = Keys.F2;
-        public static Keys Disconnect = Keys.Q;
+        public static Keys Disconnect = Keys.Delete;
         public static Keys Tweaking = Keys.T;
         public static Keys RetryLevel = Keys.R;
         public static Keys MoveUp = Keys.W;
@@ -52,7 +52,8 @@
             { Keys.W, "KeyW" },
             { Keys.A, "KeyA" },
             { Keys.S, "KeyS" },
-            { Keys.D, "KeyD" }
+            { Keys.D, "KeyD" },
+            { Keys.Delete, "KeyDelete" }
         };
     }
 

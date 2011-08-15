@@ -12,12 +12,15 @@
         private Particle TrailEffect;
         private Particle TrailEffect2;
         protected bool ShowTrail;
+        public bool ShowFiringCursor;
         public Color Color;
         private Vector3 LastPosition;
         private ProjectMercury.VariableFloat MovingReleaseSpeed;
         private ProjectMercury.VariableFloat NotMovingReleaseSpeed;
 
         private TeleportAnimation CurrentTeleportAnimation;
+
+        private Image FiringCursor;
 
 
         public SpaceshipCursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority, Color color, string image, bool visible)
@@ -27,6 +30,16 @@
 
             SetBackImage(image + "Back", 4, color);
             Circle.Radius = FrontImage.Size.X / 2;
+
+            FiringCursor = new Image("FiringDirection")
+            { 
+                SizeX = 4,
+                Alpha = 150,
+                VisualPriority = visualPriority + 0.00001
+            };
+
+
+            FiringCursor.Origin = new Vector2(FiringCursor.Center.X, FrontImage.Center.Y + 7);
 
             Color = color;
 
@@ -55,6 +68,8 @@
 
             TrailEffect.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
             TrailEffect2.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
+
+            ShowFiringCursor = false;
         }
 
 
@@ -144,6 +159,13 @@
             {
                 Vector3 p = FrontImage.Position;
                 TrailEffect.Trigger(ref p);
+            }
+
+            if (ShowFiringCursor)
+            {
+                FiringCursor.Position = FrontImage.Position;
+                FiringCursor.Rotation = FrontImage.Rotation;
+                Scene.Add(FiringCursor);
             }
 
             base.Draw();
