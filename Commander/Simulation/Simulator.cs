@@ -43,7 +43,7 @@ namespace EphemereGames.Commander.Simulation
         private PowerUpsController PowerUpsController;
         private EditorController EditorController;
         private EditorGUIController EditorGUIController;
-        private PausedGameController PausedGameController;
+        private PanelsController PausedGameController;
         internal TweakingController TweakingController;
         internal TurretsFactory TurretsFactory;
         internal PowerUpsFactory PowerUpsFactory;
@@ -136,7 +136,7 @@ namespace EphemereGames.Commander.Simulation
             LevelsController = new LevelsController(this);
             EditorController = new EditorController(this);
             EditorGUIController = new EditorGUIController(this);
-            PausedGameController = new PausedGameController(this);
+            PausedGameController = new PanelsController(this);
 
             WorldMode = false;
             DemoMode = false;
@@ -232,7 +232,6 @@ namespace EphemereGames.Commander.Simulation
             EditorController.EditorCommandExecuted += new EditorCommandHandler(GUIController.DoEditorCommandExecuted);
             SimPlayersController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             LevelsController.NewGameState += new NewGameStateHandler(PausedGameController.DoGameStateChanged);
-            SimPlayersController.PausePlayerMoved += new PausePlayerHandler(PausedGameController.DoPausePlayerMoved);
             PausedGameController.PanelOpened += new NoneHandler(GUIController.DoPanelOpened);
             PausedGameController.PanelClosed += new NoneHandler(GUIController.DoPanelClosed);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(GUIController.DoObjectDestroyed);
@@ -297,8 +296,6 @@ namespace EphemereGames.Commander.Simulation
             EditorController.EditorGUIPlayers = EditorGUIController.Players;
             EditorController.CelestialBodies = LevelsController.CelestialBodies;
             EditorGUIController.CelestialBodies = LevelsController.CelestialBodies;
-            SimPlayersController.OptionsPanel = PausedGameController.OptionsPanel;
-            SimPlayersController.PausePanel = PausedGameController.PausePanel;
             GUIController.CommonStash = LevelsController.CommonStash;
             GUIController.ActiveWaves = EnemiesController.ActiveWaves;
 
@@ -444,6 +441,18 @@ namespace EphemereGames.Commander.Simulation
                 SimPlayersController.SyncPausePlayers();
             
             PausedGameController.ShowOptionsPanel();
+        }
+
+
+        public void ShowCreditsPanel(bool sync)
+        {
+            if (PausedGameController.CreditsPanel.Visible)
+                return;
+
+            if (sync)
+                SimPlayersController.SyncPausePlayers();
+
+            PausedGameController.ShowCreditsPanel();
         }
 
 
@@ -643,12 +652,18 @@ namespace EphemereGames.Commander.Simulation
             if (simPlayer.PowerUpInUse != PowerUpType.None)
                 PowerUpsController.DoPlayerMovedDelta(simPlayer, delta);
 
-            SimPlayersController.DoMoveDelta(player, ref delta);
-
-            //    simPlayer.LastMouseDirection = Vector3.Zero;
+            if (PausedGameController.IsPanelVisible)
+                PausedGameController.DoMoveDelta(simPlayer.PausePlayer, ref delta);
+            else
+                SimPlayersController.DoMoveDelta(player, ref delta);
 
             if (simPlayer.Firing)
-                SimPlayersController.DoDirectionDelta(player, ref simPlayer.LastMouseDirection);
+            {
+                if (PausedGameController.IsPanelVisible)
+                    PausedGameController.DoDirectionDelta(simPlayer.PausePlayer, ref simPlayer.LastMouseDirection);
+                else
+                    SimPlayersController.DoDirectionDelta(player, ref simPlayer.LastMouseDirection);
+            }
 
             simPlayer.MovingLeft = simPlayer.MovingRight = simPlayer.MovingUp = simPlayer.MovingDown = false;
         }
@@ -707,9 +722,7 @@ namespace EphemereGames.Commander.Simulation
             if (PausedGameController.IsPanelVisible)
             {
                 if (button == MouseConfiguration.Select)
-                {
-                    SimPlayersController.DoPanelAction(player);
-                }
+                    PausedGameController.DoPanelAction(simPlayer.PausePlayer);
 
                 return;
             }
@@ -817,11 +830,12 @@ namespace EphemereGames.Commander.Simulation
             if (simPlayer == null) // disconnected
                 return;
 
-            //if (simPlayer.Firing)
-            //{
-                simPlayer.LastMouseDirection = delta;
+            simPlayer.LastMouseDirection = delta;
+
+            if (PausedGameController.IsPanelVisible)
+                PausedGameController.DoDirectionDelta(simPlayer.PausePlayer, ref delta);
+            else
                 SimPlayersController.DoDirectionDelta(player, ref delta);
-            //}
         }
 
 
@@ -867,9 +881,7 @@ namespace EphemereGames.Commander.Simulation
             if (PausedGameController.IsPanelVisible)
             {
                 if (button == GamePadConfiguration.Select)
-                {
-                    SimPlayersController.DoPanelAction(player);
-                }
+                    PausedGameController.DoPanelAction(simPlayer.PausePlayer);
 
                 else if (button == GamePadConfiguration.Back)
                 {
@@ -1003,12 +1015,18 @@ namespace EphemereGames.Commander.Simulation
                 if (simPlayer.PowerUpInUse != PowerUpType.None)
                     PowerUpsController.DoPlayerMovedDelta(simPlayer, delta);
 
-                SimPlayersController.DoMoveDelta(player, ref delta);
+                if (PausedGameController.IsPanelVisible)
+                    PausedGameController.DoMoveDelta(simPlayer.PausePlayer, ref delta);
+                else
+                    SimPlayersController.DoMoveDelta(player, ref delta);
             }
 
             else if (button == GamePadConfiguration.DirectionCursor)
             {
-                SimPlayersController.DoDirectionDelta(player, ref delta);
+                if (PausedGameController.IsPanelVisible)
+                    PausedGameController.DoDirectionDelta(simPlayer.PausePlayer, ref delta);
+                else
+                    SimPlayersController.DoDirectionDelta(player, ref delta);
 
                 SimPlayersController.Fire((Player) p);
             }

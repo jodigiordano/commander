@@ -14,8 +14,6 @@
         public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public StartingPathMenu StartingPathMenu;
-        public OptionsPanel OptionsPanel;
-        public PausePanel PausePanel;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
@@ -29,7 +27,6 @@
         public event CommonStashHandler CommonStashChanged;
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
-        public event PausePlayerHandler PausePlayerMoved;
         public event PowerUpTypeSimPlayerHandler ActivatePowerUpAsked;
         public event PowerUpTypeSimPlayerHandler DesactivatePowerUpAsked;
         public event SimPlayerHandler PlayerConnected;
@@ -72,10 +69,6 @@
 
             UpdateSelection = true;
 
-            PausePanel.CloseButtonHandler = DoPausePanelClosed;
-            OptionsPanel.CloseButtonHandler = DoOptionsPanelClosed;
-            PausePanel.SetClickHandler(DoPausePanelClicked);
-
             NotifyCommonStashChanged(CommonStash);
         }
 
@@ -95,10 +88,6 @@
                 UpdateSelectionz = UpdateSelection,
                 BulletAttackPoints = (float) Simulator.Level.BulletHitPoints,
                 PausePlayer = new PausePlayer(Simulator)
-                {
-                    OptionsPanel = OptionsPanel,
-                    PausePanel = PausePanel
-                }
             };
 
             simPlayer.Initialize();
@@ -245,12 +234,6 @@
         {
             SimPlayer player = Players[p];
 
-            if (Simulator.State == GameState.Paused || OptionsPanel.Visible)
-            {
-                player.PausePlayer.Move(ref delta, MouseConfiguration.MovingSpeed);
-                return;
-            }
-
             player.Move(ref delta, MouseConfiguration.MovingSpeed);
 
             if (Simulator.DemoMode)
@@ -265,13 +248,6 @@
         public void DoDirectionDelta(Player p, ref Vector3 delta)
         {
             SimPlayer player = Players[p];
-
-            if (Simulator.State == GameState.Paused || OptionsPanel.Visible)
-            {
-                player.PausePlayer.Rotate(ref delta, MouseConfiguration.RotatingSpeed);
-
-                return;
-            }
 
             player.Rotate(ref delta, MouseConfiguration.RotatingSpeed);
         }
@@ -377,19 +353,6 @@
 
         public void Update()
         {
-            if (Simulator.State == GameState.Paused || OptionsPanel.Visible)
-            {
-                foreach (var player in Players.Values)
-                {
-                    player.PausePlayer.Update();
-
-                    NotifyPausePlayerMoved(player.PausePlayer);
-                }
-
-                return;
-            }
-
-
             if (Simulator.State == GameState.Running)
             {
                 CheckAvailablePowerUps();
@@ -474,17 +437,6 @@
         public void StopFire(Player p)
         {
             Players[p].Firing = false;
-        }
-
-
-        public void DoPanelAction(Player pl)
-        {
-            var player = Players[pl].PausePlayer;
-
-            if (OptionsPanel.Visible)
-                OptionsPanel.DoClick(player.Circle);
-            else if (PausePanel.Visible)
-                PausePanel.DoClick(player.Circle);
         }
 
 
@@ -704,57 +656,6 @@
         }
 
 
-        private void DoPausePanelClosed(PanelWidget widget)
-        {
-            Simulator.TriggerNewGameState(GameState.Running);
-        }
-        
-
-        private void DoOptionsPanelClosed(PanelWidget widget)
-        {
-            OptionsPanel.SaveOnDisk();
-
-            if (!Simulator.DemoMode)
-                Simulator.ShowPausedGamePanel();
-            else
-                Simulator.TriggerNewGameState(GameState.Running);
-        }
-
-
-        private void DoPausePanelClicked(PanelWidget widget)
-        {
-            if (widget.Name == "Help")
-            {
-
-            }
-
-            else if (widget.Name == "Controls")
-            {
-
-            }
-
-            else if (widget.Name == "Restart")
-            {
-                Simulator.TriggerNewGameState(GameState.Restart);
-            }
-
-            else if (widget.Name == "Options")
-            {
-                Simulator.ShowOptionsPanel(false);
-            }
-
-            else if (widget.Name == "GoBackToWorld")
-            {
-                Simulator.TriggerNewGameState(GameState.PausedToWorld);
-            }
-
-            else if (widget.Name == "Resume")
-            {
-                Simulator.TriggerNewGameState(GameState.Running);
-            }
-        }
-
-
         private void CheckAvailablePowerUps()
         {
             foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Values)
@@ -846,13 +747,6 @@
         {
             if (PlayerMoved != null)
                 PlayerMoved(player);
-        }
-
-
-        private void NotifyPausePlayerMoved(PausePlayer player)
-        {
-            if (PausePlayerMoved != null)
-                PausePlayerMoved(player);
         }
 
 

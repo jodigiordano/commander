@@ -7,8 +7,6 @@
     class PausePlayer
     {
         public SpaceshipSpaceship SpaceshipMove;
-        public OptionsPanel OptionsPanel;
-        public PausePanel PausePanel;
 
         // for keyboard
         public bool MovingLeft;
@@ -108,17 +106,6 @@
 
         public void Update()
         {
-            // More friction on a celestial body and a turret
-            if (SpaceshipMove.SteeringBehavior.NextMovement == Vector3.Zero)
-            {
-                if (OptionsPanel.Visible && OptionsPanel.DoHover(Circle) && OptionsPanel.LastHoverWidget.Sticky)
-                    SpaceshipMove.SteeringBehavior.Friction = 0.1f;
-
-                if (PausePanel.Visible && PausePanel.DoHover(Circle) && PausePanel.LastHoverWidget.Sticky)
-                    SpaceshipMove.SteeringBehavior.Friction = 0.1f;
-            }
-
-
             SpaceshipMove.Update();
             Position = SpaceshipMove.Position;
             Direction = SpaceshipMove.Direction;

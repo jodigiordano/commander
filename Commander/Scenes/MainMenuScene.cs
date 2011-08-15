@@ -264,6 +264,7 @@
                 case "help": TransiteTo("Aide"); break;
                 case "options": Simulator.ShowOptionsPanel(true); break;
                 case "editor": TransiteTo("Editeur"); break;
+                case "credits": Simulator.ShowCreditsPanel(true); break;
 
                 case "quit":
                     if (Preferences.Target == Core.Utilities.Setting.Xbox360 && Main.TrialMode.Active)

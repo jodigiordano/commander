@@ -110,6 +110,7 @@
     <Compile Include="GUI\SandGlass.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="Panels\CreditsPanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
@@ -126,7 +127,6 @@
     <Compile Include="Simulation\GUI\Menus\StartingPathMenu.cs" />
     <Compile Include="Simulation\GUI\PlayerCash.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
-    <Compile Include="Simulation\Pause\PausedGameController.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
@@ -230,6 +230,7 @@
     <Compile Include="Simulation\Minerals\Mineral.cs" />
     <Compile Include="Simulation\Minerals\MineralDefinition.cs" />
     <Compile Include="Simulation\Minerals\MineralsFactory.cs" />
+    <Compile Include="Simulation\Pause\PanelsController.cs" />
     <Compile Include="Simulation\PlanetarySystem\CelestialBody.cs" />
     <Compile Include="Simulation\PlanetarySystem\Moon.cs" />
     <Compile Include="Simulation\PlanetarySystem\MoonMatrix.cs" />

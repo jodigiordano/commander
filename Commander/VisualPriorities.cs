@@ -39,6 +39,7 @@
         public const double PlayerPanelCursor = 0.3;
 
         public const double PausePanel = 0.35;
+        public const double CreditsPanel = 0.35;
         public const double OptionsPanel = 0.36;
 
         public const double TurretMenu = 0.38;

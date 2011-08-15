@@ -156,6 +156,7 @@
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
     <Compile Include="FutureJobsController.cs" />
+    <Compile Include="Panels\CreditsPanel.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
@@ -263,7 +264,7 @@
     <Compile Include="Simulation\GUI\Menus\Core\ToggleContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\TextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\ScoreStars.cs" />
-    <Compile Include="Simulation\Pause\PausedGameController.cs" />
+    <Compile Include="Simulation\Pause\PanelsController.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Simulation\Player\PausePlayer.cs" />
     <Compile Include="Simulation\Player\TurretToBuy\SelectedTurretToBuyOnlyAvailablesController.cs" />
