@@ -606,11 +606,34 @@ namespace EphemereGames.Commander.Simulation
             if (key == KeyboardConfiguration.AdvancedView)
                 SimPlayersController.DoAdvancedViewAction(player, true);
 
-            if (!DemoMode && key == KeyboardConfiguration.Back)
-            {
-                TriggerNewGameState(GameState.Paused);
 
+            if (EditorMode)
+            {
+                if (key == KeyboardConfiguration.QuickToggle)
+                    EditorController.DoNextOrPreviousAction(simPlayer, 1);
+            }
+
+            if (EditorMode && EditorState == EditorState.Editing)
                 return;
+
+            if (WorldMode)
+            {
+                if (key == KeyboardConfiguration.QuickToggle)
+                    SimPlayersController.DoPausedGameChoice(player, 1);
+            }
+
+            else if (DemoMode)
+            {
+                if (key == KeyboardConfiguration.QuickToggle)
+                    SimPlayersController.DoNewGameChoice(player, 1);
+            }
+
+            else
+            {
+                if (key == KeyboardConfiguration.QuickToggle)
+                    SimPlayersController.DoNextOrPreviousAction(player, 1);
+                else if (key == KeyboardConfiguration.Back)
+                    TriggerNewGameState(GameState.Paused);
             }
         }
 

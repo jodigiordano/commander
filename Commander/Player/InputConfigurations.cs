@@ -21,6 +21,7 @@
         public static Keys MoveLeft = Keys.A;
         public static Keys MoveDown = Keys.S;
         public static Keys MoveRight = Keys.D;
+        public static Keys QuickToggle = Keys.Space;
 
         public static List<Keys> ToList
         {
@@ -41,7 +42,8 @@
                     MoveDown,
                     MoveLeft,
                     MoveRight,
-                    MoveUp
+                    MoveUp,
+                    QuickToggle
                 };
             }
         }
