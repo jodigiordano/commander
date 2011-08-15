@@ -12,6 +12,8 @@
         private Text Score;
         private int DistanceY;
 
+        private int PreviousLayoutId;
+
 
         public GameEndedBubble(Scene scene, double visualPriority, string quote, Color quoteColor, int score, int nbStars)
             : base(scene, new PhysicalRectangle(), visualPriority)
@@ -23,6 +25,8 @@
             Score = new Text("Score: " + score, "Pixelite") { SizeX = 2, VisualPriority = visualPriority - 0.00001 };
 
             ComputeSize();
+
+            PreviousLayoutId = -1;
         }
 
 
@@ -72,33 +76,32 @@
             {
                 base.Position = value;
 
-                bool tooFarRight = Dimension.X + Dimension.Width + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
-                bool tooFarBottom = Dimension.Y + Dimension.Height > 370 - Preferences.Xbox360DeadZoneV2.Y;
+                bool tooFarRight = true;
+                bool tooFarBottom = true;
 
-                if (tooFarRight && tooFarBottom)
+                if (PreviousLayoutId != -1)
                 {
-                    Dimension.X += -Dimension.Width - 50;
-                    Dimension.Y += -Dimension.Height - 10;
-                    BlaPosition = 2;
+                    SetLayout(PreviousLayoutId);
+
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
+                    tooFarBottom = Dimension.Y + Dimension.Height > 370 - Preferences.Xbox360DeadZoneV2.Y;
                 }
 
-                else if (tooFarRight)
+                if (tooFarRight || tooFarBottom)
                 {
-                    Dimension.X += -Dimension.Width - 50;
-                    BlaPosition = 1;
-                }
+                    base.Position = value;
 
-                else if (tooFarBottom)
-                {
-                    Dimension.Y += -Dimension.Height - 50;
-                    BlaPosition = 3;
-                }
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
+                    tooFarBottom = Dimension.Y + Dimension.Height > 370 - Preferences.Xbox360DeadZoneV2.Y;
 
-                else
-                {
-                    Dimension.X += 50;
-                    Dimension.Y += -10;
-                    BlaPosition = 0;
+                    if (tooFarRight && tooFarBottom)
+                        SetLayout(0);
+                    else if (tooFarRight)
+                        SetLayout(1);
+                    else if (tooFarBottom)
+                        SetLayout(2);
+                    else
+                        SetLayout(3);
                 }
 
                 Dimension.X = (int) MathHelper.Clamp(Dimension.X, -640 + Preferences.Xbox360DeadZoneV2.X, 640 - Preferences.Xbox360DeadZoneV2.X - Dimension.Width / 2);
@@ -136,6 +139,51 @@
 
             Dimension.Width = (int) sizeX + 4;
             Dimension.Height = (int) sizeY + 4;
+        }
+
+
+        private void SetLayout(int layoutId)
+        {
+            if (layoutId == 0) //tooFarRight && tooFarBottom
+            {
+                Dimension.X += -Dimension.Width - 50;
+                Dimension.Y += -Dimension.Height - 10;
+                BlaPosition = 2;
+            }
+
+            else if (layoutId == 1) //tooFarRight
+            {
+                Dimension.X += -Dimension.Width - 50;
+                BlaPosition = 1;
+            }
+
+            else if (layoutId == 2) //tooFarBottom
+            {
+                Dimension.Y += -Dimension.Height - 50;
+                BlaPosition = 3;
+            }
+
+            else //layoutId == 3
+            {
+                Dimension.X += 50;
+                Dimension.Y += -10;
+                BlaPosition = 0;
+            }
+
+            PreviousLayoutId = layoutId;
+        }
+
+
+        private Vector2 GetLayout(int layoutId)
+        {
+            if (layoutId == 0)
+                return new Vector2(-Dimension.Width - 50, -Dimension.Height - 10);
+            else if (layoutId == 1)
+                return new Vector2(-Dimension.Width - 50, 0);
+            else if (layoutId == 2)
+                return new Vector2(0, -Dimension.Height - 50);
+            else
+                return new Vector2(50, -10);
         }
     }
 }
