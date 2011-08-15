@@ -116,6 +116,7 @@
                 PoolOfLists.Return(Objects[kvp.Key]);
             }
 
+            Objects.Clear();
             Effects.Clear();
             ToDelete.Clear();
         }
