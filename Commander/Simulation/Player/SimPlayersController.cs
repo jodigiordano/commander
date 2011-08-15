@@ -14,6 +14,7 @@
         public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public StartingPathMenu StartingPathMenu;
+        public List<SimPlayer> PlayersList;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
@@ -52,6 +53,7 @@
             AvailablePowerUps = new Dictionary<PowerUpType, bool>(PowerUpTypeComparer.Default);
 
             Players = new Dictionary<Player, SimPlayer>();
+            PlayersList = new List<SimPlayer>();
         }
 
 
@@ -93,6 +95,7 @@
             simPlayer.Initialize();
 
             Players.Add(player, simPlayer);
+            PlayersList.Add(simPlayer);
 
             NotifyPlayerConnected(simPlayer);
         }
@@ -105,6 +108,7 @@
             DoAdvancedViewAction(player, false);
 
             Players.Remove(player);
+            PlayersList.Remove(simPlayer);
 
             NotifyPlayerDisconnected(simPlayer);
         }
@@ -627,6 +631,23 @@
 
                 return;
             }
+        }
+
+
+        public void DoPlayersCollided(SimPlayer p1, SimPlayer p2)
+        {
+            p1.SpaceshipMove.SteeringBehavior.Bouncing -= p1.SpaceshipMove.SteeringBehavior.Acceleration * p1.SpaceshipMove.SteeringBehavior.Speed;
+            p2.SpaceshipMove.SteeringBehavior.Bouncing += p1.SpaceshipMove.SteeringBehavior.Acceleration * p1.SpaceshipMove.SteeringBehavior.Speed;
+
+            p1.SpaceshipMove.SteeringBehavior.Bouncing += p2.SpaceshipMove.SteeringBehavior.Acceleration * p1.SpaceshipMove.SteeringBehavior.Speed;
+            p2.SpaceshipMove.SteeringBehavior.Bouncing -= p2.SpaceshipMove.SteeringBehavior.Acceleration * p1.SpaceshipMove.SteeringBehavior.Speed;
+
+            p1.SpaceshipMove.SteeringBehavior.Acceleration = Vector3.Zero;
+            p2.SpaceshipMove.SteeringBehavior.Acceleration = Vector3.Zero;
+
+
+            Inputs.VibrateControllerLowFrequency(p1.BasePlayer, 120, 0.8f);
+            Inputs.VibrateControllerLowFrequency(p2.BasePlayer, 120, 0.8f);
         }
 
 

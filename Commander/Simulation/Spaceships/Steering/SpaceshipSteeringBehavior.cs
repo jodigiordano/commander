@@ -18,9 +18,10 @@
 
         protected Spaceship Spaceship;
         protected float MaxRotationPerUpdateRad;
-        protected Vector3 Acceleration;
 
-        private Vector3 Bouncing;
+        public Vector3 Acceleration;
+        public Vector3 Bouncing;
+
         private Matrix RotationMatrix;
 
         private static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };

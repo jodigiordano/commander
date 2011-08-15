@@ -52,7 +52,7 @@
         public Player()
             : base()
         {
-            Circle = new Circle(Position, 8);
+            Circle = new Circle(Position, 16);
 
             KeysToListenTo = KeyboardConfiguration.ToList;
             MouseButtonsToListenTo = MouseConfiguration.ToList;

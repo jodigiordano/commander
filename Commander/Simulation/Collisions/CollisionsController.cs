@@ -16,6 +16,7 @@
         public List<CelestialBody> CelestialBodies;
         public List<Mineral> Minerals;
         public List<ShootingStar> ShootingStars;
+        public List<SimPlayer> Players;
         public bool Debug;
 
         public event PhysicalObjectHandler ObjectOutOfBounds;
@@ -23,6 +24,7 @@
         public event TurretTurretHandler TurretBoosted;
         public event TurretPhysicalObjectHandler InTurretRange;
         public event EnemyBulletHandler BulletDeflected;
+        public event SimPlayerSimPlayerHandler PlayersCollided;
 
         private Simulator Simulator;
         private PhysicalRectangle Battlefield;
@@ -36,6 +38,7 @@
         private EnemyInRange EnemyInRange;
         private CelestialBodyExplosion CelestialBodyExplosion;
         private ObjectsCollisions ObjectsCollisions;
+        private PlayersCollisions PlayersCollisions;
 
         private Action SyncOutOfBounds;
         private Action SyncEnemyInRange;
@@ -56,6 +59,7 @@
             OutOfBounds = new OutOfBounds();
             EnemyInRange = new EnemyInRange();
             ObjectsCollisions = new ObjectsCollisions();
+            PlayersCollisions = new PlayersCollisions();
             CelestialBodyExplosion = new CelestialBodyExplosion();
 
             SyncOutOfBounds = new Action(OutOfBounds.Sync);
@@ -99,6 +103,8 @@
             ObjectsCollisions.ShootingStars = ShootingStars;
             ObjectsCollisions.Simulator = Simulator;
             ObjectsCollisions.Turrets = Turrets;
+
+            PlayersCollisions.Players = Players;
         }
 
 
@@ -118,6 +124,7 @@
             Task task6 = Parallel.Start(SyncBulletsDeflected);
 
             ObjectsCollisions.Sync();
+            PlayersCollisions.Sync();
 
             task3.Wait();
             task4.Wait();
@@ -144,6 +151,9 @@
 
             foreach (var d in BulletsDeflected.Output)
                 NotifyBulletDeflected(d.Key, d.Value);
+
+            foreach (var d in PlayersCollisions.Output)
+                NotifyPlayersCollided(d.Key, d.Value);
         }
 
 
@@ -295,6 +305,13 @@
         {
             if (BulletDeflected != null)
                 BulletDeflected(enemy, bullet);
+        }
+
+
+        private void NotifyPlayersCollided(SimPlayer p1, SimPlayer p2)
+        {
+            if (PlayersCollided != null)
+                PlayersCollided(p1, p2);
         }
     }
 }

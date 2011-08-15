@@ -208,6 +208,7 @@
     <Compile Include="Simulation\Collisions\EnemyInRange.cs" />
     <Compile Include="Simulation\Collisions\OutOfBounds.cs" />
     <Compile Include="Simulation\Collisions\HiddenEnemies.cs" />
+    <Compile Include="Simulation\Collisions\PlayersCollisions.cs" />
     <Compile Include="Simulation\Cutscenes\Cutscene.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\CommanderAnimation.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\MothershipAnimation.cs" />

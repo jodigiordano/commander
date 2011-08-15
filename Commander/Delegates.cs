@@ -30,4 +30,5 @@ namespace EphemereGames.Commander.Simulation
     delegate void EditorPlayerHandler(EditorPlayer e);
     delegate void EditorCommandHandler(EditorCommand e);
     delegate void NextWaveHandler(WaveDescriptor d);
+    delegate void SimPlayerSimPlayerHandler(SimPlayer p1, SimPlayer p2);
 }
