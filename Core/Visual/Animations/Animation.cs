@@ -32,7 +32,7 @@
         }
 
 
-        protected double RelativeTime
+        protected double ElapsedTime
         {
             get { return Length - RemainingTime; }
         }

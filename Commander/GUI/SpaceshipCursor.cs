@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
+    using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
@@ -54,7 +55,10 @@
             TrailEffect2.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
 
             if (visible)
+            {
                 FadeIn();
+                TeleportIn();
+            }
         }
 
 
@@ -89,6 +93,12 @@
             base.FadeOut();
 
             ShowTrail = false;
+        }
+
+
+        public void TeleportIn()
+        {
+            Scene.Animations.Add(new TeleportAnimation(Scene, new List<Image>() { FrontImage, BackImage }, VisualPriorities.Default.Teleport, Color, true));
         }
 
 

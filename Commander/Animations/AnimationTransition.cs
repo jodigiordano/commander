@@ -113,7 +113,7 @@ namespace EphemereGames.Commander
             {
                 var ship = AlienShips[i];
 
-                ship.Representation.position = new Vector3(Paths[i].GetPosition(RelativeTime), 0);
+                ship.Representation.position = new Vector3(Paths[i].GetPosition(ElapsedTime), 0);
 
                 Scene.BeginForeground();
                 ship.Draw();

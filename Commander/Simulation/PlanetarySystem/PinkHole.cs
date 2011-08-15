@@ -2,6 +2,7 @@
 {
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using ProjectMercury.Emitters;
     using ProjectMercury.Modifiers;
 
 
@@ -56,6 +57,20 @@
                 VisualPriorityBackup = Effect.VisualPriority;
 
                 Effect.VisualPriority = value;
+            }
+        }
+
+
+        public float Radius
+        {
+            get
+            {
+                return ((CircleEmitter) Effect.ParticleEffect[0]).Radius;
+            }
+
+            set
+            {
+                ((CircleEmitter) Effect.ParticleEffect[0]).Radius = value;
             }
         }
 

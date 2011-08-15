@@ -86,6 +86,17 @@
         }
 
 
+        public Vector3 GetPosition(double time)
+        {
+            return new Vector3
+            (
+                Curves[0].Evaluate((float) time),
+                Curves[1].Evaluate((float) time),
+                Curves[2].Evaluate((float) time)
+            );
+        }
+
+
         public float GetPercentage(double time)
         {
             return (Length != 0) ? (float) (time / Length) : 0;

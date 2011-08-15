@@ -152,6 +152,7 @@
     <Compile Include="Persistence\Persistence.cs" />
     <Compile Include="Persistence\Preferences.cs" />
     <Compile Include="Physics\Collisions.cs" />
+    <Compile Include="Physics\Effects\MovePath3DEffect.cs" />
     <Compile Include="Physics\Effects\ImpulseEffect.cs" />
     <Compile Include="Physics\Effects\MoveEffect.cs" />
     <Compile Include="Physics\Effects\MoveOffsetEffect.cs" />

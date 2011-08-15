@@ -46,6 +46,8 @@
         public const double CelestialBodyMenu = 0.39;
         public const double StartingPathMenu = 0.39;
 
+        public const double Teleport = 0.39;
+
         public const double PlayerCursor = 0.4; //Back == 0.4 - 0.00001; Trail == 0.4 - 0.00002, Trail2 == 0.4 - 0.00003
 
         public const double DefaultSpaceship = 0.41;

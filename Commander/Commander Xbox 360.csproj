@@ -120,6 +120,8 @@
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\PinkHoleLite.cs" />
+    <Compile Include="Simulation\GUI\Animations\TeleportAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TurretMoneyAnimation.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuLayout.cs" />

@@ -112,6 +112,7 @@
     <Compile Include="Physics\Effects\ImpulseEffect.cs" />
     <Compile Include="Physics\Effects\MoveEffect.cs" />
     <Compile Include="Physics\Effects\MoveOffsetEffect.cs" />
+    <Compile Include="Physics\Effects\MovePath3DEffect.cs" />
     <Compile Include="Physics\Effects\MovePathEffect.cs" />
     <Compile Include="Physics\Effects\RotationEffect.cs" />
     <Compile Include="Physics\Effects\PhysicalEffects.cs" />

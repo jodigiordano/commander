@@ -12,5 +12,6 @@
         public static readonly Color Pink = new Color(255, 0, 220, 255);
         public static readonly Color PlanetNearHit = new Color(255, 0, 0, 255);
         public static readonly Color GamePaused = new Color(255, 0, 150);
+        public static readonly Color Teleport = new Color(73, 119, 255);
     }
 }
