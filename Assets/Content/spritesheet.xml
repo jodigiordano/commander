@@ -117,6 +117,10 @@
     <Item><Key>KeyA</Key><Value>GUI/Buttons/Windows/keyA.png</Value></Item>
     <Item><Key>KeyS</Key><Value>GUI/Buttons/Windows/keyS.png</Value></Item>
     <Item><Key>KeyD</Key><Value>GUI/Buttons/Windows/keyD.png</Value></Item>
+    <Item><Key>KeyR</Key><Value>GUI/Buttons/Windows/keyR.png</Value></Item>
+    <Item><Key>KeyF</Key><Value>GUI/Buttons/Windows/keyF.png</Value></Item>
+    <Item><Key>KeySpace</Key><Value>GUI/Buttons/Windows/keySpace.png</Value></Item>
+    <Item><Key>KeyDelete</Key><Value>GUI/Buttons/Windows/keyDelete.png</Value></Item>    
     <Item><Key>MouseLeft</Key><Value>GUI/Buttons/Windows/mouseLeftPress.png</Value></Item>
     <Item><Key>MouseRight</Key><Value>GUI/Buttons/Windows/mouseRightPress.png</Value></Item>
     <Item><Key>MouseMiddle</Key><Value>GUI/Buttons/Windows/mouseMiddlePress.png</Value></Item>
