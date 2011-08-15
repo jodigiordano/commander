@@ -85,7 +85,11 @@
 
         public const double CelestialBodiePath = 0.945;
 
-        public const double LevelLocked = 0.946;
+        public const double LevelNumber = 0.946;
+        public const double LevelHighScore = 0.946;
+
+        public const double LevelLocked = 0.947;
+        public const double LevelPaused = 0.947;
 
         public const double HelpBar = 0.95;
 

@@ -320,18 +320,12 @@
         }
 
 
-        public bool PausedGameSelected(Player p)
-        {
-            var level = GetSelectedLevel(p);
+        //public bool PausedGameSelected(Player p)
+        //{
+        //    var level = GetSelectedLevel(p);
 
-            return Main.GameInProgress != null && level != null && Main.GameInProgress.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id;
-        }
-
-
-        public CelestialBody GetPausedGameCelestialBody()
-        {
-            return CelestialBodies[Main.GameInProgress.Level.Infos.Id];
-        }
+        //    return Main.GameInProgress != null && level != null && Main.GameInProgress.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id;
+        //}
 
 
         public void ShowWarpBlockedMessage()
