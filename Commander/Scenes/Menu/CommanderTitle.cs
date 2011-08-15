@@ -71,9 +71,9 @@
 
             InitPressStart();
 
-            VisualEffectsIds.Add(Scene.VisualEffects.Add(PressStart, EphemereGames.Core.Visual.VisualEffects.Fade(PressStart.Alpha, 255, 500, 1000), VisualEffectTerminated));
-            VisualEffectsIds.Add(Scene.VisualEffects.Add(Commander, Core.Visual.VisualEffects.Fade(Commander.Alpha, 255, 0, 1000), VisualEffectTerminated));
-            VisualEffectsIds.Add(Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.Fade(Filter.Alpha, 100, 0, 500), VisualEffectTerminated));
+            VisualEffectsIds.Add(Scene.VisualEffects.Add(PressStart, EphemereGames.Core.Visual.VisualEffects.Fade(PressStart.Alpha, 255, 500, 1000)));
+            VisualEffectsIds.Add(Scene.VisualEffects.Add(Commander, Core.Visual.VisualEffects.Fade(Commander.Alpha, 255, 0, 1000)));
+            VisualEffectsIds.Add(Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.Fade(Filter.Alpha, 100, 0, 500)));
 
             MovePathEffect mpe = new MovePathEffect()
             {
@@ -95,7 +95,7 @@
                         })
             };
 
-            PhysicalEffectsIds.Add(Scene.PhysicalEffects.Add(Filter, mpe, PhysicalEffectTerminated));
+            PhysicalEffectsIds.Add(Scene.PhysicalEffects.Add(Filter, mpe));
         }
 
 
@@ -103,9 +103,9 @@
         {
             ClearActiveEffects();
 
-            VisualEffectsIds.Add(Scene.VisualEffects.Add(PressStart, EphemereGames.Core.Visual.VisualEffects.Fade(PressStart.Alpha, 0, 0, 1000), VisualEffectTerminated));
-            VisualEffectsIds.Add(Scene.VisualEffects.Add(Commander, Core.Visual.VisualEffects.FadeOutTo0(Commander.Alpha, 0, 1000), VisualEffectTerminated));
-            VisualEffectsIds.Add(Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 1000), VisualEffectTerminated));
+            VisualEffectsIds.Add(Scene.VisualEffects.Add(PressStart, EphemereGames.Core.Visual.VisualEffects.Fade(PressStart.Alpha, 0, 0, 1000)));
+            VisualEffectsIds.Add(Scene.VisualEffects.Add(Commander, Core.Visual.VisualEffects.FadeOutTo0(Commander.Alpha, 0, 1000)));
+            VisualEffectsIds.Add(Scene.VisualEffects.Add(Filter, Core.Visual.VisualEffects.FadeOutTo0(Filter.Alpha, 0, 1000)));
         }
 
 
@@ -130,18 +130,6 @@
 
             VisualEffectsIds.Clear();
             PhysicalEffectsIds.Clear();
-        }
-
-
-        private void VisualEffectTerminated(int id)
-        {
-            VisualEffectsIds.Remove(id);
-        }
-
-
-        private void PhysicalEffectTerminated(int id)
-        {
-            PhysicalEffectsIds.Remove(id);
         }
     }
 }
