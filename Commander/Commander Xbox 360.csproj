@@ -136,10 +136,8 @@
     <Compile Include="Scenes\BuyScene.cs" />
     <Compile Include="Scenes\EditorScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
-    <Compile Include="Scenes\HelpScene.cs" />
     <Compile Include="Scenes\LoadingScene.cs" />
     <Compile Include="Scenes\MainMenuScene.cs" />
-    <Compile Include="Scenes\OptionsScene.cs" />
     <Compile Include="Scenes\StoryScene.cs" />
     <Compile Include="Scenes\WorldAnnunciationScene.cs" />
     <Compile Include="Scenes\WorldScene.cs" />

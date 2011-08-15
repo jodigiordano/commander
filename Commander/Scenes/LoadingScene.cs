@@ -156,8 +156,6 @@
         private void LoadScenes()
         {
             ScenesLoaded.Add(new MainMenuScene());
-            ScenesLoaded.Add(new HelpScene());
-            ScenesLoaded.Add(new OptionsScene());
             ScenesLoaded.Add(new EditorScene());
             ScenesLoaded.Add(new BuyScene());
 
