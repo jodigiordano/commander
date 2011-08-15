@@ -36,7 +36,7 @@
         public int LifePacks;
 
         // spaceship
-        public double BulletHitPoints;
+        public double BulletDamage;
 
         private Simulator Simulator;
         private double NextCelestialBodyVisualPriority = VisualPriorities.Default.CelestialBody;
@@ -292,11 +292,18 @@
 
         private void InitializeSpaceship()
         {
+            // Bullet damage
+            if (Descriptor.Player.BulletDamage > 0)
+            {
+                BulletDamage = Descriptor.Player.BulletDamage;
+                return;
+            }
+
             double averageLife = 0;
 
             if (InfiniteWaves != null)
             {
-                BulletHitPoints = InfiniteWaves.GetAverageLife();
+                BulletDamage = InfiniteWaves.GetAverageLife();
             }
 
             else
@@ -304,10 +311,10 @@
                 foreach (var w in Descriptor.Waves)
                     averageLife += w.GetAverageLife(Simulator);
 
-                BulletHitPoints = Descriptor.Waves.Count == 0 ? averageLife : averageLife / Descriptor.Waves.Count;
+                BulletDamage = Descriptor.Waves.Count == 0 ? averageLife : averageLife / Descriptor.Waves.Count;
             }
 
-            BulletHitPoints /= 15;
+            BulletDamage /= 15;
         }
 
 

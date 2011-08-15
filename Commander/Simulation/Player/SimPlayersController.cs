@@ -86,7 +86,7 @@
                 Color = player.Color,
                 ImageName = player.ImageName,
                 UpdateSelectionz = UpdateSelection,
-                BulletAttackPoints = (float) Simulator.Level.BulletHitPoints,
+                BulletAttackPoints = (float) Simulator.Level.BulletDamage,
                 PausePlayer = new PausePlayer(Simulator)
             };
 
