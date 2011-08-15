@@ -76,9 +76,12 @@
             if (CelestialBodyToProtect != null)
                 CelestialBodyToProtect.LifePoints = Descriptor.Player.Lives;
 
-            CommonStash = new CommonStash();
-            CommonStash.Lives = Descriptor.Player.Lives;
-            CommonStash.Cash = Descriptor.Player.Money;
+            CommonStash = new CommonStash()
+            {
+                Lives = Descriptor.Player.Lives,
+                Cash = Descriptor.Player.Money,
+                StartingPosition = Descriptor.Player.StartingPosition
+            };
 
             Minerals = Descriptor.Minerals.Cash;
             LifePacks = Descriptor.Minerals.LifePacks;

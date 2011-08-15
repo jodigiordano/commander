@@ -79,7 +79,7 @@
             {
                 CelestialBodies = CelestialBodies,
                 CommonStash = CommonStash,
-                Position = player.Position,
+                Position = CommonStash.StartingPosition + player.SpawningPosition,
                 Direction = new Vector3(0, -1, 0),
                 AvailableTurrets = AvailableTurrets,
                 AvailablePowerUps = AvailablePowerUps,

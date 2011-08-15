@@ -564,6 +564,11 @@
   <Player>
     <Money>100</Money>
     <Lives>1</Lives>
+    <StartingPosition>
+      <X>-375</X>
+      <Y>-125</Y>
+      <Z>0</Z>
+    </StartingPosition>
   </Player>
   <AvailableTurrets />
   <AvailablePowerUps />

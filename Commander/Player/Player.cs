@@ -10,6 +10,7 @@
         public Circle Circle;
         public Color Color;
         public string ImageName;
+        public Vector3 SpawningPosition;
 
         private Vector3 position;
 
@@ -18,13 +19,13 @@
         private string InitialImageName;
 
 
-        private static List<Vector3> AvailablesInitalPositions = new List<Vector3>()
+        private static List<Vector3> AvailablesSpawingPositions = new List<Vector3>()
         {
-            new Vector3(160, 0, 0),
-            new Vector3(190, 0, 0),
-            new Vector3(220, 0, 0),
-            new Vector3(250, 0, 0),
-            new Vector3(280, 0, 0)
+            new Vector3(0, 0, 0),
+            new Vector3(50, 0, 0),
+            new Vector3(-50, 0, 0),
+            new Vector3(0, 50, 0),
+            new Vector3(0, -50, 0)
         };
 
 
@@ -70,7 +71,7 @@
                 AvailablesColors.Add(InitialColor);
 
             if (InitialPosition != Vector3.Down)
-                AvailablesInitalPositions.Add(InitialPosition);
+                AvailablesSpawingPositions.Add(InitialPosition);
 
             if (InitialImageName != null)
                 AvailablesImages.Add(InitialImageName);
@@ -80,21 +81,21 @@
             int index = 0;
 
             index = Main.Random.Next(0, AvailablesColors.Count);
-            InitialColor = Color = AvailablesColors[index];
+            InitialColor = AvailablesColors[index];
             AvailablesColors.RemoveAt(index);
 
             index = Main.Random.Next(0, AvailablesImages.Count);
             ImageName = AvailablesImages[index];
             AvailablesImages.RemoveAt(index);
 
-            index = Main.Random.Next(0, AvailablesInitalPositions.Count);
-            InitialPosition = Position = AvailablesInitalPositions[index];
-            AvailablesInitalPositions.RemoveAt(index);
+            index = Main.Random.Next(0, AvailablesSpawingPositions.Count);
+            InitialPosition = AvailablesSpawingPositions[index];
+            AvailablesSpawingPositions.RemoveAt(index);
 
 
             // keep track of selected data
             Color = InitialColor;
-            Position = InitialPosition;
+            SpawningPosition = InitialPosition;
             InitialImageName = ImageName;
         }
 

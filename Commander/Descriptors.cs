@@ -439,11 +439,13 @@
     {
         public int Money;
         public int Lives;
+        public Vector3 StartingPosition;
 
         public PlayerDescriptor()
         {
             Money = 0;
             Lives = 0;
+            StartingPosition = Vector3.Zero;
         }
     }
 
