@@ -14,7 +14,6 @@
         public SimPlayerSelection ActualSelection;
         public CommonStash CommonStash;
         public bool UpdateSelectionz;
-        public string ImageName;
         public PowerUpType PowerUpInUse;
         public Player BasePlayer;
         public PausePlayer PausePlayer;
@@ -112,6 +111,14 @@
             get { return BasePlayer.Color; }
             set { BasePlayer.Color = value; }
         }
+
+
+        public string ImageName
+        {
+            get { return BasePlayer.ImageName; }
+            set { BasePlayer.ImageName = value; }
+        }
+
 
 
         public Vector3 NinjaPosition

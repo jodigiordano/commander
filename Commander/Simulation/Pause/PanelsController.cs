@@ -170,6 +170,24 @@
         }
 
 
+        public void SyncPlayer(SimPlayer p)
+        {
+            GUIPausePlayer current;
+
+            if (!Players.TryGetValue(p.PausePlayer, out current))
+                return;
+
+            if (current.Cursor.FrontImage.TextureName != p.ImageName || current.Cursor.Color != p.Color)
+            {
+                var previousAlpha = current.Cursor.Alpha;
+
+                current.Cursor.Color = p.Color;
+                current.Cursor.SetImage(p.ImageName);
+                current.Cursor.Alpha = previousAlpha;
+            }
+        }
+
+
         public void DoGameStateChanged(GameState newGameState)
         {
             switch (newGameState)

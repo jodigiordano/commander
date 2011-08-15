@@ -12,7 +12,7 @@
         private Particle TrailEffect;
         private Particle TrailEffect2;
         protected bool ShowTrail;
-        private Color Color;
+        public Color Color;
         private Vector3 LastPosition;
         private ProjectMercury.VariableFloat MovingReleaseSpeed;
         private ProjectMercury.VariableFloat NotMovingReleaseSpeed;
@@ -59,6 +59,14 @@
                 FadeIn();
                 TeleportIn();
             }
+        }
+
+
+        public void SetImage(string imageName)
+        {
+            SetFrontImage(imageName, 4, Color.White);
+            SetBackImage(imageName + "Back", 4, Color);
+            TrailEffect.ParticleEffect[0].ReleaseColour = Color.ToVector3();
         }
 
 

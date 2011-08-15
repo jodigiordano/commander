@@ -417,6 +417,15 @@ namespace EphemereGames.Commander.Simulation
                     DoPlayerConnected(player);
                 else if (p.State == PlayerState.Disconnected && SimPlayersController.HasPlayer(player))
                     DoPlayerDisconnected(player);
+
+                // Sync representation, if needed
+                if (p.State == PlayerState.Connected)
+                {
+                    var simPlayer = SimPlayersController.GetPlayer(p);
+
+                    GUIController.SyncPlayer(simPlayer);
+                    PausedGameController.SyncPlayer(simPlayer);
+                }
             }
 
             if (DemoMode)

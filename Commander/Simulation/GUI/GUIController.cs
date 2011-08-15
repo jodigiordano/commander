@@ -150,6 +150,21 @@
         }
 
 
+        public void SyncPlayer(SimPlayer p)
+        {
+            GUIPlayer current;
+
+            if (!Players.TryGetValue(p, out current))
+                return;
+            
+            if (current.Cursor.FrontImage.TextureName != p.ImageName || current.Cursor.Color != p.Color)
+            {
+                current.Cursor.Color = p.Color;
+                current.Cursor.SetImage(p.ImageName);
+            }
+        }
+
+
         public void SyncNewGameMenu()
         {
             foreach (var p in Players.Values)
