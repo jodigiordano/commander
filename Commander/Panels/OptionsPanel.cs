@@ -22,8 +22,6 @@
             AddWidget("Music", Music);
             AddWidget("Sfx", Sfx);
 
-            CloseButtonHandler = DoClose;
-
             Alpha = 0;
         }
 
@@ -50,10 +48,9 @@
         }
 
 
-        private void DoClose(PanelWidget widget)
+        public void SaveOnDisk()
         {
             Main.SharedSaveGame.Save();
-            Fade(Alpha, 0, 500);
         }
     }
 }

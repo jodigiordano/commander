@@ -712,6 +712,8 @@
 
         private void DoOptionsPanelClosed(PanelWidget widget)
         {
+            OptionsPanel.SaveOnDisk();
+
             if (!Simulator.DemoMode)
                 Simulator.ShowPausedGamePanel();
             else
