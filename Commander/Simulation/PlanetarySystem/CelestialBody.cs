@@ -368,7 +368,7 @@
             if (Invincible)
                 return;
 
-            this.LifePoints -= par.AttackPoints;
+            LifePoints -= par.AttackPoints;
         }
 
 
@@ -377,7 +377,7 @@
             if (Invincible)
                 return;
 
-            this.LifePoints = Math.Min(LifePoints, 0);
+            LifePoints = Math.Min(LifePoints, 0);
 
             DieEffect1 = Simulator.Scene.Particles.Get(@"bouleTerreMeurt");
             DieEffect2 = Simulator.Scene.Particles.Get(Simulator.CutsceneMode ? @"anneauTerreMeurt2" : @"anneauTerreMeurt");

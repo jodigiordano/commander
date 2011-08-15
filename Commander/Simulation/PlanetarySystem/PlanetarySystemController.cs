@@ -117,7 +117,7 @@
         {
             foreach (var c in CelestialBodies)
             {
-                if (c.FirstOnPath && c.Image != null)
+                if (c.FirstOnPath && !c.LastOnPath && c.Image != null)
                 {
                     c.Image.Rotation = Path.GetRotation(0) + MathHelper.PiOver2;
                 }
