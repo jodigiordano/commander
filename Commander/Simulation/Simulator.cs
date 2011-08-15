@@ -435,6 +435,12 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
+        public void TeleportPlayers(bool teleportOut)
+        {
+            GUIController.TeleportPlayers(teleportOut);
+        }
+
+
         public void ShowHelpBarMessage(HelpBarMessage message, InputType type)
         {
             GUIController.ShowHelpBarMessage(message, type);

@@ -162,12 +162,16 @@
             Simulator.SyncPlayers();
 
             Main.MusicController.ResumeMusic();
+
+            Simulator.TeleportPlayers(false);
         }
 
 
         public override void OnFocusLost()
         {
             Simulator.EnableInputs = false;
+
+            Simulator.TeleportPlayers(true);
         }
 
 

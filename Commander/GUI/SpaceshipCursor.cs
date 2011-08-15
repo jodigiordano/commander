@@ -17,6 +17,8 @@
         private ProjectMercury.VariableFloat MovingReleaseSpeed;
         private ProjectMercury.VariableFloat NotMovingReleaseSpeed;
 
+        private TeleportAnimation CurrentTeleportAnimation;
+
 
         public SpaceshipCursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority, Color color, string image, bool visible)
             : base(scene, initialPosition, speed, visualPriority, image, false)
@@ -53,12 +55,6 @@
 
             TrailEffect.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
             TrailEffect2.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
-
-            if (visible)
-            {
-                FadeIn();
-                TeleportIn();
-            }
         }
 
 
@@ -106,7 +102,21 @@
 
         public void TeleportIn()
         {
-            Scene.Animations.Add(new TeleportAnimation(Scene, new List<Image>() { FrontImage, BackImage }, VisualPriorities.Default.Teleport, Color, true));
+            StopCurrentTeleportAnimation();
+
+            CurrentTeleportAnimation = new TeleportAnimation(Scene, new List<Image>() { FrontImage, BackImage }, VisualPriorities.Default.Teleport, Color, true);
+
+            Scene.Animations.Add(CurrentTeleportAnimation);
+        }
+
+
+        public void TeleportOut()
+        {
+            StopCurrentTeleportAnimation();
+
+            CurrentTeleportAnimation = new TeleportAnimation(Scene, new List<Image>() { FrontImage, BackImage }, VisualPriorities.Default.Teleport, Color, false);
+
+            Scene.Animations.Add(CurrentTeleportAnimation);
         }
 
 
@@ -137,6 +147,16 @@
             }
 
             base.Draw();
+        }
+
+
+        private void StopCurrentTeleportAnimation()
+        {
+            if (CurrentTeleportAnimation == null || CurrentTeleportAnimation.IsFinished)
+                return;
+
+            CurrentTeleportAnimation.Stop();
+            Scene.Animations.Remove(CurrentTeleportAnimation);
         }
     }
 }

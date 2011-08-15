@@ -114,6 +114,8 @@
             {
                 Simulator.EnableInputs = true;
             }
+
+            Simulator.TeleportPlayers(false);
         }
 
 
@@ -124,6 +126,7 @@
             Main.MusicController.PauseMusic();
 
             Simulator.EnableInputs = false;
+            Simulator.TeleportPlayers(true);
         }
 
 

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
 
     public class AnimationsController
@@ -51,25 +50,21 @@
 
         public void Update(GameTime gameTime)
         {
-            for (int i = 0; i < Animations.Count; i++)
+            for (int i = Animations.Count - 1; i > -1; i--)
             {
-                if (Animations[i].Paused)
-                {
-                    continue;
-                }
+                var animation = Animations[i];
 
-                if (Animations[i].IsFinished)
+                if (animation.Paused)
+                    continue;
+
+                if (animation.IsFinished)
                 {
-                    Animations[i].Stop();
+                    animation.Stop();
                     Animations.RemoveAt(i);
-                    i--;
                     continue;
                 }
 
-                else
-                {
-                    Animations[i].Update(gameTime);
-                }
+                animation.Update(gameTime);
             }
         }
 
@@ -94,6 +89,20 @@
                 a.Stop();
 
             Animations.Clear();
+        }
+
+
+        // ark
+        public void Remove(Animation a)
+        {
+            for (int i = 0; i < Animations.Count; i++)
+            {
+                if (Animations[i] == a)
+                {
+                    Animations.RemoveAt(i);
+                    break;
+                }
+            }
         }
     }
 }

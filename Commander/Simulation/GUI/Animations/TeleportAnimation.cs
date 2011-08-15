@@ -107,12 +107,12 @@
         }
 
 
-        public override void Draw()
+        public override void Stop()
         {
-            //Horizontal.Position = Original.Position + ShakeHorizontal.GetPosition(ElapsedTime);
-            //Horizontal.Rotation = Original.Rotation;
+            base.Stop();
 
-            //Scene.Add(Horizontal);
+            foreach (var c in Components)
+                c.SizeX = OriginalSize;
         }
     }
 }

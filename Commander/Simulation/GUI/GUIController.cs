@@ -140,6 +140,9 @@
             PathPreviewing.DoPlayerConnected(player);
 
             HelpBar.Active = Players.Count <= 1;
+
+            player.Cursor.TeleportIn();
+            player.Cursor.FadeIn();
         }
 
 
@@ -161,6 +164,18 @@
             {
                 current.Cursor.Color = p.Color;
                 current.Cursor.SetImage(p.ImageName);
+            }
+        }
+
+
+        public void TeleportPlayers(bool teleportOut)
+        {
+            foreach (var p in Players.Values)
+            {
+                if (teleportOut)
+                    p.Cursor.TeleportOut();
+                else
+                    p.Cursor.TeleportIn();
             }
         }
 
