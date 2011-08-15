@@ -155,14 +155,14 @@
             Spaceship.Position += Bouncing;
 
             if (Bouncing.X > 0)
-                Bouncing.X = Math.Max(0, Bouncing.X - 0.8f);
+                Bouncing.X = Math.Max(0, Bouncing.X - 0.6f);
             else if (Bouncing.X < 0)
-                Bouncing.X = Math.Min(0, Bouncing.X + 0.8f);
+                Bouncing.X = Math.Min(0, Bouncing.X + 0.6f);
 
             if (Bouncing.Y > 0)
-                Bouncing.Y = Math.Max(0, Bouncing.Y - 0.8f);
+                Bouncing.Y = Math.Max(0, Bouncing.Y - 0.6f);
             else if (Bouncing.Y < 0)
-                Bouncing.Y = Math.Min(0, Bouncing.Y + 0.8f);
+                Bouncing.Y = Math.Min(0, Bouncing.Y + 0.6f);
 
             if (bouncing)
                 Spaceship.NotifyBounced();
