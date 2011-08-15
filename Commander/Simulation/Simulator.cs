@@ -604,11 +604,6 @@ namespace EphemereGames.Commander.Simulation
 
                 return;
             }
-            //{
-            //    State = GameState.Paused;
-            //    LevelsController.TriggerNewGameState(State);
-            //    return;
-            //}
         }
 
 

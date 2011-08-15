@@ -64,7 +64,7 @@
         public static MouseButton AlternateSelect = MouseButton.Middle;
         public static MouseButton SelectionNext = MouseButton.MiddleDown;
         public static MouseButton SelectionPrevious = MouseButton.MiddleUp;
-        public static MouseButton Fire = MouseButton.Middle;
+        public static MouseButton Fire = MouseButton.Right;
         public static MouseButton Previous = MouseButton.Left;
         public static MouseButton Next = MouseButton.Right;
         public static float MovingSpeed = 1.5f;
