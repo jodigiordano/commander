@@ -85,6 +85,8 @@
 
         public const double CelestialBodiePath = 0.945;
 
+        public const double LevelLocked = 0.946;
+
         public const double HelpBar = 0.95;
 
         public const double MenuChoices = 0.99;

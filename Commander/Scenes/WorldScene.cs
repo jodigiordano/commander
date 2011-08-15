@@ -15,11 +15,11 @@
         private WorldDescriptor Descriptor;
         private Dictionary<string, string> Warps;
         private Dictionary<string, LevelDescriptor> LevelsDescriptors;
-        private Dictionary<int, bool> LevelUnlockedStates;
         private List<KeyAndValue<CelestialBody, Image>> LevelCompletitionStates;
         private Dictionary<int, Text> LevelsNumbers;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
         private Dictionary<int, CelestialBody> CelestialBodies;
+        private LevelStates States;
 
 
         public WorldScene(WorldDescriptor descriptor) :
@@ -29,11 +29,11 @@
             Descriptor = descriptor;
             Warps = new Dictionary<string, string>();
             LevelsDescriptors = new Dictionary<string, LevelDescriptor>();
-            LevelUnlockedStates = new Dictionary<int, bool>();
             LevelCompletitionStates = new List<KeyAndValue<CelestialBody, Image>>();
             LevelsNumbers = new Dictionary<int, Text>();
             WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
             CelestialBodies = new Dictionary<int, CelestialBody>();
+            States = new LevelStates(this);
         }
 
 
@@ -57,8 +57,6 @@
             {
                 LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
                 LevelsDescriptors.Add(d.Infos.Mission, d);
-
-                LevelUnlockedStates.Add(level.Key, false);
             }
 
             foreach (var level in Descriptor.Warps)
@@ -95,6 +93,10 @@
                     Alpha = 150
                 }.CenterIt());
             }
+
+            States.CelestialBodies = CelestialBodies;
+            States.Descriptor = Descriptor;
+            States.Initialize();
         }
 
 
@@ -139,15 +141,11 @@
                 var cb = CelestialBodies[kvp.Key];
 
                 kvp.Value.Position = cb.Position - new Vector3(0, cb.Circle.Radius + 20, 0);
-                kvp.Value.Alpha = (byte) (LevelUnlockedStates[kvp.Key] ? 200 : 0);
+                kvp.Value.Alpha = (byte) (States.GetLevelNumberAlpha(kvp.Key));
                 Add(kvp.Value);
             }
 
-            // Draw level unlocked states
-            foreach (var kvp in LevelUnlockedStates)
-            {
-                CelestialBodies[kvp.Key].Image.Alpha = (byte) (kvp.Value ? 255 : 100);
-            }
+            States.Draw();
         }
 
 
@@ -266,8 +264,7 @@
                 GameScene currentGame = Main.GameInProgress;
 
                 // Resume Game
-                if (currentGame != null && 
-                    !currentGame.IsFinished &&
+                if (Main.GamePausedToWorld &&
                     currentGame.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id &&
                     Simulator.PausedGameChoice == PausedGameChoice.Resume)
                 {
@@ -284,7 +281,6 @@
                 currentGame = new GameScene("Game1", level);
                 Main.GameInProgress = currentGame;
                 currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
-                Simulator.MessagesController.StopPausedMessage();
 
                 if (Visuals.GetScene(currentGame.Name) == null)
                     Visuals.AddScene(currentGame);
@@ -332,6 +328,12 @@
         }
 
 
+        public CelestialBody GetPausedGameCelestialBody()
+        {
+            return CelestialBodies[Main.GameInProgress.Level.Infos.Id];
+        }
+
+
         public void ShowWarpBlockedMessage()
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(Inputs.MasterPlayer);
@@ -366,21 +368,7 @@
                 pinkHole.Color = unlocked ? new Color(255, 0, 255) : new Color(0, 0, 0);
             }
 
-            // Unlock conditions
-            foreach (var level in Descriptor.Levels)
-            {
-                bool unlocked = true;
-
-                //foreach (var other in level.Value)
-                //    if (!Main.PlayerSaveGame.Progress.ContainsKey(other) || Main.PlayerSaveGame.Progress[other] <= 0)
-                //    {
-                //        unlocked = false;
-                //        break;
-                //    }
-
-                LevelUnlockedStates[level.Key] = unlocked;
-                CelestialBodies[level.Key].CanSelect = unlocked;
-            }
+            States.Sync();
         }
     }
 }

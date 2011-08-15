@@ -28,7 +28,6 @@ namespace EphemereGames.Commander.Simulation
         public PhysicalRectangle Terrain;
         public PhysicalRectangle InnerTerrain;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
-        public CelestialBody CelestialBodyPausedGame;
 
 
         public PlanetarySystemController PlanetarySystemController;

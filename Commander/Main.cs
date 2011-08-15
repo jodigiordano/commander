@@ -23,6 +23,8 @@ namespace EphemereGames.Commander
         public static LevelsFactory LevelsFactory;
         public static MusicController MusicController;
 
+        public static bool GamePausedToWorld { get { return GameInProgress != null && GameInProgress.State == GameState.PausedToWorld; } }
+
         private GraphicsDeviceManager Graphics;
         private bool Initializing = true;
 

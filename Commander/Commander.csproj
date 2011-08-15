@@ -191,6 +191,7 @@
     <Compile Include="Scenes\WorldAnnunciationScene.cs" />
     <Compile Include="Scenes\StoryScene.cs" />
     <Compile Include="Scenes\WorldScene.cs" />
+    <Compile Include="Scenes\World\LevelStates.cs" />
     <Compile Include="Simulation\Bullets\BulletsFactory.cs" />
     <Compile Include="Simulation\Bullets\MineBullet.cs" />
     <Compile Include="Simulation\Bullets\ShieldBullet.cs" />

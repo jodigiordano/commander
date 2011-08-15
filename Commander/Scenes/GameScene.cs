@@ -11,8 +11,8 @@
     {
         public Simulator Simulator;
         public MusicController MusicController;
+        public LevelDescriptor Level;
 
-        private LevelDescriptor Level;
         private string TransitingTo;
         private FutureJobsController FutureJobs;
 

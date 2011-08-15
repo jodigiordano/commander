@@ -246,13 +246,13 @@
         };
 
 
-        private static List<string> QuotesPause = new List<string>()
+        private static List<string> QuotesPausedGame = new List<string>()
         {
             "Get back to work,\n\ncommander!",
             "Finish your job,\n\ncommander!",
-            "This world needs\n\nto be saved, commander!",
-            "Don't leave them\n\nbehind, commander!",
-            "The Resistance\n\nneeds you,\n\ncommander!"
+            "Our colony needs\n\nto be saved, commander!",
+            "Don't leave us\n\nbehind, commander!",
+            "The resistance\n\nneeds you,\n\ncommander!"
         };
 
 
@@ -301,7 +301,7 @@
                 return;
 
             Text texteInfos = new Text(message, "Pixelite", Color.White, Vector3.Zero);
-            texteInfos.SizeX = 1;
+            texteInfos.SizeX = 2;
 
             visualPriority = (visualPriority == -1) ? VisualPriorities.Default.TurretMessage : visualPriority;
 
@@ -397,15 +397,15 @@
         }
 
 
-        public void DisplayPausedMessage()
+        public void DisplayPausedMessage(CelestialBody cb)
         {
-            this.ShowMessage(Simulator.CelestialBodyPausedGame, QuotesPause[Main.Random.Next(0, QuotesPause.Count)], 1000000000, -1);
+            ShowMessage(cb, QuotesPausedGame[Main.Random.Next(0, QuotesPausedGame.Count)], double.MaxValue, -1);
         }
 
 
-        public void StopPausedMessage()
+        public void StopPausedMessage(CelestialBody cb)
         {
-            this.StopMessage(Simulator.CelestialBodyPausedGame);
+            StopMessage(cb);
         }
 
 
