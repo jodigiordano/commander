@@ -25,7 +25,7 @@
             Players = new Dictionary<PausePlayer, GUIPausePlayer>();
 
 
-            CreditsPanel = new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false };
+            CreditsPanel = new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false };
             OptionsPanel = new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 300), VisualPriorities.Default.OptionsPanel, Color.White) { Visible = false };
             PausePanel = new PausePanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.PausePanel, Color.White) { Visible = false };
         }

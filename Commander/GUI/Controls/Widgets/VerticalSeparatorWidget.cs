@@ -12,6 +12,7 @@
 
         private Image Image;
         private int visualWidth;
+        private byte maxAlpha;
 
 
         public VerticalSeparatorWidget()
@@ -19,14 +20,15 @@
             Image = new Image("PixelBlanc")
             {
                 Size = new Vector2(VisualWidth, 0),
-                Origin = Vector2.Zero,
-                Alpha = 200
+                Origin = Vector2.Zero
             };
 
             VisualWidth = 5;
             DistanceWidgetBeforeAndAfter = 0;
 
             Image.Size = new Vector2(visualWidth, 30);
+
+            MaxAlpha = 200;
         }
 
 
@@ -61,7 +63,17 @@
         public override byte Alpha
         {
             get { return Image.Alpha; }
-            set { Image.Alpha = Math.Max(value, (byte) 200); }
+            set { Image.Alpha = Math.Min(value, (byte) MaxAlpha); }
+        }
+
+        public byte MaxAlpha
+        {
+            get { return maxAlpha; }
+            set
+            {
+                maxAlpha = value;
+                Alpha = value;
+            }
         }
 
 

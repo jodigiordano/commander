@@ -166,6 +166,21 @@
         }
 
 
+        //public override Vector2 Size
+        //{
+        //    get
+        //    {
+        //        return Background.Size;
+        //    }
+        //    set
+        //    {
+        //        Dimension = new Vector3(value, 0);
+        //        Background.Size = value;
+        //        TitleSeparator.Size = new Vector2(value.X, 5);
+        //    }
+        //}
+
+
         public virtual void AddWidget(string name, PanelWidget widget)
         {
             widget.Name = name;

@@ -7,12 +7,14 @@
     class VerticalPanel : Panel
     {
         public float DistanceBetweenTwoChoices;
+        public bool CenterWidgets;
 
 
         public VerticalPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
             DistanceBetweenTwoChoices = 30;
+            CenterWidgets = false;
         }
 
 
@@ -23,6 +25,9 @@
             foreach (var w in Widgets)
             {
                 w.Value.Position = upperLeft;
+
+                if (CenterWidgets)
+                    w.Value.Position += new Vector3(Dimension.X / 2, 0, 0);
 
                 upperLeft.Y += w.Value.Dimension.Y + DistanceBetweenTwoChoices;
             }
