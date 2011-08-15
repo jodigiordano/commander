@@ -48,6 +48,7 @@
             Panels[EditorPanel.Player].SetClickHandler("Lives", DoLives);
             Panels[EditorPanel.Player].SetClickHandler("Cash", DoCash);
             Panels[EditorPanel.Player].SetClickHandler("Minerals", DoMinerals);
+            Panels[EditorPanel.Player].SetClickHandler("BulletDamage", DoBulletDamage);
             Panels[EditorPanel.Player].SetClickHandler("LifePacks", DoLifePacks);
             Panels[EditorPanel.General].SetClickHandler("Difficulty", DoDifficulty);
             Panels[EditorPanel.General].SetClickHandler("World", DoWorld);
@@ -431,6 +432,20 @@
             var command = new EditorPlayerCommand("AddOrRemoveMinerals")
             {
                 Minerals = slider.Value,
+                Owner = CurrentOpenedPanelPlayer
+            };
+
+            NotifyEditorCommandExecuted(command);
+        }
+
+
+        private void DoBulletDamage(PanelWidget widget)
+        {
+            var slider = (NumericHorizontalSlider) widget;
+
+            var command = new EditorPlayerCommand("AddOrRemoveBulletDamage")
+            {
+                BulletDamage = slider.Value / 10f,
                 Owner = CurrentOpenedPanelPlayer
             };
 

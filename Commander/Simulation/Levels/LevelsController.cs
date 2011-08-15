@@ -288,6 +288,12 @@
             {
                 Level.LifePacks = command.LifePacks;
             }
+
+            else if (command.Name == "AddOrRemoveBulletDamage")
+            {
+                Level.SaveBulletDamage = true;
+                Level.BulletDamage = command.BulletDamage;
+            }
         }
 
 

@@ -74,6 +74,7 @@
         public int Cash;
         public int Minerals;
         public int LifePacks;
+        public double BulletDamage;
 
 
         public EditorPlayerCommand(string name)
