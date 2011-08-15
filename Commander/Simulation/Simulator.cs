@@ -435,6 +435,14 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
+        public void TeleportPlayers(bool teleportOut, Vector3 position)
+        {
+            SimPlayersController.MovePlayers(position);
+
+            TeleportPlayers(teleportOut);
+        }
+
+
         public void TeleportPlayers(bool teleportOut)
         {
             GUIController.TeleportPlayers(teleportOut);

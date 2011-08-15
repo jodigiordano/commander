@@ -134,6 +134,13 @@
         }
 
 
+        public void MovePlayers(Vector3 basePosition)
+        {
+            foreach (var p in Players)
+                p.Value.Position = basePosition + ((Commander.Player) p.Key).SpawningPosition;
+        }
+
+
         public void DoPowerUpStarted(PowerUp powerUp, SimPlayer p)
         {
             if (powerUp.Type == PowerUpType.FinalSolution)

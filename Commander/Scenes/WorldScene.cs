@@ -163,7 +163,13 @@
 
             Main.MusicController.ResumeMusic();
 
-            Simulator.TeleportPlayers(false);
+            if (Main.GameInProgress != null)
+            {
+                var cb = CelestialBodies[Main.GameInProgress.Level.Infos.Id];
+                Simulator.TeleportPlayers(false, cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
+            }
+            else
+                Simulator.TeleportPlayers(false);
         }
 
 
