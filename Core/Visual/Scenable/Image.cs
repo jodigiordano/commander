@@ -20,7 +20,8 @@
         public double VisualPriority    { get; set; }
         public int Id                   { get; private set; }
 
-        public Rectangle VisiblePart    { get; set; }
+        public Rectangle VisiblePart    { get { return visiblePart; } set { visiblePart = value; } }
+        public Rectangle visiblePart;
         public SpriteEffects Effect;
         public string TextureName       { get; private set; }
 

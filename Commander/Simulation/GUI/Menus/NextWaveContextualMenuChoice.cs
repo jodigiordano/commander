@@ -9,7 +9,7 @@
     {
         private Dictionary<EnemyType, Image> EnemiesImages;
         private List<Image> Enemies;
-        private Text Quantity;
+        private ColoredText Quantity;
 
         private int DistanceEnemiesX;
         private int DistanceQuantityX;
@@ -32,7 +32,7 @@
             }
 
             Enemies = new List<Image>();
-            Quantity = new Text("Pixelite") { SizeX = 2 };
+            Quantity = new ColoredText(new List<string>() {"Next wave: ", ""}, new Color[] { Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 };
 
             DistanceEnemiesX = 10;
             DistanceQuantityX = 10;
@@ -45,7 +45,7 @@
             {
                 Enemies.Clear();
 
-                Quantity.Data = "They'll send " + value.Quantity + " ";
+                Quantity.SetData(1, value.Quantity + " ");
 
                 foreach (var enemy in value.Enemies)
                 {
@@ -71,6 +71,15 @@
 
                     e.Position = Quantity.Position + new Vector3((Quantity.AbsoluteSize.X + DistanceQuantityX) + (i * e.AbsoluteSize.X) + (i * DistanceEnemiesX), 0, 0);
                 }
+            }
+        }
+
+
+        public Color Color
+        {
+            set
+            {
+                Quantity.SetColor(1, value);
             }
         }
 

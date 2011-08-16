@@ -121,6 +121,7 @@
     <Compile Include="Scenes\World\LevelStates.cs" />
     <Compile Include="Simulation\Collisions\PlayersCollisions.cs" />
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
+    <Compile Include="Simulation\GUI\AdvancedView\NextWavePreview.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />

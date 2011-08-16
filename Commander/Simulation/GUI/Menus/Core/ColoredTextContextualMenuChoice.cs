@@ -36,9 +36,9 @@
         }
 
 
-        public void SetColors(Color[] colors)
+        public void SetColor(int index, Color color)
         {
-            Label.Colors = colors;
+            Label.SetColor(index, color);
         }
 
 

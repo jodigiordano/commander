@@ -121,6 +121,22 @@
         }
 
 
+        public void SetData(int index, string value)
+        {
+            Data[index] = value;
+
+            RelativeTextSizeComputed = false;
+            AbsoluteTextSizeComputed = false;
+            RectangleComputed = false;
+        }
+
+
+        public void SetColor(int index, Color color)
+        {
+            Colors[index] = color;
+        }
+
+
         public float SizeX
         {
             get { return Size.X; }

@@ -303,7 +303,7 @@
                 Vector3.Add(ref position, ref Margin, out position);
                 position.Y += startingAt + slotCounter * distanceY;
 
-                choice.Position = position;
+                choice.Position = position; // +new Vector3(0, (distanceY - Margin.Y * 2 - choice.Size.Y) / 2, 0);
 
                 choice.Draw();
 

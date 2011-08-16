@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -17,9 +16,9 @@
 
         private TextContextualMenuChoice CallTheNextWave;
         private NextWaveContextualMenuChoice NextWaveCompositionChoice;
-        private ColoredTextContextualMenuChoice RemainingWavesChoice;
-        //private TextContextualMenuChoice RemainingEnemiesChoice;
-        private ColoredTextContextualMenuChoice TimeNextWaveChoice;
+        //private ColoredTextContextualMenuChoice RemainingWavesChoice;
+        private ColoredTextContextualMenuChoice RemainingEnemiesChoice;
+        //private ColoredTextContextualMenuChoice TimeNextWaveChoice;
 
         private int remainingWaves;
         private double timeNextWave;
@@ -33,21 +32,21 @@
             VisualPriority = visualPriority;
 
             
-            RemainingWavesChoice = new ColoredTextContextualMenuChoice("RemainingWaves", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
-            //RemainingEnemiesChoice = new TextContextualMenuChoice("RemainingEnemies", new Text("Pixelite") { SizeX = 2 });
+            //RemainingWavesChoice = new ColoredTextContextualMenuChoice("RemainingWaves", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
+            RemainingEnemiesChoice = new ColoredTextContextualMenuChoice("RemainingEnemies", new ColoredText(new List<string>() { "", "" }, new Color[] { Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
             NextWaveCompositionChoice = new NextWaveContextualMenuChoice("NextWaveComposition");
-            TimeNextWaveChoice = new ColoredTextContextualMenuChoice("TimeRemainingChoice", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
+            //TimeNextWaveChoice = new ColoredTextContextualMenuChoice("TimeRemainingChoice", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
             CallTheNextWave = new TextContextualMenuChoice("CallTheNextWave", new Text("I'm ready! Bring it on!", "Pixelite") { SizeX = 2 });
 
             var choices = new List<ContextualMenuChoice>();
 
-            choices.Add(RemainingWavesChoice);
-            choices.Add(TimeNextWaveChoice);
+            //choices.Add(RemainingWavesChoice);
+            //choices.Add(TimeNextWaveChoice);
             //choices.Add(RemainingEnemiesChoice);
             choices.Add(NextWaveCompositionChoice);
             choices.Add(CallTheNextWave);
 
-            Menu = new ContextualMenu(Simulator, VisualPriority, Color.White, choices, 5) { SelectedIndex = 3 };
+            Menu = new ContextualMenu(Simulator, VisualPriority, Color.White, choices, 5) { SelectedIndex = 1 };
 
             remainingWaves = 0;
             timeNextWave = 0;
@@ -74,8 +73,10 @@
 
                 if (value != null)
                 {
-                    RemainingWavesChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
-                    TimeNextWaveChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
+                    //RemainingWavesChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
+                    //TimeNextWaveChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
+                    RemainingEnemiesChoice.SetColor(1, value.Color);
+                    NextWaveCompositionChoice.Color = value.Color;
                 }
             }
         }
@@ -119,7 +120,14 @@
             {
                 remainingWaves = value;
 
-                RemainingWavesChoice.SetData(new List<string>(){"Reporting ", remainingWaves.ToString(), " remaining waves."});
+                //RemainingWavesChoice.SetData(new List<string>(){"Reporting ", remainingWaves.ToString(), " remaining waves."});
+
+                if (value == 0)
+                {
+                    Menu.Clear();
+                    Menu.AddChoice(RemainingEnemiesChoice);
+                    Menu.SelectedIndex = -1;
+                }
             }
         }
 
@@ -135,7 +143,7 @@
             {
                 timeNextWave = value;
 
-                TimeNextWaveChoice.SetData(new List<string>() { "Next one due in ", String.Format("{0:0.00}", value / 1000.0), " seconds." });
+                //TimeNextWaveChoice.SetData(new List<string>() { "Next one due in ", String.Format("{0:0.00}", value / 1000.0), " seconds." });
             }
         }
 
@@ -144,7 +152,10 @@
         {
             set
             {
-                //RemainingEnemiesChoice.SetData("Remaining Enemies: " + value);
+                if (RemainingWaves != 0)
+                    return;
+
+                RemainingEnemiesChoice.SetData(new List<string>() { "Remaining enemies: ", value.ToString() });
             }
         }
 

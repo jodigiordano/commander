@@ -43,6 +43,7 @@
         private CelestialBodyNearHitAnimation CelestialBodyNearHit;
         private AlienNextWaveAnimation AlienNextWaveAnimation;
         private TheResistance GamePausedResistance;
+        private NextWavePreview NextWavePreview;
 
         private ContextualMenusCollisions ContextualMenusCollisions;
 
@@ -67,6 +68,8 @@
             {
                 Alpha = 0
             };
+
+            NextWavePreview = new NextWavePreview(simulator, VisualPriorities.Default.NextWavePreview);
         }
 
 
@@ -97,6 +100,7 @@
 
             StartingPathMenu.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             StartingPathMenu.TimeNextWave = (InfiniteWaves == null && Waves.Count != 0) ? Waves.First.Value.StartingTime : 0;
+            NextWavePreview.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
 
 
             if (!Simulator.DemoMode)
@@ -324,11 +328,12 @@
         public void DoWaveStarted()
         {
             StartingPathMenu.RemainingWaves--;
+            NextWavePreview.RemainingWaves--;
 
             if (!Simulator.DemoMode)
                 Audio.PlaySfx(@"sfxNouvelleVague");
 
-            if (InfiniteWaves != null || StartingPathMenu.RemainingWaves <= 0)
+            if (InfiniteWaves != null || NextWavePreview.RemainingWaves <= 0)
             {
                 StartingPathMenu.TimeNextWave = 0;
                 AlienNextWaveAnimation.TimeNextWave = 0;
@@ -338,7 +343,7 @@
             //todo
             LinkedListNode<Wave> nextWave = Waves.First;
 
-            for (int i = 0; i < Waves.Count - StartingPathMenu.RemainingWaves; i++)
+            for (int i = 0; i < Waves.Count - NextWavePreview.RemainingWaves; i++)
                 nextWave = nextWave.Next;
 
             StartingPathMenu.TimeNextWave = nextWave.Value.StartingTime;
@@ -583,6 +588,7 @@
             CelestialBodyNearHit.Draw();
             AlienNextWaveAnimation.Draw();
             GameMenu.Draw();
+            NextWavePreview.Draw();
         }
 
 
@@ -653,6 +659,10 @@
 
             // Sync remaining time for next wave
             StartingPathMenu.TimeNextWave = Math.Max(0, StartingPathMenu.TimeNextWave - Preferences.TargetElapsedTimeMs);
+
+            // Sync next wave preview
+            NextWavePreview.CelestialBody = Path.FirstCelestialBody;
+            NextWavePreview.TimeNextWave = StartingPathMenu.TimeNextWave;
         }
 
 

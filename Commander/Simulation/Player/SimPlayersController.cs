@@ -419,8 +419,7 @@
 
 
             // shop turrets
-            else if (player.ActualSelection.CelestialBody != null &&
-                player.ActualSelection.Turret == null)
+            else if (player.ActualSelection.CelestialBody != null && !player.ActualSelection.CelestialBody.FirstOnPath && player.ActualSelection.Turret == null)
             {
                 if (delta > 0)
                     player.NextTurretToBuy();
