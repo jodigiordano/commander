@@ -10,6 +10,10 @@
         public Vector3 Position;
 
 
+        public Circle()
+            : this(Vector3.Zero, 0) {}
+
+
         public Circle(Vector3 position, float radius)
         {
             Position = position;

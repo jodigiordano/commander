@@ -212,6 +212,12 @@
         }
 
 
+        public void Add(Animation animation)
+        {
+            Animations.Add(animation);
+        }
+
+
         public void Update(GameTime gameTime)
         {
             Particles.Update(gameTime);

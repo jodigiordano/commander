@@ -206,6 +206,7 @@
     <Compile Include="Simulation\Collisions\BoostedTurrets.cs" />
     <Compile Include="Simulation\Collisions\BulletsDeflected.cs" />
     <Compile Include="Simulation\Collisions\CelestialBodyExplosion.cs" />
+    <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
     <Compile Include="Simulation\Collisions\ObjectsCollisions.cs" />
     <Compile Include="Simulation\Collisions\EnemyInRange.cs" />
     <Compile Include="Simulation\Collisions\OutOfBounds.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\CelestialBodyShieldHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\PinkHoleLite.cs" />
     <Compile Include="Simulation\GUI\Animations\TeleportAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TurretMoneyAnimation.cs" />

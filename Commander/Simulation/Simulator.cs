@@ -238,6 +238,8 @@ namespace EphemereGames.Commander.Simulation
             EnemiesController.NextWaveCompositionChanged += new NextWaveHandler(GUIController.DoNextWaveCompositionChanged);
             LevelsController.NewGameState += new NewGameStateHandler(SimPlayersController.DoNewGameState);
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(SimPlayersController.DoPlayersCollided);
+            CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(BulletsController.DoStartingPathCollision);
+            CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(GUIController.DoStartingPathCollision);
             
         }
 
@@ -301,6 +303,7 @@ namespace EphemereGames.Commander.Simulation
             GUIController.CommonStash = LevelsController.CommonStash;
             GUIController.ActiveWaves = EnemiesController.ActiveWaves;
             CollisionsController.Players = SimPlayersController.PlayersList;
+            CollisionsController.Path = PlanetarySystemController.Path;
 
             TweakingController.Initialize();
             LevelsController.Initialize();

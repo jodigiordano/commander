@@ -193,6 +193,20 @@
         }
 
 
+        public void DoStartingPathCollision(Bullet b, CelestialBody cb)
+        {
+            Vector3 direction = b.Position - cb.Position;
+            float lengthSquared = direction.LengthSquared();
+            float cbLengthSquared = ((int) cb.Size + 15) * ((int) cb.Size + 15);
+            direction.Normalize();
+            float rotation = Core.Physics.Utilities.VectorToAngle(direction);
+            Vector3 position = b.Position - direction * 30;
+
+            if (lengthSquared >= cbLengthSquared)
+                Simulator.Scene.Add(new CelestialBodyShieldHitAnimation(cb.Size, position, rotation, Colors.Default.AlienBright, VisualPriorities.Default.CelestialBodyShield));
+        }
+
+
         public void DoNextWaveCompositionChanged(WaveDescriptor composition)
         {
             StartingPathMenu.NextWaveComposition = composition;

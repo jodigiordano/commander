@@ -93,7 +93,7 @@
       <Image>vaisseauAlien1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
-      <Size>Normal</Size>
+      <Size>Big</Size>
       <Speed>900000</Speed>
       <PathPriority>-3</PathPriority>
       <Path>

@@ -227,7 +227,7 @@ namespace EphemereGames.Commander.Simulation
         public void DoHit(ILivingObject by)
         {
             if (!(by is SlowMotionBullet))
-                this.LifePoints -= by.AttackPoints;
+                LifePoints -= by.AttackPoints;
 
             Bullet p = by as Bullet;
 

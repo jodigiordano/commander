@@ -2669,38 +2669,38 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="planetes\masks\mask11.png">
+    <None Include="planetes\masks\mask11.png">
       <Name>mask11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\masks\mask12.png">
+    </None>
+    <None Include="planetes\masks\mask12.png">
       <Name>mask12</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\masks\mask13.png">
+    </None>
+    <None Include="planetes\masks\mask13.png">
       <Name>mask13</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="planetes\masks\mask21.png">
+    <None Include="planetes\masks\mask21.png">
       <Name>mask21</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\masks\mask22.png">
+    </None>
+    <None Include="planetes\masks\mask22.png">
       <Name>mask22</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\masks\mask23.png">
+    </None>
+    <None Include="planetes\masks\mask23.png">
       <Name>mask23</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="tourelles\tourelleBoosterBase2.png">
@@ -2751,6 +2751,23 @@
   <ItemGroup>
     <None Include="spaceships\firingDirection.png">
       <Name>firingDirection</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="planetes\masks\mask31.png">
+      <Name>mask31</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask32.png">
+      <Name>mask32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask33.png">
+      <Name>mask33</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>

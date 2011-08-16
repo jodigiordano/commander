@@ -95,7 +95,10 @@
     <Item><Key>CBMask13</Key><Value>planetes/masks/mask13.png</Value></Item>
     <Item><Key>CBMask21</Key><Value>planetes/masks/mask21.png</Value></Item>
     <Item><Key>CBMask22</Key><Value>planetes/masks/mask22.png</Value></Item>
-    <Item><Key>CBMask23</Key><Value>planetes/masks/mask23.png</Value></Item>    
+    <Item><Key>CBMask23</Key><Value>planetes/masks/mask23.png</Value></Item>
+    <Item><Key>CBMask31</Key><Value>planetes/masks/mask31.png</Value></Item>
+    <Item><Key>CBMask32</Key><Value>planetes/masks/mask32.png</Value></Item>
+    <Item><Key>CBMask33</Key><Value>planetes/masks/mask33.png</Value></Item>
     
     
     <!-- Xbox 360 Buttons -->

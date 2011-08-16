@@ -86,6 +86,12 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
+        public void DoStartingPathCollision(Bullet b, CelestialBody cb)
+        {
+            b.DoHit(cb);
+        }
+
+
         public void DoObjectOutOfBounds(ICollidable obj)
         {
             Bullet b = obj as Bullet;

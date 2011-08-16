@@ -17,6 +17,7 @@
         public List<Mineral> Minerals;
         public List<ShootingStar> ShootingStars;
         public List<SimPlayer> Players;
+        public Path Path;
         public bool Debug;
 
         public event PhysicalObjectHandler ObjectOutOfBounds;
@@ -25,6 +26,7 @@
         public event TurretPhysicalObjectHandler InTurretRange;
         public event EnemyBulletHandler BulletDeflected;
         public event SimPlayerSimPlayerHandler PlayersCollided;
+        public event BulletCelestialBodyHandler StartingPathCollision;
 
         private Simulator Simulator;
         private PhysicalRectangle Battlefield;
@@ -39,6 +41,7 @@
         private CelestialBodyExplosion CelestialBodyExplosion;
         private ObjectsCollisions ObjectsCollisions;
         private PlayersCollisions PlayersCollisions;
+        private StartingPathCollisions StartingPathCollisions;
 
         private Action SyncOutOfBounds;
         private Action SyncEnemyInRange;
@@ -61,6 +64,7 @@
             ObjectsCollisions = new ObjectsCollisions();
             PlayersCollisions = new PlayersCollisions();
             CelestialBodyExplosion = new CelestialBodyExplosion();
+            StartingPathCollisions = new StartingPathCollisions();
 
             SyncOutOfBounds = new Action(OutOfBounds.Sync);
             SyncEnemyInRange = new Action(EnemyInRange.Sync);
@@ -105,6 +109,9 @@
             ObjectsCollisions.Turrets = Turrets;
 
             PlayersCollisions.Players = Players;
+
+            StartingPathCollisions.Bullets = Bullets;
+            StartingPathCollisions.Path = Path;
         }
 
 
@@ -125,6 +132,7 @@
 
             ObjectsCollisions.Sync();
             PlayersCollisions.Sync();
+            StartingPathCollisions.Sync();
 
             task3.Wait();
             task4.Wait();
@@ -154,6 +162,9 @@
 
             foreach (var d in PlayersCollisions.Output)
                 NotifyPlayersCollided(d.Key, d.Value);
+
+            foreach (var d in StartingPathCollisions.Output)
+                NotifyStartingPathCollision(d.Key, d.Value);
         }
 
 
@@ -312,6 +323,13 @@
         {
             if (PlayersCollided != null)
                 PlayersCollided(p1, p2);
+        }
+
+
+        private void NotifyStartingPathCollision(CelestialBody cb, Bullet b)
+        {
+            if (StartingPathCollision != null)
+                StartingPathCollision(b, cb);
         }
     }
 }

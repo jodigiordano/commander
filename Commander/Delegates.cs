@@ -16,7 +16,7 @@ namespace EphemereGames.Commander.Simulation
     delegate void SimPlayerHandler(SimPlayer p);
     delegate void PausePlayerHandler(PausePlayer p);
     delegate void CommonStashHandler(CommonStash s);
-    delegate void CelestialObjectHandler(CelestialBody c);
+    delegate void CelestialBodyHandler(CelestialBody c);
     delegate void NewGameStateHandler(GameState s);
     delegate void TurretHandler(Turret t);
     delegate void TurretSimPlayerHandler(Turret t, SimPlayer p);
@@ -25,6 +25,7 @@ namespace EphemereGames.Commander.Simulation
     delegate void PowerUpSimPlayerHandler(PowerUp p, SimPlayer pl);
     delegate void TurretTurretHandler(Turret t1, Turret t2);
     delegate void EnemyCelestialBodyHandler(Enemy e, CelestialBody c);
+    delegate void BulletCelestialBodyHandler(Bullet b, CelestialBody c);
     delegate void TurretPhysicalObjectHandler(Turret t, ICollidable o);
     delegate void EnemyBulletHandler(Enemy e, Bullet b);
     delegate void EditorPlayerHandler(EditorPlayer e);
