@@ -660,6 +660,8 @@
             // Sync remaining time for next wave
             StartingPathMenu.TimeNextWave = Math.Max(0, StartingPathMenu.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
+            StartingPathMenu.ActiveWaves = ActiveWaves.Count;
+
             // Sync next wave preview
             NextWavePreview.CelestialBody = Path.FirstCelestialBody;
             NextWavePreview.TimeNextWave = StartingPathMenu.TimeNextWave;

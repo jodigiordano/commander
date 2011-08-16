@@ -302,6 +302,7 @@ namespace EphemereGames.Commander.Simulation
             EditorGUIController.CelestialBodies = LevelsController.CelestialBodies;
             GUIController.CommonStash = LevelsController.CommonStash;
             GUIController.ActiveWaves = EnemiesController.ActiveWaves;
+            SimPlayersController.ActiveWaves = EnemiesController.ActiveWaves;
             CollisionsController.Players = SimPlayersController.PlayersList;
             CollisionsController.Path = PlanetarySystemController.Path;
 

@@ -15,6 +15,7 @@
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public StartingPathMenu StartingPathMenu;
         public List<SimPlayer> PlayersList;
+        public List<Wave> ActiveWaves;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
@@ -541,7 +542,7 @@
 
 
             // call next wave
-            if (player.PowerUpInUse == PowerUpType.None && StartingPathMenu.CheckedIn == player)
+            if (player.PowerUpInUse == PowerUpType.None && StartingPathMenu.CheckedIn == player && ActiveWaves.Count < 3)
             {
                 NotifyNextWaveAsked();
                 return;

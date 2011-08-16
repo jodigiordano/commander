@@ -21,6 +21,7 @@
         //private ColoredTextContextualMenuChoice TimeNextWaveChoice;
 
         private int remainingWaves;
+        private int activeWaves;
         private double timeNextWave;
 
         private SimPlayer checkedIn;
@@ -50,6 +51,7 @@
 
             remainingWaves = 0;
             timeNextWave = 0;
+            activeWaves = 0;
 
             CheckedIn = null;
         }
@@ -165,6 +167,20 @@
             set
             {
                 NextWaveCompositionChoice.Composition = value;
+            }
+        }
+
+
+        public int ActiveWaves
+        {
+            set
+            {
+                bool change = activeWaves != value;
+
+                activeWaves = value;
+
+                if (change)
+                    CallTheNextWave.SetData(value >= 3 ? "3 waves at once maximum!" : "I'm ready! Bring it on!");
             }
         }
 
