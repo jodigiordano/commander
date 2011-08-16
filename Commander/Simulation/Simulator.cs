@@ -470,6 +470,30 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
+        public void ShowHelpPanel(bool sync)
+        {
+            if (PausedGameController.HelpPanel.Visible)
+                return;
+
+            if (sync)
+                SimPlayersController.SyncPausePlayers();
+
+            PausedGameController.ShowHelpPanel();
+        }
+
+
+        public void ShowControlsPanel(bool sync)
+        {
+            if (PausedGameController.ControlsPanel.Visible)
+                return;
+
+            if (sync)
+                SimPlayersController.SyncPausePlayers();
+
+            PausedGameController.ShowControlsPanel();
+        }
+
+
         public void ShowCreditsPanel(bool sync)
         {
             if (PausedGameController.CreditsPanel.Visible)

@@ -16,6 +16,8 @@
         public OptionsPanel OptionsPanel;
         public CreditsPanel CreditsPanel;
         private PausePanel PausePanel;
+        public HelpPanel HelpPanel;
+        public ControlsPanel ControlsPanel;
 
 
         public PanelsController(Simulator simulator)
@@ -28,6 +30,8 @@
             CreditsPanel = new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false };
             OptionsPanel = new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 300), VisualPriorities.Default.OptionsPanel, Color.White) { Visible = false };
             PausePanel = new PausePanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.PausePanel, Color.White) { Visible = false };
+            HelpPanel = new HelpPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.HelpPanel, Color.White) { Visible = false };
+            ControlsPanel = new ControlsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.ControlsPanel, Color.White) { Visible = false };
         }
 
 
@@ -38,10 +42,14 @@
             OptionsPanel.Initialize();
             PausePanel.Initialize();
             CreditsPanel.Initialize();
+            HelpPanel.Initialize();
+            ControlsPanel.Initialize();
 
             PausePanel.CloseButtonHandler = DoPausePanelClosed;
             OptionsPanel.CloseButtonHandler = DoOptionsPanelClosed;
             CreditsPanel.CloseButtonHandler = DoCreditsPanelClosed;
+            HelpPanel.CloseButtonHandler = DoHelpPanelClosed;
+            ControlsPanel.CloseButtonHandler = DoControlsPanelClosed;
 
             PausePanel.SetClickHandler(DoPausePanelClicked);
         }
@@ -49,7 +57,7 @@
 
         public bool IsPanelVisible
         {
-            get { return PausePanel.Visible || OptionsPanel.Visible || CreditsPanel.Visible; }
+            get { return PausePanel.Visible || OptionsPanel.Visible || CreditsPanel.Visible || HelpPanel.Visible || ControlsPanel.Visible; }
         }
 
 
@@ -57,14 +65,7 @@
         {
             bool panelOpened = IsPanelVisible;
 
-            if (OptionsPanel.Visible)
-                OptionsPanel.Fade(OptionsPanel.Alpha, 0, 500);
-
-            if (PausePanel.Visible)
-                PausePanel.Fade(PausePanel.Alpha, 0, 500);
-
-            if (CreditsPanel.Visible)
-                CreditsPanel.Fade(CreditsPanel.Alpha, 0, 500);
+            CloseOthersPanels(null);
 
             foreach (var p in Players.Values)
                 p.Cursor.FadeOut();
@@ -76,15 +77,8 @@
 
         public void ShowCreditsPanel()
         {
-            foreach (var p in Players)
-            {
-                p.Value.Cursor.Position = p.Key.Position;
-                p.Value.Cursor.Direction = p.Key.Direction;
-                p.Value.Cursor.FadeIn();
-            }
-
-            PausePanel.Fade(PausePanel.Alpha, 0, 500);
-            OptionsPanel.Fade(OptionsPanel.Alpha, 0, 500);
+            ShowPausePlayers();
+            CloseOthersPanels(CreditsPanel);
             CreditsPanel.Fade(CreditsPanel.Alpha, 255, 500);
 
             NotifyPanelOpened();
@@ -93,15 +87,8 @@
 
         public void ShowOptionsPanel()
         {
-            foreach (var p in Players)
-            {
-                p.Value.Cursor.Position = p.Key.Position;
-                p.Value.Cursor.Direction = p.Key.Direction;
-                p.Value.Cursor.FadeIn();
-            }
-
-            PausePanel.Fade(PausePanel.Alpha, 0, 500);
-            CreditsPanel.Fade(CreditsPanel.Alpha, 0, 500);
+            ShowPausePlayers();
+            CloseOthersPanels(OptionsPanel);
             OptionsPanel.Fade(OptionsPanel.Alpha, 255, 500);
 
             NotifyPanelOpened();
@@ -110,16 +97,29 @@
 
         public void ShowPausePanel()
         {
-            foreach (var p in Players)
-            {
-                p.Value.Cursor.Position = p.Key.Position;
-                p.Value.Cursor.Direction = p.Key.Direction;
-                p.Value.Cursor.FadeIn();
-            }
-
+            ShowPausePlayers();
+            CloseOthersPanels(PausePanel);
             PausePanel.Fade(PausePanel.Alpha, 255, 500);
-            CreditsPanel.Fade(CreditsPanel.Alpha, 0, 500);
-            OptionsPanel.Fade(OptionsPanel.Alpha, 0, 500);
+
+            NotifyPanelOpened();
+        }
+
+
+        public void ShowHelpPanel()
+        {
+            ShowPausePlayers();
+            CloseOthersPanels(HelpPanel);
+            HelpPanel.Fade(HelpPanel.Alpha, 255, 500);
+
+            NotifyPanelOpened();
+        }
+
+
+        public void ShowControlsPanel()
+        {
+            ShowPausePlayers();
+            CloseOthersPanels(ControlsPanel);
+            ControlsPanel.Fade(ControlsPanel.Alpha, 255, 500);
 
             NotifyPanelOpened();
         }
@@ -151,6 +151,10 @@
                 PausePanel.DoClick(player.Circle);
             else if (CreditsPanel.Visible)
                 CreditsPanel.DoClick(player.Circle);
+            else if (HelpPanel.Visible)
+                HelpPanel.DoClick(player.Circle);
+            else if (ControlsPanel.Visible)
+                ControlsPanel.DoClick(player.Circle);
         }
 
 
@@ -227,6 +231,12 @@
 
                     if (CreditsPanel.Visible && CreditsPanel.DoHover(player.Circle) && CreditsPanel.LastHoverWidget.Sticky)
                         player.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
+
+                    if (HelpPanel.Visible && HelpPanel.DoHover(player.Circle) && HelpPanel.LastHoverWidget.Sticky)
+                        player.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
+
+                    if (ControlsPanel.Visible && ControlsPanel.DoHover(player.Circle) && ControlsPanel.LastHoverWidget.Sticky)
+                        player.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
                 }
 
 
@@ -244,6 +254,8 @@
         {
             OptionsPanel.Draw();
             CreditsPanel.Draw();
+            HelpPanel.Draw();
+            ControlsPanel.Draw();
 
             foreach (var p in Players.Values)
                 p.Draw();
@@ -272,6 +284,24 @@
         }
 
 
+        private void DoHelpPanelClosed(PanelWidget widget)
+        {
+            if (!Simulator.DemoMode)
+                Simulator.ShowPausedGamePanel();
+            else
+                Simulator.TriggerNewGameState(GameState.Running);
+        }
+
+
+        private void DoControlsPanelClosed(PanelWidget widget)
+        {
+            if (!Simulator.DemoMode)
+                Simulator.ShowPausedGamePanel();
+            else
+                Simulator.TriggerNewGameState(GameState.Running);
+        }
+
+
         private void DoCreditsPanelClosed(PanelWidget widget)
         {
             CreditsPanel.Fade(CreditsPanel.Alpha, 0, 500);
@@ -284,12 +314,12 @@
         {
             if (widget.Name == "Help")
             {
-
+                Simulator.ShowHelpPanel(false);
             }
 
             else if (widget.Name == "Controls")
             {
-
+                Simulator.ShowControlsPanel(false);
             }
 
             else if (widget.Name == "Restart")
@@ -311,6 +341,36 @@
             {
                 Simulator.TriggerNewGameState(GameState.Running);
             }
+        }
+
+
+        private void ShowPausePlayers()
+        {
+            foreach (var p in Players)
+            {
+                p.Value.Cursor.Position = p.Key.Position;
+                p.Value.Cursor.Direction = p.Key.Direction;
+                p.Value.Cursor.FadeIn();
+            }
+        }
+
+
+        private void CloseOthersPanels(Panel butNotThisOne)
+        {
+            if (OptionsPanel != butNotThisOne && OptionsPanel.Visible)
+                OptionsPanel.Fade(OptionsPanel.Alpha, 0, 500);
+
+            if (PausePanel != butNotThisOne && PausePanel.Visible)
+                PausePanel.Fade(PausePanel.Alpha, 0, 500);
+
+            if (CreditsPanel != butNotThisOne && CreditsPanel.Visible)
+                CreditsPanel.Fade(CreditsPanel.Alpha, 0, 500);
+
+            if (HelpPanel != butNotThisOne && HelpPanel.Visible)
+                HelpPanel.Fade(HelpPanel.Alpha, 0, 500);
+
+            if (ControlsPanel != butNotThisOne && ControlsPanel.Visible)
+                ControlsPanel.Fade(ControlsPanel.Alpha, 0, 500);
         }
 
 

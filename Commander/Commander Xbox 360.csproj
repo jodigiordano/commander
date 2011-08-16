@@ -110,7 +110,9 @@
     <Compile Include="GUI\SandGlass.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="Panels\ControlsPanel.cs" />
     <Compile Include="Panels\CreditsPanel.cs" />
+    <Compile Include="Panels\HelpPanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
