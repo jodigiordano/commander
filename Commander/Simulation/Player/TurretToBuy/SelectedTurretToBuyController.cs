@@ -26,8 +26,11 @@
 
         public virtual void Next()
         {
-            //if (SelectedTurret == null)
-            //    return;
+            if (SelectedTurret == null)
+            {
+                SelectedTurret = AvailableTurretsToBuy.First;
+                return;
+            }
 
             SelectedTurret = (SelectedTurret.Next == null) ? AvailableTurretsToBuy.First : SelectedTurret.Next;
         }
@@ -35,8 +38,11 @@
 
         public virtual void Previous()
         {
-            //if (SelectedTurret == null)
-            //    return;
+            if (SelectedTurret == null)
+            {
+                SelectedTurret = AvailableTurretsToBuy.First;
+                return;
+            }
 
             SelectedTurret = (SelectedTurret.Previous == null) ? AvailableTurretsToBuy.Last : SelectedTurret.Previous;
         }
