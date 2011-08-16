@@ -130,9 +130,6 @@
             {
                 TransiteToWorld();
             }
-
-            if (newState == GameState.Won || newState == GameState.Lost)
-                Simulator.EnableInputs = false;
         }
 
 

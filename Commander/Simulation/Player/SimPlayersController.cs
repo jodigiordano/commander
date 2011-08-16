@@ -368,27 +368,28 @@
             {
                 CheckAvailablePowerUps();
                 CheckAvailableTurrets();
+            }
 
-                foreach (var player in Players.Values)
+
+            foreach (var player in Players.Values)
+            {
+                player.Update();
+
+                if (player.Firing)
                 {
-                    player.Update();
+                    var bullets = player.SpaceshipMove.Fire();
 
-                    if (player.Firing)
-                    {
-                        var bullets = player.SpaceshipMove.Fire();
+                    if (bullets.Count != 0)
+                        Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
 
-                        if (bullets.Count != 0)
-                            Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
-
-                        foreach (var b in bullets)
-                            NotifyObjectCreated(b);
-                    }
-
-                    NotifyPlayerChanged(player);
-                    NotifyPlayerMoved(player);
-
-                    player.Firing = false;
+                    foreach (var b in bullets)
+                        NotifyObjectCreated(b);
                 }
+
+                NotifyPlayerChanged(player);
+                NotifyPlayerMoved(player);
+
+                player.Firing = false;
             }
         }
 
