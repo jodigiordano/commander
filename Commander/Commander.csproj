@@ -282,6 +282,7 @@
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
     <Compile Include="Simulation\Levels\LevelsController.cs" />
     <Compile Include="Simulation\PlanetarySystem\PlanetarySystemController.cs" />
+    <Compile Include="Simulation\GUI\ScoreCalculation.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipGoHomeABehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\SpaceshipSteeringBehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipChasingABehavior.cs" />
