@@ -58,6 +58,8 @@
 
             set
             {
+                brightCount = value;
+
                 for (int i = 0; i < 3; i++)
                 {
                     Images[i].Alpha = (byte) (i < value ? AlphaBright : AlphaNotBright);

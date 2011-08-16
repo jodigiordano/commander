@@ -515,10 +515,8 @@ namespace EphemereGames.Commander.Simulation
                 int levelId = LevelsController.Level.Id;
                 int score = LevelsController.Level.CommonStash.TotalScore;
 
-                if (!Main.SharedSaveGame.HighScores.ContainsKey(levelId))
-                    Main.SharedSaveGame.HighScores.Add(levelId, new HighScores(levelId));
-
-                Main.SharedSaveGame.HighScores[levelId].Add(Inputs.MasterPlayer.Name, score);
+                Main.PlayerSaveGame.UpdateProgress(state, levelId, score);
+                Main.SharedSaveGame.UpdateProgress(Inputs.MasterPlayer.Name, levelId, score);
 
                 Main.SharedSaveGame.Save();
                 Main.PlayerSaveGame.Save();

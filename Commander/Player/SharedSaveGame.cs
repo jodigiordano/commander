@@ -33,6 +33,15 @@
         }
 
 
+        public void UpdateProgress(string name, int level, int score)
+        {
+            if (!HighScores.ContainsKey(level))
+                HighScores.Add(level, new HighScores(level));
+
+            HighScores[level].Add(name, score);
+        }
+
+
         public override void DoFileNotFound()
         {
             base.DoFileNotFound();

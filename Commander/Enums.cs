@@ -6,7 +6,7 @@
         Near = 10,
         Normal = 60,
         Far = 110
-    }
+    };
 
 
     public enum Size
@@ -14,18 +14,7 @@
         Small = 28,
         Normal = 50,
         Big = 68
-    }
-
-
-    enum GameState
-    {
-        Running = 1,
-        Paused = 2,
-        Won = 3,
-        Lost = 4,
-        Restart = 5,
-        PausedToWorld = 6
-    }
+    };
 
 
     enum MusicContext
@@ -33,7 +22,18 @@
         Won = 1,
         Lost = 2,
         Other = 3
-    }
+    };
+
+
+    public enum GameState
+    {
+        Running = 1,
+        Paused = 2,
+        Won = 3,
+        Lost = 4,
+        Restart = 5,
+        PausedToWorld = 6
+    };
 }
 
 
@@ -109,7 +109,7 @@ namespace EphemereGames.Commander.Simulation
         Spaceship = 1,
         Turret = 2,
         Other = 3
-    }
+    };
 
 
     enum MineralType
@@ -126,7 +126,7 @@ namespace EphemereGames.Commander.Simulation
         None = -1,
         Sell = 0,
         Update = 1
-    }
+    };
 
 
     public enum PausedGameChoice
@@ -134,7 +134,7 @@ namespace EphemereGames.Commander.Simulation
         None = -1,
         Resume = 0,
         New = 1
-    }
+    };
 
 
     public enum NewGameChoice
@@ -150,7 +150,7 @@ namespace EphemereGames.Commander.Simulation
         WrapToWorld7 = 7,
         WrapToWorld8 = 8,
         NewGame = 9,
-    }
+    };
 
 
     enum EditorGeneralMenuChoice
@@ -160,7 +160,7 @@ namespace EphemereGames.Commander.Simulation
         Waves = 1,
         Battlefield = 2,
         Gameplay = 3
-    }
+    };
 
 
     enum EditorPanel
@@ -176,14 +176,14 @@ namespace EphemereGames.Commander.Simulation
         Background = 7,
         GeneratePlanetarySystem = 8,
         Waves = 9
-    }
+    };
 
 
     enum EditorState
     {
         Editing = 1,
         Playtest = 2
-    }
+    };
 
 
     enum EditorCommandType
@@ -192,7 +192,7 @@ namespace EphemereGames.Commander.Simulation
         Panel = 2,
         CelestialBody = 3,
         Player = 4
-    }
+    };
 
 
     enum EditorEditingState
@@ -202,7 +202,7 @@ namespace EphemereGames.Commander.Simulation
         RotatingCB = 1,
         ShrinkingCB = 2,
         StartPosCB = 3
-    }
+    };
 
 
     enum HelpBarMessage
@@ -221,7 +221,7 @@ namespace EphemereGames.Commander.Simulation
         GameLost = 10,
         GameWon = 11,
         HoldToSkip = 12
-    }
+    };
 
 
     enum PanelType
@@ -230,5 +230,5 @@ namespace EphemereGames.Commander.Simulation
         Options = 0,
         Help = 1,
         Pause = 2
-    }
+    };
 }

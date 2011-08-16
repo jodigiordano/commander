@@ -165,7 +165,7 @@
 
             return (score >= bestScore) ? 3 :
                    (score >= bestScore * 0.75) ? 2 :
-                   (score > -bestScore * 0.5) ? 1 : 0;
+                   (score >= bestScore * 0.5) ? 1 : 0;
         }
 
 

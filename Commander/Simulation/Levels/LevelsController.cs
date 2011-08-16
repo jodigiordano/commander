@@ -103,14 +103,6 @@
             {
                 State = CelestialBodyToProtect.Alive ? GameState.Won : GameState.Lost;
 
-                if (!Main.PlayerSaveGame.Progress.ContainsKey(Level.Id))
-                    Main.PlayerSaveGame.Progress.Add(Level.Id, 0);
-
-                if (Main.PlayerSaveGame.Progress[Level.Id] < 0)
-                    Main.PlayerSaveGame.Progress[Level.Id] = Math.Abs(Main.PlayerSaveGame.Progress[Level.Id]);
-                else if (Main.PlayerSaveGame.Progress[Level.Id] == 0)
-                    Main.PlayerSaveGame.Progress[Level.Id] = 1;
-
                 ComputeFinalScore();
 
                 NotifyNewGameState(State);
@@ -149,12 +141,6 @@
                 Audio.PlaySfx(@"sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
-                if (!Main.PlayerSaveGame.Progress.ContainsKey(Level.Id))
-                    Main.PlayerSaveGame.Progress.Add(Level.Id, 0);
-
-                if ((Main.PlayerSaveGame.Progress[Level.Id] <= 0))
-                    Main.PlayerSaveGame.Progress[Level.Id] -= 1;
-
                 ComputeFinalScore();
 
                 NotifyNewGameState(State);
@@ -178,12 +164,6 @@
             if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)
             {
                 State = GameState.Lost;
-
-                if (!Main.PlayerSaveGame.Progress.ContainsKey(Level.Id))
-                    Main.PlayerSaveGame.Progress.Add(Level.Id, 0);
-
-                if ((Main.PlayerSaveGame.Progress[Level.Id] <= 0))
-                    Main.PlayerSaveGame.Progress[Level.Id] -= 1;
 
                 ComputeFinalScore();
 

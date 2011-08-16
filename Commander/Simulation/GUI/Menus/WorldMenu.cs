@@ -134,12 +134,13 @@
         private void DrawHighScore()
         {
             LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
-            HighScores highscores = null;
+            
+            int score = 0;
 
-            Main.SharedSaveGame.HighScores.TryGetValue(descriptor.Infos.Id, out highscores);
+            Main.PlayerSaveGame.Scores.TryGetValue(descriptor.Infos.Id, out score);
 
             Stars.Position = CelestialBody.Position + new Vector3(5, CelestialBody.Circle.Radius + 20, 0);
-            Stars.BrightCount = descriptor.NbStars(highscores.Scores[0].Value);
+            Stars.BrightCount = descriptor.NbStars(score);
             Stars.Draw();
         }
     }
