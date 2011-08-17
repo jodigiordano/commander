@@ -30,6 +30,7 @@
         private byte alpha;
         private Vector2 padding;
         private Vector3 position;
+        private List<PanelWidget> TitleBarWidgets;
 
         protected bool RecomputePositions;
 
@@ -77,6 +78,7 @@
             Visible = true;
 
             Widgets = new List<KeyValuePair<string, PanelWidget>>();
+            TitleBarWidgets = new List<PanelWidget>();
 
             ShowFrame = true;
             ShowBackground = true;
@@ -194,6 +196,18 @@
         }
 
 
+        public void AddTitleBarWidget(PanelWidget widget)
+        {
+            widget.Scene = Scene;
+            widget.Initialize();
+            widget.VisualPriority = VisualPriority;
+
+            TitleBarWidgets.Add(widget);
+
+            RecomputePositions = true;
+        }
+
+
         public virtual void RemoveWidget(string name)
         {
             for (int i = Widgets.Count - 1; i > -1; i--)
@@ -284,6 +298,9 @@
                 return true;
             }
 
+            if (ClickTitleWidgets(circle))
+                return true;
+
             if (ClickWidgets(circle))
                 return true;
 
@@ -298,6 +315,9 @@
                 LastHoverWidget = CloseButton;
                 return true;
             }
+
+            if (HoverTitleWidgets(circle))
+                return true;
 
             if (HoverWidgets(circle))
                 return true;
@@ -360,6 +380,7 @@
             if (RecomputePositions)
             {
                 ComputePositions();
+                ComputeTitleBarPositions();
                 RecomputePositions = false;
             }
 
@@ -421,6 +442,7 @@
             }
 
             DrawWidgets();
+            DrawTitleBarWidgets();
         }
 
 
@@ -436,6 +458,13 @@
         {
             foreach (var w in Widgets)
                 w.Value.Draw();
+        }
+
+
+        private void DrawTitleBarWidgets()
+        {
+            foreach (var w in TitleBarWidgets)
+                w.Draw();
         }
 
 
@@ -465,6 +494,32 @@
         }
 
 
+        private bool ClickTitleWidgets(Circle circle)
+        {
+            foreach (var w in TitleBarWidgets)
+                if (w.DoClick(circle))
+                {
+                    LastClickedWidget = w;
+                    return true;
+                }
+
+            return false;
+        }
+
+
+        private bool HoverTitleWidgets(Circle circle)
+        {
+            foreach (var w in TitleBarWidgets)
+                if (w.DoHover(circle))
+                {
+                    LastHoverWidget = w;
+                    return true;
+                }
+
+            return false;
+        }
+
+
         protected virtual Vector3 GetUpperLeftUsableSpace()
         {
             if (Title != null)
@@ -477,6 +532,19 @@
         protected virtual void ComputePositions()
         {
 
+        }
+
+
+        private void ComputeTitleBarPositions()
+        {
+            Vector3 upperLeft = new Vector3(CloseButton.Position.X, Position.Y - 15, 0);
+
+            foreach (var w in TitleBarWidgets)
+            {
+                upperLeft.X -= w.Dimension.X + 150;
+
+                w.Position = upperLeft;
+            }
         }
 
 
