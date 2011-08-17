@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -12,12 +13,14 @@
         private PushButton VisitWebsite;
         private Label LoadingInfos;
 
+        private int MaxNewsDisplayed;
+
 
         public NewsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
             SetTitle("What's new!");
-            DistanceBetweenTwoChoices = 15;
+            DistanceBetweenTwoChoices = 30;
 
             Alpha = 0;
 
@@ -37,6 +40,8 @@
             Main.NewsController.LoadingStarted += new NewsTypeHandler(DoLoadingStarted);
             Main.NewsController.LoadingDoneSuccessfully += new NewsTypeNewsHandler(DoLoadedSuccessfully);
             Main.NewsController.LoadingDoneWithError += new NewsTypeHandler(DoLoadedError);
+
+            MaxNewsDisplayed = 3;
         }
 
 
@@ -64,7 +69,9 @@
 
             AllNews.Clear();
 
-            for (int i = 0; i < news.Count; i++)
+            news.Sort();
+
+            for (int i = 0; i < Math.Min(news.Count, MaxNewsDisplayed); i++)
             {
                 var n = new NewsWidget(news[i], (int) Dimension.X - 50);
 

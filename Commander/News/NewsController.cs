@@ -133,7 +133,8 @@
                    select new News
                    {
                        Title = System.Net.WebUtility.HtmlDecode(item.Element("title").Value),
-                       Description = System.Net.WebUtility.HtmlDecode(item.Element("description").Value)
+                       Description = System.Net.WebUtility.HtmlDecode(item.Element("description").Value),
+                       Date = DateTime.Parse(System.Net.WebUtility.HtmlDecode(item.Element("pubDate").Value))
                    }).ToList();
             }
 
