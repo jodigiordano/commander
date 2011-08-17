@@ -45,7 +45,8 @@
         Credits = 3,
         Help = 4,
         Controls = 5,
-        News = 6,
+        GeneralNews = 6,
+        UpdatesNews = 7
     };
 
 

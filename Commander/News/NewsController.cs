@@ -93,33 +93,6 @@
         }
 
 
-        //private void GeneralNewsLoaded()
-        //{
-        //    if (States[NewsType.General] == NewsLoadingState.Loaded)
-        //        NotifyLoadingDoneSuccessfully(NewsType.General);
-        //    else
-        //        NotifyLoadingDoneWithError(NewsType.General);
-        //}
-
-
-        //private void UpdateNewsLoaded()
-        //{
-        //    if (States[NewsType.Updates] == NewsLoadingState.Loaded)
-        //        NotifyLoadingDoneSuccessfully(NewsType.Updates);
-        //    else
-        //        NotifyLoadingDoneWithError(NewsType.Updates);
-        //}
-
-
-        //private void DLCNewsLoaded()
-        //{
-        //    if (States[NewsType.DLC] == NewsLoadingState.Loaded)
-        //        NotifyLoadingDoneSuccessfully(NewsType.DLC);
-        //    else
-        //        NotifyLoadingDoneWithError(NewsType.DLC);
-        //}
-
-
         private void SynchronizeNews(NewsType type)
         {
             bool ok = false;
