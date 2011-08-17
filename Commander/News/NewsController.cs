@@ -122,8 +122,10 @@
 
         private void SynchronizeNews(NewsType type)
         {
-            bool ok = true;
+            bool ok = false;
 
+
+#if WINDOWS
             try
             {
                 XDocument reader = XDocument.Load(Preferences.WebsiteURL + GetRelativeURL(type));
@@ -136,12 +138,15 @@
                        Description = System.Net.WebUtility.HtmlDecode(item.Element("description").Value),
                        Date = DateTime.Parse(System.Net.WebUtility.HtmlDecode(item.Element("pubDate").Value))
                    }).ToList();
+
+                ok = true;
             }
 
             catch
             {
                 ok = false;
             }
+#endif
 
             States[type] = ok ? NewsLoadingState.Loaded : NewsLoadingState.Error;
 
