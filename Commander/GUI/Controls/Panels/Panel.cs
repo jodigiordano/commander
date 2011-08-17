@@ -127,6 +127,9 @@
                 foreach (var w in Widgets)
                     w.Value.Alpha = value;
 
+                foreach (var w in TitleBarWidgets)
+                    w.Alpha = value;
+
                 foreach (var corner in Corners)
                     corner.Alpha = value;
 
@@ -189,6 +192,7 @@
             widget.Scene = Scene;
             widget.Initialize();
             widget.VisualPriority = VisualPriority;
+            widget.Alpha = Alpha;
 
             Widgets.Add(new KeyValuePair<string, PanelWidget>(name, widget));
 
@@ -201,6 +205,7 @@
             widget.Scene = Scene;
             widget.Initialize();
             widget.VisualPriority = VisualPriority;
+            widget.Alpha = Alpha;
 
             TitleBarWidgets.Add(widget);
 
