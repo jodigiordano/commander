@@ -14,12 +14,14 @@
         private Label LoadingInfos;
 
         private int MaxNewsDisplayed;
+        private NewsType Type;
 
 
-        public NewsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
+        public NewsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color, NewsType type, string title)
             : base(scene, position, size, visualPriority, color)
         {
-            SetTitle("What's new!");
+            SetTitle(title);
+            Type = type;
             DistanceBetweenTwoChoices = 30;
 
             Alpha = 0;
@@ -47,7 +49,7 @@
 
         public void DoLoadingStarted(NewsType type)
         {
-            if (type != NewsType.General)
+            if (type != this.Type)
                 return;
 
             LoadingInfos.SetData("Loading news, please wait.");
@@ -58,7 +60,7 @@
 
         public void DoLoadedSuccessfully(NewsType type, List<News> news)
         {
-            if (type != NewsType.General)
+            if (type != this.Type)
                 return;
 
             RemoveWidget("LoadingInfos");
@@ -83,7 +85,7 @@
 
         public void DoLoadedError(NewsType type)
         {
-            if (type != NewsType.General)
+            if (type != this.Type)
                 return;
 
             LoadingInfos.SetData("Loading error. Please retry.");
@@ -109,7 +111,7 @@
 
         private void NotifyReloadAsked()
         {
-            Main.NewsController.LoadNewsAsync(NewsType.General);
+            Main.NewsController.LoadNewsAsync(Type);
         }
     }
 }
