@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Core.Visual
 {
+    using System.Text;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -25,10 +26,12 @@
         private string data;
         private Vector3 position;
         private Color color;
+        private string FontName;
 
 
         public Text(string data, string fontName, Color color, Vector3 position)
         {
+            FontName = fontName;
             Data = data;
             Font = Core.Persistence.Persistence.GetAsset<SpriteFont>(fontName);
             Color = color;
@@ -154,6 +157,56 @@
             i.Id = Visuals.NextHashCode;
 
             return i;
+        }
+
+
+        public Text CompartmentalizeIt(int maxWidthPx)
+        {
+            //todo: use lineSpacing
+
+            // find the absolute size of one letter
+            int sizeX = (int) (new Text(@"a", FontName) { Size = Size }.AbsoluteSize.X);
+            int maxCharsPerLine = maxWidthPx / sizeX;
+
+            // split the words
+            string[] words = data.Split(new char[] { ' ' });
+
+            // add new lines where needed
+            StringBuilder newData = new StringBuilder();
+
+            int charCount = 0;
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                var word = words[i];
+
+                charCount += word.Length;
+
+                if (charCount <= maxCharsPerLine)
+                {
+                    newData.Append(word);
+                    newData.Append(@" ");
+                    charCount++;
+                }
+
+                else
+                {
+                    if (i != 0)
+                        newData.Append("\n\n");
+                    
+                    newData.Append(word);
+
+                    if (i != 0 && i != words.Length - 1)
+                        newData.Append(" ");
+
+                    charCount = word.Length + 1;
+                }
+            }
+
+            // sync the new data
+            Data = newData.ToString();
+
+            return this;
         }
 
 
