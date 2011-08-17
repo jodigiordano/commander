@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -9,20 +10,21 @@
     {
         private Text Quote;
         private ScoreStars Stars;
-        private Text Score;
+        //private Text Score;
+        private ScoreCalculation Score;
         private int DistanceY;
 
         private int PreviousLayoutId;
 
 
-        public GameEndedBubble(Scene scene, double visualPriority, string quote, Color quoteColor, int score, int nbStars)
+        public GameEndedBubble(Scene scene, double visualPriority, string quote, Color quoteColor, CommonStash commonStash, int nbStars)
             : base(scene, new PhysicalRectangle(), visualPriority)
         {
-            DistanceY = 15;
+            DistanceY = 45;
 
             Quote = new Text(quote, "Pixelite") { SizeX = 2, Color = quoteColor, VisualPriority = visualPriority - 0.00001 };
             Stars = new ScoreStars(Scene, nbStars, visualPriority - 0.00001);
-            Score = new Text("Score: " + score, "Pixelite") { SizeX = 2, VisualPriority = visualPriority - 0.00001 };
+            Score = new ScoreCalculation(Scene, commonStash.TotalCash, commonStash.TotalLives, commonStash.TotalTime, visualPriority - 0.00001);
 
             ComputeSize();
 
@@ -110,16 +112,22 @@
         }
 
 
+        public void Update()
+        {
+            Score.Update();
+        }
+
+
         public override void Draw()
         {
             base.Draw();
 
             Quote.Position = new Vector3(Dimension.X, Dimension.Y, 0);
-            Score.Position = new Vector3(Dimension.X, Quote.Position.Y + Quote.AbsoluteSize.Y + DistanceY, 0);
-            Stars.Position = new Vector3(Dimension.X, Score.Position.Y + Score.AbsoluteSize.Y + DistanceY, 0);
+            Score.Position = new Vector3(Dimension.X, Quote.Position.Y + DistanceY, 0);
+            Stars.Position = new Vector3(Dimension.X + Score.AbsoluteSize.X + 20, Score.Position.Y - 5, 0);
 
             Scene.Add(Quote);
-            Scene.Add(Score);
+            Score.Draw();
             Stars.Draw();
         }
 
@@ -127,15 +135,9 @@
         private void ComputeSize()
         {
             // find the max X
-            float sizeX = Quote.AbsoluteSize.X;
+            float sizeX = Math.Max(Quote.AbsoluteSize.X, Stars.Size.X + Score.AbsoluteSize.X + 40);
 
-            if (Stars.Size.X > sizeX)
-                sizeX = Stars.Size.X;
-
-            if (Score.AbsoluteSize.X > sizeX)
-                sizeX = Score.AbsoluteSize.X;
-
-            float sizeY = Quote.AbsoluteSize.Y + Stars.Size.Y + Score.AbsoluteSize.Y + 2 * DistanceY;
+            float sizeY = Quote.AbsoluteSize.Y;
 
             Dimension.Width = (int) sizeX + 4;
             Dimension.Height = (int) sizeY + 4;

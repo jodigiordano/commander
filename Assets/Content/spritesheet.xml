@@ -137,6 +137,12 @@
     <Item><Key>WidgetChecked</Key><Value>GUI/Widgets/checked.png</Value></Item>
     
     
+    <!-- Score -->
+    <Item><Key>ScoreLives</Key><Value>GUI/Score/lives.png</Value></Item>
+    <Item><Key>ScoreMoney</Key><Value>GUI/Score/money.png</Value></Item>
+    <Item><Key>ScoreTime</Key><Value>GUI/Score/time.png</Value></Item>
+    
+    
     <!-- Cursors -->
     <Item><Key>Cursor1</Key><Value>GUI/Cursors/cursor1.png</Value></Item>
     <Item><Key>Cursor1Back</Key><Value>GUI/Cursors/cursor1_back.png</Value></Item>

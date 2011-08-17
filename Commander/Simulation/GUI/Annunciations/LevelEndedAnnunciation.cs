@@ -16,7 +16,7 @@
 
         private static List<string> WonQuotes = new List<string>()
         {
-            "Thank you Commander!\n\n" +
+            "Thank you Commander!\n\n\n\n\n\n" +
             "You saved us but the\n\n" +
             "aliens are already\n\n" +
             "attacking another colony!"
@@ -25,7 +25,7 @@
 
         private static List<string> LostQuotes = new List<string>()
         {
-            "Mouhahaha! ...\n\n" +
+            "Mouhahaha! ...\n\n\n\n\n\n" +
             "Mouhahahaha! ...\n\n" +
             "Mouhahahaaaaa! You lost."
         };
@@ -49,7 +49,7 @@
                 VisualPriorities.Default.GameEndedAnimation,
                 state == GameState.Won ? WonQuotes[Main.Random.Next(0, WonQuotes.Count)] : LostQuotes[Main.Random.Next(0, LostQuotes.Count)],
                 state == GameState.Won ? Colors.Default.HumansBright : Colors.Default.AlienBright,
-                Level.CommonStash.TotalScore,
+                Level.CommonStash,
                 Level.NbStars(Level.CommonStash.TotalScore)
             );
 
@@ -66,6 +66,7 @@
                 return;
 
             Bubble.Position = CelestialBody.Position;
+            Bubble.Update();
         }
 
 
