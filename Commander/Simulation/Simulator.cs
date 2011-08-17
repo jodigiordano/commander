@@ -663,6 +663,10 @@ namespace EphemereGames.Commander.Simulation
                     SimPlayersController.DoNextOrPreviousAction(player, 1);
                 else if (key == KeyboardConfiguration.Back)
                     TriggerNewGameState(GameState.Paused);
+                else if (key == KeyboardConfiguration.SelectionNext)
+                    SimPlayersController.DoNextOrPreviousAction(player, 1);
+                else if (key == KeyboardConfiguration.SelectionPrevious)
+                    SimPlayersController.DoNextOrPreviousAction(player, -1);
             }
         }
 
