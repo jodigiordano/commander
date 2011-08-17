@@ -66,6 +66,7 @@
             CheckAvailableTurrets();
             
             Players.Clear();
+            PlayersList.Clear();
 
             PlayerInAdvancedView = null;
             PlayerInNextWave = null;
