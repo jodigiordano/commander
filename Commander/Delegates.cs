@@ -1,8 +1,13 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System.Collections.Generic;
+
+
     delegate void NoneHandler();
     delegate bool IntegerHandler(int i);
     delegate void PanelWidgetHandler(PanelWidget p);
+    delegate void NewsTypeHandler(NewsType t);
+    delegate void NewsTypeNewsHandler(NewsType t, List<News> n);
 }
 
 

@@ -25,7 +25,7 @@
             Panels = new Dictionary<PanelType, Panel>(PanelTypeComparer.Default);
 
             Panels.Add(PanelType.Credits, new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false });
-            Panels.Add(PanelType.News, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.NewsPanel, Color.White) { Visible = false });
+            Panels.Add(PanelType.News, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.NewsPanel, Color.White) { Visible = false });
             Panels.Add(PanelType.Options, new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 300), VisualPriorities.Default.OptionsPanel, Color.White) { Visible = false });
             Panels.Add(PanelType.Pause, new PausePanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.PausePanel, Color.White) { Visible = false });
             Panels.Add(PanelType.Help, new HelpPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.HelpPanel, Color.White) { Visible = false });

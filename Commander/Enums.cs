@@ -39,14 +39,23 @@
     public enum PanelType
     {
         None = -1,
-        Pause = 1,
+        Pause = 0,
+        DLC = 1,
         Options = 2,
         Credits = 3,
         Help = 4,
         Controls = 5,
         News = 6,
-        DLC = 7
     };
+
+
+    public enum NewsType
+    {
+        None = -1,
+        General = 0,
+        Updates = 1,
+        DLC = 2
+    }
 }
 
 

@@ -22,6 +22,7 @@ namespace EphemereGames.Commander
         public static WorldScene SelectedWorld;
         public static LevelsFactory LevelsFactory;
         public static MusicController MusicController;
+        public static NewsController NewsController;
 
         public static bool GamePausedToWorld { get { return GameInProgress != null && GameInProgress.State == GameState.PausedToWorld; } }
 
@@ -57,6 +58,7 @@ namespace EphemereGames.Commander
             LevelsFactory = new LevelsFactory();
 
             MusicController = new MusicController();
+            NewsController = new NewsController();
         }
 
 
@@ -92,7 +94,7 @@ namespace EphemereGames.Commander
         {
 #if WINDOWS
             if (Preferences.Target == Core.Utilities.Setting.WindowsDemo)
-                System.Diagnostics.Process.Start("http://commander.ephemeregames.com");
+                System.Diagnostics.Process.Start(Preferences.WebsiteURL);
 #endif
 
             base.OnExiting(sender, args);

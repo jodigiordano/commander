@@ -1,20 +1,16 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class NewsPanel : VerticalPanel
     {
-        private Label Jodi;
-        private Label Website;
-        private Label Tag;
-        private Label Mercury;
-        private Label EasyStorage;
-        private Label Backgrounds;
-        private Label SpecialThanks;
-        private VerticalSeparatorWidget Seperator1;
-        private VerticalSeparatorWidget Seperator2;
+        private List<NewsWidget> AllNews;
+        private PushButton Sync;
+        private PushButton VisitWebsite;
+        private Label LoadingInfos;
 
 
         public NewsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
@@ -22,32 +18,91 @@
         {
             SetTitle("What's new!");
             DistanceBetweenTwoChoices = 15;
-            CenterWidgets = true;
 
             Alpha = 0;
 
-            Seperator1 = new VerticalSeparatorWidget() { MaxAlpha = 0 };
+            AllNews = new List<NewsWidget>();
 
-            Jodi = new Label(new Text("A game by Jodi Giordano", "Pixelite") { SizeX = 4, Alpha = 0 }.CenterIt());
-            Website = new Label(new Text("ephemeregames.com", "Pixelite") { SizeX = 3, Alpha = 0 }.CenterIt());
+            Sync = new PushButton(new Text("Reload", "Pixelite") { SizeX = 2 });
+            Sync.ClickHandler = DoReloadClicked;
 
-            Seperator2 = new VerticalSeparatorWidget() { MaxAlpha = 0 };
+            var vwText = new Text("Visit website", "Pixelite") { SizeX = 2 };
+            VisitWebsite = new PushButton(vwText) { MinSpaceForValue = (int) vwText.AbsoluteSize.X + 20 };
+            VisitWebsite.ClickHandler = DoVisitWebsiteClicked;
 
-            SpecialThanks = new Label(new Text("Special thanks to:", "Pixelite") { SizeX = 3, Alpha = 0 }.CenterIt());
-            Tag = new Label(new Text("TAG (tag.hexagram.ca)", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
-            Mercury = new Label(new Text("Mercury Particle Engine (mpe.codeplex.com)", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
-            EasyStorage = new Label(new Text("EasyStorage (easystorage.codeplex.com)", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
-            Backgrounds = new Label(new Text("NASA/STScI for some of the backgrounds", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
+            AddTitleBarWidget(VisitWebsite);
 
-            AddWidget("Seperator", Seperator1);
-            AddWidget("Jodi", Jodi);
-            AddWidget("Website", Website);
-            AddWidget("Seperator", Seperator2);
-            AddWidget("ST", SpecialThanks);
-            AddWidget("Tag", Tag);
-            AddWidget("Backgrounds", Backgrounds);
-            AddWidget("Mercury", Mercury);
-            AddWidget("EasyStorage", EasyStorage);
+            LoadingInfos = new Label(new Text("Pixelite") { SizeX = 4 });
+
+            Main.NewsController.LoadingStarted += new NewsTypeHandler(DoLoadingStarted);
+            Main.NewsController.LoadingDoneSuccessfully += new NewsTypeNewsHandler(DoLoadedSuccessfully);
+            Main.NewsController.LoadingDoneWithError += new NewsTypeHandler(DoLoadedError);
+        }
+
+
+        public void DoLoadingStarted(NewsType type)
+        {
+            if (type != NewsType.General)
+                return;
+
+            LoadingInfos.SetData("Loading news, please wait.");
+            RemoveWidget("LoadingInfos");
+            AddWidget("LoadingInfos", LoadingInfos);
+        }
+
+
+        public void DoLoadedSuccessfully(NewsType type, List<News> news)
+        {
+            if (type != NewsType.General)
+                return;
+
+            RemoveWidget("LoadingInfos");
+            RemoveWidget("Sync");
+
+            foreach (var n in AllNews)
+                RemoveWidget(n.Name);
+
+            AllNews.Clear();
+
+            for (int i = 0; i < news.Count; i++)
+            {
+                var n = new NewsWidget(news[i], (int) Dimension.X - 50);
+
+                AllNews.Add(n);
+                AddWidget("news" + i, n);
+            }
+        }
+
+
+        public void DoLoadedError(NewsType type)
+        {
+            if (type != NewsType.General)
+                return;
+
+            LoadingInfos.SetData("Loading error. Please retry.");
+            RemoveWidget("Sync");
+            AddWidget("Sync", Sync);
+        }
+
+
+
+        private void DoVisitWebsiteClicked(PanelWidget widget)
+        {
+#if WINDOWS
+            System.Diagnostics.Process.Start(Preferences.WebsiteURL);
+#endif
+        }
+
+
+        private void DoReloadClicked(PanelWidget widget)
+        {
+            NotifyReloadAsked();
+        }
+
+
+        private void NotifyReloadAsked()
+        {
+            Main.NewsController.LoadNewsAsync(NewsType.General);
         }
     }
 }

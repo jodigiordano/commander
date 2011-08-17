@@ -156,6 +156,9 @@
     <Compile Include="Animations\AnimationSprite.cs" />
     <Compile Include="Animations\AnimationTransition.cs" />
     <Compile Include="FutureJobsController.cs" />
+    <Compile Include="GUI\Controls\Widgets\NewsWidget.cs" />
+    <Compile Include="News\News.cs" />
+    <Compile Include="News\NewsController.cs" />
     <Compile Include="Panels\ControlsPanel.cs" />
     <Compile Include="Panels\NewsPanel.cs" />
     <Compile Include="Panels\HelpPanel.cs" />

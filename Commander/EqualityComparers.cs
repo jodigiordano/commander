@@ -299,4 +299,31 @@
             return (int) obj;
         }
     }
+
+
+    class NewsTypeComparer : IEqualityComparer<NewsType>
+    {
+        private static NewsTypeComparer instance;
+        public static NewsTypeComparer Default
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new NewsTypeComparer();
+                return instance;
+            }
+        }
+
+
+        public bool Equals(NewsType x, NewsType y)
+        {
+            return x == y;
+        }
+
+
+        public int GetHashCode(NewsType obj)
+        {
+            return (int) obj;
+        }
+    }
 }

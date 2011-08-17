@@ -46,6 +46,7 @@
                 EnableInputs = false
             };
             Simulator.Initialize();
+            Main.NewsController.LoadNewsAsync(NewsType.General);
             Inputs.AddListener(Simulator);
 
             SceneState = State.Transition;

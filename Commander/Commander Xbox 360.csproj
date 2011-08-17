@@ -103,6 +103,7 @@
     <Compile Include="GUI\Controls\Widgets\ImageLabel.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\Label.cs" />
+    <Compile Include="GUI\Controls\Widgets\NewsWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\NumericHorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\PanelWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\PushButton.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="GUI\SandGlass.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />
     <Compile Include="MusicController.cs" />
+    <Compile Include="News\News.cs" />
+    <Compile Include="News\NewsController.cs" />
     <Compile Include="Panels\ControlsPanel.cs" />
     <Compile Include="Panels\CreditsPanel.cs" />
     <Compile Include="Panels\HelpPanel.cs" />

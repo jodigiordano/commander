@@ -48,5 +48,11 @@
         public const float PrioriteGUIVUeAvanceeZonesActivations = PrioriteFondEcran - 0.04f;
         public const float PrioriteSimulationCeintureAsteroides = PrioriteFondEcran - 0.05f;
         public const float PrioriteGUIPointsVieJoueur = PrioriteGUIPanneauGeneral + 0.01f;
+
+
+        public const string WebsiteURL = "http://commander.ephemeregames.com";
+        public const string GeneralNewsURL = "/feeds/news.rss";
+        public const string UpdatesNewsURL = "/feeds/updates.rss";
+        public const string DLCNewsURL = "/feeds/dlc.rss";
     }
 }
