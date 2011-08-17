@@ -157,6 +157,7 @@
     <Compile Include="Animations\AnimationTransition.cs" />
     <Compile Include="FutureJobsController.cs" />
     <Compile Include="Panels\ControlsPanel.cs" />
+    <Compile Include="Panels\NewsPanel.cs" />
     <Compile Include="Panels\HelpPanel.cs" />
     <Compile Include="Panels\CreditsPanel.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />

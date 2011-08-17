@@ -272,4 +272,31 @@
             return (int) obj;
         }
     }
+
+
+    class PanelTypeComparer : IEqualityComparer<PanelType>
+    {
+        private static PanelTypeComparer instance;
+        public static PanelTypeComparer Default
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new PanelTypeComparer();
+                return instance;
+            }
+        }
+
+
+        public bool Equals(PanelType x, PanelType y)
+        {
+            return x == y;
+        }
+
+
+        public int GetHashCode(PanelType obj)
+        {
+            return (int) obj;
+        }
+    }
 }

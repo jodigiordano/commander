@@ -264,10 +264,10 @@
                     }
                     break;
 
-                case "how to play": Simulator.ShowHelpPanel(true); break;
-                case "options": Simulator.ShowOptionsPanel(true); break;
+                case "how to play": Simulator.ShowPanel(PanelType.Help, true); break;
+                case "options": Simulator.ShowPanel(PanelType.Options, true); break;
                 case "editor": TransiteTo("Editeur"); break;
-                case "credits": Simulator.ShowCreditsPanel(true); break;
+                case "credits": Simulator.ShowPanel(PanelType.Credits, true); break;
 
                 case "quit":
                     if (Preferences.Target == Core.Utilities.Setting.Xbox360 && Main.TrialMode.Active)
