@@ -434,23 +434,26 @@
             // Firing
             player.Cursor.ShowFiringCursor = p.Firing;
 
-            // Check in the starting path menu
-            if (StartingPathMenu.CheckedIn == null && selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
+            if (!Simulator.DemoMode)
             {
-                StartingPathMenu.CelestialBody = selection.CelestialBody;
-                StartingPathMenu.Visible = true;
-                StartingPathMenu.CheckedIn = p;
-                StartingPathMenu.Color = p.Color;
-                StartingPathMenu.Position = p.Position;
+                // Check in the starting path menu
+                if (StartingPathMenu.CheckedIn == null && selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
+                {
+                    StartingPathMenu.CelestialBody = selection.CelestialBody;
+                    StartingPathMenu.Visible = true;
+                    StartingPathMenu.CheckedIn = p;
+                    StartingPathMenu.Color = p.Color;
+                    StartingPathMenu.Position = p.Position;
 
-                player.CelestialBodyMenu.Visible = false;
-            }
+                    player.CelestialBodyMenu.Visible = false;
+                }
 
-            // Check out the starting path menu
-            if (StartingPathMenu.CheckedIn == p && (selection.CelestialBody == null || !selection.CelestialBody.FirstOnPath))
-            {
-                StartingPathMenu.Visible = false;
-                StartingPathMenu.CheckedIn = null;
+                // Check out the starting path menu
+                if (StartingPathMenu.CheckedIn == p && (selection.CelestialBody == null || !selection.CelestialBody.FirstOnPath))
+                {
+                    StartingPathMenu.Visible = false;
+                    StartingPathMenu.CheckedIn = null;
+                }
             }
 
             // Open the celestial body menu
@@ -535,20 +538,7 @@
 
             AlienNextWaveAnimation.TimeNextWave = Math.Max(0, AlienNextWaveAnimation.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
-            if (Simulator.DemoMode)
-            {
-                //GamePausedResistance.StartingObject = null;
-
-                //if (Main.GameInProgress != null && Main.GameInProgress.State == GameState.Paused)
-                //{
-                //    GamePausedResistance.StartingObject = Simulator.CelestialBodyPausedGame;
-
-                //    if (GamePausedResistance.StartingObject != null)
-                //        GamePausedResistance.Update();
-                //}
-            }
-
-            else if (Simulator.State != GameState.Paused)
+            if (Simulator.State != GameState.Paused)
             {
                 StartingPathMenu.Update();
                 LevelStartedAnnunciation.Update();
@@ -572,9 +562,6 @@
 
             if (!Simulator.CutsceneMode)
                 HelpBar.Draw();
-
-            //if (Simulator.WorldMode && GamePausedResistance.StartingObject != null)
-            //    GamePausedResistance.Draw();
 
             if (Simulator.DemoMode)
                 return;
@@ -674,36 +661,55 @@
             var selection = p.ActualSelection;
             var player = Players[p];
 
-            if (Simulator.DemoMode)
+            if (Simulator.WorldMode)
+            {
+                // World Menu
+                if (selection.CelestialBody != null)
+                {
+                    if (selection.PausedGameChoice == PausedGameChoice.None)
+                        HelpBar.ShowMessage(HelpBarMessage.WorldNewGame, p.BasePlayer.InputType);
+                    else if (selection.PausedGameChoice == PausedGameChoice.New)
+                        HelpBar.ShowMessage(HelpBarMessage.WorldToggleNewGame, p.BasePlayer.InputType);
+                    else if (selection.PausedGameChoice == PausedGameChoice.Resume)
+                        HelpBar.ShowMessage(HelpBarMessage.WorldToggleResume, p.BasePlayer.InputType);
+                }
+
+                else
+                {
+                    HelpBar.HideCurrentMessage();
+                }
+            }
+
+            else if (Simulator.DemoMode)
             {
                 // Main menu
                 if (player.CelestialBodyMenu.CelestialBody == null && selection.CelestialBody != null)
                     HelpBar.ShowMessage(HelpBarMessage.Select, p.BasePlayer.InputType);
                 else if (player.CelestialBodyMenu.CelestialBody != null && selection.CelestialBody == null)
                     HelpBar.HideMessage(HelpBarMessage.Select);
-
-                // World Menu
-                if (player.WorldMenu.PausedGameChoice == PausedGameChoice.None && selection.PausedGameChoice != PausedGameChoice.None)
-                    HelpBar.ShowMessage(HelpBarMessage.WorldMenu, p.BasePlayer.InputType);
-                else if (player.WorldMenu.PausedGameChoice != PausedGameChoice.None && selection.PausedGameChoice == PausedGameChoice.None)
-                    HelpBar.HideMessage(HelpBarMessage.WorldMenu);
             }
 
             else
             {
-                // Celestial Body Menu
-                if (player.CelestialBodyMenu.TurretToBuy != selection.TurretToBuy && selection.TurretToBuy != TurretType.None)
-                    HelpBar.ShowMessage(HelpBarMessage.CelestialBodyMenu, player.CelestialBodyMenu.GetHelpBarMessage(selection.TurretToBuy));
-                else if (player.CelestialBodyMenu.TurretToBuy != selection.TurretToBuy && selection.TurretToBuy == TurretType.None)
-                    HelpBar.HideMessage(HelpBarMessage.CelestialBodyMenu);
-
                 // Turret Menu
-                if (player.TurretMenu.Turret != selection.Turret && selection.Turret != null && !selection.Turret.Disabled)
+                if (selection.Turret != null && !selection.Turret.Disabled)
                     HelpBar.ShowMessage(HelpBarMessage.TurretMenu, player.TurretMenu.GetHelpBarMessage(selection.TurretChoice));
-                else if ((selection.Turret != null && selection.Turret.Disabled) || (player.TurretMenu.Turret != selection.Turret && selection.Turret == null))
+                else
                     HelpBar.HideMessage(HelpBarMessage.TurretMenu);
-                else if (selection.Turret != null && !selection.Turret.Disabled && player.TurretMenu.SelectedOption != selection.TurretChoice)
-                    HelpBar.ShowMessage(HelpBarMessage.TurretMenu, player.TurretMenu.GetHelpBarMessage(selection.TurretChoice));
+
+                // Celestial Body Menu
+                if (selection.Turret == null && selection.TurretToPlace == null)
+                {
+                    if (selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
+                        HelpBar.ShowMessage(HelpBarMessage.CallNextWave, StartingPathMenu.GetHelpBarMessage(p.BasePlayer.InputType));
+                    else if (selection.CelestialBody != null)
+                        HelpBar.ShowMessage(HelpBarMessage.CelestialBodyMenu, player.CelestialBodyMenu.GetHelpBarMessage(selection.TurretToBuy));
+                    else
+                    {
+                        HelpBar.HideMessage(HelpBarMessage.CallNextWave);
+                        HelpBar.HideMessage(HelpBarMessage.CelestialBodyMenu);
+                    }
+                }
             }
         }
 

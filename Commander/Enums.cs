@@ -234,7 +234,7 @@ namespace EphemereGames.Commander.Simulation
         Select = 0,
         Cancel = 1,
         ToggleChoices = 2,
-        WorldMenu = 3,
+        WorldToggleNewGame = 3,
         CelestialBodyMenu = 4,
         TurretMenu = 5,
         InstallTurret = 6,
@@ -243,6 +243,10 @@ namespace EphemereGames.Commander.Simulation
         MoveYourSpaceship = 9,
         GameLost = 10,
         GameWon = 11,
-        HoldToSkip = 12
+        HoldToSkip = 12,
+        WorldToggleResume = 13,
+        WorldNewGame = 14,
+        BuyTurret = 15
     };
 }
+

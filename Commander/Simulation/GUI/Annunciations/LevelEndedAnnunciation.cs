@@ -19,7 +19,12 @@
             "Thank you Commander!\n\n\n\n\n\n" +
             "You saved us but the\n\n" +
             "aliens are already\n\n" +
-            "attacking another colony!"
+            "attacking another colony!",
+
+            "That was awesome, Commander!\n\n\n\n\n\n" +
+            "Today you saved many lives,\n\n" +
+            "but the war is not over!\n\n" +
+            "Hurry up! Go save them all!"
         };
 
 
@@ -27,7 +32,11 @@
         {
             "Mouhahaha! ...\n\n\n\n\n\n" +
             "Mouhahahaha! ...\n\n" +
-            "Mouhahahaaaaa! You lost."
+            "Mouhahahaaaaa! You lost.",
+
+            "Nice try for a human! \n\n\n\n\n\n" +
+            "Next time try to press some\n\n" +
+            "buttons on the controller.\n\n"
         };
 
 

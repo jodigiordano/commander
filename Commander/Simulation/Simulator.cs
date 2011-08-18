@@ -604,12 +604,20 @@ namespace EphemereGames.Commander.Simulation
             {
                 if (key == KeyboardConfiguration.QuickToggle)
                     SimPlayersController.DoPausedGameChoice(player, 1);
+                else if (key == KeyboardConfiguration.SelectionNext)
+                    SimPlayersController.DoPausedGameChoice(player, 1);
+                else if (key == KeyboardConfiguration.SelectionPrevious)
+                    SimPlayersController.DoPausedGameChoice(player, -1);
             }
 
             else if (DemoMode)
             {
                 if (key == KeyboardConfiguration.QuickToggle)
                     SimPlayersController.DoNewGameChoice(player, 1);
+                else if (key == KeyboardConfiguration.SelectionNext)
+                    SimPlayersController.DoNewGameChoice(player, 1);
+                else if (key == KeyboardConfiguration.SelectionPrevious)
+                    SimPlayersController.DoNewGameChoice(player, -1);
             }
 
             else

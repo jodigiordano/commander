@@ -21,7 +21,8 @@
         private double VisualPriority;
         private Color Color;
 
-        private List<KeyValuePair<string, PanelWidget>> HBMessage;
+        private List<KeyValuePair<string, PanelWidget>> HBMessageOneTurret;
+        private List<KeyValuePair<string, PanelWidget>> HBMessageManyTurrets;
         private Label TurretDescription;
 
 
@@ -33,12 +34,17 @@
 
             TurretDescription = new Label(new Text("Pixelite") { SizeX = 2f });
             
-            HBMessage = new List<KeyValuePair<string, PanelWidget>>();
-            HBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
-            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
-            HBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.Select, inputType));
-            HBMessage.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
-            HBMessage.Add(new KeyValuePair<string, PanelWidget>("turretDescription", TurretDescription));
+            HBMessageOneTurret = new List<KeyValuePair<string, PanelWidget>>();
+            HBMessageOneTurret.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.BuyTurret, inputType));
+            HBMessageOneTurret.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
+            HBMessageOneTurret.Add(new KeyValuePair<string, PanelWidget>("turretDescription", TurretDescription));
+
+            HBMessageManyTurrets = new List<KeyValuePair<string, PanelWidget>>();
+            HBMessageManyTurrets.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
+            HBMessageManyTurrets.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
+            HBMessageManyTurrets.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.BuyTurret, inputType));
+            HBMessageManyTurrets.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
+            HBMessageManyTurrets.Add(new KeyValuePair<string, PanelWidget>("turretDescription", TurretDescription));
         }
 
 
@@ -86,7 +92,7 @@
         {
             TurretDescription.SetData(Simulator.TurretsFactory.All[turretToBuy].Description);
 
-            return HBMessage;
+            return AvailableTurrets.Count > 1 ? HBMessageManyTurrets : HBMessageOneTurret;
         }
 
 

@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -81,6 +82,14 @@
                     NextWaveCompositionChoice.Color = value.Color;
                 }
             }
+        }
+
+
+        public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(InputType type)
+        {
+            return RemainingWaves > 0 ?
+            Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.CallNextWave, type) :
+            Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.None, type);
         }
 
 
