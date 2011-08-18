@@ -19,7 +19,7 @@
         public static bool HomeMadeValidation = false;
 #else
         public static bool Debug = false;
-        public static bool FullScreen = true;
+        public static bool FullScreen = false/*true*/;
         public static bool HomeMadeValidation = true;
 #endif
 

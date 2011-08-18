@@ -140,7 +140,7 @@
             Main.PlayerSaveGame.Scores.TryGetValue(descriptor.Infos.Id, out score);
 
             Stars.Position = CelestialBody.Position + new Vector3(5, CelestialBody.Circle.Radius + 20, 0);
-            Stars.BrightCount = descriptor.NbStars(score);
+            Stars.BrightCount = descriptor.GetStarsCount(score);
             Stars.Draw();
         }
     }

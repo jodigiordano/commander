@@ -10,6 +10,7 @@
         private Text RemainingCash;
         private Text RemainingLives;
         private Text TimeTaken;
+        private Text Percentage;
         private Text FinalScore;
         private Image RemainingCashLogo;
         private Image TimeTakenLogo;
@@ -21,7 +22,7 @@
         private Scene Scene;
 
 
-        public ScoreCalculation(Scene scene, int remainingCash, int remainingLifes, int timeTaken, double visualPriority)
+        public ScoreCalculation(Scene scene, int remainingCash, int remainingLifes, int timeTaken, int percentage, double visualPriority)
         {
             Scene = scene;
 
@@ -46,6 +47,13 @@
 
 
             TimeTaken = new Text(timeTaken.ToString(), "Pixelite", Vector3.Zero)
+            {
+                SizeX = 2,
+                Alpha = 0
+            };
+
+
+            Percentage = new Text(percentage + "%", "Pixelite", Vector3.Zero)
             {
                 SizeX = 2,
                 Alpha = 0
@@ -116,6 +124,7 @@
                 RemainingCash.Position = RemainingCashLogo.Position + new Vector3(RemainingCashLogo.AbsoluteSize.X + 10, 0, 0);
                 RemainingLives.Position = RemainingCash.Position;
                 TimeTaken.Position = RemainingCash.Position;
+                Percentage.Position = RemainingCashLogo.Position;
                 FinalScore.Position = RemainingCashLogo.Position;
             }
         }
@@ -133,6 +142,7 @@
                 RemainingCash.Alpha = value;
                 RemainingLives.Alpha = value;
                 TimeTaken.Alpha = value;
+                Percentage.Alpha = value;
                 FinalScore.Alpha = value;
                 RemainingCashLogo.Alpha = value;
                 RemainingLivesLogo.Alpha = value;
@@ -181,6 +191,14 @@
                 Scene.Add(TimeTaken);
                 Scene.Add(TimeTakenLogo);
             }
+
+
+            else if (Elapsed < IndividualShowLength * 4)
+            {
+                Percentage.Alpha = (byte) MathHelper.Clamp(255 * ((IndividualShowLength * 4 - Elapsed) / (IndividualShowLength / 2)), 0, 255);
+                Scene.Add(Percentage);
+            }
+
 
             else
             {

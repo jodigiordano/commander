@@ -15,6 +15,7 @@
         public int TotalTime;
         public int TotalLives;
         public int TotalCash;
+        public int PotentialScore;
 
         public Vector3 StartingPosition;
 

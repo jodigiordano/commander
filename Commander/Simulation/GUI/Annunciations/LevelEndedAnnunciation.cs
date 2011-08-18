@@ -50,7 +50,7 @@
                 state == GameState.Won ? WonQuotes[Main.Random.Next(0, WonQuotes.Count)] : LostQuotes[Main.Random.Next(0, LostQuotes.Count)],
                 state == GameState.Won ? Colors.Default.HumansBright : Colors.Default.AlienBright,
                 Level.CommonStash,
-                Level.NbStars(Level.CommonStash.TotalScore)
+                Level.GetStarsCount(Level.CommonStash.TotalScore)
             );
 
             CelestialBody = state == GameState.Won ? Path.LastCelestialBody : Path.FirstCelestialBody;

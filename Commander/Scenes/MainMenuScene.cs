@@ -36,10 +36,6 @@
 
             LevelDescriptor levelDescriptor = Main.LevelsFactory.Menu;
 
-#if !DEBUG
-            levelDescriptor.PlanetarySystem[5].CanSelect = false;
-#endif
-
             Simulator = new Simulator(this, levelDescriptor)
             {
                 DemoMode = true,

@@ -184,7 +184,7 @@
                 case EnemyType.Meteoroid: size = 35; break;
                 case EnemyType.Plutoid: size = 35; break;
                 case EnemyType.Trojan: size = 15; break;
-                case EnemyType.Damacloid: size = 20; break;
+                case EnemyType.Damacloid: size = 24; break;
                 case EnemyType.Vulcanoid: size = 20; break;
                 case EnemyType.Swarm: size = 10; break;
             }

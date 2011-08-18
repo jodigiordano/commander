@@ -157,9 +157,39 @@
         }
 
 
-        public int NbStars(int score)
+        public int GetStarsCount(int score)
         {
-            return Descriptor.NbStars(score);
+            return Descriptor.GetStarsCount(score);
+        }
+
+
+        public int GetTotalCash(int cash)
+        {
+            return Descriptor.GetTotalCash(cash);
+        }
+
+
+        public int GetTotalLives(int lives)
+        {
+            return Descriptor.GetTotalLives(lives);
+        }
+
+
+        public int GetTotalTime(double time)
+        {
+            return Descriptor.GetTotalTime(time);
+        }
+
+
+        public int GetTotalScore(double time, int cash, int lives)
+        {
+            return Descriptor.GetFinalScore(lives, cash, (int) time);
+        }
+
+
+        public int GetPotentialScore()
+        {
+            return Descriptor.GetPotentialScore();
         }
 
 

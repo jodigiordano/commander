@@ -150,7 +150,7 @@
         }
 
 
-        public int NbStars(int score)
+        public int GetPotentialScore()
         {
             int maxCash = 0;
 
@@ -159,13 +159,43 @@
 
             int maxLives = Player.Lives + Minerals.LifePacks;
 
-            int bestScore = (maxLives * 50) + maxCash + (int)(ParTime / 100);
+            return (int) ((GetTotalLives(maxLives) + GetTotalCash(maxCash) + GetTotalTime(ParTime * 0.75)) * 0.60);
+        }
 
-            bestScore = (int) (bestScore * 0.75);
 
-            return (score >= bestScore) ? 3 :
-                   (score >= bestScore * 0.75) ? 2 :
-                   (score >= bestScore * 0.5) ? 1 : 0;
+        public int GetStarsCount(int score)
+        {
+            if (score == 0)
+                return 0;
+
+            int best = GetPotentialScore();
+
+            return (score >= best) ? 3 :
+                   (score >= best * 0.75) ? 2 : 1;
+        }
+
+
+        public int GetFinalScore(int lives, int cash, int time)
+        {
+            return GetTotalLives(lives) + GetTotalCash(cash) + GetTotalTime(time);
+        }
+
+
+        public int GetTotalCash(int cash)
+        {
+            return cash;
+        }
+
+
+        public int GetTotalLives(int lives)
+        {
+            return lives * 50;
+        }
+
+
+        public int GetTotalTime(double time)
+        {
+            return (int) (time / 100);
         }
 
 

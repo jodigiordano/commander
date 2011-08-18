@@ -281,18 +281,18 @@
         {
             ElapsedTime = Math.Min(Level.ParTime, ElapsedTime);
 
-            Level.CommonStash.Time = (int) (Level.ParTime - ElapsedTime);
 
-            Level.CommonStash.TotalCash = Level.CommonStash.Cash;
-            Level.CommonStash.TotalLives = Level.CommonStash.Lives * 50;
-            Level.CommonStash.TotalTime = 0;
+            // get data
+            var time = (State == GameState.Won) ? Level.ParTime - ElapsedTime : 0;
+            var cash = Level.CommonStash.Cash;
+            var lives = Level.CommonStash.Lives;
 
-            if (State == GameState.Won)
-                Level.CommonStash.TotalTime = Level.CommonStash.Time / 100;
-
-            Level.CommonStash.TotalScore += Level.CommonStash.TotalCash;
-            Level.CommonStash.TotalScore += Level.CommonStash.TotalLives;
-            Level.CommonStash.TotalScore += Level.CommonStash.TotalTime;
+            // set totals
+            Level.CommonStash.TotalCash = Level.GetTotalCash(cash);
+            Level.CommonStash.TotalLives = Level.GetTotalLives(lives);
+            Level.CommonStash.TotalTime = Level.GetTotalTime(time);
+            Level.CommonStash.TotalScore = Level.GetTotalScore(time, cash, lives);
+            Level.CommonStash.PotentialScore = Level.GetPotentialScore();
 
             NotifyCommonStashChanged(Level.CommonStash);
         }
