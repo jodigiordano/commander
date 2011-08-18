@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -33,7 +34,7 @@
             if (CelestialBody == null || RemainingWaves == 0)
                 return;
 
-            Progress.Data = RemainingWaves + " | " + ((int) TimeNextWave / 1000);
+            Progress.Data = RemainingWaves + " | " + String.Format("{0:0.0}", TimeNextWave / 1000);
             Progress.CenterIt();
 
             Progress.Position = CelestialBody.Position + new Vector3(0, CelestialBody.Circle.Radius + 15, 0);
