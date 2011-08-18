@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
 
-    class PlayerLives
+    class PlayerLivesMoons
     {
         private CelestialBody celestialBody;
 
@@ -12,7 +12,7 @@
         private List<Moon> Moons;
 
 
-        public PlayerLives(Simulator simulator)
+        public PlayerLivesMoons(Simulator simulator)
         {
             Simulator = simulator;
 

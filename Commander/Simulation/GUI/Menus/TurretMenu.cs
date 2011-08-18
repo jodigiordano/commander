@@ -92,7 +92,7 @@
 
             if (sell.Active)
             {
-                sell.SetText("+" + Turret.SellPrice + "M$");
+                sell.SetText("+" + Turret.SellPrice + "$");
                 sell.SetColor((AvailableTurretOptions[0]) ? Color.White : Color.Red);
             }
 
@@ -102,7 +102,7 @@
 
             if (upgrade.Active)
             {
-                upgrade.SetPrice("-" + Turret.UpgradePrice + "M$");
+                upgrade.SetPrice("-" + Turret.UpgradePrice + "$");
                 upgrade.SetLevel((Turret.Level + 1).ToString());
                 upgrade.SetColor((AvailableTurretOptions[TurretChoice.Update]) ? Color.White : Color.Red);
             }

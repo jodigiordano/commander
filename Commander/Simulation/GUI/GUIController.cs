@@ -39,7 +39,7 @@
         private GameMenu GameMenu;
         private LevelStartedAnnunciation LevelStartedAnnunciation;
         private LevelEndedAnnunciation LevelEndedAnnunciation;
-        private PlayerLives PlayerLives;
+        //private PlayerLivesLiteral PlayerLives;
         private CelestialBodyNearHitAnimation CelestialBodyNearHit;
         private AlienNextWaveAnimation AlienNextWaveAnimation;
         private TheResistance GamePausedResistance;
@@ -87,10 +87,10 @@
             LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulator, Level);
             LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, Path, Level);
 
-            PlayerLives = new PlayerLives(Simulator)
-            {
-                CelestialBody = Level.CelestialBodyToProtect
-            };
+            //PlayerLives = new PlayerLivesLiteral(Simulator) //new PlayerLivesMoons(Simulator)
+            //{
+            //    CelestialBody = Level.CelestialBodyToProtect
+            //};
 
             PathPreviewing = new PathPreview(PathPreview, Path);
 
@@ -221,6 +221,7 @@
         {
             //GameMenu.Score = stash.TotalScore;
             GameMenu.Cash = stash.Cash;
+            GameMenu.Lives = stash.Lives;
         }
 
 
@@ -552,7 +553,7 @@
                 StartingPathMenu.Update();
                 LevelStartedAnnunciation.Update();
                 LevelEndedAnnunciation.Update();
-                PlayerLives.Update();
+                //PlayerLives.Update();
                 MenuPowerUps.Update();
                 PathPreviewing.Update();
                 GameMenu.Update();
@@ -582,7 +583,7 @@
             LevelStartedAnnunciation.Draw();
             LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();
-            PlayerLives.Draw();
+            //PlayerLives.Draw();
             MenuPowerUps.Draw();
             PathPreviewing.Draw();
             CelestialBodyNearHit.Draw();
@@ -608,28 +609,28 @@
 
             else if (command.Name == "Clear")
             {
-                PlayerLives.CelestialBody = null;
+                //PlayerLives.CelestialBody = null;
             }
 
             else if (command.Name == "AddPlanet" || command.Name == "PushFirst" || command.Name == "PushLast")
             {
-                PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
+                //PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
             }
 
             else if (command.Name == "Remove")
             {
-                PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
+                //PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
             }
 
             else if (command.Name == "ToggleSize")
             {
                 var c = (EditorCelestialBodyCommand) command;
 
-                if (c.CelestialBody == PlayerLives.CelestialBody)
-                {
-                    PlayerLives.CelestialBody = null;
-                    PlayerLives.CelestialBody = c.CelestialBody;
-                }
+                //if (c.CelestialBody == PlayerLives.CelestialBody)
+                //{
+                //    PlayerLives.CelestialBody = null;
+                //    PlayerLives.CelestialBody = c.CelestialBody;
+                //}
             }
 
             else if (command.Name == "ShowCelestialBodiesPaths")

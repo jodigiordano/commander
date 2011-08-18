@@ -55,7 +55,7 @@
                 image.Origin = Vector2.Zero;
 
                 Choices.Add(new LogoTextContextualMenuChoice("Buy",
-                    new Text(t.BuyPrice + "M$", "Pixelite") { SizeX = 2 },
+                    new Text(t.BuyPrice + "$", "Pixelite") { SizeX = 2 },
                     image) { LogoOffet = new Vector3(0, -2, 0) });
             }
 

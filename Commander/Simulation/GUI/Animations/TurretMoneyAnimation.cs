@@ -12,7 +12,7 @@
         public TurretMoneyAnimation(int value, bool plusSign, Vector3 position, double visualPriority)
             : base(1000, visualPriority)
         {
-            MoneySpent = new Text((plusSign? "+" : "-") + value + "M$", "Pixelite", position)
+            MoneySpent = new Text((plusSign? "+" : "-") + value + "$", "Pixelite", position)
             {
                 SizeX = 2,
                 VisualPriority = visualPriority

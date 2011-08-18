@@ -138,6 +138,8 @@
     <Compile Include="Simulation\GUI\Menus\NextWaveContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\StartingPathMenu.cs" />
     <Compile Include="Simulation\GUI\PlayerCash.cs" />
+    <Compile Include="Simulation\GUI\PlayerLivesLiteral.cs" />
+    <Compile Include="Simulation\GUI\PlayerLivesMoons.cs" />
     <Compile Include="Simulation\GUI\ScoreCalculation.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Player\HighScores.cs" />
@@ -285,7 +287,6 @@
     <Compile Include="Simulation\Player\SelectedCelestialBodyController.cs" />
     <Compile Include="GUI\Cursor.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\EnemiesLives.cs" />
-    <Compile Include="Simulation\GUI\PlayerLives.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\AdvancedView.cs" />
     <Compile Include="Simulation\PlanetarySystem\AsteroidBelt.cs" />
     <Compile Include="Simulation\Bullets\SlowMotionBullet.cs" />

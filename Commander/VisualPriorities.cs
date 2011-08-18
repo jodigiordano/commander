@@ -81,6 +81,7 @@
         public const double CelestialBody = 0.7;
         public const double CelestialBodySelection = 0.71;
 
+        public const double PlayerLives = 0.72;
         public const double NextWavePreview = 0.72;
 
         public const double MineBullet = 0.8;

@@ -31,7 +31,7 @@
             if (CelestialBody == null)
                 return;
 
-            Cash.Data = Stash.Cash + "M$";
+            Cash.Data = Stash.Cash + "$";
             Cash.CenterIt();
             Cash.Position = CelestialBody.Position + new Vector3(0, CelestialBody.Circle.Radius + 10, 0);
 

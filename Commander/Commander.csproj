@@ -243,6 +243,7 @@
     <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
     <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />
+    <Compile Include="Simulation\GUI\PlayerLivesLiteral.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuLayout.cs" />
     <Compile Include="Simulation\GUI\Menus\NextWaveContextualMenuChoice.cs" />
@@ -332,7 +333,7 @@
     <Compile Include="Simulation\GUI\Annunciations\LevelStartedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\EnemiesLives.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenu.cs" />
-    <Compile Include="Simulation\GUI\PlayerLives.cs" />
+    <Compile Include="Simulation\GUI\PlayerLivesMoons.cs" />
     <Compile Include="GUI\SandGlass.cs" />
     <Compile Include="Simulation\GUI\Menus\GameMenu.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\AdvancedView.cs" />

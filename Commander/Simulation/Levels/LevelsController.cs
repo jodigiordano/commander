@@ -279,7 +279,7 @@
 
         private void ComputeFinalScore()
         {
-            ElapsedTime = Math.Min(Level.ParTime, ElapsedTime);
+            ElapsedTime = Math.Min(Level.ParTime, ElapsedTime * 0.75);
 
 
             // get data

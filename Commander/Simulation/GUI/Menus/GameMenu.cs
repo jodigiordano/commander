@@ -6,20 +6,14 @@
 
     class GameMenu
     {
-        //public int Score;
         public int Cash;
-        //public int RemainingWaves;
-        //public double TimeNextWave;
-
-        //public NextWaveMenu MenuNextWave;
-        //public SandGlass SandGlass;
-
-        //public PhysicalRectangle Rectangle;
+        public int Lives;
 
         private Simulator Simulator;
-        //private Text WidgetScore;
-        private Text WidgetCash;
-        //private Text WidgetRemainingWaves;
+        private Image CashImage;
+        private Text CashText;
+        private Image LivesImage;
+        private Text LivesText;
         private Vector3 Position;
 
         private bool Faded;
@@ -30,64 +24,51 @@
             Simulator = simulator;
             Position = position;
 
-            //SandGlass = new SandGlass(simulator.Scene, 50000, this.Position, Preferences.PrioriteGUIPanneauGeneral + 0.05f)
-            //{
-            //    Alpha = 0
-            //};
-            
             Cash = 0;
 
+            CashImage = new Image("ScoreMoney")
+            {
+                SizeX = 4,
+                Alpha = 0,
+                VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05,
+                Position = Position,
+                Origin = Vector2.Zero
+            };
 
-            WidgetCash = new Text
-            (
-                Cash + "M$",
-                "Pixelite",
-                new Color(255, 255, 255, 0),
-                Position
-            );
-            WidgetCash.VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
-            WidgetCash.SizeX = 3;
+            CashText = new Text("Pixelite")
+            {
+                Alpha = 0,
+                VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05,
+                SizeX = 3,
+                Position = CashImage.Position + new Vector3(CashImage.AbsoluteSize.X + 5, 0, 0)
+            };
 
-            //WidgetRemainingWaves = new Text
-            //(
-            //    RemainingWaves.ToString(),
-            //    "Pixelite",
-            //    new Color(255, 255, 255, 0),
-            //    Position + new Vector3(30, -40, 0)
-            //);
-            //WidgetRemainingWaves.VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
-            //WidgetRemainingWaves.SizeX = 3;
 
-            //WidgetScore = new Text
-            //(
-            //    Score.ToString(),
-            //    "Pixelite",
-            //    new Color(255, 255, 255, 0),
-            //    Position + new Vector3(30, 40, 0)
-            //);
-            //WidgetScore.VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05f;
-            //WidgetScore.SizeX = 3;
+            LivesImage = new Image("ScoreLives")
+            {
+                SizeX = 4,
+                Alpha = 0,
+                VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05,
+                Position = Position + new Vector3(0, CashImage.AbsoluteSize.Y, 0),
+                Origin = Vector2.Zero
+            };
+
+            LivesText = new Text("Pixelite")
+            {
+                Alpha = 0,
+                VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05,
+                SizeX = 3,
+                Position = LivesImage.Position + new Vector3(LivesImage.AbsoluteSize.X + 5, 0, 0)
+            };
 
             Faded = true;
             FadeIn(255, 3000);
-
-            //Rectangle = new PhysicalRectangle(SandGlass.Rectangle.Left, SandGlass.Rectangle.Top, SandGlass.Rectangle.Width + 200, SandGlass.Rectangle.Height + 30);
         }
-
-
-        //public Dictionary<EnemyType, EnemyDescriptor> CompositionNextWave
-        //{
-        //    set
-        //    {
-        //        //MenuNextWave = new NextWaveMenu(Simulator, value, this.Position - new Vector3(150, 30, 0), Preferences.PrioriteGUIPanneauGeneral + 0.049f);
-        //    }
-        //}
 
 
         public void Update()
         {
-            //SandGlass.RemainingTime = TimeNextWave;
-            //SandGlass.Update();
+
         }
 
 
@@ -96,10 +77,12 @@
             if (!Faded)
                 return;
 
-            //Simulator.Scene.VisualEffects.Add(WidgetScore, Core.Visual.VisualEffects.Fade(WidgetScore.Alpha, to, 0, length));
-            Simulator.Scene.VisualEffects.Add(WidgetCash, Core.Visual.VisualEffects.Fade(WidgetCash.Alpha, to, 0, length));
-            //Simulator.Scene.VisualEffects.Add(WidgetRemainingWaves, Core.Visual.VisualEffects.Fade(WidgetRemainingWaves.Alpha, to, 0, length));
-            //SandGlass.Fade(to, 0, length);
+            var effect = Core.Visual.VisualEffects.Fade(CashImage.Alpha, to, 0, length);
+
+            Simulator.Scene.VisualEffects.Add(CashImage, effect);
+            Simulator.Scene.VisualEffects.Add(CashText, effect);
+            Simulator.Scene.VisualEffects.Add(LivesImage, effect);
+            Simulator.Scene.VisualEffects.Add(LivesText, effect);
             Faded = false;
         }
 
@@ -109,27 +92,25 @@
             if (Faded)
                 return;
 
-            //Simulator.Scene.VisualEffects.Add(WidgetScore, Core.Visual.VisualEffects.Fade(WidgetScore.Alpha, to, 0, length));
-            Simulator.Scene.VisualEffects.Add(WidgetCash, Core.Visual.VisualEffects.Fade(WidgetCash.Alpha, to, 0, length));
-            //Simulator.Scene.VisualEffects.Add(WidgetRemainingWaves, Core.Visual.VisualEffects.Fade(WidgetRemainingWaves.Alpha, to, 0, length));
-            //SandGlass.Fade(to, 0, length);
+            var effect = Core.Visual.VisualEffects.Fade(CashText.Alpha, to, 0, length);
+
+            Simulator.Scene.VisualEffects.Add(CashImage, effect);
+            Simulator.Scene.VisualEffects.Add(CashText, effect);
+            Simulator.Scene.VisualEffects.Add(LivesImage, effect);
+            Simulator.Scene.VisualEffects.Add(LivesText, effect);
             Faded = true;
         }
 
 
         public void Draw()
         {
+            CashText.Data = Cash.ToString();
+            LivesText.Data = Lives.ToString();
 
-            WidgetCash.Data = Cash + "M$";
-            //WidgetRemainingWaves.Data = (RemainingWaves == -1) ? "Inf." : RemainingWaves.ToString();
-            //WidgetScore.Data = Score.ToString();
-
-            Simulator.Scene.Add(WidgetCash);
-            //Simulator.Scene.Add(WidgetRemainingWaves);
-            //Simulator.Scene.Add(WidgetScore);
-
-            //SandGlass.Draw();
-            //MenuNextWave.Draw();
+            Simulator.Scene.Add(CashImage);
+            Simulator.Scene.Add(CashText);
+            Simulator.Scene.Add(LivesImage);
+            Simulator.Scene.Add(LivesText);
         }
     }
 }
