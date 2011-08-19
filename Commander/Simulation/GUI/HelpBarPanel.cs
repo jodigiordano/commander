@@ -160,7 +160,7 @@
                     new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Resume game", "Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.WorldNewGame, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Startt a new game", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Start a new game", "Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.GameLost, new List<KeyValuePair<string, PanelWidget>>() {
                     new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Retry", "Pixelite") { SizeX = 2f })),

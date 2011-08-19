@@ -17,18 +17,19 @@
         private ImageLabel TimeNextWaveText;
         private NextWaveWidget NextWaveWidget;
 
+
         private int remainingWaves;
         private double timeNextWave;
 
 
         public GameBarPanel(Simulator simulator, double visualPriority)
-            : base(simulator.Scene, new Vector3(0, (-simulator.Scene.Height / 2) + 32, 0), new Vector2(simulator.Scene.Width, 35), visualPriority, Color.White)
+            : base(simulator.Scene, new Vector3(0, (-simulator.Scene.Height / 2) + 34, 0), new Vector2(simulator.Scene.Width, 45), visualPriority, Color.White)
         {
             Simulator = simulator;
 
             ShowCloseButton = false;
             ShowFrame = false;
-            BackgroundAlpha = 150;
+            BackgroundAlpha = 100;
 
             if (Preferences.Target == Core.Utilities.Setting.Xbox360)
             {
@@ -38,27 +39,27 @@
 
             CashWidget = new ImageLabel(new Image("ScoreMoney") { SizeX = 4 }, new Text("Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(50, -5, 0)
+                Position = Position + new Vector3(50, 0, 0)
             };
 
             LivesWidget = new ImageLabel(new Image("ScoreLives") { SizeX = 4 }, new Text("Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(250, - 5, 0)
+                Position = Position + new Vector3(250, 0, 0)
             };
 
             TimeNextWaveText = new ImageLabel(new Image("ScoreTime") { SizeX = 4 }, new Text("Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(850, -5, 0)
+                Position = Position + new Vector3(850, 0, 0)
             };
 
             RemainingWavesWidget = new ImageLabel(new Image("ScoreWaves") { SizeX = 4 }, new Text("Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(700, -5, 0)
+                Position = Position + new Vector3(700, 0, 0)
             };
 
             NextWaveWidget = new NextWaveWidget()
             {
-                Position = Position + new Vector3(1000, -5, 0)
+                Position = Position + new Vector3(1000, 0, 0)
             };
 
             AddWidget("Cash", CashWidget);
@@ -89,6 +90,13 @@
                 remainingWaves = value;
 
                 RemainingWavesWidget.SetData(value.ToString());
+
+                if (remainingWaves == 0)
+                {
+                    RemoveWidget("Remaining");
+                    RemoveWidget("Time");
+                    RemoveWidget("NextWave");
+                }
             }
         }
 
