@@ -246,7 +246,9 @@ namespace EphemereGames.Commander.Simulation
         HoldToSkip = 12,
         WorldToggleResume = 13,
         WorldNewGame = 14,
-        BuyTurret = 15
+        BuyTurret = 15,
+        ToggleChoicesSelect = 16,
+        StartNewCampaign = 17
     };
 }
 

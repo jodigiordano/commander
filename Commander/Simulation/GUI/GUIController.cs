@@ -696,10 +696,17 @@
             else if (Simulator.DemoMode)
             {
                 // Main menu
-                if (player.CelestialBodyMenu.CelestialBody == null && selection.CelestialBody != null)
-                    HelpBar.ShowMessage(HelpBarMessage.Select, p.BasePlayer.InputType);
-                else if (player.CelestialBodyMenu.CelestialBody != null && selection.CelestialBody == null)
-                    HelpBar.HideMessage(HelpBarMessage.Select);
+                if (selection.CelestialBody != null && selection.CelestialBody.Name == "save the world")
+                    HelpBar.ShowMessage(player.NewGameMenu.GetHelpBarMessage(), p.BasePlayer.InputType);
+                else
+                {
+                    HelpBar.HideMessage(player.NewGameMenu.GetHelpBarMessage());
+
+                    if (selection.CelestialBody != null)
+                        HelpBar.ShowMessage(HelpBarMessage.Select, p.BasePlayer.InputType);
+                    else
+                        HelpBar.HideMessage(HelpBarMessage.Select);
+                }
             }
 
             else

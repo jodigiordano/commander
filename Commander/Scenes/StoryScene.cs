@@ -37,6 +37,7 @@
 
             HelpBar = new HelpBarPanel(this, VisualPriorities.Cutscenes.HelpBar);
             HelpBar.ShowMessage(HelpBarMessage.HoldToSkip, InputType.Gamepad);
+            InputType = InputType.Gamepad;
 
             Initialize();
         }

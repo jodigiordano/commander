@@ -34,7 +34,7 @@
                 for (int i = 1; i <= maxWorld; i++)
                     AddChoice(new TextContextualMenuChoice("jumpto", new Text("Jump to World " + i, "Pixelite") { SizeX = 2 }));
 
-            AddChoice(new TextContextualMenuChoice("new", new Text("New game", "Pixelite") { SizeX = 2 }));
+            AddChoice(new TextContextualMenuChoice("new", new Text("New campaign", "Pixelite") { SizeX = 2 }));
         }
 
 
@@ -49,6 +49,12 @@
             }
 
             set { base.Visible = value; }
+        }
+
+
+        public HelpBarMessage GetHelpBarMessage()
+        {
+            return Choices.Count == 0 ? HelpBarMessage.StartNewCampaign : HelpBarMessage.ToggleChoicesSelect;
         }
 
 
