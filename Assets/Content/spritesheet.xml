@@ -141,6 +141,7 @@
     <Item><Key>ScoreLives</Key><Value>GUI/Score/lives.png</Value></Item>
     <Item><Key>ScoreMoney</Key><Value>GUI/Score/money.png</Value></Item>
     <Item><Key>ScoreTime</Key><Value>GUI/Score/time.png</Value></Item>
+    <Item><Key>ScoreWaves</Key><Value>GUI/Score/waves.png</Value></Item>
     
     
     <!-- Cursors -->

@@ -243,6 +243,8 @@
     <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
     <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />
+    <Compile Include="Simulation\GUI\GameBarPanel.cs" />
+    <Compile Include="Simulation\GUI\NextWaveWidget.cs" />
     <Compile Include="Simulation\GUI\PlayerLivesLiteral.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuLayout.cs" />

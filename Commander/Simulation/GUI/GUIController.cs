@@ -44,6 +44,7 @@
         private AlienNextWaveAnimation AlienNextWaveAnimation;
         private TheResistance GamePausedResistance;
         private NextWavePreview NextWavePreview;
+        private GameBarPanel GameBarPanel;
 
         private ContextualMenusCollisions ContextualMenusCollisions;
 
@@ -68,6 +69,8 @@
             {
                 Alpha = 0
             };
+
+            GameBarPanel = new Simulation.GameBarPanel(Simulator, VisualPriorities.Default.GameBar);
 
             NextWavePreview = new NextWavePreview(simulator, VisualPriorities.Default.NextWavePreview);
         }
@@ -101,6 +104,7 @@
             StartingPathMenu.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
             StartingPathMenu.TimeNextWave = (InfiniteWaves == null && Waves.Count != 0) ? Waves.First.Value.StartingTime : 0;
             NextWavePreview.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
+            GameBarPanel.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
 
 
             if (!Simulator.DemoMode)
@@ -214,6 +218,7 @@
         public void DoNextWaveCompositionChanged(WaveDescriptor composition)
         {
             StartingPathMenu.NextWaveComposition = composition;
+            GameBarPanel.NextWaveComposition = composition;
         }
 
 
@@ -222,6 +227,9 @@
             //GameMenu.Score = stash.TotalScore;
             GameMenu.Cash = stash.Cash;
             GameMenu.Lives = stash.Lives;
+
+            GameBarPanel.Cash = stash.Cash;
+            GameBarPanel.Lives = stash.Lives;
         }
 
 
@@ -330,6 +338,7 @@
         {
             StartingPathMenu.RemainingWaves--;
             NextWavePreview.RemainingWaves--;
+            GameBarPanel.RemainingWaves--;
 
             if (!Simulator.DemoMode)
                 Audio.PlaySfx(@"sfxNouvelleVague");
@@ -567,7 +576,7 @@
                 return;
 
             StartingPathMenu.Draw();
-            LevelStartedAnnunciation.Draw();
+            //LevelStartedAnnunciation.Draw();
             LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();
             //PlayerLives.Draw();
@@ -575,8 +584,9 @@
             PathPreviewing.Draw();
             CelestialBodyNearHit.Draw();
             AlienNextWaveAnimation.Draw();
-            GameMenu.Draw();
-            NextWavePreview.Draw();
+            //GameMenu.Draw();
+            //NextWavePreview.Draw();
+            GameBarPanel.Draw();
         }
 
 
@@ -653,6 +663,9 @@
             // Sync next wave preview
             NextWavePreview.CelestialBody = Path.FirstCelestialBody;
             NextWavePreview.TimeNextWave = StartingPathMenu.TimeNextWave;
+
+            // Game bar panel
+            GameBarPanel.TimeNextWave = StartingPathMenu.TimeNextWave;
         }
 
 

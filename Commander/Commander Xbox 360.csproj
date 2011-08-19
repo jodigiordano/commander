@@ -133,10 +133,12 @@
     <Compile Include="Simulation\GUI\Animations\PinkHoleLite.cs" />
     <Compile Include="Simulation\GUI\Animations\TeleportAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TurretMoneyAnimation.cs" />
+    <Compile Include="Simulation\GUI\GameBarPanel.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuLayout.cs" />
     <Compile Include="Simulation\GUI\Menus\NextWaveContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\StartingPathMenu.cs" />
+    <Compile Include="Simulation\GUI\NextWaveWidget.cs" />
     <Compile Include="Simulation\GUI\PlayerCash.cs" />
     <Compile Include="Simulation\GUI\PlayerLivesLiteral.cs" />
     <Compile Include="Simulation\GUI\PlayerLivesMoons.cs" />

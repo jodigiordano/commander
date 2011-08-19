@@ -53,6 +53,7 @@
                 Origin = Vector2.Zero
             };
 
+
             LivesText = new Text("Pixelite")
             {
                 Alpha = 0,
@@ -60,6 +61,7 @@
                 SizeX = 3,
                 Position = LivesImage.Position + new Vector3(LivesImage.AbsoluteSize.X + 5, 0, 0)
             };
+
 
             Faded = true;
             FadeIn(255, 3000);

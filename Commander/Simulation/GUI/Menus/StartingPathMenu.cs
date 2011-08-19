@@ -16,7 +16,7 @@
         private double VisualPriority;
 
         private TextContextualMenuChoice CallTheNextWave;
-        private NextWaveContextualMenuChoice NextWaveCompositionChoice;
+        //private NextWaveContextualMenuChoice NextWaveCompositionChoice;
         //private ColoredTextContextualMenuChoice RemainingWavesChoice;
         private ColoredTextContextualMenuChoice RemainingEnemiesChoice;
         //private ColoredTextContextualMenuChoice TimeNextWaveChoice;
@@ -36,7 +36,7 @@
             
             //RemainingWavesChoice = new ColoredTextContextualMenuChoice("RemainingWaves", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
             RemainingEnemiesChoice = new ColoredTextContextualMenuChoice("RemainingEnemies", new ColoredText(new List<string>() { "", "" }, new Color[] { Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
-            NextWaveCompositionChoice = new NextWaveContextualMenuChoice("NextWaveComposition");
+            //NextWaveCompositionChoice = new NextWaveContextualMenuChoice("NextWaveComposition");
             //TimeNextWaveChoice = new ColoredTextContextualMenuChoice("TimeRemainingChoice", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
             CallTheNextWave = new TextContextualMenuChoice("CallTheNextWave", new Text("I'm ready! Bring it on!", "Pixelite") { SizeX = 2 });
 
@@ -45,10 +45,10 @@
             //choices.Add(RemainingWavesChoice);
             //choices.Add(TimeNextWaveChoice);
             //choices.Add(RemainingEnemiesChoice);
-            choices.Add(NextWaveCompositionChoice);
+            //choices.Add(NextWaveCompositionChoice);
             choices.Add(CallTheNextWave);
 
-            Menu = new ContextualMenu(Simulator, VisualPriority, Color.White, choices, 5) { SelectedIndex = 1 };
+            Menu = new ContextualMenu(Simulator, VisualPriority, Color.White, choices, 5) { SelectedIndex = 0 };
 
             remainingWaves = 0;
             timeNextWave = 0;
@@ -79,7 +79,7 @@
                     //RemainingWavesChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
                     //TimeNextWaveChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
                     RemainingEnemiesChoice.SetColor(1, value.Color);
-                    NextWaveCompositionChoice.Color = value.Color;
+                    //NextWaveCompositionChoice.Color = value.Color;
                 }
             }
         }
@@ -175,7 +175,7 @@
         {
             set
             {
-                NextWaveCompositionChoice.Composition = value;
+                //NextWaveCompositionChoice.Composition = value;
             }
         }
 

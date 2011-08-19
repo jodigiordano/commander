@@ -58,6 +58,7 @@
 
         public const double PowerUpsMenu = 0.42;
 
+        public const double GameBar = 0.42;
         public const double PlayerCash = 0.42;
 
         public const double EditorGeneralMenu = 0.45;
