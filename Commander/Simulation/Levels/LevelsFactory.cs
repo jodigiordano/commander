@@ -264,11 +264,11 @@
 
             var help = Menu.PlanetarySystem[4];
             help.Name = "how to play";
-            help.AddTurret(TurretType.SlowMotion, 6, new Vector3(-10, -3, 0), true, false);
+            help.AddTurret(TurretType.SlowMotion, 3, new Vector3(-10, -3, 0), true, false);
 
             var credits = Menu.PlanetarySystem[5];
             credits.Name = "credits";
-            credits.AddTurret(TurretType.SlowMotion, 6, new Vector3(-10, -3, 0), true, false);
+            credits.AddTurret(TurretType.SlowMotion, 1, new Vector3(-10, -3, 0), true, false);
 
 
             DescriptorInfiniteWaves v = new DescriptorInfiniteWaves()
