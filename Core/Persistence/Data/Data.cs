@@ -122,7 +122,10 @@
                     this.DoInitialize(data);
             }
 
-            catch {}
+            catch
+            {
+                data = null; //initialization failed
+            }
 
             if (data == null)
             {
