@@ -61,7 +61,10 @@
             };
 
 
-            Logo = new EphemereGamesLogo(this, Vector3.Zero, 0.3);
+            Logo = new EphemereGamesLogo(this, Vector3.Zero, 0.3)
+            {
+                Alpha = 0
+            };
 
             Persistence.LoadPackage("principal");
 
@@ -71,7 +74,8 @@
             {
                 VisualPriority = 1,
                 Size = Preferences.BackBuffer,
-                Color = Color.White
+                Color = Color.White,
+                Alpha = 0
             };
 
             LoadingQuote = new Text(LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], "Pixelite", new Vector3(0, 150, 0))
