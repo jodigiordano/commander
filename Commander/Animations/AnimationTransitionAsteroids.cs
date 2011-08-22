@@ -66,9 +66,9 @@ namespace EphemereGames.Commander
 
                 var posX = Main.Random.Next(900, 1500);
 
-                PathsIn.Add(new Path2D(new List<Vector2>() { Positions[i], new Vector2(posX, Positions[i].Y) }, new List<double>() { 0, Length }));
+                PathsIn.Add(new Path2D(new List<Vector2>() { Positions[i], new Vector2(posX * 1.5f, Positions[i].Y) }, new List<double>() { 0, Length }));
                 PathsOut.Add(new Path2D(new List<Vector2>() { new Vector2(-posX, Positions[i].Y), Positions[i] }, new List<double>() { 0, Length }));
-                RotationSpeeds.Add(((float) (Main.Random.NextDouble() * 0.1)));
+                RotationSpeeds.Add(((float) (Main.Random.NextDouble() * 0.2)));
             }
         }
 

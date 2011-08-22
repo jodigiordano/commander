@@ -42,7 +42,6 @@
         public CelestialBody CelestialBody;
         public bool ToPlaceMode;
         public bool CanPlace;
-        public bool ShowRange;
         public bool ShowForm;
         public int BoostMultiplier;
         public bool Wander;
@@ -65,7 +64,10 @@
         protected double VisualPriorityBackup;
         private List<Bullet> Bullets = new List<Bullet>();
         public Image RangeImage;
+        public bool ShowRangePreview;
+        public Image RangePreviewImage;
         public byte RangeAlpha;
+        public byte RangePreviewAlpha;
         public int RangeEffect;
         private Image FormImage;
         private Particle BoostGlow;
@@ -73,6 +75,7 @@
         private Matrix rotationMatrix;
 
         public SimPlayer PlayerCheckedIn;
+        private bool showRange;
 
         
         public Turret(Simulator simulator)
@@ -108,12 +111,19 @@
             ToPlaceMode = false;
             CelestialBody = null;
             RangeAlpha = 100;
+            RangePreviewAlpha = 50;
             RangeImage = new Image("CercleBlanc", Vector3.Zero)
             {
                 Color = new Color(Color.R, Color.G, Color.B, RangeAlpha),
-                VisualPriority = Preferences.PrioriteGUIEtoiles - 0.001f
+                VisualPriority = VisualPriorities.Default.TurretRange
+            };
+            RangePreviewImage = new Image("CercleBlanc", Vector3.Zero)
+            {
+                Color = new Color(Color.R, Color.G, Color.B, RangePreviewAlpha),
+                VisualPriority = VisualPriorities.Default.TurretRange + 0.000001
             };
             ShowRange = false;
+            ShowRangePreview = false;
             CanPlace = true;
             FormImage = new Image("CercleBlanc", Vector3.Zero)
             {
@@ -140,6 +150,8 @@
             PlayerCheckedIn = null;
 
             Alive = true;
+
+            RangeEffect = -1;
         }
 
 
@@ -421,6 +433,7 @@
             CanonImage.Color = Color.White;
             BaseImage.Color = Color.White;
             RangeImage.Color = new Color(Color.R, Color.G, Color.B, RangeAlpha);
+            RangePreviewImage.Color = new Color(Color.R, Color.G, Color.B, RangePreviewAlpha);
         }
 
 
@@ -434,12 +447,12 @@
 
         public virtual void Draw()
         {
-            CanonImage.position = this.Position;
-            BaseImage.position = this.Position;
+            CanonImage.position = Position;
+            BaseImage.position = Position;
 
             if (EnemyWatched != null)
             {
-                Vector3 direction = EnemyWatched.Position - this.Position;
+                Vector3 direction = EnemyWatched.Position - Position;
 
                 CanonImage.Rotation = MathHelper.PiOver2 + (float)Math.Atan2(direction.Y, direction.X);
             }
@@ -453,7 +466,7 @@
 
             if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulator.DemoMode && !ToPlaceMode)
             {
-                DisabledBarImage.Position = this.Position;
+                DisabledBarImage.Position = Position;
 
                 float pourcTemps = (PlayerControlled) ?
                     (float) (1 - TimeLastBullet / FireRate) :
@@ -469,16 +482,28 @@
 
             if (ShowRange)
             {
-                RangeImage.Position = this.Position;
+                RangeImage.Position = Position;
                 RangeImage.SizeX = (Range / 100) * 2;
 
                 Simulator.Scene.Add(RangeImage);
             }
 
 
+            if (ShowRangePreview)
+            {
+                if (ActualLevel.Next != null)
+                {
+                    RangePreviewImage.Position = Position;
+                    RangePreviewImage.SizeX = (ActualLevel.Next.Value.Range / 100) * 2;
+
+                    Simulator.Scene.Add(RangePreviewImage);
+                }
+            }
+
+
             if (ShowForm)
             {
-                FormImage.Position = this.Position;
+                FormImage.Position = Position;
                 FormImage.SizeX = (Circle.Radius / 100) * 2;
 
                 Simulator.Scene.Add(FormImage);
@@ -496,13 +521,23 @@
 
             if (BoostMultiplier > 0)
             {
-                Vector3 pos = this.Position;
+                Vector3 pos = Position;
                 BoostGlow.Trigger(ref pos);
             }
 
 
             Simulator.Scene.Add(CanonImage);
             Simulator.Scene.Add(BaseImage);
+        }
+
+
+        public bool ShowRange
+        {
+            get { return showRange; }
+            set
+            {
+                showRange = value;
+            }
         }
 
 
@@ -531,7 +566,7 @@
 
             if (!Simulator.DemoMode && !Simulator.WorldMode && ActualLevel.Value.Level != 1)
             {
-                RangeEffect = Simulator.Scene.VisualEffects.Add(RangeImage, VisualEffects.FadeOutTo0(RangeImage.Alpha, 300, 500), UpgradeFadeCompleted);
+                RangeEffect = Simulator.Scene.VisualEffects.Add(RangeImage, VisualEffects.Fade(220, RangeAlpha, 0, 500), UpgradeFadeCompleted);
                 ShowRange = true;
             }
 
@@ -543,7 +578,9 @@
         {
             RangeEffect = -1;
             RangeImage.Alpha = RangeAlpha;
-            ShowRange = false;
+
+            if (PlayerCheckedIn == null)
+                ShowRange = false;
         }
 
 

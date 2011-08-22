@@ -8,9 +8,8 @@
 
     class TurretMenu
     {
-        public Turret Turret;
+
         public Dictionary<TurretChoice, bool> AvailableTurretOptions;
-        public TurretChoice SelectedOption;
 
         public ContextualMenu Menu;
         
@@ -20,6 +19,9 @@
 
         private List<KeyValuePair<string, PanelWidget>> UpgradeTurretHBMessage;
         private List<KeyValuePair<string, PanelWidget>> SellTurretHBMessage;
+
+        private Turret turret;
+        private TurretChoice selectedOption;
 
 
         public TurretMenu(Simulator simulator, double visualPriority, Color color, InputType inputType)
@@ -43,6 +45,40 @@
 
 
             InitializeHelpBarMessages(inputType);
+        }
+
+
+        public Turret Turret
+        {
+            get { return turret; }
+            set
+            {
+                if (turret != null && turret != value)
+                {
+                    turret.ShowRange = false;
+                    turret.ShowRangePreview = false;
+                }
+
+                turret = value;
+
+                if (turret != null)
+                    turret.ShowRange = true;
+            }
+        }
+
+
+        public TurretChoice SelectedOption
+        {
+            get { return selectedOption; }
+            set
+            {
+                selectedOption = value;
+
+                if (Turret != null)
+                {
+                    Turret.ShowRangePreview = SelectedOption == TurretChoice.Update;
+                }
+            }
         }
 
 
