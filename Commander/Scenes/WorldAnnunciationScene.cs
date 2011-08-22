@@ -15,7 +15,7 @@
 
 
         public WorldAnnunciationScene(WorldDescriptor descriptor) :
-            base(1280, 720)
+            base(Preferences.BackBuffer)
         {
             Name = "World" + descriptor.Id + "Annunciation";
 

@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Core.Visual
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
 
@@ -10,10 +9,11 @@
         public virtual event NoneHandler TransitionStarted;
         public virtual event NoneHandler TransitionTerminated;
 
-        public bool InTransition                        { get; private set; }
-        public ITransitionAnimation TransitionAnimation { private get; set; }
+        public bool InTransition                                { get; private set; }
+        public List<ITransitionAnimation> TransitionAnimations  { private get; set; }
 
         private Transition CurrentTransition;
+        private ITransitionAnimation CurrentTansitionAnimation;
 
 
         public TransitionsController()
@@ -25,6 +25,7 @@
         public void Transite(string from, string to)
         {
             CurrentTransition = new Transition(from, to);
+            CurrentTansitionAnimation = TransitionAnimations != null ? TransitionAnimations[Preferences.Random.Next(0, TransitionAnimations.Count)] : null;
 
             StartFromToTransition();
         }
@@ -32,26 +33,26 @@
 
         public void Update(GameTime gameTime)
         {
-            if (TransitionAnimation == null)
+            if (CurrentTansitionAnimation == null)
             {
                 StartToFromTransition();
                 EndToFromTransition();
                 return;
             }
 
-            TransitionAnimation.Update(gameTime);
+            CurrentTansitionAnimation.Update(gameTime);
 
-            if (TransitionAnimation.IsFinished && CurrentTransition.CurrentType == TransitionType.Out)
+            if (CurrentTansitionAnimation.IsFinished && CurrentTransition.CurrentType == TransitionType.Out)
                 StartToFromTransition();
-            else if (TransitionAnimation.IsFinished && CurrentTransition.CurrentType == TransitionType.In)
+            else if (CurrentTansitionAnimation.IsFinished && CurrentTransition.CurrentType == TransitionType.In)
                 EndToFromTransition();
         }
 
 
         public void Draw()
         {
-            if (InTransition && TransitionAnimation != null)
-                TransitionAnimation.Draw();
+            if (InTransition && TransitionAnimations != null)
+                CurrentTansitionAnimation.Draw();
         }
 
 
@@ -70,12 +71,12 @@
 
             NotifyTransitionStarted();
 
-            if (TransitionAnimation != null)
+            if (TransitionAnimations != null)
             {
                 CurrentTransition.ActiveTransition = CurrentTransition.From;
                 CurrentTransition.CurrentType = TransitionType.Out;
-                TransitionAnimation.Scene = CurrentTransition.ActiveTransition;
-                TransitionAnimation.Initialize(CurrentTransition.CurrentType);
+                CurrentTansitionAnimation.Scene = CurrentTransition.ActiveTransition;
+                CurrentTansitionAnimation.Initialize(CurrentTransition.CurrentType);
             }
         }
 
@@ -87,12 +88,12 @@
 
             CurrentTransition.To.OnFocus();
 
-            if (TransitionAnimation != null)
+            if (TransitionAnimations != null)
             {
                 CurrentTransition.ActiveTransition = CurrentTransition.To;
                 CurrentTransition.CurrentType = TransitionType.In;
-                TransitionAnimation.Scene = CurrentTransition.ActiveTransition;
-                TransitionAnimation.Initialize(CurrentTransition.CurrentType);
+                CurrentTansitionAnimation.Scene = CurrentTransition.ActiveTransition;
+                CurrentTansitionAnimation.Initialize(CurrentTransition.CurrentType);
             }
         }
 

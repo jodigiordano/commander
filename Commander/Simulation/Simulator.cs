@@ -120,7 +120,7 @@ namespace EphemereGames.Commander.Simulation
             Level = new Level(this, descriptor);
 
             Terrain = new PhysicalRectangle(-840, -560, 1680, 1120);
-            InnerTerrain = new PhysicalRectangle(-640, -360, 1280, 720);
+            InnerTerrain = new PhysicalRectangle(-640, -360, (int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y);
 
             TweakingController = new TweakingController(this);
             CollisionsController = new CollisionsController(this);

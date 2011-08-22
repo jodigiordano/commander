@@ -154,7 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animations\AnimationSprite.cs" />
-    <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
+    <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
+    <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
     <Compile Include="FutureJobsController.cs" />
     <Compile Include="GUI\Controls\Widgets\NewsWidget.cs" />
     <Compile Include="News\News.cs" />

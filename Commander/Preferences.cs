@@ -10,6 +10,7 @@
         public static Vector2 Xbox360DeadZoneV2 = new Vector2(20, 30);
         public static Vector3 Xbox360DeadZone = new Vector3(20, 30, 0);
         public static float TargetElapsedTimeMs = 16;
+        public static Vector2 BackBuffer = new Vector2(1280, 720);
 
 
 #if DEBUG

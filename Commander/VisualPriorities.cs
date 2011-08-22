@@ -6,7 +6,7 @@
 
     class Foreground
     {
-        
+        public const double Transition = 0.5;
     }
 
     class Cutscenes

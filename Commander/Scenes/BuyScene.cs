@@ -19,7 +19,7 @@
 
 
         public BuyScene()
-            : base(1280, 720)
+            : base(Preferences.BackBuffer)
         {
             Name = "Acheter";
 

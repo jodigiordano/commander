@@ -47,7 +47,7 @@
 
 
         public LoadingScene()
-            : base(1280, 720)
+            : base(Preferences.BackBuffer)
         {
             Name = "Chargement";
             EnableVisuals = true;
@@ -71,7 +71,7 @@
             Background = new Image("PixelBlanc", Vector3.Zero)
             {
                 VisualPriority = 1,
-                Size = new Vector2(1280, 720),
+                Size = Preferences.BackBuffer,
                 Color = Color.White
             };
 

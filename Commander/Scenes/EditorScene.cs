@@ -13,7 +13,7 @@
 
 
         public EditorScene()
-            : base(1280, 720)
+            : base(Preferences.BackBuffer)
         {
             Name = "Editeur";
 

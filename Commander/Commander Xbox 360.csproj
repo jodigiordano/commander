@@ -78,7 +78,9 @@
   <ItemGroup>
     <Compile Include="Animations\AnimationCommodore.cs" />
     <Compile Include="Animations\AnimationSprite.cs" />
-    <Compile Include="Animations\AnimationTransition.cs" />
+    <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
+    <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
+    <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
     <Compile Include="Colors.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Descriptors.cs" />

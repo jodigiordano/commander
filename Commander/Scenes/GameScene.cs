@@ -18,7 +18,7 @@
 
 
         public GameScene(string name, LevelDescriptor level)
-            : base(1280, 720)
+            : base(Preferences.BackBuffer)
         {
             Level = level;
 

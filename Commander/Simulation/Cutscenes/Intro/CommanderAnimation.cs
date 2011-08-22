@@ -25,7 +25,7 @@
             {
                 Color = Color.White,
                 Alpha = 0,
-                Size = new Vector2(1280, 720),
+                Size = Preferences.BackBuffer,
                 VisualPriority = VisualPriorities.Cutscenes.IntroCommanderBackground,
                 Blend = BlendType.Add
             };

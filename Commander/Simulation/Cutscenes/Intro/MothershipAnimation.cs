@@ -31,7 +31,7 @@
         {
             Simulator = simulator;
 
-            Mothership = new Mothership(simulator, VisualPriorities.Cutscenes.IntroMothership);
+            Mothership = new Mothership(VisualPriorities.Cutscenes.IntroMothership);
             Mothership.Position = new Vector3(0, -Mothership.Size.Y/2 - 360, 0);
 
             State = MothershipState.None;
@@ -72,7 +72,7 @@
                 case MothershipState.Arrival:
                     if (TimeBeforeLights < 0)
                     {
-                        Mothership.ActivateDeadlyLights(10000);
+                        Mothership.ActivateDeadlyLights(Simulator.Scene, 10000);
                         State = MothershipState.Lights;
                     }
 
@@ -80,7 +80,7 @@
                 case MothershipState.Lights:
                     if (TimeBeforeDestruction < 0)
                     {
-                        Mothership.DestroyEverything();
+                        Mothership.DestroyEverything(Simulator.Scene, Simulator.PlanetarySystemController.CelestialBodies);
                         State = MothershipState.Destruction;
                     }
 
@@ -88,7 +88,7 @@
                 case MothershipState.Destruction:
                     if (TimeBeforeDeparture < 0)
                     {
-                        Mothership.DeactivateDeadlyLights(3000);
+                        Mothership.DeactivateDeadlyLights(Simulator.Scene, 3000);
                         Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, Mothership.Position.Y + 5000, 0), 0, 18000));
                         Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(0.7f, 1.5f, 0, 17000));
 
@@ -111,7 +111,7 @@
 
         public void Draw()
         {
-            Mothership.Draw();
+            Mothership.Draw(Simulator.Scene);
         }
     }
 }

@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander
 {
-    using System;
     using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Utilities;
@@ -8,16 +7,13 @@ namespace EphemereGames.Commander
     using Microsoft.Xna.Framework;
 
 
-    public class AnimationTransition : Animation, ITransitionAnimation
+    public class AnimationTransitionAlienBattleship : Animation, ITransitionAnimation
     {
         public bool In;
 
         private List<AlienSpaceship> AlienShips;
-        private List<Path2D> Paths;
-
-        private static int LastTimeChoice = 0;
-        private static string LastTimeChoiceAutre = "";
-        private static Random Random = new Random();
+        private List<Path2D> PathsIn;
+        private List<Path2D> PathsOut;
 
 
         private static List<KeyValuePair<Vector2, Vector2>> PositionsIn = new List<KeyValuePair<Vector2,Vector2>>()
@@ -57,10 +53,30 @@ namespace EphemereGames.Commander
         };
 
 
-        public AnimationTransition(double length, double visualPriority)
+        public AnimationTransitionAlienBattleship(double length, double visualPriority)
             : base(length, visualPriority)
         {
             In = false;
+
+            AlienShips = new List<AlienSpaceship>();
+            PathsIn = new List<Path2D>();
+            PathsOut = new List<Path2D>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                AlienSpaceship v = new AlienSpaceship(VisualPriority);
+                v.Image.SizeX = 16;
+                v.Image.Rotation = MathHelper.PiOver2;
+                v.Tentacules.Taille = 16;
+                v.Tentacules.Rotation = MathHelper.PiOver2;
+                v.Image.Blend = BlendType.Substract;
+                v.Tentacules.Blend = BlendType.Substract;
+
+                AlienShips.Add(v);
+
+                PathsIn.Add(new Path2D(new List<Vector2>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
+                PathsOut.Add(new Path2D(new List<Vector2>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
+            }        
         }
 
 
@@ -70,34 +86,6 @@ namespace EphemereGames.Commander
             base.Initialize();
 
             In = type == TransitionType.In;
-
-            AlienShips = new List<AlienSpaceship>();
-            Paths = new List<Path2D>();
-
-            if (!In)
-            {
-                LastTimeChoice = Random.Next(0, 2);
-                LastTimeChoiceAutre = NamesOthers[Random.Next(0, NamesOthers.Count)];
-            }
-
-
-            for (int i = 0; i < 5; i++)
-            {
-                AlienSpaceship v = new AlienSpaceship(Scene, this.VisualPriority);
-                v.Representation.SizeX = 16;
-                v.Representation.Rotation = MathHelper.PiOver2;
-                v.Tentacules.Taille = 16;
-                v.Tentacules.Rotation = MathHelper.PiOver2;
-                v.Representation.Blend = BlendType.Substract;
-                v.Tentacules.Blend = BlendType.Substract;
-
-                AlienShips.Add(v);
-
-                if (In)
-                    Paths.Add(new Path2D(new List<Vector2>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
-                else
-                    Paths.Add(new Path2D(new List<Vector2>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
-            }
         }
 
 
@@ -113,10 +101,10 @@ namespace EphemereGames.Commander
             {
                 var ship = AlienShips[i];
 
-                ship.Representation.position = new Vector3(Paths[i].GetPosition(ElapsedTime), 0);
+                ship.Image.position = new Vector3(In ? PathsIn[i].GetPosition(ElapsedTime) : PathsOut[i].GetPosition(ElapsedTime), 0);
 
                 Scene.BeginForeground();
-                ship.Draw();
+                ship.Draw(Scene);
                 Scene.EndForeground();
             }
         }

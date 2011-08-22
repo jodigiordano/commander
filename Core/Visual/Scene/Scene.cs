@@ -48,6 +48,10 @@
         private DrawMode DrawMode;
 
 
+        public Scene(Vector2 dimension)
+            : this((int) dimension.X, (int) dimension.Y) { }
+
+
         public Scene(int width, int height)
         {
             Buffer = Visuals.ScenesController.Buffer;

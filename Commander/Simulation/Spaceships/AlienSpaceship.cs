@@ -6,25 +6,22 @@
 
     public class AlienSpaceship
     {
-        private Scene Scene;
         public Sprite Tentacules;
-        public Image Representation;
+        public Image Image;
 
 
-        public AlienSpaceship(Scene scene, double prioriteAffichage)
+        public AlienSpaceship(double visualPriority)
         {
-            Scene = scene;
-
-            Representation = new Image("VaisseauAlien")
+            Image = new Image("VaisseauAlien")
             {
                 SizeX = 8,
-                VisualPriority = prioriteAffichage
+                VisualPriority = visualPriority
             };
             
             Tentacules = Persistence.GetAssetCopy<Sprite>("tentacules");
             Tentacules.Taille = 8;
             Tentacules.Origine = Tentacules.Centre;
-            Tentacules.VisualPriority = Representation.VisualPriority + 0.01f;
+            Tentacules.VisualPriority = Image.VisualPriority + 0.01f;
         }
 
 
@@ -34,12 +31,12 @@
         }
 
 
-        public void Draw()
+        public void Draw(Scene scene)
         {
-            Tentacules.Position = Representation.Position;
+            Tentacules.Position = Image.Position;
 
-            Scene.Add(Representation);
-            Scene.Add(Tentacules);
+            scene.Add(Image);
+            scene.Add(Tentacules);
         }
     }
 }

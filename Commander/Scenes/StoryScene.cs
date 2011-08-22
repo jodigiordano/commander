@@ -24,7 +24,7 @@
 
 
         public StoryScene(string name, string transiteTo, Cutscene cutscene) :
-            base(1280, 720)
+            base(Preferences.BackBuffer)
         {
             Name = name;
             ClearColor = Color.White;

@@ -1,6 +1,7 @@
 namespace EphemereGames.Commander
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Audio;
@@ -39,8 +40,8 @@ namespace EphemereGames.Commander
         public Main()
         {
             Graphics = new GraphicsDeviceManager(this);
-            Graphics.PreferredBackBufferWidth = 1280;
-            Graphics.PreferredBackBufferHeight = 720;
+            Graphics.PreferredBackBufferWidth = (int) Preferences.BackBuffer.X;
+            Graphics.PreferredBackBufferHeight = (int) Preferences.BackBuffer.Y;
 
             TrialMode = new TrialMode(this);
             Graphics.IsFullScreen = Preferences.FullScreen;
@@ -67,9 +68,7 @@ namespace EphemereGames.Commander
             base.Initialize();
 
             Persistence.Initialize("Content", "packages.xml", Services);
-            Visuals.Initialize(Graphics, 1280, 720, Content);
-
-            Visuals.TransitionAnimation = new AnimationTransition(500, Preferences.PrioriteTransitionScene);
+            Visuals.Initialize(Graphics, (int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y, Content);
 
             Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
 
@@ -107,6 +106,13 @@ namespace EphemereGames.Commander
 
             if (Initializing && Persistence.IsPackageLoaded(@"loading"))
             {
+                Visuals.TransitionAnimations = new List<ITransitionAnimation>()
+                {
+                    new AnimationTransitionAsteroids(500, VisualPriorities.Foreground.Transition),
+                    new AnimationTransitionAlienBattleship(500, VisualPriorities.Foreground.Transition),
+                    new AnimationTransitionAlienMothership(750, VisualPriorities.Foreground.Transition)
+                };
+                
                 MusicController.setActiveBank(@"Story1");
                 MusicController.InitializeSfxPriorities();
 
@@ -144,7 +150,7 @@ namespace EphemereGames.Commander
     {
         static void Main(string[] args)
         {
-            Core.Utilities.ErrorHandling.Run<Main>(1280, 720, Preferences.FullScreen, GetRunningVersion());
+            Core.Utilities.ErrorHandling.Run<Main>((int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y, Preferences.FullScreen, GetRunningVersion());
         }
 
 

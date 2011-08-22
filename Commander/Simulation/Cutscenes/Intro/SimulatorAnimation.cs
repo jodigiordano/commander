@@ -21,7 +21,7 @@
             Background = new Image("PixelBlanc")
             {
                 Color = Color.White,
-                Size = new Vector2(1280, 720),
+                Size = Preferences.BackBuffer,
                 VisualPriority = VisualPriorities.Cutscenes.IntroSimulatorBackground
             };
 

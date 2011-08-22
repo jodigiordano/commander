@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Core.Visual
 {
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -99,11 +100,11 @@
         }
 
 
-        public static ITransitionAnimation TransitionAnimation
+        public static List<ITransitionAnimation> TransitionAnimations
         {
             set
             {
-                TransitionsController.TransitionAnimation = value;
+                TransitionsController.TransitionAnimations = value;
             }
         }
     }

@@ -14,18 +14,14 @@
         public Image Lights;
         public Image Tentacles;
 
-        private Simulator Simulator;
         private List<Missile> Missiles;
 
 
 
-        public Mothership(Simulator simulator, double visualPriority)
+        public Mothership(double visualPriority)
         {
-            Simulator = simulator;
-
             Base = new Image("MothershipBase")
             {
-                SizeX = 16,
                 VisualPriority = visualPriority
             };
 
@@ -33,7 +29,6 @@
             {
                 Color = new Color(255, 200, 0),
                 Alpha = 255 / 2,
-                SizeX = 16,
                 VisualPriority = visualPriority - 0.000002
             };
 
@@ -41,18 +36,42 @@
             {
                 Color = new Color(255, 0, 0),
                 Alpha = 0,
-                SizeX = 16,
                 VisualPriority = visualPriority - 0.000001
             
             };
 
             Tentacles = new Image("MothershipTentacles")
             {
-                SizeX = 16,
                 VisualPriority = visualPriority + 0.000001
             };
 
+            SizeX = 16;
+
             Missiles = new List<Missile>();
+        }
+
+
+        public BlendType Blend
+        {
+            set
+            {
+                Base.Blend = value;
+                Top.Blend = value;
+                Lights.Blend = value;
+                Tentacles.Blend = value;
+            }
+        }
+
+
+        public float SizeX
+        {
+            set
+            {
+                Base.SizeX = value;
+                Top.SizeX = value;
+                Lights.SizeX = value;
+                Tentacles.SizeX = value;
+            }
         }
 
 
@@ -90,44 +109,39 @@
         }
 
 
-        public void Draw()
+        public void Draw(Scene scene)
         {
-            //Top.Rotation += 0.01f;
-
-            //if (Top.Rotation > MathHelper.TwoPi)
-            //    Top.Rotation -= MathHelper.TwoPi;
-
-            Simulator.Scene.Add(Base);
-            Simulator.Scene.Add(Top);
-            Simulator.Scene.Add(Lights);
-            Simulator.Scene.Add(Tentacles);
+            scene.Add(Base);
+            scene.Add(Top);
+            scene.Add(Lights);
+            scene.Add(Tentacles);
 
             foreach (var m in Missiles)
                 m.Draw();
         }
 
 
-        public void ActivateDeadlyLights(double time)
+        public void ActivateDeadlyLights(Scene scene, double time)
         {
-            Simulator.Scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 255, 0, time));
-            Simulator.Scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(Color.Red, 0, time));
+            scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 255, 0, time));
+            scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(Color.Red, 0, time));
         }
 
 
-        public void DeactivateDeadlyLights(double time)
+        public void DeactivateDeadlyLights(Scene scene, double time)
         {
-            Simulator.Scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 0, 0, time));
-            Simulator.Scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(new Color(255, 200, 0), 0, time));
+            scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 0, 0, time));
+            scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(new Color(255, 200, 0), 0, time));
         }
 
 
-        public void DestroyEverything()
+        public void DestroyEverything(Scene scene, List<CelestialBody> celestialBodies)
         {
-            for (int i = 0; i < Simulator.PlanetarySystemController.CelestialBodies.Count; i++)
+            for (int i = 0; i < celestialBodies.Count; i++)
             {
-                var cb = Simulator.PlanetarySystemController.CelestialBodies[i];
+                var cb = celestialBodies[i];
 
-                Missiles.Add(new Missile(Simulator, cb, Position + new Vector3(0, Size.Y / 4, 0), i * 300));
+                Missiles.Add(new Missile(scene, cb, Position + new Vector3(0, Size.Y / 4, 0), i * 300));
             }
         }
 
@@ -137,12 +151,10 @@
             private Image Image;
             private Particle Effect;
             private CelestialBody CelestialBody;
-            private Simulator Simulator;
 
 
-            public Missile(Simulator simulator, CelestialBody celestialBody, Vector3 position, double delay)
+            public Missile(Scene scene, CelestialBody celestialBody, Vector3 position, double delay)
             {
-                Simulator = simulator;
                 CelestialBody = celestialBody;
 
                 Image = new Image("PixelBlanc")
@@ -153,7 +165,7 @@
                     SizeX = 50
                 };
 
-                Effect = simulator.Scene.Particles.Get(@"mothershipMissile");
+                Effect = scene.Particles.Get(@"mothershipMissile");
                 Effect.VisualPriority = CelestialBody.VisualPriority - 0.00001;
 
                 FollowEffect follow = new FollowEffect()
@@ -165,7 +177,7 @@
                     Progress = Core.Utilities.Effect<IPhysical>.ProgressType.Linear
                 };
 
-                simulator.Scene.PhysicalEffects.Add(this.Image, follow);
+                scene.PhysicalEffects.Add(this.Image, follow);
             }
 
 
