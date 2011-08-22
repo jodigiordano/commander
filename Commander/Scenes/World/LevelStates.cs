@@ -63,7 +63,7 @@
                 bool unlocked = true;
 
                 foreach (var other in level.Value)
-                    if (!Main.PlayerSaveGame.Progress.ContainsKey(other) || Main.PlayerSaveGame.Progress[other] <= 0)
+                    if (!Main.SaveGameController.IsLevelUnlocked(other))
                     {
                         unlocked = false;
                         break;

@@ -115,12 +115,14 @@
     <Compile Include="MusicController.cs" />
     <Compile Include="News\News.cs" />
     <Compile Include="News\NewsController.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Panels\ControlsPanel.cs" />
     <Compile Include="Panels\CreditsPanel.cs" />
     <Compile Include="Panels\HelpPanel.cs" />
     <Compile Include="Panels\NewsPanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Panels\PausePanel.cs" />
+    <Compile Include="SaveGameController.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
@@ -149,8 +151,6 @@
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
-    <Compile Include="Player\TrialMode.cs" />
-    <Compile Include="Scenes\BuyScene.cs" />
     <Compile Include="Scenes\EditorScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\LoadingScene.cs" />

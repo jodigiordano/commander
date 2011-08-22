@@ -14,7 +14,8 @@
         private KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> Current;
         private Scene Scene;
 
-        public bool Active;
+        public bool ActivePlayers;
+        public bool ActiveOptions;
 
 
         public HelpBarPanel(Scene scene, double visualPriority)
@@ -37,7 +38,8 @@
 
             Current = new KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessage.None, null);
 
-            Active = true;
+            ActivePlayers = true;
+            ActiveOptions = true;
         }
 
 
@@ -83,7 +85,7 @@
 
         public override void Draw()
         {
-            if (!Active)
+            if (!ActivePlayers || !ActiveOptions)
                 return;
 
             base.Draw();

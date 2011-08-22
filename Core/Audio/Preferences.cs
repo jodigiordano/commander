@@ -4,7 +4,7 @@
 
     static class Preferences
     {
-        public static float VolumeMusique { get; set; }
-        public static float VolumeEffetsSonores { get; set; }
+        public static float MusicVolume { get; set; }
+        public static float SfxVolume { get; set; }
     }
 }

@@ -498,11 +498,9 @@ namespace EphemereGames.Commander.Simulation
                 int levelId = LevelsController.Level.Id;
                 int score = LevelsController.Level.CommonStash.TotalScore;
 
-                Main.PlayerSaveGame.UpdateProgress(state, levelId, score);
-                Main.SharedSaveGame.UpdateProgress(Inputs.MasterPlayer.Name, levelId, score);
+                Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, state, levelId, score);
 
-                Main.SharedSaveGame.Save();
-                Main.PlayerSaveGame.Save();
+                Main.SaveGameController.SaveAll();
             }
         }
 

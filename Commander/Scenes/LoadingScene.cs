@@ -15,7 +15,6 @@
             TransiteToMenu,
             Finished,
             LoadingAssets,
-            LoadSharedSaveGame,
             LoadScenes
         }
 
@@ -109,21 +108,10 @@
 
                     if (Persistence.IsPackageLoaded("principal"))
                     {
-                        SceneState = State.LoadSharedSaveGame;
-
-                        Persistence.LoadData("SharedSaveGame");
-                    }
-                    break;
-
-                case State.LoadSharedSaveGame:
-
-                    if (Main.SharedSaveGame.IsLoaded)
-                    {
                         SceneState = State.LoadScenes;
 
                         ThreadLoadScenes.Start();
                     }
-
                     break;
 
                 case State.LoadScenes:
@@ -157,7 +145,6 @@
         {
             ScenesLoaded.Add(new MainMenuScene());
             ScenesLoaded.Add(new EditorScene());
-            ScenesLoaded.Add(new BuyScene());
 
             LoadWorld(1);
             LoadWorld(2);

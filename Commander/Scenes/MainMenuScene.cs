@@ -2,7 +2,6 @@
 {
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -70,7 +69,7 @@
 
 
                 case State.LoadSaveGame:
-                    if (Main.PlayerSaveGame.IsLoaded)
+                    if (Main.SaveGameController.IsPlayerSaveGameLoaded)
                     {
                         Title.Hide();
                         Choices.Show();
@@ -182,7 +181,7 @@
         {
             if (Inputs.ConnectedPlayers.Count == 0)
                 InitConnectFirstPlayer();
-            else if (Main.PlayerSaveGame.Player == player)
+            else if (Main.SaveGameController.CurrentPlayer == player)
             {
                 ReloadPlayerData((Player) Inputs.MasterPlayer);
                 SceneState = State.LoadSaveGame;
@@ -192,9 +191,7 @@
 
         private void ReloadPlayerData(Player p)
         {
-            Main.PlayerSaveGame = new SaveGame(p);
-            Persistence.SetPlayerData(Main.PlayerSaveGame);
-            Persistence.LoadData("Save");
+            Main.SaveGameController.ReloadPlayerData(p);
             SceneState = State.LoadSaveGame;
         }
 
@@ -228,11 +225,11 @@
                     {
                         case NewGameChoice.None:
                         case NewGameChoice.NewGame:
-                            Main.PlayerSaveGame.ClearAndSave();
+                            Main.SaveGameController.PlayerSaveGame.ClearAndSave();
                             TransiteTo("Cutscene1");
                             break;
                         case NewGameChoice.Continue:
-                            TransiteTo("World" + Main.PlayerSaveGame.CurrentWorld + "Annunciation");
+                            TransiteTo("World" + Main.SaveGameController.PlayerSaveGame.CurrentWorld + "Annunciation");
                             break;
                         case NewGameChoice.WrapToWorld1:
                             TransiteTo("World1Annunciation");
@@ -265,13 +262,7 @@
                 case "options": Simulator.ShowPanel(PanelType.Options, true); break;
                 case "editor": TransiteTo("Editeur"); break;
                 case "credits": Simulator.ShowPanel(PanelType.Credits, true); break;
-
-                case "quit":
-                    if (Preferences.Target == Core.Utilities.Setting.Xbox360 && Main.TrialMode.Active)
-                        TransiteTo("Acheter");
-                    else
-                        Main.Instance.Exit();
-                    break;
+                case "quit": Main.Instance.Exit(); break;
             }
         }
 

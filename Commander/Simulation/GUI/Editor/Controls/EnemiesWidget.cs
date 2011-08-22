@@ -150,7 +150,7 @@
             foreach (var w in CheckBoxes)
                 if (w.Value.DoClick(circle))
                 {
-                    ClickedCount += w.Value.Checked ? 1 : -1;
+                    ClickedCount += w.Value.Value ? 1 : -1;
                     ClickedEnemy = w.Key;
                     return true;
                 }
@@ -192,7 +192,7 @@
             List<EnemyType> enemies = new List<EnemyType>();
 
             foreach (var e in CheckBoxes)
-                if (e.Value.Checked)
+                if (e.Value.Value)
                     enemies.Add(e.Key.Type);
 
             return enemies;
@@ -205,9 +205,9 @@
 
             foreach (var e in CheckBoxes)
             {
-                e.Value.Checked = enemies.Contains(e.Key.Type);
+                e.Value.Value = enemies.Contains(e.Key.Type);
 
-                if (e.Value.Checked)
+                if (e.Value.Value)
                     ClickedCount++;
             }
         }

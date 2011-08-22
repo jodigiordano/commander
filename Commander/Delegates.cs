@@ -3,8 +3,10 @@
     using System.Collections.Generic;
 
 
+    delegate void BooleanHandler(bool b);
     delegate void NoneHandler();
     delegate bool IntegerHandler(int i);
+    delegate void Integer2Handler(int i);
     delegate void PanelWidgetHandler(PanelWidget p);
     delegate void NewsTypeHandler(NewsType t);
     delegate void NewsTypeNewsHandler(NewsType t, List<News> n);

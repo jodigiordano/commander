@@ -46,7 +46,7 @@
             if (Simulator.DemoMode ||
                 Simulator.WorldMode ||
                 Simulator.EditorMode ||
-                Main.PlayerSaveGame.Tutorials.ContainsKey(Level.Id) && Main.PlayerSaveGame.Tutorials[Level.Id] > 2)
+                Main.SaveGameController.ShowTutorial(Level.Id))
             {
                 Help = new Help(Simulator, new List<string>());
                 HelpSaved = true;
@@ -66,10 +66,7 @@
                 Help.Update();
             else if (!HelpSaved)
             {
-                if (!Main.PlayerSaveGame.Tutorials.ContainsKey(Level.Id))
-                    Main.PlayerSaveGame.Tutorials.Add(new KeyValuePair<int, int>(Level.Id, 0));
-
-                Main.PlayerSaveGame.Tutorials[Level.Id]++;
+                Main.SaveGameController.SyncTutorial(Level.Id);
 
                 HelpSaved = true;
             }

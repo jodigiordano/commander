@@ -104,11 +104,10 @@
         {
             get
             {
-                int save = 0;
                 bool unlocked = true;
 
                 foreach (var level in Descriptor.UnlockedCondition)
-                    if (!Main.PlayerSaveGame.Progress.TryGetValue(level, out save) || save <= 0)
+                    if (!Main.SaveGameController.IsLevelUnlocked(level))
                     {
                         unlocked = false;
                         break;
@@ -157,7 +156,7 @@
 
             InitializeLevelsStates();
             Main.SelectedWorld = this;
-            Main.PlayerSaveGame.CurrentWorld = Descriptor.Id;
+            Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
 
             Simulator.SyncPlayers();
 
@@ -353,8 +352,7 @@
             {
                 var descriptor = LevelsDescriptors[kvp.Key.Name];
 
-                int value = 0;
-                bool done = Main.PlayerSaveGame.Progress.TryGetValue(descriptor.Infos.Id, out value) && value > 0;
+                bool done = Main.SaveGameController.IsLevelUnlocked(descriptor.Infos.Id);
 
                 kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone");
 

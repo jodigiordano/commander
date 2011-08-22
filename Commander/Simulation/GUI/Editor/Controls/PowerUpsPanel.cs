@@ -31,7 +31,7 @@
             {
                 var widget = (PowerUpCheckBox) GetWidgetByName(powerUp.Key.ToString());
 
-                widget.Checked = Simulator.PowerUpsFactory.Availables.ContainsKey(powerUp.Key);
+                widget.Value = Simulator.PowerUpsFactory.Availables.ContainsKey(powerUp.Key);
             }
         }
     }

@@ -118,7 +118,9 @@
             GamePausedMenuPlayerCheckedIn = null;
             AdvancedViewCheckedIn = null;
 
+            HelpBar.ActiveOptions = Main.Options.ShowHelpBar;
             HelpBar.Initialize();
+            Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
 
             CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator, Enemies, Path)
             {
@@ -147,7 +149,7 @@
 
             PathPreviewing.DoPlayerConnected(player);
 
-            HelpBar.Active = Players.Count <= 1;
+            HelpBar.ActivePlayers = Players.Count <= 1;
 
             player.Cursor.TeleportIn();
             player.Cursor.FadeIn();
@@ -198,6 +200,12 @@
         public void DoObjectDestroyed(ICollidable obj)
         {
 
+        }
+
+
+        private void DoShowHelpBarChanged(bool value)
+        {
+            HelpBar.ActiveOptions = value;
         }
 
 

@@ -29,7 +29,7 @@
             {
                 var widget = (TurretCheckBox) GetWidgetByName(turret.Key.ToString());
 
-                widget.Checked = Simulator.TurretsFactory.Availables.ContainsKey(turret.Key);
+                widget.Value = Simulator.TurretsFactory.Availables.ContainsKey(turret.Key);
             }
         }
     }

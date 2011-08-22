@@ -134,10 +134,8 @@
         private void DrawHighScore()
         {
             LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
-            
-            int score = 0;
 
-            Main.PlayerSaveGame.Scores.TryGetValue(descriptor.Infos.Id, out score);
+            int score = Main.SaveGameController.GetPlayerHighScore(descriptor.Infos.Id);
 
             Stars.Position = CelestialBody.Position + new Vector3(5, CelestialBody.Circle.Radius + 20, 0);
             Stars.BrightCount = descriptor.GetStarsCount(score);

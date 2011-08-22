@@ -9,6 +9,8 @@
     {
         private NumericHorizontalSlider Music;
         private NumericHorizontalSlider Sfx;
+        private CheckBox Fullscreen;
+        private CheckBox ShowHelpBar;
 
 
         public OptionsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
@@ -18,9 +20,13 @@
 
             Music = new NumericHorizontalSlider("Music", 0, 10, 5, 1, 100);
             Sfx = new NumericHorizontalSlider("Sfx  ", 0, 10, 5, 1, 100);
+            Fullscreen = new CheckBox("Fullscreen") { MinSpaceLabelX = 292 };
+            ShowHelpBar = new CheckBox("Show help bar") { MinSpaceLabelX = 292 };
 
             AddWidget("Music", Music);
             AddWidget("Sfx", Sfx);
+            AddWidget("Fullscreen", Fullscreen);
+            AddWidget("ShowHelpBar", ShowHelpBar);
 
             Alpha = 0;
         }
@@ -28,8 +34,10 @@
 
         public override void Initialize()
         {
-            Music.Value = Main.SharedSaveGame.VolumeMusic;
-            Sfx.Value = Main.SharedSaveGame.VolumeSfx;
+            Music.Value = Main.Options.MusicVolume;
+            Sfx.Value = Main.Options.SfxVolume;
+            Fullscreen.Value = Main.Options.FullScreen;
+            ShowHelpBar.Value = Main.Options.ShowHelpBar;
         }
 
 
@@ -39,9 +47,11 @@
 
             if (click)
             {
-                Main.SharedSaveGame.VolumeMusic = Music.Value;
-                Main.SharedSaveGame.VolumeSfx = Sfx.Value;
-                Main.SharedSaveGame.ApplyChanges();
+                Main.Options.MusicVolume = Music.Value;
+                Main.Options.SfxVolume = Sfx.Value;
+
+                Main.Options.FullScreen = Fullscreen.Value;
+                Main.Options.ShowHelpBar = ShowHelpBar.Value;
             }
 
             return click;
@@ -50,7 +60,7 @@
 
         public void SaveOnDisk()
         {
-            Main.SharedSaveGame.Save();
+            Main.SaveGameController.SharedSaveGame.Save();
         }
     }
 }

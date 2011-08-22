@@ -10,13 +10,13 @@
         internal static AudioController AudioController = new AudioController();
 
 
-        public static void Initialize(float volumeMusique, float volumeEffetsSonores)
+        public static void Initialize(float musicVolume, float sfxVolume)
         {
-            Preferences.VolumeMusique = volumeMusique;
-            Preferences.VolumeEffetsSonores = volumeEffetsSonores;
+            Preferences.MusicVolume = musicVolume;
+            Preferences.SfxVolume = sfxVolume;
 
-            AudioController.MusicVolume = volumeMusique;
-            AudioController.SfxVolume = volumeEffetsSonores;
+            AudioController.MusicVolume = musicVolume;
+            AudioController.SfxVolume = sfxVolume;
 
             Persistence.AddAssetType(new SoundEffect());
             Persistence.AddAssetType(new Music());
@@ -116,7 +116,7 @@
         {
             set
             {
-                Preferences.VolumeMusique = value;
+                Preferences.MusicVolume = value;
                 AudioController.MusicVolume = value;
             }
         }
@@ -126,7 +126,7 @@
         {
             set
             {
-                Preferences.VolumeEffetsSonores = value;
+                Preferences.SfxVolume = value;
                 AudioController.SfxVolume = value;
             }
         }

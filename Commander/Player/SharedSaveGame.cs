@@ -7,8 +7,10 @@
 
     public class SharedSaveGame : SharedData
     {
-        public int VolumeMusic;
-        public int VolumeSfx;
+        public int MusicVolume;
+        public int SfxVolume;
+        public bool FullScreen;
+        public bool ShowHelpBar;
 
         public SerializableDictionaryProxy<int, HighScores> HighScores;
 
@@ -25,9 +27,11 @@
         {
             SharedSaveGame d = data as SharedSaveGame;
 
-            VolumeMusic = d.VolumeMusic;
-            VolumeSfx = d.VolumeSfx;
+            MusicVolume = d.MusicVolume;
+            SfxVolume = d.SfxVolume;
             HighScores = d.HighScores;
+            FullScreen = d.FullScreen;
+            ShowHelpBar = d.ShowHelpBar;
             
             HighScores.Initialize();
         }
@@ -70,26 +74,20 @@
         {
             base.DoLoadEnded();
 
-            Audio.MusicVolume = VolumeMusic / 10f;
-            Audio.SfxVolume = VolumeSfx / 10f;
-        }
-
-
-        public void ApplyChanges()
-        {
-            Audio.MusicVolume = VolumeMusic / 10f;
-            Audio.SfxVolume = VolumeSfx / 10f;
+            Audio.MusicVolume = MusicVolume / 10f;
+            Audio.SfxVolume = SfxVolume / 10f;
         }
 
 
         private void FirstLoad()
         {
-            VolumeMusic = 5;
-            VolumeSfx = 5;
+            MusicVolume = Main.Options.MusicVolume;
+            SfxVolume = Main.Options.SfxVolume;
+            FullScreen = Main.Options.FullScreen;
+            ShowHelpBar = Main.Options.ShowHelpBar;
 
             HighScores = new SerializableDictionaryProxy<int, HighScores>();
 
-            ApplyChanges();
             Save();
 
             Loaded = true;

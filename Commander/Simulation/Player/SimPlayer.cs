@@ -561,9 +561,9 @@
 
         private void CheckAvailableNewGameChoices()
         {
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.Continue] = Main.PlayerSaveGame.CurrentWorld > 0;
+            ActualSelection.AvailableNewGameChoices[NewGameChoice.Continue] = Main.SaveGameController.PlayerSaveGame.CurrentWorld > 0;
 
-            var maxWorld = Main.PlayerSaveGame.LastUnlockedWorld;
+            var maxWorld = Main.SaveGameController.PlayerSaveGame.LastUnlockedWorld;
 
             ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld1] = maxWorld > 1;
             ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld2] = maxWorld >= 2;

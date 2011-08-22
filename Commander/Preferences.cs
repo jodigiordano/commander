@@ -12,16 +12,12 @@
         public static float TargetElapsedTimeMs = 16;
         public static Vector2 BackBuffer = new Vector2(1280, 720);
 
-
 #if DEBUG
         public static bool Debug = true;
         public static bool FullScreen = false;
-        //public static bool FullScreen = true;
-        public static bool HomeMadeValidation = false;
 #else
         public static bool Debug = false;
         public static bool FullScreen = true;
-        public static bool HomeMadeValidation = true;
 #endif
 
 

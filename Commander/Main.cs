@@ -15,20 +15,28 @@ namespace EphemereGames.Commander
 
     class Main : Game
     {
-        public static SharedSaveGame SharedSaveGame;
-        public static SaveGame PlayerSaveGame;
-        public static TrialMode TrialMode;
+        private enum BootSequence
+        {
+            Initial,
+            LoadingSharedSaveGame,
+            LoadingMinimalPackage,
+            Running
+        }
+
+
+        public static Options Options;
         public static GameScene GameInProgress;
         public static Main Instance;
         public static WorldScene SelectedWorld;
         public static LevelsFactory LevelsFactory;
         public static MusicController MusicController;
         public static NewsController NewsController;
+        public static SaveGameController SaveGameController;
 
         public static bool GamePausedToWorld { get { return GameInProgress != null && GameInProgress.State == GameState.PausedToWorld; } }
 
         private GraphicsDeviceManager Graphics;
-        private bool Initializing = true;
+        private BootSequence Boot;
 
         private static int nextHash = 0;
         public static int NextHashCode { get { return nextHash++; } }
@@ -39,16 +47,17 @@ namespace EphemereGames.Commander
 
         public Main()
         {
-            Graphics = new GraphicsDeviceManager(this);
-            Graphics.PreferredBackBufferWidth = (int) Preferences.BackBuffer.X;
-            Graphics.PreferredBackBufferHeight = (int) Preferences.BackBuffer.Y;
+            Options = new Options();
 
-            TrialMode = new TrialMode(this);
-            Graphics.IsFullScreen = Preferences.FullScreen;
+            Graphics = new GraphicsDeviceManager(this)
+            {
+                PreferredBackBufferWidth = (int) Preferences.BackBuffer.X,
+                PreferredBackBufferHeight = (int) Preferences.BackBuffer.Y,
+            };
+
             IsFixedTimeStep = true;
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (int) Preferences.TargetElapsedTimeMs);
             Content.RootDirectory = "Content";
-            SharedSaveGame = new SharedSaveGame();
             Window.AllowUserResizing = false;
 
             if (Preferences.Target == Core.Utilities.Setting.Xbox360)
@@ -57,9 +66,11 @@ namespace EphemereGames.Commander
             Instance = this;
 
             LevelsFactory = new LevelsFactory();
-
             MusicController = new MusicController();
             NewsController = new NewsController();
+            SaveGameController = new SaveGameController();
+
+            Boot = BootSequence.Initial;
         }
 
 
@@ -68,24 +79,108 @@ namespace EphemereGames.Commander
             base.Initialize();
 
             Persistence.Initialize("Content", "packages.xml", Services);
-            Visuals.Initialize(Graphics, (int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y, Content);
-
-            Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
-
-            //todo: pass the Player Class to Inputs so it can spawn players on the fly
-            Inputs.AddPlayer(new Player());
-            Inputs.AddPlayer(new Player());
-            Inputs.AddPlayer(new Player());
-            Inputs.AddPlayer(new Player());
-
             Physics.Initialize();
-            Audio.Initialize(0.5f, 0.5f);
 
-            Persistence.AddSharedData(SharedSaveGame);
-
-            Persistence.LoadPackage(@"loading");
+            SaveGameController.Initialize();
 
             LevelsFactory.Initialize();
+        }
+
+
+        protected override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            switch (Boot)
+            {
+                case BootSequence.Initial:
+                    SaveGameController.LoadSharedSave();
+                    Boot = BootSequence.LoadingSharedSaveGame;
+                    break;
+
+                case BootSequence.LoadingSharedSaveGame:
+                    if (SaveGameController.IsSharedSaveGameLoaded)
+                    {
+                        Options.ShowHelpBar = SaveGameController.SharedSaveGame.ShowHelpBar;
+                        Options.FullScreen = SaveGameController.SharedSaveGame.FullScreen;
+                        Options.MusicVolume = SaveGameController.SharedSaveGame.MusicVolume;
+                        Options.SfxVolume = SaveGameController.SharedSaveGame.SfxVolume;
+                        Options.FullScreenChanged += new BooleanHandler(DoFullScreenChanged);
+                        Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
+                        Options.VolumeMusicChanged += new Integer2Handler(DoVolumeMusicChanged);
+                        Options.VolumeSfxChanged += new Integer2Handler(DoVolumeSfxChanged);
+                        Options.FullScreenChanged += new BooleanHandler(SaveGameController.DoFullScreenChanged);
+                        Options.ShowHelpBarChanged += new BooleanHandler(SaveGameController.DoShowHelpBarChanged);
+                        Options.VolumeMusicChanged += new Integer2Handler(SaveGameController.DoVolumeMusicChanged);
+                        Options.VolumeSfxChanged += new Integer2Handler(SaveGameController.DoVolumeSfxChanged);
+
+                        Audio.Initialize(Options.MusicVolume / 10f, Options.SfxVolume / 10f);
+
+                        DoFullScreenChanged(Options.FullScreen);
+
+                        Visuals.Initialize(Graphics, (int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y, Content);
+
+                        Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
+
+                        //todo: pass the Player Class to Inputs so it can spawn players on the fly
+                        Inputs.AddPlayer(new Player());
+                        Inputs.AddPlayer(new Player());
+                        Inputs.AddPlayer(new Player());
+                        Inputs.AddPlayer(new Player());
+
+                        Persistence.LoadPackage(@"loading");
+                        Boot = BootSequence.LoadingMinimalPackage;
+                    }
+                    break;
+
+                case BootSequence.LoadingMinimalPackage:
+                    if (Persistence.IsPackageLoaded(@"loading"))
+                    {
+                        Visuals.TransitionAnimations = new List<ITransitionAnimation>()
+                        {
+                            new AnimationTransitionAsteroids(500, VisualPriorities.Foreground.Transition),
+                            new AnimationTransitionAlienBattleship(500, VisualPriorities.Foreground.Transition),
+                            new AnimationTransitionAlienMothership(750, VisualPriorities.Foreground.Transition)
+                        };
+
+                        MusicController.setActiveBank(@"Story1");
+                        MusicController.InitializeSfxPriorities();
+
+                        Visuals.AddScene(new LoadingScene());
+
+                        Boot = BootSequence.Running;
+                    }
+                    break;
+
+                case BootSequence.Running:
+                    if (!IsActive)
+                        return;
+
+                    Visuals.Update(gameTime);
+                    Inputs.Update(gameTime);
+
+                    if (Persistence.IsPackageLoaded(@"principal"))
+                    {
+                        Audio.Update(gameTime);
+                        MusicController.Update();
+                    }
+
+                    break;
+            }
+
+            Persistence.Update(gameTime);
+        }
+
+
+        protected override void Draw(GameTime gameTime)
+        {
+            if (Boot != BootSequence.Running)
+            {
+                Graphics.GraphicsDevice.Clear(Color.Black);
+                return;
+            }
+
+            Visuals.Draw();
         }
 
 
@@ -100,48 +195,28 @@ namespace EphemereGames.Commander
         }
 
 
-        protected override void Update(GameTime gameTime)
+        private void DoFullScreenChanged(bool fullscreen)
         {
-            base.Update(gameTime);
-
-            if (Initializing && Persistence.IsPackageLoaded(@"loading"))
-            {
-                Visuals.TransitionAnimations = new List<ITransitionAnimation>()
-                {
-                    new AnimationTransitionAsteroids(500, VisualPriorities.Foreground.Transition),
-                    new AnimationTransitionAlienBattleship(500, VisualPriorities.Foreground.Transition),
-                    new AnimationTransitionAlienMothership(750, VisualPriorities.Foreground.Transition)
-                };
-                
-                MusicController.setActiveBank(@"Story1");
-                MusicController.InitializeSfxPriorities();
-
-                Visuals.AddScene(new LoadingScene());
-                        
-                Initializing = false;
-            }
-
-            if (!IsActive)
-                return;
-
-            Persistence.Update(gameTime);
-            Visuals.Update(gameTime);
-            Inputs.Update(gameTime);
-
-            if (!Initializing && Persistence.IsPackageLoaded("principal"))
-            {
-                Audio.Update(gameTime);
-                MusicController.Update();
-            }
-
-            if (PlayerSaveGame != null && PlayerSaveGame.IsLoaded)
-                TrialMode.Update(gameTime);
+            if (fullscreen != Graphics.IsFullScreen)
+                Graphics.ToggleFullScreen();
         }
 
 
-        protected override void Draw(GameTime gameTime)
+        private void DoShowHelpBarChanged(bool value)
         {
-            Visuals.Draw();
+            
+        }
+
+
+        private void DoVolumeMusicChanged(int value)
+        {
+            Audio.MusicVolume = value / 10f;
+        }
+
+
+        private void DoVolumeSfxChanged(int value)
+        {
+            Audio.SfxVolume = value / 10f;
         }
     }
 

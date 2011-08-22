@@ -499,7 +499,7 @@
         {
             var checkbox = (TurretCheckBox) widget;
 
-            if (checkbox.Checked)
+            if (checkbox.Value)
                 Simulator.TurretsFactory.Availables.Add(checkbox.Turret.Type, checkbox.Turret);
             else
                 Simulator.TurretsFactory.Availables.Remove(checkbox.Turret.Type);
@@ -510,7 +510,7 @@
         {
             var checkbox = (PowerUpCheckBox) widget;
 
-            if (checkbox.Checked)
+            if (checkbox.Value)
                 Simulator.PowerUpsFactory.Availables.Add(checkbox.PowerUp, Simulator.PowerUpsFactory.Create(checkbox.PowerUp));
             else
                 Simulator.PowerUpsFactory.Availables.Remove(checkbox.PowerUp);
