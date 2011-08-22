@@ -33,27 +33,27 @@
 
             PausedGameChoices = new List<ContextualMenuChoice>()
             {
-                new TextContextualMenuChoice("resume", new Text("resume game", "Pixelite") { SizeX = 2 }),
-                new TextContextualMenuChoice("new", new Text("new game", "Pixelite") { SizeX = 2 })
+                new TextContextualMenuChoice("resume", new Text("resume game", @"Pixelite") { SizeX = 2 }),
+                new TextContextualMenuChoice("new", new Text("new game", @"Pixelite") { SizeX = 2 })
             };
 
             PausedGameMenu = new ContextualMenu(simulator, visualPriority, color, PausedGameChoices, 15);
 
-            Title = new Text("Pixelite")
+            Title = new Text(@"Pixelite")
             {
                 SizeX = 3,
                 VisualPriority = VisualPriorities.Default.LevelNumber,
                 Alpha = 200
             };
 
-            Difficulty = new Text("Pixelite")
+            Difficulty = new Text(@"Pixelite")
             {
                 SizeX = 3,
                 VisualPriority = VisualPriorities.Default.LevelNumber,
                 Alpha = 200
             };
 
-            Highscore = new Text("Pixelite")
+            Highscore = new Text(@"Pixelite")
             {
                 SizeX = 2,
                 VisualPriority = VisualPriorities.Default.LevelHighScore,

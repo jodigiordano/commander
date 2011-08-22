@@ -39,8 +39,8 @@
             DecrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, Effect = SpriteEffects.FlipHorizontally, SizeX = 4 };
             IncrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, SizeX = 4 };
 
-            ValueText = new Text(Value.ToString(), "Pixelite") { SizeX = 2 }.CenterIt();
-            Label = new Text(label, "Pixelite") { SizeX = 2 };
+            ValueText = new Text(Value.ToString(), @"Pixelite") { SizeX = 2 }.CenterIt();
+            Label = new Text(label, @"Pixelite") { SizeX = 2 };
 
             DecrementCircle = new Circle(Vector3.Zero, DecrementRep.AbsoluteSize.X / 2);
             IncrementCircle = new Circle(Vector3.Zero, IncrementRep.AbsoluteSize.X / 2);

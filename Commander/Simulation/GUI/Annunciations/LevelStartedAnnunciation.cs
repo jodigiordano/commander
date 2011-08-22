@@ -18,7 +18,7 @@
             Simulator = simulator;
 
             TranslatorMission = new Translator
-            (Simulator.Scene, new Vector3(-600, -330, 0), "Alien", Colors.Default.AlienBright, "Pixelite", Colors.Default.NeutralBright, level.Mission, 4, true, 4000, 250, Preferences.PrioriteGUIHistoire, false);
+            (Simulator.Scene, new Vector3(-600, -330, 0), "Alien", Colors.Default.AlienBright, @"Pixelite", Colors.Default.NeutralBright, level.Mission, 4, true, 4000, 250, Preferences.PrioriteGUIHistoire, false);
 
             EffectsController = new EffectsController<IVisual>();
 

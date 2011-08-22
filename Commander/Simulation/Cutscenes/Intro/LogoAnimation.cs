@@ -16,7 +16,7 @@
         {
             Scene = scene;
 
-            Logo = new Text("Ephemere Games", "Pixelite")
+            Logo = new Text("Ephemere Games", @"Pixelite")
             {
                 Alpha = 0,
                 VisualPriority = VisualPriorities.Cutscenes.IntroLogo,
@@ -24,7 +24,7 @@
             };
             Logo.CenterIt();
 
-            Presents = new Text("Presents", "Pixelite", new Vector3(0, 60, 0))
+            Presents = new Text("Presents", @"Pixelite", new Vector3(0, 60, 0))
             {
                 Alpha = 0,
                 VisualPriority = VisualPriorities.Cutscenes.IntroLogo,

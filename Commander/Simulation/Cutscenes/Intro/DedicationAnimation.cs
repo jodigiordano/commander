@@ -24,7 +24,7 @@
         {
             Scene = scene;
 
-            Text = new Text("", "Pixelite", new Vector3(200, 100, 0))
+            Text = new Text("", @"Pixelite", new Vector3(200, 100, 0))
             {
                 Data = AvailableDedications[Main.Random.Next(0, AvailableDedications.Count)],
                 Alpha = 0,

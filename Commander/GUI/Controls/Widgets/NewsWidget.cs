@@ -14,8 +14,8 @@
 
         public NewsWidget(News news, int maxWidth)
         {
-            Title = new Text(news.Title, "Pixelite") { SizeX = 3, Color = Colors.Default.AlienBright };
-            Description = new Text(news.Description, "Pixelite") { SizeX = 2 }.CompartmentalizeIt(maxWidth);
+            Title = new Text(news.Title, @"Pixelite") { SizeX = 3, Color = Colors.Default.AlienBright };
+            Description = new Text(news.Description, @"Pixelite") { SizeX = 2 }.CompartmentalizeIt(maxWidth);
         }
 
 

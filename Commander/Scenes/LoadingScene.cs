@@ -78,7 +78,7 @@
                 Alpha = 0
             };
 
-            LoadingQuote = new Text(LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], "Pixelite", new Vector3(0, 150, 0))
+            LoadingQuote = new Text(LoadingQuotes[Main.Random.Next(0, LoadingQuotes.Count)], @"Pixelite", new Vector3(0, 150, 0))
             {
                 Color = Color.Transparent,
                 SizeX = 3

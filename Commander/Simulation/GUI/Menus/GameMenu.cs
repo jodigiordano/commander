@@ -35,7 +35,7 @@
                 Origin = Vector2.Zero
             };
 
-            CashText = new Text("Pixelite")
+            CashText = new Text(@"Pixelite")
             {
                 Alpha = 0,
                 VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05,
@@ -54,7 +54,7 @@
             };
 
 
-            LivesText = new Text("Pixelite")
+            LivesText = new Text(@"Pixelite")
             {
                 Alpha = 0,
                 VisualPriority = Preferences.PrioriteGUIPanneauGeneral + 0.05,

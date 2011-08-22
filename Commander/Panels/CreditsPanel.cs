@@ -28,16 +28,16 @@
 
             Seperator1 = new VerticalSeparatorWidget() { MaxAlpha = 0 };
 
-            Jodi = new Label(new Text("A game by Jodi Giordano", "Pixelite") { SizeX = 4, Alpha = 0 }.CenterIt());
-            Website = new Label(new Text("ephemeregames.com", "Pixelite") { SizeX = 3, Alpha = 0 }.CenterIt());
+            Jodi = new Label(new Text("A game by Jodi Giordano", @"Pixelite") { SizeX = 4, Alpha = 0 }.CenterIt());
+            Website = new Label(new Text("ephemeregames.com", @"Pixelite") { SizeX = 3, Alpha = 0 }.CenterIt());
 
             Seperator2 = new VerticalSeparatorWidget() { MaxAlpha = 0 };
 
-            SpecialThanks = new Label(new Text("Special thanks to:", "Pixelite") { SizeX = 3, Alpha = 0 }.CenterIt());
-            Tag = new Label(new Text("TAG (tag.hexagram.ca)", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
-            Mercury = new Label(new Text("Mercury Particle Engine (mpe.codeplex.com)", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
-            EasyStorage = new Label(new Text("EasyStorage (easystorage.codeplex.com)", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
-            Backgrounds = new Label(new Text("NASA/STScI for some of the backgrounds", "Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
+            SpecialThanks = new Label(new Text("Special thanks to:", @"Pixelite") { SizeX = 3, Alpha = 0 }.CenterIt());
+            Tag = new Label(new Text("TAG (tag.hexagram.ca)", @"Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
+            Mercury = new Label(new Text("Mercury Particle Engine (mpe.codeplex.com)", @"Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
+            EasyStorage = new Label(new Text("EasyStorage (easystorage.codeplex.com)", @"Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
+            Backgrounds = new Label(new Text("NASA/STScI for some of the backgrounds", @"Pixelite") { SizeX = 2, Alpha = 0 }.CenterIt());
 
             AddWidget("Seperator", Seperator1);
             AddWidget("Jodi", Jodi);

@@ -16,7 +16,7 @@
         {
             Scene = scene;
 
-            Where = new Text("Far far away, in a tiny colony", "Pixelite", new Vector3(-600, 260, 0))
+            Where = new Text("Far far away, in a tiny colony", @"Pixelite", new Vector3(-600, 260, 0))
             {
                 SizeX = 3,
                 Alpha = 0,
@@ -24,7 +24,7 @@
             };
 
 
-            Time = new Text("Date: Who cares?", "Pixelite", new Vector3(-600, 300, 0))
+            Time = new Text("Date: Who cares?", @"Pixelite", new Vector3(-600, 300, 0))
             {
                 SizeX = 3,
                 Alpha = 0,

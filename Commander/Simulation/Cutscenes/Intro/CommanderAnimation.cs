@@ -30,7 +30,7 @@
                 Blend = BlendType.Add
             };
 
-            Commander = new Text("Commander", "Pixelite")
+            Commander = new Text("Commander", @"Pixelite")
             {
                 Color = Color.Black,
                 SizeX = 12,
@@ -41,7 +41,7 @@
                 scene,
                 new Vector3(0, 100, 0),
                 "Alien", Colors.Default.NeutralDark,
-                "Pixelite", Colors.Default.AlienBright,
+                @"Pixelite", Colors.Default.AlienBright,
                 "Todo: Subtitle here",
                 5, true, 4000, 250, VisualPriorities.Cutscenes.IntroCommanderText, false);
             SubTitle.CenterText = true;

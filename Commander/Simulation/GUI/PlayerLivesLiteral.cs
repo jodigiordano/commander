@@ -24,7 +24,7 @@
                 Origin = Vector2.Zero
             };
 
-            LifesCount = new Text("Pixelite")
+            LifesCount = new Text(@"Pixelite")
             {
                 SizeX = 2,
                 VisualPriority = VisualPriorities.Default.PlayerLives

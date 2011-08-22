@@ -46,13 +46,13 @@
             DistanceBetweenTwoChoices = new Vector3(30, 30, 0);
             PowerUpsLayout = new Vector3(4, 4, 0);
 
-            PowerUpPriceTitleAndCost = new Text("Pixelite")
+            PowerUpPriceTitleAndCost = new Text(@"Pixelite")
             {
                 SizeX = TextSize,
                 VisualPriority = VisualPriority + 0.001f
             };
 
-            PowerUpDescription = new Text("Pixelite")
+            PowerUpDescription = new Text(@"Pixelite")
             {
                 SizeX = TextSize - 1,
                 VisualPriority = VisualPriority + 0.001f

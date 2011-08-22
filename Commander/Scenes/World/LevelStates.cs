@@ -31,7 +31,7 @@
             foreach (var level in Descriptor.Levels)
             {
                 LevelUnlockedStates.Add(level.Key, false);
-                LockedTexts.Add(level.Key, new Text("Locked", "Pixelite")
+                LockedTexts.Add(level.Key, new Text("Locked", @"Pixelite")
                 {
                     SizeX = 2,
                     Alpha = 100,
@@ -39,7 +39,7 @@
                 }.CenterIt());
             }
 
-            GamePausedText = new Text("Paused", "Pixelite")
+            GamePausedText = new Text("Paused", @"Pixelite")
             {
                 SizeX = 2,
                 Color = Colors.Default.GamePaused,

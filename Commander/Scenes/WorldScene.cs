@@ -86,7 +86,7 @@
             {
                 var cb = CelestialBodies[level.Key];
 
-                LevelsNumbers.Add(level.Key, new Text(LevelsDescriptors[cb.Name].Infos.Mission, "Pixelite")
+                LevelsNumbers.Add(level.Key, new Text(LevelsDescriptors[cb.Name].Infos.Mission, @"Pixelite")
                 {
                     SizeX = 3,
                     VisualPriority = cb.VisualPriority + 0.00001,

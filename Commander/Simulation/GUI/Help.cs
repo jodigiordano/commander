@@ -172,7 +172,7 @@
                 text,
                 Color.Black,
                 new Vector3(-230, -175, 0),
-                "Pixelite",
+                @"Pixelite",
                 2,
                 new Vector2(Bubble.TextureSize.X * Bubble.Size.X - 40, Bubble.TextureSize.Y * Bubble.Size.Y - 40),
                 20,

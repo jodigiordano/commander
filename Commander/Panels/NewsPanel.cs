@@ -28,16 +28,16 @@
 
             AllNews = new List<NewsWidget>();
 
-            Sync = new PushButton(new Text("Reload", "Pixelite") { SizeX = 2 });
+            Sync = new PushButton(new Text("Reload", @"Pixelite") { SizeX = 2 });
             Sync.ClickHandler = DoReloadClicked;
 
-            var vwText = new Text("Visit website", "Pixelite") { SizeX = 2 };
+            var vwText = new Text("Visit website", @"Pixelite") { SizeX = 2 };
             VisitWebsite = new PushButton(vwText) { MinSpaceForValue = (int) vwText.AbsoluteSize.X + 20 };
             VisitWebsite.ClickHandler = DoVisitWebsiteClicked;
 
             AddTitleBarWidget(VisitWebsite);
 
-            LoadingInfos = new Label(new Text("Pixelite") { SizeX = 4 });
+            LoadingInfos = new Label(new Text(@"Pixelite") { SizeX = 4 });
 
             Main.NewsController.LoadingStarted += new NewsTypeHandler(DoLoadingStarted);
             Main.NewsController.LoadingDoneSuccessfully += new NewsTypeNewsHandler(DoLoadedSuccessfully);

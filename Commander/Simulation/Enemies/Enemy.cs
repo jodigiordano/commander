@@ -84,7 +84,7 @@ namespace EphemereGames.Commander.Simulation
             WaveId = -1;
             EndOfPathReached = false;
 
-            CashValueText = new Text("Pixelite") { SizeX = 2 };
+            CashValueText = new Text(@"Pixelite") { SizeX = 2 };
         }
 
 

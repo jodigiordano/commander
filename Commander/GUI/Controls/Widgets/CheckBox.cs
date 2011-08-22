@@ -25,7 +25,7 @@
 
         public CheckBox(string label)
         {
-            Label = new Text(label, "Pixelite") { SizeX = 2 };
+            Label = new Text(label, @"Pixelite") { SizeX = 2 };
 
             Box = new Image("WidgetPush") { SizeX = 4, Origin = Vector2.Zero };
             CheckedRep = new Image("WidgetChecked") { SizeX = 4, Origin = Vector2.Zero };

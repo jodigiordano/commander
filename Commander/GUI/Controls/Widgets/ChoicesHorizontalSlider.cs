@@ -37,10 +37,10 @@
             DecrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, Effect = SpriteEffects.FlipHorizontally, SizeX = 4 };
             IncrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, SizeX = 4 };
 
-            ValueText = new Text(Choices[ChoiceIndex], "Pixelite") { SizeX = 2 };
-            Label = new Text(label, "Pixelite") { SizeX = 2 };
+            ValueText = new Text(Choices[ChoiceIndex], @"Pixelite") { SizeX = 2 };
+            Label = new Text(label, @"Pixelite") { SizeX = 2 };
 
-            LongestChoice = new Text("Pixelite") { SizeX = 2 };
+            LongestChoice = new Text(@"Pixelite") { SizeX = 2 };
 
             foreach (var choice in Choices)
             {

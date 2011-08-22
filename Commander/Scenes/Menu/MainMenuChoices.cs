@@ -26,7 +26,7 @@
                 if (c is AsteroidBelt)
                     continue;
 
-                var text = new Text(c.Name, "Pixelite")
+                var text = new Text(c.Name, @"Pixelite")
                 {
                     SizeX = 3,
                     VisualPriority = visualPriority,

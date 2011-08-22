@@ -35,7 +35,7 @@
             Droite = new Image("Droite", Position + new Vector3(50, 0, 0));
             Droite.VisualPriority = priorite;
 
-            ValeurRep = new Text(Valeur.ToString(), "Pixelite", Color.White, Position);
+            ValeurRep = new Text(Valeur.ToString(), @"Pixelite", Color.White, Position);
             ValeurRep.SizeX = 2;
             ValeurRep.VisualPriority = priorite;
             ValeurRep.Origin = ValeurRep.Center;

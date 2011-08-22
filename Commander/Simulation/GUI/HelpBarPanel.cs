@@ -49,6 +49,12 @@
         }
 
 
+        public bool Active
+        {
+            get { return ActivePlayers && ActiveOptions; }
+        }
+
+
         public void ShowMessage(HelpBarMessage message, InputType inputType)
         {
             if (Current.Key == message)
@@ -124,134 +130,134 @@
             PredefinedMessagesXbox = new Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessageComparer.Default)
             {
                 { HelpBarMessage.Select, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Select", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Select", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.StartNewCampaign, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Start a new campaign", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Start a new campaign", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.CallNextWave, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Call next wave now", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Call next wave now", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.BuyTurret, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Buy a turret", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Buy a turret", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.None, new List<KeyValuePair<string, PanelWidget>>() {}},
 
                 { HelpBarMessage.HoldToSkip, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Hold to skip", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Hold to skip", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.Cancel, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Cancel", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Cancel", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.ToggleChoices, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.MoveYourSpaceship, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("moveSpaceship", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.MoveCursor]), new Text("Move your spaceship over a planet", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("moveSpaceship", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.MoveCursor]), new Text("Move your spaceship over a planet", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.InstallTurret, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Install turret", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Install turret", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Cancel", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Cancel", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.ToggleChoicesSelect, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Select", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Select", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.WorldToggleNewGame, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Start a new game", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Start a new game", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.WorldToggleResume, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() { new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]), new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, new Text("Toggle choices", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Resume game", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Resume game", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.WorldNewGame, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Start a new game", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Start a new game", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.GameLost, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Retry", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Retry", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Go back to the world", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Go back to the world", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.GameWon, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Next Level", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Next Level", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("retry", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.RetryLevel]), new Text("Retry level", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("retry", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.RetryLevel]), new Text("Retry level", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Go back to the world", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), new Text("Go back to the world", @"Pixelite") { SizeX = 2f }))}},
             };
 
 
             PredefinedMessagesWindows = new Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessageComparer.Default)
             {
                 { HelpBarMessage.Select, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Select", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Select", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.StartNewCampaign, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start a new campaign", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start a new campaign", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.CallNextWave, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start next wave now", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start next wave now", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.BuyTurret, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Buy a turret", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Buy a turret", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.None, new List<KeyValuePair<string, PanelWidget>>() {}},
 
                 { HelpBarMessage.HoldToSkip, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Hold to skip", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Hold to skip", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.Cancel, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Cancel", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Cancel", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.ToggleChoices, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.MoveYourSpaceship, new List<KeyValuePair<string, PanelWidget>>() {
                     new KeyValuePair<string, PanelWidget>("moveSpaceship", new ImageLabel(new List<Image>() {
                         new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveUp]),
                         new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveLeft]),
                         new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveDown]),
-                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveRight])  }, new Text("Move your spaceship over a planet", "Pixelite") { SizeX = 2f }))}},
+                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveRight])  }, new Text("Move your spaceship over a planet", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.InstallTurret, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Install turret", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Install turret", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Cancel", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Cancel", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.ToggleChoicesSelect, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Select", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Select", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.WorldToggleNewGame, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start a new game", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start a new game", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.WorldToggleResume, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.SelectionPrevious]), new Text("Toggle choices", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Resume game", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Resume game", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.WorldNewGame, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start a new game", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Start a new game", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.GameLost, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Retry", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Retry", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Go back to the world", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Go back to the world", @"Pixelite") { SizeX = 2f }))}},
 
                 { HelpBarMessage.GameWon, new List<KeyValuePair<string, PanelWidget>>() {
-                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Next Level", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Next Level", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("retry", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.AlternateSelect]), new Text("Retry level", "Pixelite") { SizeX = 2f })),
+                    new KeyValuePair<string, PanelWidget>("retry", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.AlternateSelect]), new Text("Retry level", @"Pixelite") { SizeX = 2f })),
                     new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()),
-                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Go back to the world", "Pixelite") { SizeX = 2f }))}},
+                    new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), new Text("Go back to the world", @"Pixelite") { SizeX = 2f }))}},
             };
         }
     }

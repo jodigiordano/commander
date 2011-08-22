@@ -11,7 +11,7 @@
 
 
         public EditorToggleContextualMenuChoice(string name, List<string> labels, float textSize, List<EditorCommand> commands)
-            : base(name, labels, new Text(labels[0], "Pixelite") { SizeX = textSize })
+            : base(name, labels, new Text(labels[0], @"Pixelite") { SizeX = textSize })
         {
             if (commands.Count != labels.Count)
             {

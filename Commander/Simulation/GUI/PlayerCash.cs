@@ -18,7 +18,7 @@
             Simulator = simulator;
             Stash = stash;
 
-            Cash = new Text(Stash.Cash.ToString(), "Pixelite")
+            Cash = new Text(Stash.Cash.ToString(), @"Pixelite")
             {
                 SizeX = 2,
                 VisualPriority = VisualPriorities.Default.PlayerCash

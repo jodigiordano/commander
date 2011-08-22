@@ -163,7 +163,7 @@
 
         public void SetTitle(string title)
         {
-            Title = new Text(title, "Pixelite") { SizeX = 2, VisualPriority = VisualPriority };
+            Title = new Text(title, @"Pixelite") { SizeX = 2, VisualPriority = VisualPriority };
 
             ComputeSize();
         }

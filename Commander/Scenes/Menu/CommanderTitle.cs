@@ -22,7 +22,7 @@
         {
             Scene = scene;
 
-            Commander = new Text("Commander", "Pixelite", position)
+            Commander = new Text("Commander", @"Pixelite", position)
             {
                 SizeX = 12,
                 VisualPriority = visualPriority,
@@ -114,7 +114,7 @@
             PressStart = new Translator(
                 Scene, new Vector3(0, 65, 0),
                 "Alien", Colors.Default.AlienBright,
-                "Pixelite", Colors.Default.NeutralBright,
+                @"Pixelite", Colors.Default.NeutralBright,
                 (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine",
                 3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal, false)
                 {

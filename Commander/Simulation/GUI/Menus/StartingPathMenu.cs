@@ -34,11 +34,11 @@
             VisualPriority = visualPriority;
 
             
-            //RemainingWavesChoice = new ColoredTextContextualMenuChoice("RemainingWaves", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
-            RemainingEnemiesChoice = new ColoredTextContextualMenuChoice("RemainingEnemies", new ColoredText(new List<string>() { "", "" }, new Color[] { Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
+            //RemainingWavesChoice = new ColoredTextContextualMenuChoice("RemainingWaves", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, @"Pixelite", Vector3.Zero) { SizeX = 2 });
+            RemainingEnemiesChoice = new ColoredTextContextualMenuChoice("RemainingEnemies", new ColoredText(new List<string>() { "", "" }, new Color[] { Color.White, Color.White }, @"Pixelite", Vector3.Zero) { SizeX = 2 });
             //NextWaveCompositionChoice = new NextWaveContextualMenuChoice("NextWaveComposition");
-            //TimeNextWaveChoice = new ColoredTextContextualMenuChoice("TimeRemainingChoice", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 });
-            CallTheNextWave = new TextContextualMenuChoice("CallTheNextWave", new Text("I'm ready! Bring it on!", "Pixelite") { SizeX = 2 });
+            //TimeNextWaveChoice = new ColoredTextContextualMenuChoice("TimeRemainingChoice", new ColoredText(new List<string>() { "", "", "" }, new Color[] { Color.White, Color.White, Color.White }, @"Pixelite", Vector3.Zero) { SizeX = 2 });
+            CallTheNextWave = new TextContextualMenuChoice("CallTheNextWave", new Text("I'm ready! Bring it on!", @"Pixelite") { SizeX = 2 });
 
             var choices = new List<ContextualMenuChoice>();
 

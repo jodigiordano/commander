@@ -32,7 +32,7 @@
             }
 
             Enemies = new List<Image>();
-            Quantity = new ColoredText(new List<string>() {"Next wave: ", ""}, new Color[] { Color.White, Color.White }, "Pixelite", Vector3.Zero) { SizeX = 2 };
+            Quantity = new ColoredText(new List<string>() {"Next wave: ", ""}, new Color[] { Color.White, Color.White }, @"Pixelite", Vector3.Zero) { SizeX = 2 };
 
             DistanceEnemiesX = 10;
             DistanceQuantityX = 10;

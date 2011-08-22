@@ -553,6 +553,8 @@
             if (PowerUpsToBuyCount == 0)
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
 
+            ShowGameBarHBMessage();
+
             AlienNextWaveAnimation.TimeNextWave = Math.Max(0, AlienNextWaveAnimation.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
             if (Simulator.State != GameState.Paused)
@@ -565,6 +567,31 @@
                 PathPreviewing.Update();
                 GameMenu.Update();
             }
+        }
+
+
+        private void ShowGameBarHBMessage()
+        {
+            if (!HelpBar.Active)
+            {
+                HelpBar.HideMessage(HelpBarMessage.GameBar);
+                return;
+            }
+
+            bool show = false;
+
+            foreach (var p in Players)
+            {
+                if (GameBarPanel.DoHover(p.Key.Circle))
+                {
+                    HelpBar.ShowMessage(HelpBarMessage.GameBar, GameBarPanel.GetHelpBarMessage());
+                    show = true;
+                    break;
+                }
+            }
+
+            if (!show)
+                HelpBar.HideMessage(HelpBarMessage.GameBar);
         }
 
 

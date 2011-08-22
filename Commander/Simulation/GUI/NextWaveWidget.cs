@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -16,6 +17,7 @@
 
         private byte alpha;
         private Vector3 position;
+        private PhysicalRectangle Rectangle;
 
 
         public NextWaveWidget()
@@ -34,10 +36,12 @@
             }
 
             Enemies = new List<Image>();
-            Quantity = new Text("Pixelite") { SizeX = 3 };
+            Quantity = new Text(@"Pixelite") { SizeX = 3 };
 
             DistanceEnemiesX = 10;
             DistanceQuantityX = 10;
+
+            Rectangle = new PhysicalRectangle();
         }
 
 
@@ -76,7 +80,7 @@
                 {
                     var e = Enemies[i];
 
-                    e.Position = position + new Vector3((Quantity.AbsoluteSize.X + DistanceQuantityX) + (i * e.AbsoluteSize.X) + (i * DistanceEnemiesX), 5, 0);
+                    e.Position = position + new Vector3((i * e.AbsoluteSize.X) + (i * DistanceEnemiesX), 5, 0);
                 }
 
                 Quantity.Position = Enemies.Count <= 0 ? value : Enemies[Enemies.Count - 1].Position + new Vector3(Enemies[Enemies.Count - 1].AbsoluteSize.X, -5, 0);
@@ -93,7 +97,7 @@
 
             set
             {
-                foreach (var e in Enemies)
+                foreach (var e in EnemiesImages.Values)
                     e.VisualPriority = value;
 
                 Quantity.VisualPriority = value;
@@ -117,7 +121,7 @@
                 return Enemies.Count == 0 ?
                     Vector3.Zero :
                     new Vector3(
-                        Quantity.Position.X + Quantity.AbsoluteSize.X - Enemies[0].Position.X,
+                        (Quantity.Position.X + Quantity.AbsoluteSize.X) - Enemies[0].Position.X,
                         Enemies[0].AbsoluteSize.Y, 0);
             }
 
@@ -149,9 +153,11 @@
         }
 
 
-        protected override bool Hover(Core.Physics.Circle circle)
+        protected override bool Hover(Circle circle)
         {
-            return false;
+            SyncRectangle();
+
+            return Physics.CircleRectangleCollision(circle, Rectangle);
         }
 
 
@@ -163,6 +169,17 @@
                 Scene.VisualEffects.Add(e, effect);
 
             Scene.VisualEffects.Add(Quantity, effect);
+        }
+
+
+        private void SyncRectangle()
+        {
+            var dimension = Dimension;
+
+            Rectangle.X = (int) Position.X;
+            Rectangle.Y = (int) Position.Y;
+            Rectangle.Width = (int) dimension.X;
+            Rectangle.Height = (int) dimension.Y;
         }
     }
 }

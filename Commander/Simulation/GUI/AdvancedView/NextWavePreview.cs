@@ -20,7 +20,7 @@
         {
             Simulator = simulator;
 
-            Progress = new Text("Pixelite")
+            Progress = new Text(@"Pixelite")
             {
                 SizeX = 2,
                 Color = Colors.Default.AlienBright,

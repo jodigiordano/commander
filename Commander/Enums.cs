@@ -248,7 +248,8 @@ namespace EphemereGames.Commander.Simulation
         WorldNewGame = 14,
         BuyTurret = 15,
         ToggleChoicesSelect = 16,
-        StartNewCampaign = 17
+        StartNewCampaign = 17,
+        GameBar = 18
     };
 }
 

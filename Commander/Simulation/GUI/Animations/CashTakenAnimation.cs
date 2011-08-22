@@ -12,7 +12,7 @@
         public CashTakenAnimation(int value, Vector3 position, double visualPriority)
             : base(1000, visualPriority)
         {
-            Value = new Text(value + "$", "Pixelite", position)
+            Value = new Text(value + "$", @"Pixelite", position)
             {
                 SizeX = 2,
                 VisualPriority = visualPriority

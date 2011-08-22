@@ -30,7 +30,7 @@
 
         public PushButton()
         {
-            Label = new Text("Pixelite");
+            Label = new Text(@"Pixelite");
             Box = new Image("WidgetPush") { SizeX = 4, Origin = Vector2.Zero };
             BoxCircle = new Circle(Vector3.Zero, Box.AbsoluteSize.X / 2);
         }

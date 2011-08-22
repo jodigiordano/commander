@@ -13,6 +13,9 @@
 
         private List<Image> Images;
         private Text Text;
+        private PhysicalRectangle Rectangle;
+
+        public bool CanHover;
 
 
         public ImageLabel(Image image, Text text)
@@ -30,6 +33,9 @@
                 img.Origin = Vector2.Zero;
             
             Text = text;
+
+            CanHover = false;
+            Rectangle = new PhysicalRectangle();
         }
 
 
@@ -115,7 +121,12 @@
 
         protected override bool Hover(Circle circle)
         {
-            return false;
+            if (!CanHover)
+                return false;
+
+            SyncRectangle();
+
+            return Physics.CircleRectangleCollision(circle, Rectangle);
         }
 
 
@@ -141,6 +152,17 @@
             }
 
             Scene.VisualEffects.Add(Text, effect);
+        }
+
+
+        private void SyncRectangle()
+        {
+            var dimension = Dimension;
+
+            Rectangle.X = (int) Position.X;
+            Rectangle.Y = (int) Position.Y;
+            Rectangle.Width = (int) dimension.X;
+            Rectangle.Height = (int) dimension.Y;
         }
     }
 }

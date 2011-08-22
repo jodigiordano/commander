@@ -32,7 +32,7 @@
             VisualPriority = visualPriority;
             Color = color;
 
-            TurretDescription = new Label(new Text("Pixelite") { SizeX = 2f });
+            TurretDescription = new Label(new Text(@"Pixelite") { SizeX = 2f });
             
             HBMessageOneTurret = new List<KeyValuePair<string, PanelWidget>>();
             HBMessageOneTurret.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.BuyTurret, inputType));
@@ -61,7 +61,7 @@
                 image.Origin = Vector2.Zero;
 
                 Choices.Add(new LogoTextContextualMenuChoice("Buy",
-                    new Text(t.BuyPrice + "$", "Pixelite") { SizeX = 2 },
+                    new Text(t.BuyPrice + "$", @"Pixelite") { SizeX = 2 },
                     image) { LogoOffet = new Vector3(0, -2, 0) });
             }
 

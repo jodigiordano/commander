@@ -300,7 +300,7 @@
             if (obj == null || TalkingTurrets.ContainsKey(obj))
                 return;
 
-            Text texteInfos = new Text(message, "Pixelite", Color.White, Vector3.Zero);
+            Text texteInfos = new Text(message, @"Pixelite", Color.White, Vector3.Zero);
             texteInfos.SizeX = 2;
 
             visualPriority = (visualPriority == -1) ? VisualPriorities.Default.TurretMessage : visualPriority;
@@ -351,7 +351,7 @@
                     if (!tourelle.Visible || !tourelle.Watcher || tourelle.Type == TurretType.Alien || TalkingTurrets.ContainsKey(tourelle))
                         return;
 
-                    Text texte = new Text("Pixelite");
+                    Text texte = new Text(@"Pixelite");
                     texte.SizeX = 1;
                     texte.Color = tourelle.Color;
 

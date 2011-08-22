@@ -22,7 +22,7 @@
         {
             DistanceY = 45;
 
-            Quote = new Text(quote, "Pixelite") { SizeX = 2, Color = quoteColor, VisualPriority = visualPriority - 0.00001 };
+            Quote = new Text(quote, @"Pixelite") { SizeX = 2, Color = quoteColor, VisualPriority = visualPriority - 0.00001 };
             Stars = new ScoreStars(Scene, nbStars, visualPriority - 0.00001);
             Score = new ScoreCalculation(Scene, commonStash.TotalCash, commonStash.TotalLives, commonStash.TotalTime, (commonStash.TotalScore * 100) / commonStash.PotentialScore, visualPriority - 0.00001);
 

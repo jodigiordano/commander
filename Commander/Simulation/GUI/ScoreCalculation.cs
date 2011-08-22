@@ -26,41 +26,41 @@
         {
             Scene = scene;
 
-            Score = new Text("Score: ", "Pixelite", Vector3.Zero)
+            Score = new Text("Score: ", @"Pixelite", Vector3.Zero)
             {
                 SizeX = 2,
                 Alpha = 0
             };
 
-            RemainingCash = new Text(remainingCash.ToString(), "Pixelite", Vector3.Zero)
-            {
-                SizeX = 2,
-                Alpha = 0
-            };
-
-
-            RemainingLives = new Text(remainingLifes.ToString(), "Pixelite", Vector3.Zero)
+            RemainingCash = new Text(remainingCash.ToString(), @"Pixelite", Vector3.Zero)
             {
                 SizeX = 2,
                 Alpha = 0
             };
 
 
-            TimeTaken = new Text(timeTaken.ToString(), "Pixelite", Vector3.Zero)
+            RemainingLives = new Text(remainingLifes.ToString(), @"Pixelite", Vector3.Zero)
             {
                 SizeX = 2,
                 Alpha = 0
             };
 
 
-            Percentage = new Text(percentage + "%", "Pixelite", Vector3.Zero)
+            TimeTaken = new Text(timeTaken.ToString(), @"Pixelite", Vector3.Zero)
             {
                 SizeX = 2,
                 Alpha = 0
             };
 
 
-            FinalScore = new Text((remainingCash + remainingLifes + timeTaken).ToString(), "Pixelite", Vector3.Zero)
+            Percentage = new Text(percentage + "%", @"Pixelite", Vector3.Zero)
+            {
+                SizeX = 2,
+                Alpha = 0
+            };
+
+
+            FinalScore = new Text((remainingCash + remainingLifes + timeTaken).ToString(), @"Pixelite", Vector3.Zero)
             {
                 SizeX = 2,
                 Alpha = 0

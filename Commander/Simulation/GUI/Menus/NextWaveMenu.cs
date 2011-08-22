@@ -45,7 +45,7 @@
 
                 RepresentationsEnnemis.Add(kvp.Key, im);
 
-                Text t = new Text("Pixelite")
+                Text t = new Text(@"Pixelite")
                 {
                     VisualPriority = this.PrioriteAffichage,
                     SizeX = 2
@@ -53,7 +53,7 @@
 
                 RepresentationsQtes.Add(kvp.Key, t);
 
-                t = new Text("Pixelite")
+                t = new Text(@"Pixelite")
                 {
                     VisualPriority = this.PrioriteAffichage,
                     SizeX = 1

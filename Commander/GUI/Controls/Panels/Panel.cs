@@ -320,7 +320,7 @@
         {
             bool adjustDimension = Title == null;
 
-            Title = new Text(title, "Pixelite")
+            Title = new Text(title, @"Pixelite")
             {
                 SizeX = 2,
                 VisualPriority = VisualPriority,
