@@ -61,8 +61,8 @@
 
                         foreach (var player in Inputs.Players)
                         {
-                            Inputs.VibrateControllerHighFrequency(player, 5000, 0.1f);
-                            Inputs.VibrateControllerLowFrequency(player, 5000, 0.2f);
+                            //Inputs.VibrateControllerHighFrequency(player, 5000, 0.1f);
+                            Inputs.VibrateControllerLowFrequency(player, 5000, 0.4f);
                         }
 
                         State = MothershipState.Arrival;
@@ -94,8 +94,8 @@
 
                         foreach (var player in Inputs.Players)
                         {
-                            Inputs.VibrateControllerHighFrequency(player, 6000, 0.1f);
-                            Inputs.VibrateControllerLowFrequency(player, 6000, 0.2f);
+                            //Inputs.VibrateControllerHighFrequency(player, 6000, 0.1f);
+                            Inputs.VibrateControllerLowFrequency(player, 6000, 0.4f);
                         }
 
                         State = MothershipState.Departure;

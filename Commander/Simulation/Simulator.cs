@@ -512,12 +512,12 @@ namespace EphemereGames.Commander.Simulation
             if (State == GameState.Won)
                 return;
 
-            if (!this.DemoMode && this.State != GameState.Lost)
+            if (!DemoMode && State != GameState.Lost)
             {
                 foreach (var player in Inputs.Players)
                 {
-                    Inputs.VibrateControllerHighFrequency(player, 300, 0.5f);
-                    Inputs.VibrateControllerLowFrequency(player, 300, 0.5f);
+                    //Inputs.VibrateControllerHighFrequency(player, 300, 0.5f);
+                    Inputs.VibrateControllerLowFrequency(player, 300, 0.9f);
                 }
             }
         }
@@ -527,8 +527,8 @@ namespace EphemereGames.Commander.Simulation
         {
             foreach (var player in Inputs.Players)
             {
-                Inputs.VibrateControllerHighFrequency(player, 300, 0.5f);
-                Inputs.VibrateControllerLowFrequency(player, 300, 0.5f);
+                //Inputs.VibrateControllerHighFrequency(player, 300, 0.5f);
+                Inputs.VibrateControllerLowFrequency(player, 300, 0.9f);
             }
         }
 
