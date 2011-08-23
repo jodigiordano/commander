@@ -203,6 +203,7 @@
             SceneState = State.ConnectPlayer;
             Simulator.EnableInputs = false;
             Simulator.SyncPlayers();
+            Main.GameInProgress = null;
         }
 
 

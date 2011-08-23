@@ -25,12 +25,18 @@
         private List<KeyValuePair<string, PanelWidget>> HBMessageManyTurrets;
         private Label TurretDescription;
 
+        private bool AlternateSelectedCannotDo;
+        private bool AlternateSelectedText;
+
 
         public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color, InputType inputType)
         {
             Simulator = simulator;
             VisualPriority = visualPriority;
             Color = color;
+
+            AlternateSelectedCannotDo = color == Colors.Spaceship.Pink;
+            AlternateSelectedText = color == Colors.Spaceship.Yellow;
 
             TurretDescription = new Label(new Text(@"Pixelite") { SizeX = 2f });
             
@@ -117,9 +123,19 @@
             {
                 var turret = (LogoTextContextualMenuChoice) Choices[slotCounter];
 
-                turret.SetColor((kvp.Value) ? Color.White : Color.Red);
+                bool canBuy = kvp.Value;
+                bool selected = TurretToBuy == Simulator.TurretsFactory.Availables[kvp.Key].Type;
 
-                if (TurretToBuy == Simulator.TurretsFactory.Availables[kvp.Key].Type)
+                if (!canBuy && AlternateSelectedCannotDo && selected)
+                    turret.SetColor(Colors.Spaceship.CannotDo);
+                else if (!canBuy)
+                    turret.SetColor(Color.Red);
+                else if (AlternateSelectedText && selected)
+                    turret.SetColor(Colors.Spaceship.Selected);
+                else
+                    turret.SetColor(Color.White);
+
+                if (selected)
                     Menu.SelectedIndex = slotCounter;
 
                 slotCounter++;

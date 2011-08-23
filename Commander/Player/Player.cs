@@ -31,11 +31,11 @@
 
         private static List<Color> AvailablesColors = new List<Color>()
         {
-            new Color(255, 0, 136),
-            new Color(255, 115, 40),
-            new Color(128, 255, 63),
-            new Color(95, 71, 255),
-            new Color(255, 227, 48)
+            Colors.Spaceship.Blue,
+            Colors.Spaceship.Green,
+            Colors.Spaceship.Orange,
+            Colors.Spaceship.Pink,
+            Colors.Spaceship.Yellow
         };
 
 

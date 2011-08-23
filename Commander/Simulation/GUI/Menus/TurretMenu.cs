@@ -23,12 +23,18 @@
         private Turret turret;
         private TurretChoice selectedOption;
 
+        private bool AlternateSelectedCannotDo;
+        private bool AlternateSelectedText;
+
 
         public TurretMenu(Simulator simulator, double visualPriority, Color color, InputType inputType)
         {
             Simulator = simulator;
 
             float textSize = 2f;
+
+            AlternateSelectedCannotDo = color == Colors.Spaceship.Pink;
+            AlternateSelectedText = color == Colors.Spaceship.Yellow;
 
             Choices = new List<ContextualMenuChoice>()
             {
@@ -42,7 +48,6 @@
             };
 
             Menu = new ContextualMenu(simulator, visualPriority, color, Choices, 15);
-
 
             InitializeHelpBarMessages(inputType);
         }
@@ -129,25 +134,62 @@
             if (sell.Active)
             {
                 sell.SetText("+" + Turret.SellPrice + "$");
-                sell.SetColor((AvailableTurretOptions[0]) ? Color.White : Color.Red);
+
+                bool canSell = AvailableTurretOptions[TurretChoice.Sell];
+
+                if (!canSell && AlternateSelectedCannotDo && SelectedOption == TurretChoice.Sell)
+                    sell.SetColor(Colors.Spaceship.CannotDo);
+                else if (!canSell)
+                    sell.SetColor(Color.Red);
+                else if (AlternateSelectedText && SelectedOption == TurretChoice.Sell)
+                    sell.SetColor(Colors.Spaceship.Selected);
+                else
+                    sell.SetColor(Color.White);
+
             }
 
 
             var upgrade = (UpgradeTurretContextualMenuChoice) Choices[0];
             upgrade.Active = Turret.CanUpdate;
 
+            bool max = Turret.Level == Simulator.TweakingController.TurretsFactory.TurretsLevels[Turret.Type].Count - 1;
+
             if (upgrade.Active)
             {
                 upgrade.SetPrice("-" + Turret.UpgradePrice + "$");
                 upgrade.SetLevel((Turret.Level + 1).ToString());
-                upgrade.SetColor((AvailableTurretOptions[TurretChoice.Update]) ? Color.White : Color.Red);
             }
 
-            else if (Turret.Level == Simulator.TweakingController.TurretsFactory.TurretsLevels[Turret.Type].Count - 1)
+            else if (max)
             {
                 upgrade.SetPrice("MAX");
                 upgrade.SetLevel((Turret.Level).ToString());
-                upgrade.SetColor(Color.Red);
+            }
+
+            if (upgrade.Active || max)
+            {
+                bool canUpgrade = AvailableTurretOptions[TurretChoice.Update];
+
+                if (!canUpgrade && AlternateSelectedCannotDo && SelectedOption == TurretChoice.Update)
+                {
+                    upgrade.SetPriceColor(Colors.Spaceship.CannotDo);
+                    upgrade.SetLevelColor(Colors.Spaceship.CannotDo);
+                }
+                else if (!canUpgrade)
+                {
+                    upgrade.SetPriceColor(Color.Red);
+                    upgrade.SetLevelColor(Color.Red);
+                }
+                else if (AlternateSelectedText && SelectedOption == TurretChoice.Update)
+                {
+                    upgrade.SetPriceColor(Colors.Spaceship.Selected);
+                    upgrade.SetLevelColor(Colors.Spaceship.Selected);
+                }
+                else
+                {
+                    upgrade.SetPriceColor(Color.White);
+                    upgrade.SetLevelColor(Color.White);
+                }
             }
 
             Menu.SelectedIndex = SelectedOption == TurretChoice.Sell ? 1 : 0;

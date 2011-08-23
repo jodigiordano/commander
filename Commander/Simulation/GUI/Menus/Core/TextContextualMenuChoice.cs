@@ -45,6 +45,12 @@
         }
 
 
+        public void SetColor(Color color)
+        {
+            Label.Color = color;
+        }
+
+
         public override void Draw()
         {
             Scene.Add(Label);

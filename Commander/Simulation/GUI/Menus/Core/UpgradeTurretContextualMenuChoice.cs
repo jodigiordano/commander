@@ -37,9 +37,15 @@
         }
 
 
-        public void SetColor(Color color)
+        public void SetPriceColor(Color color)
         {
             Price.Color = color;
+        }
+
+
+        public void SetLevelColor(Color color)
+        {
+            Level.Color = color;
         }
 
 

@@ -23,6 +23,7 @@
         private List<ContextualMenuChoice> PausedGameChoices;
 
         private Simulator Simulator;
+        private bool AlternateSelectedText;
 
 
         public WorldMenu(Simulator simulator, double visualPriority, Dictionary<string, LevelDescriptor> availableLevels, Color color)
@@ -30,6 +31,9 @@
             Simulator = simulator;
             VisualPriority = visualPriority;
             AvailableLevels = availableLevels;
+
+            AlternateSelectedText = color == Colors.Spaceship.Yellow;
+
 
             PausedGameChoices = new List<ContextualMenuChoice>()
             {
@@ -102,7 +106,18 @@
 
             if (PausedGameMenuCheckedIn && PausedGameMenuVisible)
             {
-                PausedGameMenu.SelectedIndex = (int) PausedGameChoice;
+                int newIndex = (int) PausedGameChoice;
+
+                if (AlternateSelectedText && PausedGameMenu.Choices.Count > 0 && newIndex != PausedGameMenu.SelectedIndex)
+                {
+                    if (PausedGameMenu.SelectedIndex >= 0)
+                        ((TextContextualMenuChoice) PausedGameMenu.Choices[PausedGameMenu.SelectedIndex]).SetColor(Color.White);
+
+                    if (newIndex >= 0)
+                        ((TextContextualMenuChoice) PausedGameMenu.Choices[newIndex]).SetColor(Colors.Spaceship.Selected);
+                }
+
+                PausedGameMenu.SelectedIndex = newIndex;
                 PausedGameMenu.Draw();
             }
 

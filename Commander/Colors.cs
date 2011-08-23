@@ -14,4 +14,18 @@
         public static readonly Color GamePaused = new Color(255, 0, 150);
         public static readonly Color Teleport = new Color(73, 119, 255);
     }
+
+
+    class Spaceship
+    {
+        public static readonly Color Pink = new Color(255, 0, 136);
+        public static readonly Color Yellow = new Color(255, 227, 48);
+
+        public static readonly Color Orange = new Color(255, 115, 40);
+        public static readonly Color Blue = new Color(95, 71, 255);
+        public static readonly Color Green = new Color(128, 255, 63);
+
+        public static readonly Color CannotDo = new Color(81, 20, 20);
+        public static readonly Color Selected = new Color(50, 137, 0);
+    }
 }

@@ -11,11 +11,13 @@
         public CelestialBody CelestialBody;
         public NewGameChoice NewGameChoice;
 
+        private bool AlternateSelectedText;
+
 
         public NewGameMenu(Simulator simulator, double visualPriority, Color color)
             : base(simulator, visualPriority, color, new List<ContextualMenuChoice>(), 10)
         {
-
+            AlternateSelectedText = color == Colors.Spaceship.Yellow;
         }
 
 
@@ -67,7 +69,19 @@
 
         public override void Draw()
         {
-            SelectedIndex = Math.Min((int) NewGameChoice, Choices.Count - 1);
+
+            var newIndex = Math.Min((int) NewGameChoice, Choices.Count - 1);
+
+            if (AlternateSelectedText && Choices.Count > 0 && newIndex != SelectedIndex)
+            {
+                if (SelectedIndex >= 0)
+                    ((TextContextualMenuChoice) Choices[SelectedIndex]).SetColor(Color.White);
+
+                if (newIndex >= 0)
+                    ((TextContextualMenuChoice) Choices[newIndex]).SetColor(Colors.Spaceship.Selected);
+            }
+
+            SelectedIndex = newIndex;
 
             base.Draw();
         }
