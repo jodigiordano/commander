@@ -21,6 +21,8 @@
         private double VisualPriority;
         private bool Active;
 
+        public byte MaxAlpha;
+
 
         public Cursor(Scene scene, Vector3 initialPosition, float speed, double visualPriority)
             : this(scene, initialPosition, speed, visualPriority, "Curseur", true)
@@ -39,6 +41,7 @@
             Circle = new Circle(initialPosition, Size.X / 4);
             Position = initialPosition;
             BackImage = null;
+            MaxAlpha = 255;
 
             if (visible)
                 FadeIn();
@@ -120,13 +123,19 @@
 
         public virtual void FadeIn()
         {
-            Fade(Alpha, 255, FadeTime);
+            Fade(Alpha, MaxAlpha, FadeTime);
         }
 
 
         public virtual void FadeOut()
         {
             Fade(Alpha, 0, FadeTime);
+        }
+
+
+        public virtual void FadeOut(byte to)
+        {
+            Fade(Alpha, to, FadeTime);
         }
 
 

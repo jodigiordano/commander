@@ -85,6 +85,8 @@
         public const double PlayerLives = 0.72;
         public const double NextWavePreview = 0.72;
 
+        public const double NextWaveStarted = 0.73;
+
         public const double MineBullet = 0.8;
         public const double PulseBullet = 0.8;
 

@@ -7,13 +7,6 @@
     <asset name="HumanBattleship"      type="Image" path="scenarios/humanBattleship" />
     <asset name="PixelBlanc"           type="Image" path="pixelBlanc" />
 
-    <asset name="background1"                 type="Image" path="backgrounds/story1/background01" />
-    <asset name="background2"                 type="Image" path="backgrounds/story1/background02" />
-    <asset name="background3"                 type="Image" path="backgrounds/story1/background03" />
-    <asset name="background4"                 type="Image" path="backgrounds/story1/background04" />
-    <asset name="background5"                 type="Image" path="backgrounds/story1/background05" />
-    <asset name="background6"                 type="Image" path="backgrounds/story1/background06" />
-
 
     <asset name="LogoBack"                type="Image" path="GUI/Logo/ephemereBack" />
     <asset name="LogoFront"               type="Image" path="GUI/Logo/ephemereFront" />
@@ -34,8 +27,11 @@
     <!-- Spritesheets -->
     
     <asset name="spritesheet"                  type="SpriteSheet" path="spritesheet" />    
+  </Package>
+  
+  
+  <Package name="principal" volatile="false">
     
-
     <!-- Sfx -->
       <!-- Turrets -->
       <asset name="sfxTourelleBase"                      type="Sfx" path="sfx/story1/turrets/basic/firing"><param name="bank" value="Story1" /></asset>
@@ -105,20 +101,13 @@
     
       <asset name="sfxPulse1"                            type="Sfx" path="sfx/story1/powerUps/pulse/in"><param name="bank" value="Story1" /></asset>
       <asset name="sfxPulse2"                            type="Sfx" path="sfx/story1/powerUps/pulse/firing"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPulse3"                            type="Sfx" path="sfx/story1/powerUps/pulse/out"><param name="bank" value="Story1" /></asset>
-
-
+      <asset name="sfxPulse3"                            type="Sfx" path="sfx/story1/powerUps/pulse/out"><param name="bank" value="Story1" /></asset>    
+    
     <!-- Particle Effects -->
+
+    <asset name="nextWave"                     type="Particles" path="particules/nextWave"/>
     <asset name="etoilesScintillantes"         type="Particles" path="particules/etoilesScintillantes"/>
-    <asset name="etoileFilante"                type="Particles" path="particules/etoileFilante"/>
-
-  </Package>
-  
-  
-  <Package name="principal" volatile="false">
-    
-    <!-- Particle Effects -->
-    
+    <asset name="etoileFilante"                type="Particles" path="particules/etoileFilante"/>    
     <asset name="projectileMissileDeplacement" type="Particles" path="particules/projectileBaseParticulesDeplacement"/>
     <asset name="projectileBaseExplosion"      type="Particles" path="particules/projectileBaseParticulesExplosion"/>
     <asset name="missileAlien"                 type="Particles" path="particules/missileAlien"/>
@@ -164,6 +153,12 @@
     
     <!-- Backgrounds -->
       <!-- Story 1 -->
+      <asset name="background1"                 type="Image" path="backgrounds/story1/background01" />
+      <asset name="background2"                 type="Image" path="backgrounds/story1/background02" />
+      <asset name="background3"                 type="Image" path="backgrounds/story1/background03" />
+      <asset name="background4"                 type="Image" path="backgrounds/story1/background04" />
+      <asset name="background5"                 type="Image" path="backgrounds/story1/background05" />
+      <asset name="background6"                 type="Image" path="backgrounds/story1/background06" />
       <asset name="background7"                 type="Image" path="backgrounds/story1/background07" />
       <asset name="background8"                 type="Image" path="backgrounds/story1/background08" />
       <asset name="background9"                 type="Image" path="backgrounds/story1/background09" />

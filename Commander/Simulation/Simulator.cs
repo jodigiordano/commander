@@ -100,7 +100,8 @@ namespace EphemereGames.Commander.Simulation
                     @"spaceshipTrail2",
                     @"darkSideEffect",
                     @"starExplosion",
-                    @"mothershipMissile"
+                    @"mothershipMissile",
+                    @"nextWave"
                 }, false);
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);

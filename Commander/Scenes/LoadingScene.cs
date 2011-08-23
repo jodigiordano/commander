@@ -114,6 +114,9 @@
                     {
                         SceneState = State.LoadScenes;
 
+                        MusicController.SetActiveBank(@"Story1");
+                        MusicController.InitializeSfxPriorities();
+
                         ThreadLoadScenes.Start();
                     }
                     break;

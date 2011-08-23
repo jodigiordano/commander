@@ -115,6 +115,14 @@
         }
 
 
+        public override void FadeOut(byte to)
+        {
+            base.FadeOut(to);
+
+            ShowTrail = false;
+        }
+
+
         public void TeleportIn()
         {
             StopCurrentTeleportAnimation();

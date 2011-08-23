@@ -143,9 +143,6 @@ namespace EphemereGames.Commander
                             new AnimationTransitionAlienMothership(750, VisualPriorities.Foreground.Transition)
                         };
 
-                        MusicController.setActiveBank(@"Story1");
-                        MusicController.InitializeSfxPriorities();
-
                         Visuals.AddScene(new LoadingScene());
 
                         Boot = BootSequence.Running;

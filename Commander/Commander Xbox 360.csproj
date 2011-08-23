@@ -131,6 +131,7 @@
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\NextWavePreview.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\AlienNextWaveStartedAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyShieldHitAnimation.cs" />

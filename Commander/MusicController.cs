@@ -193,7 +193,7 @@
         }
 
 
-        public static void setActiveBank(string bank)
+        public static void SetActiveBank(string bank)
         {
             Audio.SetActiveSfxBank(bank);
         }

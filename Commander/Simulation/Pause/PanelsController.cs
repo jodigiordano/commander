@@ -116,9 +116,7 @@
 
         public void DoPlayerConnected(SimPlayer p)
         {
-            GUIPausePlayer player = new GUIPausePlayer(Simulator, p.Color, p.ImageName, p.BasePlayer.InputType);
-
-            player.Cursor.Position = p.Position;
+            GUIPausePlayer player = new GUIPausePlayer(Simulator, p);
 
             Players.Add(p.PausePlayer, player);
         }
@@ -265,8 +263,7 @@
         {
             foreach (var p in Players)
             {
-                p.Value.Cursor.Position = p.Key.Position;
-                p.Value.Cursor.Direction = p.Key.Direction;
+                p.Value.Sync();
                 p.Value.Cursor.FadeIn();
             }
         }

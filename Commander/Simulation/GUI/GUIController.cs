@@ -252,8 +252,8 @@
         public void DoPanelOpened()
         {
             foreach (var p in Players.Values)
-                if (p.Cursor.Alpha != 0)
-                    p.Cursor.FadeOut();
+                if (p.Cursor.Alpha > 100)
+                    p.Cursor.FadeOut(100);
         }
 
 
@@ -350,6 +350,9 @@
 
             if (!Simulator.DemoMode)
                 Audio.PlaySfx(@"sfxNouvelleVague");
+
+            if (InfiniteWaves == null && Path.LastCelestialBody != null)
+                Simulator.Scene.Add(new AlienNextWaveStartedAnimation(Simulator, Path.FirstCelestialBody));
 
             if (InfiniteWaves != null || NextWavePreview.RemainingWaves <= 0)
             {
