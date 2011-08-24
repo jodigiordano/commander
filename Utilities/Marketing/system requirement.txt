@@ -1,0 +1,7 @@
+- A decent CPU and graphic card which supports DirectX 9
+- 300 mb of space on your hard drive
+- 512 mb of free memory
+- A screen which supports a 1280×720 resolution
+- A keyboard (QWERTY layout) and a mouse
+- XNA 4 distributable and .Net Framework 4 (included in the installation)
+- The best way to know if you can run this game is to try the demo :)
