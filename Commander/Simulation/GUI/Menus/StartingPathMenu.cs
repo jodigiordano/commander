@@ -80,6 +80,12 @@
                     //TimeNextWaveChoice.SetColors(new Color[] { Color.White, value.Color, Color.White });
                     RemainingEnemiesChoice.SetColor(1, value.Color);
                     //NextWaveCompositionChoice.Color = value.Color;
+
+
+                    if (value.Color == Colors.Spaceship.Yellow)
+                        CallTheNextWave.SetColor(Colors.Spaceship.Selected);
+                    else
+                        CallTheNextWave.SetColor(Color.White);
                 }
             }
         }
