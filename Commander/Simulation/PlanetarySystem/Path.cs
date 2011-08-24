@@ -17,6 +17,8 @@
         public List<CelestialBody> CelestialBodies;
         public double Length;
         public bool Active;
+        public bool TakeIntoAccountFakeGravTurret;
+        public bool TakeIntoAccountFakeGravTurretLv2;
 
         private Path3D InnerPath;
         private List<double> Times;
@@ -60,6 +62,8 @@
             }
 
             Active = true;
+            TakeIntoAccountFakeGravTurret = false;
+            TakeIntoAccountFakeGravTurretLv2 = false;
         }
 
 
@@ -68,7 +72,7 @@
             CelestialBodiesPath = new OrderedBag<CelestialBody>();
 
             foreach (var c in CelestialBodies)
-                if (c.HasGravitationalTurret)
+                if (c.HasGravitationalTurret || (TakeIntoAccountFakeGravTurret && c.FakeHasGravitationalTurret))
                     AddCelestialBody(c, false);
 
             Active = true;
@@ -151,7 +155,7 @@
             if (celestialBody.PathPriority == int.MinValue)
                 return;
 
-            if (!celestialBody.HasGravitationalTurret)
+            if (!celestialBody.HasGravitationalTurret && (TakeIntoAccountFakeGravTurret && !celestialBody.FakeHasGravitationalTurret))
                 return;
 
             if (LastCelestialBody != null)
@@ -220,16 +224,16 @@
             if (!Active)
                 return;
 
-            int nbLines = Math.Min((int) (Length / DistanceTwoPoints) + 1, MaxVisibleLines);
+            int linesCount = Math.Min((int) (Length / DistanceTwoPoints) + 1, MaxVisibleLines);
             
-            for (int j = 0; j < nbLines; j++)
+            for (int j = 0; j < linesCount; j++)
             {
                 var line = Lines[j];
 
                 InnerPath.GetPosition(j * DistanceTwoPoints, ref line.position);
 
                 line.Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
-                line.color.G = line.color.B = (byte) (255 * (1 - (((float) j + 1) / nbLines)));
+                line.color.G = line.color.B = (byte) (255 * (1 - (((float) j + 1) / linesCount)));
                 line.VisualPriority = VisualPriorities.Default.Path - InnerPath.GetPercentage(j * DistanceTwoPoints) / 100;
                 Scene.Add(line);
             }
@@ -333,7 +337,7 @@
 
                 Points[NbPoints++] = exitVec;
 
-                if (celestialBody.HasLevel2GravitationalTurret)
+                if ((TakeIntoAccountFakeGravTurretLv2 && celestialBody.FakeHasGravitationalTurretLv2) || celestialBody.HasLevel2GravitationalTurret)
                 {
                     step = MathHelper.TwoPi / 8;
 

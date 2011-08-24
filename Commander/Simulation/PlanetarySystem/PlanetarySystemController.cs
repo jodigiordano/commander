@@ -37,7 +37,7 @@
             ShootingStarsFactory = new Core.Utilities.Pool<ShootingStar>();
 
             Path = new Path(Simulator, new Color(255, 255, 255, 100), BlendType.Add);
-            PathPreview = new Path(Simulator, new Color(255, 255, 255, 0), BlendType.Add);
+            PathPreview = new Path(Simulator, new Color(255, 255, 255, 0), BlendType.Add) { TakeIntoAccountFakeGravTurret = true, TakeIntoAccountFakeGravTurretLv2 = true };
 
             SyncUpdateShootingStars = new Action(UpdateShootingStars);
             SyncPathPreview = new Action(PathPreview.Update);

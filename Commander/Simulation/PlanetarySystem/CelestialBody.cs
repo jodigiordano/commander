@@ -44,7 +44,7 @@
         public bool HasMoons;
         public bool StraightLine;
         public List<Moon> Moons;
-        public bool HasGravitationalTurretBypass;
+        public bool FakeHasGravitationalTurret;
         public Circle InnerTurretZone;
         public Circle OuterTurretZone;
         public bool ShowTurretsZone;
@@ -53,7 +53,8 @@
         public string PartialImageName;
         public bool canSelect; //only for editor
         public Turret StartingPathTurret;
-        public SimPlayer PlayerCheckedIn;        
+        public SimPlayer PlayerCheckedIn;
+        public bool FakeHasGravitationalTurretLv2;
 
         protected Simulator Simulator;
         protected double VisualPriorityBackup;
@@ -130,6 +131,7 @@
             ShowPath = false;
             FollowPath = false;
             HasMoons = true;
+            FakeHasGravitationalTurretLv2 = false;
         }
 
 
@@ -276,9 +278,6 @@
         {
             get
             {
-                if (HasGravitationalTurretBypass)
-                    return true;
-
                 for (int i = 0; i < Turrets.Count; i++)
                     if (Turrets[i].Type == TurretType.Gravitational)
                         return true;
@@ -297,6 +296,19 @@
                         return true;
 
                 return false;
+            }
+        }
+
+
+        public Turret GravitationalTurret
+        {
+            get
+            {
+                for (int i = 0; i < Turrets.Count; i++)
+                    if (Turrets[i].Type == TurretType.Gravitational)
+                        return Turrets[i];
+
+                return null;
             }
         }
 
