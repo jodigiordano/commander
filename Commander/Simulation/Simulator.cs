@@ -898,9 +898,9 @@ namespace EphemereGames.Commander.Simulation
 
             if (LevelsController.Help.Active)
             {
-                if (button == GamePadConfiguration.SelectionNext)
+                if (button == GamePadConfiguration.SelectionNext || button == GamePadConfiguration.AlternateSelectionNext)
                     LevelsController.Help.NextDirective();
-                else if (button == GamePadConfiguration.SelectionPrevious)
+                else if (button == GamePadConfiguration.SelectionPrevious || button == GamePadConfiguration.AlternateSelectionPrevious)
                     LevelsController.Help.PreviousDirective();
                 else if (button == GamePadConfiguration.Cancel)
                     LevelsController.Help.Skip();
@@ -933,10 +933,10 @@ namespace EphemereGames.Commander.Simulation
                 if (button == GamePadConfiguration.Select)
                     EditorController.DoSelectAction(simPlayer);
 
-                else if (button == GamePadConfiguration.SelectionNext)
+                else if (button == GamePadConfiguration.SelectionNext || button == GamePadConfiguration.AlternateSelectionNext)
                     EditorController.DoNextOrPreviousAction(simPlayer, 1);
 
-                else if (button == GamePadConfiguration.SelectionPrevious)
+                else if (button == GamePadConfiguration.SelectionPrevious || button == GamePadConfiguration.AlternateSelectionPrevious)
                     EditorController.DoNextOrPreviousAction(simPlayer, -1);
             }
 
@@ -947,24 +947,24 @@ namespace EphemereGames.Commander.Simulation
             {
                 if (button == GamePadConfiguration.Cancel)
                     PowerUpsController.DoInputCanceled(simPlayer);
-                else if (button == GamePadConfiguration.Select || button == GamePadConfiguration.SelectionNext)
+                else if (button == GamePadConfiguration.Select || button == GamePadConfiguration.SelectionNext || button == GamePadConfiguration.AlternateSelectionNext)
                     PowerUpsController.DoInputPressed(simPlayer);
             }
 
 
             if (WorldMode)
             {
-                if (button == GamePadConfiguration.SelectionNext)
+                if (button == GamePadConfiguration.SelectionNext || button == GamePadConfiguration.AlternateSelectionNext)
                     SimPlayersController.DoPausedGameChoice(player, 1);
-                else if (button == GamePadConfiguration.SelectionPrevious)
+                else if (button == GamePadConfiguration.SelectionPrevious || button == GamePadConfiguration.AlternateSelectionPrevious)
                     SimPlayersController.DoPausedGameChoice(player, -1);
             }
 
             else if (DemoMode)
             {
-                if (button == GamePadConfiguration.SelectionNext)
+                if (button == GamePadConfiguration.SelectionNext || button == GamePadConfiguration.AlternateSelectionNext)
                     SimPlayersController.DoNewGameChoice(player, 1);
-                else if (button == GamePadConfiguration.SelectionPrevious)
+                else if (button == GamePadConfiguration.SelectionPrevious || button == GamePadConfiguration.AlternateSelectionPrevious)
                     SimPlayersController.DoNewGameChoice(player, -1);
             }
 
@@ -979,10 +979,10 @@ namespace EphemereGames.Commander.Simulation
                 else if (button == GamePadConfiguration.Cancel)
                     SimPlayersController.DoCancelAction(player);
 
-                else if (button == GamePadConfiguration.SelectionNext)
+                else if (button == GamePadConfiguration.SelectionNext || button == GamePadConfiguration.AlternateSelectionNext)
                     SimPlayersController.DoNextOrPreviousAction(player, 1);
 
-                else if (button == GamePadConfiguration.SelectionPrevious)
+                else if (button == GamePadConfiguration.SelectionPrevious || button == GamePadConfiguration.AlternateSelectionPrevious)
                     SimPlayersController.DoNextOrPreviousAction(player, -1);
 
                 else if (button == GamePadConfiguration.Back)
@@ -1025,7 +1025,7 @@ namespace EphemereGames.Commander.Simulation
                 SimPlayersController.DoAdvancedViewAction(player, false);
 
             if (simPlayer.PowerUpInUse != PowerUpType.None &&
-               (button == GamePadConfiguration.Select || button == GamePadConfiguration.SelectionNext))
+               (button == GamePadConfiguration.Select || button == GamePadConfiguration.SelectionNext || button == GamePadConfiguration.AlternateSelectionNext))
                 PowerUpsController.DoInputReleased(simPlayer);
         }
 

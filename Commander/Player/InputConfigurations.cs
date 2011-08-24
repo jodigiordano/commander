@@ -114,20 +114,20 @@
     {
         public static Buttons Back = Buttons.Start;
         public static Buttons Cancel = Buttons.B;
-        public static Buttons ChangeMusic = Buttons.DPadUp;
-        public static Buttons Debug = Buttons.DPadDown;
-        public static Buttons Editor = Buttons.LeftShoulder;
+        public static Buttons ChangeMusic = Buttons.DPadLeft;
+        public static Buttons Debug = Buttons.LeftShoulder;
+        public static Buttons Tweaking = Buttons.RightShoulder;
         public static Buttons Select = Buttons.A;
         public static Buttons AlternateSelect = Buttons.X;
         public static Buttons AdvancedView = Buttons.Y;
         public static Buttons SelectionNext = Buttons.RightTrigger;
         public static Buttons SelectionPrevious = Buttons.LeftTrigger;
+        public static Buttons AlternateSelectionNext = Buttons.DPadDown;
+        public static Buttons AlternateSelectionPrevious = Buttons.DPadUp;
         public static Buttons MoveCursor = Buttons.LeftStick;
         public static Buttons DirectionCursor = Buttons.RightStick;
         public static Buttons Disconnect = Buttons.Back;
-        public static Buttons Tweaking = Buttons.DPadLeft;
         public static Buttons RetryLevel = Buttons.Y;
-        public static Buttons Fire = Buttons.RightTrigger;
         public static float Speed = 15;
 
 
@@ -142,7 +142,6 @@
                     Cancel,
                     ChangeMusic,
                     Debug,
-                    Editor,
                     AlternateSelect,
                     Select,
                     AdvancedView,
@@ -150,7 +149,8 @@
                     SelectionPrevious,
                     Tweaking,
                     RetryLevel,
-                    Fire
+                    AlternateSelectionNext,
+                    AlternateSelectionPrevious
                 };
             }
         }
