@@ -95,7 +95,7 @@
                "The game had an unexpected error and had to shut down. I'm sooooo sorry for the inconvenience!\n" +
                "The good news is that you can send me the error via the interwebz by pressing the Left mouse button OR\n" +
                "the A button on a gamepad. By doing so, you will greatly help to make this game better and better.\n\n" +
-               "With a little bit of luck, it should not happen again if you restart the game. Even more, the bug may already fixed\n" +
+               "With a little bit of luck, it should not happen again if you restart the game. Even more, the bug may already be fixed\n" +
                "in a more recent version! Your current version is " + Version.ToString() + ". Please visit commander.ephemeregames.com\n" +
                "to know how to upgrade the game to the current version! By doing so, you could also benefit from new stuff\n" +
                "that I'm adding on every update!";

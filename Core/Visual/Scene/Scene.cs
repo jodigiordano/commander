@@ -123,7 +123,7 @@
             {
                 if (scenable.Blend != LastBlend)
                 {
-                    this.Batch.End();
+                    Batch.End();
                     Batch.Begin(SpriteSortMode.Deferred, SwitchBlendMode(scenable.Blend), SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, camera);
                 }
 

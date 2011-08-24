@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System;
     using System.Collections.Generic;
-    using System.Threading;
     using EphemereGames.Commander.Cutscenes;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
@@ -25,7 +25,6 @@
         private SandGlass SandGlass;
         private State SceneState;
 
-        private Thread ThreadLoadScenes;
         private bool ScenesAreLoaded;
 
         private double TimeBeforeTransition = 2000;
@@ -89,8 +88,7 @@
             VisualEffects.Add(Logo, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeTranslation - 500, 500));
             VisualEffects.Add(LoadingQuote, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeTranslation, 1000));
             SandGlass.FadeIn(TimeBeforeTranslation, 1000);
-
-            ThreadLoadScenes = new Thread(LoadScenes);
+            
             ScenesAreLoaded = false;
         }
 
@@ -117,7 +115,7 @@
                         MusicController.SetActiveBank(@"Story1");
                         MusicController.InitializeSfxPriorities();
 
-                        ThreadLoadScenes.Start();
+                        ParallelTasks.Parallel.Start(new Action(LoadScenes));
                     }
                     break;
 
@@ -206,13 +204,12 @@
         }
 
 
-        public override void OnFocus() //Not ran the first time
+        public override void OnFocus() //Not ran the first time. In fact should never came back here.
         {
             base.OnFocus();
 
             VisualEffects.Clear();
             LoadingQuote.Alpha = 0;
-            ThreadLoadScenes = new Thread(LoadScenes);
             ScenesAreLoaded = false;
             SandGlass.FadeOut(0);
             TimeBeforeTransition = 2000;
