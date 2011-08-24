@@ -125,6 +125,7 @@
     <Compile Include="Utilities\Collections\Set.cs" />
     <Compile Include="Utilities\Collections\Strings.cs" />
     <Compile Include="Utilities\Collections\Util.cs" />
+    <Compile Include="Utilities\ColorInterpolator.cs" />
     <Compile Include="Utilities\Curve\Curve.cs" />
     <Compile Include="Utilities\Curve\CurveKey.cs" />
     <Compile Include="Utilities\CustomBlends.cs" />

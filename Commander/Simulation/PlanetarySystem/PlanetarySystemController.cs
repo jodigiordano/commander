@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using ParallelTasks;
@@ -36,8 +37,8 @@
             ShootingStars = new List<ShootingStar>();
             ShootingStarsFactory = new Core.Utilities.Pool<ShootingStar>();
 
-            Path = new Path(Simulator, new Color(255, 255, 255, 100), BlendType.Add);
-            PathPreview = new Path(Simulator, new Color(255, 255, 255, 0), BlendType.Add) { TakeIntoAccountFakeGravTurret = true, TakeIntoAccountFakeGravTurretLv2 = true };
+            Path = new Path(Simulator, new ColorInterpolator(Color.White, Color.Red), 100, BlendType.Add);
+            PathPreview = new Path(Simulator, new ColorInterpolator(Color.White, Color.Green), 0, BlendType.Add) { TakeIntoAccountFakeGravTurret = true, TakeIntoAccountFakeGravTurretLv2 = true };
 
             SyncUpdateShootingStars = new Action(UpdateShootingStars);
             SyncPathPreview = new Action(PathPreview.Update);

@@ -127,6 +127,7 @@
     <Compile Include="Physics\Shapes\Triangle.cs" />
     <Compile Include="Physics\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ColorInterpolator.cs" />
     <Compile Include="Utilities\Effect.cs" />
     <Compile Include="Utilities\Collections\Algorithms.cs" />
     <Compile Include="Utilities\Collections\Bag.cs" />

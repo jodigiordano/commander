@@ -170,6 +170,7 @@
     <Compile Include="Physics\IPhysical.cs" />
     <Compile Include="Physics\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ColorInterpolator.cs" />
     <Compile Include="Utilities\Path.cs" />
     <Compile Include="Utilities\Effect.cs" />
     <Compile Include="Utilities\Collections\Algorithms.cs" />

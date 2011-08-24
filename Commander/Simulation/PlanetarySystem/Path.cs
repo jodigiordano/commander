@@ -29,11 +29,13 @@
         private Scene Scene;
         private int NbPoints;
         private double LengthBefore;
+        private ColorInterpolator ColorInterpolator;
 
 
-        public Path(Simulator simulator, Color color, BlendType blend)
+        public Path(Simulator simulator, ColorInterpolator color, byte alpha, BlendType blend)
         {
             Scene = simulator.Scene;
+            ColorInterpolator = color;
             
             InnerPath = new Path3D();
             Times = new List<double>(MaxCurvePoints);
@@ -55,9 +57,9 @@
             {
                 Lines[i] = new Image("LigneTrajet", Vector3.Zero)
                 {
-                    Color = color,
                     Blend = blend,
-                    SizeX = 1.5f
+                    SizeX = 1.5f,
+                    Alpha = alpha
                 };
             }
 
@@ -233,7 +235,7 @@
                 InnerPath.GetPosition(j * DistanceTwoPoints, ref line.position);
 
                 line.Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
-                line.color.G = line.color.B = (byte) (255 * (1 - (((float) j + 1) / linesCount)));
+                ColorInterpolator.GetPerc((j + 1f) / linesCount, ref line.color);
                 line.VisualPriority = VisualPriorities.Default.Path - InnerPath.GetPercentage(j * DistanceTwoPoints) / 100;
                 Scene.Add(line);
             }
