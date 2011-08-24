@@ -90,13 +90,14 @@
                 }
             }
 
+            UpdateCelestialBodies();
+
 
             Task t1, t2;
 
             t1 = Parallel.Start(SyncUpdateShootingStars);
             t2 = Parallel.Start(SyncPathPreview);
 
-            UpdateCelestialBodies();
             Path.Update();
 
             t1.Wait();
