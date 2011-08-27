@@ -21,7 +21,8 @@
     {
         Won = 1,
         Lost = 2,
-        Other = 3
+        Other = 3,
+        Cutscene = 4
     };
 
 

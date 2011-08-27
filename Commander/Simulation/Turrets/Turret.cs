@@ -16,7 +16,7 @@
         public Image CanonImage;
         public Image BaseImage;
         public bool Disabled                        { get { return DisabledOverride && DisabledCounter > 0; } set { DisabledOverride = value; } }
-        public virtual Enemy EnemyWatched          { get; set; }
+        public virtual IDestroyable EnemyWatched    { get; set; }
         public double TimeLastBullet;
         public TurretType Type                      { get; protected set; }
         public string Name                          { get; protected set; }
@@ -50,7 +50,7 @@
         public string Description;
 
         protected LinkedList<TurretLevel> Levels;
-        protected string SfxShooting;
+        public string SfxShooting;
 
         protected Simulator Simulator;
         private bool DisabledOverride;
@@ -407,9 +407,6 @@
 
                 TimeLastBullet = FireRate;
             }
-
-            if (Bullets.Count != 0)
-                Audio.PlaySfx(SfxShooting);
 
             return Bullets;
         }

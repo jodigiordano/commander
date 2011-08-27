@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.Collections.Generic.Dictionary[System.String, System.String]">
+    <Item><Key>Eyes1</Key><Value>spaceships/mothership/mothership_eyes1.png</Value></Item>
+    <Item><Key>Eyes2</Key><Value>spaceships/mothership/mothership_eyes2.png</Value></Item>
+    <Item><Key>Eyes3</Key><Value>spaceships/mothership/mothership_eyes3.png</Value></Item>
+    <Item><Key>Eyes4</Key><Value>spaceships/mothership/mothership_eyes4.png</Value></Item>
+    <Item><Key>Eyes5</Key><Value>spaceships/mothership/mothership_eyes5.png</Value></Item>
+  </Asset>
+</XnaContent>

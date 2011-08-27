@@ -19,6 +19,7 @@
         public const double IntroLocation = 0.09;
         public const double IntroWife = 0.08;
         public const double IntroProtagonist = 0.07;
+        public const double IntroHumanBattleships = 0.07;
         public const double IntroMothership = 0.06;
 
         public const double IntroCommanderBackground = 0.1;

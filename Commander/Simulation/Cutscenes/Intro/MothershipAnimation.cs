@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Cutscenes
 {
+    using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using Microsoft.Xna.Framework;
@@ -17,7 +18,8 @@
         }
 
 
-        private Mothership Mothership;
+        public Mothership Mothership;
+        public List<HumanBattleship> Battleships;
         private Simulator Simulator;
         private MothershipState State;
 
@@ -31,8 +33,18 @@
         {
             Simulator = simulator;
 
-            Mothership = new Mothership(VisualPriorities.Cutscenes.IntroMothership);
+            Mothership = new Mothership(Simulator, VisualPriorities.Cutscenes.IntroMothership)
+            {
+                Direction = new Vector3(0, -1, 0),
+                ShowShield = true,
+                ShieldImageName = "MothershipHitMask",
+                ShieldColor = Colors.Default.AlienBright,
+                ShieldAlpha = 50,
+                ShieldDistance = 10
+            };
             Mothership.Position = new Vector3(0, -Mothership.Size.Y/2 - 360, 0);
+
+            Simulator.AddSpaceship(Mothership);
 
             State = MothershipState.None;
             Simulator.Scene.Camera.Zoom = 1f;
@@ -56,13 +68,13 @@
                 case MothershipState.None:
                     if (TimeBeforeArrival <= 0)
                     {
-                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, -Mothership.Size.Y/2, 0), 0, 5000));
-                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(1f, 0.7f, 0, 5000));
+                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, -Mothership.Size.Y/2, 0), 0, 5500));
+                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(1f, 0.7f, 0, 5500));
 
                         foreach (var player in Inputs.Players)
                         {
-                            //Inputs.VibrateControllerHighFrequency(player, 5000, 0.1f);
-                            Inputs.VibrateControllerLowFrequency(player, 5000, 0.4f);
+                            //Inputs.VibrateControllerHighFrequency(player, 5500, 0.1f);
+                            Inputs.VibrateControllerLowFrequency(player, 5500, 0.4f);
                         }
 
                         State = MothershipState.Arrival;
@@ -80,7 +92,7 @@
                 case MothershipState.Lights:
                     if (TimeBeforeDestruction < 0)
                     {
-                        Mothership.DestroyEverything(Simulator.Scene, Simulator.PlanetarySystemController.CelestialBodies);
+                        Mothership.DestroyEverything(Simulator.Scene, Simulator.PlanetarySystemController.CelestialBodies, Battleships);
                         State = MothershipState.Destruction;
                     }
 
@@ -89,8 +101,9 @@
                     if (TimeBeforeDeparture < 0)
                     {
                         Mothership.DeactivateDeadlyLights(Simulator.Scene, 3000);
+                        Mothership.CoverInvasionShips(Simulator.Scene, 4000);
                         Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, Mothership.Position.Y + 5000, 0), 0, 18000));
-                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(0.7f, 1.5f, 0, 17000));
+                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(0.7f, 1.5f, 3000, 17000));
 
                         foreach (var player in Inputs.Players)
                         {

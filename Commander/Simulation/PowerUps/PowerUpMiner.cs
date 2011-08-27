@@ -7,11 +7,11 @@ namespace EphemereGames.Commander.Simulation
     class PowerUpMiner : PowerUp
     {
         public SpaceshipMiner Miner { get; private set; }
-        private HumanBattleship HumanBattleship;
+        private PowerUpsBattleship HumanBattleship;
         private bool Firing;
 
 
-        public PowerUpMiner(Simulator simulator, HumanBattleship humanBattleship)
+        public PowerUpMiner(Simulator simulator, PowerUpsBattleship humanBattleship)
             : base(simulator)
         {
             HumanBattleship = humanBattleship;

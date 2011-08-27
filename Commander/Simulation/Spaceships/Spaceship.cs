@@ -7,13 +7,13 @@
     using Microsoft.Xna.Framework;
 
 
-    class Spaceship : ICollidable
+    class Spaceship : IDestroyable
     {
         public event NoneHandler Bounced;
 
         // Movement
         
-        public Vector3 Position                 { get; set; }
+        public virtual Vector3 Position         { get; set; }
         public float Speed                      { get { return SteeringBehavior.Speed; } set { SteeringBehavior.Speed = value; } }
         public Vector3 Direction                { get; set; }
         private Vector3 LastPosition;
@@ -23,6 +23,11 @@
         public Image Image;
         private Particle TrailEffect;
         protected bool ShowTrail;
+        public string ShieldImageName;
+        public Color ShieldColor;
+        public byte ShieldAlpha;
+        public float ShieldDistance;
+        public bool ShowShield;
 
         // Collision
         public Shape Shape                      { get; set; }
@@ -37,27 +42,31 @@
         public IPhysical StartingObject;
         public virtual bool Active { get; set; }
 
+        public bool Alive { get; set; }
+
+
         protected Simulator Simulator;
 
         public SpaceshipSteeringBehavior SteeringBehavior;
         public SpaceshipWeapon Weapon;
 
 
-        public Spaceship(Simulator simulator)
+        public Spaceship(Simulator simulator) : this(simulator, "Vaisseau") {}
+
+
+        public Spaceship(Simulator simulator, string imageName)
         {
             Simulator = simulator;
-            Image = new Image("Vaisseau", Position)
-            {
-                SizeX = 4
-            };
-            
+            Image = new Image(imageName, Position);
             Position = Vector3.Zero;
             SteeringBehavior = new SpaceshipNoneBehavior(this);
             
             Direction = new Vector3(1, 0, 0);
 
             Shape = Shape.Circle;
-            Circle = new Circle(Position, Image.TextureSize.X * Image.SizeX / 2);
+            Circle = new Circle();
+
+            SizeX = 4;
 
             Weapon = new NoWeapon(Simulator, this);
 
@@ -66,6 +75,9 @@
             Active = true;
 
             ShowTrail = false;
+            ShowShield = false;
+
+            Alive = true;
         }
 
 
@@ -92,6 +104,23 @@
         }
 
 
+        public virtual float SizeX
+        {
+            get { return Image.SizeX; }
+            set
+            {
+                Image.SizeX = value;
+                Circle.Radius = Image.AbsoluteSize.X / 2;
+            }
+        }
+
+
+        public virtual BlendType Blend
+        {
+            set { Image.Blend = value; }
+        }
+
+
         public virtual void Update()
         {
             LastPosition = Position;
@@ -107,11 +136,12 @@
 
         public double VisualPriority
         {
+            get { return Image.VisualPriority;  }
             set { Image.VisualPriority = value; }
         }
 
 
-        public List<Bullet> Fire()
+        public virtual List<Bullet> Fire()
         {
             return Weapon.Fire();
         }
@@ -150,7 +180,19 @@
         }
 
 
-        //useless
-        public float Rotation { get; set; }
+        public void DoShieldHit(Vector3 hitPosition)
+        {
+            if (!ShowShield)
+                return;
+
+            Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, Position, hitPosition, ShieldColor, Image.SizeX, VisualPriority, ShieldDistance, ShieldAlpha));
+        }
+
+
+        public float Rotation
+        {
+            get { return Core.Physics.Utilities.VectorToAngle(Direction); }
+            set { Direction = Core.Physics.Utilities.AngleToVector(value); }
+        }
     }
 }

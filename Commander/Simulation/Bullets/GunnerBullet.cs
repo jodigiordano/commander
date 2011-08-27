@@ -9,7 +9,7 @@
 
     class GunnerBullet : Bullet
     {
-        public Enemy Target;
+        public IDestroyable Target;
         public Turret Turret;
         private Particle TurretEffect;
         private Matrix CanonRotation;
@@ -33,7 +33,7 @@
             Rectangle.set((int) Position.X - 10, (int) Position.Y - 10, 20, 20);
             
             ExplodingEffect = Scene.Particles.Get(@"projectileBaseExplosion");
-            ExplodingEffect.VisualPriority = Target.Image.VisualPriority - 0.0001f;
+            ExplodingEffect.VisualPriority = VisualPriorities.Default.DefaultBullet;
 
             TurretEffect = Scene.Particles.Get(@"gunnerTurret");
             TurretEffect.ParticleEffect[0].ReleaseColour = Turret.Color.ToVector3();

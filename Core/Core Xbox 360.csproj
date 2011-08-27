@@ -102,6 +102,7 @@
     <Compile Include="Physics\Effects\RotationEffect.cs" />
     <Compile Include="Physics\Effects\SpeedPathEffect.cs" />
     <Compile Include="Physics\ICollidable.cs" />
+    <Compile Include="Physics\IDestroyable.cs" />
     <Compile Include="Physics\IPhysical.cs" />
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Shapes\Circle.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Visual\Scenable\IScenableComparer.cs" />
     <Compile Include="Visual\Scenable\IVisible.cs" />
     <Compile Include="Visual\Scenable\IVisual.cs" />
+    <Compile Include="Visual\Scenable\NewSprite.cs" />
     <Compile Include="Visual\Scenable\Sprite.cs" />
     <Compile Include="Visual\Scenable\Text.cs" />
     <Compile Include="Visual\Scenable\VisualLine.cs" />

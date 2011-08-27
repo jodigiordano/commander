@@ -35,7 +35,10 @@
 
             Particles.Add(@"selectionCorpsCeleste");
 
-            HelpBar = new HelpBarPanel(this, VisualPriorities.Cutscenes.HelpBar);
+            HelpBar = new HelpBarPanel(this, VisualPriorities.Cutscenes.HelpBar)
+            {
+                ShowOnForegroundLayer = true
+            };
             HelpBar.ShowMessage(HelpBarMessage.HoldToSkip, InputType.Gamepad);
             InputType = InputType.Gamepad;
 
@@ -62,7 +65,10 @@
             Cutscene.Update();
 
             if (Cutscene.Terminated)
+            {
+                Cutscene.Stop();
                 TransiteToWorld();
+            }
         }
 
 

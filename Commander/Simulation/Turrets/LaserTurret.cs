@@ -1,12 +1,13 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
 
     class LaserTurret : Turret
     {
         public Bullet ActiveBullet;
-        private Enemy EnemyAttacked;
+        private IDestroyable EnemyAttacked;
 
 
         public LaserTurret(Simulator simulator)
@@ -25,7 +26,7 @@
         }
 
 
-        public override Enemy EnemyWatched
+        public override IDestroyable EnemyWatched
         {
             get
             {

@@ -4,7 +4,7 @@ namespace EphemereGames.Core.Visual
     using Microsoft.Xna.Framework;
 
 
-    public class Camera : IVisual
+    public class Camera : IVisual, IPhysical
     {
         public string Name;
         public Matrix Transform;
@@ -138,6 +138,13 @@ namespace EphemereGames.Core.Visual
             Rectangle.Y = (int) (position.Y - PhysicalSize.Y / zoom / 2);
             Rectangle.Width = (int) (PhysicalSize.X / zoom);
             Rectangle.Height = (int) (PhysicalSize.Y / zoom);
+        }
+
+
+        public float Speed
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
         }
     }
 }

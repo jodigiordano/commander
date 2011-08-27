@@ -12,6 +12,19 @@
         private static Random random = new Random();
 
 
+        public static RotationEffect Rotate(float rotationRad, double delay, double length)
+        {
+            var e = RotationEffect.Pool.Get();
+
+            e.Delay = delay;
+            e.Length = length;
+            e.Progress = Effect<IPhysical>.ProgressType.Linear;
+            e.Quantity = rotationRad;
+
+            return e;
+        }
+
+
         public static MovePathEffect FollowPath(Path2D path, double delay)
         {
             var e = MovePathEffect.Pool.Get();

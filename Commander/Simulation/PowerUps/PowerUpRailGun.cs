@@ -7,14 +7,14 @@ namespace EphemereGames.Commander.Simulation
 
     class PowerUpRailGun : PowerUp
     {
-        private HumanBattleship HumanBattleship;
+        private PowerUpsBattleship HumanBattleship;
         private RailGunTurret Turret;
         private bool terminated;
 
         private bool Firing;
 
 
-        public PowerUpRailGun(Simulator simulator, HumanBattleship humanBattleship)
+        public PowerUpRailGun(Simulator simulator, PowerUpsBattleship humanBattleship)
             : base(simulator)
         {
             HumanBattleship = humanBattleship;

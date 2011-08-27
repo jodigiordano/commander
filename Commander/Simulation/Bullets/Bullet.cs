@@ -36,6 +36,7 @@ namespace EphemereGames.Commander.Simulation
         
         public bool Explosive;
         public float ExplosionRange;
+        public string SfxExplosion;
 
 
         public Bullet()
@@ -46,6 +47,7 @@ namespace EphemereGames.Commander.Simulation
             Explosive = false;
             ExplosionRange = 0;
             ShowMovingEffect = true;
+            SfxExplosion = "";
         }
 
 

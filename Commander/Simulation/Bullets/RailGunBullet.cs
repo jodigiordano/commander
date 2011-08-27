@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -17,6 +16,7 @@
             Shape = Shape.Rectangle;
             Rectangle = new PhysicalRectangle();
             Explosive = true;
+            SfxExplosion = @"sfxRailGunExplosion2";
         }
 
 
@@ -43,14 +43,6 @@
             Rectangle.Y = (int) Position.Y;
 
             base.Update();
-        }
-
-
-        public override void DoDie()
-        {
-            Audio.PlaySfx(@"sfxRailGunExplosion2");
-            
-            base.DoDie();
         }
     }
 }

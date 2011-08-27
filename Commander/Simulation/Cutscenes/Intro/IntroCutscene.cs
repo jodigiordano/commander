@@ -8,15 +8,15 @@
         public static Dictionary<string, double> Timing;
 
         private LogoAnimation Logo;
-        private DedicationAnimation Dedication;
         private SimulatorAnimation Simulator;
         private CommanderAnimation Commander;
         private LocationAnimation Location;
         private ProtagonistsAnimation Protagonist;
         private MothershipAnimation Mothership;
+        private ResistanceAnimation Resistance;
 
-        private double TimeBeforeMusic = 2000;
-        private double Length = 125000;
+        private double TimeBeforeMusic = 1000;
+        private double Length = 82000;
 
 
         public override void Initialize()
@@ -24,15 +24,18 @@
             InitializeTiming();
 
             Logo = new LogoAnimation(Scene);
-            Dedication = new DedicationAnimation(Scene);
             Simulator = new SimulatorAnimation(Scene);
             Commander = new CommanderAnimation(Scene);
             Location = new LocationAnimation(Scene);
-            Protagonist = new ProtagonistsAnimation(Simulator.Simulator);
             Mothership = new MothershipAnimation(Simulator.Simulator);
+            Protagonist = new ProtagonistsAnimation(Simulator.Simulator, Mothership.Mothership);
+            Resistance = new ResistanceAnimation(Simulator.Simulator, Mothership.Mothership);
+            Mothership.Battleships = Resistance.Battleships;
 
-            TimeBeforeMusic = 2000;
-            Length = 125000;
+            TimeBeforeMusic = 1000;
+            Length = 82000;
+
+            Main.MusicController.SwitchTo(MusicContext.Cutscene, "introMusic", false);
         }
 
 
@@ -44,7 +47,7 @@
 
             if (TimeBeforeMusic < 0)
             {
-                Core.Audio.Audio.PlayMusic("introMusic", false, 0, false);
+                Main.MusicController.PlayMusic(false, false, false);
                 TimeBeforeMusic = double.MaxValue;
             }
 
@@ -54,6 +57,7 @@
                 Protagonist.Update();
                 Mothership.Update();
                 Commander.Update();
+                Resistance.Update();
             }
 
             Terminated = Length <= 0;
@@ -63,18 +67,18 @@
         public override void Draw()
         {
             Logo.Draw();
-            Dedication.Draw();
             Simulator.Draw();
             Location.Draw();
             Protagonist.Draw();
             Commander.Draw();
             Mothership.Draw();
+            Resistance.Draw();
         }
         
 
         public override void Stop()
         {
-            Core.Audio.Audio.StopMusic("introMusic", true, 250);
+            Main.MusicController.SwitchTo(MusicContext.Other);
         }
 
 
@@ -82,18 +86,26 @@
         {
             Timing = new Dictionary<string, double>();
 
-            Timing.Add("LogoIn", 2000);
-            Timing.Add("DedicationIn", 10000);
-            Timing.Add("SimulatorIn", 18000);
-            Timing.Add("LocationIn", 24000);
-            Timing.Add("ProtagonistIn", 27000);
-            Timing.Add("MothershipArrival", 53000);
-            Timing.Add("MothershipLights", 78000);
-            Timing.Add("MothershipDestruction", 86000);
-            Timing.Add("CommanderIn", 96000);
-            Timing.Add("MothershipDeparture", 106000);
+            Timing.Add("SimulatorIn", 0);
+            Timing.Add("LogoIn", 1000);
+            Timing.Add("LocationIn", 3000);
+            Timing.Add("ProtagonistIn", 5000);
+            Timing.Add("MothershipArrival", 16500);
+
+            Timing.Add("HumanBattleshipsArrival", 32000);
+            Timing.Add("HumanBattleshipsFiring", 34000);
+            Timing.Add("HumanBattleshipsDestruction", 39000);
+
+            Timing.Add("MothershipLights", 34000);
+            Timing.Add("MothershipDestruction", 39000);
+            Timing.Add("CommanderIn", 50000);
+            Timing.Add("MothershipDeparture", 62000);
 
             //test
+            //Timing.Add("MothershipArrival", 0);
+            //Timing.Add("HumanBattleshipsArrival", 6000);
+            //Timing.Add("HumanBattleshipsFiring", 9000);
+            //Timing.Add("HumanBattleshipsDestruction", 15000);
             //Timing.Add("LogoIn", 100000);
             //Timing.Add("DedicationIn", 100000);
             //Timing.Add("SimulatorIn", 0);

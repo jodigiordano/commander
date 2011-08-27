@@ -32,14 +32,17 @@
         public Color color;
 
 
-        public Image(string imageName) : this(imageName, Vector3.Zero) {}
+        public Image(string imageName) : this(imageName, Vector3.Zero, @"spritesheet") {}
 
 
-        public Image(string imageName, Vector3 position)
+        public Image(string imageName, Vector3 position) : this(imageName, position, @"spritesheet") { }
+
+
+        public Image(string imageName, Vector3 position, string spriteSheetName)
         {
             TextureName = imageName;
 
-            LoadTexture();
+            LoadTexture(spriteSheetName);
 
             Center = TextureSize / 2f;
             Position = position;
@@ -132,7 +135,7 @@
         }
 
 
-        private void LoadTexture()
+        private void LoadTexture(string spriteSheetName)
         {
             Texture2D result = Persistence.Persistence.GetAsset<Texture2D>(TextureName);
 
@@ -145,7 +148,7 @@
             }
 
             SpriteSheet spritesheet =
-                Persistence.Persistence.GetAsset<SpriteSheet>("spritesheet");
+                Persistence.Persistence.GetAsset<SpriteSheet>(spriteSheetName);
 
             Texture = spritesheet.Texture;
             VisiblePart = spritesheet.SourceRectangle(TextureName);

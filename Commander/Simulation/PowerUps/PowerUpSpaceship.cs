@@ -8,11 +8,11 @@ namespace EphemereGames.Commander.Simulation
     {
         public Spaceship SpaceshipSpaceship { get; private set; }
 
-        private HumanBattleship HumanBattleship;
+        private PowerUpsBattleship HumanBattleship;
         private float ActiveTime;
 
 
-        public PowerUpSpaceship(Simulator simulator, HumanBattleship humanBattleship)
+        public PowerUpSpaceship(Simulator simulator, PowerUpsBattleship humanBattleship)
             : base(simulator)
         {
             HumanBattleship = humanBattleship;

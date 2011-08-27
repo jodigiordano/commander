@@ -101,6 +101,9 @@
     <Item><Key>CBMask33</Key><Value>planetes/masks/mask33.png</Value></Item>
     
     
+    <Item><Key>MothershipHitMask</Key><Value>spaceships/masks/mask11.png</Value></Item>
+    
+    
     <!-- Xbox 360 Buttons -->
     <Item><Key>ButtonBack</Key><Value>GUI/Buttons/Xbox/back.png</Value></Item>
     <Item><Key>ButtonA</Key><Value>GUI/Buttons/Xbox/facebutton_a.png</Value></Item>
@@ -178,12 +181,19 @@
     <Item><Key>TheResistance</Key><Value>spaceships/TheResistance.png</Value></Item>
     <Item><Key>Vaisseau</Key><Value>spaceships/Vaisseau.png</Value></Item>
     
+    <Item><Key>HumanBattleship1</Key><Value>spaceships/battleships/humanbattleship1.png</Value></Item>
+    <Item><Key>HumanBattleship2</Key><Value>spaceships/battleships/humanbattleship2.png</Value></Item>
+    <Item><Key>HumanBattleship3</Key><Value>spaceships/battleships/humanbattleship3.png</Value></Item>    
+    
     <Item><Key>FiringDirection</Key><Value>spaceships/firingDirection.png</Value></Item>
     
-    <Item><Key>MothershipBase</Key><Value>spaceships/mothership_base.png</Value></Item>
-    <Item><Key>MothershipTop</Key><Value>spaceships/mothership_top.png</Value></Item>
-    <Item><Key>MothershipLights</Key><Value>spaceships/mothership_deadly.png</Value></Item>
-    <Item><Key>MothershipTentacles</Key><Value>spaceships/mothership_tentacles.png</Value></Item>
+    <Item><Key>MothershipAliens</Key><Value>spaceships/mothership/mothership_aliens.png</Value></Item>
+    <Item><Key>MothershipBase</Key><Value>spaceships/mothership/mothership_base.png</Value></Item>
+    <Item><Key>MothershipBubble</Key><Value>spaceships/mothership/mothership_bubble.png</Value></Item>
+    <Item><Key>MothershipDeadly</Key><Value>spaceships/mothership/mothership_deadly.png</Value></Item>
+    <Item><Key>MothershipInvasionShips</Key><Value>spaceships/mothership/mothership_invasion_ships.png</Value></Item>
+    <Item><Key>MothershipLights</Key><Value>spaceships/mothership/mothership_lights.png</Value></Item>
+    <Item><Key>MothershipTentacles</Key><Value>spaceships/mothership/mothership_tentacles.png</Value></Item>    
     
     
     <!-- Turrets -->

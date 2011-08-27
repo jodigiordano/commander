@@ -12,7 +12,7 @@
         private const int LONGUEUR_LIGNE = 1500;
 
         private double LifeSpan;
-        public Enemy Target;
+        public IDestroyable Target;
         public Vector3 TargetOffset;
         public Turret Turret;
         private VisualLine MovingEffect2;

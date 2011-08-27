@@ -119,6 +119,7 @@
     <Compile Include="Physics\Effects\FollowEffect.cs" />
     <Compile Include="Physics\Effects\SpeedPathEffect.cs" />
     <Compile Include="Physics\ICollidable.cs" />
+    <Compile Include="Physics\IDestroyable.cs" />
     <Compile Include="Physics\IPhysical.cs" />
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Shapes\Circle.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Visual\Effects\ColorEffect.cs" />
     <Compile Include="Visual\Scenable\ColoredText.cs" />
     <Compile Include="Visual\Scenable\IVisual.cs" />
+    <Compile Include="Visual\Scenable\NewSprite.cs" />
     <Compile Include="Visual\Scene\ITransitionAnimation.cs" />
     <Compile Include="Visual\ScreenSafeZone.cs" />
     <Compile Include="Visual\Animations\Animation.cs" />

@@ -7,14 +7,16 @@
     class MusicController
     {
         public bool SwitchMusicRandomly;
+        public int FadeTime = 1000;
+
+        private MusicContext Context;
         
         private string SelectedMusic;
-        private MusicContext Context;
         private double TimeBetweenTwoMusicChange = 0;
 
         private const int SwitchMusicRandomlyFadeTime = 10000;
-        private const int FadeTime = 1000;
 
+        private bool CanChangeMusic;
 
 
         public MusicController()
@@ -23,6 +25,7 @@
             AvailableMusics.Remove(SelectedMusic);
             Context = MusicContext.Other;
             SwitchMusicRandomly = false;
+            CanChangeMusic = true;
         }
 
 
@@ -34,6 +37,9 @@
 
         public void ChangeMusic(bool overrideMinimumTime)
         {
+            if (!CanChangeMusic)
+                return;
+
             if (!overrideMinimumTime && TimeBetweenTwoMusicChange > 0)
                 return;
 
@@ -52,17 +58,23 @@
 
         public void PlayMusic(bool switching)
         {
+            PlayMusic(switching, true, true);
+        }
+
+
+        public void PlayMusic(bool switching, bool fade, bool loop)
+        {
             if (!Audio.IsMusicPlaying(SelectedMusic))
             {
                 if (SwitchMusicRandomly)
-                    Audio.PlayMusic(SelectedMusic, true, switching ? SwitchMusicRandomlyFadeTime : FadeTime, MusicFinished, SwitchMusicRandomlyFadeTime);
+                    Audio.PlayMusic(SelectedMusic, fade, switching ? SwitchMusicRandomlyFadeTime : FadeTime, MusicFinished, SwitchMusicRandomlyFadeTime);
                 else
-                    Audio.PlayMusic(SelectedMusic, true, FadeTime, true);
+                    Audio.PlayMusic(SelectedMusic, fade, FadeTime, loop);
             }
 
             else
             {
-                Audio.ResumeMusic(SelectedMusic, true, FadeTime);
+                Audio.ResumeMusic(SelectedMusic, fade, FadeTime);
             }
         }
 
@@ -77,6 +89,12 @@
         public void PauseMusic()
         {
             Audio.PauseMusic(SelectedMusic, true, FadeTime);
+        }
+
+
+        public void PauseMusicNow()
+        {
+            Audio.PauseMusic(SelectedMusic, false, 0);
         }
         
 
@@ -97,6 +115,12 @@
 
         public void SwitchTo(MusicContext context)
         {
+            SwitchTo(context, null, true);
+        }
+
+
+        public void SwitchTo(MusicContext context, string musicName, bool playNow)
+        {
             Audio.StopMusic(SelectedMusic, true, 500);
 
             string lastMusic = SelectedMusic;
@@ -105,16 +129,24 @@
             switch (context)
             {
                 case MusicContext.Won:
-                    SelectedMusic = AvailableGameWonMusics[Main.Random.Next(0, AvailableGameWonMusics.Count)];
+                    SelectedMusic = musicName == null ? AvailableGameWonMusics[Main.Random.Next(0, AvailableGameWonMusics.Count)] : musicName;
                     AvailableGameWonMusics.Remove(SelectedMusic);
+                    CanChangeMusic = true;
                     break;
                 case MusicContext.Lost:
-                    SelectedMusic = AvailableGameLostMusics[Main.Random.Next(0, AvailableGameLostMusics.Count)];
+                    SelectedMusic = musicName == null ? AvailableGameLostMusics[Main.Random.Next(0, AvailableGameLostMusics.Count)] : musicName;
                     AvailableGameLostMusics.Remove(SelectedMusic);
+                    CanChangeMusic = true;
                     break;
                 case MusicContext.Other:
-                    SelectedMusic = AvailableMusics[Main.Random.Next(0, AvailableMusics.Count)];
+                    SelectedMusic = musicName == null ? AvailableMusics[Main.Random.Next(0, AvailableMusics.Count)] : musicName;
                     AvailableMusics.Remove(SelectedMusic);
+                    CanChangeMusic = true;
+                    break;
+                case MusicContext.Cutscene:
+                    SelectedMusic = musicName == null ? AvailableCutsceneMusics[Main.Random.Next(0, AvailableCutsceneMusics.Count)] : musicName;
+                    AvailableCutsceneMusics.Remove(SelectedMusic);
+                    CanChangeMusic = false;
                     break;
             }
 
@@ -125,11 +157,13 @@
                 case MusicContext.Won: AvailableGameWonMusics.Add(lastMusic); break;
                 case MusicContext.Lost: AvailableGameLostMusics.Add(lastMusic); break;
                 case MusicContext.Other: AvailableMusics.Add(lastMusic); break;
+                case MusicContext.Cutscene: AvailableCutsceneMusics.Add(lastMusic); break;
             }
 
             Context = context;
 
-            Audio.PlayMusic(SelectedMusic, true, FadeTime, true);
+            if (playNow)
+                Audio.PlayMusic(SelectedMusic, true, FadeTime, true);
         }
 
 
@@ -167,6 +201,12 @@
         {
             "gameover1",
             "gameover2"
+        };
+
+
+        private static List<string> AvailableCutsceneMusics = new List<string>()
+        {
+            "introMusic"
         };
 
 

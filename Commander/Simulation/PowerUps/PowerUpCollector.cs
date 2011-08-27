@@ -7,10 +7,10 @@ namespace EphemereGames.Commander.Simulation
     class PowerUpCollector : PowerUp
     {
         public SpaceshipCollector Collector { get; private set; }
-        private HumanBattleship HumanBattleship;
+        private PowerUpsBattleship HumanBattleship;
 
 
-        public PowerUpCollector(Simulator simulator, HumanBattleship humanBattleship)
+        public PowerUpCollector(Simulator simulator, PowerUpsBattleship humanBattleship)
             : base(simulator)
         {
             HumanBattleship = humanBattleship;

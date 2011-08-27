@@ -11,8 +11,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 namespace SpriteSheetRuntime
@@ -38,6 +38,9 @@ namespace SpriteSheetRuntime
         [ContentSerializer]
         Dictionary<string, int> spriteNames = null;
 
+        [ContentSerializerIgnore]
+        Dictionary<int, string> Names = null;
+
 
         /// <summary>
         /// Gets the single large texture used by this sprite sheet.
@@ -56,6 +59,21 @@ namespace SpriteSheetRuntime
             int spriteIndex = GetIndex(spriteName);
 
             return spriteRectangles[spriteIndex];
+        }
+
+
+        /// <summary>
+        /// Get the number of sprites in the spritesheet
+        /// </summary>
+        public int ImagesCount
+        {
+            get { return spriteRectangles.Count; }
+        }
+
+
+        public Dictionary<string, int>.KeyCollection ImagesNames
+        {
+            get { return spriteNames.Keys; }
         }
 
 
@@ -87,6 +105,24 @@ namespace SpriteSheetRuntime
             }
 
             return index;
+        }
+
+
+        /// <summary>
+        /// Get the name of the image
+        /// </summary>
+        public string GetImageName(int index)
+        {
+            //build the index
+            if (Names == null)
+            {
+                Names = new Dictionary<int, string>();
+
+                foreach (var kvp in spriteNames)
+                    Names.Add(kvp.Value, kvp.Key);
+            }
+
+            return Names[index];
         }
     }
 }

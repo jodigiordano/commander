@@ -1981,23 +1981,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="spaceships\mothership_base.png">
-      <Name>mothership_base</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-    <None Include="spaceships\mothership_deadly.png">
-      <Name>mothership_deadly</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-    <None Include="spaceships\mothership_top.png">
-      <Name>mothership_top</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="GUI\Cursors\cursor1.png">
       <Name>cursor1</Name>
       <Importer>TextureImporter</Importer>
@@ -2084,13 +2067,6 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="spaceships\mothership_tentacles.png">
-      <Name>mothership_tentacles</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2801,6 +2777,108 @@
   <ItemGroup>
     <Compile Include="particules\nextWave.xml">
       <Name>nextWave</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="spaceships\mothership\mothership_aliens.png">
+      <Name>mothership_aliens</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_base.png">
+      <Name>mothership_base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_bubble.png">
+      <Name>mothership_bubble</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_deadly.png">
+      <Name>mothership_deadly</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_invasion_ships.png">
+      <Name>mothership_invasion_ships</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_lights.png">
+      <Name>mothership_lights</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_tentacles.png">
+      <Name>mothership_tentacles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="spaceships\mothership\mothership_eyes_sprite.xml">
+      <Name>mothership_eyes_sprite</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>SpriteSheetProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="spaceships\mothership\mothership_eyes1.png">
+      <Name>mothership_eyes1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_eyes2.png">
+      <Name>mothership_eyes2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_eyes3.png">
+      <Name>mothership_eyes3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_eyes4.png">
+      <Name>mothership_eyes4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\mothership\mothership_eyes5.png">
+      <Name>mothership_eyes5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="spaceships\battleships\humanbattleship1.png">
+      <Name>humanbattleship1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\battleships\humanbattleship2.png">
+      <Name>humanbattleship2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="spaceships\battleships\humanbattleship3.png">
+      <Name>humanbattleship3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="spaceships\masks\mask11.png">
+      <Name>mask11</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="particules\abduction.xml">
+      <Name>abduction</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Compile>

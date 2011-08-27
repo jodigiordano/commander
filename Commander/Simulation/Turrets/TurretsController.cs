@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
-    using Microsoft.Xna.Framework;
 
 
     class TurretsController
@@ -83,10 +83,14 @@
 
             for (int i = 0; i < Turrets.Count; i++)
             {
-                List<Bullet> projectiles = Turrets[i].BulletsThisTick();
+                var t = Turrets[i];
+                List<Bullet> bullets = t.BulletsThisTick();
 
-                for (int j = 0; j < projectiles.Count; j++)
-                    NotifyObjectCreated(projectiles[j]);
+                if (!Simulator.CutsceneMode && bullets.Count != 0)
+                    Audio.PlaySfx(t.SfxShooting);
+
+                for (int j = 0; j < bullets.Count; j++)
+                    NotifyObjectCreated(bullets[j]);
             }
 
             // Pour l'instant, à chaque tick, les tourelles sont dissociées de leurs ennemis

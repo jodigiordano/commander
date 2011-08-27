@@ -27,6 +27,7 @@
         public event EnemyBulletHandler BulletDeflected;
         public event SimPlayerSimPlayerHandler PlayersCollided;
         public event BulletCelestialBodyHandler StartingPathCollision;
+        public event CollidableBulletHandler ShieldCollided;
 
         private Simulator Simulator;
         private PhysicalRectangle Battlefield;
@@ -42,6 +43,7 @@
         private ObjectsCollisions ObjectsCollisions;
         private PlayersCollisions PlayersCollisions;
         private StartingPathCollisions StartingPathCollisions;
+        private ShieldsCollisions ShieldsCollisions;
 
         private Action SyncOutOfBounds;
         private Action SyncEnemyInRange;
@@ -65,6 +67,7 @@
             PlayersCollisions = new PlayersCollisions();
             CelestialBodyExplosion = new CelestialBodyExplosion();
             StartingPathCollisions = new StartingPathCollisions();
+            ShieldsCollisions = new ShieldsCollisions();
 
             SyncOutOfBounds = new Action(OutOfBounds.Sync);
             SyncEnemyInRange = new Action(EnemyInRange.Sync);
@@ -112,6 +115,8 @@
 
             StartingPathCollisions.Bullets = Bullets;
             StartingPathCollisions.Path = Path;
+
+            ShieldsCollisions.Bullets = Bullets;
         }
 
 
@@ -133,6 +138,7 @@
             ObjectsCollisions.Sync();
             PlayersCollisions.Sync();
             StartingPathCollisions.Sync();
+            ShieldsCollisions.Sync();
 
             task3.Wait();
             task4.Wait();
@@ -165,6 +171,9 @@
 
             foreach (var d in StartingPathCollisions.Output)
                 NotifyStartingPathCollision(d.Key, d.Value);
+
+            foreach (var d in ShieldsCollisions.Output)
+                NotifyShieldCollided(d.Key, d.Value);
         }
 
 
@@ -272,6 +281,9 @@
 
             else if (obj is SpaceshipAutomaticCollector)
                 ObjectsCollisions.AutomaticCollector = (SpaceshipAutomaticCollector) obj;
+
+            else if (obj is Mothership)
+                ShieldsCollisions.Objects.Add(obj);
         }
 
 
@@ -330,6 +342,13 @@
         {
             if (StartingPathCollision != null)
                 StartingPathCollision(b, cb);
+        }
+
+
+        private void NotifyShieldCollided(ICollidable i, Bullet b)
+        {
+            if (ShieldCollided != null)
+                ShieldCollided(i, b);
         }
     }
 }

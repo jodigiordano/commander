@@ -7,7 +7,7 @@
     {
         public Dictionary<PowerUpType, PowerUp> Availables;
         public Dictionary<PowerUpType, PowerUp> All;
-        public HumanBattleship HumanBattleship;
+        public PowerUpsBattleship HumanBattleship;
         private Simulator Simulator;
 
 

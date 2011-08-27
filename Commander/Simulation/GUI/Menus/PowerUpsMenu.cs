@@ -8,7 +8,7 @@
 
     class PowerUpsMenu
     {
-        public HumanBattleship HumanBattleship;
+        public PowerUpsBattleship HumanBattleship;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public PowerUpType PowerUpToBuy;
@@ -70,7 +70,7 @@
             ImagesPlaceHolders = new Dictionary<PowerUpType, Image>(PowerUpTypeComparer.Default);
             ImagesTurretsPowerUps = new Dictionary<PowerUpType, Turret>(PowerUpTypeComparer.Default);
 
-            HumanBattleship = new HumanBattleship(Simulator, VisualPriority + 0.005f);
+            HumanBattleship = new PowerUpsBattleship(Simulator, VisualPriority + 0.005f);
         }
 
 

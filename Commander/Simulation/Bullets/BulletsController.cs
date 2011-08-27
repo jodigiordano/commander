@@ -2,6 +2,7 @@ namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
@@ -41,7 +42,12 @@ namespace EphemereGames.Commander.Simulation
                     if (b.OutOfBounds)
                         b.DoDieSilent();
                     else
+                    {
                         b.DoDie();
+
+                        if (!Simulator.CutsceneMode && b.SfxExplosion != "")
+                            Audio.PlaySfx(b.SfxExplosion);
+                    }
                     
                     NotifyObjectDestroyed(b);
 
@@ -89,6 +95,12 @@ namespace EphemereGames.Commander.Simulation
         public void DoStartingPathCollision(Bullet b, CelestialBody cb)
         {
             b.DoHit(cb);
+        }
+
+
+        public void DoShieldCollided(ICollidable i, Bullet b)
+        {
+            b.DoHit(null);
         }
 
 

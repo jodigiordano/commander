@@ -8,7 +8,6 @@
         public Scene Scene;
         public bool Terminated = false;
 
-
         public abstract void Initialize();
         public abstract void Update();
         public abstract void Draw();

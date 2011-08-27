@@ -3,18 +3,12 @@
 
     <!-- Textures -->
 
-    <asset name="VaisseauAlien"        type="Image" path="scenarios/vaisseauAlien" />
-    <asset name="HumanBattleship"      type="Image" path="scenarios/humanBattleship" />
     <asset name="PixelBlanc"           type="Image" path="pixelBlanc" />
 
 
     <asset name="LogoBack"                type="Image" path="GUI/Logo/ephemereBack" />
     <asset name="LogoFront"               type="Image" path="GUI/Logo/ephemereFront" />
     <asset name="LogoGames"               type="Image" path="GUI/Logo/games" />
-    
-    <!-- Sprites -->
-
-    <asset name="tentacules"           type="Sprite" path="scenarios/tentacules1" />
 
     
     <!-- Polices -->
@@ -23,10 +17,21 @@
     <asset name="PixelBig"             type="Font" path="polices/pixelbig" />
     <asset name="Alien"                type="Font" path="polices/alien" />
 
-    
+
     <!-- Spritesheets -->
+
+    <asset name="spritesheet"                  type="SpriteSheet" path="spritesheet" />
+    <asset name="MothershipEyesSprite"       type="SpriteSheet" path="spaceships/mothership/mothership_eyes_sprite" />
+
+
+    <!-- Textures -->
     
-    <asset name="spritesheet"                  type="SpriteSheet" path="spritesheet" />    
+    <asset name="VaisseauAlien"        type="Image" path="scenarios/vaisseauAlien" />
+    
+    <!-- Sprites -->
+
+    <asset name="tentacules"                 type="Sprite" path="scenarios/tentacules1" />    
+    
   </Package>
   
   
@@ -149,6 +154,7 @@
     <asset name="spaceshipTrail2"              type="Particles" path="particules/spaceshipTrail2"/>
     <asset name="starExplosion"                type="Particles" path="particules/starExplosion"/>
     <asset name="mothershipMissile"            type="Particles" path="particules/mothership_missile"/>
+    <asset name="mothershipAbduction"          type="Particles" path="particules/abduction"/>
 
     
     <!-- Backgrounds -->
@@ -238,6 +244,10 @@
     <!-- Sprites -->    
     
     <asset name="mine"                       type="Sprite" path="projectiles/mine1" />
+
+
+    <!-- Textures -->
+    <asset name="HumanBattleship"      type="Image" path="scenarios/humanBattleship" />
 
 
     <!-- Musics -->

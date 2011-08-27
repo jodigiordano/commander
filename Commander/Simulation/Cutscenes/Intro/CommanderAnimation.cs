@@ -32,8 +32,8 @@
 
             Commander = new Text("Commander", @"Pixelite")
             {
-                Color = Color.Black,
-                SizeX = 12,
+                Color = Color.White,
+                SizeX = 16,
                 VisualPriority = VisualPriorities.Cutscenes.IntroCommanderText
             };
 
@@ -50,16 +50,8 @@
 
             PrepareLetters();
 
-            Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeIn, 2000));
-            Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 13000, 2000));
-
-            Scene.VisualEffects.Add(SubTitle.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeIn + 5000, 3000));
-            Scene.VisualEffects.Add(SubTitle.Translated, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 11000, 3000));
-
-            Scene.VisualEffects.Add(SubTitle.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeIn + 5000, 3000));
-            Scene.VisualEffects.Add(SubTitle.ToTranslate, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 11000, 3000));
-
-
+            //Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeIn, 2000));
+            //Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 11000, 2000));
 
             foreach (var kvp in Letters)
             {
@@ -69,6 +61,9 @@
                 Scene.VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeIn + Main.Random.Next(2000, 3000), 1500));
                 Scene.VisualEffects.Add(kvp.Key, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 11000, 1000));
             }
+
+            Scene.VisualEffects.Add(SubTitle, Core.Visual.VisualEffects.FadeInFrom0(255, TimeBeforeIn + 5000, 3000));
+            Scene.VisualEffects.Add(SubTitle, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn + 11000, 1000));
 
             Elapsed = 0;
         }
@@ -85,15 +80,15 @@
 
         public void Draw()
         {
-            Scene.BeginForeground();
-            Scene.Add(Background);
+            //Scene.BeginForeground();
+            //Scene.Add(Background);
 
             foreach (var l in Letters)
                 Scene.Add(l.Key);
 
-            SubTitle.Draw();
+            //SubTitle.Draw();
 
-            Scene.EndForeground();
+            //Scene.EndForeground();
         }
 
 
@@ -116,6 +111,7 @@
                 t.Data = text[i].ToString();
                 t.Position = endPosition - new Vector3((centerLetterIndex - i) * letterSizeX / 2, 0, 0);
                 t.CenterIt();
+                t.Blend = BlendType.Add;
 
                 Letters.Add(new KeyValuePair<Text,Vector3>(t, endPosition));
             }
@@ -126,6 +122,7 @@
                 t.Data = text[text.Length / 2].ToString();
                 t.Position = Commander.Position;
                 t.CenterIt();
+                t.Blend = BlendType.Add;
 
                 Letters.Add(new KeyValuePair<Text, Vector3>(t, Commander.Position));
             }
@@ -138,6 +135,7 @@
                 t.Data = text[centerLetterIndex + i].ToString();
                 t.Position = endPosition + new Vector3(i * letterSizeX / 2, 0, 0);
                 t.CenterIt();
+                t.Blend = BlendType.Add;
 
                 Letters.Add(new KeyValuePair<Text,Vector3>(t, endPosition));
             }

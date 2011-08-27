@@ -9,7 +9,7 @@
 
     class LaserBullet : Bullet
     {
-        public Enemy Target;
+        public IDestroyable Target;
         public Turret Turret;
         private VisualLine MovingEffect2;
         private double LifeSpan;

@@ -8,7 +8,7 @@
     {
         public List<Enemy> Enemies;
         public List<Mineral> Minerals;
-        public HumanBattleship HumanBattleship;
+        public PowerUpsBattleship PowerUpsBattleship;
         public event PhysicalObjectHandler ObjectCreated;
 
         private Simulator Simulator;
@@ -94,6 +94,17 @@
             Spaceships.Add(spaceship);
 
             NotifyObjectCreated(spaceship);
+        }
+
+
+        public void DoShieldCollided(ICollidable collidable, Bullet b)
+        {
+            var spaceship = collidable as Spaceship;
+
+            if (spaceship == null)
+                return;
+
+            spaceship.DoShieldHit(b.Position);
         }
 
 

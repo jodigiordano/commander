@@ -128,7 +128,9 @@
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
     <Compile Include="Scenes\World\LevelStates.cs" />
     <Compile Include="Simulation\Collisions\PlayersCollisions.cs" />
+    <Compile Include="Simulation\Collisions\ShieldsCollisions.cs" />
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
+    <Compile Include="Simulation\Cutscenes\Intro\ResistanceAnimation.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\NextWavePreview.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveStartedAnimation.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyShieldHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\PinkHoleLite.cs" />
+    <Compile Include="Simulation\GUI\Animations\ShieldHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TeleportAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TurretMoneyAnimation.cs" />
     <Compile Include="Simulation\GUI\GameBarPanel.cs" />
@@ -181,7 +184,6 @@
     <Compile Include="Simulation\Cutscenes\Intro\MothershipAnimation.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\ProtagonistsAnimation.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\SimulatorAnimation.cs" />
-    <Compile Include="Simulation\Cutscenes\Intro\DedicationAnimation.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\IntroCutscene.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\LogoAnimation.cs" />
     <Compile Include="Simulation\Editor\EditorCommands.cs" />
@@ -268,7 +270,9 @@
     <Compile Include="Simulation\PowerUps\PowerUpsFactory.cs" />
     <Compile Include="Simulation\Simulator.cs" />
     <Compile Include="Simulation\Spaceships\AlienSpaceship.cs" />
+    <Compile Include="Simulation\Spaceships\HumanBattleship.cs" />
     <Compile Include="Simulation\Spaceships\Mothership.cs" />
+    <Compile Include="Simulation\Spaceships\PowerUpsBattleship.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipChasingABehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipGoHomeABehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipGamePadMBehavior.cs" />
@@ -309,7 +313,6 @@
     <Compile Include="Simulation\PowerUps\PowerUpLastSolution.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipAutomaticCollector.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipMiner.cs" />
-    <Compile Include="Simulation\Spaceships\HumanBattleship.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipSpaceship.cs" />
     <Compile Include="Simulation\Turrets\AlienTurret.cs" />
     <Compile Include="Simulation\Turrets\BoosterTurret.cs" />

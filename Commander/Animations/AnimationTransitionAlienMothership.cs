@@ -10,7 +10,9 @@ namespace EphemereGames.Commander
     {
         public bool In;
 
-        private Mothership Mothership;
+        private Image MothershipBase;
+        private Image MothershipTentacles;
+        private Image MothershipLights;
         private Path2D PathIn;
         private Path2D PathOut;
 
@@ -26,7 +28,19 @@ namespace EphemereGames.Commander
         {
             In = false;
 
-            Mothership = new Mothership(VisualPriority)
+            MothershipBase = new Image("MothershipBase")
+            {
+                Blend = BlendType.Substract,
+                SizeX = 12
+            };
+
+            MothershipTentacles = new Image("MothershipTentacles")
+            {
+                Blend = BlendType.Substract,
+                SizeX = 12
+            };
+
+            MothershipLights = new Image("MothershipLights")
             {
                 Blend = BlendType.Substract,
                 SizeX = 12
@@ -54,10 +68,12 @@ namespace EphemereGames.Commander
 
         public override void Draw()
         {
-            Mothership.Position = new Vector3(In ? PathIn.GetPosition(ElapsedTime) : PathOut.GetPosition(ElapsedTime), 0);
+            MothershipBase.Position = MothershipLights.Position = MothershipTentacles.Position = new Vector3(In ? PathIn.GetPosition(ElapsedTime) : PathOut.GetPosition(ElapsedTime), 0);
 
             Scene.BeginForeground();
-            Mothership.Draw(Scene);
+            Scene.Add(MothershipBase);
+            Scene.Add(MothershipTentacles);
+            Scene.Add(MothershipLights);
             Scene.EndForeground();
         }
     }

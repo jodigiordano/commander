@@ -101,7 +101,8 @@ namespace EphemereGames.Commander.Simulation
                     @"darkSideEffect",
                     @"starExplosion",
                     @"mothershipMissile",
-                    @"nextWave"
+                    @"nextWave",
+                    @"mothershipAbduction"
                 }, false);
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
@@ -241,6 +242,8 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(SimPlayersController.DoPlayersCollided);
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(BulletsController.DoStartingPathCollision);
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(GUIController.DoStartingPathCollision);
+            CollisionsController.ShieldCollided += new CollidableBulletHandler(SpaceshipsController.DoShieldCollided);
+            CollisionsController.ShieldCollided += new CollidableBulletHandler(BulletsController.DoShieldCollided);
             
         }
 
@@ -293,7 +296,7 @@ namespace EphemereGames.Commander.Simulation
             GUIController.AvailableTurrets = SimPlayersController.AvailableTurrets;
             GUIController.Turrets = TurretsController.Turrets;
             SpaceshipsController.Enemies = EnemiesController.Enemies;
-            SpaceshipsController.HumanBattleship = GUIController.HumanBattleship;
+            SpaceshipsController.PowerUpsBattleship = GUIController.HumanBattleship;
             SpaceshipsController.Minerals = EnemiesController.Minerals;
             MessagesController.Turrets = TurretsController.Turrets;
             EditorController.GeneralMenu = EditorGUIController.GeneralMenu;
@@ -412,6 +415,12 @@ namespace EphemereGames.Commander.Simulation
         public void AddNewGameStateListener(NewGameStateHandler handler)
         {
             LevelsController.NewGameState += handler;
+        }
+
+
+        public void AddSpaceship(Spaceship spaceship)
+        {
+            SpaceshipsController.DoAddSpaceshipAsked(spaceship);
         }
 
 

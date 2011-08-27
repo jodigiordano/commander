@@ -99,6 +99,18 @@
         }
 
 
+        public override byte Alpha
+        {
+            get { return base.Alpha; }
+            set
+            {
+                base.Alpha = value;
+
+                ShowTrail = value != 0;
+            }
+        }
+
+
         public override void FadeIn()
         {
             base.FadeIn();

@@ -5,70 +5,136 @@
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using ProjectMercury.Modifiers;
 
 
-    class Mothership : IPhysical
+    class Mothership : Spaceship
     {
-        public Image Base;
-        public Image Top;
-        public Image Lights;
-        public Image Tentacles;
+        private Image Aliens;
+        private Image Bubble;
+        private Image Deadly;
+        private NewSprite Eyes;
+        private Image InvasionShips;
+        private Image Lights;
+        private Image Tentacles;
+
+        private Particle AbductionEffect;
+        private double AbductionLength;
+        private bool Abducting;
+        private double AbductionElapsed;
+        private ICollidable ObjectAbducted;
+
 
         private List<Missile> Missiles;
 
 
-
-        public Mothership(double visualPriority)
+        public Mothership(Simulator simulator, double visualPriority)
+            : base(simulator)
         {
-            Base = new Image("MothershipBase")
+            Aliens = new Image(@"MothershipAliens")
             {
-                VisualPriority = visualPriority
+                VisualPriority = visualPriority + 0.000008
             };
 
-            Top = new Image("MothershipTop")
+            Image = new Image(@"MothershipBase")
             {
-                Color = new Color(255, 200, 0),
-                Alpha = 255 / 2,
-                VisualPriority = visualPriority - 0.000002
+                VisualPriority = visualPriority + 0.000009
             };
 
-            Lights = new Image("MothershipLights")
+            Bubble = new Image(@"MothershipBubble")
             {
-                Color = new Color(255, 0, 0),
+                Blend = BlendType.Add,
+                Alpha = 200,
+                VisualPriority = visualPriority + 0.000005
+
+            };
+
+            Deadly = new Image(@"MothershipDeadly")
+            {
                 Alpha = 0,
-                VisualPriority = visualPriority - 0.000001
+                VisualPriority = visualPriority + 0.000004
+
+            };
+
+            Eyes = new NewSprite(@"MothershipEyesSprite", new List<int>()
+            {
+                0, 0, 0, 0, 0, 0, 0, 1,
+                0, 0, 0, 0, 2, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 3,
+                0, 0, 0, 0, 0, 0, 4, 0
+            }, 200, true)
+            {
+                VisualPriority = visualPriority + 0.000005
+            };
+
+            InvasionShips = new Image(@"MothershipInvasionShips")
+            {
+                Alpha = 0,
+                VisualPriority = visualPriority + 0.000006
+
+            };
+
+            Lights = new Image(@"MothershipLights")
+            {
+                VisualPriority = visualPriority + 0.000007
             
             };
 
-            Tentacles = new Image("MothershipTentacles")
+            Tentacles = new Image(@"MothershipTentacles")
             {
-                VisualPriority = visualPriority + 0.000001
+                VisualPriority = visualPriority + 0.000010
             };
 
             SizeX = 16;
+            Circle.Radius = Image.AbsoluteSize.X / 2;
 
             Missiles = new List<Missile>();
+
+            AbductionEffect = Simulator.Scene.Particles.Get(@"mothershipAbduction");
+            ((RadialGravityModifier) AbductionEffect.ParticleEffect[0].Modifiers[0]).Radius = 2000;
+            ((RadialGravityModifier) AbductionEffect.ParticleEffect[0].Modifiers[0]).Strength = 700;
+            AbductionLength = 5000;
+            AbductionElapsed = 0;
+            Abducting = false;
         }
 
 
-        public BlendType Blend
+        public override BlendType Blend
         {
             set
             {
-                Base.Blend = value;
-                Top.Blend = value;
+                base.Blend = value;
+
+                Aliens.Blend = value;
+                Bubble.Blend = value;
+                Deadly.Blend = value;
+                Eyes.Blend = value;
+                InvasionShips.Blend = value;
                 Lights.Blend = value;
                 Tentacles.Blend = value;
             }
         }
 
 
-        public float SizeX
+        public override float SizeX
         {
+            get
+            {
+                return base.SizeX;
+            }
+
             set
             {
-                Base.SizeX = value;
-                Top.SizeX = value;
+                base.SizeX = value;
+
+                if (Aliens == null)
+                    return;
+
+                Aliens.SizeX = value;
+                Bubble.SizeX = value;
+                Deadly.SizeX = value;
+                Eyes.SizeX = value;
+                InvasionShips.SizeX = value;
                 Lights.SizeX = value;
                 Tentacles.SizeX = value;
             }
@@ -77,42 +143,61 @@
 
         public Vector2 Size
         {
-            get { return Base.AbsoluteSize; }
+            get { return Image.AbsoluteSize; }
         }
 
 
-        public Vector3 Position
+        public override void Update()
         {
-            get { return Base.Position; }
-            set { Base.Position = Top.Position = Lights.Position = Tentacles.Position = value; }
-        }
+            base.Update();
 
+            Eyes.Update();
 
-        public float Speed
-        {
-            get { return 0; }
-            set { }
-        }
-
-
-        public float Rotation
-        {
-            get { return Base.Rotation; }
-            set { Base.Rotation = Lights.Rotation = Tentacles.Rotation = value; }
-        }
-
-
-        public void Update()
-        {
             foreach (var m in Missiles)
                 m.Update();
+
+            if (Abducting)
+            {
+                AbductionElapsed += Preferences.TargetElapsedTimeMs;
+
+                var p = ObjectAbducted.Position;
+
+                ((RadialGravityModifier) AbductionEffect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(Position.X, Position.Y);
+                AbductionEffect.Trigger(ref p);
+
+                if (AbductionElapsed >= AbductionLength)
+                {
+                    Abducting = false;
+                }
+            }
         }
 
 
         public void Draw(Scene scene)
         {
-            scene.Add(Base);
-            scene.Add(Top);
+            base.Draw();
+
+            Aliens.Position =
+            Bubble.Position =
+            Deadly.Position =
+            Eyes.Position =
+            InvasionShips.Position =
+            Lights.Position =
+            Tentacles.Position = Image.Position;
+
+            Aliens.Rotation =
+            Bubble.Rotation =
+            Deadly.Rotation =
+            Eyes.Rotation =
+            InvasionShips.Rotation =
+            Lights.Rotation =
+            Tentacles.Rotation = Image.Rotation;
+
+            scene.Add(Aliens);
+            scene.Add(Bubble);
+            scene.Add(Deadly);
+            scene.Add(Eyes);
+            scene.Add(InvasionShips);
             scene.Add(Lights);
             scene.Add(Tentacles);
 
@@ -123,25 +208,70 @@
 
         public void ActivateDeadlyLights(Scene scene, double time)
         {
-            scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 255, 0, time));
-            scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(Color.Red, 0, time));
+            Eyes.Stop();
+            Eyes.FirstFrame();
+            scene.VisualEffects.Add(Deadly, Core.Visual.VisualEffects.Fade(Deadly.Alpha, 255, 0, time));
         }
 
 
         public void DeactivateDeadlyLights(Scene scene, double time)
         {
-            scene.VisualEffects.Add(Lights, Core.Visual.VisualEffects.Fade(Lights.Alpha, 0, 0, time));
-            scene.VisualEffects.Add(Top, Core.Visual.VisualEffects.ChangeColor(new Color(255, 200, 0), 0, time));
+            scene.VisualEffects.Add(Deadly, Core.Visual.VisualEffects.Fade(Deadly.Alpha, 0, 0, time));
         }
 
 
-        public void DestroyEverything(Scene scene, List<CelestialBody> celestialBodies)
+        public void DestroyEverything(Scene scene, List<CelestialBody> celestialBodies, List<HumanBattleship> battleships)
         {
             for (int i = 0; i < celestialBodies.Count; i++)
             {
                 var cb = celestialBodies[i];
 
-                Missiles.Add(new Missile(scene, cb, Position + new Vector3(0, Size.Y / 4, 0), i * 300));
+                Missiles.Add(new Missile(scene, cb, cb.VisualPriority - 0.000001, Position + new Vector3(0, Size.Y / 4, 0), i * 300, DoTargetReached));
+            }
+
+
+            for (int i = 0; i < battleships.Count; i++)
+            {
+                var ship = battleships[i];
+
+                Missiles.Add(new Missile(scene, ship, ship.VisualPriority - 0.000001, Position + new Vector3(0, Size.Y / 4, 0), i * 300, DoTargetReached));
+            }
+        }
+
+
+        public void CoverInvasionShips(Scene scene, double time)
+        {
+            scene.VisualEffects.Add(InvasionShips, Core.Visual.VisualEffects.Fade(InvasionShips.Alpha, 255, 0, time));
+        }
+
+
+        public void AbductShip(Scene scene, ICollidable obj, double visualPriority)
+        {
+            Abducting = true;
+            AbductionElapsed = 0;
+            ObjectAbducted = obj;
+            AbductionEffect.VisualPriority = visualPriority;
+        }
+
+
+
+        private void DoTargetReached(IDestroyable obj)
+        {
+            var cb = obj as CelestialBody;
+
+            if (cb != null)
+            {
+                cb.LifePoints = 0;
+                return;
+            }
+
+            var bs = obj as HumanBattleship;
+
+            if (bs != null)
+            {
+                bs.DoDie();
+                bs.Alpha = 0;
+                return;
             }
         }
 
@@ -150,12 +280,14 @@
         {
             private Image Image;
             private Particle Effect;
-            private CelestialBody CelestialBody;
+            private IDestroyable FollowedObject;
+            private DestroyableHandler TargetReachedCallback;
 
 
-            public Missile(Scene scene, CelestialBody celestialBody, Vector3 position, double delay)
+            public Missile(Scene scene, IDestroyable followedObject, double visualPriority, Vector3 position, double delay, DestroyableHandler targetReachedCallback)
             {
-                CelestialBody = celestialBody;
+                FollowedObject = followedObject;
+                TargetReachedCallback = targetReachedCallback;
 
                 Image = new Image("PixelBlanc")
                 {
@@ -166,14 +298,14 @@
                 };
 
                 Effect = scene.Particles.Get(@"mothershipMissile");
-                Effect.VisualPriority = CelestialBody.VisualPriority - 0.00001;
+                Effect.VisualPriority = visualPriority;
 
                 FollowEffect follow = new FollowEffect()
                 {
                     Delay = delay,
-                    Length = 10000,
-                    FollowedObject = CelestialBody,
-                    Speed = 2,
+                    Length = 15000,
+                    FollowedObject = FollowedObject,
+                    Speed = 1.5f,
                     Progress = Core.Utilities.Effect<IPhysical>.ProgressType.Linear
                 };
 
@@ -183,17 +315,17 @@
 
             public void Update()
             {
-                if (!CelestialBody.Alive)
+                if (!FollowedObject.Alive)
                     return;
 
-                if (Vector3.DistanceSquared(Image.Position, CelestialBody.Position) <= 300)
-                    CelestialBody.LifePoints = 0;
+                if (Vector3.DistanceSquared(Image.Position, FollowedObject.Position) <= 300)
+                    TargetReachedCallback(FollowedObject);
             }
 
 
             public void Draw()
             {
-                if (!CelestialBody.Alive)
+                if (!FollowedObject.Alive)
                     return;
 
                 Effect.Trigger(ref Image.position);

@@ -57,16 +57,16 @@ namespace EphemereGames.Core.Persistence
             if (package.Loaded)
                 return;
 
-            Parallel.StartBackground(package.Load);
+            Parallel.Start(package.Load);
         }
 
 
         public void UnloadPackage(string packageName)
         {
             if (temporaryPackages.ContainsKey(packageName))
-                Parallel.StartBackground(temporaryPackages[packageName].Unload);
+                Parallel.Start(temporaryPackages[packageName].Unload);
             else
-                Parallel.StartBackground(permanentPackages[packageName].Unload);
+                Parallel.Start(permanentPackages[packageName].Unload);
         }
 
 

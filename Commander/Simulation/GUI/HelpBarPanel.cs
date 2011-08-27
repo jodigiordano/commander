@@ -16,6 +16,7 @@
 
         public bool ActivePlayers;
         public bool ActiveOptions;
+        public bool ShowOnForegroundLayer;
 
 
         public HelpBarPanel(Scene scene, double visualPriority)
@@ -40,6 +41,7 @@
 
             ActivePlayers = true;
             ActiveOptions = true;
+            ShowOnForegroundLayer = false;
         }
 
 
@@ -94,7 +96,13 @@
             if (!ActivePlayers || !ActiveOptions)
                 return;
 
+            if (ShowOnForegroundLayer)
+                Scene.BeginForeground();
+
             base.Draw();
+
+            if (ShowOnForegroundLayer)
+                Scene.EndForeground();
         }
 
 

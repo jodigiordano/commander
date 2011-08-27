@@ -21,7 +21,7 @@
         public Path PathPreview;
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
-        public HumanBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
+        public PowerUpsBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
         public HelpBarPanel HelpBar;
         public CommonStash CommonStash;
         public List<Wave> ActiveWaves;

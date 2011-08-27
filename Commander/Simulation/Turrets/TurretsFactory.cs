@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Utilities;
+    using Microsoft.Xna.Framework;
 
 
     class TurretsFactory
@@ -156,7 +157,13 @@
             TurretsLevels.Add(TurretType.RailGun, new LinkedListWithInit<TurretLevel>()
             {
                 new TurretLevel(0, 0, 0, 0, 10000, 1, 0, BulletType.RailGun, "", "", 0, 0, 0),
-                new TurretLevel(1, 30, 15, 75, 3000, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15)
+                new TurretLevel(1, 30, 15, 75, 4000, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15),
+                new TurretLevel(2, 30, 15, 75, 3500, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15),
+                new TurretLevel(3, 30, 15, 75, 3000, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15),
+                new TurretLevel(4, 30, 15, 75, 2500, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15),
+                new TurretLevel(5, 30, 15, 75, 2250, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15),
+                new TurretLevel(6, 30, 15, 75, 2000, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15),
+                new TurretLevel(7, 30, 15, 75, 1750, 1, 0, BulletType.RailGun, "railGunTurretCanon", "railGunTurretBase", 1000, 100, 15)
             });
             TurretsLevels.Add(TurretType.SlowMotion, new LinkedListWithInit<TurretLevel>()
             {
@@ -202,6 +209,21 @@
                 case TurretType.RailGun:            t = new RailGunTurret(Simulator);          break;
                 default:                            t = new BasicTurret(Simulator);            break;
             }
+
+            return t;
+        }
+
+
+        public Turret Create(TurretType type, int level, Vector3 relativePosition, bool visible, bool canSell, bool canUpgrade, bool canSelect)
+        {
+            var t = Create(type);
+
+            t.Level = level;
+            t.RelativePosition = relativePosition;
+            t.Visible = visible;
+            t.CanSell = canSell;
+            t.CanUpdate = canUpgrade;
+            t.CanSelect = canSelect;
 
             return t;
         }

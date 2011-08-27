@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -10,7 +9,7 @@
 
     class MissileBullet : Bullet
     {
-        public Enemy Target;
+        public IDestroyable Target;
         public Image Image1;
         public Image Image2;
         public bool Wander;
@@ -25,6 +24,7 @@
             Shape = Shape.Rectangle;
             Rectangle = new PhysicalRectangle();
             Explosive = true;
+            SfxExplosion = @"sfxTourelleMissileExplosion";
         }
 
 
@@ -126,8 +126,6 @@
         public override void DoDie()
         {
             ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
-
-            Audio.PlaySfx(@"sfxTourelleMissileExplosion");
 
             Scene.Particles.Return(TrailEffect);
 

@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Cursor : ICollidable
+    class Cursor : ICollidable, IVisual
     {
         public float Speed { get; set; }
         public Circle Circle { get; set; }
@@ -160,5 +160,28 @@
         public Line Line { get; set; }
 
         #endregion
+
+        public Rectangle VisiblePart
+        {
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public Vector2 Origin
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        Vector2 IVisual.Size
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public Color Color
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
     }
 }

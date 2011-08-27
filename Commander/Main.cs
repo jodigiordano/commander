@@ -71,6 +71,9 @@ namespace EphemereGames.Commander
             SaveGameController = new SaveGameController();
 
             Boot = BootSequence.Initial;
+
+            Activated += new EventHandler<EventArgs>(DoWindowsFocusGained);
+            Deactivated += new EventHandler<EventArgs>(DoWindowsFocusLost);
         }
 
 
@@ -152,7 +155,7 @@ namespace EphemereGames.Commander
                 case BootSequence.Running:
                     if (!IsActive)
                         return;
-
+                    
                     Visuals.Update(gameTime);
                     Inputs.Update(gameTime);
 
@@ -189,6 +192,24 @@ namespace EphemereGames.Commander
 #endif
 
             base.OnExiting(sender, args);
+        }
+
+
+        private void DoWindowsFocusGained(object sender, EventArgs args)
+        {
+            if (GameInProgress != null && !GamePausedToWorld)
+                GameInProgress.MusicController.ResumeMusic();
+            else
+                MusicController.ResumeMusic();
+        }
+
+
+        private void DoWindowsFocusLost(object sender, EventArgs args)
+        {
+            if (GameInProgress != null && !GamePausedToWorld)
+                GameInProgress.MusicController.PauseMusicNow();
+            else
+                MusicController.PauseMusicNow();
         }
 
 

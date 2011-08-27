@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
@@ -22,6 +21,7 @@
             Circle = new Circle(Vector3.Zero, 0);
             Rectangle = new PhysicalRectangle();
             Explosive = true;
+            SfxExplosion = @"sfxMineExplose";
         }
 
 
@@ -63,8 +63,6 @@
         public override void DoDie()
         {
             ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
-
-            Audio.PlaySfx(@"sfxMineExplose");
             
             base.DoDie();
         }
