@@ -31,8 +31,8 @@
 
             if (Preferences.Target == Core.Utilities.Setting.Xbox360)
             {
-                Position -= new Vector3(0, Preferences.Xbox360DeadZoneV2.Y, 0);
-                Padding = new Vector2(10 + Preferences.Xbox360DeadZoneV2.X, 0);
+                Position -= new Vector3(0, Preferences.DeadZoneV2.Y, 0);
+                Padding = new Vector2(10 + Preferences.DeadZoneV2.X, 0);
             }
 
             InitializePredefinedMessages();

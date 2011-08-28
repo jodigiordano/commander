@@ -20,13 +20,20 @@
 
         public Mothership Mothership;
         public List<HumanBattleship> Battleships;
+        public List<CelestialBody> CelestialBodies;
+
+        public double TimeBeforeArrival;
+        public double TimeArrival;
+        public double TimeBeforeLights;
+        public double TimeLights;
+        public double TimeBeforeDestruction;
+        public double TimeBeforeDeparture;
+        public double TimeDeparture;
+        public float ArrivalZoom;
+        public float DepartureZoom;
+
         private Simulator Simulator;
         private MothershipState State;
-
-        private double TimeBeforeArrival;
-        private double TimeBeforeLights;
-        private double TimeBeforeDestruction;
-        private double TimeBeforeDeparture;
 
 
         public MothershipAnimation(Simulator simulator)
@@ -53,6 +60,12 @@
             TimeBeforeLights = IntroCutscene.Timing["MothershipLights"];
             TimeBeforeDestruction = IntroCutscene.Timing["MothershipDestruction"];
             TimeBeforeDeparture = IntroCutscene.Timing["MothershipDeparture"];
+
+            TimeArrival = 5500;
+            TimeLights = 10000;
+            TimeDeparture = 18000;
+            ArrivalZoom = 0.7f;
+            DepartureZoom = 1.5f;
         }
 
 
@@ -68,13 +81,13 @@
                 case MothershipState.None:
                     if (TimeBeforeArrival <= 0)
                     {
-                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, -Mothership.Size.Y/2, 0), 0, 5500));
-                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(1f, 0.7f, 0, 5500));
+                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, -Mothership.Size.Y / 2, 0), 0, TimeArrival));
+                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(1f, ArrivalZoom, 0, TimeArrival));
 
                         foreach (var player in Inputs.Players)
                         {
-                            //Inputs.VibrateControllerHighFrequency(player, 5500, 0.1f);
-                            Inputs.VibrateControllerLowFrequency(player, 5500, 0.4f);
+                            //Inputs.VibrateControllerHighFrequency(player, TimeArrival, 0.1f);
+                            Inputs.VibrateControllerLowFrequency(player, TimeArrival, 0.4f);
                         }
 
                         State = MothershipState.Arrival;
@@ -84,7 +97,7 @@
                 case MothershipState.Arrival:
                     if (TimeBeforeLights < 0)
                     {
-                        Mothership.ActivateDeadlyLights(Simulator.Scene, 10000);
+                        Mothership.ActivateDeadlyLights(Simulator.Scene, TimeLights);
                         State = MothershipState.Lights;
                     }
 
@@ -92,7 +105,12 @@
                 case MothershipState.Lights:
                     if (TimeBeforeDestruction < 0)
                     {
-                        Mothership.DestroyEverything(Simulator.Scene, Simulator.PlanetarySystemController.CelestialBodies, Battleships);
+                        if (CelestialBodies != null)
+                            Mothership.DestroyEverything(Simulator.Scene, CelestialBodies);
+                        
+                        if (Battleships != null)
+                            Mothership.DestroyEverything(Simulator.Scene, Battleships);
+                        
                         State = MothershipState.Destruction;
                     }
 
@@ -100,15 +118,15 @@
                 case MothershipState.Destruction:
                     if (TimeBeforeDeparture < 0)
                     {
-                        Mothership.DeactivateDeadlyLights(Simulator.Scene, 3000);
-                        Mothership.CoverInvasionShips(Simulator.Scene, 4000);
-                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, Mothership.Position.Y + 5000, 0), 0, 18000));
-                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(0.7f, 1.5f, 3000, 17000));
+                        Mothership.DeactivateDeadlyLights(Simulator.Scene, TimeDeparture / 6);
+                        Mothership.CoverInvasionShips(Simulator.Scene, TimeDeparture / 4);
+                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, Mothership.Position.Y + 5000, 0), 0, TimeDeparture));
+                        Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(ArrivalZoom, DepartureZoom, TimeDeparture / 6, TimeDeparture));
 
                         foreach (var player in Inputs.Players)
                         {
-                            //Inputs.VibrateControllerHighFrequency(player, 6000, 0.1f);
-                            Inputs.VibrateControllerLowFrequency(player, 6000, 0.4f);
+                            //Inputs.VibrateControllerHighFrequency(player, TimeDeparture / 3, 0.1f);
+                            Inputs.VibrateControllerLowFrequency(player, TimeDeparture / 3, 0.4f);
                         }
 
                         State = MothershipState.Departure;

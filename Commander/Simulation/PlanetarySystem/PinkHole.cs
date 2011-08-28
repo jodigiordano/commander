@@ -24,6 +24,7 @@
             : base (simulator, name, path, position, 0, size, speed, null, startingPourc, visualPriority, false)
         {
             Effect = effect;
+            Effect.VisualPriority = visualPriority;
         }
 
 

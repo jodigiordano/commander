@@ -9,12 +9,12 @@
     {
         public Simulator Simulator;
 
-        private Scene Scene;
+        private CommanderScene Scene;
         private double TimeBeforeIn;
         private Image Background;
 
 
-        public SimulatorAnimation(Scene scene)
+        public SimulatorAnimation(CommanderScene scene)
         {
             Scene = scene;
 

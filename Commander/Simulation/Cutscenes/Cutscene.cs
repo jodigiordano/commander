@@ -1,11 +1,8 @@
 ﻿namespace EphemereGames.Commander.Cutscenes
 {
-    using EphemereGames.Core.Visual;
-
-
     abstract class Cutscene
     {
-        public Scene Scene;
+        public CommanderScene Scene;
         public bool Terminated = false;
 
         public abstract void Initialize();

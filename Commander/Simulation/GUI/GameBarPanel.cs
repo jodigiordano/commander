@@ -33,8 +33,8 @@ using Microsoft.Xna.Framework;
 
             if (Preferences.Target == Core.Utilities.Setting.Xbox360)
             {
-                Position += new Vector3(0, Preferences.Xbox360DeadZoneV2.Y, 0);
-                Padding = new Vector2(10 + Preferences.Xbox360DeadZoneV2.X, 0);
+                Position += new Vector3(0, Preferences.DeadZoneV2.Y, 0);
+                Padding = new Vector2(10 + Preferences.DeadZoneV2.X, 0);
             }
 
             CashWidget = new ImageLabel(new Image("ScoreMoney") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
@@ -66,12 +66,6 @@ using Microsoft.Xna.Framework;
                 Position = Position + new Vector3(1050, 0, 0)
             };
 
-            AddWidget(@"Cash", CashWidget);
-            AddWidget(@"Lives", LivesWidget);
-            AddWidget(@"Remaining", RemainingWavesWidget);
-            AddWidget(@"Time", TimeNextWaveText);
-            AddWidget(@"NextWave", NextWaveWidget);
-
             HBMessages = new Dictionary<string, List<KeyValuePair<string, PanelWidget>>>()
             {
                 { @"None", new List<KeyValuePair<string, PanelWidget>>() { new KeyValuePair<string, PanelWidget>(@"msg", new Label(new Text("") { SizeX = 2 })) } },
@@ -81,6 +75,18 @@ using Microsoft.Xna.Framework;
                 { @"Time", new List<KeyValuePair<string, PanelWidget>>() { new KeyValuePair<string, PanelWidget>(@"msg", new Label(new Text(@"Remaining time before next wave", @"Pixelite") { SizeX = 2 })) } },
                 { @"NextWave", new List<KeyValuePair<string, PanelWidget>>() { new KeyValuePair<string, PanelWidget>(@"msg", new Label(new Text(@"Composition of the next wave", @"Pixelite") { SizeX = 2 })) } }
             };
+        }
+
+
+        public void Initialize()
+        {
+            ClearWidgets();
+
+            AddWidget(@"Cash", CashWidget);
+            AddWidget(@"Lives", LivesWidget);
+            AddWidget(@"Remaining", RemainingWavesWidget);
+            AddWidget(@"Time", TimeNextWaveText);
+            AddWidget(@"NextWave", NextWaveWidget);
         }
 
 

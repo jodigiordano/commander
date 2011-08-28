@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    class GameScene : Scene
+    class GameScene : CommanderScene
     {
         public Simulator Simulator;
         public MusicController MusicController;
@@ -18,11 +18,10 @@
 
 
         public GameScene(string name, LevelDescriptor level)
-            : base(Preferences.BackBuffer)
+            : base(name)
         {
             Level = level;
 
-            Name = name;
             TransitingTo = "";
 
             MusicController = new MusicController() { SwitchMusicRandomly = false };
@@ -253,7 +252,7 @@
 
         private void NextLevel()
         {
-            var nextLevelId = Main.LevelsFactory.GetNextLevel(Main.SelectedWorld.WorldId, Level.Infos.Id);
+            var nextLevelId = Main.LevelsFactory.GetNextLevel(Main.SelectedWorld.Id, Level.Infos.Id);
 
             if (nextLevelId == -1)
             {

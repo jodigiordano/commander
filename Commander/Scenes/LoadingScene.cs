@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class LoadingScene : Scene
+    class LoadingScene : CommanderScene
     {
         private enum State
         {
@@ -45,9 +45,8 @@
 
 
         public LoadingScene()
-            : base(Preferences.BackBuffer)
+            : base("Chargement")
         {
-            Name = "Chargement";
             EnableVisuals = true;
             EnableInputs = true;
             EnableUpdate = true;

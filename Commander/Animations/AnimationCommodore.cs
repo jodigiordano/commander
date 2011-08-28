@@ -60,31 +60,31 @@ namespace EphemereGames.Commander
 
             MovePathEffect edt = new MovePathEffect();
             edt.Delay = 0;
-            edt.Length = this.Length;
+            edt.Length = this.Duration;
             edt.Progress = Effect<IPhysical>.ProgressType.Linear;
             edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-300, 500), new Vector2(-300, 275), new Vector2(-300, 275), new Vector2(-300, 700) },
-             new List<double> { 0, 1000, this.Length - 1000, this.Length });
+             new List<double> { 0, 1000, this.Duration - 1000, this.Duration });
 
             GPE.Add(TheLieutenant, edt);
 
             edt = new MovePathEffect();
             edt.Delay = 0;
-            edt.Length = this.Length;
+            edt.Length = this.Duration;
             edt.Progress = Effect<IPhysical>.ProgressType.Linear;
             edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-100, 300), new Vector2(-100, -100), new Vector2(-100, -100), new Vector2(-100, 500) },
-             new List<double> { 0, 1000, this.Length - 1000, this.Length });
+             new List<double> { 0, 1000, this.Duration - 1000, this.Duration });
 
             GPE.Add(Bubble, edt);
 
             edt = new MovePathEffect();
             edt.Delay = 0;
-            edt.Length = this.Length;
+            edt.Length = this.Duration;
             edt.Progress = Effect<IPhysical>.ProgressType.Linear;
             edt.InnerPath = new Path2D
             (new List<Vector2> { new Vector2(-75, 325), new Vector2(-75, -75), new Vector2(-75, -75), new Vector2(-75, 500) },
-             new List<double> { 0, 1000, this.Length - 1000, this.Length });
+             new List<double> { 0, 1000, this.Duration - 1000, this.Duration });
 
             GPE.Add(TypeWriter.Text, edt);
         }

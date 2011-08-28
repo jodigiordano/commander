@@ -10,7 +10,7 @@
 
     class Bubble : IVisual, IPhysical
     {
-        protected Scene Scene;
+        protected CommanderScene Scene;
 
         private List<Image> Corners;
         private List<Image> Edges;
@@ -22,7 +22,7 @@
         public byte FilterAlpha;
 
 
-        public Bubble(Scene scene, PhysicalRectangle dimension, double visualPriority)
+        public Bubble(CommanderScene scene, PhysicalRectangle dimension, double visualPriority)
         {
             Scene = scene;
             Dimension = dimension;
@@ -215,34 +215,41 @@
         }
 
 
-        public float Speed
+        protected void ClampPositionInView()
+        {
+            Dimension.X = (int) MathHelper.Clamp(Dimension.X, Scene.CameraView.Left, Scene.CameraView.Right - Dimension.Width / 2);
+            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, Scene.CameraView.Top + Dimension.Height / 2, Scene.CameraView.Bottom - Dimension.Height / 2);
+        }
+
+
+        float IPhysical.Speed
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
 
-        public float Rotation
+        float IPhysical.Rotation
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
 
-        public Rectangle VisiblePart
+        Rectangle IVisual.VisiblePart
         {
             set { throw new NotImplementedException(); }
         }
 
 
-        public Vector2 Origin
+        Vector2 IVisual.Origin
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
 
-        public Vector2 Size
+        Vector2 IVisual.Size
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }

@@ -74,8 +74,8 @@ namespace EphemereGames.Commander
 
                 AlienShips.Add(v);
 
-                PathsIn.Add(new Path2D(new List<Vector2>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Length }));
-                PathsOut.Add(new Path2D(new List<Vector2>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Length }));
+                PathsIn.Add(new Path2D(new List<Vector2>() { PositionsIn[i].Key, PositionsIn[i].Value }, new List<double>() { 0, this.Duration }));
+                PathsOut.Add(new Path2D(new List<Vector2>() { PositionsOut[i].Key, PositionsOut[i].Value }, new List<double>() { 0, this.Duration }));
             }        
         }
 

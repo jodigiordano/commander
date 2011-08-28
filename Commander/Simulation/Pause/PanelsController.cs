@@ -84,6 +84,8 @@
 
             p.Fade(p.Alpha, 255, 500);
 
+            Simulator.CanSelectCelestialBodies = false;
+
             NotifyPanelOpened();
         }
 
@@ -167,8 +169,6 @@
 
         public void Update()
         {
-            Simulator.CanSelectCelestialBodies = !IsPanelVisible;
-
             if (!IsPanelVisible)
                 return;
 
@@ -221,6 +221,7 @@
             else
             {
                 Simulator.TriggerNewGameState(GameState.Running);
+                Simulator.CanSelectCelestialBodies = true;
             }
         }
 

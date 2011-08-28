@@ -9,6 +9,8 @@ namespace EphemereGames.Core.Visual
         public string Name;
         public Matrix Transform;
 
+        public event CameraHandler Changed;
+
         public PhysicalRectangle Rectangle { get; private set; }
 
         private Vector2 origin;
@@ -138,6 +140,8 @@ namespace EphemereGames.Core.Visual
             Rectangle.Y = (int) (position.Y - PhysicalSize.Y / zoom / 2);
             Rectangle.Width = (int) (PhysicalSize.X / zoom);
             Rectangle.Height = (int) (PhysicalSize.Y / zoom);
+
+            NotifyCameraChanged();
         }
 
 
@@ -145,6 +149,13 @@ namespace EphemereGames.Core.Visual
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
+        }
+
+
+        private void NotifyCameraChanged()
+        {
+            if (Changed != null)
+                Changed(this);
         }
     }
 }

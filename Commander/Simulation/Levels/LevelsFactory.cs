@@ -74,6 +74,21 @@
         }
 
 
+        public EndOfWorldAnimation GetEndOfWorldAnimation(WorldScene scene)
+        {
+            EndOfWorldAnimation result = null;
+
+            switch (scene.Id)
+            {
+                case 1:
+                    result = new EndOfWorld1Animation(scene);
+                    break;
+            }
+
+            return result;
+        }
+
+
         private void LoadLevels(string startingWith)
         {
             string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", startingWith + "*.xml");
@@ -117,7 +132,8 @@
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
                 Layout = 1001,
                 UnlockedCondition = new List<int>(),
-                WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level."
+                WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level.",
+                LastLevelId = 15
             };
             WorldsDescriptors.Add(wd.Id, wd);
 
@@ -146,7 +162,8 @@
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
                 Layout = 1002,
                 UnlockedCondition = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
-                WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world."
+                WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world.",
+                LastLevelId = 30
             };
             WorldsDescriptors.Add(wd.Id, wd);
 
@@ -170,7 +187,8 @@
                 Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World3") },
                 Layout = 1003,
                 UnlockedCondition = new List<int>() { -1 },
-                WarpBlockedMessage = ""
+                WarpBlockedMessage = "",
+                LastLevelId = 40
             };
             WorldsDescriptors.Add(wd.Id, wd);
         }

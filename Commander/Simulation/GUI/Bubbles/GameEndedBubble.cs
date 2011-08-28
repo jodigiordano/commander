@@ -17,7 +17,7 @@
         private int PreviousLayoutId;
 
 
-        public GameEndedBubble(Scene scene, double visualPriority, string quote, Color quoteColor, CommonStash commonStash, int nbStars)
+        public GameEndedBubble(CommanderScene scene, double visualPriority, string quote, Color quoteColor, CommonStash commonStash, int nbStars)
             : base(scene, new PhysicalRectangle(), visualPriority)
         {
             DistanceY = 45;
@@ -85,16 +85,16 @@
                 {
                     SetLayout(PreviousLayoutId);
 
-                    tooFarRight = Dimension.X + Dimension.Width + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
-                    tooFarBottom = Dimension.Y + Dimension.Height > 370 - Preferences.Xbox360DeadZoneV2.Y;
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > Scene.CameraView.Right;
+                    tooFarBottom = Dimension.Y + Dimension.Height > Scene.CameraView.Bottom;
                 }
 
                 if (tooFarRight || tooFarBottom)
                 {
                     base.Position = value;
 
-                    tooFarRight = Dimension.X + Dimension.Width + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
-                    tooFarBottom = Dimension.Y + Dimension.Height > 370 - Preferences.Xbox360DeadZoneV2.Y;
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > Scene.CameraView.Right;
+                    tooFarBottom = Dimension.Y + Dimension.Height > Scene.CameraView.Bottom;
 
                     if (tooFarRight && tooFarBottom)
                         SetLayout(0);
@@ -106,8 +106,7 @@
                         SetLayout(3);
                 }
 
-                Dimension.X = (int) MathHelper.Clamp(Dimension.X, -640 + Preferences.Xbox360DeadZoneV2.X, 640 - Preferences.Xbox360DeadZoneV2.X - Dimension.Width / 2);
-                Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Dimension.Height / 2, 370 - Preferences.Xbox360DeadZoneV2.Y - Dimension.Height / 2);
+                ClampPositionInView();
             }
         }
 

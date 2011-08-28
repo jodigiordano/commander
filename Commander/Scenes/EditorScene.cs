@@ -2,21 +2,18 @@
 {
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
 
-    class EditorScene : Scene
+    class EditorScene : CommanderScene
     {
         private Simulator Simulator;
 
 
         public EditorScene()
-            : base(Preferences.BackBuffer)
+            : base("Editeur")
         {
-            Name = "Editeur";
-
             Simulator = new Simulator(this, Main.LevelsFactory.GetEmptyDescriptor())
             {
                 EditorMode = true

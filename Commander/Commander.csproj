@@ -167,6 +167,7 @@
     <Compile Include="Panels\NewsPanel.cs" />
     <Compile Include="Panels\HelpPanel.cs" />
     <Compile Include="Panels\CreditsPanel.cs" />
+    <Compile Include="Scenes\CommanderScene.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
@@ -246,6 +247,8 @@
     <Compile Include="Simulation\GUI\Animations\ShieldHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TeleportAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TurretMoneyAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorldAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorld1Animation.cs" />
     <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
     <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />

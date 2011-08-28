@@ -261,7 +261,7 @@
             Layouts[index].Rectangle.Width = (int) Size.X + 40;
             Layouts[index].Rectangle.Height = (int) Size.Y + 20;
 
-            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
+            PossibleLayouts.Add(Simulator.Scene.CameraView.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
         }
 
 
@@ -272,7 +272,7 @@
             Layouts[index].Rectangle.Width = (int) Size.X + 20;
             Layouts[index].Rectangle.Height = (int) Size.Y + 40;
 
-            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
+            PossibleLayouts.Add(Simulator.Scene.CameraView.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
         }
 
 
@@ -283,7 +283,7 @@
             Layouts[index].Rectangle.Width = (int) Size.X + 40;
             Layouts[index].Rectangle.Height = (int) Size.Y + 20;
 
-            PossibleLayouts.Add(Simulator.InnerTerrain.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
+            PossibleLayouts.Add(Simulator.Scene.CameraView.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
         }
 
 

@@ -2,12 +2,11 @@
 {
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     
 
-    class MainMenuScene : Scene
+    class MainMenuScene : CommanderScene
     {
         private Simulator Simulator;
 
@@ -26,10 +25,8 @@
 
 
         public MainMenuScene()
-            : base(Preferences.BackBuffer)
+            : base("Menu")
         {
-            Name = "Menu";
-
             Title = new CommanderTitle(this, new Vector3(0, -10, 0), VisualPriorities.Default.Title);
             Title.Initialize();
 

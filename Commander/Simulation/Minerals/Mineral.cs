@@ -21,7 +21,7 @@
         public int Value                            { get { return Definition.Value; } }
         public MineralDefinition Definition;
         public double VisualPriority;
-        public Scene Scene;
+        public CommanderScene Scene;
 
         private Vector3 AnciennePosition;
         private Vector3 position;
@@ -49,7 +49,7 @@
 
             Position += Direction * Speed;
 
-            doBouncing();
+            DoBouncing();
 
             //Cercle.Position.X = Position.X - Origin.X;
             //Cercle.Position.Y = Position.Y - Origin.Y;
@@ -90,9 +90,9 @@
         }
 
 
-        private void doBouncing()
+        private void DoBouncing()
         {
-            if (Position.X > 640 - Preferences.Xbox360DeadZoneV2.X - 20)
+            if (Position.X > Scene.CameraView.Right - 20)
             {
                 Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -100,7 +100,7 @@
                 Speed = 0;
             }
 
-            if (Position.X < -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius)
+            if (Position.X < Scene.CameraView.Left + Circle.Radius)
             {
                 Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -108,7 +108,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y > 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius)
+            if (Position.Y > Scene.CameraView.Bottom - Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Speed);
@@ -116,7 +116,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y < -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius)
+            if (Position.Y < Scene.CameraView.Top + Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Speed);
@@ -137,13 +137,32 @@
                 Bouncing.Y = Math.Min(0, Bouncing.Y + 0.5f);
         }
 
-        #region Useless
-        public float AttackPoints { get; set; }
-        public PhysicalRectangle Rectangle { get; set; }
-        public Line Line { get; set; }
-        public float Masse { get; set; }
-        public float Rotation { get; set; }
-        public float ResistanceRotation { get; set; }
-        #endregion
+
+        float ILivingObject.AttackPoints
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        PhysicalRectangle ICollidable.Rectangle
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        Line ICollidable.Line
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        float IPhysical.Rotation
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

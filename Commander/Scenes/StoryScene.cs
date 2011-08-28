@@ -9,7 +9,7 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    class StoryScene : Scene
+    class StoryScene : CommanderScene
     {
         private string WorldToTransiteTo;
         private double SkipCounter;
@@ -24,9 +24,8 @@
 
 
         public StoryScene(string name, string transiteTo, Cutscene cutscene) :
-            base(Preferences.BackBuffer)
+            base(name)
         {
-            Name = name;
             ClearColor = Color.White;
             WorldToTransiteTo = transiteTo;
             Cutscene = cutscene;

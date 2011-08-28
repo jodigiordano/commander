@@ -9,31 +9,29 @@
     using Microsoft.Xna.Framework.Input;
 
 
-    class WorldScene : Scene
+    class WorldScene : CommanderScene
     {
-        private Simulator Simulator;
+        public LevelStates LevelStates;
+        public Simulator Simulator;
+
         private WorldDescriptor Descriptor;
         private Dictionary<string, string> Warps;
         private Dictionary<string, LevelDescriptor> LevelsDescriptors;
         private List<KeyAndValue<CelestialBody, Image>> LevelCompletitionStates;
-        private Dictionary<int, Text> LevelsNumbers;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
         private Dictionary<int, CelestialBody> CelestialBodies;
-        private LevelStates States;
 
 
         public WorldScene(WorldDescriptor descriptor) :
-            base(Preferences.BackBuffer)
+            base("World" + descriptor.Id)
         {
-            Name = "World" + descriptor.Id;
             Descriptor = descriptor;
             Warps = new Dictionary<string, string>();
             LevelsDescriptors = new Dictionary<string, LevelDescriptor>();
             LevelCompletitionStates = new List<KeyAndValue<CelestialBody, Image>>();
-            LevelsNumbers = new Dictionary<int, Text>();
             WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
             CelestialBodies = new Dictionary<int, CelestialBody>();
-            States = new LevelStates(this);
+            LevelStates = new LevelStates(this);
         }
 
 
@@ -50,7 +48,7 @@
             Simulator.Initialize();
             Inputs.AddListener(Simulator);
             Simulator.EnableInputs = false;
-
+            Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
 
             // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
             foreach (var level in Descriptor.Levels)
@@ -81,22 +79,16 @@
                     WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);
             }
 
-            // Level numbers
-            foreach (var level in Descriptor.Levels)
-            {
-                var cb = CelestialBodies[level.Key];
+            LevelStates.CelestialBodies = CelestialBodies;
+            LevelStates.Descriptor = Descriptor;
+            LevelStates.LevelsDescriptors = LevelsDescriptors;
+            LevelStates.Initialize();
+        }
 
-                LevelsNumbers.Add(level.Key, new Text(LevelsDescriptors[cb.Name].Infos.Mission, @"Pixelite")
-                {
-                    SizeX = 3,
-                    VisualPriority = cb.VisualPriority + 0.00001,
-                    Alpha = 150
-                }.CenterIt());
-            }
 
-            States.CelestialBodies = CelestialBodies;
-            States.Descriptor = Descriptor;
-            States.Initialize();
+        public bool CanSelectCelestialBodies
+        {
+            set { Simulator.CanSelectCelestialBodies = value; }
         }
 
 
@@ -118,7 +110,7 @@
         }
 
 
-        public int WorldId
+        public int Id
         {
             get { return Descriptor.Id; }
         }
@@ -134,17 +126,7 @@
         {
             Simulator.Draw();
 
-            // Draw level numbers
-            foreach (var kvp in LevelsNumbers)
-            {
-                var cb = CelestialBodies[kvp.Key];
-
-                kvp.Value.Position = cb.Position - new Vector3(0, cb.Circle.Radius + 20, 0);
-                kvp.Value.Alpha = (byte) (States.GetLevelNumberAlpha(kvp.Key));
-                Add(kvp.Value);
-            }
-
-            States.Draw();
+            LevelStates.Draw();
         }
 
 
@@ -152,7 +134,7 @@
         {
             Simulator.EnableInputs = true;
 
-            Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
+            //
 
             InitializeLevelsStates();
             Main.SelectedWorld = this;
@@ -169,6 +151,10 @@
             }
             else
                 Simulator.TeleportPlayers(false);
+
+            if (LastLevelTerminated)
+            //if (Main.GameInProgress != null)
+                Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
         }
 
 
@@ -329,19 +315,20 @@
         }
 
 
-        //public bool PausedGameSelected(Player p)
-        //{
-        //    var level = GetSelectedLevel(p);
-
-        //    return Main.GameInProgress != null && level != null && Main.GameInProgress.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id;
-        //}
-
-
         public void ShowWarpBlockedMessage()
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(Inputs.MasterPlayer);
 
             Simulator.MessagesController.ShowMessage(c, Descriptor.WarpBlockedMessage, 5000, -1);
+        }
+
+
+        private bool LastLevelTerminated
+        {
+            get
+            {
+                return Main.GameInProgress != null && Main.GameInProgress.State == GameState.Won && Main.GameInProgress.Level.Infos.Id == Descriptor.LastLevelId;
+            }
         }
 
 
@@ -370,7 +357,7 @@
                 pinkHole.Color = unlocked ? new Color(255, 0, 255) : new Color(0, 0, 0);
             }
 
-            States.Sync();
+            LevelStates.Sync();
         }
     }
 }

@@ -34,6 +34,7 @@
 
         public const double Tutorial = 0.08;
         public const double GameEndedAnimation = 0.1;
+        public const double EndOfWorldAnimation = 0.1;
 
         public const double Title = 0.2;
 

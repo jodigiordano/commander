@@ -134,6 +134,8 @@
             };
 
             lastEnemiesToReleaseCount = -1;
+
+            GameBarPanel.Initialize();
         }
 
 
@@ -582,6 +584,9 @@
 
         private void ShowGameBarHBMessage()
         {
+            if (Simulator.DemoMode)
+                return;
+
             if (!HelpBar.Active)
             {
                 HelpBar.HideMessage(HelpBarMessage.GameBar);
@@ -620,7 +625,9 @@
             if (Simulator.DemoMode)
                 return;
 
-            StartingPathMenu.Draw();
+            if (!(Simulator.EditorMode && Simulator.EditorState == EditorState.Editing))
+                StartingPathMenu.Draw();
+
             //LevelStartedAnnunciation.Draw();
             LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();

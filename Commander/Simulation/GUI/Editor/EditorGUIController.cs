@@ -84,6 +84,7 @@
             GeneralMenu.Initialize();
 
             CelestialBodiesPathPreviews.CelestialBodies = CelestialBodies;
+            CelestialBodiesPathPreviews.Initialize();
         }
 
 
@@ -224,7 +225,11 @@
         {
             var player = Players[command.Owner];
 
-            if (command.Name == "ShowPathPreview")
+            if (command.Name == "AddPlanet")
+                CelestialBodiesPathPreviews.Sync();
+            else if (command.Name == "Remove")
+                CelestialBodiesPathPreviews.Sync();
+            else if (command.Name == "ShowPathPreview")
                 command.CelestialBody.ShowPath = true;
             
             else if (command.Name == "HidePathPreview")

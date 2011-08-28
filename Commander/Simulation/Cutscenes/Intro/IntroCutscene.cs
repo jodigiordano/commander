@@ -31,6 +31,7 @@
             Protagonist = new ProtagonistsAnimation(Simulator.Simulator, Mothership.Mothership);
             Resistance = new ResistanceAnimation(Simulator.Simulator, Mothership.Mothership);
             Mothership.Battleships = Resistance.Battleships;
+            Mothership.CelestialBodies = Simulator.Simulator.PlanetarySystemController.CelestialBodies;
 
             TimeBeforeMusic = 1000;
             Length = 82000;

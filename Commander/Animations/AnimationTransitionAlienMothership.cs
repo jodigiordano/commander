@@ -46,8 +46,8 @@ namespace EphemereGames.Commander
                 SizeX = 12
             };
 
-            PathIn = new Path2D(new List<Vector2>() { PositionIn.Key, PositionIn.Value }, new List<double>() { 0, Length });
-            PathOut = new Path2D(new List<Vector2>() { PositionOut.Key, PositionOut.Value }, new List<double>() { 0, Length });
+            PathIn = new Path2D(new List<Vector2>() { PositionIn.Key, PositionIn.Value }, new List<double>() { 0, Duration });
+            PathOut = new Path2D(new List<Vector2>() { PositionOut.Key, PositionOut.Value }, new List<double>() { 0, Duration });
         }
 
 

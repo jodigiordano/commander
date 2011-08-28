@@ -123,6 +123,7 @@
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="SaveGameController.cs" />
+    <Compile Include="Scenes\CommanderScene.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
@@ -141,6 +142,8 @@
     <Compile Include="Simulation\GUI\Animations\ShieldHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TeleportAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TurretMoneyAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorld1Animation.cs" />
+    <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorldAnimation.cs" />
     <Compile Include="Simulation\GUI\GameBarPanel.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuLayout.cs" />

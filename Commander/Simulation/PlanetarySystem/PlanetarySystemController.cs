@@ -430,7 +430,7 @@
             {
                 ShootingStar ss = ShootingStarsFactory.Get();
                 ss.Scene = Simulator.Scene;
-                ss.Terrain = Simulator.Terrain;
+                ss.Terrain = Simulator.Scene.CameraOuterView;
                 ss.LoadContent();
                 ss.Initialize();
 

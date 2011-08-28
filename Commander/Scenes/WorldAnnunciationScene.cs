@@ -4,7 +4,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class WorldAnnunciationScene : Scene
+    class WorldAnnunciationScene : CommanderScene
     {
         private WorldDescriptor Descriptor;
         private Text WorldId;
@@ -15,10 +15,8 @@
 
 
         public WorldAnnunciationScene(WorldDescriptor descriptor) :
-            base(Preferences.BackBuffer)
+            base("World" + descriptor.Id + "Annunciation")
         {
-            Name = "World" + descriptor.Id + "Annunciation";
-
             Descriptor = descriptor;
 
             WorldId = new Text("World " + Descriptor.Id, @"Pixelite")

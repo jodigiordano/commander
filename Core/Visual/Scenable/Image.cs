@@ -30,6 +30,7 @@
         private bool RectangleComputed;
         private PhysicalRectangle rectangle;
         public Color color;
+        private bool FromSpritesheet;
 
 
         public Image(string imageName) : this(imageName, Vector3.Zero, @"spritesheet") {}
@@ -69,7 +70,9 @@
         {
             get
             {
-                return Size * TextureSize;
+                return FromSpritesheet ?
+                    new Vector2(visiblePart.Width * Size.X, visiblePart.Height * Size.Y) :
+                    Size * TextureSize;
             }
         }
 
@@ -144,6 +147,7 @@
                 Texture = result;
                 TextureSize = new Vector2(Texture.Width, Texture.Height);
                 VisiblePart = new Rectangle(0, 0, (int) TextureSize.X, (int) TextureSize.Y);
+                FromSpritesheet = false;
                 return;
             }
 
@@ -153,6 +157,7 @@
             Texture = spritesheet.Texture;
             VisiblePart = spritesheet.SourceRectangle(TextureName);
             TextureSize = new Vector2(VisiblePart.Width, VisiblePart.Height);
+            FromSpritesheet = true;
         }
 
 

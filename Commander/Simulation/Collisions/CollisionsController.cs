@@ -54,7 +54,7 @@
         public CollisionsController(Simulator simulator)
         {
             Simulator = simulator;
-            Battlefield = Simulator.Terrain;
+            Battlefield = Simulator.Scene.CameraOuterView;
             EnemiesGrid = new GridWorld(Battlefield, 50);
             TurretsGrid = new GridWorld(Battlefield, 50);
             

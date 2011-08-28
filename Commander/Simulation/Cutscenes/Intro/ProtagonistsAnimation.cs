@@ -183,8 +183,8 @@
         {
             Wife.FadeOut();
             Mothership.AbductShip(Simulator.Scene, Wife, Wife.FrontImage.VisualPriority - 0.00001);
-            Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, 1.2f, 500, 1000));
-            Simulator.Scene.PhysicalEffects.Add(Simulator.Scene.Camera, Core.Physics.PhysicalEffects.Arrival(Wife.Position, 500, 1000));
+            //Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, 1.2f, 500, 1000));
+            //Simulator.Scene.PhysicalEffects.Add(Simulator.Scene.Camera, Core.Physics.PhysicalEffects.Arrival(Wife.Position, 500, 1000));
         }
 
 
@@ -207,8 +207,8 @@
         private void DoGoGetHelp()
         {
             Protagonist.Direction = new Vector3(0, 1, 0);
-            Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, 0.7f, 1000, 1000));
-            Simulator.Scene.PhysicalEffects.Add(Simulator.Scene.Camera, Core.Physics.PhysicalEffects.Arrival(Vector3.Zero, 1000, 1000));
+            //Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, 0.7f, 1000, 1000));
+            //Simulator.Scene.PhysicalEffects.Add(Simulator.Scene.Camera, Core.Physics.PhysicalEffects.Arrival(Vector3.Zero, 1000, 1000));
             Simulator.Scene.PhysicalEffects.Add(Protagonist, Core.Physics.PhysicalEffects.Move(new Vector3(Protagonist.Position.X, 1000, 0), 0, 1000));
         }
 

@@ -235,7 +235,7 @@
                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                        descriptor.Image,
                        descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001f,
+                       NextCelestialBodyVisualPriority -= 0.001,
                        descriptor.HasMoons
                     ) { FollowPath = descriptor.FollowPath, StraightLine = descriptor.StraightLine };
                 }

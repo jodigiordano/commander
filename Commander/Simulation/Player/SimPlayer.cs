@@ -92,6 +92,7 @@
             set
             {
                 BasePlayer.Position = SpaceshipMove.Position = value;
+                VerifyFrame();
             }
         }
 
@@ -525,10 +526,10 @@
 
         private void VerifyFrame()
         {
-            Position = new Vector3
+            BasePlayer.Position = new Vector3
             (
-                MathHelper.Clamp(Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius),
-                MathHelper.Clamp(Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius),
+                MathHelper.Clamp(Position.X, Simulator.Scene.CameraView.Left + Circle.Radius, Simulator.Scene.CameraView.Right - Circle.Radius),
+                MathHelper.Clamp(Position.Y, Simulator.Scene.CameraView.Top + Circle.Radius, Simulator.Scene.CameraView.Bottom - Circle.Radius),
                 0
             );
         }

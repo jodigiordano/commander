@@ -45,7 +45,7 @@
         public bool Alive { get; set; }
 
 
-        protected Simulator Simulator;
+        public Simulator Simulator;
 
         public SpaceshipSteeringBehavior SteeringBehavior;
         public SpaceshipWeapon Weapon;

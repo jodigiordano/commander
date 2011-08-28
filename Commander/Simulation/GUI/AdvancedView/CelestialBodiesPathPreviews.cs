@@ -8,7 +8,7 @@
 
     class CelestialBodiesPathPreviews
     {
-        private List<CelestialBody> celestialBodies;
+        public List<CelestialBody> CelestialBodies;
 
         private Dictionary<CelestialBody, double> Highlights;
 
@@ -58,6 +58,21 @@
         }
 
 
+        public void Initialize()
+        {
+            Sync();
+        }
+
+
+        public void Sync()
+        {
+            Highlights.Clear();
+
+            foreach (var c in CelestialBodies)
+                Highlights.Add(c, c.ActualRotationTime);
+        }
+
+
         public bool Visible
         {
             set
@@ -67,21 +82,6 @@
 
                 foreach (var c in CelestialBodies)
                     Highlights[c] = c.ActualRotationTime;
-            }
-        }
-
-
-        public List<CelestialBody> CelestialBodies
-        {
-            get { return celestialBodies; }
-            set
-            {
-                celestialBodies = value;
-
-                Highlights.Clear();
-
-                foreach (var c in CelestialBodies)
-                    Highlights.Add(c, c.ActualRotationTime);
             }
         }
 
@@ -97,9 +97,6 @@
                     continue;
 
                 if (c is AsteroidBelt)
-                    continue;
-
-                if (c.Speed == float.MaxValue)
                     continue;
 
                 PathPositions.Clear();
@@ -147,6 +144,9 @@
 
         private double UpdateHighlight(CelestialBody c)
         {
+            if (c.Speed == float.MaxValue)
+                return 1;
+
             var current = (Highlights[c] + Preferences.TargetElapsedTimeMs * 5) % c.Speed;
 
             Highlights[c] = current;

@@ -106,7 +106,6 @@
             set
             {
                 position = value;
-                VerifyFrame();
                 Circle.Position = position;
             }
         }
@@ -115,13 +114,6 @@
         public void Move(ref Vector3 delta, float speed)
         {
             Position += delta * speed;
-        }
-
-
-        private void VerifyFrame()
-        {
-            position.X = MathHelper.Clamp(this.Position.X, -640 + Preferences.Xbox360DeadZoneV2.X + Circle.Radius, 640 - Preferences.Xbox360DeadZoneV2.X - Circle.Radius);
-            position.Y = MathHelper.Clamp(this.Position.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Circle.Radius, 370 - Preferences.Xbox360DeadZoneV2.Y - Circle.Radius);
         }
     }
 }

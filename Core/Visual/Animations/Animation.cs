@@ -10,37 +10,37 @@
         public Scene Scene                  { protected get; set; }
         public double RemainingTime         { get; private set; }
 
-        private double length = 0;
+        private double duration = 0;
 
 
-        public Animation(double length, double visualPriority)
+        public Animation(double duration, double visualPriority)
         {
-            Length = length;
+            Duration = duration;
             Paused = false;
             VisualPriority = visualPriority;
         }
 
 
-        public double Length
+        public double Duration
         {
-            get { return length; }
+            get { return duration; }
             set
             {
-                RemainingTime += value - length;
-                length = value;
+                RemainingTime += value - duration;
+                duration = value;
             }
         }
 
 
         protected double ElapsedTime
         {
-            get { return Length - RemainingTime; }
+            get { return Duration - RemainingTime; }
         }
 
 
         public virtual void Initialize()
         {
-            RemainingTime = Length;
+            RemainingTime = Duration;
         }
 
 
@@ -58,7 +58,7 @@
 
         public virtual void Start()
         {
-            RemainingTime = Length;
+            RemainingTime = Duration;
         }
 
 

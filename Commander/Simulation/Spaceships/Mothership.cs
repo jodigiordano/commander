@@ -220,7 +220,7 @@
         }
 
 
-        public void DestroyEverything(Scene scene, List<CelestialBody> celestialBodies, List<HumanBattleship> battleships)
+        public void DestroyEverything(Scene scene, List<CelestialBody> celestialBodies)
         {
             for (int i = 0; i < celestialBodies.Count; i++)
             {
@@ -228,8 +228,11 @@
 
                 Missiles.Add(new Missile(scene, cb, cb.VisualPriority - 0.000001, Position + new Vector3(0, Size.Y / 4, 0), i * 300, DoTargetReached));
             }
+        }
 
 
+        public void DestroyEverything(Scene scene, List<HumanBattleship> battleships)
+        {
             for (int i = 0; i < battleships.Count; i++)
             {
                 var ship = battleships[i];

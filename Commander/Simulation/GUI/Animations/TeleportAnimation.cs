@@ -83,7 +83,7 @@
         {
             base.Update(gameTime);
 
-            if (ElapsedTime > Length * 0.75)
+            if (ElapsedTime > Duration * 0.75)
             {
                 PinkHole.Radius = Math.Max(PinkHole.Radius - 2f, 0);
                 PinkHole.Alpha = (byte) Math.Max(PinkHole.Alpha - 2, 0);
@@ -91,14 +91,14 @@
             else
                 PinkHole.Radius = Math.Min(PinkHole.Radius + 2f, 50f);
 
-            if (ElapsedTime > Length * 0.50)
+            if (ElapsedTime > Duration * 0.50)
             {
                 foreach (var c in Components)
                 {
                     if (FadeIn)
-                        c.SizeX = Math.Min((float) (FinalSize * ((ElapsedTime * 0.75) / (Length / 2))), OriginalSize);
+                        c.SizeX = Math.Min((float) (FinalSize * ((ElapsedTime * 0.75) / (Duration / 2))), OriginalSize);
                     else
-                        c.SizeX = Math.Max((float) (OriginalSize * (1 - ElapsedTime / Length)), FinalSize);
+                        c.SizeX = Math.Max((float) (OriginalSize * (1 - ElapsedTime / Duration)), FinalSize);
                 }
             }
 

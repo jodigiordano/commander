@@ -7,8 +7,6 @@
     class Preferences
     {
         public const int TimeBetweenTwoMusics = 300;
-        public static Vector2 Xbox360DeadZoneV2 = new Vector2(20, 30);
-        public static Vector3 Xbox360DeadZone = new Vector3(20, 30, 0);
         public static float TargetElapsedTimeMs = 16;
         public static Vector2 BackBuffer = new Vector2(1280, 720);
 
@@ -22,10 +20,16 @@
 
 
 #if WINDOWS && TRIAL
+        public static Vector2 DeadZoneV2 = new Vector2(0, 0);
+        public static Vector3 DeadZone = new Vector3(0, 0, 0);
         public static Setting Target = Setting.WindowsDemo;
 #elif WINDOWS
+        public static Vector2 DeadZoneV2 = new Vector2(0, 0);
+        public static Vector3 DeadZone = new Vector3(0, 0, 0);
         public static Setting Target = Setting.WindowsFull;
 #else
+        public static Vector2 DeadZoneV2 = new Vector2(20, 30);
+        public static Vector3 DeadZone = new Vector3(20, 30, 0);
         public static Setting Target = Setting.Xbox360;
 #endif
 

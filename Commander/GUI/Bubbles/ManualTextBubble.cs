@@ -11,7 +11,7 @@
         public bool Visible;
 
 
-        public ManualTextBubble(Scene scene, Text text, Vector3 position, double visualPriority)
+        public ManualTextBubble(CommanderScene scene, Text text, Vector3 position, double visualPriority)
             : base(scene, new PhysicalRectangle(), visualPriority)
         {
             Text = text;
@@ -52,7 +52,7 @@
         }
 
 
-        public void Update()
+        public virtual void Update()
         {
             Visible = Text.Color.A != 0;
 
@@ -70,20 +70,20 @@
         }
 
 
-        public override void FadeIn(double time)
+        public override void FadeIn(double duration)
         {
-            base.FadeIn(time);
+            base.FadeIn(duration);
 
             Text.Alpha = 0;
-            Scene.VisualEffects.Add(Text, VisualEffects.FadeInFrom0(255, 0, time));
+            Scene.VisualEffects.Add(Text, VisualEffects.FadeInFrom0(255, 0, duration));
         }
 
 
-        public override void FadeOut(double time)
+        public override void FadeOut(double duration)
         {
-            base.FadeOut(time);
+            base.FadeOut(duration);
 
-            Scene.VisualEffects.Add(Text, VisualEffects.FadeOutTo0(255, 0, time));
+            Scene.VisualEffects.Add(Text, VisualEffects.FadeOutTo0(255, 0, duration));
         }
 
 
@@ -91,30 +91,30 @@
         {
             Vector2 size = Text.AbsoluteSize;
 
-            this.Dimension.Width = (int) size.X + 4;
-            this.Dimension.Height = (int) size.Y + 4;
+            Dimension.Width = (int) size.X + 4;
+            Dimension.Height = (int) size.Y + 4;
         }
 
 
         private void ComputePosition()
         {
-            bool tropADroite = Dimension.X + Dimension.Width + 50 > 640 - Preferences.Xbox360DeadZoneV2.X;
-            bool tropBas = Dimension.Y + Dimension.Height > 370 - Preferences.Xbox360DeadZoneV2.Y;
+            bool tooMuchRight = Dimension.X + Dimension.Width + 50 > Scene.CameraView.Right;
+            bool tooMuchBottom = Dimension.Y + Dimension.Height > Scene.CameraView.Bottom;
 
-            if (tropADroite && tropBas)
+            if (tooMuchRight && tooMuchBottom)
             {
                 Dimension.X += -Dimension.Width - 50;
                 Dimension.Y += -Dimension.Height - 10;
                 BlaPosition = 2;
             }
 
-            else if (tropADroite)
+            else if (tooMuchRight)
             {
                 Dimension.X += -Dimension.Width - 50;
                 BlaPosition = 1;
             }
 
-            else if (tropBas)
+            else if (tooMuchBottom)
             {
                 Dimension.Y += -Dimension.Height - 50;
                 BlaPosition = 3;
@@ -127,8 +127,7 @@
                 BlaPosition = 0;
             }
 
-            Dimension.X = (int) MathHelper.Clamp(Dimension.X, -640 + Preferences.Xbox360DeadZoneV2.X, 640 - Preferences.Xbox360DeadZoneV2.X - Dimension.Width / 2);
-            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, -370 + Preferences.Xbox360DeadZoneV2.Y + Dimension.Height / 2, 370 - Preferences.Xbox360DeadZoneV2.Y - Dimension.Height / 2);
+            ClampPositionInView();
         }
     }
 }

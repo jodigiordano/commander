@@ -10,7 +10,7 @@ namespace EphemereGames.Commander.Simulation
 
     class Simulator : InputListener
     {
-        public Scene Scene;
+        public CommanderScene Scene;
         public Dictionary<string, LevelDescriptor> AvailableLevelsDemoMode;
         public bool DebugMode;
         public bool WorldMode;
@@ -25,8 +25,6 @@ namespace EphemereGames.Commander.Simulation
         public bool HelpMode { get { return LevelsController.Help.Active; } }
         public PausedGameChoice PausedGameChoice;
         public NewGameChoice NewGameChoice;
-        public PhysicalRectangle Terrain;
-        public PhysicalRectangle InnerTerrain;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
 
 
@@ -52,7 +50,7 @@ namespace EphemereGames.Commander.Simulation
         internal BulletsFactory BulletsFactory;
 
 
-        public Simulator(Scene scene, LevelDescriptor descriptor)
+        public Simulator(CommanderScene scene, LevelDescriptor descriptor)
         {
             Scene = scene;
 
@@ -120,9 +118,6 @@ namespace EphemereGames.Commander.Simulation
             BulletsFactory.Initialize();
 
             Level = new Level(this, descriptor);
-
-            Terrain = new PhysicalRectangle(-840, -560, 1680, 1120);
-            InnerTerrain = new PhysicalRectangle(-640, -360, (int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y);
 
             TweakingController = new TweakingController(this);
             CollisionsController = new CollisionsController(this);
@@ -244,7 +239,6 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(GUIController.DoStartingPathCollision);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(SpaceshipsController.DoShieldCollided);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(BulletsController.DoShieldCollided);
-            
         }
 
 
