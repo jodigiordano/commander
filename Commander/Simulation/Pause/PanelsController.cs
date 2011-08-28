@@ -256,6 +256,7 @@
             else if (widget.Name == "Resume")
             {
                 Simulator.TriggerNewGameState(GameState.Running);
+                Simulator.CanSelectCelestialBodies = true;
             }
         }
 
