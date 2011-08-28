@@ -13,6 +13,8 @@
     {
         public LevelStates LevelStates;
         public Simulator Simulator;
+        public bool NeedReinit;
+        public bool CanGoBackToMainMenu;
 
         private WorldDescriptor Descriptor;
         private Dictionary<string, string> Warps;
@@ -32,6 +34,8 @@
             WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
             CelestialBodies = new Dictionary<int, CelestialBody>();
             LevelStates = new LevelStates(this);
+            NeedReinit = false;
+            CanGoBackToMainMenu = true;
         }
 
 
@@ -64,20 +68,8 @@
                 Warps.Add(d.Infos.Mission, level.Value);
             }
 
-
             // Keep track of celestial bodies and pink holes
-            foreach (var celestialBody in Simulator.PlanetarySystemController.CelestialBodies)
-            {
-                if (LevelsDescriptors.ContainsKey(celestialBody.Name) && !(celestialBody is PinkHole))
-                {
-                    LevelCompletitionStates.Add(new KeyAndValue<CelestialBody, Image>(celestialBody, null));
-
-                    CelestialBodies.Add(LevelsDescriptors[celestialBody.Name].Infos.Id, celestialBody);
-                }
-
-                if (celestialBody is PinkHole)
-                    WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);
-            }
+            InitializeCelestialBodies();
 
             LevelStates.CelestialBodies = CelestialBodies;
             LevelStates.Descriptor = Descriptor;
@@ -132,6 +124,14 @@
 
         public override void OnFocus()
         {
+            if (NeedReinit)
+            {
+                Simulator.Initialize();
+                InitializeCelestialBodies();
+
+                NeedReinit = false;
+            }
+
             Simulator.EnableInputs = true;
 
             //
@@ -152,8 +152,8 @@
             else
                 Simulator.TeleportPlayers(false);
 
-            if (LastLevelTerminated)
-            //if (Main.GameInProgress != null)
+            //if (LastLevelTerminated)
+            if (Main.GameInProgress != null)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
         }
 
@@ -234,6 +234,9 @@
 
         private void DoBackAction()
         {
+            if (!CanGoBackToMainMenu)
+                return;
+
             TransiteTo("Menu");
         }
 
@@ -358,6 +361,27 @@
             }
 
             LevelStates.Sync();
+        }
+
+
+        private void InitializeCelestialBodies()
+        {
+            LevelCompletitionStates.Clear();
+            CelestialBodies.Clear();
+            WarpsCelestialBodies.Clear();
+
+            foreach (var celestialBody in Simulator.PlanetarySystemController.CelestialBodies)
+            {
+                if (LevelsDescriptors.ContainsKey(celestialBody.Name) && !(celestialBody is PinkHole))
+                {
+                    LevelCompletitionStates.Add(new KeyAndValue<CelestialBody, Image>(celestialBody, null));
+
+                    CelestialBodies.Add(LevelsDescriptors[celestialBody.Name].Infos.Id, celestialBody);
+                }
+
+                if (celestialBody is PinkHole)
+                    WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);
+            }
         }
     }
 }

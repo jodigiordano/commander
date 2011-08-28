@@ -155,7 +155,7 @@
             if (celestialBody == null)
                 return;
 
-            if (!Simulator.CutsceneMode)
+            if (!celestialBody.SilentDeath)
                 Audio.PlaySfx(@"sfxCorpsCelesteExplose");
 
             if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)

@@ -77,6 +77,12 @@
 
                 if (!c.Alive)
                 {
+                    if (Simulator.CutsceneMode || Simulator.WorldMode)
+                    {
+                        c.SilentDeath = true;
+                        c.SlowDeath = true;
+                    }
+
                     c.DoDie();
 
                     if (Path.ContainsCelestialBody(c))

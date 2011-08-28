@@ -55,6 +55,8 @@
         public Turret StartingPathTurret;
         public SimPlayer PlayerCheckedIn;
         public bool FakeHasGravitationalTurretLv2;
+        public bool SlowDeath;
+        public bool SilentDeath;
 
         protected Simulator Simulator;
         protected double VisualPriorityBackup;
@@ -132,6 +134,8 @@
             FollowPath = false;
             HasMoons = true;
             FakeHasGravitationalTurretLv2 = false;
+            SlowDeath = false;
+            SilentDeath = false;
         }
 
 
@@ -392,7 +396,7 @@
             LifePoints = Math.Min(LifePoints, 0);
 
             DieEffect1 = Simulator.Scene.Particles.Get(@"bouleTerreMeurt");
-            DieEffect2 = Simulator.Scene.Particles.Get(Simulator.CutsceneMode ? @"anneauTerreMeurt2" : @"anneauTerreMeurt");
+            DieEffect2 = Simulator.Scene.Particles.Get(SlowDeath ? @"anneauTerreMeurt2" : @"anneauTerreMeurt");
 
             DieEffect1.VisualPriority = VisualPriority - 0.000001;
             DieEffect2.VisualPriority = VisualPriority - 0.000001;

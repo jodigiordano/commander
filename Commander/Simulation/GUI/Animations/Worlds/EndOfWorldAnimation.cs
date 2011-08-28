@@ -17,6 +17,7 @@
 
             Main.GameInProgress = null;
             WorldScene.CanSelectCelestialBodies = false;
+            WorldScene.CanGoBackToMainMenu = false;
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 0, 500);
             Simulator.Scene.VisualEffects.Add(WorldScene.LevelStates, Core.Visual.VisualEffects.Fade(WorldScene.LevelStates.Alpha, 0, 0, 1000));
         }
@@ -27,8 +28,8 @@
             base.Stop();
 
             WorldScene.CanSelectCelestialBodies = true;
+            WorldScene.CanGoBackToMainMenu = true;
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
-            Simulator.Scene.VisualEffects.Add(WorldScene.LevelStates, Core.Visual.VisualEffects.Fade(WorldScene.LevelStates.Alpha, 255, 0, 1000));
         }
     }
 }

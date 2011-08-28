@@ -21,7 +21,7 @@
             CelestialBodiesToDestroy = new List<CelestialBody>();
 
             foreach (var cb in Path.CelestialBodies)
-                if (cb != Path.FirstCelestialBody || cb != Path.LastCelestialBody)
+                if (cb != Path.FirstCelestialBody && cb != Path.LastCelestialBody)
                     CelestialBodiesToDestroy.Add(cb);
 
             MothershipAnimation = new MothershipAnimation(Simulator)
@@ -41,17 +41,16 @@
             // Switch the music
 
             // World 2 warp glow & text "Go to world 2" appears
-            // Modify bounding box to match the camera
-            // On next focus, recreate the path
+            // Help bar says: "Go to world 2"
             // Stop spawning enemies
-            // Explose planets slowly without sfx
-            // Fix warp visual priority
             // Show only warp
+            // Verify with Xbox 360 controller (vibration on edges)
+            // Show "goto world 2" on warp
 
             // To check:
-            // Don't permit to go in a level
-            // Clear game in progress
-            // Hide help bar
+
+
+            worldScene.NeedReinit = true;
         }
 
 
