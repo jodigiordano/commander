@@ -19,6 +19,7 @@
         
         public List<Enemy> Enemies;
         public List<Mineral> Minerals;
+        public bool SpawnEnemies;
 
         public event NoneHandler WaveEnded;
         public event NoneHandler WaveStarted;
@@ -106,6 +107,8 @@
             {
                 return (m1.Key > m2.Key) ? -1 : (m1.Key < m2.Key) ? 1 : 0;
             });
+
+            SpawnEnemies = true;
         }
 
 
@@ -192,6 +195,9 @@
 
         private void AddNewEnemies()
         {
+            if (!SpawnEnemies)
+                return;
+
             foreach (var w in ActiveWaves)
                 foreach (var e in w.NewEnemies)
                     AddEnemy(e, w);
@@ -275,6 +281,9 @@
 
         private void AddWave()
         {
+            if (!SpawnEnemies)
+                return;
+
             TimeElapsedLastWave += Preferences.TargetElapsedTimeMs;
 
             if (NextWave == null || NextWave.Value.StartingTime >= TimeElapsedLastWave)

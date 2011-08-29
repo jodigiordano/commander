@@ -29,7 +29,7 @@
             Scene actualScene = Scenes[sceneName];
 
             if (actualScene != null)
-                actualScene.Dispose();
+                actualScene.CleanUp();
 
             Scenes[sceneName] = scene;
 

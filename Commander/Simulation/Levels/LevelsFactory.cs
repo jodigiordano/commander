@@ -56,13 +56,13 @@
                 d.Infos.Difficulty = "";
 
                 if (id == 2001)
-                    d.Infos.Mission = "World2";
+                    d.Infos.Mission = GetWorldStringId(2);
                 else if (id == 2002)
-                    d.Infos.Mission = "World3";
+                    d.Infos.Mission = GetWorldStringId(3);
                 else if (id == 2003)
-                    d.Infos.Mission = "World1";
+                    d.Infos.Mission = GetWorldStringId(1);
                 else if (id == 2004)
-                    d.Infos.Mission = "World2";
+                    d.Infos.Mission = GetWorldStringId(2);
             }
 
             else
@@ -71,6 +71,18 @@
             }
 
             return d;
+        }
+
+
+        public string GetWorldStringId(int id)
+        {
+            return "World " + id;
+        }
+
+
+        public string GetWorldAnnounciationStringId(int id)
+        {
+            return GetWorldStringId(id) + "Annunciation";
         }
 
 
@@ -129,7 +141,7 @@
                     new KeyValuePair<int, List<int>>(14, new List<int>() { 13 }),
                     new KeyValuePair<int, List<int>>(15, new List<int>() { 14 })
                 },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, "World2") },
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, GetWorldStringId(2)) },
                 Layout = 1001,
                 UnlockedCondition = new List<int>(),
                 WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level.",
@@ -159,7 +171,7 @@
                     new KeyValuePair<int, List<int>>(29, new List<int>() { 28 }),
                     new KeyValuePair<int, List<int>>(30, new List<int>() { 29 })
                 },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, "World3"), new KeyValuePair<int, string>(2003, "World1") },
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, GetWorldStringId(3)), new KeyValuePair<int, string>(2003, GetWorldStringId(1)) },
                 Layout = 1002,
                 UnlockedCondition = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
                 WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world.",
@@ -184,7 +196,7 @@
                     new KeyValuePair<int, List<int>>(39, new List<int>() { 38 }),
                     new KeyValuePair<int, List<int>>(40, new List<int>() { 39 })
                 },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, "World3") },
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, GetWorldStringId(3)) },
                 Layout = 1003,
                 UnlockedCondition = new List<int>() { -1 },
                 WarpBlockedMessage = "",

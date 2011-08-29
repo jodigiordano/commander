@@ -77,6 +77,12 @@
         }
 
 
+        public virtual void CleanUp()
+        {
+            Inputs.RemoveListener(this);
+        }
+
+
         public string Name
         {
             get { return name; }
@@ -231,13 +237,6 @@
             PhysicalEffects.Update((float) gameTime.ElapsedGameTime.TotalMilliseconds);
             VisualEffects.Update((float) gameTime.ElapsedGameTime.TotalMilliseconds);
         }
-
-
-        internal void Dispose()
-        {
-            EphemereGames.Core.Input.Inputs.RemoveListener(this);
-        }
-
 
 
         public void Clamp(ref Vector3 v)

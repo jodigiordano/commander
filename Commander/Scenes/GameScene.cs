@@ -35,6 +35,13 @@
         }
 
 
+        public override void CleanUp()
+        {
+            base.CleanUp();
+            Simulator.CleanUp();
+        }
+
+
         public override bool IsFinished
         {
             get

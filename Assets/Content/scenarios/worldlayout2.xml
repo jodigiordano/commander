@@ -493,14 +493,14 @@
       <StraightLine>true</StraightLine>
     </CelestialBody>
     <CelestialBody>
-      <Name>World1</Name>
+      <Name>World 1</Name>
       <Images />
       <Image>planete9</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Normal</Size>
       <Speed>-2.14748365E+09</Speed>
-      <PathPriority>-2147483647</PathPriority>
+      <PathPriority>-1</PathPriority>
       <Path>
         <X>0</X>
         <Y>0</Y>
@@ -521,7 +521,7 @@
       <StraightLine>false</StraightLine>
     </CelestialBody>
     <CelestialBody>
-      <Name>World3</Name>
+      <Name>World 3</Name>
       <Images />
       <Image>planete6</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>

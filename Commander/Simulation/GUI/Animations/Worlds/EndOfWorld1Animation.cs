@@ -32,25 +32,23 @@
                 TimeBeforeArrival = 0,
                 TimeArrival = 5500,
                 TimeBeforeLights = 5500,
-                TimeLights = 5000,
-                TimeBeforeDestruction = 10500,
-                TimeBeforeDeparture = 20500,
+                TimeLights = 2000,
+                TimeBeforeDestruction = 7500,
+                TimeBeforeDeparture = 17500,
                 TimeDeparture = 5000
             };
 
             // Switch the music
 
-            // World 2 warp glow & text "Go to world 2" appears
-            // Help bar says: "Go to world 2"
             // Stop spawning enemies
-            // Show only warp
             // Verify with Xbox 360 controller (vibration on edges)
-            // Show "goto world 2" on warp
 
             // To check:
 
 
             worldScene.NeedReinit = true;
+            Simulator.SpawnEnemies = false;
+            //Path.RemoveCelestialBody(Path.FirstCelestialBody);
         }
 
 

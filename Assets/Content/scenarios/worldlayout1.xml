@@ -493,7 +493,7 @@
       <StraightLine>true</StraightLine>
     </CelestialBody>
     <CelestialBody>
-      <Name>World2</Name>
+      <Name>World 2</Name>
       <Images />
       <HasGravitationalTurret>false</HasGravitationalTurret>
       <StartingTurrets />

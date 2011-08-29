@@ -200,7 +200,7 @@
       <HasMoons>true</HasMoons>
     </CelestialBody>
     <CelestialBody>
-      <Name>World2</Name>
+      <Name>World 2</Name>
       <Images />
       <Image>planete7</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
@@ -281,7 +281,7 @@
       <HasMoons>true</HasMoons>
     </CelestialBody>
     <CelestialBody>
-      <Name>World4</Name>
+      <Name>World 4</Name>
       <Images />
       <Image>planete7</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>

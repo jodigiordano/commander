@@ -24,6 +24,7 @@
         public static Keys QuickToggle = Keys.Space;
         public static Keys SelectionNext = Keys.E;
         public static Keys SelectionPrevious = Keys.Q;
+        public static Keys Cheat1 = Keys.P;
 
         public static List<Keys> ToList
         {
@@ -47,7 +48,8 @@
                     MoveUp,
                     QuickToggle,
                     SelectionNext,
-                    SelectionPrevious
+                    SelectionPrevious,
+                    Cheat1
                 };
             }
         }
@@ -128,6 +130,7 @@
         public static Buttons DirectionCursor = Buttons.RightStick;
         public static Buttons Disconnect = Buttons.Back;
         public static Buttons RetryLevel = Buttons.Y;
+        public static Buttons Cheat1 = Buttons.DPadRight;
         public static float Speed = 15;
 
 
@@ -150,7 +153,8 @@
                     Tweaking,
                     RetryLevel,
                     AlternateSelectionNext,
-                    AlternateSelectionPrevious
+                    AlternateSelectionPrevious,
+                    Cheat1
                 };
             }
         }

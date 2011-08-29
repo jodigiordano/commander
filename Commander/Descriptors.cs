@@ -32,6 +32,16 @@
             WarpBlockedMessage = "";
             LastLevelId = -1;
         }
+
+
+        public bool ContainsLevel(int id)
+        {
+            foreach (var l in Levels)
+                if (l.Key == id)
+                    return true;
+
+            return false;
+        }
     }
 
 

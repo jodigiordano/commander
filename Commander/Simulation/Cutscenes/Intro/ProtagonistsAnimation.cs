@@ -59,8 +59,8 @@
 
             TimeBeforeArrival = IntroCutscene.Timing["ProtagonistIn"];
             TimeBeforeAbduction = TimeBeforeArrival + 20000;
-            TimeBeforeGoGetHelp = TimeBeforeAbduction + 2000;
-            TimeBeforeFireAgainAtMothership = TimeBeforeGoGetHelp + 4000;
+            TimeBeforeGoGetHelp = TimeBeforeAbduction + 4000;
+            TimeBeforeFireAgainAtMothership = TimeBeforeGoGetHelp + 2000;
             TimeBeforeGoInCenter = TimeBeforeFireAgainAtMothership + 18000;
             TimeBeforeWarnColonies = TimeBeforeGoInCenter + 20000;
             TimeBeforeTeleport = TimeBeforeWarnColonies + 10000;

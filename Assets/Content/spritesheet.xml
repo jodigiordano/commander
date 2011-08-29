@@ -263,8 +263,6 @@
     <Item><Key>crosshairSniper</Key><Value>GUI/sniperTarget.png</Value></Item>
     <Item><Key>Gauche</Key><Value>GUI/gauche.png</Value></Item>
     <Item><Key>Droite</Key><Value>GUI/droite.png</Value></Item>
-    <Item><Key>LevelDone</Key><Value>GUI/done.png</Value></Item>
-    <Item><Key>LevelNotDone</Key><Value>GUI/notdone.png</Value></Item>
     <Item><Key>bulleBlabla</Key><Value>GUI/bulleBlabla.png</Value></Item>
     <Item><Key>bulleCoin</Key><Value>GUI/bulleCoin.png</Value></Item>
     <Item><Key>sell</Key><Value>GUI/sell.png</Value></Item>

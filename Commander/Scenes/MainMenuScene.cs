@@ -227,31 +227,10 @@
                             TransiteTo("Cutscene1");
                             break;
                         case NewGameChoice.Continue:
-                            TransiteTo("World" + Main.SaveGameController.PlayerSaveGame.CurrentWorld + "Annunciation");
+                            TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(Main.SaveGameController.PlayerSaveGame.CurrentWorld));
                             break;
-                        case NewGameChoice.WrapToWorld1:
-                            TransiteTo("World1Annunciation");
-                            break;
-                        case NewGameChoice.WrapToWorld2:
-                            TransiteTo("World2Annunciation");
-                            break;
-                        case NewGameChoice.WrapToWorld3:
-                            TransiteTo("World3Annunciation");
-                            break;
-                        case NewGameChoice.WrapToWorld4:
-                            TransiteTo("World4Annunciation");
-                            break;
-                        case NewGameChoice.WrapToWorld5:
-                            TransiteTo("World5Annunciation");
-                            break;
-                        case NewGameChoice.WrapToWorld6:
-                            TransiteTo("World6Annunciation");
-                            break;
-                        case NewGameChoice.WrapToWorld7:
-                            TransiteTo("World7Annunciation");
-                            break;
-                        case NewGameChoice.WrapToWorld8:
-                            TransiteTo("World8Annunciation");
+                        default:
+                            TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId((int) Simulator.NewGameChoice));
                             break;
                     }
                     break;

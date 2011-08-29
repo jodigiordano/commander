@@ -10,6 +10,7 @@
     delegate void PanelWidgetHandler(PanelWidget p);
     delegate void NewsTypeHandler(NewsType t);
     delegate void NewsTypeNewsHandler(NewsType t, List<News> n);
+    delegate void StringHandler(string s);
 }
 
 

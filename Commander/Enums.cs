@@ -57,7 +57,7 @@
         General = 0,
         Updates = 1,
         DLC = 2
-    }
+    };
 }
 
 
@@ -250,7 +250,8 @@ namespace EphemereGames.Commander.Simulation
         BuyTurret = 15,
         ToggleChoicesSelect = 16,
         StartNewCampaign = 17,
-        GameBar = 18
+        GameBar = 18,
+        WorldWarp = 19
     };
 }
 

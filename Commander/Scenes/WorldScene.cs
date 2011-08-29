@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -19,18 +18,16 @@
         private WorldDescriptor Descriptor;
         private Dictionary<string, string> Warps;
         private Dictionary<string, LevelDescriptor> LevelsDescriptors;
-        private List<KeyAndValue<CelestialBody, Image>> LevelCompletitionStates;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
         private Dictionary<int, CelestialBody> CelestialBodies;
 
 
         public WorldScene(WorldDescriptor descriptor) :
-            base("World" + descriptor.Id)
+            base(Main.LevelsFactory.GetWorldStringId(descriptor.Id))
         {
             Descriptor = descriptor;
             Warps = new Dictionary<string, string>();
             LevelsDescriptors = new Dictionary<string, LevelDescriptor>();
-            LevelCompletitionStates = new List<KeyAndValue<CelestialBody, Image>>();
             WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
             CelestialBodies = new Dictionary<int, CelestialBody>();
             LevelStates = new LevelStates(this);
@@ -75,6 +72,8 @@
             LevelStates.Descriptor = Descriptor;
             LevelStates.LevelsDescriptors = LevelsDescriptors;
             LevelStates.Initialize();
+
+            Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
         }
 
 
@@ -128,6 +127,7 @@
             {
                 Simulator.Initialize();
                 InitializeCelestialBodies();
+                LevelStates.Alpha = 255;
 
                 NeedReinit = false;
             }
@@ -144,7 +144,7 @@
 
             Main.MusicController.ResumeMusic();
 
-            if (Main.GameInProgress != null)
+            if (Main.GameInProgress != null && Descriptor.ContainsLevel(Main.GameInProgress.Level.Infos.Id))
             {
                 var cb = CelestialBodies[Main.GameInProgress.Level.Infos.Id];
                 Simulator.TeleportPlayers(false, cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
@@ -152,8 +152,7 @@
             else
                 Simulator.TeleportPlayers(false);
 
-            //if (LastLevelTerminated)
-            if (Main.GameInProgress != null)
+            if (LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
         }
 
@@ -326,7 +325,7 @@
         }
 
 
-        private bool LastLevelTerminated
+        private bool LastLevelWon
         {
             get
             {
@@ -337,19 +336,6 @@
 
         private void InitializeLevelsStates()
         {
-            // Level Completition State
-            foreach (var kvp in LevelCompletitionStates)
-            {
-                var descriptor = LevelsDescriptors[kvp.Key.Name];
-
-                bool done = Main.SaveGameController.IsLevelUnlocked(descriptor.Infos.Id);
-
-                kvp.Value = new Image((done) ? "LevelDone" : "LevelNotDone");
-
-                kvp.Value.VisualPriority = kvp.Key.Image.VisualPriority - 0.0001f;
-                kvp.Value.SizeX = (kvp.Key.Circle.Radius < (int) Size.Normal) ? 0.5f : 0.80f;
-            }
-
             // Warps
             foreach (var warp in WarpsCelestialBodies)
             {
@@ -366,21 +352,34 @@
 
         private void InitializeCelestialBodies()
         {
-            LevelCompletitionStates.Clear();
             CelestialBodies.Clear();
             WarpsCelestialBodies.Clear();
 
             foreach (var celestialBody in Simulator.PlanetarySystemController.CelestialBodies)
             {
                 if (LevelsDescriptors.ContainsKey(celestialBody.Name) && !(celestialBody is PinkHole))
-                {
-                    LevelCompletitionStates.Add(new KeyAndValue<CelestialBody, Image>(celestialBody, null));
-
                     CelestialBodies.Add(LevelsDescriptors[celestialBody.Name].Infos.Id, celestialBody);
-                }
 
                 if (celestialBody is PinkHole)
                     WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);
+            }
+        }
+
+
+        private void DoCheatActivated(string name)
+        {
+            if (!EnableInputs || LevelStates.AllLevelsUnlockedOverride)
+                return;
+
+            if (name == "AllLevelsUnlocked")
+            {
+                foreach (var l in Descriptor.Levels)
+                    Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, GameState.Won, l.Key, 0);
+
+                LevelStates.AllLevelsUnlockedOverride = true;
+                InitializeLevelsStates();
+
+                Main.SaveGameController.SaveAll();
             }
         }
     }

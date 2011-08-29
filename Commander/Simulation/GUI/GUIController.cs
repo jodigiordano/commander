@@ -120,7 +120,6 @@
 
             HelpBar.ActiveOptions = Main.Options.ShowHelpBar;
             HelpBar.Initialize();
-            Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
 
             CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator, Enemies, Path)
             {
@@ -202,12 +201,6 @@
         public void DoObjectDestroyed(ICollidable obj)
         {
 
-        }
-
-
-        private void DoShowHelpBarChanged(bool value)
-        {
-            HelpBar.ActiveOptions = value;
         }
 
 
@@ -731,7 +724,9 @@
                 // World Menu
                 if (selection.CelestialBody != null)
                 {
-                    if (selection.PausedGameChoice == PausedGameChoice.None)
+                    if (selection.PausedGameChoice == PausedGameChoice.None && selection.CelestialBody is PinkHole)
+                        HelpBar.ShowMessage(HelpBarMessage.WorldWarp, p.BasePlayer.InputType);
+                    else if (selection.PausedGameChoice == PausedGameChoice.None)
                         HelpBar.ShowMessage(HelpBarMessage.WorldNewGame, p.BasePlayer.InputType);
                     else if (selection.PausedGameChoice == PausedGameChoice.New)
                         HelpBar.ShowMessage(HelpBarMessage.WorldToggleNewGame, p.BasePlayer.InputType);

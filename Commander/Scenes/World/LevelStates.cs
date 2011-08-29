@@ -25,6 +25,8 @@
         private byte GamePausedMaxAlpha;
         private byte NumbersMaxAlpha;
 
+        public bool AllLevelsUnlockedOverride;
+
 
         public LevelStates(Scene scene)
         {
@@ -37,6 +39,8 @@
             GamePausedMaxAlpha = 200;
             alpha = 255;
             NumbersMaxAlpha = 200;
+
+            AllLevelsUnlockedOverride = false;
         }
 
 
@@ -94,17 +98,19 @@
 
         public void Sync()
         {
-            // Unlock conditions
             foreach (var level in Descriptor.Levels)
             {
                 bool unlocked = true;
 
-                //foreach (var other in level.Value)
-                //    if (!Main.SaveGameController.IsLevelUnlocked(other))
-                //    {
-                //        unlocked = false;
-                //        break;
-                //    }
+                if (!AllLevelsUnlockedOverride)
+                {
+                    foreach (var other in level.Value)
+                        if (!Main.SaveGameController.IsLevelUnlocked(other))
+                        {
+                            unlocked = false;
+                            break;
+                        }
+                }
 
                 LevelUnlockedStates[level.Key] = unlocked;
                 CelestialBodies[level.Key].CanSelect = unlocked;

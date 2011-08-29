@@ -157,6 +157,11 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="Cheats\AllLevelsUnlockedCheat.cs" />
+    <Compile Include="Cheats\Cheat.cs" />
+    <Compile Include="Cheats\CheatsController.cs" />
+    <Compile Include="Cheats\LevelWonCheat.cs" />
+    <Compile Include="Cheats\InputSequenceCheat.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="SaveGameController.cs" />
     <Compile Include="FutureJobsController.cs" />

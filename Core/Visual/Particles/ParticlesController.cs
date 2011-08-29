@@ -3,7 +3,6 @@ namespace EphemereGames.Core.Visual
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
-    using EphemereGames.Core.Utilities;
     using ParallelTasks;
 
 
@@ -70,7 +69,6 @@ namespace EphemereGames.Core.Visual
             particle.Initialize();
 
             Particles.Add(particle);
-            //Scene.Add(particle);
 
             return particle;
         }
@@ -92,8 +90,6 @@ namespace EphemereGames.Core.Visual
                 //todo: clear the particles
                 p.State = State.Idle;
                 ParticlesPools[p.Name].Return(p);
-
-                //Scene.Remove(p);
             }
 
             Particles.Clear();
@@ -102,21 +98,11 @@ namespace EphemereGames.Core.Visual
 
         public void Update(GameTime gameTime)
         {
-            //elapsedSeconds = (float) gameTime.ElapsedGameTime.TotalSeconds;
-
             Parallel.For(0, (int) Math.Ceiling(Particles.Count / 50.0), i =>
             {
                 AsyncUpdate(i * 50, Math.Min(i * 50 + 50, Particles.Count), (float) gameTime.ElapsedGameTime.TotalSeconds);
             });
 
-            //Task t = Parallel.Start(UpdateFirstPart);
-            //ParallelTasks.Parallel.Start(UpdateSecondPart);
-            //UpdateSecondPart();
-
-            //t.Wait();
-
-            //AsyncUpdate(0, Particles.Count / 2, (float) gameTime.ElapsedGameTime.TotalSeconds);
-            //AsyncUpdate(Particles.Count / 2, Particles.Count, (float) gameTime.ElapsedGameTime.TotalSeconds);
             RemoveDeadParticles();
         }
 
@@ -129,8 +115,6 @@ namespace EphemereGames.Core.Visual
                     Particles[i].State = State.Idle;
                     ParticlesPools[Particles[i].Name].Return(Particles[i]);
                     
-                    //Scene.Remove(Particles[i]);
-
                     Particles.RemoveAt(i);
                 }
         }
@@ -146,39 +130,5 @@ namespace EphemereGames.Core.Visual
                     Particles[k].State = State.Dead;
             }
         }
-
-        //private float elapsedSeconds;
-        //private void UpdateFirstPart()
-        //{
-        //    for (int k = 0; k < Particles.Count / 2; k++)
-        //    {
-        //        Particles[k].ParticleEffect.Update(elapsedSeconds);
-
-        //        if (Particles[k].State == State.Dying && Particles[k].ParticleEffect.ActiveParticlesCount == 0)
-        //            Particles[k].State = State.Dead;
-        //    }
-        //}
-
-        //private void UpdateSecondPart()
-        //{
-        //    for (int k = 0; k < Particles.Count / 2; k++)
-        //    {
-        //        Particles[k].ParticleEffect.Update(elapsedSeconds);
-
-        //        if (Particles[k].State == State.Dying && Particles[k].ParticleEffect.ActiveParticlesCount == 0)
-        //            Particles[k].State = State.Dead;
-        //    }
-        //}
-
-        //private void UpdateThirdPart()
-        //{
-        //    for (int k = Particles.Count / 2; k < Particles.Count; k++)
-        //    {
-        //        Particles[k].ParticleEffect.Update(elapsedSeconds);
-
-        //        if (Particles[k].State == State.Dying && Particles[k].ParticleEffect.ActiveParticlesCount == 0)
-        //            Particles[k].State = State.Dead;
-        //    }
-        //}
     }
 }

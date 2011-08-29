@@ -101,7 +101,7 @@ namespace EphemereGames.Commander.Simulation
                     @"mothershipMissile",
                     @"nextWave",
                     @"mothershipAbduction"
-                }, false);
+                }, true);
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
 
@@ -239,12 +239,17 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(GUIController.DoStartingPathCollision);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(SpaceshipsController.DoShieldCollided);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(BulletsController.DoShieldCollided);
+
+            Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
+            Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
         }
 
 
         public void Initialize()
         {
             State = GameState.Running;
+
+            Scene.Particles.Clear();
 
             TweakingController.BulletsFactory = BulletsFactory;
             TweakingController.EnemiesFactory = EnemiesFactory;
@@ -323,6 +328,21 @@ namespace EphemereGames.Commander.Simulation
             BulletsController.Initialize();
             PausedGameController.Initialize();
         }
+
+
+        public void CleanUp()
+        {
+            Main.CheatsController.CheatActivated -= DoCheatActivated;
+            Main.Options.ShowHelpBarChanged -= DoShowHelpBarChanged;
+            Inputs.RemoveListener(this);
+        }
+
+
+        public bool SpawnEnemies
+        {
+            set { EnemiesController.SpawnEnemies = value; }
+        }
+
 
 
         public LevelDescriptor LevelDescriptor
@@ -503,7 +523,6 @@ namespace EphemereGames.Commander.Simulation
                 int score = LevelsController.Level.CommonStash.TotalScore;
 
                 Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, state, levelId, score);
-
                 Main.SaveGameController.SaveAll();
             }
         }
@@ -532,6 +551,29 @@ namespace EphemereGames.Commander.Simulation
                 //Inputs.VibrateControllerHighFrequency(player, 300, 0.5f);
                 Inputs.VibrateControllerLowFrequency(player, 300, 0.9f);
             }
+        }
+
+
+        private void DoCheatActivated(string name)
+        {
+            if (DemoMode || EditorMode || WorldMode)
+                return;
+
+            if (State != GameState.Running)
+                return;
+
+            if (name == "LevelWon")
+            {
+                State = GameState.Won;
+                LevelsController.ComputeFinalScore();
+                LevelsController.TriggerNewGameState(State);
+            }
+        }
+
+
+        private void DoShowHelpBarChanged(bool value)
+        {
+            HelpBar.ActiveOptions = value;
         }
 
 

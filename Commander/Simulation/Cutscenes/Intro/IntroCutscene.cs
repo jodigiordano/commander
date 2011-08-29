@@ -27,7 +27,19 @@
             Simulator = new SimulatorAnimation(Scene);
             Commander = new CommanderAnimation(Scene);
             Location = new LocationAnimation(Scene);
-            Mothership = new MothershipAnimation(Simulator.Simulator);
+            Mothership = new MothershipAnimation(Simulator.Simulator)
+            {
+                TimeBeforeArrival = IntroCutscene.Timing["MothershipArrival"],
+                TimeBeforeLights = IntroCutscene.Timing["MothershipLights"],
+                TimeBeforeDestruction = IntroCutscene.Timing["MothershipDestruction"],
+                TimeBeforeDeparture = IntroCutscene.Timing["MothershipDeparture"],
+                TimeArrival = 5500,
+                TimeLights = 10000,
+                TimeDeparture = 18000,
+                ArrivalZoom = 0.7f,
+                DepartureZoom = 1.5f
+            };
+
             Protagonist = new ProtagonistsAnimation(Simulator.Simulator, Mothership.Mothership);
             Resistance = new ResistanceAnimation(Simulator.Simulator, Mothership.Mothership);
             Mothership.Battleships = Resistance.Battleships;

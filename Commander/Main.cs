@@ -32,6 +32,7 @@ namespace EphemereGames.Commander
         public static MusicController MusicController;
         public static NewsController NewsController;
         public static SaveGameController SaveGameController;
+        public static CheatsController CheatsController;
 
         public static bool GamePausedToWorld { get { return GameInProgress != null && GameInProgress.State == GameState.PausedToWorld; } }
 
@@ -69,6 +70,7 @@ namespace EphemereGames.Commander
             MusicController = new MusicController();
             NewsController = new NewsController();
             SaveGameController = new SaveGameController();
+            CheatsController = new CheatsController();
 
             Boot = BootSequence.Initial;
 
@@ -131,6 +133,8 @@ namespace EphemereGames.Commander
                         Inputs.AddPlayer(new Player());
                         Inputs.AddPlayer(new Player());
 
+                        CheatsController.Initialize();
+
                         Persistence.LoadPackage(@"loading");
                         Boot = BootSequence.LoadingMinimalPackage;
                     }
@@ -158,6 +162,7 @@ namespace EphemereGames.Commander
                     
                     Visuals.Update(gameTime);
                     Inputs.Update(gameTime);
+                    CheatsController.Update();
 
                     if (Persistence.IsPackageLoaded(@"principal"))
                     {
@@ -197,6 +202,12 @@ namespace EphemereGames.Commander
 
         private void DoWindowsFocusGained(object sender, EventArgs args)
         {
+            if (Boot != BootSequence.Running)
+                return;
+
+            if (!Persistence.IsPackageLoaded(@"principal"))
+                return;
+
             if (GameInProgress != null && !GamePausedToWorld)
                 GameInProgress.MusicController.ResumeMusic();
             else
@@ -206,6 +217,12 @@ namespace EphemereGames.Commander
 
         private void DoWindowsFocusLost(object sender, EventArgs args)
         {
+            if (Boot != BootSequence.Running)
+                return;
+
+            if (!Persistence.IsPackageLoaded(@"principal"))
+                return;
+
             if (GameInProgress != null && !GamePausedToWorld)
                 GameInProgress.MusicController.PauseMusicNow();
             else

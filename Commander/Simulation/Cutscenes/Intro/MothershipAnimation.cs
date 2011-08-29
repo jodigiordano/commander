@@ -46,7 +46,7 @@
                 ShowShield = true,
                 ShieldImageName = "MothershipHitMask",
                 ShieldColor = Colors.Default.AlienBright,
-                ShieldAlpha = 50,
+                ShieldAlpha = 100,
                 ShieldDistance = 10
             };
             Mothership.Position = new Vector3(0, -Mothership.Size.Y/2 - 360, 0);
@@ -55,17 +55,6 @@
 
             State = MothershipState.None;
             Simulator.Scene.Camera.Zoom = 1f;
-
-            TimeBeforeArrival = IntroCutscene.Timing["MothershipArrival"];
-            TimeBeforeLights = IntroCutscene.Timing["MothershipLights"];
-            TimeBeforeDestruction = IntroCutscene.Timing["MothershipDestruction"];
-            TimeBeforeDeparture = IntroCutscene.Timing["MothershipDeparture"];
-
-            TimeArrival = 5500;
-            TimeLights = 10000;
-            TimeDeparture = 18000;
-            ArrivalZoom = 0.7f;
-            DepartureZoom = 1.5f;
         }
 
 

@@ -1322,18 +1322,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GUI\done.png">
-      <Name>done</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-    <None Include="GUI\notdone.png">
-      <Name>notdone</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="help\mercenariesWin.png">
       <Name>mercenariesWin</Name>
       <Importer>TextureImporter</Importer>

@@ -10,7 +10,7 @@
         public int FadeTime = 1000;
 
         private MusicContext Context;
-        
+
         private string SelectedMusic;
         private double TimeBetweenTwoMusicChange = 0;
 

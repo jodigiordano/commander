@@ -15,11 +15,11 @@
 
 
         public WorldAnnunciationScene(WorldDescriptor descriptor) :
-            base("World" + descriptor.Id + "Annunciation")
+            base(Main.LevelsFactory.GetWorldAnnounciationStringId(descriptor.Id))
         {
             Descriptor = descriptor;
 
-            WorldId = new Text("World " + Descriptor.Id, @"Pixelite")
+            WorldId = new Text(Main.LevelsFactory.GetWorldStringId(Descriptor.Id), @"Pixelite")
             {
                 SizeX = 4,
                 Color = Color.Black
@@ -49,7 +49,7 @@
 
             if (Length <= 0)
             {
-                TransiteTo("World" + Descriptor.Id);
+                TransiteTo(Main.LevelsFactory.GetWorldStringId(Descriptor.Id));
                 TransitionInProgress = true;
             }
 
