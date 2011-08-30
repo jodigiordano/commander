@@ -171,7 +171,7 @@
 
                 if (CurrentSequenceId == SequenceGamepad.Count)
                 {
-                    CurrentStatus = Status.Succeed;
+                    CurrentStatus = Recurrent ? Status.None : Status.Succeed;
                     SetActivatedThisTick();
                 }
             }

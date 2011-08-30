@@ -38,6 +38,8 @@
             Sfx.Value = Main.Options.SfxVolume;
             Fullscreen.Value = Main.Options.FullScreen;
             ShowHelpBar.Value = Main.Options.ShowHelpBar;
+
+            base.Initialize();
         }
 
 

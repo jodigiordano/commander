@@ -58,6 +58,16 @@
         Updates = 1,
         DLC = 2
     };
+
+
+    public enum HelpBarMessageType
+    {
+        Select = 1,
+        Cancel = 2,
+        Toggle = 3,
+        Move = 4,
+        Retry = 5
+    };
 }
 
 

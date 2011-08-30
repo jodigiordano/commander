@@ -54,9 +54,9 @@
             set
             {
                 Label.VisualPriority = value;
-                Box.VisualPriority = value;
-                CheckedRep.VisualPriority = value - 0.0000001;
-                Selection.VisualPriority = value + 0.0000001;
+                Box.VisualPriority = value - 0.0000002;
+                CheckedRep.VisualPriority = value - 0.0000003;
+                Selection.VisualPriority = value - 0.0000001;
             }
         }
 

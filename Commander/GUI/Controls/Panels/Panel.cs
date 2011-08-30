@@ -91,6 +91,13 @@
         }
 
 
+        public override void Initialize()
+        {
+            CloseButton.Initialize();
+            CloseButton.VisualPriority = VisualPriority;
+        }
+
+
         public override Scene Scene
         {
             get { return base.Scene; }

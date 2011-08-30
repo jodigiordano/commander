@@ -150,6 +150,8 @@
     <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorld1Animation.cs" />
     <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorldAnimation.cs" />
     <Compile Include="Simulation\GUI\GameBarPanel.cs" />
+    <Compile Include="Simulation\GUI\HelpBarPanel\HBMessageConstructor.cs" />
+    <Compile Include="Simulation\GUI\HelpBarPanel\HelpBarPanel.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuLayout.cs" />
     <Compile Include="Simulation\GUI\Menus\NextWaveContextualMenuChoice.cs" />
@@ -230,7 +232,6 @@
     <Compile Include="Simulation\GUI\Editor\EditorToggleContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
     <Compile Include="Simulation\GUI\GUIPlayer.cs" />
-    <Compile Include="Simulation\GUI\HelpBarPanel.cs" />
     <Compile Include="Simulation\GUI\Menus\CelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuChoice.cs" />

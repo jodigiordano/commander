@@ -326,4 +326,31 @@
             return (int) obj;
         }
     }
+
+
+    class HelpBarMessageTypeComparer : IEqualityComparer<HelpBarMessageType>
+    {
+        private static HelpBarMessageTypeComparer instance;
+        public static HelpBarMessageTypeComparer Default
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new HelpBarMessageTypeComparer();
+                return instance;
+            }
+        }
+
+
+        public bool Equals(HelpBarMessageType x, HelpBarMessageType y)
+        {
+            return x == y;
+        }
+
+
+        public int GetHashCode(HelpBarMessageType obj)
+        {
+            return (int) obj;
+        }
+    }
 }

@@ -9,7 +9,7 @@
         {
             Type = TurretType.MultipleLasers;
             Name = @"Multi-laser";
-            Description = @"Shoot a laser that hit every enemy in it's path";
+            Description = @"Shoot a laser that hit every enemy on it's path";
             SfxShooting = @"sfxTourelleLaserMultiple";
             Color = new Color(255, 96, 28);
 

@@ -63,6 +63,8 @@
             { Keys.D, "KeyD" },
             { Keys.R, "KeyR" },
             { Keys.F, "KeyF" },
+            { Keys.E, "KeyE" },
+            { Keys.Q, "KeyQ" },
             { Keys.Delete, "KeyDelete" }
         };
     }

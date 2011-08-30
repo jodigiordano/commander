@@ -20,13 +20,16 @@
                 SizeX = 4
             };
 
-            Selection = scene.Particles.Get(@"selectionCorpsCeleste");
-
             VisualPriority = visualPriority;
             Position = position;
 
             ButtonCircle = new Circle(position, Button.AbsoluteSize.X / 2);
+        }
 
+
+        public override void Initialize()
+        {
+            Selection = Scene.Particles.Get(@"selectionCorpsCeleste");
             ((CircleEmitter) Selection.ParticleEffect[0]).Radius = ButtonCircle.Radius + 5;
         }
 
@@ -40,7 +43,9 @@
             set
             {
                 Button.VisualPriority = value + 0.0000001;
-                Selection.VisualPriority = value + 0.0000002;
+                
+                if (Selection != null)
+                    Selection.VisualPriority = value + 0.0000002;
             }
         }
 

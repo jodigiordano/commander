@@ -270,7 +270,7 @@
         {
             var player = Players[p];
 
-            if (player.ActualSelection.CelestialBody == null)
+            if (player.ActualSelection.PausedGameChoice == PausedGameChoice.None)
                 return;
 
             if (delta > 0)

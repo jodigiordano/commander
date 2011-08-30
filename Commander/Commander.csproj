@@ -258,6 +258,7 @@
     <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
     <Compile Include="GUI\Bubbles\ManualTextBubble.cs" />
     <Compile Include="Simulation\GUI\GameBarPanel.cs" />
+    <Compile Include="Simulation\GUI\HelpBarPanel\HBMessageConstructor.cs" />
     <Compile Include="Simulation\GUI\NextWaveWidget.cs" />
     <Compile Include="Simulation\GUI\PlayerLivesLiteral.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ColoredTextContextualMenuChoice.cs" />
@@ -285,7 +286,7 @@
     <Compile Include="Simulation\GUI\Editor\EditorToggleContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\GUIController.cs" />
     <Compile Include="Simulation\GUI\GUIPlayer.cs" />
-    <Compile Include="Simulation\GUI\HelpBarPanel.cs" />
+    <Compile Include="Simulation\GUI\HelpBarPanel\HelpBarPanel.cs" />
     <Compile Include="Simulation\GUI\Menus\NewGameMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\UpgradeTurretContextualMenuChoice.cs" />

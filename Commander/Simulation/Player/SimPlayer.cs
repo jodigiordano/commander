@@ -202,8 +202,7 @@
         {
             ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
 
-            if (ActualSelection.CelestialBody != null && Main.GameInProgress != null &&
-                !Main.GameInProgress.IsFinished &&
+            if (ActualSelection.CelestialBody != null && Main.GamePausedToWorld &&
                 Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == ActualSelection.CelestialBody.Name &&
                 Simulator.Scene.EnableInputs &&
                 ActualSelection.PausedGameChoice == PausedGameChoice.None) //todo: take it from WorldMenu
@@ -211,7 +210,7 @@
                 NextPausedGameChoice();
             }
 
-            else if (Main.GameInProgress == null || ActualSelection.CelestialBody == null)
+            else if (Main.GameInProgress == null || ActualSelection.CelestialBody == null || Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission != ActualSelection.CelestialBody.Name)
             {
                 ActualSelection.PausedGameChoice = PausedGameChoice.None;
             }

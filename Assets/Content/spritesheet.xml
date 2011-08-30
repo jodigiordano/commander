@@ -122,6 +122,8 @@
     <Item><Key>KeyW</Key><Value>GUI/Buttons/Windows/keyW.png</Value></Item>
     <Item><Key>KeyA</Key><Value>GUI/Buttons/Windows/keyA.png</Value></Item>
     <Item><Key>KeyS</Key><Value>GUI/Buttons/Windows/keyS.png</Value></Item>
+    <Item><Key>KeyE</Key><Value>GUI/Buttons/Windows/keyE.png</Value></Item>
+    <Item><Key>KeyQ</Key><Value>GUI/Buttons/Windows/keyQ.png</Value></Item>
     <Item><Key>KeyD</Key><Value>GUI/Buttons/Windows/keyD.png</Value></Item>
     <Item><Key>KeyR</Key><Value>GUI/Buttons/Windows/keyR.png</Value></Item>
     <Item><Key>KeyF</Key><Value>GUI/Buttons/Windows/keyF.png</Value></Item>

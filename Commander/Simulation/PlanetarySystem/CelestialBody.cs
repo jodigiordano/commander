@@ -115,8 +115,6 @@
             Speed = float.MaxValue;
             SetSpeed(speed);
 
-            InitMoons();
-
             TurretsZoneImage = new Image("CercleBlanc", Vector3.Zero);
             TurretsZoneImage.Color = new Color(255, 255, 255, 100);
             TurretsZoneImage.VisualPriority = VisualPriorities.Default.TurretRange;
@@ -136,6 +134,8 @@
             FakeHasGravitationalTurretLv2 = false;
             SlowDeath = false;
             SilentDeath = false;
+
+            InitMoons();
         }
 
 
@@ -328,8 +328,8 @@
             InnerTurretZone.Position = Position;
             OuterTurretZone.Position = Position;
 
-            for (int i = 0; i < Moons.Count; i++)
-                Moons[i].Update();
+            foreach (var m in Moons)
+                m.Update();
         }
 
 
@@ -487,18 +487,18 @@
         private void InitMoons()
         {
             Moons = new List<Moon>();
-            int nbLunes = HasMoons ? Main.Random.Next(0, 3) : 0;
+            int moonsCount = HasMoons ? Main.Random.Next(0, 3) : 0;
 
-            for (int i = 0; i < nbLunes; i++)
+            for (int i = 0; i < moonsCount; i++)
             {
-                Moon lune;
+                Moon moon;
 
                 if ((Main.Random.Next(0, 2) == 0))
-                    lune = new MoonMatrix(Simulator, this, 50);
+                    moon = new MoonMatrix(Simulator, this, 50);
                 else
-                    lune = new MoonPath(Simulator, this, 50);
+                    moon = new MoonPath(Simulator, this, 50);
 
-                Moons.Add(lune);
+                Moons.Add(moon);
             }
         }
 
