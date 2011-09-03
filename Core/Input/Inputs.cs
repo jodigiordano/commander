@@ -45,6 +45,12 @@
         }
 
 
+        public static void Ready()
+        {
+            PlayerConnection.Initialize();
+        }
+
+
         public static void UpdateInputSource(
             Player player,
             List<MouseButton> mouseButtons,

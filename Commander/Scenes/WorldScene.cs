@@ -243,12 +243,14 @@
         private void DoSelectAction(Player p)
         {
             // Select a warp
-            if (WorldSelected != null)
+            var world = GetWorldSelected(p);
+
+            if (world != null)
             {
-                if (WorldSelected.Unlocked)
-                    TransiteTo(WorldSelected.Name + "Annunciation");
+                if (world.Unlocked)
+                    TransiteTo(world.Name + "Annunciation");
                 else
-                    ShowWarpBlockedMessage();
+                    ShowWarpBlockedMessage(p);
 
                 return;
             }
@@ -306,20 +308,17 @@
         }
 
 
-        public WorldScene WorldSelected
+        public WorldScene GetWorldSelected(Player p)
         {
-            get
-            {
-                CelestialBody c = Simulator.GetSelectedCelestialBody(Inputs.MasterPlayer);
+            CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
-                return (c != null && c is PinkHole) ? (WorldScene) Visuals.GetScene(Warps[c.Name]) : null;
-            }
+            return (c != null && c is PinkHole) ? (WorldScene) Visuals.GetScene(Warps[c.Name]) : null;
         }
 
 
-        public void ShowWarpBlockedMessage()
+        public void ShowWarpBlockedMessage(Player p)
         {
-            CelestialBody c = Simulator.GetSelectedCelestialBody(Inputs.MasterPlayer);
+            CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
             Simulator.MessagesController.ShowMessage(c, Descriptor.WarpBlockedMessage, 5000, -1);
         }

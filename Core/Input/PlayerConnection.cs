@@ -15,9 +15,15 @@
 
         public PlayerConnection()
         {
+
+            
+        }
+
+
+        public void Initialize()
+        {
             SignedInGamer.SignedIn += new EventHandler<SignedInEventArgs>(DoPlayerConnected);
             SignedInGamer.SignedOut += new EventHandler<SignedOutEventArgs>(DoPlayerDisconnected);
-            
         }
 
 

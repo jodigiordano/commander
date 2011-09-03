@@ -39,8 +39,8 @@
 
             var worldLevel = Simulator.LevelDescriptor.Infos.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
 
-            World.Value = int.Parse(worldLevel[0]);
-            Level.Value = int.Parse(worldLevel[1]);
+            //World.Value = int.Parse(worldLevel[0]);
+            //Level.Value = int.Parse(worldLevel[1]); //todo: redo
         }
     }
 }
