@@ -130,6 +130,12 @@
         public void DoPlayerDisconnected(SimPlayer p)
         {
             Players.Remove(p.PausePlayer);
+
+            if (Players.Count == 0 && IsPanelVisible)
+            {
+                CloseOthersPanels(PanelType.None);
+                Simulator.CanSelectCelestialBodies = true;
+            }
         }
 
 
