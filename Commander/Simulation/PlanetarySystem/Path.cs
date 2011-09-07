@@ -8,7 +8,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class Path
+    class Path : IVisual
     {
         private const int MaxVisibleLines = 300;
         private const int MaxCurvePoints = 300;
@@ -357,6 +357,33 @@
                     Points[NbPoints++] = exitVec;
                 }
             }
+        }
+
+
+        Rectangle IVisual.VisiblePart
+        {
+            set { throw new NotImplementedException(); }
+        }
+
+
+        Vector2 IVisual.Origin
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        Vector2 IVisual.Size
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        Color IVisual.Color
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
     }
 }

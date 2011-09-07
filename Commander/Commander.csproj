@@ -243,6 +243,7 @@
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\NextWavePreview.cs" />
+    <Compile Include="Simulation\GUI\AdvancedView\PathPreview\PathPreviewVisual.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
@@ -329,7 +330,7 @@
     <Compile Include="Simulation\Minerals\MineralDefinition.cs" />
     <Compile Include="Simulation\Minerals\MineralsFactory.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\FinalSolutionPreview.cs" />
-    <Compile Include="Simulation\GUI\AdvancedView\PathPreview.cs" />
+    <Compile Include="Simulation\GUI\AdvancedView\PathPreview\PathPreview.cs" />
     <Compile Include="Simulation\GUI\Animations\MineralTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
     <Compile Include="GUI\Bubbles\Bubble.cs" />

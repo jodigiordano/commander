@@ -567,7 +567,6 @@
                 StartingPathMenu.Update();
                 LevelStartedAnnunciation.Update();
                 LevelEndedAnnunciation.Update();
-                //PlayerLives.Update();
                 MenuPowerUps.Update();
                 PathPreviewing.Update();
                 GameMenu.Update();
@@ -626,7 +625,7 @@
             AdvancedView.Draw();
             //PlayerLives.Draw();
             MenuPowerUps.Draw();
-            PathPreviewing.Draw();
+            PathPreview.Draw();
             CelestialBodyNearHit.Draw();
             AlienNextWaveAnimation.Draw();
             //GameMenu.Draw();

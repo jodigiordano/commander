@@ -138,6 +138,8 @@
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\ResistanceAnimation.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\NextWavePreview.cs" />
+    <Compile Include="Simulation\GUI\AdvancedView\PathPreview\PathPreview.cs" />
+    <Compile Include="Simulation\GUI\AdvancedView\PathPreview\PathPreviewVisual.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\AlienNextWaveStartedAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
@@ -295,7 +297,6 @@
     <Compile Include="Simulation\Turrets\TurretsController.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipsController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\FinalSolutionPreview.cs" />
-    <Compile Include="Simulation\GUI\AdvancedView\PathPreview.cs" />
     <Compile Include="Simulation\GUI\Animations\MineralTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
     <Compile Include="Simulation\GUI\Help.cs" />

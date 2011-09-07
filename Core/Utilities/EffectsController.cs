@@ -122,6 +122,12 @@
         }
 
 
+        public void StopAllKeepCurrentState()
+        {
+            Clear();
+        }
+
+
         public void CancelEffect(int id)
         {
             Effect<T> effect;
