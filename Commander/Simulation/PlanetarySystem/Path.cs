@@ -164,6 +164,7 @@
             {
                 FirstCelestialBody.FirstOnPath = false;
                 LastCelestialBody.LastOnPath = false;
+                LastCelestialBody.StayOnPathUponDeath = false;
 
                 if (beforeLast)
                 {
@@ -179,6 +180,7 @@
 
                 FirstCelestialBody.FirstOnPath = true;
                 LastCelestialBody.LastOnPath = true;
+                LastCelestialBody.StayOnPathUponDeath = true;
             }
 
             else

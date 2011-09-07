@@ -85,7 +85,7 @@
 
                     c.DoDie();
 
-                    if (Path.ContainsCelestialBody(c))
+                    if (!c.StayOnPathUponDeath && Path.ContainsCelestialBody(c))
                     {
                         Path.RemoveCelestialBody(c);
                         PathPreview.RemoveCelestialBody(c);

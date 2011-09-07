@@ -43,6 +43,7 @@
         public bool FollowPath;
         public bool HasMoons;
         public bool StraightLine;
+        public bool StayOnPathUponDeath;
         public List<Moon> Moons;
         public bool FakeHasGravitationalTurret;
         public Circle InnerTurretZone;
@@ -134,6 +135,7 @@
             FakeHasGravitationalTurretLv2 = false;
             SlowDeath = false;
             SilentDeath = false;
+            StayOnPathUponDeath = false;
 
             InitMoons();
         }
