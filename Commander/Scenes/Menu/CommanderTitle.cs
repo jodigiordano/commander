@@ -115,7 +115,7 @@
                 Scene, new Vector3(0, 65, 0),
                 "Alien", Colors.Default.AlienBright,
                 @"Pixelite", Colors.Default.NeutralBright,
-                (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a button to start your engine",
+                (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a mouse button to start your engine",
                 3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal, false)
                 {
                     CenterText = true
