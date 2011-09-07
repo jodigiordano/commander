@@ -117,7 +117,7 @@
                 Scene.VisualEffects.Add(BackImage, effect);
             }
 
-            Active = to < from || to == 0;
+            Active = to >= from && to != 0;
         }
 
 

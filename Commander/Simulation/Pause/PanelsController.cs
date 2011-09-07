@@ -121,6 +121,9 @@
             GUIPausePlayer player = new GUIPausePlayer(Simulator, p);
 
             Players.Add(p.PausePlayer, player);
+
+            if (IsPanelVisible)
+                ShowPausePlayer(player);
         }
 
 
@@ -263,11 +266,15 @@
 
         private void ShowPausePlayers()
         {
-            foreach (var p in Players)
-            {
-                p.Value.Sync();
-                p.Value.Cursor.FadeIn();
-            }
+            foreach (var p in Players.Values)
+                ShowPausePlayer(p);
+        }
+
+
+        private void ShowPausePlayer(GUIPausePlayer p)
+        {
+            p.Sync();
+            p.Cursor.FadeIn();
         }
 
 

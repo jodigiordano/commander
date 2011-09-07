@@ -18,7 +18,6 @@
             InnerPlayer = innerPlayer;
 
             Cursor = new SpaceshipCursor(Simulator.Scene, Vector3.Zero, 2, VisualPriorities.Default.PlayerPanelCursor, InnerPlayer.Color, InnerPlayer.ImageName, false);
-            Cursor.FadeOut();
         }
 
 
