@@ -93,7 +93,7 @@
         }
 
 
-        public object Load(string musicName, string path, Dictionary<string, string> parameters, ContentManager contenu)
+        public IAsset Load(string musicName, string path, Dictionary<string, string> parameters, ContentManager contenu)
         {
             Microsoft.Xna.Framework.Audio.SoundEffect sound = contenu.Load<Microsoft.Xna.Framework.Audio.SoundEffect>(path);
 
@@ -103,6 +103,12 @@
             Audio.AudioController.SetMusic(musicName, music);
 
             return music;
+        }
+
+
+        public void Unload()
+        {
+
         }
 
 

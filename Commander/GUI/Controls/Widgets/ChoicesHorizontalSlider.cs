@@ -60,7 +60,7 @@
         {
             Selection = Scene.Particles.Get(@"selectionCorpsCeleste");
 
-            ((CircleEmitter) Selection.ParticleEffect[0]).Radius = DecrementCircle.Radius + 5;
+            ((CircleEmitter) Selection.Model[0]).Radius = DecrementCircle.Radius + 5;
         }
 
 

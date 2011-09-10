@@ -191,7 +191,7 @@
                 Vector3 newColor = Color.Red.ToVector3();
                 Vector4 newColor2 = Color.Red.ToVector4();
 
-                var stars = Stars.ParticleEffect[0];
+                var stars = Stars.Model[0];
 
                 stars.ReleaseColour = newColor;
 
@@ -202,7 +202,7 @@
                     star.Colour = newColor2;
 
                     var effect = Simulator.Scene.Particles.Get(@"starExplosion");
-                    effect.ParticleEffect[0].ReleaseColour = newColor;
+                    effect.Model[0].ReleaseColour = newColor;
                     effect.Trigger(ref star.Position);
                     effect.VisualPriority = Preferences.PrioriteFondEcran - 0.00001f;
                     Simulator.Scene.Particles.Return(effect);

@@ -120,6 +120,7 @@ namespace EphemereGames.Commander
                         Options.VolumeSfxChanged += new Integer2Handler(SaveGameController.DoVolumeSfxChanged);
 
                         Audio.Initialize(Options.MusicVolume / 10f, Options.SfxVolume / 10f);
+                        EphemereGames.Core.XACTAudio.XACTAudio.Initialize(Content.RootDirectory + @"\audio\Audio.xgs");
 
                         DoFullScreenChanged(Options.FullScreen);
 

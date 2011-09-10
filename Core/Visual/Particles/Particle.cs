@@ -26,7 +26,7 @@
         public Vector3 Position                 { get; set; }
         public Scene Scene                      { get; set; }
         public int Id                           { get; private set; }
-        public ParticleEffect ParticleEffect;
+        public ParticleEffect Model;
         public SpriteBatchRenderer Renderer;
         internal State State;
 
@@ -46,11 +46,11 @@
 
         public void Initialize()
         {
-            ProjectMercury.ParticleEffect model = EphemereGames.Core.Persistence.Persistence.GetAsset<ProjectMercury.ParticleEffect>(Name);
+            ParticleEffect model = EphemereGames.Core.Persistence.Persistence.GetAsset<Particle>(Name).Model;
 
-            ParticleEffect = model.DeepCopy();
+            Model = model.DeepCopy();
 
-            ParticleEffect.Initialise();
+            Model.Initialise();
         }
 
 
@@ -61,10 +61,10 @@
             {
                 blend = value;
 
-                if (ParticleEffect == null)
+                if (Model == null)
                     return;
 
-                foreach (var effect in ParticleEffect)
+                foreach (var effect in Model)
                     effect.BlendMode = ToMercuryBlend(value);
             }
         }
@@ -72,7 +72,7 @@
 
         public void Trigger(ref Vector2 position)
         {
-            this.ParticleEffect.Trigger(ref position);
+            this.Model.Trigger(ref position);
         }
 
 
@@ -80,15 +80,15 @@
         {
             Vector2 position2d = new Vector2(position.X, position.Y);
 
-            this.ParticleEffect.Trigger(ref position2d);
+            this.Model.Trigger(ref position2d);
         }
 
 
         public void Move(ref Vector2 varPosition)
         {
-            for (int i = 0; i < ParticleEffect.Count; i++)
-                for (int j = 0; j < ParticleEffect[i].ActiveParticlesCount; j++)
-                    Vector2.Add(ref ParticleEffect[i].Particles[j].Position, ref varPosition, out ParticleEffect[i].Particles[j].Position);
+            for (int i = 0; i < Model.Count; i++)
+                for (int j = 0; j < Model[i].ActiveParticlesCount; j++)
+                    Vector2.Add(ref Model[i].Particles[j].Position, ref varPosition, out Model[i].Particles[j].Position);
         }
 
 
@@ -134,7 +134,7 @@
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Renderer.RenderEffect(this.ParticleEffect, ref Scene.Camera.Transform);
+            Renderer.RenderEffect(this.Model, ref Scene.Camera.Transform);
         }
 
 
@@ -144,15 +144,23 @@
         }
 
 
-        public object Load(string nom, string chemin, Dictionary<string, string> parametres, ContentManager contenu)
+        public IAsset Load(string nom, string path, Dictionary<string, string> parameters, ContentManager contentManager)
         {
-            // charge la particule à partir du fichier XML (une seule fois)
-            ParticleEffect particle = contenu.Load<ParticleEffect>(chemin);
+            Particle p = new Particle()
+            {
+                Model = contentManager.Load<ParticleEffect>(path)
+            };
 
-            // charge les images qui doivent (pour l'instant) se trouver dans WindowsContent
-            particle.LoadContent(contenu);
+            // Load images (that must be in WindowsContent for now)
+            p.Model.LoadContent(contentManager);
 
-            return particle;
+            return p;
+        }
+
+
+        public void Unload()
+        {
+
         }
 
 

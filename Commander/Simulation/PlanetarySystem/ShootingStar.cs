@@ -115,7 +115,7 @@
 
             RemainingTime = Length = time * 2;
 
-            ((ColourInterpolatorModifier) Effect.ParticleEffect[0].Modifiers[1]).InitialColour = Couleurs[Main.Random.Next(0, Couleurs.Length)];
+            ((ColourInterpolatorModifier) Effect.Model[0].Modifiers[1]).InitialColour = Couleurs[Main.Random.Next(0, Couleurs.Length)];
 
             Circle.Position = new Vector3(startingPosition.X, startingPosition.Y, 0);
         }
@@ -128,7 +128,7 @@
             double relativeTime = Length - RemainingTime;
 
             TrailDirection = Path.GetDirection(relativeTime);
-            ((ConeEmitter) Effect.ParticleEffect[0]).Direction = (float) Math.Atan2(TrailDirection.Y, TrailDirection.X) - MathHelper.Pi;
+            ((ConeEmitter) Effect.Model[0]).Direction = (float) Math.Atan2(TrailDirection.Y, TrailDirection.X) - MathHelper.Pi;
 
             Vector2 p = Path.GetPosition(relativeTime);
             position = new Vector3(p.X, p.Y, 0);

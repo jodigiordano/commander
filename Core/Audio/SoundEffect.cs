@@ -11,7 +11,6 @@
     {
         public int InstancesActives;
 
-        //private Dictionary<int, NoneHandler> InstancesCallbacks;
         private List<int> ToDelete;
 
 
@@ -20,17 +19,8 @@
         {
             Volume = Audio.AudioController.SfxVolume;
             InstancesActives = 0;
-            //InstancesCallbacks = new Dictionary<int, NoneHandler>();
             ToDelete = new List<int>();
         }
-
-
-        //public void Play(bool progressive, int fadeTime, NoneHandler callback)
-        //{
-        //    Play(progressive, fadeTime, false);
-        //    
-        //}
-        
 
 
         public override void Update(GameTime gameTime)
@@ -64,19 +54,25 @@
         }
 
 
-        public object Load(string name, string path, Dictionary<string, string> parameters, ContentManager contenu)
+        public IAsset Load(string name, string path, Dictionary<string, string> parameters, ContentManager contenu)
         {
-            string banque = parameters[@"bank"];
+            string bank = parameters[@"bank"];
 
-            Microsoft.Xna.Framework.Audio.SoundEffect son = contenu.Load<Microsoft.Xna.Framework.Audio.SoundEffect>(path);
-            son.Name = name;
+            Microsoft.Xna.Framework.Audio.SoundEffect sound = contenu.Load<Microsoft.Xna.Framework.Audio.SoundEffect>(path);
+            sound.Name = name;
 
-            SoundEffect effetSonore = new SoundEffect();
-            effetSonore.Sound = son;
+            SoundEffect soundEffect = new SoundEffect();
+            soundEffect.Sound = sound;
 
-            Audio.AudioController.SetSfx(banque, effetSonore);
+            Audio.AudioController.SetSfx(bank, soundEffect);
 
-            return effetSonore;
+            return soundEffect;
+        }
+
+
+        public void Unload()
+        {
+
         }
 
 

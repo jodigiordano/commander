@@ -9,11 +9,10 @@ namespace EphemereGames.Core.Visual
 
     using System;
     using System.Collections.Generic;
-    using System.Text;
+    using EphemereGames.Core.Persistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using EphemereGames.Core.Persistence;
     
     public class Sprite : IVisible, IAsset
     {
@@ -259,13 +258,18 @@ namespace EphemereGames.Core.Visual
             get { return "Sprite"; }
         }
 
-        public object Load(string nom, string chemin, Dictionary<string, string> parametres, ContentManager contenu)
+        public IAsset Load(string nom, string chemin, Dictionary<string, string> parametres, ContentManager contenu)
         {
             Sprite sprite = contenu.Load<Sprite>(chemin);
 
             sprite.SpriteSheet = contenu.Load<Texture2D>(sprite.NomSpriteSheet);
 
             return sprite;
+        }
+
+        public void Unload()
+        {
+
         }
 
         public object Clone()

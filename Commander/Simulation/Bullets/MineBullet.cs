@@ -62,7 +62,7 @@
 
         public override void DoDie()
         {
-            ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
+            ((CircleEmitter) ExplodingEffect.Model[1]).Radius = ExplosionRange;
             
             base.DoDie();
         }

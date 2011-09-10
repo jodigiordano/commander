@@ -139,7 +139,7 @@
             BoostGlow = Simulator.Scene.Particles.Get(@"boosterTurret");
             BoostGlow.VisualPriority = this.VisualPriorityBackup + 0.006f;
 
-            CircleEmitter emitter = (CircleEmitter) BoostGlow.ParticleEffect[0];
+            CircleEmitter emitter = (CircleEmitter) BoostGlow.Model[0];
 
             emitter.Radius = this.Circle.Radius;
             emitter.ReleaseScale.Value = 50;

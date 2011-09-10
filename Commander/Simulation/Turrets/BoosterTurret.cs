@@ -57,7 +57,7 @@ namespace EphemereGames.Commander.Simulation
         {
             Glow.VisualPriority = this.VisualPriorityBackup + 0.006f;
 
-            CircleEmitter emitter = (CircleEmitter) Glow.ParticleEffect[0];
+            CircleEmitter emitter = (CircleEmitter) Glow.Model[0];
 
             emitter.Radius = this.Range;
             emitter.Term = this.Range / 300f;

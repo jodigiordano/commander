@@ -46,7 +46,7 @@
             ShowTrail = true;
 
             TrailEffect = Scene.Particles.Get(@"spaceshipTrail");
-            TrailEffect.ParticleEffect[0].ReleaseColour = Color.ToVector3();
+            TrailEffect.Model[0].ReleaseColour = Color.ToVector3();
             TrailEffect.VisualPriority = BackImage.VisualPriority + 0.00001;
 
             TrailEffect2 = Scene.Particles.Get(@"spaceshipTrail2");
@@ -66,8 +66,8 @@
                 Variation = 25
             };
 
-            TrailEffect.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
-            TrailEffect2.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
+            TrailEffect.Model[0].ReleaseSpeed = NotMovingReleaseSpeed;
+            TrailEffect2.Model[0].ReleaseSpeed = NotMovingReleaseSpeed;
 
             ShowFiringCursor = false;
         }
@@ -77,7 +77,7 @@
         {
             SetFrontImage(imageName, 4, Color.White);
             SetBackImage(imageName + "Back", 4, Color);
-            TrailEffect.ParticleEffect[0].ReleaseColour = Color.ToVector3();
+            TrailEffect.Model[0].ReleaseColour = Color.ToVector3();
         }
 
 
@@ -159,14 +159,14 @@
         {
             if (LastPosition == Position)
             {
-                TrailEffect.ParticleEffect[0].ReleaseSpeed = NotMovingReleaseSpeed;
-                ((ConeEmitter) TrailEffect.ParticleEffect[0]).Direction += 0.1f;
-                ((ConeEmitter) TrailEffect.ParticleEffect[0]).Direction %= MathHelper.TwoPi;
+                TrailEffect.Model[0].ReleaseSpeed = NotMovingReleaseSpeed;
+                ((ConeEmitter) TrailEffect.Model[0]).Direction += 0.1f;
+                ((ConeEmitter) TrailEffect.Model[0]).Direction %= MathHelper.TwoPi;
             }
 
             else
             {
-                TrailEffect.ParticleEffect[0].ReleaseSpeed = MovingReleaseSpeed;
+                TrailEffect.Model[0].ReleaseSpeed = MovingReleaseSpeed;
             }
 
             LastPosition = Position;

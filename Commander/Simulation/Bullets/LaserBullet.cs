@@ -36,9 +36,9 @@
             Line.Debut = Turret.Position;
             Line.Fin = Target.Position;
 
-            LineEmitter emitter = (LineEmitter)MovingEffect.ParticleEffect[0];
+            LineEmitter emitter = (LineEmitter)MovingEffect.Model[0];
             emitter.Length = Line.Longueur;
-            emitter = (LineEmitter)MovingEffect.ParticleEffect[1];
+            emitter = (LineEmitter)MovingEffect.Model[1];
             emitter.Length = Line.Longueur;
 
             MovingEffect2 = new VisualLine(Line.Debut, Line.Fin, new Color(255, 0, 110), 4);
@@ -93,12 +93,12 @@
 
         public override void Draw()
         {
-            LineEmitter emitter1 = (LineEmitter)MovingEffect.ParticleEffect[0];
+            LineEmitter emitter1 = (LineEmitter)MovingEffect.Model[0];
             emitter1.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
             emitter1.Length = (Target.Position - Turret.Position).Length();
             emitter1.TriggerOffset = new Vector2(this.Direction.X * (emitter1.Length / 2), this.Direction.Y * (emitter1.Length / 2));
             
-            LineEmitter emitter2 = (LineEmitter) MovingEffect.ParticleEffect[1];
+            LineEmitter emitter2 = (LineEmitter) MovingEffect.Model[1];
             emitter2.Angle = emitter1.Angle;
             emitter2.Length = emitter1.Length;
             emitter2.TriggerOffset = emitter1.TriggerOffset;

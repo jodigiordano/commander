@@ -87,7 +87,12 @@
                 List<Bullet> bullets = t.BulletsThisTick();
 
                 if (!Simulator.CutsceneMode && bullets.Count != 0)
-                    Audio.PlaySfx(t.SfxShooting);
+                {
+                    if (t is BasicTurret)
+                        Core.XACTAudio.XACTAudio.PlayCue("BasicTurretFiring", "Sound Bank");
+                    else
+                        Audio.PlaySfx(t.SfxShooting);
+                }
 
                 for (int j = 0; j < bullets.Count; j++)
                     NotifyObjectCreated(bullets[j]);

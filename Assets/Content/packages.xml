@@ -37,6 +37,11 @@
   
   <Package name="principal" volatile="false">
     
+    <!-- Audio -->
+    <asset name="Wave Bank"                              type="WaveBank"  path="audio/Wave Bank.xwb" />
+    <asset name="Sound Bank"                             type="SoundBank" path="audio/Sound Bank.xsb" />
+    
+    
     <!-- Sfx -->
       <!-- Turrets -->
       <asset name="sfxTourelleBase"                      type="Sfx" path="sfx/story1/turrets/basic/firing"><param name="bank" value="Story1" /></asset>

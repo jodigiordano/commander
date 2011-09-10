@@ -91,8 +91,8 @@
             Missiles = new List<Missile>();
 
             AbductionEffect = Simulator.Scene.Particles.Get(@"mothershipAbduction");
-            ((RadialGravityModifier) AbductionEffect.ParticleEffect[0].Modifiers[0]).Radius = 2000;
-            ((RadialGravityModifier) AbductionEffect.ParticleEffect[0].Modifiers[0]).Strength = 700;
+            ((RadialGravityModifier) AbductionEffect.Model[0].Modifiers[0]).Radius = 2000;
+            ((RadialGravityModifier) AbductionEffect.Model[0].Modifiers[0]).Strength = 700;
             AbductionLength = 5000;
             AbductionElapsed = 0;
             Abducting = false;
@@ -162,7 +162,7 @@
 
                 var p = ObjectAbducted.Position;
 
-                ((RadialGravityModifier) AbductionEffect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(Position.X, Position.Y);
+                ((RadialGravityModifier) AbductionEffect.Model[0].Modifiers[0]).Position = new Vector2(Position.X, Position.Y);
                 AbductionEffect.Trigger(ref p);
 
                 if (AbductionElapsed >= AbductionLength)

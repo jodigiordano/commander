@@ -21,9 +21,9 @@
 
             Effect = Simulator.Scene.Particles.Get(@"nextWave");
             Effect.VisualPriority = VisualPriorities.Default.NextWaveStarted;
-            Effect.ParticleEffect[0].ReleaseColour = Colors.Default.AlienBright.ToVector3();
+            Effect.Model[0].ReleaseColour = Colors.Default.AlienBright.ToVector3();
 
-            ((RadialGravityModifier) Effect.ParticleEffect[0].Modifiers[0]).Strength = 100;
+            ((RadialGravityModifier) Effect.Model[0].Modifiers[0]).Strength = 100;
 
             Effect.Trigger(ref CelestialBody.position);
         }
@@ -33,7 +33,7 @@
         {
             base.Update(gameTime);
 
-            ((RadialGravityModifier) Effect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(CelestialBody.position.X, CelestialBody.position.Y);
+            ((RadialGravityModifier) Effect.Model[0].Modifiers[0]).Position = new Vector2(CelestialBody.position.X, CelestialBody.position.Y);
 
             var delta = CelestialBody.DeltaPosition;
 

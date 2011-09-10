@@ -125,7 +125,7 @@
 
             DarkSideEffect = Simulator.Scene.Particles.Get(@"darkSideEffect");
             DarkSideEffect.VisualPriority = VisualPriority + 0.000001;
-            ((CircleEmitter) DarkSideEffect.ParticleEffect[0]).Radius = Circle.Radius;
+            ((CircleEmitter) DarkSideEffect.Model[0]).Radius = Circle.Radius;
 
             PlayerCheckedIn = null;
             AliveOverride = false;

@@ -17,20 +17,34 @@
         public ContentManager AssetsPool                    { get; set; }
         public List<AssetDescriptor> Assets                 { get; set; }
         
-        private Dictionary<string, object> LoadedAssets     { get; set; }
+        private Dictionary<string, IAsset> LoadedAssets         { get; set; }
+        private Dictionary<string, object> ManagedLoadedAssets  { get; set; }
 
 
         public Package()
         {
-            LoadedAssets = new Dictionary<string, object>();
+            LoadedAssets = new Dictionary<string, IAsset>();
+            ManagedLoadedAssets = new Dictionary<string, object>();
             Loaded = false;
         }
 
 
         public object Get(string name)
         {
-            if (LoadedAssets.ContainsKey(name))
-                return LoadedAssets[name];
+            bool exists;
+
+            IAsset asset;
+            object o;
+
+            exists = LoadedAssets.TryGetValue(name, out asset);
+
+            if (exists)
+                return asset;
+
+            exists = ManagedLoadedAssets.TryGetValue(name, out o);
+
+            if (exists)
+                return o;
 
             return null;
         }
@@ -41,24 +55,24 @@
             foreach (var asset in Assets)
             {
                 if (asset.Type == "Image")
-                    LoadedAssets.Add(asset.Name, AssetsPool.Load<Texture2D>(asset.Path));
+                    ManagedLoadedAssets.Add(asset.Name, AssetsPool.Load<Texture2D>(asset.Path));
 #if !WINDOWS_PHONE
                 else if (asset.Type == "Video")
-                    LoadedAssets.Add(asset.Name, AssetsPool.Load<Video>(asset.Path));
+                    ManagedLoadedAssets.Add(asset.Name, AssetsPool.Load<Video>(asset.Path));
 #endif
                 else if (asset.Type == "VisualEffect")
-                    LoadedAssets.Add(asset.Name, AssetsPool.Load<Effect>(asset.Path));
+                    ManagedLoadedAssets.Add(asset.Name, AssetsPool.Load<Effect>(asset.Path));
                 else if (asset.Type == "Font")
-                    LoadedAssets.Add(asset.Name, AssetsPool.Load<SpriteFont>(asset.Path));
+                    ManagedLoadedAssets.Add(asset.Name, AssetsPool.Load<SpriteFont>(asset.Path));
                 else if (asset.Type == "SpriteSheet")
-                    LoadedAssets.Add(asset.Name, AssetsPool.Load<SpriteSheet>(asset.Path));
+                    ManagedLoadedAssets.Add(asset.Name, AssetsPool.Load<SpriteSheet>(asset.Path));
                 else
                 {
                     var obj = Persistence.AssetsController.GetAssetType(asset.Type).Load(
                         asset.Name,
                         asset.Path,
                         asset.Parameters,
-                        this.AssetsPool);
+                        AssetsPool);
 
                     LoadedAssets.Add(asset.Name, obj);
                 }
@@ -70,7 +84,11 @@
 
         public void Unload()
         {
+            foreach (var asset in LoadedAssets.Values)
+                asset.Unload();
+
             AssetsPool.Unload();
+            ManagedLoadedAssets.Clear();
             LoadedAssets.Clear();
             Loaded = false;
         }

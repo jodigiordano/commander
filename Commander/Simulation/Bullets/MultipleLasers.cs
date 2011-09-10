@@ -38,7 +38,7 @@
             Line.Fin = Direction * LONGUEUR_LIGNE;
 
             MovingEffect = Scene.Particles.Get(@"projectileLaserMultiple");
-            LineEmitter emitter = (LineEmitter)MovingEffect.ParticleEffect[0];
+            LineEmitter emitter = (LineEmitter)MovingEffect.Model[0];
             emitter.Length = LONGUEUR_LIGNE;
             MovingEffect.VisualPriority = VisualPriority + 0.001f;
 
@@ -92,7 +92,7 @@
 
         public override void Draw()
         {
-            LineEmitter emitter = (LineEmitter)MovingEffect.ParticleEffect[0];
+            LineEmitter emitter = (LineEmitter)MovingEffect.Model[0];
             emitter.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
             emitter.TriggerOffset = new Vector2(this.Direction.X * (LONGUEUR_LIGNE/2), this.Direction.Y * (LONGUEUR_LIGNE/2));
 

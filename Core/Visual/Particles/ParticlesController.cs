@@ -76,7 +76,7 @@ namespace EphemereGames.Core.Visual
 
         public void Return(Particle particle)
         {
-            if (particle.ParticleEffect.ActiveParticlesCount != 0)
+            if (particle.Model.ActiveParticlesCount != 0)
                 particle.State = State.Dying;
             else
                 particle.State = State.Dead;
@@ -124,9 +124,9 @@ namespace EphemereGames.Core.Visual
         {
             for (int k = i; k < j; k++)
             {
-                Particles[k].ParticleEffect.Update(elapsedSeconds);
+                Particles[k].Model.Update(elapsedSeconds);
 
-                if (Particles[k].State == State.Dying && Particles[k].ParticleEffect.ActiveParticlesCount == 0)
+                if (Particles[k].State == State.Dying && Particles[k].Model.ActiveParticlesCount == 0)
                     Particles[k].State = State.Dead;
             }
         }

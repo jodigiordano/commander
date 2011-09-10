@@ -39,7 +39,7 @@ namespace EphemereGames.Commander.Simulation
             Bullet.Position = ToProtect.Position;
             Bullet.Rectangle.Width = (int) (ToProtect.Circle.Radius * 2 + 10);
             Bullet.Rectangle.Height = (int) (ToProtect.Circle.Radius * 2 + 10);
-            ((CircleEmitter) Bullet.MovingEffect.ParticleEffect[0]).Radius = ToProtect.Circle.Radius;
+            ((CircleEmitter) Bullet.MovingEffect.Model[0]).Radius = ToProtect.Circle.Radius;
 
             ActiveTime -= Preferences.TargetElapsedTimeMs;
         }

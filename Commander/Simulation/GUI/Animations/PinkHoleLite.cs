@@ -35,14 +35,14 @@
         {
             get
             {
-                var color = ((ColourInterpolatorModifier) Effect.ParticleEffect[0].Modifiers[2]).MiddleColour;
+                var color = ((ColourInterpolatorModifier) Effect.Model[0].Modifiers[2]).MiddleColour;
 
                 return new Color(color);
             }
 
             set
             {
-                ((ColourInterpolatorModifier) Effect.ParticleEffect[0].Modifiers[2]).MiddleColour = value.ToVector3();
+                ((ColourInterpolatorModifier) Effect.Model[0].Modifiers[2]).MiddleColour = value.ToVector3();
             }
         }
 
@@ -76,12 +76,12 @@
         {
             get
             {
-                return ((CircleEmitter) Effect.ParticleEffect[0]).Radius;
+                return ((CircleEmitter) Effect.Model[0]).Radius;
             }
 
             set
             {
-                ((CircleEmitter) Effect.ParticleEffect[0]).Radius = value;
+                ((CircleEmitter) Effect.Model[0]).Radius = value;
             }
         }
 
@@ -90,7 +90,7 @@
         {
             set
             {
-                ((VelocityClampModifier) Effect.ParticleEffect[0].Modifiers[1]).MaximumVelocity = value;
+                ((VelocityClampModifier) Effect.Model[0].Modifiers[1]).MaximumVelocity = value;
             }
         }
 
@@ -99,7 +99,7 @@
         {
             set
             {
-                ((RadialGravityModifier) Effect.ParticleEffect[0].Modifiers[0]).Strength = value;
+                ((RadialGravityModifier) Effect.Model[0].Modifiers[0]).Strength = value;
             }
         }
 
@@ -112,7 +112,7 @@
                 var current = Color;
                 current.A = value;
 
-                ((ColourInterpolatorModifier) Effect.ParticleEffect[0].Modifiers[2]).MiddleColour = current.ToVector3();
+                ((ColourInterpolatorModifier) Effect.Model[0].Modifiers[2]).MiddleColour = current.ToVector3();
             }
         }
 
@@ -120,7 +120,7 @@
         public void Update()
         {
             this.LastPosition = this.Position;
-            ((RadialGravityModifier) Effect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
+            ((RadialGravityModifier) Effect.Model[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
 
             Vector3 deplacement;
             Vector3.Subtract(ref this.position, ref this.LastPosition, out deplacement);

@@ -34,7 +34,7 @@
             LastPosition = Position;
 
             MovingEffect = Scene.Particles.Get(@"planeteGazeuse");
-            CircleEmitter ce = (CircleEmitter) MovingEffect.ParticleEffect[0];
+            CircleEmitter ce = (CircleEmitter) MovingEffect.Model[0];
             ce.Radius = Circle.Radius - 5;
 
             MovingEffect.VisualPriority = VisualPriority + 0.001f;

@@ -36,7 +36,7 @@
                     return;
 
 
-                ((CircleEmitter)Selection.ParticleEffect[0]).Radius = celestialBody.Circle.Radius + 5;
+                ((CircleEmitter)Selection.Model[0]).Radius = celestialBody.Circle.Radius + 5;
             }
         }
 

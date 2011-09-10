@@ -99,7 +99,7 @@ namespace EphemereGames.Commander.Simulation
             SlowMotionEffect = Simulator.Scene.Particles.Get(@"etincelleSlowMotionTouche");
             ExplodingEffect = Simulator.Scene.Particles.Get(@"explosionEnnemi");
             NanobotsInfectionEffect = Simulator.Scene.Particles.Get(@"nanobots");
-            NanobotsInfectionEffect.ParticleEffect[0].ReleaseColour = Color.Red.ToVector3();
+            NanobotsInfectionEffect.Model[0].ReleaseColour = Color.Red.ToVector3();
 
             VisualPriority = Simulator.TweakingController.EnemiesFactory.GetVisualPriority(Type, 0);
             Image.VisualPriority = VisualPriority;
@@ -122,7 +122,7 @@ namespace EphemereGames.Commander.Simulation
             Circle.Position.X = Position.X - Circle.Radius;
             Circle.Position.Y = Position.Y - Circle.Radius;
 
-            ExplodingEffect.ParticleEffect[0].ReleaseColour = Color.ToVector3();
+            ExplodingEffect.Model[0].ReleaseColour = Color.ToVector3();
             MovingEffect = null;
 
             RotationSpeed = Main.Random.Next(-5, 6) / 100.0f;
@@ -298,7 +298,7 @@ namespace EphemereGames.Commander.Simulation
                 direction.Normalize();
                 direction *= 150;
 
-                ExplodingEffect.ParticleEffect[0].ReleaseImpulse = new Vector2(direction.X, direction.Y);
+                ExplodingEffect.Model[0].ReleaseImpulse = new Vector2(direction.X, direction.Y);
                 ExplodingEffect.Trigger(ref this.position);
 
                 Simulator.Scene.Particles.Return(ExplodingEffect);

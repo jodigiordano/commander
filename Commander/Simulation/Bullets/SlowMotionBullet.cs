@@ -64,8 +64,8 @@
 
         public override void DoDie()
         {
-            ((CircleEmitter)ExplodingEffect.ParticleEffect[0]).Radius = Circle.Radius;
-            ((RadialGravityModifier)ExplodingEffect.ParticleEffect[0].Modifiers[0]).Position = new Vector2(this.Position.X, this.Position.Y);
+            ((CircleEmitter)ExplodingEffect.Model[0]).Radius = Circle.Radius;
+            ((RadialGravityModifier)ExplodingEffect.Model[0].Modifiers[0]).Position = new Vector2(this.Position.X, this.Position.Y);
 
             base.DoDie();
         }

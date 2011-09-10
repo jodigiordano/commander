@@ -36,7 +36,7 @@
             ExplodingEffect.VisualPriority = VisualPriorities.Default.DefaultBullet;
 
             TurretEffect = Scene.Particles.Get(@"gunnerTurret");
-            TurretEffect.ParticleEffect[0].ReleaseColour = Turret.Color.ToVector3();
+            TurretEffect.Model[0].ReleaseColour = Turret.Color.ToVector3();
             TurretEffect.VisualPriority = Turret.VisualPriority + 0.0001f;
 
             LifePoints = Int16.MaxValue;
@@ -75,7 +75,7 @@
             // emits canon explosion - explosion direction
             Vector2 targetPosition = new Vector2(Target.Position.X, Target.Position.Y);
             Vector2.Subtract(ref targetPosition, ref canonEdge, out targetPosition);
-            ((ConeEmitter) TurretEffect.ParticleEffect[0]).Direction = (float) Math.Atan2(targetPosition.Y, targetPosition.X);
+            ((ConeEmitter) TurretEffect.Model[0]).Direction = (float) Math.Atan2(targetPosition.Y, targetPosition.X);
 
             //TurretEffect.Emettre(ref canonEdge);
             Vector2 turretPosition = new Vector2(Turret.Position.X, Turret.Position.Y);

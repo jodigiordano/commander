@@ -78,7 +78,7 @@
             TrailEffect = Scene.Particles.Get(@"traineeMissile");
             TrailEffect.VisualPriority = Image.VisualPriority - 0.0001f;
 
-            ConeEmitter emitter = (ConeEmitter)TrailEffect.ParticleEffect[0];
+            ConeEmitter emitter = (ConeEmitter)TrailEffect.Model[0];
             emitter.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
 
             LifePoints = 5;
@@ -105,7 +105,7 @@
             Position += Speed * Direction;
             Rotation = (float) Math.Atan2(Direction.Y, Direction.X);
 
-            ConeEmitter emitter = (ConeEmitter)TrailEffect.ParticleEffect[0];
+            ConeEmitter emitter = (ConeEmitter)TrailEffect.Model[0];
             emitter.Direction = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.Pi;
 
             base.Update();
@@ -125,7 +125,7 @@
 
         public override void DoDie()
         {
-            ((CircleEmitter) ExplodingEffect.ParticleEffect[1]).Radius = ExplosionRange;
+            ((CircleEmitter) ExplodingEffect.Model[1]).Radius = ExplosionRange;
 
             Scene.Particles.Return(TrailEffect);
 

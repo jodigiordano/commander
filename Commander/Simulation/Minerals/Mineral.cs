@@ -55,7 +55,7 @@
             //Cercle.Position.Y = Position.Y - Origin.Y;
 
             if (Type == MineralType.Cash150)
-                ((RadialGravityModifier) RepresentationParticules.ParticleEffect[1].Modifiers[0]).Position = new Vector2(Position.X - Definition.Origin.X, Position.Y - Definition.Origin.Y);
+                ((RadialGravityModifier) RepresentationParticules.Model[1].Modifiers[0]).Position = new Vector2(Position.X - Definition.Origin.X, Position.Y - Definition.Origin.Y);
 
             TempsExistence -= Preferences.TargetElapsedTimeMs;
 
