@@ -37,7 +37,7 @@
             PushButtons.Clear();
             Levels.ClearWidgets();
 
-            foreach (var d in Main.LevelsFactory.Descriptors.Values)
+            foreach (var d in Main.LevelsFactory.UserDescriptors.Values)
             {
                 var button = new PushButton();
                 PushButtons.Add(d, button);

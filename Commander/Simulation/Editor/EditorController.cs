@@ -340,15 +340,15 @@
 
                 var descriptor = Simulator.LevelDescriptor;
 
-                if (!Main.LevelsFactory.Descriptors.ContainsKey(descriptor.Infos.Id))
+                if (!Main.LevelsFactory.UserDescriptors.ContainsKey(descriptor.Infos.Id))
                 {
-                    Main.LevelsFactory.Descriptors.Add(descriptor.Infos.Id, descriptor);
+                    Main.LevelsFactory.UserDescriptors.Add(descriptor.Infos.Id, descriptor);
 
                     ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
                     ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
                 }
 
-                Main.LevelsFactory.SaveLevelDescriptorOnDisk(descriptor.Infos.Id);
+                Main.LevelsFactory.SaveUserDescriptorOnDisk(descriptor.Infos.Id);
             }
 
 
@@ -580,7 +580,7 @@
             {
                 var descriptor = Simulator.LevelDescriptor;
 
-                Main.LevelsFactory.DeleteDescriptorFromDisk(descriptor.Infos.Id);
+                Main.LevelsFactory.DeleteUserDescriptorFromDisk(descriptor.Infos.Id);
                 Main.LevelsFactory.Descriptors.Remove(descriptor.Infos.Id);
 
                 ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();

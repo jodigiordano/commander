@@ -10,6 +10,7 @@
     class LevelsFactory
     {
         public Dictionary<int, LevelDescriptor> Descriptors;
+        public Dictionary<int, LevelDescriptor> UserDescriptors;
         public Dictionary<int, LevelDescriptor> CutsceneDescriptors;
 
         public LevelDescriptor Menu;
@@ -18,24 +19,35 @@
         private XmlSerializer LevelSerializer;
         private XmlSerializer WorldSerializer;
 
+        private string UserDescriptorsDirectory;
+        private string DescriptorsDirectory;
+
 
         public LevelsFactory()
         {
             Descriptors = new Dictionary<int, LevelDescriptor>();
+            UserDescriptors = new Dictionary<int, LevelDescriptor>();
             CutsceneDescriptors = new Dictionary<int, LevelDescriptor>();
             WorldsDescriptors = new Dictionary<int, WorldDescriptor>();
 
             LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
             WorldSerializer = new XmlSerializer(typeof(WorldDescriptor));
+
+            UserDescriptorsDirectory = @".\UserContent\scenarios";
+            DescriptorsDirectory = @".\Content\scenarios";
         }
 
 
         public void Initialize()
         {
             Descriptors.Clear();
+            UserDescriptors.Clear();
 
-            LoadLevels("level");
-            LoadLevels("worldlayout");
+            CreateDirectory(UserDescriptorsDirectory);
+
+            LoadLevels(DescriptorsDirectory, "level", Descriptors);
+            LoadLevels(DescriptorsDirectory, "worldlayout", Descriptors);
+            LoadLevels(UserDescriptorsDirectory, "level", UserDescriptors);
             LoadWorlds();
             LoadCutscenes();
             LoadMenuDescriptor();
@@ -101,14 +113,14 @@
         }
 
 
-        private void LoadLevels(string startingWith)
+        private void LoadLevels(string root, string startingWith, Dictionary<int, LevelDescriptor> to)
         {
-            string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", startingWith + "*.xml");
+            string[] levelsFiles = Directory.GetFiles(root, startingWith + "*.xml");
 
             foreach (var f in levelsFiles)
             {
                 var descriptor = LoadLevelDescriptor(f);
-                Descriptors.Add(descriptor.Infos.Id, descriptor);
+                to.Add(descriptor.Infos.Id, descriptor);
             }
         }
 
@@ -210,7 +222,7 @@
         {
             CutsceneDescriptors.Clear();
 
-            string[] levelsFiles = Directory.GetFiles(".\\Content\\scenarios", "cutscene*.xml");
+            string[] levelsFiles = Directory.GetFiles(DescriptorsDirectory, "cutscene*.xml");
 
             foreach (var f in levelsFiles)
             {
@@ -227,17 +239,17 @@
         }
 
 
-        public void SaveLevelDescriptorOnDisk(int id)
+        public void SaveUserDescriptorOnDisk(int id)
         {
-            using(StreamWriter writer = new StreamWriter(".\\Content\\scenarios\\level" + id + ".xml"))
-                LevelSerializer.Serialize(writer.BaseStream, Descriptors[id]);
+            using(StreamWriter writer = new StreamWriter(UserDescriptorsDirectory + @"\level" + id + ".xml"))
+                LevelSerializer.Serialize(writer.BaseStream, UserDescriptors[id]);
         }
 
 
-        public void DeleteDescriptorFromDisk(int id)
+        public void DeleteUserDescriptorFromDisk(int id)
         {
-            if (File.Exists(".\\Content\\scenarios\\level" + id + ".xml"))
-                File.Delete(".\\Content\\scenarios\\level" + id + ".xml");
+            if (File.Exists(UserDescriptorsDirectory + @"\level" + id + ".xml"))
+                File.Delete(UserDescriptorsDirectory + @"\level" + id + ".xml");
         }
 
 
@@ -271,7 +283,7 @@
 
         private void LoadMenuDescriptor()
         {
-            Menu = LoadLevelDescriptor(".\\Content\\scenarios\\menu.xml");
+            Menu = LoadLevelDescriptor(DescriptorsDirectory + @"\menu.xml");
 
             var newGame = Menu.PlanetarySystem[6];
 
@@ -527,6 +539,15 @@
             foreach (var pink in pinkHolesToAdd)
                 d.PlanetarySystem.Add(pink);
 
+        }
+
+
+        private void CreateDirectory(string directory)
+        {
+            if (Directory.Exists(directory))
+                return;
+
+            Directory.CreateDirectory(directory);
         }
     }
 }
