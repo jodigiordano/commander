@@ -263,10 +263,13 @@
     <Reference Include="Microsoft.Xna.Framework.Video">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
-    <Reference Include="ParallelTasks, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="ParallelTasks">
+      <HintPath>..\Libraries\Xbox\ParallelTasks\ParallelTasks.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectMercury">
       <HintPath>..\Libraries\Xbox\ProjectMercury.dll</HintPath>
     </Reference>
