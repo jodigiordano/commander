@@ -178,6 +178,7 @@
     <Compile Include="Visual\ScreenSafeZone.cs" />
     <Compile Include="Visual\Visuals.cs" />
     <Compile Include="XACTAudio\AudioController.cs" />
+    <Compile Include="XACTAudio\Cue.cs" />
     <Compile Include="XACTAudio\SoundBank.cs" />
     <Compile Include="XACTAudio\WaveBank.cs" />
     <Compile Include="XACTAudio\XACTAudio.cs" />

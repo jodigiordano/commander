@@ -133,10 +133,12 @@
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
     <Compile Include="Scenes\World\LevelStates.cs" />
+    <Compile Include="Simulation\AudioController.cs" />
     <Compile Include="Simulation\Collisions\PlayersCollisions.cs" />
     <Compile Include="Simulation\Collisions\ShieldsCollisions.cs" />
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\ResistanceAnimation.cs" />
+    <Compile Include="Simulation\Enemies\EnemiesData.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\NextWavePreview.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\PathPreview\PathPreview.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\PathPreview\PathPreviewVisual.cs" />

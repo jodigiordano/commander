@@ -16,6 +16,7 @@
         public int MineralsCash;
         public int LifePacksGiven;
         public List<Wave> ActiveWaves;
+        public EnemiesData EnemiesData;
         
         public List<Enemy> Enemies;
         public List<Mineral> Minerals;
@@ -55,6 +56,11 @@
             SyncProcessDeadEnemies = new Action(ProcessDeadEnemies);
             SyncUpdateEnemies = new Action(UpdateEnemies);
             SyncUpdateMinerals = new Action(UpdateMinerals);
+
+            EnemiesData = new EnemiesData()
+            {
+                Enemies = Enemies
+            };
         }
 
 
@@ -74,7 +80,6 @@
             if (InfiniteWaves != null)
                 return;
 
-            // Minerals Distribution
             int enemiesCnt = 0;
 
             foreach (var wave in Waves)
@@ -83,6 +88,10 @@
                 enemiesCnt += wave.EnemiesCount;
             }
 
+            EnemiesData.Path = Path;
+            EnemiesData.MaxEnemiesForCountPerc = 20;
+
+            // Minerals Distribution
             Vector3 unitValue = new Vector3(
                 Simulator.MineralsFactory.GetValue(MineralType.Cash10),
                 Simulator.MineralsFactory.GetValue(MineralType.Cash25),
@@ -133,6 +142,7 @@
             t2.Wait();
 
             AddWave();
+            EnemiesData.Update();
         }
 
 

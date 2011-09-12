@@ -43,6 +43,7 @@ namespace EphemereGames.Commander.Simulation
         private EditorGUIController EditorGUIController;
         private PanelsController PanelsController;
         internal TweakingController TweakingController;
+        private AudioController AudioController;
         internal TurretsFactory TurretsFactory;
         internal PowerUpsFactory PowerUpsFactory;
         internal EnemiesFactory EnemiesFactory;
@@ -134,6 +135,7 @@ namespace EphemereGames.Commander.Simulation
             EditorController = new EditorController(this);
             EditorGUIController = new EditorGUIController(this);
             PanelsController = new PanelsController(this);
+            AudioController = new AudioController(this);
 
             WorldMode = false;
             DemoMode = false;
@@ -308,6 +310,8 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.ActiveWaves = EnemiesController.ActiveWaves;
             CollisionsController.Players = SimPlayersController.PlayersList;
             CollisionsController.Path = PlanetarySystemController.Path;
+            GUIController.EnemiesData = EnemiesController.EnemiesData;
+            AudioController.EnemiesData = EnemiesController.EnemiesData;
 
             TweakingController.Initialize();
             LevelsController.Initialize();
@@ -318,6 +322,7 @@ namespace EphemereGames.Commander.Simulation
             PowerUpsController.Initialize();
             SimPlayersController.Initialize(); // Must be done after the PowerUpsController
             CollisionsController.Initialize();
+            AudioController.Initialize();
 
             if (EditorMode)
             {
@@ -388,6 +393,7 @@ namespace EphemereGames.Commander.Simulation
                 MessagesController.Update();
                 GUIController.Update();
                 PowerUpsController.Update();
+                AudioController.Update();
             }
 
             else

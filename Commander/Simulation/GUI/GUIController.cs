@@ -25,6 +25,7 @@
         public HelpBarPanel HelpBar;
         public CommonStash CommonStash;
         public List<Wave> ActiveWaves;
+        public EnemiesData EnemiesData;
 
         private Simulator Simulator;
         private Dictionary<SimPlayer, GUIPlayer> Players;
@@ -90,11 +91,6 @@
             LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulator, Level);
             LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, Path, Level);
 
-            //PlayerLives = new PlayerLivesLiteral(Simulator) //new PlayerLivesMoons(Simulator)
-            //{
-            //    CelestialBody = Level.CelestialBodyToProtect
-            //};
-
             PathPreviewing = new PathPreview(PathPreview, Path);
 
             MenuPowerUps.Turrets = Turrets;
@@ -121,9 +117,10 @@
             HelpBar.ActiveOptions = Main.Options.ShowHelpBar;
             HelpBar.Initialize();
 
-            CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator, Enemies, Path)
+            CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator)
             {
-                CelestialBody = Level.CelestialBodyToProtect
+                CelestialBody = Level.CelestialBodyToProtect,
+                EnemiesData = EnemiesData
             };
 
             AlienNextWaveAnimation = new AlienNextWaveAnimation(Simulator)

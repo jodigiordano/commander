@@ -27,5 +27,23 @@
         {
             AudioController.PlayCue(cueName, bankName);
         }
+
+
+        public static Cue GetCue(string cueName, string bankName)
+        {
+            return AudioController.GetCue(cueName, bankName);
+        }
+
+
+        public static void SetGlobalVariable(string variable, float value)
+        {
+            AudioController.SetGlobalVariable(variable, value);
+        }
+
+
+        public static float GetGlobalVariable(string variable)
+        {
+            return AudioController.GetGlobalVariable(variable);
+        }
     }
 }

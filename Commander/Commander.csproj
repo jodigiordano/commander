@@ -157,6 +157,7 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="Simulation\AudioController.cs" />
     <Compile Include="Cheats\AllLevelsUnlockedCheat.cs" />
     <Compile Include="Cheats\Cheat.cs" />
     <Compile Include="Cheats\CheatsController.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Simulation\Editor\EditorController.cs" />
     <Compile Include="Simulation\Editor\EditorPlayerSelection.cs" />
     <Compile Include="Simulation\Editor\EditorPlayer.cs" />
+    <Compile Include="Simulation\Enemies\EnemiesData.cs" />
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
