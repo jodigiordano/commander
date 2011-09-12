@@ -58,9 +58,6 @@
         private float RotationWander = 0;
         private LinkedListNode<TurretLevel> actualLevel;
         public float DisabledCounter;
-        private float DisabledAnnounciationCounter;
-        private Image DisabledProgressBarImage;
-        private Image DisabledBarImage;
         protected double VisualPriorityBackup;
         private List<Bullet> Bullets = new List<Bullet>();
         public Image RangeImage;
@@ -77,6 +74,9 @@
         public SimPlayer PlayerCheckedIn;
         private bool showRange;
 
+        private DisableBar DisableBar;
+        private float DisabledAnnounciationCounter;
+
         
         public Turret(Simulator simulator)
         {
@@ -90,17 +90,6 @@
             DisabledCounter = 0;
             CanUpdateOverride = true;
             DisabledOverride = true;
-            DisabledProgressBarImage = new Image("PixelBlanc", Vector3.Zero)
-            {
-                Size = new Vector2(36, 4),
-                Color = new Color(255, 0, 220, 255),
-                Origin = new Vector2()
-            };
-            DisabledBarImage = new Image("BarreInactivite", Vector3.Zero)
-            {
-                SizeX = 3f
-            };
-            DisabledAnnounciationCounter = float.NaN;
             Watcher = true;
             VisualPriorityBackup = VisualPriorities.Default.Turret;
             BackActiveThisTickOverride = false;
@@ -152,6 +141,9 @@
             Alive = true;
 
             RangeEffect = -1;
+
+            DisableBar = new DisableBar(Simulator.Scene);
+            DisabledAnnounciationCounter = float.NaN;
         }
 
 
@@ -202,10 +194,7 @@
 
                 BaseImage.VisualPriority = value;
                 CanonImage.VisualPriority = value + 0.00001;
-
-                DisabledBarImage.VisualPriority = value - 0.00002;
-                DisabledProgressBarImage.VisualPriority = value - 0.00003;
-
+                DisableBar.VisualPriority = value - 0.00003;
                 FormImage.VisualPriority = BaseImage.VisualPriority + 0.00004;
             }
         }
@@ -418,10 +407,9 @@
 
             Simulator.Scene.VisualEffects.Add(CanonImage, effect);
             Simulator.Scene.VisualEffects.Add(BaseImage, effect);
-            Simulator.Scene.VisualEffects.Add(DisabledProgressBarImage, effect);
-            Simulator.Scene.VisualEffects.Add(DisabledBarImage, effect);
             Simulator.Scene.VisualEffects.Add(RangeImage, effect);
             Simulator.Scene.VisualEffects.Add(FormImage, effect);
+            Simulator.Scene.VisualEffects.Add(DisableBar, effect);
         }
 
 
@@ -463,17 +451,11 @@
 
             if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulator.DemoMode && !ToPlaceMode)
             {
-                DisabledBarImage.Position = Position;
-
-                float pourcTemps = (PlayerControlled) ?
+                DisableBar.Position = Position;
+                DisableBar.PercentageDone = (PlayerControlled) ?
                     (float) (1 - TimeLastBullet / FireRate) :
                     (float) (DisabledCounter / BuildingTime);
-
-                DisabledProgressBarImage.Size = new Vector2(pourcTemps * 30, 8);
-                DisabledProgressBarImage.Position = DisabledBarImage.Position - new Vector3(16, 4, 0);
-
-                Simulator.Scene.Add(DisabledProgressBarImage);
-                Simulator.Scene.Add(DisabledBarImage);
+                DisableBar.Draw();
             }
 
 
