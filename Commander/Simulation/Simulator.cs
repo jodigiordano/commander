@@ -639,6 +639,10 @@ namespace EphemereGames.Commander.Simulation
             {
                 if (key == KeyboardConfiguration.QuickToggle)
                     EditorController.DoNextOrPreviousAction(simPlayer, 1);
+                else if (key == KeyboardConfiguration.SelectionNext)
+                    EditorController.DoNextOrPreviousAction(simPlayer, 1);
+                else if (key == KeyboardConfiguration.SelectionPrevious)
+                    EditorController.DoNextOrPreviousAction(simPlayer, -1);
             }
 
             if (EditorMode && EditorState == EditorState.Editing)
