@@ -225,6 +225,12 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 1328487167;
     Bank Last Revised High = 30174697;
 
@@ -324,6 +330,18 @@ Sound Bank
             Index = 0;
             Weight Min = 0;
             Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = BasicLaserFiring;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
         }
     }
 }
