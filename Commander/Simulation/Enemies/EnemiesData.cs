@@ -12,6 +12,8 @@
         public Path Path;
         public int MaxEnemiesForCountPerc;
 
+        private double MaxEnemyNearHitPercDelta;
+
 
         public EnemiesData()
         {
@@ -19,6 +21,7 @@
             EnemyCountPerc = 0;
 
             MaxEnemiesForCountPerc = int.MaxValue;
+            MaxEnemyNearHitPercDelta = 0.01;
         }
 
 
@@ -31,7 +34,7 @@
 
         private void ComputeNearestEnemyPerc()
         {
-            EnemyNearHitPerc = 0;
+            double currentEnemyNearHitPerc = 0;
 
             for (int i = 0; i < Enemies.Count; i++)
             {
@@ -39,9 +42,11 @@
 
                 double displacementPerc = Path.GetPercentage(e.Displacement);
 
-                if (displacementPerc > EnemyNearHitPerc)
-                    EnemyNearHitPerc = displacementPerc;
+                if (displacementPerc > currentEnemyNearHitPerc)
+                    currentEnemyNearHitPerc = displacementPerc;
             }
+
+            EnemyNearHitPerc = Core.Physics.Utilities.LerpMax(EnemyNearHitPerc, currentEnemyNearHitPerc, MaxEnemyNearHitPercDelta);
         }
 
 
