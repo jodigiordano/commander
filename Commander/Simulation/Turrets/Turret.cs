@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -233,9 +232,6 @@
 
             if (DisabledAnnounciationCounter < 0 && !Simulator.DemoMode)
             {
-                if (!this.BackActiveThisTickOverride)
-                    Audio.PlaySfx(@"sfxTourelleMiseAJour");
-
                 DisabledAnnounciationCounter = float.NaN;
                 BackActiveThisTick = true;
             }

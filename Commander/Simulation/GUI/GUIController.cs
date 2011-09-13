@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
@@ -339,9 +338,6 @@
             StartingPathMenu.RemainingWaves--;
             NextWavePreview.RemainingWaves--;
             GameBarPanel.RemainingWaves--;
-
-            if (!Simulator.DemoMode)
-                Audio.PlaySfx(@"sfxNouvelleVague");
 
             if (InfiniteWaves == null && Path.LastCelestialBody != null)
                 Simulator.Scene.Add(new AlienNextWaveStartedAnimation(Simulator, Path.FirstCelestialBody));

@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
@@ -24,6 +23,7 @@ namespace EphemereGames.Commander.Simulation
             BuyDescription = "The shooting stars become deadly to enemies.";
             NeedInput = false;
             Position = Vector3.Zero;
+            SfxIn = "sfxShootingStars";
         }
 
 
@@ -35,7 +35,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            Audio.PlaySfx(@"sfxShootingStars");
+
         }
     }
 }

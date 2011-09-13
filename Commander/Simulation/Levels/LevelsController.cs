@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
 
 
@@ -13,6 +12,7 @@
 
         public event NewGameStateHandler NewGameState;
         public event CommonStashHandler CommonStashChanged;
+        public event PhysicalObjectHandler ObjectHit;
 
         public Help Help;
 
@@ -119,9 +119,7 @@
                 celestialBody.DoHit(enemy);
 
             if (!Simulator.DemoMode && Simulator.State != GameState.Lost)
-            {
-                Audio.PlaySfx(@"sfxCorpsCelesteTouche");
-            }
+                NotifyObjectHit(celestialBody);
 
             if (Simulator.EditorMode && celestialBody == CelestialBodyToProtect)
                 celestialBody.LifePoints = CommonStash.Lives;
@@ -134,8 +132,6 @@
 
             if (CommonStash.Lives <= 0 && State == GameState.Running)
             {
-                CelestialBodyToProtect.DoDie();
-                Audio.PlaySfx(@"sfxCorpsCelesteExplose");
                 State = GameState.Lost;
 
                 ComputeFinalScore();
@@ -154,9 +150,6 @@
 
             if (celestialBody == null)
                 return;
-
-            if (!celestialBody.SilentDeath)
-                Audio.PlaySfx(@"sfxCorpsCelesteExplose");
 
             if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)
             {
@@ -306,6 +299,13 @@
         {
             if (NewGameState != null)
                 NewGameState(newState);
+        }
+
+
+        private void NotifyObjectHit(ICollidable obj)
+        {
+            if (ObjectHit != null)
+                ObjectHit(obj);
         }
     }
 }

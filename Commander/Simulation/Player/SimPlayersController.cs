@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
@@ -320,9 +319,6 @@
 
             foreach (var p in Players.Values)
                 p.UpdateSelection();
-
-            if (turret.Type == TurretType.Gravitational && !Simulator.DemoMode)
-                Audio.PlaySfx(@"sfxTourelleGravitationnelleAchetee");
         }
 
 
@@ -333,11 +329,6 @@
 
             foreach (var p in Players.Values)
                 p.UpdateSelection();
-
-            if (turret.Type == TurretType.Gravitational)
-                Audio.PlaySfx(@"sfxTourelleGravitationnelleAchetee");
-            else
-                Audio.PlaySfx(@"sfxTourelleVendue");
         }
 
 
@@ -381,8 +372,8 @@
                 {
                     var bullets = player.SpaceshipMove.Fire();
 
-                    if (bullets.Count != 0)
-                        Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
+                    //if (bullets.Count != 0)
+                    //    Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
 
                     foreach (var b in bullets)
                         NotifyObjectCreated(b);

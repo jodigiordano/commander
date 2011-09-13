@@ -241,6 +241,18 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(GUIController.DoStartingPathCollision);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(SpaceshipsController.DoShieldCollided);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(BulletsController.DoShieldCollided);
+            BulletsController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
+            EnemiesController.WaveStarted += new NoneHandler(AudioController.DoWaveStarted);
+            PowerUpsController.PowerUpStarted += new PowerUpSimPlayerHandler(AudioController.DoPowerUpStarted);
+            PowerUpsController.PowerUpStopped += new PowerUpSimPlayerHandler(AudioController.DoPowerUpStopped);
+            TurretsController.TurretBought += new TurretSimPlayerHandler(AudioController.DoTurretBought);
+            TurretsController.TurretSold += new TurretSimPlayerHandler(AudioController.DoTurretSold);
+            LevelsController.ObjectHit += new PhysicalObjectHandler(AudioController.DoObjectHit);
+            TurretsController.TurretFired += new TurretHandler(AudioController.DoTurretFired);
+            TurretsController.TurretReactivated += new TurretHandler(AudioController.DoTurretReactivated);
+            PowerUpsController.PowerUpInputCanceled += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputCanceled);
+            PowerUpsController.PowerUpInputPressed += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputPressed);
+            PowerUpsController.PowerUpInputReleased += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputReleased);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);

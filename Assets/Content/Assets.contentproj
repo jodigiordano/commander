@@ -2884,13 +2884,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiring.wav">
-      <Name>BasicTurretFiring</Name>
+    <Compile Include="audio\sfx\Empty.wav">
+      <Name>Empty</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="audio\Audio.xap">
       <Name>Audio</Name>

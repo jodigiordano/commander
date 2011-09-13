@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;
 
@@ -25,6 +24,8 @@ namespace EphemereGames.Commander.Simulation
             BuyDescription = "Become temporary invincible for " + (int) ActiveTime / 1000 + " sec.";
             NeedInput = false;
             Position = Vector3.Zero;
+            SfxIn = "sfxShieldIn";
+            SfxOut = "sfxShieldOut";
         }
 
 
@@ -55,14 +56,6 @@ namespace EphemereGames.Commander.Simulation
             Bullet.VisualPriority = VisualPriorities.Default.PowerUpShield;
 
             Bullet.Initialize();
-
-            Audio.PlaySfx(@"sfxShieldIn");
-        }
-
-
-        public override void Stop()
-        {
-            Audio.PlaySfx(@"sfxShieldOut");
         }
     }
 }

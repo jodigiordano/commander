@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -63,8 +62,6 @@ namespace EphemereGames.Commander.Simulation
             {
                 Miner.Weapon.FireOnceNow();
 
-                Audio.PlaySfx(@"sfxMineGround");
-
                 Firing = false;
             }
         }
@@ -87,7 +84,8 @@ namespace EphemereGames.Commander.Simulation
             };
             Miner.SteeringBehavior.ApplySafeBouncing();
 
-            Audio.PlaySfx(Miner.SfxIn);
+            SfxIn = Miner.SfxIn;
+            SfxOut = Miner.SfxOut;
 
             Firing = false;
         }
@@ -95,8 +93,6 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Stop()
         {
-            Audio.PlaySfx(Miner.SfxOut);
-
             Firing = false;
 
             Miner.Active = false;

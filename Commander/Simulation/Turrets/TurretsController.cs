@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
 
 
@@ -16,6 +15,7 @@
         public event TurretSimPlayerHandler TurretSold;
         public event TurretSimPlayerHandler TurretUpgraded;
         public event TurretHandler TurretReactivated;
+        public event TurretHandler TurretFired;
         public event PhysicalObjectHandler ObjectCreated;
 
         private Simulator Simulator;
@@ -87,12 +87,7 @@
                 List<Bullet> bullets = t.BulletsThisTick();
 
                 if (!Simulator.CutsceneMode && bullets.Count != 0)
-                {
-                    if (t is BasicTurret)
-                        Core.XACTAudio.XACTAudio.PlayCue("BasicTurretFiring", "Sound Bank");
-                    else
-                        Audio.PlaySfx(t.SfxShooting);
-                }
+                    NotifyTurretFired(t);
 
                 for (int j = 0; j < bullets.Count; j++)
                     NotifyObjectCreated(bullets[j]);
@@ -241,6 +236,13 @@
         {
             if (TurretReactivated != null)
                 TurretReactivated(turret);
+        }
+
+
+        private void NotifyTurretFired(Turret turret)
+        {
+            if (TurretFired != null)
+                TurretFired(turret);
         }
     }
 }

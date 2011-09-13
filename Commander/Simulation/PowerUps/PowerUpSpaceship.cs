@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -56,19 +55,14 @@ namespace EphemereGames.Commander.Simulation
             };
             SpaceshipSpaceship.SteeringBehavior.ApplySafeBouncing();
 
-            Audio.PlaySfx(SpaceshipSpaceship.SfxIn);
+            SfxIn = SpaceshipSpaceship.SfxIn;
+            SfxOut = SpaceshipSpaceship.SfxOut;
         }
 
 
         public override bool Terminated
         {
             get { return TerminatedOverride || !SpaceshipSpaceship.Active; }
-        }
-
-
-        public override void Stop()
-        {
-            Audio.PlaySfx(SpaceshipSpaceship.SfxOut);
         }
     }
 }

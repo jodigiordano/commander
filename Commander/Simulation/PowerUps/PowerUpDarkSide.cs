@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -34,6 +33,8 @@ namespace EphemereGames.Commander.Simulation
                     0,
                     false);
             CorpsCeleste.AttackPoints = 0.5f;
+
+            SfxIn = "sfxDarkSide";
         }
 
 
@@ -45,7 +46,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            Audio.PlaySfx(@"sfxDarkSide");
+
         }
     }
 }
