@@ -20,6 +20,7 @@
         public SpaceshipSpaceship SpaceshipMove;
         public bool TurretToPlaceChanged;
         public bool GameOver;
+        public SimPlayerHandler BouncedHandler;
 
         // for keyboard/mouse
         public bool MovingLeft;
@@ -579,7 +580,8 @@
 
         private void DoBouncing()
         {
-            Core.Input.Inputs.VibrateControllerLowFrequency(BasePlayer, 150, 0.7f);
+            if (BouncedHandler != null)
+                BouncedHandler(this);
         }
     }
 }

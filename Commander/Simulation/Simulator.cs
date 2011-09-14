@@ -259,6 +259,7 @@ namespace EphemereGames.Commander.Simulation
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
             PlanetarySystemController.ObjectHit += new PhysicalObjectHandler(AudioController.DoObjectHit);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
+            SimPlayersController.PlayerBounced += new SimPlayerHandler(AudioController.DoPlayerBounced);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);

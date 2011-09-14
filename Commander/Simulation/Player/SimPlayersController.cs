@@ -35,12 +35,12 @@
         public event SimPlayerHandler ShowAdvancedViewAsked;
         public event SimPlayerHandler HideAdvancedViewAsked;
         public event PhysicalObjectHandler ObjectCreated;
+        public event SimPlayerHandler PlayerBounced;
 
         private Simulator Simulator;
         private Dictionary<Player, SimPlayer> Players;
 
         private SimPlayer PlayerInAdvancedView;
-        private SimPlayer PlayerInNextWave;
 
         private bool UpdateSelection;
 
@@ -68,7 +68,6 @@
             PlayersList.Clear();
 
             PlayerInAdvancedView = null;
-            PlayerInNextWave = null;
 
             UpdateSelection = true;
 
@@ -90,7 +89,8 @@
                 ImageName = player.ImageName,
                 UpdateSelectionz = UpdateSelection,
                 BulletAttackPoints = (float) Simulator.Level.BulletDamage,
-                PausePlayer = new PausePlayer(Simulator)
+                PausePlayer = new PausePlayer(Simulator),
+                BouncedHandler = DoPlayerBounced
             };
 
             simPlayer.Initialize();
@@ -644,6 +644,14 @@
         }
 
 
+        public void DoPlayerBounced(SimPlayer player)
+        {
+            Core.Input.Inputs.VibrateControllerLowFrequency(player.BasePlayer, 150, 0.7f);
+
+            NotifyPlayerBounced(player);
+        }
+
+
         private void InitializePowerUpsAndTurrets()
         {
             AvailablePowerUps.Clear();
@@ -803,6 +811,13 @@
         {
             if (ObjectCreated != null)
                 ObjectCreated(objet);
+        }
+
+
+        private void NotifyPlayerBounced(SimPlayer player)
+        {
+            if (PlayerBounced != null)
+                PlayerBounced(player);
         }
     }
 }

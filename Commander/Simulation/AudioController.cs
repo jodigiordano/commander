@@ -191,5 +191,11 @@
         {
             Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipToShipCollision"*/, "Sound Bank");
         }
+
+
+        public void DoPlayerBounced(SimPlayer player)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipBouncing"*/, "Sound Bank");
+        }
     }
 }
