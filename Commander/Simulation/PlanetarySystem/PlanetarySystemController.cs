@@ -17,6 +17,7 @@
         public Path Path;
         public Path PathPreview;
 
+        public event PhysicalObjectHandler ObjectHit;
         public event PhysicalObjectHandler ObjectDestroyed;
 
         private Simulator Simulator;
@@ -172,6 +173,22 @@
             celestialBody.Turrets.Remove(turret);
 
             return true;
+        }
+
+
+        public void DoEnemyReachedEnd(Enemy enemy, CelestialBody celestialBody)
+        {
+            if (Simulator.State == GameState.Won)
+                return;
+
+            if (celestialBody == null || !celestialBody.Alive)
+                return;
+
+            if (!(celestialBody is AsteroidBelt))
+                celestialBody.DoHit(enemy);
+
+            if (!Simulator.DemoMode && celestialBody.Alive)
+                NotifyObjectHit(celestialBody);
         }
 
 
@@ -420,6 +437,13 @@
                     return (AsteroidBelt) c;
 
             return null;
+        }
+
+
+        private void NotifyObjectHit(ICollidable obj)
+        {
+            if (ObjectHit != null)
+                ObjectHit(obj);
         }
 
 

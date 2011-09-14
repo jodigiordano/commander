@@ -7,6 +7,7 @@
     class AudioController
     {
         public EnemiesData EnemiesData;
+        public CelestialBody CelestialBodyToProtect;
 
         private Simulator Simulator;
 
@@ -42,7 +43,10 @@
 
             if (celestialBody != null)
             {
-                XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteTouche"*/, "Sound Bank");
+                if (celestialBody == CelestialBodyToProtect)
+                    XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteTouche"*/, "Sound Bank");
+                else
+                    XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteTouche"*/, "Sound Bank");
 
                 return;
             }
@@ -76,7 +80,12 @@
 
             if (celestialBody != null)
             {
-                if (!celestialBody.SilentDeath)
+                if (celestialBody.SilentDeath)
+                    return;
+
+                if (celestialBody == CelestialBodyToProtect)
+                    XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteExplose"*/, "Sound Bank");
+                else
                     XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteExplose"*/, "Sound Bank");
 
                 return;

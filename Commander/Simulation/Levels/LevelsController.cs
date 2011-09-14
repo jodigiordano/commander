@@ -12,7 +12,6 @@
 
         public event NewGameStateHandler NewGameState;
         public event CommonStashHandler CommonStashChanged;
-        public event PhysicalObjectHandler ObjectHit;
 
         public Help Help;
 
@@ -107,19 +106,12 @@
         }
 
 
-        public void DoEnemyReachedEnd(Enemy enemy, CelestialBody celestialBody)
+        public void DoObjectHit(ICollidable obj)
         {
-            if (State == GameState.Won)
-                return;
+            var celestialBody = obj as CelestialBody;
 
             if (celestialBody == null)
                 return;
-
-            if (!(celestialBody is AsteroidBelt))
-                celestialBody.DoHit(enemy);
-
-            if (!Simulator.DemoMode && Simulator.State != GameState.Lost)
-                NotifyObjectHit(celestialBody);
 
             if (Simulator.EditorMode && celestialBody == CelestialBodyToProtect)
                 celestialBody.LifePoints = CommonStash.Lives;
@@ -129,15 +121,6 @@
 
             if (celestialBody == CelestialBodyToProtect)
                 CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints;
-
-            if (CommonStash.Lives <= 0 && State == GameState.Running)
-            {
-                State = GameState.Lost;
-
-                ComputeFinalScore();
-
-                NotifyNewGameState(State);
-            }
         }
         
 
@@ -148,17 +131,15 @@
 
             CelestialBody celestialBody = obj as CelestialBody;
 
-            if (celestialBody == null)
+            if (celestialBody == null || Simulator.DemoMode ||
+                Simulator.EditorMode  || celestialBody != CelestialBodyToProtect)
                 return;
 
-            if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)
-            {
-                State = GameState.Lost;
+            State = GameState.Lost;
 
-                ComputeFinalScore();
+            ComputeFinalScore();
 
-                NotifyNewGameState(State);
-            }
+            NotifyNewGameState(State);
         }
 
 
@@ -299,13 +280,6 @@
         {
             if (NewGameState != null)
                 NewGameState(newState);
-        }
-
-
-        private void NotifyObjectHit(ICollidable obj)
-        {
-            if (ObjectHit != null)
-                ObjectHit(obj);
         }
     }
 }
