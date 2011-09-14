@@ -46,6 +46,16 @@
 
                 return;
             }
+
+
+            var enemy = obj as Enemy;
+
+            if (enemy != null)
+            {
+                XACTAudio.PlayCue("SilentCue" /*enemy.SfxHit*/, "Sound Bank");
+
+                return;
+            }
         }
 
 
@@ -68,6 +78,16 @@
             {
                 if (!celestialBody.SilentDeath)
                     XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteExplose"*/, "Sound Bank");
+
+                return;
+            }
+
+
+            var enemy = obj as Enemy;
+
+            if (enemy != null)
+            {
+                XACTAudio.PlayCue("SilentCue" /*enemy.SfxDie*/, "Sound Bank");
 
                 return;
             }

@@ -14,7 +14,7 @@ namespace EphemereGames.Commander.Simulation
         public Vector3 Direction                                    { get; set; }
         public Shape Shape                                          { get; set; }
         public Circle Circle                                        { get; set; }
-        public Line Line                                           { get; set; }
+        public Line Line                                            { get; set; }
         public PhysicalRectangle Rectangle                          { get; set; }
         public float LifePoints                                     { get; set; }
         public float StartingLifePoints                             { get; set; }
@@ -66,6 +66,9 @@ namespace EphemereGames.Commander.Simulation
         private double BeingHitCounter;
         private Text CashValueText;
 
+        public string SfxHit;
+        public string SfxDie;
+
 
         public Enemy()
         {
@@ -85,6 +88,8 @@ namespace EphemereGames.Commander.Simulation
             EndOfPathReached = false;
 
             CashValueText = new Text(@"Pixelite") { SizeX = 2 };
+            SfxHit = "";
+            SfxDie = "";
         }
 
 
@@ -136,6 +141,9 @@ namespace EphemereGames.Commander.Simulation
             EndOfPathReached = false;
 
             BeingHitCounter = 0;
+
+            SfxHit = Simulator.TweakingController.EnemiesFactory.GetSfxHit(Type);
+            SfxDie = Simulator.TweakingController.EnemiesFactory.GetSfxDie(Type);
         }
 
 

@@ -253,6 +253,8 @@ namespace EphemereGames.Commander.Simulation
             PowerUpsController.PowerUpInputCanceled += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputCanceled);
             PowerUpsController.PowerUpInputPressed += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputPressed);
             PowerUpsController.PowerUpInputReleased += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputReleased);
+            EnemiesController.ObjectHit += new PhysicalObjectHandler(AudioController.DoObjectHit);
+            EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);

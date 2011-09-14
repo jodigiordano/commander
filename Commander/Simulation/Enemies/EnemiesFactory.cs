@@ -54,6 +54,34 @@
         };
 
 
+        private static readonly Dictionary<EnemyType, string> SfxHit = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
+        {
+            { EnemyType.Asteroid, "AsteroidHit" },
+            { EnemyType.Comet, "CometHit" },
+            { EnemyType.Plutoid, "PlutoidHit" },
+            { EnemyType.Centaur, "CentaurHit" },
+            { EnemyType.Trojan, "TrojanHit" },
+            { EnemyType.Meteoroid, "MeteoroidHit" },
+            { EnemyType.Damacloid, "DamacloidHit" },
+            { EnemyType.Swarm, "SwarmHit" },
+            { EnemyType.Vulcanoid, "VulcanoidHit" }
+        };
+
+
+        private static readonly Dictionary<EnemyType, string> SfxDie = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
+        {
+            { EnemyType.Asteroid, "AsteroidDestroyed" },
+            { EnemyType.Comet, "CometDestroyed" },
+            { EnemyType.Plutoid, "PlutoidDestroyed" },
+            { EnemyType.Centaur, "CentaurDestroyed" },
+            { EnemyType.Trojan, "TrojanDestroyed" },
+            { EnemyType.Meteoroid, "MeteoroidDestroyed" },
+            { EnemyType.Damacloid, "DamacloidDestroyed" },
+            { EnemyType.Swarm, "SwarmDestroyed" },
+            { EnemyType.Vulcanoid, "VulcanoidDestroyed" }
+        };
+
+
         public EnemiesFactory(Simulator simulator)
         {
             Simulator = simulator;
@@ -214,6 +242,19 @@
 
             return vp;
         }
+
+
+        public string GetSfxHit(EnemyType type)
+        {
+            return SfxHit[type];
+        }
+
+
+        public string GetSfxDie(EnemyType type)
+        {
+            return SfxDie[type];
+        }
+
 
 
         public static string GetTexture(EnemyType type)

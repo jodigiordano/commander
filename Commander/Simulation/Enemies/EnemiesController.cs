@@ -24,6 +24,7 @@
 
         public event NoneHandler WaveEnded;
         public event NoneHandler WaveStarted;
+        public event PhysicalObjectHandler ObjectHit;
         public event PhysicalObjectHandler ObjectDestroyed;
         public event PhysicalObjectHandler ObjectCreated;
         public event EnemyCelestialBodyHandler EnemyReachedEndOfPath;
@@ -160,6 +161,9 @@
             if (enemy != null && enemy.Alive)
             {
                 enemy.DoHit((ILivingObject)by);
+
+                if (enemy.Alive)
+                    NotifyObjectHit(enemy);
 
                 return;
             }
@@ -401,6 +405,13 @@
         {
             if (WaveStarted != null)
                 WaveStarted();
+        }
+
+
+        private void NotifyObjectHit(ICollidable obj)
+        {
+            if (ObjectHit != null)
+                ObjectHit(obj);
         }
 
 
