@@ -44,9 +44,9 @@
             if (celestialBody != null)
             {
                 if (celestialBody == CelestialBodyToProtect)
-                    XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteTouche"*/, "Sound Bank");
+                    XACTAudio.PlayCue("SilentCue" /*"PlanetToProtectHit"*/, "Sound Bank");
                 else
-                    XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteTouche"*/, "Sound Bank");
+                    XACTAudio.PlayCue("SilentCue" /*"PlanetHit"*/, "Sound Bank");
 
                 return;
             }
@@ -84,9 +84,9 @@
                     return;
 
                 if (celestialBody == CelestialBodyToProtect)
-                    XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteExplose"*/, "Sound Bank");
+                    XACTAudio.PlayCue("SilentCue" /*"PlanetToProtectDestroyed"*/, "Sound Bank");
                 else
-                    XACTAudio.PlayCue("SilentCue" /*"sfxCorpsCelesteExplose"*/, "Sound Bank");
+                    XACTAudio.PlayCue("SilentCue" /*"PlanetDestroyed"*/, "Sound Bank");
 
                 return;
             }
