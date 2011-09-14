@@ -179,5 +179,17 @@
             if (powerUp.Type == PowerUpType.RailGun)
                 Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"sfxRailGunCharging"*/, "Sound Bank");
         }
+
+
+        public void DoStartingPathCollision(Bullet b, CelestialBody cb)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"MothershipShieldHit"*/, "Sound Bank");
+        }
+
+
+        public void DoPlayersCollided(SimPlayer p1, SimPlayer p2)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipToShipCollision"*/, "Sound Bank");
+        }
     }
 }
