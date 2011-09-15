@@ -262,7 +262,8 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PlayerBounced += new SimPlayerHandler(AudioController.DoPlayerBounced);
             TurretsController.TurretWandered += new TurretHandler(AudioController.DoTurretWandered);
             TurretsController.TurretUpgraded += new TurretSimPlayerHandler(AudioController.DoTurretUpgraded);
-            BulletsController.BulletDeflected += new BulletHandler(AudioController.DoBulletDeflected);            
+            BulletsController.BulletDeflected += new BulletHandler(AudioController.DoBulletDeflected);
+            EnemiesController.WaveNearToStart += new NoneHandler(AudioController.DoWaveNearToStart);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);

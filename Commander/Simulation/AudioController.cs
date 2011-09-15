@@ -113,6 +113,13 @@
         }
 
 
+        public void DoWaveNearToStart()
+        {
+            if (!Simulator.DemoMode)
+                XACTAudio.PlayCue("SilentCue" /*"NewWaveComing"*/, "Sound Bank");
+        }
+
+
         public void DoWaveStarted()
         {
             if (!Simulator.DemoMode)
