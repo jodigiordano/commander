@@ -16,6 +16,8 @@
         public float BulletHitPoints;
         public float BulletExplosionRange;
         public float BulletSpeed;
+        public string MovingSfx;
+        public string FiringSfx;
 
 
         public TurretLevel()
@@ -33,37 +35,43 @@
             BulletHitPoints = 0;
             BulletExplosionRange = 1;
             BulletSpeed = 0;
+            MovingSfx = "";
+            FiringSfx = "";
         }
 
 
         public TurretLevel(
-            int niveau,
-            int prixAchat,
-            int prixVente,
-            float zoneActivation,
-            double cadenceTir,
-            int nombreCanons,
-            double tempsConstruction,
-            BulletType projectileLance,
-            string representation,
-            string representationBase,
-            float projectilePointsAttaque,
-            float projectileZoneImpact,
-            float projectileVitesse)
+            int level,
+            int buyPrice,
+            int sellPrice,
+            float range,
+            double fireRate,
+            int nbCanons,
+            double buildingTime,
+            BulletType bullet,
+            string canonImageName,
+            string baseImageName,
+            float bulletHitPoints,
+            float bulletExplosionRange,
+            float bulletSpeed,
+            string movingSfx,
+            string firingSfx)
         {
-            this.Level = niveau;
-            this.BuyPrice = prixAchat;
-            this.SellPrice = prixVente;
-            this.Range = zoneActivation;
-            this.FireRate = cadenceTir;
-            this.NbCanons = nombreCanons;
-            this.BuildingTime = tempsConstruction;
-            this.Bullet = projectileLance;
-            this.CanonImageName = representation;
-            this.BaseImageName = representationBase;
-            this.BulletHitPoints = projectilePointsAttaque;
-            this.BulletExplosionRange = projectileZoneImpact;
-            this.BulletSpeed = projectileVitesse;
+            Level = level;
+            BuyPrice = buyPrice;
+            SellPrice = sellPrice;
+            Range = range;
+            FireRate = fireRate;
+            NbCanons = nbCanons;
+            BuildingTime = buildingTime;
+            Bullet = bullet;
+            CanonImageName = canonImageName;
+            BaseImageName = baseImageName;
+            BulletHitPoints = bulletHitPoints;
+            BulletExplosionRange = bulletExplosionRange;
+            BulletSpeed = bulletSpeed;
+            MovingSfx = movingSfx;
+            FiringSfx = firingSfx;
         }
     }
 }

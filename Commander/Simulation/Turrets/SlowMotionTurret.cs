@@ -15,7 +15,6 @@ namespace EphemereGames.Commander.Simulation
             Type = TurretType.SlowMotion;
             Name = @"Slow";
             Description = @"Slow down enemies";
-            SfxShooting = @"sfxTourelleSlowMotion";
             Color = new Color(255, 216, 0);
 
             RotationSpeed = Main.Random.Next(-50, 50) / 1000f;

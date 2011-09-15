@@ -30,12 +30,15 @@
         public int NbCanons                         { get { return ActualLevel.Value.NbCanons; } }
         public double BuildingTime                  { get { return ActualLevel.Value.BuildingTime; } }
         public BulletType BulletType                { get { return ActualLevel.Value.Bullet; } }
+        public string MovingSfx                     { get { return ActualLevel.Value.MovingSfx; } }
+        public string FiringSfx                     { get { return ActualLevel.Value.FiringSfx; } }
         public bool Watcher;
         public Color Color;
         public bool BackActiveThisTick              { get; private set; }
         public bool BackActiveThisTickOverride;
         public bool Visible;
         public bool Alive;
+        public bool NewWanderThisTick;
         public Shape Shape                          { get; set; }
         public Circle Circle                        { get; set; }
         public CelestialBody CelestialBody;
@@ -49,7 +52,6 @@
         public string Description;
 
         protected LinkedList<TurretLevel> Levels;
-        public string SfxShooting;
 
         protected Simulator Simulator;
         private bool DisabledOverride;
@@ -151,6 +153,7 @@
             Alive = true;
 
             RangeEffect = -1;
+            NewWanderThisTick = false;
         }
 
 
@@ -227,7 +230,9 @@
 
             TimeLastBullet -= Preferences.TargetElapsedTimeMs;
 
-            if (Type != TurretType.SlowMotion && Type != TurretType.Gravitational && Type != TurretType.Alien)
+            NewWanderThisTick = false;
+
+            if (Type != TurretType.SlowMotion && Type != TurretType.Gravitational)
                 DoWanderRotation();
 
             if (DisabledAnnounciationCounter < 0 && !Simulator.DemoMode)
@@ -247,7 +252,10 @@
                 else if (RotationWander < 0)
                     RotationWander = Math.Min(0, RotationWander + 0.001f);
                 else
+                {
                     RotationWander = Main.Random.Next(-10, 11) / 100.0f;
+                    NewWanderThisTick = true;
+                }
             }
         }
 

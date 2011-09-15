@@ -150,7 +150,7 @@
 
         public void DoTurretFired(Turret turret)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*turret.SfxShooting*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*turret.FiringSfx*/, "Sound Bank");
         }
 
 
@@ -158,6 +158,12 @@
         {
             if (!turret.BackActiveThisTickOverride)
                 Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"sfxTourelleMiseAJour"*/, "Sound Bank");
+        }
+
+
+        public void DoTurretWandered(Turret turret)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*turret.MovingSfx*/, "Sound Bank");
         }
 
 

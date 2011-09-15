@@ -17,6 +17,7 @@
         public event TurretHandler TurretReactivated;
         public event TurretHandler TurretFired;
         public event PhysicalObjectHandler ObjectCreated;
+        public event TurretHandler TurretWandered;
 
         private Simulator Simulator;
         private Dictionary<Turret, Enemy> AssociationsThisTick;
@@ -60,6 +61,9 @@
 
                 if (t.BackActiveThisTick)
                     NotifyTurretReactivated(t);
+
+                if (t.NewWanderThisTick)
+                    NotifyTurretWandered(t);
 
                 if (t.PlayerControlled)
                     continue;
@@ -116,7 +120,6 @@
         public void DoBuyTurret(Turret turret, SimPlayer player)
         {
             turret.RelativePosition = turret.Position - turret.CelestialBody.position;
-            //turret.Show();
 
             PlanetarySystemController.AddTurret(turret);
             Turrets.Add(turret);
@@ -129,7 +132,6 @@
             PlanetarySystemController.RemoveTurret(turret);
 
             turret.DoDie();
-            //turret.Hide();
 
             Turrets.Remove(turret);
             NotifyTurretSold(turret, player);
@@ -243,6 +245,13 @@
         {
             if (TurretFired != null)
                 TurretFired(turret);
+        }
+
+
+        private void NotifyTurretWandered(Turret turret)
+        {
+            if (TurretWandered != null)
+                TurretWandered(turret);
         }
     }
 }
