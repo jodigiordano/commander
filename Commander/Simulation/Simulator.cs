@@ -264,6 +264,8 @@ namespace EphemereGames.Commander.Simulation
             TurretsController.TurretUpgraded += new TurretSimPlayerHandler(AudioController.DoTurretUpgraded);
             BulletsController.BulletDeflected += new BulletHandler(AudioController.DoBulletDeflected);
             EnemiesController.WaveNearToStart += new NoneHandler(AudioController.DoWaveNearToStart);
+            SimPlayersController.PlayerConnected += new SimPlayerHandler(AudioController.DoPlayerConnected);
+            SimPlayersController.PlayerDisconnected += new SimPlayerHandler(AudioController.DoPlayerDisconnected);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
@@ -507,6 +509,9 @@ namespace EphemereGames.Commander.Simulation
         public void TeleportPlayers(bool teleportOut)
         {
             GUIController.TeleportPlayers(teleportOut);
+
+            if (!teleportOut && Inputs.ConnectedPlayers.Count > 0)
+                AudioController.TeleportPlayers(teleportOut);
         }
 
 

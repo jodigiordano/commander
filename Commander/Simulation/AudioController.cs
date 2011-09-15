@@ -230,5 +230,23 @@
         {
             Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"VulcanoidDeflection"*/, "Sound Bank");
         }
+
+
+        public void DoPlayerConnected(SimPlayer p)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipTeleportIn"*/, "Sound Bank");
+        }
+
+
+        public void DoPlayerDisconnected(SimPlayer p)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipTeleportOut"*/, "Sound Bank");
+        }
+
+
+        public void TeleportPlayers(bool teleportOut)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*teleportOut ? "ShipTelportOut" : "ShipTelportIn"*/, "Sound Bank");
+        }
     }
 }
