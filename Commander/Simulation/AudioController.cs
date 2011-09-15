@@ -248,5 +248,11 @@
         {
             Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*teleportOut ? "ShipTelportOut" : "ShipTelportIn"*/, "Sound Bank");
         }
+
+
+        public void DoWaveEnded()
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"WaveDestroyed"*/, "Sound Bank");
+        }
     }
 }
