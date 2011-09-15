@@ -322,6 +322,7 @@
                         pm.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         pm.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         pm.Big = BulletType == BulletType.Missile2;
+                        pm.SfxExplosion = ActualLevel.Value.BulletExplosionSfx;
 
                         Bullets.Add(pm);
                         

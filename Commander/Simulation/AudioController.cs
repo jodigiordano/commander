@@ -69,7 +69,7 @@
 
             if (bullet != null)
             {
-                if (!bullet.OutOfBounds && !Simulator.CutsceneMode && bullet.SfxExplosion != "")
+                if (!bullet.OutOfBounds && !Simulator.CutsceneMode && bullet.Explosive && bullet.SfxExplosion != "")
                     XACTAudio.PlayCue("SilentCue" /*bullet.SfxExplosion*/, "Sound Bank");
 
                 return;

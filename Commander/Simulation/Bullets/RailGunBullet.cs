@@ -16,7 +16,6 @@
             Shape = Shape.Rectangle;
             Rectangle = new PhysicalRectangle();
             Explosive = true;
-            SfxExplosion = @"sfxRailGunExplosion2";
         }
 
 

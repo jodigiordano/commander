@@ -18,6 +18,7 @@
         public float BulletSpeed;
         public string MovingSfx;
         public string FiringSfx;
+        public string BulletExplosionSfx;
 
 
         public TurretLevel()
@@ -37,6 +38,7 @@
             BulletSpeed = 0;
             MovingSfx = "";
             FiringSfx = "";
+            BulletExplosionSfx = "";
         }
 
 
@@ -52,7 +54,6 @@
             string canonImageName,
             string baseImageName,
             float bulletHitPoints,
-            float bulletExplosionRange,
             float bulletSpeed,
             string movingSfx,
             string firingSfx)
@@ -68,7 +69,6 @@
             CanonImageName = canonImageName;
             BaseImageName = baseImageName;
             BulletHitPoints = bulletHitPoints;
-            BulletExplosionRange = bulletExplosionRange;
             BulletSpeed = bulletSpeed;
             MovingSfx = movingSfx;
             FiringSfx = firingSfx;
