@@ -261,6 +261,8 @@ namespace EphemereGames.Commander.Simulation
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
             SimPlayersController.PlayerBounced += new SimPlayerHandler(AudioController.DoPlayerBounced);
             TurretsController.TurretWandered += new TurretHandler(AudioController.DoTurretWandered);
+            TurretsController.TurretUpgraded += new TurretSimPlayerHandler(AudioController.DoTurretUpgraded);
+            BulletsController.BulletDeflected += new BulletHandler(AudioController.DoBulletDeflected);            
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);

@@ -9,6 +9,7 @@ namespace EphemereGames.Commander.Simulation
     class BulletsController
     {
         public event PhysicalObjectHandler ObjectDestroyed;
+        public event BulletHandler BulletDeflected;
         public List<Bullet> Bullets { get; private set; }
 
         private Simulator Simulator;
@@ -151,6 +152,19 @@ namespace EphemereGames.Commander.Simulation
 
             if (bullet is MissileBullet)
                 ((MissileBullet) bullet).Wander = true;
+
+            if (!bullet.Deflected)
+            {
+                bullet.Deflected = true;
+                NotifyBulletDeflected(bullet);
+            }
+        }
+
+
+        private void NotifyBulletDeflected(Bullet b)
+        {
+            if (BulletDeflected != null)
+                BulletDeflected(b);
         }
     }
 }

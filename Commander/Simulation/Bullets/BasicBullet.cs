@@ -13,6 +13,7 @@
         {
             Shape = Shape.Rectangle;
             Rectangle = new PhysicalRectangle();
+            Deflectable = true;
         }
 
 
@@ -47,6 +48,7 @@
             ExplodingEffect.VisualPriority = VisualPriorities.Default.DefaultBullet;
 
             LifePoints = 5;
+            Deflected = false;
         }
 
 

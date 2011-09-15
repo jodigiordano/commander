@@ -281,7 +281,7 @@
 
             if (TimeLastBullet <= 0)
             {
-                Vector3 direction = (PlayerControlled) ? Direction : EnemyWatched.Position - this.Position;
+                Vector3 direction = (PlayerControlled) ? Direction : EnemyWatched.Position - Position;
                 direction.Normalize();
                 Matrix.CreateRotationZ(MathHelper.PiOver2, out rotationMatrix);
                 Vector3 directionUnitairePerpendiculaire = Vector3.Transform(direction, rotationMatrix);
@@ -298,11 +298,11 @@
 
                             BasicBullet p = (BasicBullet) Simulator.BulletsFactory.Get(BulletType.Base);
 
-                            p.Position = this.Position + translation;
+                            p.Position = Position + translation;
                             p.Direction = direction;
                             p.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                             p.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
-                            p.VisualPriority = this.CanonImage.VisualPriority;
+                            p.VisualPriority = CanonImage.VisualPriority;
                             p.ShowMovingEffect = true;
                             p.Image.SizeX = 1f;
                             
@@ -314,11 +314,11 @@
                     case BulletType.Missile2:
                         MissileBullet pm = (MissileBullet) Simulator.BulletsFactory.Get(BulletType.Missile);
 
-                        pm.Position = this.Position;
+                        pm.Position = Position;
                         pm.Direction = EnemyWatched.Position - this.Position;
                         pm.Target = EnemyWatched;
                         pm.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                        pm.VisualPriority = this.CanonImage.VisualPriority;
+                        pm.VisualPriority = CanonImage.VisualPriority;
                         pm.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         pm.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         pm.Big = BulletType == BulletType.Missile2;
@@ -336,9 +336,9 @@
                             pLM.Turret = this;
                             pLM.TargetOffset = directionUnitairePerpendiculaire * BulletsSources[NbCanons - 1][i];
                             pLM.Target = EnemyWatched;
-                            pLM.Direction = EnemyWatched.Position - this.Position;
+                            pLM.Direction = EnemyWatched.Position - Position;
                             pLM.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                            pLM.VisualPriority = this.CanonImage.VisualPriority;
+                            pLM.VisualPriority = CanonImage.VisualPriority;
                             
                             Bullets.Add(pLM);
                         }
@@ -349,9 +349,9 @@
 
                         pLS.Turret = this;
                         pLS.Target = EnemyWatched;
-                        pLS.Direction = EnemyWatched.Position - this.Position;
+                        pLS.Direction = EnemyWatched.Position - Position;
                         pLS.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                        pLS.VisualPriority = this.CanonImage.VisualPriority;
+                        pLS.VisualPriority = CanonImage.VisualPriority;
                         
                         ((LaserTurret)this).ActiveBullet = pLS;
 
@@ -363,9 +363,9 @@
 
                         gb.Turret = this;
                         gb.Target = EnemyWatched;
-                        gb.Direction = EnemyWatched.Position - this.Position;
+                        gb.Direction = EnemyWatched.Position - Position;
                         gb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                        gb.VisualPriority = this.CanonImage.VisualPriority;
+                        gb.VisualPriority = CanonImage.VisualPriority;
                         
                         ((GunnerTurret) this).ActiveBullet = gb;
 
@@ -375,10 +375,10 @@
                     case BulletType.SlowMotion:
                         SlowMotionBullet pSM = (SlowMotionBullet) Simulator.BulletsFactory.Get(BulletType.SlowMotion);
 
-                        pSM.Position = this.Position;
+                        pSM.Position = Position;
                         pSM.Radius = Range;
                         pSM.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
-                        pSM.VisualPriority = this.CanonImage.VisualPriority;
+                        pSM.VisualPriority = CanonImage.VisualPriority;
                         
                         Bullets.Add(pSM);
                         break;
@@ -386,12 +386,12 @@
                     case BulletType.Nanobots:
                         NanobotsBullet nb = (NanobotsBullet) Simulator.BulletsFactory.Get(BulletType.Nanobots);
 
-                        nb.Position = this.Position;
+                        nb.Position = Position;
                         nb.Direction = direction;
                         nb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         nb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         nb.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
-                        nb.VisualPriority = this.CanonImage.VisualPriority;
+                        nb.VisualPriority = CanonImage.VisualPriority;
                         
                         Bullets.Add(nb);
                         break;
@@ -399,12 +399,12 @@
                     case BulletType.RailGun:
                         RailGunBullet rgb = (RailGunBullet) Simulator.BulletsFactory.Get(BulletType.RailGun);
 
-                        rgb.Position = this.Position;
+                        rgb.Position = Position;
                         rgb.Direction = direction;
                         rgb.AttackPoints = ActualLevel.Value.BulletHitPoints * boostLevel.BulletHitPointsMultiplier;
                         rgb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         rgb.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
-                        rgb.VisualPriority = this.CanonImage.VisualPriority;
+                        rgb.VisualPriority = CanonImage.VisualPriority;
                         
                         Bullets.Add(rgb);
                         break;

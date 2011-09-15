@@ -144,6 +144,15 @@
         }
 
 
+        public void DoTurretUpgraded(Turret turret, SimPlayer player)
+        {
+            if (Simulator.DemoMode)
+                return;
+
+            XACTAudio.PlayCue("SilentCue" /*TurretUpgraded*/, "Sound Bank");
+        }
+
+
         public void DoTurretSold(Turret turret, SimPlayer player)
         {
             if (Simulator.DemoMode)
@@ -207,6 +216,12 @@
         public void DoPlayerBounced(SimPlayer player)
         {
             Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipBouncing"*/, "Sound Bank");
+        }
+
+
+        public void DoBulletDeflected(Bullet b)
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"VulcanoidDeflection"*/, "Sound Bank");
         }
     }
 }
