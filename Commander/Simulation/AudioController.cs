@@ -134,17 +134,22 @@
 
         public void DoTurretBought(Turret turret, SimPlayer player)
         {
-            if (turret.Type == TurretType.Gravitational && !Simulator.DemoMode)
-                XACTAudio.PlayCue("SilentCue" /*"sfxTourelleGravitationnelleAchetee"*/, "Sound Bank");
+            if (Simulator.DemoMode)
+                return;
+
+            if (turret.Type == TurretType.Gravitational)
+                XACTAudio.PlayCue("SilentCue" /*turret.FiringSfx*/, "Sound Bank");
+            else
+                XACTAudio.PlayCue("SilentCue" /*TurretBought*/, "Sound Bank");
         }
 
 
         public void DoTurretSold(Turret turret, SimPlayer player)
         {
-            if (turret.Type == TurretType.Gravitational)
-                XACTAudio.PlayCue("SilentCue" /*"sfxTourelleGravitationnelleAchetee"*/, "Sound Bank");
-            else
-                XACTAudio.PlayCue("SilentCue" /*"sfxTourelleVendue"*/, "Sound Bank");
+            if (Simulator.DemoMode)
+                return;
+
+            XACTAudio.PlayCue("SilentCue" /*"TurretSold"*/, "Sound Bank");
         }
 
 
