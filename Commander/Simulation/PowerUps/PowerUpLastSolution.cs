@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -32,6 +31,8 @@ namespace EphemereGames.Commander.Simulation
             Crosshair = "crosshairDestruction";
             Position = Vector3.Zero;
             GoAhead = false;
+            SfxIn = "sfxLastSolutionIn";
+            SfxOut = "sfxLastSolutionOut";
         }
 
 
@@ -57,16 +58,12 @@ namespace EphemereGames.Commander.Simulation
         {
             terminated = true;
             GoAhead = false;
-
-            Audio.PlaySfx(@"sfxLastSolutionOut");
         }
 
 
         public override void Start()
         {
             terminated = false;
-
-            Audio.PlaySfx(@"sfxLastSolutionIn");
         }
     }
 }

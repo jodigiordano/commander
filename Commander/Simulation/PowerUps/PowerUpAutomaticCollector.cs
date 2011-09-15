@@ -1,6 +1,5 @@
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -45,13 +44,8 @@ namespace EphemereGames.Commander.Simulation
             };
             AutomaticCollector.SteeringBehavior.ApplySafeBouncing();
 
-            Audio.PlaySfx(AutomaticCollector.SfxIn);
-        }
-
-
-        public override void Stop()
-        {
-            Audio.PlaySfx(AutomaticCollector.SfxOut);
+            SfxIn = AutomaticCollector.SfxIn;
+            SfxOut = AutomaticCollector.SfxOut;
         }
     }
 }

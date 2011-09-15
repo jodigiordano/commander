@@ -2,7 +2,6 @@ namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
@@ -42,12 +41,7 @@ namespace EphemereGames.Commander.Simulation
                     if (b.OutOfBounds)
                         b.DoDieSilent();
                     else
-                    {
                         b.DoDie();
-
-                        if (!Simulator.CutsceneMode && b.SfxExplosion != "")
-                            Audio.PlaySfx(b.SfxExplosion);
-                    }
                     
                     NotifyObjectDestroyed(b);
 

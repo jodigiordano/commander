@@ -43,6 +43,7 @@ namespace EphemereGames.Commander.Simulation
         private EditorGUIController EditorGUIController;
         private PanelsController PanelsController;
         internal TweakingController TweakingController;
+        private AudioController AudioController;
         internal TurretsFactory TurretsFactory;
         internal PowerUpsFactory PowerUpsFactory;
         internal EnemiesFactory EnemiesFactory;
@@ -134,6 +135,7 @@ namespace EphemereGames.Commander.Simulation
             EditorController = new EditorController(this);
             EditorGUIController = new EditorGUIController(this);
             PanelsController = new PanelsController(this);
+            AudioController = new AudioController(this);
 
             WorldMode = false;
             DemoMode = false;
@@ -159,7 +161,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.SellTurretAsked += new TurretSimPlayerHandler(TurretsController.DoSellTurret);
             TurretsController.TurretSold += new TurretSimPlayerHandler(SimPlayersController.DoTurretSold);
             TurretsController.TurretBought += new TurretSimPlayerHandler(SimPlayersController.DoTurretBought);
-            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(LevelsController.DoEnemyReachedEnd);
+            EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(PlanetarySystemController.DoEnemyReachedEnd);
             TurretsController.TurretUpgraded += new TurretSimPlayerHandler(SimPlayersController.DoTurretUpgraded);
             TurretsController.TurretUpgraded += new TurretSimPlayerHandler(GUIController.DoTurretUpgraded);
             SimPlayersController.UpgradeTurretAsked += new TurretSimPlayerHandler(TurretsController.DoUpgradeTurret);
@@ -171,6 +173,7 @@ namespace EphemereGames.Commander.Simulation
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
+            PlanetarySystemController.ObjectHit += new PhysicalObjectHandler(LevelsController.DoObjectHit);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(LevelsController.DoObjectDestroyed);
             EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.DoEnemyReachedEndOfPath);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.DoCelestialBodyDestroyed);
@@ -235,10 +238,29 @@ namespace EphemereGames.Commander.Simulation
             EnemiesController.NextWaveCompositionChanged += new NextWaveHandler(GUIController.DoNextWaveCompositionChanged);
             LevelsController.NewGameState += new NewGameStateHandler(SimPlayersController.DoNewGameState);
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(SimPlayersController.DoPlayersCollided);
+            CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(AudioController.DoPlayersCollided);
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(BulletsController.DoStartingPathCollision);
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(GUIController.DoStartingPathCollision);
+            CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(AudioController.DoStartingPathCollision);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(SpaceshipsController.DoShieldCollided);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(BulletsController.DoShieldCollided);
+            BulletsController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
+            EnemiesController.WaveStarted += new NoneHandler(AudioController.DoWaveStarted);
+            PowerUpsController.PowerUpStarted += new PowerUpSimPlayerHandler(AudioController.DoPowerUpStarted);
+            PowerUpsController.PowerUpStopped += new PowerUpSimPlayerHandler(AudioController.DoPowerUpStopped);
+            TurretsController.TurretBought += new TurretSimPlayerHandler(AudioController.DoTurretBought);
+            TurretsController.TurretSold += new TurretSimPlayerHandler(AudioController.DoTurretSold);
+            TurretsController.TurretFired += new TurretHandler(AudioController.DoTurretFired);
+            TurretsController.TurretReactivated += new TurretHandler(AudioController.DoTurretReactivated);
+            PowerUpsController.PowerUpInputCanceled += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputCanceled);
+            PowerUpsController.PowerUpInputPressed += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputPressed);
+            PowerUpsController.PowerUpInputReleased += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputReleased);
+            EnemiesController.ObjectHit += new PhysicalObjectHandler(AudioController.DoObjectHit);
+            EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
+            PlanetarySystemController.ObjectHit += new PhysicalObjectHandler(AudioController.DoObjectHit);
+            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
+            SimPlayersController.PlayerBounced += new SimPlayerHandler(AudioController.DoPlayerBounced);
+            TurretsController.TurretWandered += new TurretHandler(AudioController.DoTurretWandered);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
@@ -308,6 +330,9 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.ActiveWaves = EnemiesController.ActiveWaves;
             CollisionsController.Players = SimPlayersController.PlayersList;
             CollisionsController.Path = PlanetarySystemController.Path;
+            GUIController.EnemiesData = EnemiesController.EnemiesData;
+            AudioController.EnemiesData = EnemiesController.EnemiesData;
+            AudioController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
 
             TweakingController.Initialize();
             LevelsController.Initialize();
@@ -318,6 +343,7 @@ namespace EphemereGames.Commander.Simulation
             PowerUpsController.Initialize();
             SimPlayersController.Initialize(); // Must be done after the PowerUpsController
             CollisionsController.Initialize();
+            AudioController.Initialize();
 
             if (EditorMode)
             {
@@ -388,6 +414,7 @@ namespace EphemereGames.Commander.Simulation
                 MessagesController.Update();
                 GUIController.Update();
                 PowerUpsController.Update();
+                AudioController.Update();
             }
 
             else

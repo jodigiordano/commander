@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
 
 
@@ -16,7 +15,9 @@
         public event TurretSimPlayerHandler TurretSold;
         public event TurretSimPlayerHandler TurretUpgraded;
         public event TurretHandler TurretReactivated;
+        public event TurretHandler TurretFired;
         public event PhysicalObjectHandler ObjectCreated;
+        public event TurretHandler TurretWandered;
 
         private Simulator Simulator;
         private Dictionary<Turret, Enemy> AssociationsThisTick;
@@ -61,6 +62,9 @@
                 if (t.BackActiveThisTick)
                     NotifyTurretReactivated(t);
 
+                if (t.NewWanderThisTick)
+                    NotifyTurretWandered(t);
+
                 if (t.PlayerControlled)
                     continue;
 
@@ -87,12 +91,7 @@
                 List<Bullet> bullets = t.BulletsThisTick();
 
                 if (!Simulator.CutsceneMode && bullets.Count != 0)
-                {
-                    if (t is BasicTurret)
-                        Core.XACTAudio.XACTAudio.PlayCue("BasicTurretFiring", "Sound Bank");
-                    else
-                        Audio.PlaySfx(t.SfxShooting);
-                }
+                    NotifyTurretFired(t);
 
                 for (int j = 0; j < bullets.Count; j++)
                     NotifyObjectCreated(bullets[j]);
@@ -121,7 +120,6 @@
         public void DoBuyTurret(Turret turret, SimPlayer player)
         {
             turret.RelativePosition = turret.Position - turret.CelestialBody.position;
-            //turret.Show();
 
             PlanetarySystemController.AddTurret(turret);
             Turrets.Add(turret);
@@ -134,7 +132,6 @@
             PlanetarySystemController.RemoveTurret(turret);
 
             turret.DoDie();
-            //turret.Hide();
 
             Turrets.Remove(turret);
             NotifyTurretSold(turret, player);
@@ -241,6 +238,20 @@
         {
             if (TurretReactivated != null)
                 TurretReactivated(turret);
+        }
+
+
+        private void NotifyTurretFired(Turret turret)
+        {
+            if (TurretFired != null)
+                TurretFired(turret);
+        }
+
+
+        private void NotifyTurretWandered(Turret turret)
+        {
+            if (TurretWandered != null)
+                TurretWandered(turret);
         }
     }
 }

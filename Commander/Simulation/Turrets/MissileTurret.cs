@@ -11,7 +11,6 @@ namespace EphemereGames.Commander.Simulation
             Type = TurretType.Missile;
             Name = @"Missile";
             Description = @"Shoot powerful missiles";
-            SfxShooting = @"sfxTourelleMissile";
             Color = new Color(25, 121, 255);
 
             Levels = simulator.TurretsFactory.TurretsLevels[Type];

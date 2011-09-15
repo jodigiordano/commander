@@ -9,12 +9,10 @@
 
     class CelestialBodyNearHitAnimation
     {
-        private double EnemyPerc;
+        public EnemiesData EnemiesData;
 
         private CelestialBody celestialBody;
         private Simulator Simulator;
-        private List<Enemy> Enemies;
-        private Path Path;
 
         private Dictionary<Size, Image> NearHitMasks;
         private Image SelectedMask;
@@ -25,11 +23,9 @@
         private double Alpha;
 
 
-        public CelestialBodyNearHitAnimation(Simulator simulator, List<Enemy> enemies, Path path)
+        public CelestialBodyNearHitAnimation(Simulator simulator)
         {
             Simulator = simulator;
-            Enemies = enemies;
-            Path = path;
 
             NearHitMasks = new Dictionary<Size, Image>()
             {
@@ -38,7 +34,6 @@
                 { Size.Big, CreateMaskImage(GetMaskName(Size.Big)) },
             };
 
-            EnemyPerc = 0;
             Alpha = 0;
             MinEnemyPerc = 0.7;
             MinMaxFrequencyMs = new Vector2(500, 2000);
@@ -64,7 +59,7 @@
 
         public bool Visible
         {
-            get { return EnemyPerc >= MinEnemyPerc; }
+            get { return EnemiesData.EnemyNearHitPerc >= MinEnemyPerc; }
         }
 
 
@@ -72,8 +67,6 @@
         {
             if (celestialBody == null || !celestialBody.Alive)
                 return;
-
-            ComputeNearestEnemyPerc();
 
             if (!Visible)
             {
@@ -137,25 +130,9 @@
         }
 
 
-        private void ComputeNearestEnemyPerc()
-        {
-            EnemyPerc = 0;
-
-            for (int i = 0; i < Enemies.Count; i++)
-            {
-                Enemy e = Enemies[i];
-
-                double displacementPerc = Path.GetPercentage(e.Displacement);
-
-                if (displacementPerc > EnemyPerc)
-                    EnemyPerc = displacementPerc;
-            }
-        }
-
-
         private double GetEnemyRelativePerc()
         {
-            return (EnemyPerc - MinEnemyPerc) / (1 - MinEnemyPerc);
+            return (EnemiesData.EnemyNearHitPerc - MinEnemyPerc) / (1 - MinEnemyPerc);
         }
     }
 }

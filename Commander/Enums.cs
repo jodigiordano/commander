@@ -113,7 +113,6 @@ namespace EphemereGames.Commander.Simulation
         MultipleLasers = 4,
         Laser = 5,
         None = 6,
-        Alien = 7,
         SlowMotion = 8,
         Booster = 9,
         Gunner = 10,

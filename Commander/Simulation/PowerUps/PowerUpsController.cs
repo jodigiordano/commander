@@ -9,6 +9,9 @@
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public event PowerUpSimPlayerHandler PowerUpStarted;
         public event PowerUpSimPlayerHandler PowerUpStopped;
+        public event PowerUpSimPlayerHandler PowerUpInputCanceled;
+        public event PowerUpSimPlayerHandler PowerUpInputReleased;
+        public event PowerUpSimPlayerHandler PowerUpInputPressed;
 
         private Dictionary<SimPlayer, List<PowerUp>> PowerUps;
         private Simulator Simulator;
@@ -131,7 +134,10 @@
         {
             foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
+                {
                     powerUp.DoInputCanceled();
+                    NotifyPowerUpInputCanceled(powerUp, player);
+                }
         }
 
 
@@ -139,7 +145,10 @@
         {
             foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
+                {
                     powerUp.DoInputReleased();
+                    NotifyPowerUpInputReleased(powerUp, player);
+                }
         }
 
 
@@ -147,7 +156,10 @@
         {
             foreach (var powerUp in PowerUps[player])
                 if (powerUp.NeedInput)
+                {
                     powerUp.DoInputPressed();
+                    NotifyPowerUpInputPressed(powerUp, player);
+                }
         }
 
 
@@ -192,6 +204,27 @@
         {
             if (PowerUpStopped != null)
                 PowerUpStopped(powerUp, player);
+        }
+
+
+        private void NotifyPowerUpInputCanceled(PowerUp powerUp, SimPlayer player)
+        {
+            if (PowerUpInputCanceled != null)
+                PowerUpInputCanceled(powerUp, player);
+        }
+
+
+        private void NotifyPowerUpInputReleased(PowerUp powerUp, SimPlayer player)
+        {
+            if (PowerUpInputReleased != null)
+                PowerUpInputReleased(powerUp, player);
+        }
+
+
+        private void NotifyPowerUpInputPressed(PowerUp powerUp, SimPlayer player)
+        {
+            if (PowerUpInputPressed != null)
+                PowerUpInputPressed(powerUp, player);
         }
     }
 }

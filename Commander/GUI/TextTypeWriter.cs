@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -115,8 +114,8 @@
 
                 NbCharWritten++;
 
-                if (PlaySfx)
-                    Audio.PlaySfx(Sfxs[Main.Random.Next(0, Sfxs.Count)]);
+                //if (PlaySfx)
+                //    Audio.PlaySfx(Sfxs[Main.Random.Next(0, Sfxs.Count)]);
             }
         }
 

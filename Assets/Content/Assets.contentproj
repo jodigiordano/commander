@@ -2884,20 +2884,196 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiring.wav">
-      <Name>BasicTurretFiring</Name>
+    <Compile Include="audio\sfx\Empty.wav">
+      <Name>Empty</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="audio\music\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="audio\Audio.xap">
       <Name>Audio</Name>
       <Importer>XactImporter</Importer>
       <Processor>XactProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="audio\music\Chopin_3_aliens.wav">
+      <Name>Chopin_3_aliens</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\music\Chopin_3_breakbeat.wav">
+      <Name>Chopin_3_breakbeat</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\music\Chopin_3_piano.wav">
+      <Name>Chopin_3_piano</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="audio\sfx\AsteroidDestroyed.wav">
+      <Name>AsteroidDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\BasicTurretFiring1.wav">
+      <Name>BasicTurretFiring1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\BasicTurretFiring2.wav">
+      <Name>BasicTurretFiring2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\BasicTurretFiring3.wav">
+      <Name>BasicTurretFiring3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\BasicTurretFiring4.wav">
+      <Name>BasicTurretFiring4</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\CentaurDesroyed.wav">
+      <Name>CentaurDesroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\CometDestroyed.wav">
+      <Name>CometDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\DamacloidDestroyed.wav">
+      <Name>DamacloidDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring1.wav">
+      <Name>LaserTurretFiring1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring2.wav">
+      <Name>LaserTurretFiring2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3.wav">
+      <Name>LaserTurretFiring3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring4.wav">
+      <Name>LaserTurretFiring4</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring5.wav">
+      <Name>LaserTurretFiring5</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring6.wav">
+      <Name>LaserTurretFiring6</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring7.wav">
+      <Name>LaserTurretFiring7</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MeteroidDestroyed.wav">
+      <Name>MeteroidDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MissileTurretLaunching.wav">
+      <Name>MissileTurretLaunching</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MothershipOn.wav">
+      <Name>MothershipOn</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\NewWaveComing.wav">
+      <Name>NewWaveComing</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\NewWaveLaunching.wav">
+      <Name>NewWaveLaunching</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\NewWaveLaunching2.wav">
+      <Name>NewWaveLaunching2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\NewWaveLaunching3.wav">
+      <Name>NewWaveLaunching3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\PlanetDestroyed.wav">
+      <Name>PlanetDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\PlanetToProtectDestroyed.wav">
+      <Name>PlanetToProtectDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\PlanetToProtectHit.wav">
+      <Name>PlanetToProtectHit</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\RailgunTurretCharging.wav">
+      <Name>RailgunTurretCharging</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\ShipBouncing.wav">
+      <Name>ShipBouncing</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\ShipFiring.wav">
+      <Name>ShipFiring</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\ShootingStar.wav">
+      <Name>ShootingStar</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\TrojanDestroyed.wav">
+      <Name>TrojanDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\TurretBought.wav">
+      <Name>TurretBought</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\VulcanoidDestroyed.wav">
+      <Name>VulcanoidDestroyed</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

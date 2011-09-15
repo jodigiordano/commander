@@ -419,7 +419,6 @@
             c.Images.Add("Meteoroid");
             c.PathPriority = 0;
             c.CanSelect = true;
-            c.AddTurret(TurretType.Alien, 1, Vector3.Zero, true, false);
 
             d.PlanetarySystem.Add(c);
 

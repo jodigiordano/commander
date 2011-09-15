@@ -39,6 +39,7 @@
     
     <!-- Audio -->
     <asset name="Wave Bank"                              type="WaveBank"  path="audio/Wave Bank.xwb" />
+    <asset name="Music"                                  type="WaveBank"  path="audio/Music.xwb" />
     <asset name="Sound Bank"                             type="SoundBank" path="audio/Sound Bank.xsb" />
     
     

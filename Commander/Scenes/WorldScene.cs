@@ -275,7 +275,7 @@
 
                 // Start a new game
                 if (currentGame != null)
-                    currentGame.MusicController.StopMusic(true);
+                    currentGame.Music.Stop();
 
                 currentGame = new GameScene("Game1", level);
                 Main.GameInProgress = currentGame;

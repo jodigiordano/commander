@@ -212,7 +212,7 @@ namespace EphemereGames.Commander
                 return;
 
             if (GameInProgress != null && !GamePausedToWorld)
-                GameInProgress.MusicController.ResumeMusic();
+                GameInProgress.Music.Resume();
             else
                 MusicController.ResumeMusic();
         }
@@ -227,7 +227,7 @@ namespace EphemereGames.Commander
                 return;
 
             if (GameInProgress != null && !GamePausedToWorld)
-                GameInProgress.MusicController.PauseMusicNow();
+                GameInProgress.Music.Resume();
             else
                 MusicController.PauseMusicNow();
         }

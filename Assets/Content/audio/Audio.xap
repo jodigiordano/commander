@@ -214,6 +214,244 @@ Global Settings
         Min = 0.000000;
         Max = 1000000.000000;
     }
+
+    Variable
+    {
+        Name = NumberOfAliens;
+        Public = 1;
+        Global = 1;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 0;
+        Read Only = 0;
+        Time = 0;
+        Value = 1.000000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 1.000000;
+    }
+
+    Variable
+    {
+        Name = DistanceFromPlanet;
+        Public = 1;
+        Global = 1;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 0;
+        Read Only = 0;
+        Time = 0;
+        Value = 1.000000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 1.000000;
+    }
+
+    RPC
+    {
+        Name = AlienMusic;
+
+        RPC Curve
+        {
+            Name = 2::82cfd4c2-4556-40dd-931f-db14fbc0a533;
+            Property = 0;
+            Sound = 0;
+            Line Color = 4294901760;
+            Viewable = 1;
+
+            Variable Entry
+            {
+                Name = NumberOfAliens;
+            }
+
+            RPC Point
+            {
+                X = 0.000000;
+                Y = -9600.000000;
+                Curve = 1;
+            }
+
+            RPC Point
+            {
+                X = 0.100985;
+                Y = -1026.352905;
+                Curve = 1;
+            }
+
+            RPC Point
+            {
+                X = 0.700000;
+                Y = 0.000000;
+                Curve = 0;
+            }
+        }
+
+        RPC Curve
+        {
+            Name = 2::56c80597-93ee-4a09-a6ab-e4b86b6c99f3;
+            Property = 3;
+            Sound = 0;
+            Line Color = 4294934656;
+            Viewable = 1;
+
+            Variable Entry
+            {
+                Name = NumberOfAliens;
+            }
+
+            RPC Point
+            {
+                X = 0.000000;
+                Y = 20.000000;
+                Curve = 1;
+            }
+
+            RPC Point
+            {
+                X = 0.054187;
+                Y = 12256.885742;
+                Curve = 2;
+            }
+
+            RPC Point
+            {
+                X = 0.490148;
+                Y = 20000.000000;
+                Curve = 0;
+            }
+
+            RPC Point
+            {
+                X = 0.783251;
+                Y = 20000.000000;
+                Curve = 0;
+            }
+        }
+    }
+
+    RPC
+    {
+        Name = HumanMusic;
+
+        RPC Curve
+        {
+            Name = 1::b773c12a-6834-44e9-903b-dd1917faffd9;
+            Property = 0;
+            Sound = 0;
+            Line Color = 4286578943;
+            Viewable = 1;
+
+            Variable Entry
+            {
+                Name = NumberOfAliens;
+            }
+
+            RPC Point
+            {
+                X = 0.002463;
+                Y = 130.165070;
+                Curve = 1;
+            }
+
+            RPC Point
+            {
+                X = 0.105911;
+                Y = 21.741526;
+                Curve = 2;
+            }
+
+            RPC Point
+            {
+                X = 0.709360;
+                Y = -1058.823486;
+                Curve = 2;
+            }
+
+            RPC Point
+            {
+                X = 1.000000;
+                Y = -9600.000000;
+                Curve = 0;
+            }
+        }
+    }
+
+    RPC
+    {
+        Name = StressMusic;
+
+        RPC Curve
+        {
+            Name = 3::29236aaf-b737-477f-a76a-bdbc805f4008;
+            Property = 0;
+            Sound = 0;
+            Line Color = 4294967040;
+            Viewable = 1;
+
+            Variable Entry
+            {
+                Name = DistanceFromPlanet;
+            }
+
+            RPC Point
+            {
+                X = 0.253695;
+                Y = -9564.706055;
+                Curve = 0;
+            }
+
+            RPC Point
+            {
+                X = 0.300000;
+                Y = -2585.049561;
+                Curve = 0;
+            }
+
+            RPC Point
+            {
+                X = 0.800000;
+                Y = 0.000000;
+                Curve = 0;
+            }
+
+            RPC Point
+            {
+                X = 1.000000;
+                Y = 35.294117;
+                Curve = 0;
+            }
+        }
+
+        RPC Curve
+        {
+            Name = 3::07d25b0b-0d3a-48aa-84a8-5ab58987be1d;
+            Property = 3;
+            Sound = 0;
+            Line Color = 4294967168;
+            Viewable = 1;
+
+            Variable Entry
+            {
+                Name = DistanceFromPlanet;
+            }
+
+            RPC Point
+            {
+                X = 0.147783;
+                Y = 1365.655884;
+                Curve = 1;
+            }
+
+            RPC Point
+            {
+                X = 0.926108;
+                Y = 20000.000000;
+                Curve = 2;
+            }
+        }
+    }
 }
 
 Wave Bank
@@ -225,15 +463,17 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 1328487167;
-    Bank Last Revised High = 30174697;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 1009144042;
+    Bank Last Revised High = 30175821;
 
     Wave
     {
-        Name = BasicTurretFiring;
-        File = Sfx\BasicTurretFiring.wav;
-        Build Settings Last Modified Low = 920973858;
-        Build Settings Last Modified High = 30174697;
+        Name = Empty;
+        File = Sfx\Empty.wav;
+        Build Settings Last Modified Low = 2549822981;
+        Build Settings Last Modified High = 30175808;
 
         Cache
         {
@@ -242,12 +482,100 @@ Wave Bank
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 14742;
+            Play Region Length = 2222;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 966514690;
-            Last Modified High = 30173678;
+            Last Modified Low = 2467274294;
+            Last Modified High = 30175808;
+        }
+    }
+}
+
+Wave Bank
+{
+    Name = Music;
+    Xbox File = Xbox\Music.xwb;
+    Windows File = Win\Music.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = <none>;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 775270366;
+    Bank Last Revised High = 30175627;
+
+    Wave
+    {
+        Name = Chopin_3_aliens;
+        File = Music\Chopin_3_aliens.wav;
+        Build Settings Last Modified Low = 3177816382;
+        Build Settings Last Modified High = 30175625;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 33766884;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3899900110;
+            Last Modified High = 30175622;
+        }
+    }
+
+    Wave
+    {
+        Name = Chopin_3_breakbeat;
+        File = Music\Chopin_3_breakbeat.wav;
+        Build Settings Last Modified Low = 3177816382;
+        Build Settings Last Modified High = 30175625;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 33766884;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3465855284;
+            Last Modified High = 30175622;
+        }
+    }
+
+    Wave
+    {
+        Name = Chopin_3_piano;
+        File = Music\Chopin_3_piano.wav;
+        Build Settings Last Modified Low = 1119299137;
+        Build Settings Last Modified High = 30175626;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 33766884;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 527086831;
+            Last Modified High = 30175626;
         }
     }
 }
@@ -259,10 +587,184 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
-        Name = BasicTurretFiring;
+        Name = Raindrop;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        RPC Entry
+        {
+            RPC Name = AlienMusic;
+        }
+
+        RPC Entry
+        {
+            RPC Name = HumanMusic;
+        }
+
+        RPC Entry
+        {
+            RPC Name = StressMusic;
+        }
+
+        Track
+        {
+            Name = Piano;
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Music;
+                    Bank Index = 1;
+                    Entry Name = Chopin_3_piano;
+                    Entry Index = 2;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = HumanMusic;
+                RPC Curve Name = 1::b773c12a-6834-44e9-903b-dd1917faffd9;
+            }
+        }
+
+        Track
+        {
+            Name = Aliens;
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 20000.000000;
+            Filter Q Factor = 30.000000;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Music;
+                    Bank Index = 1;
+                    Entry Name = Chopin_3_aliens;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = AlienMusic;
+                RPC Curve Name = 2::82cfd4c2-4556-40dd-931f-db14fbc0a533;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = AlienMusic;
+                RPC Curve Name = 2::56c80597-93ee-4a09-a6ab-e4b86b6c99f3;
+            }
+        }
+
+        Track
+        {
+            Name = Breakbeats;
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 1000.000000;
+            Filter Q Factor = 30.000000;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Music;
+                    Bank Index = 1;
+                    Entry Name = Chopin_3_breakbeat;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = StressMusic;
+                RPC Curve Name = 3::29236aaf-b737-477f-a76a-bdbc805f4008;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = StressMusic;
+                RPC Curve Name = 3::07d25b0b-0d3a-48aa-84a8-5ab58987be1d;
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Empty;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -298,7 +800,7 @@ Sound Bank
                 {
                     Bank Name = Wave Bank;
                     Bank Index = 0;
-                    Entry Name = BasicTurretFiring;
+                    Entry Name = Empty;
                     Entry Index = 0;
                     Weight = 255;
                     Weight Min = 0;
@@ -309,7 +811,7 @@ Sound Bank
 
     Cue
     {
-        Name = BasicTurretFiring;
+        Name = Raindrop;
 
         Variation
         {
@@ -320,8 +822,28 @@ Sound Bank
 
         Sound Entry
         {
-            Name = BasicTurretFiring;
+            Name = Raindrop;
             Index = 0;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SilentCue;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
             Weight Min = 0;
             Weight Max = 255;
         }

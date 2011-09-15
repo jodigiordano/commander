@@ -10,7 +10,6 @@
             Type = TurretType.MultipleLasers;
             Name = @"Multi-laser";
             Description = @"Shoot a laser that hit every enemy on it's path";
-            SfxShooting = @"sfxTourelleLaserMultiple";
             Color = new Color(255, 96, 28);
 
             Levels = simulator.TurretsFactory.TurretsLevels[Type];

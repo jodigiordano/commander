@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -22,6 +21,7 @@
         public MineralDefinition Definition;
         public double VisualPriority;
         public CommanderScene Scene;
+        public string SfxDie;
 
         private Vector3 AnciennePosition;
         private Vector3 position;
@@ -38,6 +38,7 @@
             TempsExistence = Definition.TimeAlive;
             Circle = new Circle(this, Definition.Radius);
             LifePoints = 1;
+            SfxDie = (Type == MineralType.Life1) ? "sfxLifePack" : "sfxMoney" + Main.Random.Next(1, 4);
         }
 
 
@@ -83,10 +84,6 @@
             pris.Trigger(ref this.position);
             Scene.Particles.Return(pris);
             Scene.Animations.Add(new MineralTakenAnimation(Scene, Definition, Position, RepresentationParticules.VisualPriority - 0.0001));
-
-            string sfx = (Type == MineralType.Life1) ? "sfxLifePack" : "sfxMoney" + Main.Random.Next(1, 4);
-
-            Audio.PlaySfx(sfx);
         }
 
 

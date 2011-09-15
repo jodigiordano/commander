@@ -16,6 +16,7 @@
         public int MineralsCash;
         public int LifePacksGiven;
         public List<Wave> ActiveWaves;
+        public EnemiesData EnemiesData;
         
         public List<Enemy> Enemies;
         public List<Mineral> Minerals;
@@ -23,6 +24,7 @@
 
         public event NoneHandler WaveEnded;
         public event NoneHandler WaveStarted;
+        public event PhysicalObjectHandler ObjectHit;
         public event PhysicalObjectHandler ObjectDestroyed;
         public event PhysicalObjectHandler ObjectCreated;
         public event EnemyCelestialBodyHandler EnemyReachedEndOfPath;
@@ -55,6 +57,11 @@
             SyncProcessDeadEnemies = new Action(ProcessDeadEnemies);
             SyncUpdateEnemies = new Action(UpdateEnemies);
             SyncUpdateMinerals = new Action(UpdateMinerals);
+
+            EnemiesData = new EnemiesData()
+            {
+                Enemies = Enemies
+            };
         }
 
 
@@ -74,7 +81,6 @@
             if (InfiniteWaves != null)
                 return;
 
-            // Minerals Distribution
             int enemiesCnt = 0;
 
             foreach (var wave in Waves)
@@ -83,6 +89,10 @@
                 enemiesCnt += wave.EnemiesCount;
             }
 
+            EnemiesData.Path = Path;
+            EnemiesData.MaxEnemiesForCountPerc = 20;
+
+            // Minerals Distribution
             Vector3 unitValue = new Vector3(
                 Simulator.MineralsFactory.GetValue(MineralType.Cash10),
                 Simulator.MineralsFactory.GetValue(MineralType.Cash25),
@@ -133,6 +143,7 @@
             t2.Wait();
 
             AddWave();
+            EnemiesData.Update();
         }
 
 
@@ -150,6 +161,9 @@
             if (enemy != null && enemy.Alive)
             {
                 enemy.DoHit((ILivingObject)by);
+
+                if (enemy.Alive)
+                    NotifyObjectHit(enemy);
 
                 return;
             }
@@ -391,6 +405,13 @@
         {
             if (WaveStarted != null)
                 WaveStarted();
+        }
+
+
+        private void NotifyObjectHit(ICollidable obj)
+        {
+            if (ObjectHit != null)
+                ObjectHit(obj);
         }
 
 

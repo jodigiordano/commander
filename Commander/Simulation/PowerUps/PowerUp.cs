@@ -23,6 +23,8 @@
         public abstract bool Terminated     { get; }
         public bool TerminatedOverride      { protected get; set; }
         public SimPlayer Owner              { get; set; }
+        public string SfxIn                 { get; protected set; }
+        public string SfxOut                { get; protected set; }
 
         protected Simulator Simulation;
 
@@ -47,6 +49,8 @@
             TerminatedOverride = false;
             Owner = null;
             AssociatedTurret = TurretType.None;
+            SfxIn = "";
+            SfxOut = "";
         }
 
 

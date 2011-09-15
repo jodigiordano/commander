@@ -57,5 +57,13 @@
 
             return (float) Math.Atan2(perpDot, Vector3.Dot(vec1, vec2));
         }
+
+
+        public static double LerpMax(double from, double to, double max)
+        {
+            return (from <= to) ?
+                from += Math.Min(to - from, max) :
+                from += Math.Max(to - from, -max);
+        }
     }
 }

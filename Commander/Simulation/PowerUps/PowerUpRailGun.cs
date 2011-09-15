@@ -32,6 +32,8 @@ namespace EphemereGames.Commander.Simulation
             Crosshair = "crosshairRailGun";
             Position = Vector3.Zero;
             AssociatedTurret = TurretType.RailGun;
+            SfxIn = "sfxRailGunIn";
+            SfxOut = "sfxRailGunOut";
         }
 
 
@@ -65,8 +67,6 @@ namespace EphemereGames.Commander.Simulation
         {
             Turret.Fire();
             Firing = true;
-
-            Audio.PlaySfx(@"sfxRailGunCharging");
         }
 
 
@@ -88,8 +88,6 @@ namespace EphemereGames.Commander.Simulation
             Turret = HumanBattleship.RailGun;
             Turret.Owner = Owner;
             Firing = false;
-
-            Audio.PlaySfx(@"sfxRailGunIn");
         }
 
 
@@ -98,8 +96,6 @@ namespace EphemereGames.Commander.Simulation
             Turret.StopFire();
             Firing = false;
             HumanBattleship.RailGun.Wander = true;
-
-            Audio.PlaySfx(@"sfxRailGunOut");
         }
     }
 }

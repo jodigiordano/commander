@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Physics;
 
 
@@ -107,21 +106,12 @@
         }
 
 
-        public void DoEnemyReachedEnd(Enemy enemy, CelestialBody celestialBody)
+        public void DoObjectHit(ICollidable obj)
         {
-            if (State == GameState.Won)
-                return;
+            var celestialBody = obj as CelestialBody;
 
             if (celestialBody == null)
                 return;
-
-            if (!(celestialBody is AsteroidBelt))
-                celestialBody.DoHit(enemy);
-
-            if (!Simulator.DemoMode && Simulator.State != GameState.Lost)
-            {
-                Audio.PlaySfx(@"sfxCorpsCelesteTouche");
-            }
 
             if (Simulator.EditorMode && celestialBody == CelestialBodyToProtect)
                 celestialBody.LifePoints = CommonStash.Lives;
@@ -131,17 +121,6 @@
 
             if (celestialBody == CelestialBodyToProtect)
                 CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints;
-
-            if (CommonStash.Lives <= 0 && State == GameState.Running)
-            {
-                CelestialBodyToProtect.DoDie();
-                Audio.PlaySfx(@"sfxCorpsCelesteExplose");
-                State = GameState.Lost;
-
-                ComputeFinalScore();
-
-                NotifyNewGameState(State);
-            }
         }
         
 
@@ -152,20 +131,15 @@
 
             CelestialBody celestialBody = obj as CelestialBody;
 
-            if (celestialBody == null)
+            if (celestialBody == null || Simulator.DemoMode ||
+                Simulator.EditorMode  || celestialBody != CelestialBodyToProtect)
                 return;
 
-            if (!celestialBody.SilentDeath)
-                Audio.PlaySfx(@"sfxCorpsCelesteExplose");
+            State = GameState.Lost;
 
-            if (celestialBody == CelestialBodyToProtect && !Simulator.DemoMode && !Simulator.EditorMode)
-            {
-                State = GameState.Lost;
+            ComputeFinalScore();
 
-                ComputeFinalScore();
-
-                NotifyNewGameState(State);
-            }
+            NotifyNewGameState(State);
         }
 
 

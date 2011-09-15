@@ -348,7 +348,7 @@
 
                     Turret tourelle = Turrets[Main.Random.Next(0, Turrets.Count)];
 
-                    if (!tourelle.Visible || !tourelle.Watcher || tourelle.Type == TurretType.Alien || TalkingTurrets.ContainsKey(tourelle))
+                    if (!tourelle.Visible || !tourelle.Watcher || TalkingTurrets.ContainsKey(tourelle))
                         return;
 
                     Text texte = new Text(@"Pixelite");
