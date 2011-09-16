@@ -249,13 +249,30 @@ Global Settings
         Max = 1.000000;
     }
 
+    Variable
+    {
+        Name = ShipSpeed;
+        Public = 1;
+        Global = 0;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 0;
+        Read Only = 0;
+        Time = 0;
+        Value = 0.000000;
+        Initial Value = 0.000000;
+        Min = 0.000000;
+        Max = 1.000000;
+    }
+
     RPC
     {
         Name = AlienMusic;
 
         RPC Curve
         {
-            Name = 2::0818bd7c-cdff-48f4-bbdd-b6b9e654787d;
+            Name = 2::8f73ba0a-372b-4363-9ad4-8fdf99409dbd;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -290,7 +307,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::6d73ad23-4900-4147-b7d8-c210b44630c4;
+            Name = 2::60767cf8-3b51-4377-91af-f80eeac1ba48;
             Property = 3;
             Sound = 0;
             Line Color = 4294934656;
@@ -337,7 +354,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::03ccea0c-703e-45e3-a5e9-f1bfcc433f31;
+            Name = 1::0ba71643-8029-41ad-a027-b5ff2400c212;
             Property = 0;
             Sound = 0;
             Line Color = 4286578943;
@@ -384,7 +401,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::3cb4a118-6024-43de-b664-b9d1df5282f0;
+            Name = 3::7c665f39-a71c-4782-8124-1f56bbe8270f;
             Property = 0;
             Sound = 0;
             Line Color = 4294967040;
@@ -426,7 +443,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::8d70c814-baac-4eca-9333-100fc9362381;
+            Name = 3::f705ce32-4087-4460-bfd8-9407d2957caf;
             Property = 3;
             Sound = 0;
             Line Color = 4294967168;
@@ -463,8 +480,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 1075275638;
-    Bank Last Revised High = 30176045;
+    Bank Last Revised Low = 326260462;
+    Bank Last Revised High = 30176406;
 
     Wave
     {
@@ -652,10 +669,10 @@ Wave Bank
 
     Wave
     {
-        Name = ShipFiring;
-        File = Sfx\ShipFiring.wav;
-        Build Settings Last Modified Low = 1043181957;
-        Build Settings Last Modified High = 30176033;
+        Name = Select;
+        File = Sfx\Select.wav;
+        Build Settings Last Modified Low = 3840944515;
+        Build Settings Last Modified High = 30176396;
 
         Cache
         {
@@ -767,10 +784,10 @@ Wave Bank
 
     Wave
     {
-        Name = CentaurDesroyed;
-        File = Sfx\CentaurDesroyed.wav;
-        Build Settings Last Modified Low = 835683668;
-        Build Settings Last Modified High = 30176034;
+        Name = CentaurDestroyed;
+        File = Sfx\CentaurDestroyed.wav;
+        Build Settings Last Modified Low = 326260462;
+        Build Settings Last Modified High = 30176406;
 
         Cache
         {
@@ -1224,6 +1241,190 @@ Wave Bank
             Last Modified High = 30175356;
         }
     }
+
+    Wave
+    {
+        Name = CentaurHit;
+        File = Sfx\CentaurHit.wav;
+        Build Settings Last Modified Low = 926201117;
+        Build Settings Last Modified High = 30176382;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 88;
+            Play Region Length = 59838;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3816860800;
+            Last Modified High = 29595825;
+        }
+    }
+
+    Wave
+    {
+        Name = DamacloidHit;
+        File = Sfx\DamacloidHit.wav;
+        Build Settings Last Modified Low = 4294385502;
+        Build Settings Last Modified High = 30176383;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 88;
+            Play Region Length = 12924;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3936860800;
+            Last Modified High = 29595825;
+        }
+    }
+
+    Wave
+    {
+        Name = CometHit;
+        File = Sfx\CometHit.wav;
+        Build Settings Last Modified Low = 1886229851;
+        Build Settings Last Modified High = 30176394;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 88;
+            Play Region Length = 13376;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3936860800;
+            Last Modified High = 29595825;
+        }
+    }
+
+    Wave
+    {
+        Name = SwarmDestroyed;
+        File = Sfx\SwarmDestroyed.wav;
+        Build Settings Last Modified Low = 578579238;
+        Build Settings Last Modified High = 30176395;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 88;
+            Play Region Length = 15374;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3946860800;
+            Last Modified High = 29595825;
+        }
+    }
+
+    Wave
+    {
+        Name = ShipFiring;
+        File = Sfx\ShipFiring.wav;
+        Build Settings Last Modified Low = 2443440542;
+        Build Settings Last Modified High = 30176400;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 30696;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2576762249;
+            Last Modified High = 30174607;
+        }
+    }
+
+    Wave
+    {
+        Name = Cancel;
+        File = Sfx\Cancel.wav;
+        Build Settings Last Modified Low = 514405041;
+        Build Settings Last Modified High = 30176402;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 44366;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 246053632;
+            Last Modified High = 29360508;
+        }
+    }
+
+    Wave
+    {
+        Name = Validate;
+        File = Sfx\Validate.wav;
+        Build Settings Last Modified Low = 1781217146;
+        Build Settings Last Modified High = 30176403;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 134888;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2587214267;
+            Last Modified High = 30174607;
+        }
+    }
+
+    Wave
+    {
+        Name = ScreenChange;
+        File = Sfx\ScreenChange.wav;
+        Build Settings Last Modified Low = 523477745;
+        Build Settings Last Modified High = 30176404;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 358464;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 338397159;
+            Last Modified High = 30176404;
+        }
+    }
 }
 
 Wave Bank
@@ -1387,7 +1588,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = HumanMusic;
-                RPC Curve Name = 1::03ccea0c-703e-45e3-a5e9-f1bfcc433f31;
+                RPC Curve Name = 1::0ba71643-8029-41ad-a027-b5ff2400c212;
             }
         }
 
@@ -1432,13 +1633,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = AlienMusic;
-                RPC Curve Name = 2::0818bd7c-cdff-48f4-bbdd-b6b9e654787d;
+                RPC Curve Name = 2::8f73ba0a-372b-4363-9ad4-8fdf99409dbd;
             }
 
             RPC Curve Entry
             {
                 RPC Name = AlienMusic;
-                RPC Curve Name = 2::6d73ad23-4900-4147-b7d8-c210b44630c4;
+                RPC Curve Name = 2::60767cf8-3b51-4377-91af-f80eeac1ba48;
             }
         }
 
@@ -1483,13 +1684,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = StressMusic;
-                RPC Curve Name = 3::3cb4a118-6024-43de-b664-b9d1df5282f0;
+                RPC Curve Name = 3::7c665f39-a71c-4782-8124-1f56bbe8270f;
             }
 
             RPC Curve Entry
             {
                 RPC Name = StressMusic;
-                RPC Curve Name = 3::8d70c814-baac-4eca-9333-100fc9362381;
+                RPC Curve Name = 3::f705ce32-4087-4460-bfd8-9407d2957caf;
             }
         }
     }
@@ -1909,7 +2110,7 @@ Sound Bank
                     Bank Name = Wave Bank;
                     Bank Index = 0;
                     Entry Name = ShipFiring;
-                    Entry Index = 8;
+                    Entry Index = 37;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -2013,7 +2214,7 @@ Sound Bank
 
     Sound
     {
-        Name = CentaurDesroyed;
+        Name = CentaurDestroyed;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -2049,7 +2250,7 @@ Sound Bank
                 {
                     Bank Name = Wave Bank;
                     Bank Index = 0;
-                    Entry Name = CentaurDesroyed;
+                    Entry Name = CentaurDestroyed;
                     Entry Index = 13;
                     Weight = 255;
                     Weight Min = 0;
@@ -2951,6 +3152,429 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = CentaurHit;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = CentaurHit;
+                    Entry Index = 33;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = DamacloidHit;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = DamacloidHit;
+                    Entry Index = 34;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = CometHit;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = CometHit;
+                    Entry Index = 35;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SwarmDestroyed;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = SwarmDestroyed;
+                    Entry Index = 36;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Select;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = Select;
+                    Entry Index = 8;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Cancel;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = Cancel;
+                    Entry Index = 38;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Validate;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = Validate;
+                    Entry Index = 39;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = ScreenChange;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = ScreenChange;
+                    Entry Index = 40;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = ShipSpeed;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = Empty;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = Raindrop;
@@ -3193,7 +3817,7 @@ Sound Bank
 
     Cue
     {
-        Name = CentaurDesroyed;
+        Name = CentaurDestroyed;
 
         Variation
         {
@@ -3204,7 +3828,7 @@ Sound Bank
 
         Sound Entry
         {
-            Name = CentaurDesroyed;
+            Name = CentaurDestroyed;
             Index = 12;
             Weight Min = 0;
             Weight Max = 255;
@@ -3766,6 +4390,186 @@ Sound Bank
         {
             Name = PlanetDestroyed;
             Index = 31;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = CentaurHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = CentaurHit;
+            Index = 32;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = DamacloidHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = DamacloidHit;
+            Index = 33;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = CometHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = CometHit;
+            Index = 34;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SwarmDestroyed;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SwarmDestroyed;
+            Index = 35;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Select;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Select;
+            Index = 36;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Cancel;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Cancel;
+            Index = 37;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Validate;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Validate;
+            Index = 38;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ScreenChange;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = ScreenChange;
+            Index = 39;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ShipSpeed;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = ShipSpeed;
+            Index = 40;
             Weight Min = 0;
             Weight Max = 255;
         }
