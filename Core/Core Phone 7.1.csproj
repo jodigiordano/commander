@@ -161,6 +161,7 @@
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
     <Compile Include="Utilities\Path2D.cs" />
     <Compile Include="Utilities\Path3D.cs" />
+    <Compile Include="Utilities\StringBuilderExtensions.cs" />
     <Compile Include="Visual\Effects\ColorEffect.cs" />
     <Compile Include="Visual\Scenable\ColoredText.cs" />
     <Compile Include="Visual\Scenable\IVisual.cs" />

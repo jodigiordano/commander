@@ -131,6 +131,7 @@
     <Compile Include="Audio\Music.cs" />
     <Compile Include="Audio\Preferences.cs" />
     <Compile Include="Handlers.cs" />
+    <Compile Include="Utilities\StringBuilderExtensions.cs" />
     <Compile Include="XACTAudio\AudioController.cs" />
     <Compile Include="XACTAudio\Cue.cs" />
     <Compile Include="XACTAudio\SoundBank.cs" />
