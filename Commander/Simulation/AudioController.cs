@@ -26,8 +26,11 @@
 
         public void Update()
         {
-            XACTAudio.SetGlobalVariable("NumberOfAliens", (float) EnemiesData.EnemyCountPerc);
-            XACTAudio.SetGlobalVariable("DistanceFromPlanet", (float) EnemiesData.EnemyNearHitPerc);
+            if (XACTAudio.GetGlobalVariable("NumberOfAliens") != EnemiesData.EnemyCountPerc)
+                XACTAudio.SetGlobalVariable("NumberOfAliens", (float) EnemiesData.EnemyCountPerc);
+
+            if (XACTAudio.GetGlobalVariable("DistanceFromPlanet") != EnemiesData.EnemyNearHitPerc)
+                XACTAudio.SetGlobalVariable("DistanceFromPlanet", (float) EnemiesData.EnemyNearHitPerc);
 
             // Deleted sound effects (need to be hooked again)
             // - Player(s) firing
