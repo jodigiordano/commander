@@ -272,7 +272,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::8f73ba0a-372b-4363-9ad4-8fdf99409dbd;
+            Name = 2::ea79ecb3-2dcd-4a61-9430-2ad1e0e2869e;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -307,7 +307,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::60767cf8-3b51-4377-91af-f80eeac1ba48;
+            Name = 2::cdb134d7-f7fd-42c4-bdd0-0e8c8e74e6b4;
             Property = 3;
             Sound = 0;
             Line Color = 4294934656;
@@ -354,7 +354,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::0ba71643-8029-41ad-a027-b5ff2400c212;
+            Name = 1::ffa8ef33-6ffd-4d04-ba6a-0c0e9935fcb7;
             Property = 0;
             Sound = 0;
             Line Color = 4286578943;
@@ -401,7 +401,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::7c665f39-a71c-4782-8124-1f56bbe8270f;
+            Name = 3::18570d42-dce0-473c-8a05-93209adea6ee;
             Property = 0;
             Sound = 0;
             Line Color = 4294967040;
@@ -443,7 +443,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::f705ce32-4087-4460-bfd8-9407d2957caf;
+            Name = 3::aafb8510-bb43-4b76-9834-179e10d78e39;
             Property = 3;
             Sound = 0;
             Line Color = 4294967168;
@@ -480,8 +480,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 326260462;
-    Bank Last Revised High = 30176406;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 1792394441;
+    Bank Last Revised High = 30176641;
 
     Wave
     {
@@ -1083,10 +1085,10 @@ Wave Bank
 
     Wave
     {
-        Name = MeteroidDestroyed;
-        File = Sfx\MeteroidDestroyed.wav;
-        Build Settings Last Modified Low = 1944612486;
-        Build Settings Last Modified High = 30176040;
+        Name = MeteoroidDestroyed;
+        File = Sfx\MeteoroidDestroyed.wav;
+        Build Settings Last Modified Low = 1479344356;
+        Build Settings Last Modified High = 30176631;
 
         Cache
         {
@@ -1425,6 +1427,29 @@ Wave Bank
             Last Modified High = 30176404;
         }
     }
+
+    Wave
+    {
+        Name = PlutoidDestroyed;
+        File = Sfx\PlutoidDestroyed.wav;
+        Build Settings Last Modified Low = 2006184490;
+        Build Settings Last Modified High = 30176631;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 37414;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2933171708;
+            Last Modified High = 30176381;
+        }
+    }
 }
 
 Wave Bank
@@ -1588,7 +1613,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = HumanMusic;
-                RPC Curve Name = 1::0ba71643-8029-41ad-a027-b5ff2400c212;
+                RPC Curve Name = 1::ffa8ef33-6ffd-4d04-ba6a-0c0e9935fcb7;
             }
         }
 
@@ -1633,13 +1658,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = AlienMusic;
-                RPC Curve Name = 2::8f73ba0a-372b-4363-9ad4-8fdf99409dbd;
+                RPC Curve Name = 2::ea79ecb3-2dcd-4a61-9430-2ad1e0e2869e;
             }
 
             RPC Curve Entry
             {
                 RPC Name = AlienMusic;
-                RPC Curve Name = 2::60767cf8-3b51-4377-91af-f80eeac1ba48;
+                RPC Curve Name = 2::cdb134d7-f7fd-42c4-bdd0-0e8c8e74e6b4;
             }
         }
 
@@ -1684,13 +1709,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = StressMusic;
-                RPC Curve Name = 3::7c665f39-a71c-4782-8124-1f56bbe8270f;
+                RPC Curve Name = 3::18570d42-dce0-473c-8a05-93209adea6ee;
             }
 
             RPC Curve Entry
             {
                 RPC Name = StressMusic;
-                RPC Curve Name = 3::f705ce32-4087-4460-bfd8-9407d2957caf;
+                RPC Curve Name = 3::aafb8510-bb43-4b76-9834-179e10d78e39;
             }
         }
     }
@@ -2825,7 +2850,7 @@ Sound Bank
 
     Sound
     {
-        Name = MeteroidDestroyed;
+        Name = MeteoroidDestroyed;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -2861,7 +2886,7 @@ Sound Bank
                 {
                     Bank Name = Wave Bank;
                     Bank Index = 0;
-                    Entry Name = MeteroidDestroyed;
+                    Entry Name = MeteoroidDestroyed;
                     Entry Index = 26;
                     Weight = 255;
                     Weight Min = 0;
@@ -3531,6 +3556,100 @@ Sound Bank
     Sound
     {
         Name = ShipSpeed;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = Empty;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = PlutoidDestroyed;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = PlutoidDestroyed;
+                    Entry Index = 41;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Empty 2;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -4257,7 +4376,7 @@ Sound Bank
 
     Cue
     {
-        Name = MeteroidDestroyed;
+        Name = MeteoroidDestroyed;
 
         Variation
         {
@@ -4268,7 +4387,7 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MeteroidDestroyed;
+            Name = MeteoroidDestroyed;
             Index = 25;
             Weight Min = 0;
             Weight Max = 255;
@@ -4570,6 +4689,666 @@ Sound Bank
         {
             Name = ShipSpeed;
             Index = 40;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = PlutoidDestroyed;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = PlutoidDestroyed;
+            Index = 41;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = AsteroidHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Empty 2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty 2;
+            Index = 42;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Empty;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Meteoroid_Hit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = PlutoidHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SwarmHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = TrojanHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = VulcanoidHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = VulcanoidDeflection;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = GravitationalTurret;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MultipleLasersTurretFiring;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = GravitationalTurretUpgrade;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = TurretInstalling;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = TurretSold;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = TurretUpgrading;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = TurretUpgraded;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = TurretSpottedEnemy;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MothershipShieldHit;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ShipMoving;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ShipTeleportIn;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ShipTelportOut;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = WarpProximity;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = WaveDestroyed;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ContextualMenuSelectionChange;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ContextualMenuSelectionOK;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ContextualMenuIn;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ContextualMenuSelectionError;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = AlienTranslation;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = PanelChoiceOn;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = PanelAction;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ScoreCalculation;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = ScoreResult;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Empty;
+            Index = 1;
             Weight Min = 0;
             Weight Max = 255;
         }
