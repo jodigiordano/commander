@@ -875,6 +875,9 @@ namespace EphemereGames.Commander.Simulation
 
         void InputListener.DoMouseButtonPressed(Core.Input.Player p, MouseButton button)
         {
+            if (PanelsController.IsPanelVisible)
+                return;
+
             if (button == MouseConfiguration.Fire)
                 SimPlayersController.Fire((Player) p);
         }
