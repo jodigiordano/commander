@@ -47,7 +47,7 @@
             if (celestialBody != null)
             {
                 if (celestialBody == CelestialBodyToProtect)
-                    XACTAudio.PlayCue("SilentCue" /*"PlanetToProtectHit"*/, "Sound Bank");
+                    XACTAudio.PlayCue("PlanetToProtectHit", "Sound Bank");
                 else
                     XACTAudio.PlayCue("SilentCue" /*"PlanetHit"*/, "Sound Bank");
 
@@ -59,7 +59,8 @@
 
             if (enemy != null)
             {
-                XACTAudio.PlayCue("SilentCue" /*enemy.SfxHit*/, "Sound Bank");
+                if (enemy.Type == EnemyType.Centaur || enemy.Type == EnemyType.Comet || enemy.Type == EnemyType.Damacloid)
+                    XACTAudio.PlayCue(enemy.SfxHit, "Sound Bank");
 
                 return;
             }
@@ -87,9 +88,9 @@
                     return;
 
                 if (celestialBody == CelestialBodyToProtect)
-                    XACTAudio.PlayCue("SilentCue" /*"PlanetToProtectDestroyed"*/, "Sound Bank");
+                    XACTAudio.PlayCue("PlanetToProtectDestroyed", "Sound Bank");
                 else
-                    XACTAudio.PlayCue("SilentCue" /*"PlanetDestroyed"*/, "Sound Bank");
+                    XACTAudio.PlayCue("PlanetDestroyed", "Sound Bank");
 
                 return;
             }
@@ -99,7 +100,7 @@
 
             if (enemy != null)
             {
-                if (enemy.Type != EnemyType.Plutoid)
+                if (enemy.Type != EnemyType.Plutoid && enemy.Type != EnemyType.Meteoroid)
                     XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
 
                 return;
@@ -120,14 +121,14 @@
         public void DoWaveNearToStart()
         {
             if (!Simulator.DemoMode)
-                XACTAudio.PlayCue("SilentCue" /*"NewWaveComing"*/, "Sound Bank");
+                XACTAudio.PlayCue("NewWaveComing", "Sound Bank");
         }
 
 
         public void DoWaveStarted()
         {
             if (!Simulator.DemoMode)
-                XACTAudio.PlayCue("SilentCue" /*"sfxNouvelleVague"*/, "Sound Bank");
+                XACTAudio.PlayCue("NewWaveLaunching", "Sound Bank");
         }
 
 
@@ -151,7 +152,7 @@
             if (turret.Type == TurretType.Gravitational)
                 XACTAudio.PlayCue("SilentCue" /*turret.FiringSfx*/, "Sound Bank");
             else
-                XACTAudio.PlayCue("SilentCue" /*TurretBought*/, "Sound Bank");
+                XACTAudio.PlayCue("TurretBought", "Sound Bank");
         }
 
 
@@ -227,7 +228,7 @@
 
         public void DoPlayerBounced(SimPlayer player)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipBouncing"*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("ShipBouncing", "Sound Bank");
         }
 
 
