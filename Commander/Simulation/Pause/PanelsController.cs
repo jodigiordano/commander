@@ -75,6 +75,14 @@
         }
 
 
+        public void CloseCurrentPanel()
+        {
+            foreach (var p in Panels.Values)
+                if (p.Visible)
+                    DoPanelClosed(p);
+        }
+
+
         public void ShowPanel(PanelType type)
         {
             ShowPausePlayers();

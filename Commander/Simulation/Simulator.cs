@@ -656,13 +656,7 @@ namespace EphemereGames.Commander.Simulation
             if (PanelsController.IsPanelVisible)
             {
                 if (key == KeyboardConfiguration.Back)
-                {
-                    if (State == GameState.Paused)
-                    {
-                        SimPlayersController.SyncPausePlayers();
-                        TriggerNewGameState(GameState.Running);
-                    }
-                }
+                    PanelsController.CloseCurrentPanel();
 
                 return;
             }
@@ -1005,10 +999,7 @@ namespace EphemereGames.Commander.Simulation
                     PanelsController.DoPanelAction(simPlayer.PausePlayer);
 
                 else if (button == GamePadConfiguration.Back)
-                {
-                    if (State == GameState.Paused)
-                        TriggerNewGameState(GameState.Running);
-                }
+                    PanelsController.CloseCurrentPanel();
 
                 return;
             }
