@@ -165,10 +165,15 @@
 
             if (enemy != null && enemy.Alive)
             {
-                enemy.DoHit((ILivingObject)by);
+                var living = (ILivingObject) by;
 
-                if (enemy.Alive)
+                enemy.DoHit(living);
+
+                if (enemy.Alive && enemy.LastHitBy != living)
+                {
+                    enemy.LastHitBy = living;
                     NotifyObjectHit(enemy);
+                }
 
                 return;
             }

@@ -135,7 +135,6 @@
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\EffectsController.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />
-    <Compile Include="Utilities\fraction.cs" />
     <Compile Include="Utilities\Ids.cs" />
     <Compile Include="Utilities\KeyAndValue.cs" />
     <Compile Include="Utilities\LinkedListWithInit.cs" />
@@ -145,6 +144,7 @@
     <Compile Include="Utilities\Path3D.cs" />
     <Compile Include="Utilities\Pool.cs" />
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
+    <Compile Include="Utilities\StringBuilderExtensions.cs" />
     <Compile Include="Visual\Animations\Animation.cs" />
     <Compile Include="Visual\Animations\AnimationsController.cs" />
     <Compile Include="Visual\Camera\Camera.cs" />

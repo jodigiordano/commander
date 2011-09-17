@@ -2990,11 +2990,6 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="audio\sfx\MeteroidDestroyed.wav">
-      <Name>MeteroidDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
     <Compile Include="audio\sfx\MissileTurretLaunching.wav">
       <Name>MissileTurretLaunching</Name>
       <Importer>WavImporter</Importer>
@@ -3124,6 +3119,13 @@
     </Compile>
     <Compile Include="audio\sfx\Validate.wav">
       <Name>Validate</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="audio\sfx\MeteoroidDestroyed.wav">
+      <Name>MeteoroidDestroyed</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>

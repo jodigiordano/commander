@@ -131,6 +131,7 @@
     <Compile Include="Audio\Music.cs" />
     <Compile Include="Audio\Preferences.cs" />
     <Compile Include="Handlers.cs" />
+    <Compile Include="Utilities\StringBuilderExtensions.cs" />
     <Compile Include="XACTAudio\AudioController.cs" />
     <Compile Include="XACTAudio\Cue.cs" />
     <Compile Include="XACTAudio\SoundBank.cs" />
@@ -200,7 +201,6 @@
     <Compile Include="Utilities\Fade.cs" />
     <Compile Include="Utilities\EffectsController.cs" />
     <Compile Include="Utilities\ErrorHandling.cs" />
-    <Compile Include="Utilities\fraction.cs" />
     <Compile Include="Utilities\Ids.cs" />
     <Compile Include="Utilities\KeyAndValue.cs" />
     <Compile Include="Utilities\LinkedListWithInit.cs" />
