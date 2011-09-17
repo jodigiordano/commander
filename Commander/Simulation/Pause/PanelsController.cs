@@ -77,9 +77,14 @@
 
         public void CloseCurrentPanel()
         {
+            Panel panel = null;
+
             foreach (var p in Panels.Values)
                 if (p.Visible)
-                    DoPanelClosed(p);
+                    panel = p;
+
+            if (panel != null)
+                DoPanelClosed(panel);
         }
 
 
