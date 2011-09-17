@@ -99,7 +99,8 @@
 
             if (enemy != null)
             {
-                XACTAudio.PlayCue("SilentCue" /*enemy.SfxDie*/, "Sound Bank");
+                if (enemy.Type != EnemyType.Plutoid)
+                    XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
 
                 return;
             }
@@ -174,7 +175,8 @@
 
         public void DoTurretFired(Turret turret)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*turret.FiringSfx*/, "Sound Bank");
+            if (turret.Type == TurretType.Basic || turret.Type == TurretType.Laser || turret.Type == TurretType.Missile)
+                Core.XACTAudio.XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
         }
 
 
