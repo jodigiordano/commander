@@ -65,7 +65,8 @@ namespace EphemereGames.Core.Visual
             particle.State = State.Active;
             particle.Scene = Scene;
             particle.Name = name;
-            particle.Renderer = this.Renderer;
+            particle.Renderer = Renderer;
+            particle.LoadContent();
             particle.Initialize();
 
             Particles.Add(particle);
