@@ -59,7 +59,7 @@
 
             if (enemy != null)
             {
-                if (enemy.Type == EnemyType.Centaur || enemy.Type == EnemyType.Comet || enemy.Type == EnemyType.Damacloid)
+                if (enemy.Type != EnemyType.Meteoroid)
                     XACTAudio.PlayCue(enemy.SfxHit, "Sound Bank");
 
                 return;
@@ -100,8 +100,7 @@
 
             if (enemy != null)
             {
-                if (enemy.Type != EnemyType.Plutoid && enemy.Type != EnemyType.Meteoroid)
-                    XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
+                XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
 
                 return;
             }
@@ -149,9 +148,9 @@
             if (Simulator.DemoMode)
                 return;
 
-            if (turret.Type == TurretType.Gravitational)
-                XACTAudio.PlayCue("SilentCue" /*turret.FiringSfx*/, "Sound Bank");
-            else
+            //if (turret.Type == TurretType.Gravitational)
+            //    XACTAudio.PlayCue("GravitationalTurretBought", "Sound Bank");
+            //else
                 XACTAudio.PlayCue("TurretBought", "Sound Bank");
         }
 
@@ -161,7 +160,10 @@
             if (Simulator.DemoMode)
                 return;
 
-            XACTAudio.PlayCue("SilentCue" /*TurretUpgraded*/, "Sound Bank");
+            if (turret.Type == TurretType.Gravitational)
+                XACTAudio.PlayCue("GravitationalTurretUpgrade", "Sound Bank");
+            else
+                XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
         }
 
 
@@ -170,13 +172,14 @@
             if (Simulator.DemoMode)
                 return;
 
-            XACTAudio.PlayCue("SilentCue" /*"TurretSold"*/, "Sound Bank");
+            XACTAudio.PlayCue("TurretSold", "Sound Bank");
         }
 
 
         public void DoTurretFired(Turret turret)
         {
-            if (turret.Type == TurretType.Basic || turret.Type == TurretType.Laser || turret.Type == TurretType.Missile)
+            if (turret.Type == TurretType.Basic || turret.Type == TurretType.Laser ||
+                turret.Type == TurretType.Missile /*|| turret.Type == TurretType.MultipleLasers*/)
                 Core.XACTAudio.XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
         }
 
@@ -184,7 +187,7 @@
         public void DoTurretReactivated(Turret turret)
         {
             if (!turret.BackActiveThisTickOverride)
-                Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"sfxTourelleMiseAJour"*/, "Sound Bank");
+                Core.XACTAudio.XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
         }
 
 
@@ -216,7 +219,7 @@
 
         public void DoStartingPathCollision(Bullet b, CelestialBody cb)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"MothershipShieldHit"*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("MothershipShieldHit", "Sound Bank");
         }
 
 
@@ -234,31 +237,31 @@
 
         public void DoBulletDeflected(Bullet b)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"VulcanoidDeflection"*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("VulcanoidDeflection", "Sound Bank");
         }
 
 
         public void DoPlayerConnected(SimPlayer p)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipTeleportIn"*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportIn", "Sound Bank");
         }
 
 
         public void DoPlayerDisconnected(SimPlayer p)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipTeleportOut"*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportOut", "Sound Bank");
         }
 
 
         public void TeleportPlayers(bool teleportOut)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*teleportOut ? "ShipTelportOut" : "ShipTelportIn"*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
         }
 
 
         public void DoWaveEnded()
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"WaveDestroyed"*/, "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("WaveDestroyed", "Sound Bank");
         }
     }
 }
