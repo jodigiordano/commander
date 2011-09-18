@@ -313,7 +313,8 @@
             if (NextWave == null)
                 return;
 
-            if (!NextWave.Value.AnnouncedNearToStart && NextWave.Value.StartingTime - TimeElapsedLastWave <= MinTimeWaveNearToStart)
+            if (NextWave.Value.StartingTime != 0 && !NextWave.Value.AnnouncedNearToStart &&
+                NextWave.Value.StartingTime - TimeElapsedLastWave <= MinTimeWaveNearToStart)
             {
                 NotifyWaveNearToStart();
                 NextWave.Value.AnnouncedNearToStart = true;
