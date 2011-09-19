@@ -9,6 +9,7 @@ namespace EphemereGames.Commander
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
 
@@ -120,7 +121,7 @@ namespace EphemereGames.Commander
                         Options.VolumeSfxChanged += new Integer2Handler(SaveGameController.DoVolumeSfxChanged);
 
                         Audio.Initialize(Options.MusicVolume / 10f, Options.SfxVolume / 10f);
-                        EphemereGames.Core.XACTAudio.XACTAudio.Initialize(Content.RootDirectory + @"\audio\Audio.xgs");
+                        XACTAudio.Initialize(Content.RootDirectory + @"\audio\Audio.xgs");
 
                         DoFullScreenChanged(Options.FullScreen);
 
@@ -170,6 +171,7 @@ namespace EphemereGames.Commander
                     if (Persistence.IsPackageLoaded(@"principal"))
                     {
                         Audio.Update(gameTime);
+                        XACTAudio.Update();
                         MusicController.Update();
                     }
 
