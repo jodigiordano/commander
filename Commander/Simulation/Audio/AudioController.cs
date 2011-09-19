@@ -66,8 +66,7 @@
 
             if (enemy != null)
             {
-                if (enemy.Type != EnemyType.Meteoroid)
-                    XACTAudio.PlayCue(enemy.SfxHit, "Sound Bank");
+                XACTAudio.PlayCue(enemy.SfxHit, "Sound Bank");
 
                 return;
             }
@@ -163,9 +162,9 @@
             if (Simulator.DemoMode)
                 return;
 
-            //if (turret.Type == TurretType.Gravitational)
-            //    XACTAudio.PlayCue("GravitationalTurretBought", "Sound Bank");
-            //else
+            if (turret.Type == TurretType.Gravitational)
+                XACTAudio.PlayCue("GravitationalTurretBought", "Sound Bank");
+            else
                 XACTAudio.PlayCue("TurretBought", "Sound Bank");
         }
 
@@ -194,7 +193,7 @@
         public void DoTurretFired(Turret turret)
         {
             if (turret.Type == TurretType.Basic || turret.Type == TurretType.Laser ||
-                turret.Type == TurretType.Missile /*|| turret.Type == TurretType.MultipleLasers*/)
+                turret.Type == TurretType.Missile || turret.Type == TurretType.MultipleLasers)
                 Core.XACTAudio.XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
         }
 
@@ -277,10 +276,16 @@
         }
 
 
+        public void DoPlayerFired(SimPlayer p)
+        {
+            Players[p].Fire();
+        }
+
+
         public void TeleportPlayers(bool teleportOut)
         {
             // for now only one sound effect, could be nice to have a sfx for multiple ships
-            //Core.XACTAudio.XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
         }
 
 

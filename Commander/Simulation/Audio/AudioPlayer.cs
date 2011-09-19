@@ -8,7 +8,7 @@
     {
         private SimPlayer InnerPlayer;
         private Cue MovingCue;
-        private Cue FiringCue;
+        //private Cue FiringCue;
 
         private float ShipSpeed;
         private bool ShipSpeedChanged;
@@ -20,7 +20,7 @@
             ShipSpeed = 0;
             ShipSpeedChanged = true;
             MovingCue = XACTAudio.GetCue("ShipMoving", "Sound Bank");
-            FiringCue = XACTAudio.GetCue("ShipFiring", "Sound Bank");
+            //FiringCue = XACTAudio.GetCue("ShipFiring", "Sound Bank");
         }
 
 
@@ -32,34 +32,40 @@
 
         public void TeleportOut()
         {
-            //Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportOut", "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportOut", "Sound Bank");
+        }
+
+
+        public void Fire()
+        {
+            Core.XACTAudio.XACTAudio.PlayCue("ShipFiring", "Sound Bank");
         }
 
 
         public void PauseLoopingCues()
         {
             MovingCue.MasterPause();
-            FiringCue.MasterPause();
+            //FiringCue.MasterPause();
         }
 
 
         public void ResumeLoopingCues()
         {
             MovingCue.MasterResume();
-            FiringCue.MasterResume();
+            //FiringCue.MasterResume();
         }
 
 
         public void StopLoopingCues()
         {
             MovingCue.Stop();
-            FiringCue.Stop();
+            //FiringCue.Stop();
         }
 
 
         public void Update()
         {
-            //HandleMovingCue();
+            HandleMovingCue();
             //HandleFiringCue();
         }
 
@@ -81,13 +87,13 @@
         }
 
 
-        private void HandleFiringCue()
-        {
-            if (InnerPlayer.Firing)
-                FiringCue.PlayOrResume();
-            else
-                FiringCue.Pause();
-        }
+        //private void HandleFiringCue()
+        //{
+        //    if (InnerPlayer.Firing)
+        //        FiringCue.PlayOrResume();
+        //    else
+        //        FiringCue.Pause();
+        //}
 
 
         private void ComputeShipSpeed()

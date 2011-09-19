@@ -28,6 +28,7 @@
         public event CommonStashHandler CommonStashChanged;
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
+        public event SimPlayerHandler PlayerFired;
         public event PowerUpTypeSimPlayerHandler ActivatePowerUpAsked;
         public event PowerUpTypeSimPlayerHandler DesactivatePowerUpAsked;
         public event SimPlayerHandler PlayerConnected;
@@ -371,6 +372,9 @@
                 if (player.Firing)
                 {
                     var bullets = player.SpaceshipMove.Fire();
+
+                    if (bullets.Count != 0)
+                        NotifyPlayerFired(player);
 
                     foreach (var b in bullets)
                         NotifyObjectCreated(b);
@@ -813,6 +817,13 @@
         {
             if (PlayerBounced != null)
                 PlayerBounced(player);
+        }
+
+
+        private void NotifyPlayerFired(SimPlayer player)
+        {
+            if (PlayerFired != null)
+                PlayerFired(player);
         }
     }
 }
