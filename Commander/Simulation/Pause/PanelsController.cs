@@ -273,6 +273,7 @@
             else if (widget.Name == "GoBackToWorld")
             {
                 Simulator.TriggerNewGameState(GameState.PausedToWorld);
+                Simulator.CanSelectCelestialBodies = true;
             }
 
             else if (widget.Name == "Resume")

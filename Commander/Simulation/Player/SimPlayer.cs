@@ -181,6 +181,12 @@
         }
 
 
+        public float MaximumSpeed
+        {
+            get { return SpaceshipMove.SteeringBehavior.MaximumSpeed; }
+        }
+
+
         public bool MovementInputThisTick
         {
             get { return SpaceshipMove.SteeringBehavior.ManualMovementInputThisTick; }

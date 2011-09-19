@@ -26,12 +26,15 @@
 
         private static List<int> SafeBouncing = new List<int>() { -20, -18, -16, -14, -10, 10, 14, 16, 18, 20 };
 
+        private float MaxAcceleration;
+
 
         public SpaceshipSteeringBehavior(Spaceship spaceship)
         {
             Spaceship = spaceship;
             MaxRotationPerUpdateRad = 0.2f;
             Acceleration = Vector3.Zero;
+            MaxAcceleration = 2f;
             ManualMovementInputThisTick = false;
             NextMovement = Vector3.Zero;
             NextRotation = Vector3.Zero;
@@ -58,6 +61,12 @@
         public Vector3 CurrentSpeed
         {
             get { return Speed * Acceleration; }
+        }
+
+
+        public float MaximumSpeed
+        {
+            get { return Speed * MaxAcceleration; }
         }
 
 
@@ -174,8 +183,8 @@
         {
             Acceleration += input / 10f;
 
-            Acceleration.X = MathHelper.Clamp(Acceleration.X, -2, 2);
-            Acceleration.Y = MathHelper.Clamp(Acceleration.Y, -2, 2);
+            Acceleration.X = MathHelper.Clamp(Acceleration.X, -MaxAcceleration, MaxAcceleration);
+            Acceleration.Y = MathHelper.Clamp(Acceleration.Y, -MaxAcceleration, MaxAcceleration);
 
             if (Acceleration.X > 0)
                 Acceleration.X = Math.Max(0, Acceleration.X - (0.03f + Friction)); //lower literal == less in general

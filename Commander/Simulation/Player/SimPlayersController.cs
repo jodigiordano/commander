@@ -372,17 +372,12 @@
                 {
                     var bullets = player.SpaceshipMove.Fire();
 
-                    //if (bullets.Count != 0)
-                    //    Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
-
                     foreach (var b in bullets)
                         NotifyObjectCreated(b);
                 }
 
                 NotifyPlayerChanged(player);
                 NotifyPlayerMoved(player);
-
-                player.Firing = false;
             }
         }
 

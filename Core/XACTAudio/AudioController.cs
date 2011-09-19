@@ -10,12 +10,15 @@
         private Dictionary<string, WaveBank> WaveBanks;
         private Dictionary<string, SoundBank> SoundBanks;
 
+        private List<Cue> Cues;
+
 
         public AudioController(string fileName)
         {
             Engine = new Microsoft.Xna.Framework.Audio.AudioEngine(fileName);
             WaveBanks = new Dictionary<string, WaveBank>();
             SoundBanks = new Dictionary<string,SoundBank>();
+            Cues = new List<Cue>();
         }
 
 
@@ -46,6 +49,16 @@
         public void Update()
         {
             Engine.Update();
+
+            for (int i = 0; i < Cues.Count; i++)
+            {
+                var cue = Cues[i];
+
+                cue.Update();
+
+                if (cue.InnerCue.IsDisposed)
+                    Cues.RemoveAt(i);
+            }
         }
 
 
@@ -57,7 +70,11 @@
 
         public Cue GetCue(string cueName, string bankName)
         {
-            return new Cue(SoundBanks[bankName].InnerSoundBank.GetCue(cueName));
+            var cue = new Cue(cueName, SoundBanks[bankName].InnerSoundBank.GetCue(cueName));
+
+            Cues.Add(cue);
+
+            return cue;
         }
 
 

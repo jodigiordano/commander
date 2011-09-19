@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.XACTAudio;
 
@@ -8,12 +9,16 @@
     {
         public EnemiesData EnemiesData;
         public CelestialBody CelestialBodyToProtect;
-
         private Simulator Simulator;
+        private Dictionary<SimPlayer, AudioPlayer> Players;
+
+        private Cue WaveNearToStartCue;
+
 
         public AudioController(Simulator simulator)
         {
             Simulator = simulator;
+            Players = new Dictionary<SimPlayer, AudioPlayer>();
         }
 
 
@@ -37,6 +42,8 @@
             // - Typewriter
             // - Pulse power-up
 
+            foreach (var p in Players.Values)
+                p.Update();
         }
 
 
@@ -119,15 +126,23 @@
 
         public void DoWaveNearToStart()
         {
-            if (!Simulator.DemoMode)
-                XACTAudio.PlayCue("NewWaveComing", "Sound Bank");
+            if (Simulator.DemoMode)
+                return;
+
+            WaveNearToStartCue = XACTAudio.GetCue("NewWaveComing", "Sound Bank");
+            WaveNearToStartCue.Play();
         }
 
 
         public void DoWaveStarted()
         {
-            if (!Simulator.DemoMode)
-                XACTAudio.PlayCue("NewWaveLaunching", "Sound Bank");
+            if (Simulator.DemoMode)
+                return;
+
+            if (WaveNearToStartCue != null)
+                WaveNearToStartCue.Stop();
+
+            XACTAudio.PlayCue("NewWaveLaunching", "Sound Bank");
         }
 
 
@@ -243,25 +258,66 @@
 
         public void DoPlayerConnected(SimPlayer p)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportIn", "Sound Bank");
+            var audioPlayer = new AudioPlayer(p);
+
+            Players.Add(p, audioPlayer);
+
+            audioPlayer.TeleportIn();
         }
 
 
         public void DoPlayerDisconnected(SimPlayer p)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportOut", "Sound Bank");
+            var audioPlayer = Players[p];
+
+            audioPlayer.StopLoopingCues();
+            audioPlayer.TeleportOut();
+
+            Players.Remove(p);
         }
 
 
         public void TeleportPlayers(bool teleportOut)
         {
-            Core.XACTAudio.XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
+            // for now only one sound effect, could be nice to have a sfx for multiple ships
+            //Core.XACTAudio.XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
         }
 
 
         public void DoWaveEnded()
         {
             Core.XACTAudio.XACTAudio.PlayCue("WaveDestroyed", "Sound Bank");
+        }
+
+
+        public void DoNewGameState(GameState state)
+        {
+            switch (state)
+            {
+                case GameState.Paused:
+                    foreach (var p in Players.Values)
+                        p.PauseLoopingCues();
+                    break;
+
+                case GameState.Running:
+                    foreach (var p in Players.Values)
+                        p.ResumeLoopingCues();
+                    break;
+            }
+        }
+
+
+        public void DoFocusLost()
+        {
+            foreach (var p in Players.Values)
+                p.PauseLoopingCues();
+        }
+
+
+        public void DoFocusGained()
+        {
+            foreach (var p in Players.Values)
+                p.ResumeLoopingCues();
         }
     }
 }

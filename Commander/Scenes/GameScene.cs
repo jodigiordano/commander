@@ -76,16 +76,13 @@
         {
             base.OnFocus();
 
-            Simulator.SyncPlayers();
-
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
 
             EnableUpdate = true;
 
             Music.PlayOrResume();
 
-            Simulator.EnableInputs = true;
-
+            Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
         }
 
@@ -99,8 +96,7 @@
             if (TransitingTo == Main.SelectedWorld.Name || TransitingTo == "Menu")
                 Music.Pause();
 
-            Simulator.EnableInputs = false;
-
+            Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
         }
 

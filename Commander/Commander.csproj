@@ -157,7 +157,7 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
-    <Compile Include="Simulation\AudioController.cs" />
+    <Compile Include="Simulation\Audio\AudioController.cs" />
     <Compile Include="Cheats\AllLevelsUnlockedCheat.cs" />
     <Compile Include="Cheats\Cheat.cs" />
     <Compile Include="Cheats\CheatsController.cs" />
@@ -209,6 +209,7 @@
     <Compile Include="Scenes\StoryScene.cs" />
     <Compile Include="Scenes\WorldScene.cs" />
     <Compile Include="Scenes\World\LevelStates.cs" />
+    <Compile Include="Simulation\Audio\AudioPlayer.cs" />
     <Compile Include="Simulation\Bullets\BulletsFactory.cs" />
     <Compile Include="Simulation\Bullets\MineBullet.cs" />
     <Compile Include="Simulation\Bullets\ShieldBullet.cs" />

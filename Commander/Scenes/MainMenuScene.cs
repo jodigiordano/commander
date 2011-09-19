@@ -97,18 +97,13 @@
         {
             base.OnFocus();
 
-            Simulator.SyncPlayers();
-
             Main.MusicController.PlayMusic(false);
 
-            if (Inputs.ConnectedPlayers.Count == 0)
-                InitConnectFirstPlayer();
-            else
-            {
-                Simulator.EnableInputs = true;
-            }
-
+            Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
+
+            if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
+                InitConnectFirstPlayer();
         }
 
 
@@ -118,7 +113,7 @@
 
             Main.MusicController.PauseMusic();
 
-            Simulator.EnableInputs = false;
+            Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
         }
 

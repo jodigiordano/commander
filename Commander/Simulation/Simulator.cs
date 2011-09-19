@@ -370,6 +370,21 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
+        public void OnFocus()
+        {
+            SyncPlayers();
+            EnableInputs = true;
+            AudioController.DoFocusGained();
+        }
+
+
+        public void OnFocusLost()
+        {
+            EnableInputs = false;
+            AudioController.DoFocusLost();
+        }
+
+
         public bool SpawnEnemies
         {
             set { EnemiesController.SpawnEnemies = value; }
@@ -901,7 +916,7 @@ namespace EphemereGames.Commander.Simulation
             }
 
             if (simPlayer.Firing)
-                simPlayer.Firing = false;
+                SimPlayersController.StopFire(p);
 
             if (EditorMode && EditorState == EditorState.Editing)
                 return;
@@ -1143,7 +1158,10 @@ namespace EphemereGames.Commander.Simulation
                 else
                     SimPlayersController.DoDirectionDelta(player, ref delta);
 
-                SimPlayersController.Fire((Player) p);
+                if (delta == Vector3.Zero)
+                    SimPlayersController.StopFire(p);
+                else
+                    SimPlayersController.Fire((Player) p);
             }
         }
 

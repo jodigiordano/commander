@@ -133,7 +133,8 @@
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
     <Compile Include="Scenes\World\LevelStates.cs" />
-    <Compile Include="Simulation\AudioController.cs" />
+    <Compile Include="Simulation\Audio\AudioController.cs" />
+    <Compile Include="Simulation\Audio\AudioPlayer.cs" />
     <Compile Include="Simulation\Collisions\PlayersCollisions.cs" />
     <Compile Include="Simulation\Collisions\ShieldsCollisions.cs" />
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />

@@ -132,15 +132,11 @@
                 NeedReinit = false;
             }
 
-            Simulator.EnableInputs = true;
-
-            //
-
             InitializeLevelsStates();
             Main.SelectedWorld = this;
             Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
 
-            Simulator.SyncPlayers();
+            Simulator.OnFocus();
 
             Main.MusicController.ResumeMusic();
 
@@ -159,8 +155,7 @@
 
         public override void OnFocusLost()
         {
-            Simulator.EnableInputs = false;
-
+            Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
         }
 
