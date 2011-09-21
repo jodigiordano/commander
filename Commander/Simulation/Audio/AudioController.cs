@@ -106,7 +106,8 @@
 
             if (enemy != null)
             {
-                XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
+                if (Simulator.State == GameState.Running)
+                    XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
 
                 return;
             }

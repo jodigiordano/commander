@@ -138,7 +138,7 @@
 
             Simulator.OnFocus();
 
-            Main.MusicController.ResumeMusic();
+            Main.MusicController.PlayOrResume(Descriptor.Music);
 
             if (Main.GameInProgress != null && Descriptor.ContainsLevel(Main.GameInProgress.Level.Infos.Id))
             {
@@ -173,7 +173,7 @@
                 DoBackAction();
 
             if (key == KeyboardConfiguration.ChangeMusic)
-                Main.MusicController.ChangeMusic(false);
+                Main.MusicController.ToggleCurrentMusic();
         }
 
 
@@ -183,7 +183,7 @@
                 DoBackAction();
 
             if (button == GamePadConfiguration.ChangeMusic)
-                Main.MusicController.ChangeMusic(false);
+                Main.MusicController.ToggleCurrentMusic();
 
             if (button == GamePadConfiguration.Select)
                 DoSelectAction((Player) p);
@@ -263,14 +263,13 @@
                     Simulator.PausedGameChoice == PausedGameChoice.Resume)
                 {
                     currentGame.Simulator.State = GameState.Running;
-                    Main.MusicController.PauseMusic();
                     TransiteTo(currentGame.Name);
                     return;
                 }
 
                 // Start a new game
                 if (currentGame != null)
-                    currentGame.Music.Stop();
+                    currentGame.StopMusic();
 
                 currentGame = new GameScene("Game1", level);
                 Main.GameInProgress = currentGame;
@@ -282,7 +281,6 @@
                     Visuals.UpdateScene(currentGame.Name, currentGame);
 
                 TransiteTo(currentGame.Name);
-                Main.MusicController.PauseMusic();
 
                 return;
             }

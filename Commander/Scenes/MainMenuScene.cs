@@ -97,7 +97,7 @@
         {
             base.OnFocus();
 
-            Main.MusicController.PlayMusic(false);
+            Main.MusicController.PlayOrResume("MainMenuMusic");
 
             Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
@@ -110,8 +110,6 @@
         public override void OnFocusLost()
         {
             base.OnFocusLost();
-
-            Main.MusicController.PauseMusic();
 
             Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
@@ -158,14 +156,14 @@
                 BeginTransition((Player) p);
 
             else if (button == GamePadConfiguration.ChangeMusic)
-                Main.MusicController.ChangeMusic(false);
+                Main.MusicController.ToggleCurrentMusic();
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
             if (key == KeyboardConfiguration.ChangeMusic)
-                Main.MusicController.ChangeMusic(false);
+                Main.MusicController.ToggleCurrentMusic();
         }
 
 

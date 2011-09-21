@@ -3,7 +3,6 @@
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
-    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -12,7 +11,6 @@
     {
         public Simulator Simulator;
         public LevelDescriptor Level;
-        public Cue Music;
 
         private string TransitingTo;
         private FutureJobsController FutureJobs;
@@ -24,8 +22,6 @@
             Level = level;
 
             TransitingTo = "";
-
-            Music = XACTAudio.GetCue("Raindrop", "Sound Bank");
 
             Simulator = new Simulator(this, level);
             Simulator.Initialize();
@@ -80,7 +76,7 @@
 
             EnableUpdate = true;
 
-            Music.PlayOrResume();
+            Main.MusicController.PlayOrResume(GetMusicName());
 
             Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
@@ -93,9 +89,6 @@
 
             EnableUpdate = false;
 
-            if (TransitingTo == Main.SelectedWorld.Name || TransitingTo == "Menu")
-                Music.Pause();
-
             Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
         }
@@ -106,7 +99,7 @@
             if (newState == GameState.Won)
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon, Inputs.MasterPlayer.InputType);
-                //MusicController.SwitchTo(MusicContext.Won);
+                Main.MusicController.PlayOrResume("WinMusic");
                 Inputs.Active = false;
 
                 FutureJobs.Add(ReactiveInputs, 750);
@@ -116,7 +109,7 @@
             else if (newState == GameState.Lost)
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost, Inputs.MasterPlayer.InputType);
-                //MusicController.SwitchTo(MusicContext.Lost);
+                Main.MusicController.PlayOrResume("LoseMusic");
                 Inputs.Active = false;
 
                 FutureJobs.Add(ReactiveInputs, 750);
@@ -247,6 +240,12 @@
         }
 
 
+        public void StopMusic()
+        {
+            Main.MusicController.Stop(GetMusicName());
+        }
+
+
         private void RetryLevel()
         {
             TransiteToNewGame(Level);
@@ -269,7 +268,7 @@
 
         private void TransiteToNewGame(LevelDescriptor level)
         {
-            Music.Stop();
+            Main.MusicController.StopCurrentMusic();
 
             var newGame = new GameScene(Name == "Game1" ? "Game2" : "Game1", level);
             Main.GameInProgress = newGame;
@@ -301,6 +300,15 @@
         private void StopVibrations()
         {
             Inputs.StopAllVibrators();
+        }
+
+
+        private string GetMusicName()
+        {
+            return
+                /* Simulator.State == GameState.Running ? "BattleMusic" */
+                Simulator.State == GameState.Running ? "Raindrop" :
+                Simulator.State == GameState.Won ? "WinMusic" : "LoseMusic";
         }
     }
 }

@@ -361,6 +361,7 @@
     <Compile Include="Simulation\Turrets\TurretsFactory.cs" />
     <Compile Include="Simulation\TweakingController.cs" />
     <Compile Include="VisualPriorities.cs" />
+    <Compile Include="XACTMusicController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

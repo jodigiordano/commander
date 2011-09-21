@@ -89,6 +89,8 @@
             SandGlass.FadeIn(TimeBeforeTranslation, 1000);
             
             ScenesAreLoaded = false;
+
+            //Main.MusicController.PlayOrResume("EphemereGamesLogo");
         }
 
 

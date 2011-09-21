@@ -19,6 +19,7 @@
         public List<int> UnlockedCondition;
         public string WarpBlockedMessage;
         public int LastLevelId;
+        public string Music;
 
 
         public WorldDescriptor()
@@ -31,6 +32,7 @@
             UnlockedCondition = new List<int>();
             WarpBlockedMessage = "";
             LastLevelId = -1;
+            Music = "";
         }
 
 
