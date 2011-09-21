@@ -99,7 +99,7 @@
         private void ComputeShipSpeed()
         {
             var currentSpeed = InnerPlayer.CurrentSpeed;
-            var max = Math.Max(currentSpeed.X, currentSpeed.Y);
+            var max = Math.Max(Math.Abs(currentSpeed.X), Math.Abs(currentSpeed.Y));
 
             ShipSpeedChanged = ShipSpeed != max;
             
