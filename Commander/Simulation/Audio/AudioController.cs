@@ -195,20 +195,20 @@
         {
             if (turret.Type == TurretType.Basic || turret.Type == TurretType.Laser ||
                 turret.Type == TurretType.Missile || turret.Type == TurretType.MultipleLasers)
-                Core.XACTAudio.XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
+                XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
         }
 
 
         public void DoTurretReactivated(Turret turret)
         {
             if (!turret.BackActiveThisTickOverride)
-                Core.XACTAudio.XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
+                XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
         }
 
 
         public void DoTurretWandered(Turret turret)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*turret.MovingSfx*/, "Sound Bank");
+            XACTAudio.PlayCue("SilentCue" /*turret.MovingSfx*/, "Sound Bank");
         }
 
 
@@ -221,38 +221,38 @@
         public void DoPowerUpInputReleased(PowerUp powerUp, SimPlayer player)
         {
             if (powerUp.Type == PowerUpType.Miner)
-                Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"sfxMineGround"*/, "Sound Bank");
+                XACTAudio.PlayCue("SilentCue" /*"sfxMineGround"*/, "Sound Bank");
         }
 
 
         public void DoPowerUpInputPressed(PowerUp powerUp, SimPlayer player)
         {
             if (powerUp.Type == PowerUpType.RailGun)
-                Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"sfxRailGunCharging"*/, "Sound Bank");
+                XACTAudio.PlayCue("SilentCue" /*"sfxRailGunCharging"*/, "Sound Bank");
         }
 
 
         public void DoStartingPathCollision(Bullet b, CelestialBody cb)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("MothershipShieldHit", "Sound Bank");
+            XACTAudio.PlayCue("MothershipShieldHit", "Sound Bank");
         }
 
 
         public void DoPlayersCollided(SimPlayer p1, SimPlayer p2)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("SilentCue" /*"ShipToShipCollision"*/, "Sound Bank");
+            XACTAudio.PlayCue("SilentCue" /*"ShipToShipCollision"*/, "Sound Bank");
         }
 
 
         public void DoPlayerBounced(SimPlayer player)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("ShipBouncing", "Sound Bank");
+            XACTAudio.PlayCue("ShipBouncing", "Sound Bank");
         }
 
 
         public void DoBulletDeflected(Bullet b)
         {
-            Core.XACTAudio.XACTAudio.PlayCue("VulcanoidDeflection", "Sound Bank");
+            XACTAudio.PlayCue("VulcanoidDeflection", "Sound Bank");
         }
 
 
@@ -286,13 +286,13 @@
         public void TeleportPlayers(bool teleportOut)
         {
             // for now only one sound effect, could be nice to have a sfx for multiple ships
-            Core.XACTAudio.XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
+            XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
         }
 
 
         public void DoWaveEnded()
         {
-            Core.XACTAudio.XACTAudio.PlayCue("WaveDestroyed", "Sound Bank");
+            XACTAudio.PlayCue("WaveDestroyed", "Sound Bank");
         }
 
 
@@ -324,6 +324,68 @@
         {
             foreach (var p in Players.Values)
                 p.ResumeLoopingCues();
+        }
+
+
+        public void DoPlayerSelectionChanged(SimPlayer p)
+        {
+            if (Simulator.DemoMode)
+            {
+                if (p.ActualSelection.NewGameChoiceChanged && p.LastSelection.NewGameChoice == NewGameChoice.None)
+                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                else if (p.ActualSelection.NewGameChoiceChanged && p.LastSelection.NewGameChoice != NewGameChoice.None && p.ActualSelection.NewGameChoice == NewGameChoice.None)
+                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                else if (p.ActualSelection.NewGameChoiceChanged)
+                    XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
+
+                if (Simulator.WorldMode)
+                {
+                    if (p.ActualSelection.PausedGameChoiceChanged && p.LastSelection.PausedGameChoice == PausedGameChoice.None)
+                        XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                    else if (p.ActualSelection.PausedGameChoiceChanged && p.LastSelection.PausedGameChoice != PausedGameChoice.None && p.ActualSelection.PausedGameChoice == PausedGameChoice.None)
+                    { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                    else if (p.ActualSelection.PausedGameChoiceChanged)
+                        XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
+                }
+            }
+
+            else if (Simulator.EditorMode)
+            {
+            
+            }
+
+            else
+            {
+                // Power-Ups
+                if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy == PowerUpType.None)
+                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                else if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy != PowerUpType.None && p.ActualSelection.PowerUpToBuy == PowerUpType.None)
+                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                else if (p.ActualSelection.PowerUpToBuyChanged)
+                    XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
+
+                // Turrets
+                if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy == TurretType.None)
+                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                else if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy != TurretType.None && p.ActualSelection.TurretToBuy == TurretType.None)
+                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                else if (p.ActualSelection.TurretToBuyChanged)
+                    XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
+
+                // Turret
+                if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice == TurretChoice.None)
+                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                else if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice != TurretChoice.None && p.ActualSelection.TurretChoice == TurretChoice.None)
+                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                else if (p.ActualSelection.TurretChoiceChanged)
+                    XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
+            }
+        }
+
+
+        public void DoPlayerActionRefused(SimPlayer player)
+        {
+            XACTAudio.PlayCue("ContextualMenuSelectionError", "Sound Bank");
         }
     }
 }

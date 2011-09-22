@@ -268,6 +268,8 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PlayerDisconnected += new SimPlayerHandler(AudioController.DoPlayerDisconnected);
             EnemiesController.WaveEnded += new NoneHandler(AudioController.DoWaveEnded);
             SimPlayersController.PlayerFired += new SimPlayerHandler(AudioController.DoPlayerFired);
+            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(AudioController.DoPlayerSelectionChanged);
+            SimPlayersController.PlayerActionRefused += new SimPlayerHandler(AudioController.DoPlayerActionRefused);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);

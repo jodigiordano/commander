@@ -12,6 +12,7 @@
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
         public SimPlayerSelection ActualSelection;
+        public SimPlayerSelection LastSelection;
         public CommonStash CommonStash;
         public bool UpdateSelectionz;
         public PowerUpType PowerUpInUse;
@@ -63,6 +64,7 @@
         public void Initialize()
         {
             ActualSelection = new SimPlayerSelection();
+            LastSelection = new SimPlayerSelection();
             TurretToBuyController = new SelectedTurretToBuyAllController(AvailableTurrets);
             SelectedCelestialBodyController = new SelectedCelestialBodyController(Simulator, this, CelestialBodies);
             SelectedPowerUpController = new SelectedPowerUpController(Simulator.PowerUpsFactory.Availables, Circle);
@@ -242,6 +244,8 @@
 
         public void UpdateSelection()
         {
+            LastSelection.Sync(ActualSelection);
+
             if (GameOver)
             {
                 ActualSelection.Initialize();
@@ -519,7 +523,7 @@
             
                 if (VibrationMetronome.CyclesCountThisTick != 0)
                     Core.Input.Inputs.VibrateControllerHighFrequency(BasePlayer, 80, 0.4f);
-            }   
+            }
         }
 
 
