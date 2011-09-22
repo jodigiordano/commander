@@ -15,6 +15,8 @@
         private string TransitingTo;
         private FutureJobsController FutureJobs;
 
+        private string MusicName;
+
 
         public GameScene(string name, LevelDescriptor level)
             : base(name)
@@ -29,6 +31,8 @@
             Inputs.AddListener(Simulator);
 
             FutureJobs = new FutureJobsController();
+
+            MusicName = "Raindrop";
         }
 
 
@@ -76,7 +80,7 @@
 
             EnableUpdate = true;
 
-            Main.MusicController.PlayOrResume(GetMusicName());
+            Main.MusicController.PlayOrResume(MusicName);
 
             Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
@@ -99,7 +103,8 @@
             if (newState == GameState.Won)
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon, Inputs.MasterPlayer.InputType);
-                Main.MusicController.PlayOrResume("WinMusic");
+                MusicName = "WinMusic";
+                Main.MusicController.PlayOrResume(MusicName);
                 Inputs.Active = false;
 
                 FutureJobs.Add(ReactiveInputs, 750);
@@ -109,7 +114,8 @@
             else if (newState == GameState.Lost)
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost, Inputs.MasterPlayer.InputType);
-                Main.MusicController.PlayOrResume("LoseMusic");
+                MusicName = "LoseMusic";
+                Main.MusicController.PlayOrResume(MusicName);
                 Inputs.Active = false;
 
                 FutureJobs.Add(ReactiveInputs, 750);
@@ -242,7 +248,7 @@
 
         public void StopMusic()
         {
-            Main.MusicController.Stop(GetMusicName());
+            Main.MusicController.Stop(MusicName);
         }
 
 
@@ -300,15 +306,6 @@
         private void StopVibrations()
         {
             Inputs.StopAllVibrators();
-        }
-
-
-        private string GetMusicName()
-        {
-            return
-                /* Simulator.State == GameState.Running ? "BattleMusic" */
-                Simulator.State == GameState.Running ? "Raindrop" :
-                Simulator.State == GameState.Won ? "WinMusic" : "LoseMusic";
         }
     }
 }
