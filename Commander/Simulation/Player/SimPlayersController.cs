@@ -378,6 +378,9 @@
 
                     foreach (var b in bullets)
                         NotifyObjectCreated(b);
+
+                    if (player.BasePlayer.InputType == InputType.Gamepad)
+                        StopFire(player.BasePlayer);
                 }
 
                 NotifyPlayerChanged(player);
