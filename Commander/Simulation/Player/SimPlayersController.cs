@@ -28,6 +28,8 @@
         public event CommonStashHandler CommonStashChanged;
         public event SimPlayerHandler PlayerSelectionChanged;
         public event SimPlayerHandler PlayerMoved;
+        public event SimPlayerHandler PlayerFired;
+        public event SimPlayerHandler PlayerActionRefused;
         public event PowerUpTypeSimPlayerHandler ActivatePowerUpAsked;
         public event PowerUpTypeSimPlayerHandler DesactivatePowerUpAsked;
         public event SimPlayerHandler PlayerConnected;
@@ -372,17 +374,20 @@
                 {
                     var bullets = player.SpaceshipMove.Fire();
 
-                    //if (bullets.Count != 0)
-                    //    Audio.PlaySfx(@"sfxPowerUpResistanceTire" + Main.Random.Next(1, 4));
+                    if (bullets.Count != 0)
+                        NotifyPlayerFired(player);
 
                     foreach (var b in bullets)
                         NotifyObjectCreated(b);
+
+                    if (player.BasePlayer.InputType == InputType.Gamepad)
+                        StopFire(player.BasePlayer);
                 }
 
                 NotifyPlayerChanged(player);
                 NotifyPlayerMoved(player);
 
-                player.Firing = false;
+                player.ActualSelection.Update();
             }
         }
 
@@ -449,20 +454,27 @@
             var player = Players[pl];
 
             // activate a power-up
-            if (player.ActualSelection.PowerUpToBuy != PowerUpType.None &&
-                AvailablePowerUps[player.ActualSelection.PowerUpToBuy])
+            if (player.ActualSelection.PowerUpToBuy != PowerUpType.None)
             {
-                PowerUp p = Simulator.PowerUpsFactory.Availables[player.ActualSelection.PowerUpToBuy];
-
-                NotifyActivatePowerUpAsked(player.ActualSelection.PowerUpToBuy, player);
-
-                if (p.PayOnActivation)
+                if (!AvailablePowerUps[player.ActualSelection.PowerUpToBuy])
                 {
-                    CommonStash.Cash -= p.BuyPrice;
-                    NotifyCommonStashChanged(CommonStash);
+                    NotifyPlayerActionRefused(player);
                 }
 
-                player.UpdateSelection();
+                else
+                {
+                    PowerUp p = Simulator.PowerUpsFactory.Availables[player.ActualSelection.PowerUpToBuy];
+
+                    NotifyActivatePowerUpAsked(player.ActualSelection.PowerUpToBuy, player);
+
+                    if (p.PayOnActivation)
+                    {
+                        CommonStash.Cash -= p.BuyPrice;
+                        NotifyCommonStashChanged(CommonStash);
+                    }
+
+                    player.UpdateSelection();
+                }
 
                 return;
             }
@@ -473,7 +485,7 @@
             {
                 if (!AvailableTurrets[player.ActualSelection.TurretToBuy])
                 {
-                    // cannot buy turret here
+                    NotifyPlayerActionRefused(player);
                 }
 
                 else
@@ -492,16 +504,24 @@
             }
 
             // place a turret
-            if (player.ActualSelection.TurretToPlace != null &&
-                player.ActualSelection.TurretToPlace.CanPlace)
+            if (player.ActualSelection.TurretToPlace != null)
             {
-                player.ActualSelection.TurretToPlace.SetCanPlaceColor();
-                player.ActualSelection.TurretToPlace.ToPlaceMode = false;
-                NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace, player);
-                NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
-                player.ActualSelection.TurretToPlace = null;
-                player.TurretToPlaceChanged = true;
-                player.UpdateSelection();
+                if (!player.ActualSelection.TurretToPlace.CanPlace)
+                {
+                    NotifyPlayerActionRefused(player);
+                }
+
+                else
+                {
+                    player.ActualSelection.TurretToPlace.SetCanPlaceColor();
+                    player.ActualSelection.TurretToPlace.ToPlaceMode = false;
+                    NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace, player);
+                    NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
+                    player.ActualSelection.TurretToPlace = null;
+                    player.TurretToPlaceChanged = true;
+                    player.UpdateSelection();
+                }
+
                 return;
             }
 
@@ -517,7 +537,7 @@
                     case TurretChoice.Update:
                         if (!player.ActualSelection.AvailableTurretOptions[TurretChoice.Update])
                         {
-                            // cannot upgrade here (sound, shake that menu, etc.)
+                            NotifyPlayerActionRefused(player);
                         }
 
                         else
@@ -818,6 +838,20 @@
         {
             if (PlayerBounced != null)
                 PlayerBounced(player);
+        }
+
+
+        private void NotifyPlayerFired(SimPlayer player)
+        {
+            if (PlayerFired != null)
+                PlayerFired(player);
+        }
+
+
+        private void NotifyPlayerActionRefused(SimPlayer player)
+        {
+            if (PlayerActionRefused != null)
+                PlayerActionRefused(player);
         }
     }
 }

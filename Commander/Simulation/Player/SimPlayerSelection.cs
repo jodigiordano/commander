@@ -5,23 +5,28 @@
 
     class SimPlayerSelection
     {
-        public CelestialBody CelestialBody;
-
-        public PowerUpType PowerUpToBuy;
-
-        public Turret Turret;
-        public TurretChoice TurretChoice;
         public Dictionary<TurretChoice, bool> AvailableTurretOptions;
-
-        public TurretType TurretToBuy;
-        public Turret TurretToPlace;
-
-        public PausedGameChoice PausedGameChoice;
-
-        public NewGameChoice NewGameChoice;
         public Dictionary<NewGameChoice, bool> AvailableNewGameChoices;
 
-        public EditorEditingState EditingState;
+        protected CelestialBody celestialBody;
+        protected PowerUpType powerUpToBuy;
+        protected Turret turret;
+        protected TurretChoice turretChoice;
+        protected TurretType turretToBuy;
+        protected Turret turretToPlace;
+        protected PausedGameChoice pausedGameChoice;
+        protected NewGameChoice newGameChoice;
+        protected EditorEditingState editingState;
+
+        public bool CelestialBodyChanged;
+        public bool PowerUpToBuyChanged;
+        public bool TurretChanged;
+        public bool TurretChoiceChanged;
+        public bool TurretToBuyChanged;
+        public bool TurretToPlaceChanged;
+        public bool PausedGameChoiceChanged;
+        public bool NewGameChoiceChanged;
+        public bool EditingStateChanged;
 
 
         public SimPlayerSelection()
@@ -57,6 +62,99 @@
             PausedGameChoice = PausedGameChoice.None;
             NewGameChoice = NewGameChoice.None;
             EditingState = EditorEditingState.None;
+
+            Update();
+        }
+
+
+        public void Update()
+        {
+            CelestialBodyChanged = false;
+            PowerUpToBuyChanged = false;
+            TurretChanged = false;
+            TurretChoiceChanged = false;
+            TurretToBuyChanged = false;
+            TurretToPlaceChanged = false;
+            PausedGameChoiceChanged = false;
+            NewGameChoiceChanged = false;
+            EditingStateChanged = false;
+        }
+
+
+        public CelestialBody CelestialBody
+        {
+            get { return celestialBody; }
+            set { CelestialBodyChanged = celestialBody != value; celestialBody = value; }
+        }
+
+
+        public PowerUpType PowerUpToBuy
+        {
+            get { return powerUpToBuy; }
+            set { PowerUpToBuyChanged = powerUpToBuy != value; powerUpToBuy = value; }
+        }
+
+
+        public Turret Turret
+        {
+            get { return turret; }
+            set { TurretChanged = turret != value; turret = value; }
+        }
+
+
+        public TurretChoice TurretChoice
+        {
+            get { return turretChoice; }
+            set { TurretChoiceChanged = turretChoice != value; turretChoice = value; }
+        }
+
+
+        public TurretType TurretToBuy
+        {
+            get { return turretToBuy; }
+            set { TurretToBuyChanged = turretToBuy != value; turretToBuy = value; }
+        }
+
+
+        public Turret TurretToPlace
+        {
+            get { return turretToPlace; }
+            set { TurretToPlaceChanged = turretToPlace != value; turretToPlace = value; }
+        }
+
+
+        public PausedGameChoice PausedGameChoice
+        {
+            get { return pausedGameChoice; }
+            set { PausedGameChoiceChanged = pausedGameChoice != value; pausedGameChoice = value; }
+        }
+
+
+        public NewGameChoice NewGameChoice
+        {
+            get { return newGameChoice; }
+            set { NewGameChoiceChanged = newGameChoice != value; newGameChoice = value; }
+        }
+
+
+        public EditorEditingState EditingState
+        {
+            get { return editingState; }
+            set { EditingStateChanged = editingState != value; editingState = value; }
+        }
+
+
+        public void Sync(SimPlayerSelection other)
+        {
+            celestialBody = other.celestialBody;
+            powerUpToBuy = other.powerUpToBuy;
+            turret = other.turret;
+            turretChoice = other.turretChoice;
+            turretToBuy = other.turretToBuy;
+            turretToPlace = other.turretToPlace;
+            pausedGameChoice = other.pausedGameChoice;
+            newGameChoice = other.newGameChoice;
+            editingState = other.editingState;
         }
     }
 }

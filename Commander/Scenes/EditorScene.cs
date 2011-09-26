@@ -41,10 +41,7 @@
         {
             base.OnFocus();
 
-            Simulator.SyncPlayers();
-
-            Simulator.EnableInputs = true;
-
+            Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
         }
 
@@ -53,8 +50,7 @@
         {
             base.OnFocusLost();
 
-            Simulator.EnableInputs = false;
-
+            Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
         }
 

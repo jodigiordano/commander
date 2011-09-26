@@ -100,7 +100,7 @@
         {
             foreach (var level in Descriptor.Levels)
             {
-                bool unlocked = true;
+                bool unlocked = Descriptor.Id < 2; //tmp Alpha (instead of true)
 
                 if (!AllLevelsUnlockedOverride)
                 {

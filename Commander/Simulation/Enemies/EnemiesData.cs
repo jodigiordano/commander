@@ -6,7 +6,10 @@
     class EnemiesData
     {
         public double EnemyNearHitPerc;
+        public bool EnemyNearHitPercChanged;
+
         public double EnemyCountPerc;
+        public bool EnemyCountPercChanged;
 
         public List<Enemy> Enemies;
         public Path Path;
@@ -19,6 +22,9 @@
         {
             EnemyNearHitPerc = 0;
             EnemyCountPerc = 0;
+
+            EnemyNearHitPercChanged = true;
+            EnemyCountPercChanged = true;
 
             MaxEnemiesForCountPerc = int.MaxValue;
             MaxEnemyNearHitPercDelta = 0.01;
@@ -46,13 +52,21 @@
                     currentEnemyNearHitPerc = displacementPerc;
             }
 
-            EnemyNearHitPerc = Core.Physics.Utilities.LerpMax(EnemyNearHitPerc, currentEnemyNearHitPerc, MaxEnemyNearHitPercDelta);
+            double newEnemyNearHitPerc = Core.Physics.Utilities.LerpMax(EnemyNearHitPerc, currentEnemyNearHitPerc, MaxEnemyNearHitPercDelta);
+
+            EnemyNearHitPercChanged = EnemyNearHitPerc != newEnemyNearHitPerc;
+
+            EnemyNearHitPerc = newEnemyNearHitPerc;
         }
 
 
         private void ComputeEnemyCountPerc()
         {
-            EnemyCountPerc = (float) Enemies.Count / MaxEnemiesForCountPerc;
+            double newEnemyCountPerc = (float) Enemies.Count / MaxEnemiesForCountPerc;
+
+            EnemyCountPercChanged = EnemyCountPerc != newEnemyCountPerc;
+
+            EnemyCountPerc = newEnemyCountPerc;
         }
     }
 }

@@ -210,6 +210,12 @@
         }
 
 
+        public override string ToString()
+        {
+            return data;
+        }
+
+
         private Vector2 RelativeTextSize
         {
             get

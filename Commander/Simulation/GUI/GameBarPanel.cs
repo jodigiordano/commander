@@ -1,9 +1,10 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System;
-using System.Collections.Generic;
-using EphemereGames.Core.Visual;
-using Microsoft.Xna.Framework;
+    using System.Collections.Generic;
+    using System.Text;
+    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.Visual;
+    using Microsoft.Xna.Framework;
 
 
     class GameBarPanel : Panel
@@ -20,6 +21,8 @@ using Microsoft.Xna.Framework;
         private double timeNextWave;
 
         private Dictionary<string, List<KeyValuePair<string, PanelWidget>>> HBMessages;
+        
+        private StringBuilder TimeNextWaveBuilder;
 
 
         public GameBarPanel(Simulator simulator, double visualPriority)
@@ -75,6 +78,8 @@ using Microsoft.Xna.Framework;
                 { @"Time", new List<KeyValuePair<string, PanelWidget>>() { new KeyValuePair<string, PanelWidget>(@"msg", new Label(new Text(@"Remaining time before next wave", @"Pixelite") { SizeX = 2 })) } },
                 { @"NextWave", new List<KeyValuePair<string, PanelWidget>>() { new KeyValuePair<string, PanelWidget>(@"msg", new Label(new Text(@"Composition of the next wave", @"Pixelite") { SizeX = 2 })) } }
             };
+
+            TimeNextWaveBuilder = new StringBuilder();
         }
 
 
@@ -128,7 +133,12 @@ using Microsoft.Xna.Framework;
             {
                 timeNextWave = value;
 
-                TimeNextWaveText.SetData(String.Format("{0:0.0}", TimeNextWave / 1000));
+                TimeNextWaveBuilder.Length = 0;
+                TimeNextWaveBuilder.AppendNumber((int) TimeNextWave / 1000);
+                //TimeNextWaveBuilder.Append(".");
+                //TimeNextWaveBuilder.AppendNumber(((int) TimeNextWave % 1000) / 10);
+
+                TimeNextWaveText.SetData(TimeNextWaveBuilder.ToString());
             }
         }
 

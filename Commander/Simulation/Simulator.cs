@@ -261,6 +261,15 @@ namespace EphemereGames.Commander.Simulation
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
             SimPlayersController.PlayerBounced += new SimPlayerHandler(AudioController.DoPlayerBounced);
             TurretsController.TurretWandered += new TurretHandler(AudioController.DoTurretWandered);
+            TurretsController.TurretUpgraded += new TurretSimPlayerHandler(AudioController.DoTurretUpgraded);
+            BulletsController.BulletDeflected += new BulletHandler(AudioController.DoBulletDeflected);
+            EnemiesController.WaveNearToStart += new NoneHandler(AudioController.DoWaveNearToStart);
+            SimPlayersController.PlayerConnected += new SimPlayerHandler(AudioController.DoPlayerConnected);
+            SimPlayersController.PlayerDisconnected += new SimPlayerHandler(AudioController.DoPlayerDisconnected);
+            EnemiesController.WaveEnded += new NoneHandler(AudioController.DoWaveEnded);
+            SimPlayersController.PlayerFired += new SimPlayerHandler(AudioController.DoPlayerFired);
+            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(AudioController.DoPlayerSelectionChanged);
+            SimPlayersController.PlayerActionRefused += new SimPlayerHandler(AudioController.DoPlayerActionRefused);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
@@ -361,6 +370,21 @@ namespace EphemereGames.Commander.Simulation
             Main.CheatsController.CheatActivated -= DoCheatActivated;
             Main.Options.ShowHelpBarChanged -= DoShowHelpBarChanged;
             Inputs.RemoveListener(this);
+        }
+
+
+        public void OnFocus()
+        {
+            SyncPlayers();
+            EnableInputs = true;
+            AudioController.DoFocusGained();
+        }
+
+
+        public void OnFocusLost()
+        {
+            EnableInputs = false;
+            AudioController.DoFocusLost();
         }
 
 
@@ -504,6 +528,9 @@ namespace EphemereGames.Commander.Simulation
         public void TeleportPlayers(bool teleportOut)
         {
             GUIController.TeleportPlayers(teleportOut);
+
+            if (!teleportOut && Inputs.ConnectedPlayers.Count > 0)
+                AudioController.TeleportPlayers(teleportOut);
         }
 
 
@@ -647,13 +674,7 @@ namespace EphemereGames.Commander.Simulation
             if (PanelsController.IsPanelVisible)
             {
                 if (key == KeyboardConfiguration.Back)
-                {
-                    if (State == GameState.Paused)
-                    {
-                        SimPlayersController.SyncPausePlayers();
-                        TriggerNewGameState(GameState.Running);
-                    }
-                }
+                    PanelsController.CloseCurrentPanel();
 
                 return;
             }
@@ -872,6 +893,9 @@ namespace EphemereGames.Commander.Simulation
 
         void InputListener.DoMouseButtonPressed(Core.Input.Player p, MouseButton button)
         {
+            if (PanelsController.IsPanelVisible)
+                return;
+
             if (button == MouseConfiguration.Fire)
                 SimPlayersController.Fire((Player) p);
         }
@@ -895,7 +919,7 @@ namespace EphemereGames.Commander.Simulation
             }
 
             if (simPlayer.Firing)
-                simPlayer.Firing = false;
+                SimPlayersController.StopFire(p);
 
             if (EditorMode && EditorState == EditorState.Editing)
                 return;
@@ -996,10 +1020,7 @@ namespace EphemereGames.Commander.Simulation
                     PanelsController.DoPanelAction(simPlayer.PausePlayer);
 
                 else if (button == GamePadConfiguration.Back)
-                {
-                    if (State == GameState.Paused)
-                        TriggerNewGameState(GameState.Running);
-                }
+                    PanelsController.CloseCurrentPanel();
 
                 return;
             }
@@ -1140,7 +1161,10 @@ namespace EphemereGames.Commander.Simulation
                 else
                     SimPlayersController.DoDirectionDelta(player, ref delta);
 
-                SimPlayersController.Fire((Player) p);
+                if (delta == Vector3.Zero)
+                    SimPlayersController.StopFire(p);
+                else
+                    SimPlayersController.Fire((Player) p);
             }
         }
 

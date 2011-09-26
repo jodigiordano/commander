@@ -16,6 +16,7 @@
         private int EnemiesAlive;
 
         public WaveDescriptor Descriptor;
+        public bool AnnouncedNearToStart;
 
 
         public Wave(Simulator simulator, WaveDescriptor descriptor)
@@ -42,6 +43,8 @@
 
             EnemiesCount = EnemiesToCreate.Count;
             EnemiesAlive = 0;
+
+            AnnouncedNearToStart = false;
         }
 
 

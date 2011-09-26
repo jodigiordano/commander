@@ -37,7 +37,7 @@
             {
                 CurrentBullet = Bullets[i];
 
-                if (!(CurrentBullet is BasicBullet || CurrentBullet is MissileBullet))
+                if (!CurrentBullet.Deflectable)
                     continue;
 
                 SyncRectangleAndCircle();

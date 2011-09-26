@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Commander.Cutscenes;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -10,10 +11,11 @@
         private Path Path;
         private List<CelestialBody> CelestialBodiesToDestroy;
         private MothershipAnimation MothershipAnimation;
+        private Text TmpEndOfAlpha;
 
 
         public EndOfWorld1Animation(WorldScene worldScene)
-            : base(worldScene, 30000)
+            : base(worldScene, /*30000*/ int.MaxValue /*tmp*/)
         {
             Path = Simulator.PlanetarySystemController.Path;
 
@@ -49,6 +51,14 @@
             worldScene.NeedReinit = true;
             Simulator.SpawnEnemies = false;
             //Path.RemoveCelestialBody(Path.FirstCelestialBody);
+
+            TmpEndOfAlpha = new Text("End of demo!", "Pixelite")
+            {
+                SizeX = 4,
+                Alpha = 0,
+                VisualPriority = VisualPriorities.Default.Path + 0.01
+            }.CenterIt();
+            Simulator.Scene.VisualEffects.Add(TmpEndOfAlpha, VisualEffects.FadeInFrom0(255, 20000, 2000));
         }
 
 
@@ -63,6 +73,7 @@
         public override void Draw()
         {
             MothershipAnimation.Draw();
+            Scene.Add(TmpEndOfAlpha);
         }
     }
 }

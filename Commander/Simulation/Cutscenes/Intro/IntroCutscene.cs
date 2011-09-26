@@ -15,7 +15,6 @@
         private MothershipAnimation Mothership;
         private ResistanceAnimation Resistance;
 
-        private double TimeBeforeMusic = 1000;
         private double Length = 82000;
 
 
@@ -45,10 +44,9 @@
             Mothership.Battleships = Resistance.Battleships;
             Mothership.CelestialBodies = Simulator.Simulator.PlanetarySystemController.CelestialBodies;
 
-            TimeBeforeMusic = 1000;
             Length = 82000;
 
-            Main.MusicController.SwitchTo(MusicContext.Cutscene, "introMusic", false);
+            Main.MusicController.PlayOrResume("CinematicIntro");
         }
 
 
@@ -56,13 +54,6 @@
         public override void Update()
         {
             Length -= Preferences.TargetElapsedTimeMs;
-            TimeBeforeMusic -= Preferences.TargetElapsedTimeMs;
-
-            if (TimeBeforeMusic < 0)
-            {
-                Main.MusicController.PlayMusic(false, false, false);
-                TimeBeforeMusic = double.MaxValue;
-            }
 
             if (Simulator != null)
             {
@@ -91,7 +82,7 @@
 
         public override void Stop()
         {
-            Main.MusicController.SwitchTo(MusicContext.Other);
+            Main.MusicController.StopCurrentMusic();
         }
 
 

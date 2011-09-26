@@ -9,6 +9,7 @@
         private WorldDescriptor Descriptor;
         private Text WorldId;
         private Translator WorldName;
+        private Image Background;
 
         private double Length;
         private bool TransitionInProgress;
@@ -24,6 +25,12 @@
                 SizeX = 4,
                 Color = Color.Black
             }.CenterIt();
+
+            Background = new Image("WhiteBg", Vector3.Zero)
+            {
+                VisualPriority = 1,
+                Alpha = 0
+            };
         }
 
 
@@ -37,6 +44,8 @@
 
             VisualEffects.Add(WorldName.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
             VisualEffects.Add(WorldName.Translated, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
+
+            Background.Color = new Color(Main.Random.Next(235, 255), Main.Random.Next(235, 255), Main.Random.Next(235, 255));
         }
 
 
@@ -49,7 +58,7 @@
 
             if (Length <= 0)
             {
-                TransiteTo(Main.LevelsFactory.GetWorldStringId(Descriptor.Id));
+                TransiteTo(Descriptor.Id > 1 ? "EndOfDemo" : Main.LevelsFactory.GetWorldStringId(Descriptor.Id)); //tmp
                 TransitionInProgress = true;
             }
 
@@ -60,7 +69,7 @@
         protected override void UpdateVisual()
         {
             Add(WorldId);
-
+            Add(Background);
             WorldName.Draw();
         }
 

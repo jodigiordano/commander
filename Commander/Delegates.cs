@@ -42,4 +42,5 @@ namespace EphemereGames.Commander.Simulation
     delegate void SimPlayerSimPlayerHandler(SimPlayer p1, SimPlayer p2);
     delegate void CollidableBulletHandler(ICollidable i, Bullet b);
     delegate void DestroyableHandler(IDestroyable i);
+    delegate void BulletHandler(Bullet b);
 }

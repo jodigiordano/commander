@@ -129,11 +129,14 @@
     <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="SaveGameController.cs" />
     <Compile Include="Scenes\CommanderScene.cs" />
+    <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
+    <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Scenes\World\LevelStates.cs" />
-    <Compile Include="Simulation\AudioController.cs" />
+    <Compile Include="Simulation\Audio\AudioController.cs" />
+    <Compile Include="Simulation\Audio\AudioPlayer.cs" />
     <Compile Include="Simulation\Collisions\PlayersCollisions.cs" />
     <Compile Include="Simulation\Collisions\ShieldsCollisions.cs" />
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
@@ -361,6 +364,7 @@
     <Compile Include="Simulation\Turrets\TurretsFactory.cs" />
     <Compile Include="Simulation\TweakingController.cs" />
     <Compile Include="VisualPriorities.cs" />
+    <Compile Include="XACTMusicController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

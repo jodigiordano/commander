@@ -24,7 +24,7 @@
             Shape = Shape.Rectangle;
             Rectangle = new PhysicalRectangle();
             Explosive = true;
-            SfxExplosion = @"sfxTourelleMissileExplosion";
+            Deflectable = true;
         }
 
 
@@ -84,6 +84,7 @@
             LifePoints = 5;
             TrailEffectCounter = 400;
             Wander = false;
+            Deflected = false;
         }
 
 

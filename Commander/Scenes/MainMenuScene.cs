@@ -97,18 +97,13 @@
         {
             base.OnFocus();
 
-            Simulator.SyncPlayers();
+            Main.MusicController.PlayOrResume("MainMenuMusic");
 
-            Main.MusicController.PlayMusic(false);
-
-            if (Inputs.ConnectedPlayers.Count == 0)
-                InitConnectFirstPlayer();
-            else
-            {
-                Simulator.EnableInputs = true;
-            }
-
+            Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
+
+            if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
+                InitConnectFirstPlayer();
         }
 
 
@@ -116,9 +111,7 @@
         {
             base.OnFocusLost();
 
-            Main.MusicController.PauseMusic();
-
-            Simulator.EnableInputs = false;
+            Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
         }
 
@@ -163,14 +156,14 @@
                 BeginTransition((Player) p);
 
             else if (button == GamePadConfiguration.ChangeMusic)
-                Main.MusicController.ChangeMusic(false);
+                Main.MusicController.ToggleCurrentMusic();
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
             if (key == KeyboardConfiguration.ChangeMusic)
-                Main.MusicController.ChangeMusic(false);
+                Main.MusicController.ToggleCurrentMusic();
         }
 
 
@@ -237,7 +230,7 @@
 
                 case "how to play": Simulator.ShowPanel(PanelType.Help, true); break;
                 case "options": Simulator.ShowPanel(PanelType.Options, true); break;
-                case "editor": TransiteTo("Editeur"); break;
+                case "editor": if (Preferences.Debug) { TransiteTo("Editeur"); } break;
                 case "credits": Simulator.ShowPanel(PanelType.Credits, true); break;
                 case "quit": Main.Instance.Exit(); break;
             }

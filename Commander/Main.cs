@@ -9,6 +9,7 @@ namespace EphemereGames.Commander
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
 
@@ -29,7 +30,7 @@ namespace EphemereGames.Commander
         public static Main Instance;
         public static WorldScene SelectedWorld;
         public static LevelsFactory LevelsFactory;
-        public static MusicController MusicController;
+        public static XACTMusicController MusicController;
         public static NewsController NewsController;
         public static SaveGameController SaveGameController;
         public static CheatsController CheatsController;
@@ -67,7 +68,7 @@ namespace EphemereGames.Commander
             Instance = this;
 
             LevelsFactory = new LevelsFactory();
-            MusicController = new MusicController();
+            MusicController = new XACTMusicController();
             NewsController = new NewsController();
             SaveGameController = new SaveGameController();
             CheatsController = new CheatsController();
@@ -87,7 +88,7 @@ namespace EphemereGames.Commander
             Physics.Initialize();
 
             SaveGameController.Initialize();
-
+            MusicController.Initialize();
             LevelsFactory.Initialize();
         }
 
@@ -120,7 +121,7 @@ namespace EphemereGames.Commander
                         Options.VolumeSfxChanged += new Integer2Handler(SaveGameController.DoVolumeSfxChanged);
 
                         Audio.Initialize(Options.MusicVolume / 10f, Options.SfxVolume / 10f);
-                        EphemereGames.Core.XACTAudio.XACTAudio.Initialize(Content.RootDirectory + @"\audio\Audio.xgs");
+                        XACTAudio.Initialize(Content.RootDirectory + @"\audio\Audio.xgs");
 
                         DoFullScreenChanged(Options.FullScreen);
 
@@ -170,7 +171,7 @@ namespace EphemereGames.Commander
                     if (Persistence.IsPackageLoaded(@"principal"))
                     {
                         Audio.Update(gameTime);
-                        MusicController.Update();
+                        XACTAudio.Update();
                     }
 
                     break;
@@ -211,10 +212,7 @@ namespace EphemereGames.Commander
             if (!Persistence.IsPackageLoaded(@"principal"))
                 return;
 
-            if (GameInProgress != null && !GamePausedToWorld)
-                GameInProgress.Music.Resume();
-            else
-                MusicController.ResumeMusic();
+            MusicController.ResumeCurrentMusic();
         }
 
 
@@ -226,10 +224,7 @@ namespace EphemereGames.Commander
             if (!Persistence.IsPackageLoaded(@"principal"))
                 return;
 
-            if (GameInProgress != null && !GamePausedToWorld)
-                GameInProgress.Music.Resume();
-            else
-                MusicController.PauseMusicNow();
+            MusicController.PauseCurrentMusic();
         }
 
 

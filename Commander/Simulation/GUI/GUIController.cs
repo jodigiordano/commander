@@ -155,8 +155,12 @@
 
         public void DoPlayerDisconnected(SimPlayer p)
         {
-            PathPreviewing.DoPlayerDisconnected(Players[p]);
+            var player = Players[p];
+
+            PathPreviewing.DoPlayerDisconnected(player);
             Players.Remove(p);
+
+            player.Cursor.TeleportOut();
         }
 
 

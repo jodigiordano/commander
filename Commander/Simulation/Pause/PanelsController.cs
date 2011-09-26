@@ -75,6 +75,19 @@
         }
 
 
+        public void CloseCurrentPanel()
+        {
+            Panel panel = null;
+
+            foreach (var p in Panels.Values)
+                if (p.Visible)
+                    panel = p;
+
+            if (panel != null)
+                DoPanelClosed(panel);
+        }
+
+
         public void ShowPanel(PanelType type)
         {
             ShowPausePlayers();
@@ -260,6 +273,7 @@
             else if (widget.Name == "GoBackToWorld")
             {
                 Simulator.TriggerNewGameState(GameState.PausedToWorld);
+                Simulator.CanSelectCelestialBodies = true;
             }
 
             else if (widget.Name == "Resume")

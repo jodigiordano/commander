@@ -22,8 +22,9 @@
         public List<Mineral> Minerals;
         public bool SpawnEnemies;
 
-        public event NoneHandler WaveEnded;
+        public event NoneHandler WaveNearToStart;
         public event NoneHandler WaveStarted;
+        public event NoneHandler WaveEnded;
         public event PhysicalObjectHandler ObjectHit;
         public event PhysicalObjectHandler ObjectDestroyed;
         public event PhysicalObjectHandler ObjectCreated;
@@ -41,6 +42,8 @@
         private Action SyncProcessDeadEnemies;
         private Action SyncUpdateEnemies;
         private Action SyncUpdateMinerals;
+
+        private double MinTimeWaveNearToStart;
 
 
         public EnemiesController(Simulator simulator)
@@ -62,6 +65,8 @@
             {
                 Enemies = Enemies
             };
+
+            MinTimeWaveNearToStart = 10000;
         }
 
 
@@ -160,10 +165,15 @@
 
             if (enemy != null && enemy.Alive)
             {
-                enemy.DoHit((ILivingObject)by);
+                var living = (ILivingObject) by;
 
-                if (enemy.Alive)
+                enemy.DoHit(living);
+
+                if (enemy.Alive && enemy.LastHitBy != living)
+                {
+                    enemy.LastHitBy = living;
                     NotifyObjectHit(enemy);
+                }
 
                 return;
             }
@@ -300,7 +310,17 @@
 
             TimeElapsedLastWave += Preferences.TargetElapsedTimeMs;
 
-            if (NextWave == null || NextWave.Value.StartingTime >= TimeElapsedLastWave)
+            if (NextWave == null)
+                return;
+
+            if (NextWave.Value.StartingTime != 0 && !NextWave.Value.AnnouncedNearToStart &&
+                NextWave.Value.StartingTime - TimeElapsedLastWave <= MinTimeWaveNearToStart)
+            {
+                NotifyWaveNearToStart();
+                NextWave.Value.AnnouncedNearToStart = true;
+            }
+
+            if (NextWave.Value.StartingTime >= TimeElapsedLastWave)
                 return;
 
             TimeElapsedLastWave = 0;
@@ -439,6 +459,13 @@
         {
             if (NextWaveCompositionChanged != null)
                 NextWaveCompositionChanged(NextWave != null ? NextWave.Value.Descriptor : new WaveDescriptor());
+        }
+
+
+        private void NotifyWaveNearToStart()
+        {
+            if (WaveNearToStart != null)
+                WaveNearToStart();
         }
     }
 }

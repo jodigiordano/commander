@@ -31,6 +31,7 @@
         internal State State;
 
         private BlendType blend;
+        private bool ContentLoaded;
 
         
         public Particle()
@@ -41,16 +42,29 @@
             VisualPriority = 0;
             State = State.Idle;
             Id = Visuals.NextHashCode;
+            ContentLoaded = false;
         }
 
 
-        public void Initialize()
+        public void LoadContent()
         {
+            if (ContentLoaded)
+                return;
+
             ParticleEffect model = EphemereGames.Core.Persistence.Persistence.GetAsset<Particle>(Name).Model;
 
             Model = model.DeepCopy();
 
             Model.Initialise();
+
+            ContentLoaded = true;
+        }
+
+
+        public void Initialize()
+        {
+            foreach (var emitter in Model)
+                emitter.Terminate();
         }
 
 

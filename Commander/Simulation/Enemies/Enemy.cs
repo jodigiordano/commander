@@ -69,6 +69,8 @@ namespace EphemereGames.Commander.Simulation
         public string SfxHit;
         public string SfxDie;
 
+        public ILivingObject LastHitBy;
+
 
         public Enemy()
         {
@@ -90,6 +92,7 @@ namespace EphemereGames.Commander.Simulation
             CashValueText = new Text(@"Pixelite") { SizeX = 2 };
             SfxHit = "";
             SfxDie = "";
+            LastHitBy = null;
         }
 
 
@@ -144,6 +147,8 @@ namespace EphemereGames.Commander.Simulation
 
             SfxHit = Simulator.TweakingController.EnemiesFactory.GetSfxHit(Type);
             SfxDie = Simulator.TweakingController.EnemiesFactory.GetSfxDie(Type);
+
+            LastHitBy = null;
         }
 
 
@@ -321,6 +326,8 @@ namespace EphemereGames.Commander.Simulation
 
             if (!Simulator.DemoMode && Simulator.State == GameState.Running && CashValue > 0)
                 Simulator.Scene.Animations.Add(new CashTakenAnimation(CashValue, Position, VisualPriorities.Default.EnemyCashAnimation));
+
+            LastHitBy = null;
         }
     }
 }
