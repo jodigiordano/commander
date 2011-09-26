@@ -37,7 +37,7 @@
             set
             {
                 BarImage.VisualPriority = value;
-                ProgressBarImage.VisualPriority = value + 0.00001;
+                ProgressBarImage.VisualPriority = value - 0.00001;
             }
         }
 
