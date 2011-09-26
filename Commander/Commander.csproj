@@ -157,6 +157,8 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="Scenes\EndOfDemoScene.cs" />
+    <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="XACTMusicController.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />
     <Compile Include="Cheats\AllLevelsUnlockedCheat.cs" />

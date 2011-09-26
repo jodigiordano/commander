@@ -9,6 +9,7 @@
     <asset name="LogoBack"                type="Image" path="GUI/Logo/ephemereBack" />
     <asset name="LogoFront"               type="Image" path="GUI/Logo/ephemereFront" />
     <asset name="LogoGames"               type="Image" path="GUI/Logo/games" />
+    <asset name="WhiteBg"                 type="Image" path="GUI/whitebg" />
 
     
     <!-- Polices -->

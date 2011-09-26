@@ -129,9 +129,11 @@
     <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="SaveGameController.cs" />
     <Compile Include="Scenes\CommanderScene.cs" />
+    <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\MainMenuChoices.cs" />
+    <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Scenes\World\LevelStates.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />
     <Compile Include="Simulation\Audio\AudioPlayer.cs" />

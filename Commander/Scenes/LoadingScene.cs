@@ -68,11 +68,10 @@
 
             SceneState = State.LoadingAssets;
 
-            Background = new Image("PixelBlanc", Vector3.Zero)
+            Background = new Image("WhiteBg", Vector3.Zero)
             {
                 VisualPriority = 1,
-                Size = Preferences.BackBuffer,
-                Color = Color.White,
+                Color = new Color(Main.Random.Next(235, 255), Main.Random.Next(235, 255), Main.Random.Next(235, 255)),
                 Alpha = 0
             };
 
@@ -137,7 +136,9 @@
 
                     if (TimeBeforeTransition <= 0)
                     {
-                        Visuals.Transite("Chargement", "Menu");
+                        //tmp: alpha
+                        TransiteTo("Warning");
+                        //TransiteTo("Menu");
                         SceneState = State.Finished;
                     }
 
@@ -149,6 +150,8 @@
         List<Scene> ScenesLoaded = new List<Scene>();
         private void LoadScenes()
         {
+            ScenesLoaded.Add(new WarningScene());
+            ScenesLoaded.Add(new EndOfDemoScene());
             ScenesLoaded.Add(new MainMenuScene());
             ScenesLoaded.Add(new EditorScene());
 
