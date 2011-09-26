@@ -12,7 +12,7 @@
         private Image Background;
 
         private static string Message =
-            "Welcome to the battlefield, Commander!\n\n\n\n" +
+            "Welcome to the battlefield, Commander! (v. 0.1)\n\n\n\n" +
 
             "Please keep in mind that it's a pre-alpha demo.\n\n" +
             "In your journey, you will encounter bugs, stumble\n\n" +
