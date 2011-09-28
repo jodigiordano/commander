@@ -1,11 +1,13 @@
 ﻿namespace EphemereGames.Core.XACTAudio
 {
     using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
 
 
     class AudioController
     {
         public Microsoft.Xna.Framework.Audio.AudioEngine Engine { get; private set; }
+        public bool Active { get; private set; }
 
         private Dictionary<string, WaveBank> WaveBanks;
         private Dictionary<string, SoundBank> SoundBanks;
@@ -19,6 +21,7 @@
             WaveBanks = new Dictionary<string, WaveBank>();
             SoundBanks = new Dictionary<string,SoundBank>();
             Cues = new List<Cue>();
+            Active = true;
         }
 
 
@@ -88,5 +91,25 @@
         {
             return Engine.GetGlobalVariable(variable);
         }
+
+
+        public void ChangeCategoryVolume(string name, int volume)
+        {
+            Engine.GetCategory(name).SetVolume(MathHelper.Clamp(volume / 10f, 0, 1));
+        }
+
+
+        //public void Pause()
+        //{
+        //    Engine.GetCategory("Global").Pause();
+        //    Active = false;
+        //}
+
+
+        //public void Resume()
+        //{
+        //    Engine.GetCategory("Global").Resume();
+        //    Active = true;
+        //}
     }
 }

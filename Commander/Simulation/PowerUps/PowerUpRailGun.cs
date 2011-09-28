@@ -1,7 +1,6 @@
 namespace EphemereGames.Commander.Simulation
 {
     using System;
-    using EphemereGames.Core.Audio;
     using Microsoft.Xna.Framework;
 
 
@@ -49,8 +48,6 @@ namespace EphemereGames.Commander.Simulation
             {
                 Turret.StopFire();
                 Firing = false;
-
-                Audio.StopSfx(@"sfxRailGunCharging");
             }
         }
 

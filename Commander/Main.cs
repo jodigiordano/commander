@@ -4,7 +4,6 @@ namespace EphemereGames.Commander
     using System.Collections.Generic;
     using System.Reflection;
     using EphemereGames.Commander.Simulation;
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
@@ -120,8 +119,9 @@ namespace EphemereGames.Commander
                         Options.VolumeMusicChanged += new Integer2Handler(SaveGameController.DoVolumeMusicChanged);
                         Options.VolumeSfxChanged += new Integer2Handler(SaveGameController.DoVolumeSfxChanged);
 
-                        Audio.Initialize(Options.MusicVolume / 10f, Options.SfxVolume / 10f);
                         XACTAudio.Initialize(Content.RootDirectory + @"\audio\Audio.xgs");
+                        DoVolumeMusicChanged(Options.MusicVolume);
+                        DoVolumeSfxChanged(Options.SfxVolume);
 
                         DoFullScreenChanged(Options.FullScreen);
 
@@ -170,7 +170,6 @@ namespace EphemereGames.Commander
 
                     if (Persistence.IsPackageLoaded(@"principal"))
                     {
-                        Audio.Update(gameTime);
                         XACTAudio.Update();
                     }
 
@@ -213,6 +212,7 @@ namespace EphemereGames.Commander
                 return;
 
             MusicController.ResumeCurrentMusic();
+            //XACTAudio.Resume();
         }
 
 
@@ -225,6 +225,7 @@ namespace EphemereGames.Commander
                 return;
 
             MusicController.PauseCurrentMusic();
+            //XACTAudio.Pause();
         }
 
 
@@ -243,13 +244,13 @@ namespace EphemereGames.Commander
 
         private void DoVolumeMusicChanged(int value)
         {
-            Audio.MusicVolume = value / 10f;
+            XACTAudio.ChangeCategoryVolume("Music", value);
         }
 
 
         private void DoVolumeSfxChanged(int value)
         {
-            Audio.SfxVolume = value / 10f;
+            XACTAudio.ChangeCategoryVolume("Default", value);
         }
     }
 

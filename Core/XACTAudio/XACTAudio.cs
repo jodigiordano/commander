@@ -45,5 +45,29 @@
         {
             return AudioController.GetGlobalVariable(variable);
         }
+
+
+        public static void ChangeCategoryVolume(string category, int volume)
+        {
+            AudioController.ChangeCategoryVolume(category, volume);
+        }
+
+
+        //public static bool Active
+        //{
+        //    get { return AudioController.Active; }
+        //}
+
+
+        //public static void Pause()
+        //{
+        //    AudioController.Pause();
+        //}
+
+
+        //public static void Resume()
+        //{
+        //    AudioController.Resume();
+        //}
     }
 }

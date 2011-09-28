@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander
 {
-    using EphemereGames.Core.Audio;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.XACTAudio;
     
 
     public class SharedSaveGame : SharedData
@@ -74,8 +74,8 @@
         {
             base.DoLoadEnded();
 
-            Audio.MusicVolume = MusicVolume / 10f;
-            Audio.SfxVolume = SfxVolume / 10f;
+            XACTAudio.ChangeCategoryVolume("Music", MusicVolume);
+            XACTAudio.ChangeCategoryVolume("Default", SfxVolume);
         }
 
 
