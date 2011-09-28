@@ -43,78 +43,6 @@
     <asset name="Music"                                  type="WaveBank"  path="audio/Music.xwb" />
     <asset name="Sound Bank"                             type="SoundBank" path="audio/Sound Bank.xsb" />
     
-    
-    <!-- Sfx -->
-      <!-- Turrets -->
-      <asset name="sfxTourelleBase"                      type="Sfx" path="sfx/story1/turrets/basic/firing"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxTourelleMissile"                   type="Sfx" path="sfx/story1/turrets/missile/firing"><param name="bank" value="Story1" /></asset>    
-      <asset name="sfxTourelleMissileExplosion"          type="Sfx" path="sfx/story1/turrets/missile/explode"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxTourelleLaserSimple"               type="Sfx" path="sfx/story1/turrets/simpleLasers/firing"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxTourelleLaserMultiple"             type="Sfx" path="sfx/story1/turrets/multipleLasers/firing"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxTourelleSlowMotion"                type="Sfx" path="sfx/story1/turrets/slowMotion/firing"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxTourelleGravitationnelleAchetee"   type="Sfx" path="sfx/story1/turrets/gravitational/bought"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxTourelleMiseAJour"                 type="Sfx" path="sfx/story1/turrets/upgraded"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxTourelleVendue"                    type="Sfx" path="sfx/story1/turrets/sold"><param name="bank" value="Story1" /></asset>    
-    
-      <!-- Celestial Bodies -->
-      <asset name="sfxCorpsCelesteTouche"                type="Sfx" path="sfx/story1/celestialBodies/hit"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxCorpsCelesteExplose"               type="Sfx" path="sfx/story1/celestialBodies/explode"><param name="bank" value="Story1" /></asset>
-      
-      <!-- Story -->
-      <asset name="sfxLieutenantParle1"                  type="Sfx" path="sfx/story1/story/commodoreTalking1"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxLieutenantParle2"                  type="Sfx" path="sfx/story1/story/commodoreTalking2"><param name="bank" value="Story1" /></asset>    
-      <asset name="sfxLieutenantParle3"                  type="Sfx" path="sfx/story1/story/commodoreTalking3"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxLieutenantParle4"                  type="Sfx" path="sfx/story1/story/commodoreTalking4"><param name="bank" value="Story1" /></asset>
-      
-      <!-- Enemies -->
-      <asset name="sfxNouvelleVague"                     type="Sfx" path="sfx/story1/enemies/newWave"><param name="bank" value="Story1" /></asset>
-
-      <!-- Minerals -->
-      <asset name="sfxMoney1"                            type="Sfx" path="sfx/story1/minerals/money1"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxMoney2"                            type="Sfx" path="sfx/story1/minerals/money2"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxMoney3"                            type="Sfx" path="sfx/story1/minerals/money3"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxLifePack"                          type="Sfx" path="sfx/story1/minerals/lifePack"><param name="bank" value="Story1" /></asset>    
-    
-      <!-- Power Ups -->
-      <asset name="sfxPowerUpResistanceIn"               type="Sfx" path="sfx/story1/powerUps/resistance/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPowerUpResistanceOut"              type="Sfx" path="sfx/story1/powerUps/resistance/out"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPowerUpResistanceTire1"            type="Sfx" path="sfx/story1/powerUps/resistance/firing1"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPowerUpResistanceTire2"            type="Sfx" path="sfx/story1/powerUps/resistance/firing2"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPowerUpResistanceTire3"            type="Sfx" path="sfx/story1/powerUps/resistance/firing3"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxPowerUpCollecteurIn"               type="Sfx" path="sfx/story1/powerUps/collector/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPowerUpCollecteurOut"              type="Sfx" path="sfx/story1/powerUps/collector/out"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxPowerUpDoItYourselfIn"             type="Sfx" path="sfx/story1/powerUps/spaceship/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPowerUpDoItYourselfOut"            type="Sfx" path="sfx/story1/powerUps/spaceship/out"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxLastSolutionIn"                    type="Sfx" path="sfx/story1/powerUps/lastSolution/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxLastSolutionOut"                   type="Sfx" path="sfx/story1/powerUps/lastSolution/out"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxShootingStars"                     type="Sfx" path="sfx/story1/powerUps/shootingStars/activated"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxDarkSide"                          type="Sfx" path="sfx/story1/powerUps/darkSide/activated"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxAutomaticCollectorIn"              type="Sfx" path="sfx/story1/powerUps/automaticCollector/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxAutomaticCollectorOut"             type="Sfx" path="sfx/story1/powerUps/automaticCollector/out"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxMinerIn"                           type="Sfx" path="sfx/story1/powerUps/miner/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxMinerOut"                          type="Sfx" path="sfx/story1/powerUps/miner/out"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxMineExplose"                       type="Sfx" path="sfx/story1/powerUps/miner/mineExploded"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxMineGround"                        type="Sfx" path="sfx/story1/powerUps/miner/mineGround"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxRailGunIn"                         type="Sfx" path="sfx/story1/powerUps/railgun/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxRailGunOut"                        type="Sfx" path="sfx/story1/powerUps/railgun/out"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxRailGunCharging"                   type="Sfx" path="sfx/story1/powerUps/railgun/charging"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxRailGunExplosion1"                 type="Sfx" path="sfx/story1/powerUps/railgun/firing"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxRailGunExplosion2"                 type="Sfx" path="sfx/story1/powerUps/railgun/explosion"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxShieldIn"                          type="Sfx" path="sfx/story1/powerUps/shield/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxShieldOut"                         type="Sfx" path="sfx/story1/powerUps/shield/out"><param name="bank" value="Story1" /></asset>
-    
-      <asset name="sfxPulse1"                            type="Sfx" path="sfx/story1/powerUps/pulse/in"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPulse2"                            type="Sfx" path="sfx/story1/powerUps/pulse/firing"><param name="bank" value="Story1" /></asset>
-      <asset name="sfxPulse3"                            type="Sfx" path="sfx/story1/powerUps/pulse/out"><param name="bank" value="Story1" /></asset>    
-    
     <!-- Particle Effects -->
 
     <asset name="nextWave"                     type="Particles" path="particules/nextWave"/>
@@ -255,21 +183,5 @@
 
     <!-- Textures -->
     <asset name="HumanBattleship"      type="Image" path="scenarios/humanBattleship" />
-
-
-    <!-- Musics -->
-
-    <asset name="ingame1"                 type="Music" path="musiques/Chopin1" />
-    <asset name="ingame2"                 type="Music" path="musiques/Chopin2" />
-    <asset name="ingame3"                 type="Music" path="musiques/Chopin3" />
-    <asset name="ingame4"                 type="Music" path="musiques/Chopin4" />
-    <asset name="win1"                    type="Music" path="musiques/Chopin5-courte" />
-    <asset name="ingame5"                 type="Music" path="musiques/Chopin6-courte" />
-    <asset name="win2"                    type="Music" path="musiques/Chopin7-courte" />
-    <asset name="gameover1"               type="Music" path="musiques/Chopin8-courte" />
-    <asset name="ingame6"                 type="Music" path="musiques/Chopin9" />
-    <asset name="gameover2"               type="Music" path="musiques/Chopin11-gameover" />
-    <asset name="ingame7"                 type="Music" path="musiques/Chopin12" />
-    <asset name="introMusic"                   type="Music" path="musiques/intro" />
   </Package>
 </Packages>
