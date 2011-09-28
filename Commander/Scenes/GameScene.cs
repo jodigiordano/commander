@@ -32,7 +32,7 @@
 
             FutureJobs = new FutureJobsController();
 
-            MusicName = "Raindrop";
+            MusicName = "BattleMusic";
         }
 
 
@@ -103,6 +103,7 @@
             if (newState == GameState.Won)
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon, Inputs.MasterPlayer.InputType);
+                Main.MusicController.StopCurrentMusic();
                 MusicName = "WinMusic";
                 Main.MusicController.PlayOrResume(MusicName);
                 Inputs.Active = false;
@@ -114,6 +115,7 @@
             else if (newState == GameState.Lost)
             {
                 Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost, Inputs.MasterPlayer.InputType);
+                Main.MusicController.StopCurrentMusic();
                 MusicName = "LoseMusic";
                 Main.MusicController.PlayOrResume(MusicName);
                 Inputs.Active = false;
