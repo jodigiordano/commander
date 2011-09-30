@@ -70,6 +70,15 @@
         }
 
 
+        public void StopNow()
+        {
+            if (InnerCue.IsDisposed)
+                return;
+
+            InnerCue.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.Immediate);
+        }
+
+
         public void MasterPause()
         {
             if (InnerCue.IsStopped)
