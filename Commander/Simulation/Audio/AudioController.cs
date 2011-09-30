@@ -292,7 +292,7 @@
 
         public void DoWaveEnded()
         {
-            if (Simulator.State != GameState.Running)
+            if (Simulator.State == GameState.Running)
                 XACTAudio.PlayCue("WaveDestroyed", "Sound Bank");
         }
 
