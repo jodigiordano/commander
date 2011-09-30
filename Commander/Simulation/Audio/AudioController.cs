@@ -358,27 +358,27 @@
             else
             {
                 // Power-Ups
-                if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy == PowerUpType.None)
-                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                else if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy != PowerUpType.None && p.ActualSelection.PowerUpToBuy == PowerUpType.None)
-                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                else if (p.ActualSelection.PowerUpToBuyChanged)
+                //if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy == PowerUpType.None)
+                //    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                //else if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy != PowerUpType.None && p.ActualSelection.PowerUpToBuy == PowerUpType.None)
+                //{ /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                /*else*/ if (p.ActualSelection.PowerUpToBuyChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
 
                 // Turrets
-                if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy == TurretType.None)
-                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                else if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy != TurretType.None && p.ActualSelection.TurretToBuy == TurretType.None)
-                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                else if (p.ActualSelection.TurretToBuyChanged)
+                //if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy == TurretType.None)
+                //    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                //else if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy != TurretType.None && p.ActualSelection.TurretToBuy == TurretType.None)
+                //{ /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                /*else*/ if (p.ActualSelection.TurretToBuyChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
 
                 // Turret
-                if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice == TurretChoice.None)
-                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                else if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice != TurretChoice.None && p.ActualSelection.TurretChoice == TurretChoice.None)
-                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                else if (p.ActualSelection.TurretChoiceChanged)
+                //if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice == TurretChoice.None)
+                //    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
+                //else if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice != TurretChoice.None && p.ActualSelection.TurretChoice == TurretChoice.None)
+                //{ /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
+                /*else*/ if (p.ActualSelection.TurretChoiceChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
             }
         }
