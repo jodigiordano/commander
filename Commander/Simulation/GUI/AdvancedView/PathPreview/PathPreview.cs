@@ -206,6 +206,8 @@
 
             public void ChangeState(PathState state, Path newPath, CelestialBody cb)
             {
+                RollBack(newPath);
+
                 CelestialBody = cb;
                 PathState = state;
 

@@ -522,7 +522,18 @@
                     selection.Turret.CanSell &&
                     !selection.Turret.Disabled &&
                     selection.TurretChoice == TurretChoice.Sell)
+                {
                     PathPreviewing.RemoveCelestialObject(player, selection.Turret.CelestialBody);
+                }
+                else if (PathPreviewing != null && //preview: upgrade turret
+                    selection.Turret != null &&
+                    selection.Turret.Type == TurretType.Gravitational &&
+                    selection.Turret.CanUpdate &&
+                    selection.TurretChoice == TurretChoice.Update &&
+                    selection.Turret.Level <= 1)
+                {
+                    PathPreviewing.UpgradeCelestialObject(player, selection.Turret.CelestialBody);
+                }
                 else if (PathPreviewing != null && //preview: final solution
                     selection.CelestialBody != null &&
                     player.PowerUpFinalSolution &&
@@ -535,13 +546,6 @@
                     selection.TurretToPlace != null &&
                     selection.TurretToPlace.Type == TurretType.Gravitational)
                     PathPreviewing.AddCelestialObject(player, selection.CelestialBody);
-                else if (PathPreviewing != null && //preview: update turret
-                    selection.Turret != null &&
-                    selection.Turret.Type == TurretType.Gravitational &&
-                    selection.Turret.CanUpdate &&
-                    selection.TurretChoice == TurretChoice.Update &&
-                    selection.Turret.Level <= 1)
-                    PathPreviewing.UpgradeCelestialObject(player, selection.Turret.CelestialBody);
                 else if (PathPreviewing != null) //preview: rollback
                     PathPreviewing.RollBack(player);
             }
