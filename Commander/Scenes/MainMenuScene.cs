@@ -217,7 +217,8 @@
                         case NewGameChoice.None:
                         case NewGameChoice.NewGame:
                             Main.SaveGameController.PlayerSaveGame.ClearAndSave();
-                            TransiteTo("Cutscene1");
+                            TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(1));
+                            //tmp alpha: TransiteTo("Cutscene1");
                             break;
                         case NewGameChoice.Continue:
                             TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(Main.SaveGameController.PlayerSaveGame.CurrentWorld));
