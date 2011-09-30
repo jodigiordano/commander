@@ -77,6 +77,8 @@
         public override void OnFocus()
         {
             Initialize();
+
+            Main.MusicController.Play("IntroNiveau");
         }
 
 
