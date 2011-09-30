@@ -27,6 +27,26 @@
             Musics.Add("LoseMusic", null);
             Musics.Add("BattleMusic", null);
             Musics.Add("CinematicIntro", null);
+            Musics.Add("IntroNiveau", null);
+        }
+
+
+        public void Play(string musicName)
+        {
+            if (CurrentMusic != null)
+                Musics[CurrentMusic].Pause();
+
+            Cue music = Musics[musicName];
+
+            if (music != null)
+                music.StopNow();
+
+            music = XACTAudio.GetCue(musicName, "Sound Bank");
+            Musics[musicName] = music;
+
+            music.PlayOrResume();
+
+            CurrentMusic = musicName;
         }
 
 
