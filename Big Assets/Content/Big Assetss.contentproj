@@ -1488,6 +1488,145 @@
       <Processor>XactProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="audio\sfx\EnemyDestroyed1_2011_09_30.wav">
+      <Name>EnemyDestroyed1_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed2_2011_09_30.wav">
+      <Name>EnemyDestroyed2_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed3_2011_09_30.wav">
+      <Name>EnemyDestroyed3_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed4_2011_09_30.wav">
+      <Name>EnemyDestroyed4_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed5_2011_09_30.wav">
+      <Name>EnemyDestroyed5_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed6_2011_09_30.wav">
+      <Name>EnemyDestroyed6_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed7_2011_09_30.wav">
+      <Name>EnemyDestroyed7_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed8_2011_09_30.wav">
+      <Name>EnemyDestroyed8_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\EnemyDestroyed9_2011_09_30.wav">
+      <Name>EnemyDestroyed9_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3_01.wav">
+      <Name>LaserTurretFiring3_01</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3_02.wav">
+      <Name>LaserTurretFiring3_02</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3_03.wav">
+      <Name>LaserTurretFiring3_03</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3_04.wav">
+      <Name>LaserTurretFiring3_04</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3_05.wav">
+      <Name>LaserTurretFiring3_05</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3_06.wav">
+      <Name>LaserTurretFiring3_06</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\LaserTurretFiring3_07.wav">
+      <Name>LaserTurretFiring3_07</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MothershipHit_2011_09_30.wav">
+      <Name>MothershipHit_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_01.wav">
+      <Name>MultipleLasersFiring_2011_09_30_01</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_02.wav">
+      <Name>MultipleLasersFiring_2011_09_30_02</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_03.wav">
+      <Name>MultipleLasersFiring_2011_09_30_03</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_04.wav">
+      <Name>MultipleLasersFiring_2011_09_30_04</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_05.wav">
+      <Name>MultipleLasersFiring_2011_09_30_05</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_06.wav">
+      <Name>MultipleLasersFiring_2011_09_30_06</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_07.wav">
+      <Name>MultipleLasersFiring_2011_09_30_07</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\PlanetToProtectHit2.wav">
+      <Name>PlanetToProtectHit2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\sfx\Upgraded_2011_09_30.wav">
+      <Name>Upgraded_2011_09_30</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27-ancien1.wav">
+      <Name>ValseBrillante%28Galaxy%29_2011_09_27-ancien1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
