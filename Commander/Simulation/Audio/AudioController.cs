@@ -79,7 +79,10 @@
 
             if (bullet != null)
             {
-                if (!bullet.OutOfBounds && !Simulator.CutsceneMode && bullet.Explosive && bullet.SfxExplosion != "")
+                if (Simulator.State != GameState.Running || Simulator.CutsceneMode)
+                    return;
+
+                if (!bullet.OutOfBounds && bullet.Explosive && bullet.SfxExplosion != "")
                     XACTAudio.PlayCue("SilentCue" /*bullet.SfxExplosion*/, "Sound Bank");
 
                 return;
@@ -106,8 +109,10 @@
 
             if (enemy != null)
             {
-                if (Simulator.State == GameState.Running)
-                    XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
+                if (Simulator.State != GameState.Running)
+                    return;
+
+                XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
 
                 return;
             }
@@ -193,6 +198,9 @@
 
         public void DoTurretFired(Turret turret)
         {
+            if (Simulator.State != GameState.Running)
+                return;
+
             if (turret.Type == TurretType.Basic || turret.Type == TurretType.Laser ||
                 turret.Type == TurretType.Missile || turret.Type == TurretType.MultipleLasers)
                 XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
