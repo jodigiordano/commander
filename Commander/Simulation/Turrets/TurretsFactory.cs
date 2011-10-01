@@ -119,13 +119,13 @@
             TurretsLevels.Add(TurretType.Missile, new LinkedListWithInit<TurretLevel>()
             {
                 new TurretLevel(0, 0, 0, 150, 2600, 1, 0, BulletType.Missile, "", "", 30, 1.8f, "", "") { BulletExplosionRange = 50 },
-                new TurretLevel(1, 100, 125, 100, 2400, 1, 5000, BulletType.Missile, "tourelleMissileCanon1", "tourelleMissileBase", 3, 2.0f, "MissileTurretMoving", "MissileTurretLaunching1") { BulletExplosionRange = 60, BulletExplosionSfx = "MissileExplosion1" },
-                new TurretLevel(2, 150, 200, 125, 2200, 1, 7000, BulletType.Missile, "tourelleMissileCanon1", "tourelleMissileBase2", 6, 2.2f, "MissileTurretMoving", "MissileTurretLaunching2") { BulletExplosionRange = 70, BulletExplosionSfx = "MissileExplosion2" },
-                new TurretLevel(3, 200, 300, 150, 2000, 1, 9000, BulletType.Missile, "tourelleMissileCanon2", "tourelleMissileBase", 9, 2.4f, "MissileTurretMoving", "MissileTurretLaunching3") { BulletExplosionRange = 80, BulletExplosionSfx = "MissileExplosion3" },
-                new TurretLevel(4, 250, 425, 175, 1800, 1, 11000, BulletType.Missile, "tourelleMissileCanon2", "tourelleMissileBase2", 12, 2.6f, "MissileTurretMoving", "MissileTurretLaunching4") { BulletExplosionRange = 90, BulletExplosionSfx = "MissileExplosion4" },
-                new TurretLevel(5, 300, 575, 200, 1600, 1, 13000, BulletType.Missile2, "tourelleMissileCanon3", "tourelleMissileBase", 15, 2.8f, "MissileTurretMoving", "MissileTurretLaunching5") { BulletExplosionRange = 100, BulletExplosionSfx = "MissileExplosion5" },
-                new TurretLevel(6, 350, 750, 225, 1400, 1, 15000, BulletType.Missile2, "tourelleMissileCanon3", "tourelleMissileBase2", 18, 3.0f, "MissileTurretMoving", "MissileTurretLaunching6") { BulletExplosionRange = 110, BulletExplosionSfx = "MissileExplosion6" },
-                new TurretLevel(7, 450, 1175, 250, 1000, 1, 19000, BulletType.Missile2, "tourelleMissileCanon3", "tourelleMissileBase3", 21, 3.4f, "MissileTurretMoving", "MissileTurretLaunching7") { BulletExplosionRange = 130, BulletExplosionSfx = "MissileExplosion7" }
+                new TurretLevel(1, 100, 125, 100, 2400, 1, 5000, BulletType.Missile, "tourelleMissileCanon1", "tourelleMissileBase", 3, 2.0f, "MissileTurretMoving", "MissileTurretLaunching1") { BulletExplosionRange = 60, BulletExplosionSfx = "MissileExplosion" },
+                new TurretLevel(2, 150, 200, 125, 2200, 1, 7000, BulletType.Missile, "tourelleMissileCanon1", "tourelleMissileBase2", 6, 2.2f, "MissileTurretMoving", "MissileTurretLaunching2") { BulletExplosionRange = 70, BulletExplosionSfx = "MissileExplosion" },
+                new TurretLevel(3, 200, 300, 150, 2000, 1, 9000, BulletType.Missile, "tourelleMissileCanon2", "tourelleMissileBase", 9, 2.4f, "MissileTurretMoving", "MissileTurretLaunching3") { BulletExplosionRange = 80, BulletExplosionSfx = "MissileExplosion" },
+                new TurretLevel(4, 250, 425, 175, 1800, 1, 11000, BulletType.Missile, "tourelleMissileCanon2", "tourelleMissileBase2", 12, 2.6f, "MissileTurretMoving", "MissileTurretLaunching4") { BulletExplosionRange = 90, BulletExplosionSfx = "MissileExplosion" },
+                new TurretLevel(5, 300, 575, 200, 1600, 1, 13000, BulletType.Missile2, "tourelleMissileCanon3", "tourelleMissileBase", 15, 2.8f, "MissileTurretMoving", "MissileTurretLaunching5") { BulletExplosionRange = 100, BulletExplosionSfx = "MissileExplosion" },
+                new TurretLevel(6, 350, 750, 225, 1400, 1, 15000, BulletType.Missile2, "tourelleMissileCanon3", "tourelleMissileBase2", 18, 3.0f, "MissileTurretMoving", "MissileTurretLaunching6") { BulletExplosionRange = 110, BulletExplosionSfx = "MissileExplosion" },
+                new TurretLevel(7, 450, 1175, 250, 1000, 1, 19000, BulletType.Missile2, "tourelleMissileCanon3", "tourelleMissileBase3", 21, 3.4f, "MissileTurretMoving", "MissileTurretLaunching7") { BulletExplosionRange = 130, BulletExplosionSfx = "MissileExplosion" }
             });
             TurretsLevels.Add(TurretType.MultipleLasers, new LinkedListWithInit<TurretLevel>()
             {

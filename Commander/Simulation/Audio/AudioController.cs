@@ -83,7 +83,7 @@
                     return;
 
                 if (!bullet.OutOfBounds && bullet.Explosive && bullet.SfxExplosion != "")
-                    XACTAudio.PlayCue("SilentCue" /*bullet.SfxExplosion*/, "Sound Bank");
+                    XACTAudio.PlayCue(bullet.SfxExplosion, "Sound Bank");
 
                 return;
             }
@@ -300,7 +300,7 @@
 
         public void DoWaveEnded()
         {
-            if (Simulator.State == GameState.Running)
+            if (Simulator.State == GameState.Running || Simulator.State == GameState.Won)
                 XACTAudio.PlayCue("WaveDestroyed", "Sound Bank");
         }
 
