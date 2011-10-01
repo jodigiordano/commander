@@ -24,8 +24,8 @@
             FullScreen = true;
 #endif
 
-            SfxVolume = 5;
-            MusicVolume = 5;
+            SfxVolume = 10;
+            MusicVolume = 10;
         }
 
 
