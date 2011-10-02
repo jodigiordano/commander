@@ -202,7 +202,8 @@
                 return;
 
             if (turret.Type == TurretType.Basic || turret.Type == TurretType.Laser ||
-                turret.Type == TurretType.Missile || turret.Type == TurretType.MultipleLasers)
+                turret.Type == TurretType.Missile || turret.Type == TurretType.MultipleLasers ||
+                turret.Type == TurretType.SlowMotion)
                 XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
         }
 

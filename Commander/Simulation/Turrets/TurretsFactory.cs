@@ -163,12 +163,12 @@
             TurretsLevels.Add(TurretType.SlowMotion, new LinkedListWithInit<TurretLevel>()
             {
                 new TurretLevel(0, 0, 0, 100, 2000, 1, 0, BulletType.SlowMotion, "", "", 0.2f, 0, "", ""),
-                new TurretLevel(1, 120, 110, 120, 1400, 1, 3500, BulletType.SlowMotion, "tourelleSlowMotionCanon1", "tourelleSlowMotionBase", 0.6f, 0, "SlowMotionTurretMoving", "SlowMotionTurretFiring1"),
-                new TurretLevel(2, 140, 180, 140, 1300, 1, 5000, BulletType.SlowMotion, "tourelleSlowMotionCanon2", "tourelleSlowMotionBase", 0.8f, 0, "SlowMotionTurretMoving", "SlowMotionTurretFiring2"),
-                new TurretLevel(3, 160, 260, 160, 1200, 1, 6500, BulletType.SlowMotion, "tourelleSlowMotionCanon2", "tourelleSlowMotionBase2", 1.0f, 0, "SlowMotionTurretMoving", "SlowMotionTurretFiring3"),
-                new TurretLevel(4, 180, 350, 180, 1100, 1, 8000, BulletType.SlowMotion, "tourelleSlowMotionCanon3", "tourelleSlowMotionBase", 1.2f, 0, "SlowMotionTurretMoving", "SlowMotionTurretFiring4"),
-                new TurretLevel(5, 240, 680, 240, 1000, 1, 12500, BulletType.SlowMotion, "tourelleSlowMotionCanon3", "tourelleSlowMotionBase2", 1.4f, 0, "SlowMotionTurretMoving", "SlowMotionTurretFiring5"),
-                new TurretLevel(6, 280, 820, 260, 900, 1, 14000, BulletType.SlowMotion, "tourelleSlowMotionCanon3", "tourelleSlowMotionBase3", 1.6f, 0, "SlowMotionTurretMoving", "SlowMotionTurretFiring6")
+                new TurretLevel(1, 120, 110, 120, 1400, 1, 3500, BulletType.SlowMotion, "tourelleSlowMotionCanon1", "tourelleSlowMotionBase", 0.6f, 0, "SlowMotionTurretMoving", "SlowMotionTurret"),
+                new TurretLevel(2, 140, 180, 140, 1300, 1, 5000, BulletType.SlowMotion, "tourelleSlowMotionCanon2", "tourelleSlowMotionBase", 0.8f, 0, "SlowMotionTurretMoving", "SlowMotionTurret"),
+                new TurretLevel(3, 160, 260, 160, 1200, 1, 6500, BulletType.SlowMotion, "tourelleSlowMotionCanon2", "tourelleSlowMotionBase2", 1.0f, 0, "SlowMotionTurretMoving", "SlowMotionTurret"),
+                new TurretLevel(4, 180, 350, 180, 1100, 1, 8000, BulletType.SlowMotion, "tourelleSlowMotionCanon3", "tourelleSlowMotionBase", 1.2f, 0, "SlowMotionTurretMoving", "SlowMotionTurret"),
+                new TurretLevel(5, 240, 680, 240, 1000, 1, 12500, BulletType.SlowMotion, "tourelleSlowMotionCanon3", "tourelleSlowMotionBase2", 1.4f, 0, "SlowMotionTurretMoving", "SlowMotionTurret"),
+                new TurretLevel(6, 280, 820, 260, 900, 1, 14000, BulletType.SlowMotion, "tourelleSlowMotionCanon3", "tourelleSlowMotionBase3", 1.6f, 0, "SlowMotionTurretMoving", "SlowMotionTurret")
             });
 
             All.Clear();
