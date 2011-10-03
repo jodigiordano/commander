@@ -15,7 +15,7 @@
 
 
         public EndOfWorld1Animation(WorldScene worldScene)
-            : base(worldScene, /*30000*/ int.MaxValue /*tmp*/)
+            : base(worldScene, 30000)
         {
             Path = Simulator.PlanetarySystemController.Path;
 
