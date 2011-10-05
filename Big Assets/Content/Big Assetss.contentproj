@@ -397,1089 +397,1089 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Etude12op25Aliens_2011_09_27.wav">
+    <None Include="audio\music\Etude12op25Aliens_2011_09_27.wav">
       <Name>Etude12op25Aliens_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\ValseMinute%28Victory%29Intro_2011_09_27.wav">
+    <None Include="audio\music\ValseMinute%28Victory%29Intro_2011_09_27.wav">
       <Name>ValseMinute%28Victory%29Intro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Etude12op25Piano_2011_09_27.wav">
+    <None Include="audio\music\Etude12op25Piano_2011_09_27.wav">
       <Name>Etude12op25Piano_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Etude12op25Zic_2011_09_27.wav">
+    <None Include="audio\music\Etude12op25Zic_2011_09_27.wav">
       <Name>Etude12op25Zic_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\IntroNiveau%28ValseEb%29.wav">
+    <None Include="audio\music\IntroNiveau%28ValseEb%29.wav">
       <Name>IntroNiveau%28ValseEb%29</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\MarcheFunebre_intro_2011_09_27.wav">
+    <None Include="audio\music\MarcheFunebre_intro_2011_09_27.wav">
       <Name>MarcheFunebre_intro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\MarcheFunebreAliens_2011_09_27.wav">
+    <None Include="audio\music\MarcheFunebreAliens_2011_09_27.wav">
       <Name>MarcheFunebreAliens_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\MarcheFunebrePiano_2011_09_27.wav">
+    <None Include="audio\music\MarcheFunebrePiano_2011_09_27.wav">
       <Name>MarcheFunebrePiano_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\NocturneOp27Aliens_2011_09_27.wav">
+    <None Include="audio\music\NocturneOp27Aliens_2011_09_27.wav">
       <Name>NocturneOp27Aliens_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\NocturneOp27no2IntroPiano_2011_09_27.wav">
+    <None Include="audio\music\NocturneOp27no2IntroPiano_2011_09_27.wav">
       <Name>NocturneOp27no2IntroPiano_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\NocturneOp27no2IntroZic_2011_09_27.wav">
+    <None Include="audio\music\NocturneOp27no2IntroZic_2011_09_27.wav">
       <Name>NocturneOp27no2IntroZic_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\NocturneOp27no2Piano_2011_09_27.wav">
+    <None Include="audio\music\NocturneOp27no2Piano_2011_09_27.wav">
       <Name>NocturneOp27no2Piano_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\NocturneOp27no2Zic_2011_09_27.wav">
+    <None Include="audio\music\NocturneOp27no2Zic_2011_09_27.wav">
       <Name>NocturneOp27no2Zic_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseAb%28Menu%29_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseAb%28Menu%29_2011_09_27.wav">
       <Name>PolonaiseAb%28Menu%29_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseAb%28Menu%29Intro_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseAb%28Menu%29Intro_2011_09_27.wav">
       <Name>PolonaiseAb%28Menu%29Intro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseOp44Aliens_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseOp44Aliens_2011_09_27.wav">
       <Name>PolonaiseOp44Aliens_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseOp44AliensIntro_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseOp44AliensIntro_2011_09_27.wav">
       <Name>PolonaiseOp44AliensIntro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseOp44Piano_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseOp44Piano_2011_09_27.wav">
       <Name>PolonaiseOp44Piano_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseOp44PianoIntro_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseOp44PianoIntro_2011_09_27.wav">
       <Name>PolonaiseOp44PianoIntro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseOp44Zic_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseOp44Zic_2011_09_27.wav">
       <Name>PolonaiseOp44Zic_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\PolonaiseOp44ZicIntro_2011_09_27.wav">
+    <None Include="audio\music\PolonaiseOp44ZicIntro_2011_09_27.wav">
       <Name>PolonaiseOp44ZicIntro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Raindrop2Aliens_2011_09_27.wav">
+    <None Include="audio\music\Raindrop2Aliens_2011_09_27.wav">
       <Name>Raindrop2Aliens_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Raindrop2Intro_2011_09_27.wav">
+    <None Include="audio\music\Raindrop2Intro_2011_09_27.wav">
       <Name>Raindrop2Intro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Raindrop2Zic_2011_09_27.wav">
+    <None Include="audio\music\Raindrop2Zic_2011_09_27.wav">
       <Name>Raindrop2Zic_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\RaindropPiano_2011_09_27.wav">
+    <None Include="audio\music\RaindropPiano_2011_09_27.wav">
       <Name>RaindropPiano_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\SonateBm%28Defeat%29.wav">
+    <None Include="audio\music\SonateBm%28Defeat%29.wav">
       <Name>SonateBm%28Defeat%29</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Spianato%28Galaxy%29_2011_09_27.wav">
+    <None Include="audio\music\Spianato%28Galaxy%29_2011_09_27.wav">
       <Name>Spianato%28Galaxy%29_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\Spianato%28Galaxy%29Intro_2011_09_27.wav">
+    <None Include="audio\music\Spianato%28Galaxy%29Intro_2011_09_27.wav">
       <Name>Spianato%28Galaxy%29Intro_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27.wav">
+    <None Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27.wav">
       <Name>ValseBrillante%28Galaxy%29_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\ValseBrillanteIntro%28Galaxy%29_2011_09_27.wav">
+    <None Include="audio\music\ValseBrillanteIntro%28Galaxy%29_2011_09_27.wav">
       <Name>ValseBrillanteIntro%28Galaxy%29_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\ValseMinute%28Victory%29_2011_09_27.wav">
+    <None Include="audio\music\ValseMinute%28Victory%29_2011_09_27.wav">
       <Name>ValseMinute%28Victory%29_2011_09_27</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\AsteroidDestroyed.wav">
+    <None Include="audio\sfx\AsteroidDestroyed.wav">
       <Name>AsteroidDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\AsteroidHit.wav">
+    <None Include="audio\sfx\AsteroidHit.wav">
       <Name>AsteroidHit</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiring_2011_09_26 1.wav">
+    <None Include="audio\sfx\BasicTurretFiring_2011_09_26 1.wav">
       <Name>BasicTurretFiring_2011_09_26 1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiring1.wav">
+    <None Include="audio\sfx\BasicTurretFiring1.wav">
       <Name>BasicTurretFiring1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiring2.wav">
+    <None Include="audio\sfx\BasicTurretFiring2.wav">
       <Name>BasicTurretFiring2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiring3.wav">
+    <None Include="audio\sfx\BasicTurretFiring3.wav">
       <Name>BasicTurretFiring3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiring4.wav">
+    <None Include="audio\sfx\BasicTurretFiring4.wav">
       <Name>BasicTurretFiring4</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiringx2_2011_09_26 1.wav">
+    <None Include="audio\sfx\BasicTurretFiringx2_2011_09_26 1.wav">
       <Name>BasicTurretFiringx2_2011_09_26 1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiringx3_2011_09_26 1.wav">
+    <None Include="audio\sfx\BasicTurretFiringx3_2011_09_26 1.wav">
       <Name>BasicTurretFiringx3_2011_09_26 1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\BasicTurretFiringx4_2011_09_26 1.wav">
+    <None Include="audio\sfx\BasicTurretFiringx4_2011_09_26 1.wav">
       <Name>BasicTurretFiringx4_2011_09_26 1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\Cancel.wav">
+    <None Include="audio\sfx\Cancel.wav">
       <Name>Cancel</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\CentaurDesroyed.wav">
+    <None Include="audio\sfx\CentaurDesroyed.wav">
       <Name>CentaurDesroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\CentaurDestroyed.wav">
+    <None Include="audio\sfx\CentaurDestroyed.wav">
       <Name>CentaurDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\CentaurHit.wav">
+    <None Include="audio\sfx\CentaurHit.wav">
       <Name>CentaurHit</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\CometDestroyed.wav">
+    <None Include="audio\sfx\CometDestroyed.wav">
       <Name>CometDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\CometHit.wav">
+    <None Include="audio\sfx\CometHit.wav">
       <Name>CometHit</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ContextualMenuIn_2011_09_26.wav">
+    <None Include="audio\sfx\ContextualMenuIn_2011_09_26.wav">
       <Name>ContextualMenuIn_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ContextualMenuIn_2011_09_27_2.wav">
+    <None Include="audio\sfx\ContextualMenuIn_2011_09_27_2.wav">
       <Name>ContextualMenuIn_2011_09_27_2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ContextualMenuIn_2011_09_27_3.wav">
+    <None Include="audio\sfx\ContextualMenuIn_2011_09_27_3.wav">
       <Name>ContextualMenuIn_2011_09_27_3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ContextualMenuSelect_2011_09_26.wav">
+    <None Include="audio\sfx\ContextualMenuSelect_2011_09_26.wav">
       <Name>ContextualMenuSelect_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\DamacloidDestroyed.wav">
+    <None Include="audio\sfx\DamacloidDestroyed.wav">
       <Name>DamacloidDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\DamacloidHit.wav">
+    <None Include="audio\sfx\DamacloidHit.wav">
       <Name>DamacloidHit</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\Empty.wav">
+    <None Include="audio\sfx\Empty.wav">
       <Name>Empty</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\GravitationalTurretBought_2011_09_26.wav">
+    <None Include="audio\sfx\GravitationalTurretBought_2011_09_26.wav">
       <Name>GravitationalTurretBought_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\GravitationalTurretUpgrade_2011_09_26.wav">
+    <None Include="audio\sfx\GravitationalTurretUpgrade_2011_09_26.wav">
       <Name>GravitationalTurretUpgrade_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring1.wav">
+    <None Include="audio\sfx\LaserTurretFiring1.wav">
       <Name>LaserTurretFiring1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2.wav">
+    <None Include="audio\sfx\LaserTurretFiring2.wav">
       <Name>LaserTurretFiring2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_01.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_01.wav">
       <Name>LaserTurretFiring2_01</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_02.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_02.wav">
       <Name>LaserTurretFiring2_02</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_03.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_03.wav">
       <Name>LaserTurretFiring2_03</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_04.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_04.wav">
       <Name>LaserTurretFiring2_04</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_05.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_05.wav">
       <Name>LaserTurretFiring2_05</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_06.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_06.wav">
       <Name>LaserTurretFiring2_06</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_07.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_07.wav">
       <Name>LaserTurretFiring2_07</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_08.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_08.wav">
       <Name>LaserTurretFiring2_08</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_09.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_09.wav">
       <Name>LaserTurretFiring2_09</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring2_10.wav">
+    <None Include="audio\sfx\LaserTurretFiring2_10.wav">
       <Name>LaserTurretFiring2_10</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring3.wav">
+    <None Include="audio\sfx\LaserTurretFiring3.wav">
       <Name>LaserTurretFiring3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring4.wav">
+    <None Include="audio\sfx\LaserTurretFiring4.wav">
       <Name>LaserTurretFiring4</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring5.wav">
+    <None Include="audio\sfx\LaserTurretFiring5.wav">
       <Name>LaserTurretFiring5</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring6.wav">
+    <None Include="audio\sfx\LaserTurretFiring6.wav">
       <Name>LaserTurretFiring6</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\LaserTurretFiring7.wav">
+    <None Include="audio\sfx\LaserTurretFiring7.wav">
       <Name>LaserTurretFiring7</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MeteoroidDestroyed.wav">
+    <None Include="audio\sfx\MeteoroidDestroyed.wav">
       <Name>MeteoroidDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MissileExplosion_2011_09_26.wav">
+    <None Include="audio\sfx\MissileExplosion_2011_09_26.wav">
       <Name>MissileExplosion_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MissileTurretLaunching.wav">
+    <None Include="audio\sfx\MissileTurretLaunching.wav">
       <Name>MissileTurretLaunching</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MissileTurretLaunching_2011_09_26_2.wav">
+    <None Include="audio\sfx\MissileTurretLaunching_2011_09_26_2.wav">
       <Name>MissileTurretLaunching_2011_09_26_2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipOn.wav">
+    <None Include="audio\sfx\MothershipOn.wav">
       <Name>MothershipOn</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_01.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_01.wav">
       <Name>MothershipShieldHit1_01</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_02.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_02.wav">
       <Name>MothershipShieldHit1_02</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_03.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_03.wav">
       <Name>MothershipShieldHit1_03</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_04.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_04.wav">
       <Name>MothershipShieldHit1_04</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_05.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_05.wav">
       <Name>MothershipShieldHit1_05</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_06.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_06.wav">
       <Name>MothershipShieldHit1_06</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_07.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_07.wav">
       <Name>MothershipShieldHit1_07</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MothershipShieldHit1_08.wav">
+    <None Include="audio\sfx\MothershipShieldHit1_08.wav">
       <Name>MothershipShieldHit1_08</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_26.wav">
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_26.wav">
       <Name>MultipleLasersFiring_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_01.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_01.wav">
       <Name>MultipleLasersTurretFiring1_01</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_02.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_02.wav">
       <Name>MultipleLasersTurretFiring1_02</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_03.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_03.wav">
       <Name>MultipleLasersTurretFiring1_03</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_04.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_04.wav">
       <Name>MultipleLasersTurretFiring1_04</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_05.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_05.wav">
       <Name>MultipleLasersTurretFiring1_05</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_06.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_06.wav">
       <Name>MultipleLasersTurretFiring1_06</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_07.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_07.wav">
       <Name>MultipleLasersTurretFiring1_07</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_08.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_08.wav">
       <Name>MultipleLasersTurretFiring1_08</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_09.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_09.wav">
       <Name>MultipleLasersTurretFiring1_09</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_10.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_10.wav">
       <Name>MultipleLasersTurretFiring1_10</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\MultipleLasersTurretFiring1_11.wav">
+    <None Include="audio\sfx\MultipleLasersTurretFiring1_11.wav">
       <Name>MultipleLasersTurretFiring1_11</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\NewWaveComing.wav">
+    <None Include="audio\sfx\NewWaveComing.wav">
       <Name>NewWaveComing</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\NewWaveLaunching.wav">
+    <None Include="audio\sfx\NewWaveLaunching.wav">
       <Name>NewWaveLaunching</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\NewWaveLaunching2.wav">
+    <None Include="audio\sfx\NewWaveLaunching2.wav">
       <Name>NewWaveLaunching2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\NewWaveLaunching3.wav">
+    <None Include="audio\sfx\NewWaveLaunching3.wav">
       <Name>NewWaveLaunching3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\PlanetDestroyed.wav">
+    <None Include="audio\sfx\PlanetDestroyed.wav">
       <Name>PlanetDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\PlanetToProtectDestroyed.wav">
+    <None Include="audio\sfx\PlanetToProtectDestroyed.wav">
       <Name>PlanetToProtectDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\PlanetToProtectHit.wav">
+    <None Include="audio\sfx\PlanetToProtectHit.wav">
       <Name>PlanetToProtectHit</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\PlutoidDestroyed.wav">
+    <None Include="audio\sfx\PlutoidDestroyed.wav">
       <Name>PlutoidDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\RailgunTurretCharging.wav">
+    <None Include="audio\sfx\RailgunTurretCharging.wav">
       <Name>RailgunTurretCharging</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ScreenChange.wav">
+    <None Include="audio\sfx\ScreenChange.wav">
       <Name>ScreenChange</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\Select.wav">
+    <None Include="audio\sfx\Select.wav">
       <Name>Select</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipBouncing.wav">
+    <None Include="audio\sfx\ShipBouncing.wav">
       <Name>ShipBouncing</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipFiring.wav">
+    <None Include="audio\sfx\ShipFiring.wav">
       <Name>ShipFiring</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipFiring_2011_09_26.wav">
+    <None Include="audio\sfx\ShipFiring_2011_09_26.wav">
       <Name>ShipFiring_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipFiring_2011_09_26_02.wav">
+    <None Include="audio\sfx\ShipFiring_2011_09_26_02.wav">
       <Name>ShipFiring_2011_09_26_02</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving.wav">
+    <None Include="audio\sfx\ShipMoving.wav">
       <Name>ShipMoving</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving_2011_09_26.wav">
+    <None Include="audio\sfx\ShipMoving_2011_09_26.wav">
       <Name>ShipMoving_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving2.wav">
+    <None Include="audio\sfx\ShipMoving2.wav">
       <Name>ShipMoving2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving3.wav">
+    <None Include="audio\sfx\ShipMoving3.wav">
       <Name>ShipMoving3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving4.wav">
+    <None Include="audio\sfx\ShipMoving4.wav">
       <Name>ShipMoving4</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving5.wav">
+    <None Include="audio\sfx\ShipMoving5.wav">
       <Name>ShipMoving5</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving6.wav">
+    <None Include="audio\sfx\ShipMoving6.wav">
       <Name>ShipMoving6</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipMoving7.wav">
+    <None Include="audio\sfx\ShipMoving7.wav">
       <Name>ShipMoving7</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipTeleportIn.wav">
+    <None Include="audio\sfx\ShipTeleportIn.wav">
       <Name>ShipTeleportIn</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipTeleportIn2.wav">
+    <None Include="audio\sfx\ShipTeleportIn2.wav">
       <Name>ShipTeleportIn2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipTeleportIn3_2011_09_26.wav">
+    <None Include="audio\sfx\ShipTeleportIn3_2011_09_26.wav">
       <Name>ShipTeleportIn3_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipTeleportOut.wav">
+    <None Include="audio\sfx\ShipTeleportOut.wav">
       <Name>ShipTeleportOut</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipTeleportOut2.wav">
+    <None Include="audio\sfx\ShipTeleportOut2.wav">
       <Name>ShipTeleportOut2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShipTeleportOut3_2011_09_26.wav">
+    <None Include="audio\sfx\ShipTeleportOut3_2011_09_26.wav">
       <Name>ShipTeleportOut3_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\ShootingStar.wav">
+    <None Include="audio\sfx\ShootingStar.wav">
       <Name>ShootingStar</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\SwarmDestroyed.wav">
+    <None Include="audio\sfx\SwarmDestroyed.wav">
       <Name>SwarmDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\TrojanDestroyed.wav">
+    <None Include="audio\sfx\TrojanDestroyed.wav">
       <Name>TrojanDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\TurretBought.wav">
+    <None Include="audio\sfx\TurretBought.wav">
       <Name>TurretBought</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\TurretBought_2011_09_26.wav">
+    <None Include="audio\sfx\TurretBought_2011_09_26.wav">
       <Name>TurretBought_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\Upgraded_2011_09_26.wav">
+    <None Include="audio\sfx\Upgraded_2011_09_26.wav">
       <Name>Upgraded_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\Upgrading_2011_09_26.wav">
+    <None Include="audio\sfx\Upgrading_2011_09_26.wav">
       <Name>Upgrading_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\Validate.wav">
+    <None Include="audio\sfx\Validate.wav">
       <Name>Validate</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection1.wav">
+    <None Include="audio\sfx\VulcanoidDeflection1.wav">
       <Name>VulcanoidDeflection1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection10.wav">
+    <None Include="audio\sfx\VulcanoidDeflection10.wav">
       <Name>VulcanoidDeflection10</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection11.wav">
+    <None Include="audio\sfx\VulcanoidDeflection11.wav">
       <Name>VulcanoidDeflection11</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection12.wav">
+    <None Include="audio\sfx\VulcanoidDeflection12.wav">
       <Name>VulcanoidDeflection12</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection13.wav">
+    <None Include="audio\sfx\VulcanoidDeflection13.wav">
       <Name>VulcanoidDeflection13</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection14.wav">
+    <None Include="audio\sfx\VulcanoidDeflection14.wav">
       <Name>VulcanoidDeflection14</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection15.wav">
+    <None Include="audio\sfx\VulcanoidDeflection15.wav">
       <Name>VulcanoidDeflection15</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection16.wav">
+    <None Include="audio\sfx\VulcanoidDeflection16.wav">
       <Name>VulcanoidDeflection16</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection2.wav">
+    <None Include="audio\sfx\VulcanoidDeflection2.wav">
       <Name>VulcanoidDeflection2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection3.wav">
+    <None Include="audio\sfx\VulcanoidDeflection3.wav">
       <Name>VulcanoidDeflection3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection4.wav">
+    <None Include="audio\sfx\VulcanoidDeflection4.wav">
       <Name>VulcanoidDeflection4</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection5.wav">
+    <None Include="audio\sfx\VulcanoidDeflection5.wav">
       <Name>VulcanoidDeflection5</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection6.wav">
+    <None Include="audio\sfx\VulcanoidDeflection6.wav">
       <Name>VulcanoidDeflection6</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection7.wav">
+    <None Include="audio\sfx\VulcanoidDeflection7.wav">
       <Name>VulcanoidDeflection7</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection8.wav">
+    <None Include="audio\sfx\VulcanoidDeflection8.wav">
       <Name>VulcanoidDeflection8</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDeflection9.wav">
+    <None Include="audio\sfx\VulcanoidDeflection9.wav">
       <Name>VulcanoidDeflection9</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\VulcanoidDestroyed.wav">
+    <None Include="audio\sfx\VulcanoidDestroyed.wav">
       <Name>VulcanoidDestroyed</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\WaveDestroyed_2011_09_26.wav">
+    <None Include="audio\sfx\WaveDestroyed_2011_09_26.wav">
       <Name>WaveDestroyed_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\WaveDestroyed2_2011_09_26.wav">
+    <None Include="audio\sfx\WaveDestroyed2_2011_09_26.wav">
       <Name>WaveDestroyed2_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\WrongChoice_2011_09_26.wav">
+    <None Include="audio\sfx\WrongChoice_2011_09_26.wav">
       <Name>WrongChoice_2011_09_26</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="audio\Audio.xap">
@@ -1489,160 +1489,160 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\EnemyDestroyed1_2011_09_30.wav">
+    <None Include="audio\sfx\EnemyDestroyed1_2011_09_30.wav">
       <Name>EnemyDestroyed1_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed2_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed2_2011_09_30.wav">
       <Name>EnemyDestroyed2_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed3_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed3_2011_09_30.wav">
       <Name>EnemyDestroyed3_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed4_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed4_2011_09_30.wav">
       <Name>EnemyDestroyed4_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed5_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed5_2011_09_30.wav">
       <Name>EnemyDestroyed5_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed6_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed6_2011_09_30.wav">
       <Name>EnemyDestroyed6_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed7_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed7_2011_09_30.wav">
       <Name>EnemyDestroyed7_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed8_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed8_2011_09_30.wav">
       <Name>EnemyDestroyed8_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\EnemyDestroyed9_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\EnemyDestroyed9_2011_09_30.wav">
       <Name>EnemyDestroyed9_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\LaserTurretFiring3_01.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\LaserTurretFiring3_01.wav">
       <Name>LaserTurretFiring3_01</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\LaserTurretFiring3_02.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\LaserTurretFiring3_02.wav">
       <Name>LaserTurretFiring3_02</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\LaserTurretFiring3_03.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\LaserTurretFiring3_03.wav">
       <Name>LaserTurretFiring3_03</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\LaserTurretFiring3_04.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\LaserTurretFiring3_04.wav">
       <Name>LaserTurretFiring3_04</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\LaserTurretFiring3_05.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\LaserTurretFiring3_05.wav">
       <Name>LaserTurretFiring3_05</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\LaserTurretFiring3_06.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\LaserTurretFiring3_06.wav">
       <Name>LaserTurretFiring3_06</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\LaserTurretFiring3_07.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\LaserTurretFiring3_07.wav">
       <Name>LaserTurretFiring3_07</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MothershipHit_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MothershipHit_2011_09_30.wav">
       <Name>MothershipHit_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_01.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_30_01.wav">
       <Name>MultipleLasersFiring_2011_09_30_01</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_02.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_30_02.wav">
       <Name>MultipleLasersFiring_2011_09_30_02</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_03.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_30_03.wav">
       <Name>MultipleLasersFiring_2011_09_30_03</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_04.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_30_04.wav">
       <Name>MultipleLasersFiring_2011_09_30_04</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_05.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_30_05.wav">
       <Name>MultipleLasersFiring_2011_09_30_05</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_06.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_30_06.wav">
       <Name>MultipleLasersFiring_2011_09_30_06</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\MultipleLasersFiring_2011_09_30_07.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\MultipleLasersFiring_2011_09_30_07.wav">
       <Name>MultipleLasersFiring_2011_09_30_07</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\PlanetToProtectHit2.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\PlanetToProtectHit2.wav">
       <Name>PlanetToProtectHit2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\Upgraded_2011_09_30.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\Upgraded_2011_09_30.wav">
       <Name>Upgraded_2011_09_30</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27-ancien1.wav">
+    <None Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27-ancien1.wav">
       <Name>ValseBrillante%28Galaxy%29_2011_09_27-ancien1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="audio\sfx\SlowMotionTurret_2011_10_02_1.wav">
+    <None Include="audio\sfx\SlowMotionTurret_2011_10_02_1.wav">
       <Name>SlowMotionTurret_2011_10_02_1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\SlowMotionTurret_2011_10_02_2.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\SlowMotionTurret_2011_10_02_2.wav">
       <Name>SlowMotionTurret_2011_10_02_2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\sfx\SlowMotionTurret_2011_10_02_3.wav">
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\SlowMotionTurret_2011_10_02_3.wav">
       <Name>SlowMotionTurret_2011_10_02_3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

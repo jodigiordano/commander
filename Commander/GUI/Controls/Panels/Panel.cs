@@ -183,7 +183,7 @@
             widget.Name = name;
             widget.Scene = Scene;
             widget.Initialize();
-            widget.VisualPriority = VisualPriority;
+            widget.VisualPriority = VisualPriority - 0.001;
             widget.Alpha = Alpha;
 
             Widgets.Add(new KeyValuePair<string, PanelWidget>(name, widget));
@@ -196,7 +196,7 @@
         {
             widget.Scene = Scene;
             widget.Initialize();
-            widget.VisualPriority = VisualPriority;
+            widget.VisualPriority = VisualPriority - 0.001;
             widget.Alpha = Alpha;
 
             TitleBarWidgets.Add(widget);
