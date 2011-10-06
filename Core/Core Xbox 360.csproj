@@ -79,6 +79,7 @@
     <Compile Include="Input\InputListener.cs" />
     <Compile Include="Input\InputSource.cs" />
     <Compile Include="Input\MouseButton.cs" />
+    <Compile Include="Input\PlayerIndexAlt.cs" />
     <Compile Include="Input\PlayersController.cs" />
     <Compile Include="Input\Vibrator.cs" />
     <Compile Include="Persistence\Assets\AssetDescriptor.cs" />
@@ -288,7 +289,6 @@
     </Reference>
     <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

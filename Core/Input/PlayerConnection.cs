@@ -81,21 +81,21 @@
 
         private void DoPlayerConnected(object sender, SignedInEventArgs e)
         {
-            Player player = Inputs.PlayersController.GetPlayer(e.Gamer.PlayerIndex);
+            Player player = Inputs.PlayersController.GetPlayer((PlayerIndexAlt) e.Gamer.PlayerIndex);
             player.Profile = e.Gamer;
 
             if (player.State == PlayerState.Connecting)
             {
                 player.State = PlayerState.Connected;
 
-                NotifyPlayerConnected(Inputs.PlayersController.GetPlayer(e.Gamer.PlayerIndex));
+                NotifyPlayerConnected(Inputs.PlayersController.GetPlayer((PlayerIndexAlt) e.Gamer.PlayerIndex));
             }
         }
 
 
         private void DoPlayerDisconnected(object sender, SignedOutEventArgs e)
         {
-            Player player = Inputs.PlayersController.GetPlayer(e.Gamer.PlayerIndex);
+            Player player = Inputs.PlayersController.GetPlayer((PlayerIndexAlt) e.Gamer.PlayerIndex);
             player.State = PlayerState.Disconnected;
 
             NotifyPlayerDisconnected(player);

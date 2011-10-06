@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Core.Input
 {
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.GamerServices;
     using Microsoft.Xna.Framework.Input;
 
@@ -17,7 +16,7 @@
     public abstract class Player : IEqualityComparer<Player>
     {
         public SignedInGamer Profile;
-        public PlayerIndex Index;
+        public PlayerIndexAlt Index;
         public PlayerState State;
         public InputType InputType;
         public bool Master;
@@ -30,7 +29,7 @@
 
         public Player()
         {
-            Index = PlayerIndex.One;
+            Index = PlayerIndexAlt.One;
             State = PlayerState.Disconnected;
             Master = false;
             Name = "Unknown";

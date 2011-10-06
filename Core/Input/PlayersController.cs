@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Core.Input
 {
     using System.Collections.Generic;
-    using Microsoft.Xna.Framework;
+
 #if WINDOWS
     using System.Security.Principal;
 #endif
@@ -16,7 +16,7 @@
 
 
         private List<InputListener> Listeners;
-        private Stack<PlayerIndex> AvailablesIndexes;
+        private Stack<PlayerIndexAlt> AvailablesIndexes;
 
 
         public PlayersController()
@@ -24,11 +24,12 @@
             Players = new List<Player>();
             Listeners = new List<InputListener>();
 
-            AvailablesIndexes = new Stack<PlayerIndex>();
-            AvailablesIndexes.Push(PlayerIndex.Four);
-            AvailablesIndexes.Push(PlayerIndex.Three);
-            AvailablesIndexes.Push(PlayerIndex.Two);
-            AvailablesIndexes.Push(PlayerIndex.One);
+            AvailablesIndexes = new Stack<PlayerIndexAlt>();
+            AvailablesIndexes.Push(PlayerIndexAlt.Five);
+            AvailablesIndexes.Push(PlayerIndexAlt.Four);
+            AvailablesIndexes.Push(PlayerIndexAlt.Three);
+            AvailablesIndexes.Push(PlayerIndexAlt.Two);
+            AvailablesIndexes.Push(PlayerIndexAlt.One);
 
             ConnectedPlayers = new List<Player>();
 
@@ -44,7 +45,7 @@
             if (AvailablesIndexes.Count != 0)
                 player.Index = AvailablesIndexes.Pop();
             else
-                player.Index = PlayerIndex.Four;
+                player.Index = PlayerIndexAlt.Five;
 
             player.Initialize();
         }
@@ -108,8 +109,6 @@
             if (p.InputType == InputType.Mouse)
             {
                 MouseInUse = true;
-
-                Players[Players.Count - 1].Index = p.Index;
             }
 
             foreach (var l in Listeners)
@@ -145,7 +144,7 @@
         }
 
 
-        internal Player GetPlayer(PlayerIndex index)
+        internal Player GetPlayer(PlayerIndexAlt index)
         {
             foreach (var p in Players)
                 if (p.Index == index)

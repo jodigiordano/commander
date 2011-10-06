@@ -142,8 +142,11 @@
 
         public void DoGamePadInput()
         {
+            if (Player.Index == PlayerIndexAlt.Five)
+                return;
+
             // Receive raw input
-            GamePadState gamePadState = GamePad.GetState(Player.Index, GamePadDeadZone.Circular);
+            GamePadState gamePadState = GamePad.GetState((PlayerIndex) Player.Index, GamePadDeadZone.Circular);
 
             foreach (var button in MappedGamePadButtons)
             {
@@ -162,6 +165,9 @@
 
         public void DoMouseInput()
         {
+            if (Player.Index != PlayerIndexAlt.Five)
+                return;
+
             MouseState mouseState = Mouse.GetState();
             int currentMouseWheelValue = MouseWheelValue(mouseState.ScrollWheelValue);
             PreviousMouseWheelValue = mouseState.ScrollWheelValue;

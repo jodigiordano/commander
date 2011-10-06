@@ -129,7 +129,7 @@
             if (player.InputType != InputType.Gamepad)
                 return;
 
-            Vibrator.VibrateLowFrequency(player.Index, length, amount);
+            Vibrator.VibrateLowFrequency((PlayerIndex) player.Index, length, amount);
         }
 
 
@@ -138,7 +138,7 @@
             if (player.InputType != InputType.Gamepad)
                 return;
 
-            Vibrator.VibrateHighFrequency(player.Index, length, amount);
+            Vibrator.VibrateHighFrequency((PlayerIndex) player.Index, length, amount);
         }
 
 

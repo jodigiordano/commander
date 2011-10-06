@@ -134,6 +134,7 @@ namespace EphemereGames.Commander
                         Inputs.AddPlayer(new Player());
                         Inputs.AddPlayer(new Player());
                         Inputs.AddPlayer(new Player());
+                        Inputs.AddPlayer(new Player());
 
                         Inputs.Ready();
 

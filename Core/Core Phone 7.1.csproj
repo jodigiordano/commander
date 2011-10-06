@@ -96,6 +96,7 @@
     <Compile Include="Input\InputSource.cs" />
     <Compile Include="Input\MouseButton.cs" />
     <Compile Include="Input\EqualityComparers.cs" />
+    <Compile Include="Input\PlayerIndexAlt.cs" />
     <Compile Include="Input\PlayersController.cs" />
     <Compile Include="Input\Vibrator.cs" />
     <Compile Include="Persistence\Assets\AssetDescriptor.cs" />
