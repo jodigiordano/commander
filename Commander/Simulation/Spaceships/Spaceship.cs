@@ -11,13 +11,15 @@
     {
         public event NoneHandler Bounced;
 
-        // Movement
+        private static int NextId = 0;
         
+        public int Id                           { get; set; }
+
+        // Movement
         public virtual Vector3 Position         { get; set; }
         public float Speed                      { get { return SteeringBehavior.Speed; } set { SteeringBehavior.Speed = value; } }
         public Vector3 Direction                { get; set; }
         private Vector3 LastPosition;
-
 
         // Visual
         public Image Image;
@@ -27,7 +29,9 @@
         public Color ShieldColor;
         public byte ShieldAlpha;
         public float ShieldDistance;
+        public float ShieldSize;
         public bool ShowShield;
+        public Circle ShieldCircle              { get; set; }
 
         // Collision
         public Shape Shape                      { get; set; }
@@ -43,7 +47,6 @@
         public virtual bool Active { get; set; }
 
         public bool Alive { get; set; }
-
 
         public Simulator Simulator;
 
@@ -65,6 +68,7 @@
 
             Shape = Shape.Circle;
             Circle = new Circle();
+            ShieldCircle = new Circle();
 
             SizeX = 4;
 
@@ -78,6 +82,7 @@
             ShowShield = false;
 
             Alive = true;
+            Id = NextId++;
         }
 
 
@@ -111,6 +116,7 @@
             {
                 Image.SizeX = value;
                 Circle.Radius = Image.AbsoluteSize.X / 2;
+                ShieldCircle.Radius = Image.AbsoluteSize.X + 10;
             }
         }
 
@@ -126,6 +132,7 @@
             LastPosition = Position;
 
             Circle.Position = Position;
+            ShieldCircle.Position = Position;
 
             if (Weapon != null)
                 Weapon.Update();
@@ -185,7 +192,7 @@
             if (!ShowShield)
                 return;
 
-            Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, Position, hitPosition, ShieldColor, Image.SizeX, VisualPriority, ShieldDistance, ShieldAlpha));
+            Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, Position, hitPosition, ShieldColor, ShieldSize, VisualPriority, ShieldDistance, ShieldAlpha));
         }
 
 

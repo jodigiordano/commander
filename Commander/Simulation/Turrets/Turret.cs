@@ -294,6 +294,7 @@
                             p.VisualPriority = CanonImage.VisualPriority;
                             p.ShowMovingEffect = true;
                             p.Image.SizeX = 1f;
+                            p.FiredBy = -1;
                             
                             Bullets.Add(p);
                         }
@@ -312,6 +313,7 @@
                         pm.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         pm.Big = BulletType == BulletType.Missile2;
                         pm.SfxExplosion = ActualLevel.Value.BulletExplosionSfx;
+                        pm.FiredBy = -1;
 
                         Bullets.Add(pm);
                         
@@ -394,6 +396,7 @@
                         rgb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         rgb.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         rgb.VisualPriority = CanonImage.VisualPriority;
+                        rgb.FiredBy = -1;
                         
                         Bullets.Add(rgb);
                         break;

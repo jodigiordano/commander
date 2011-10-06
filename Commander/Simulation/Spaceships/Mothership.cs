@@ -87,6 +87,7 @@
 
             SizeX = 16;
             Circle.Radius = Image.AbsoluteSize.X / 2;
+            ShieldCircle.Radius = Circle.Radius + 10;
 
             Missiles = new List<Missile>();
 

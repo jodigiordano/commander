@@ -50,7 +50,13 @@
             SpaceshipMove = new SpaceshipSpaceship(simulator)
             {
                 Speed = 4,
-                VisualPriority = VisualPriorities.Default.PlayerCursor
+                VisualPriority = VisualPriorities.Default.PlayerCursor,
+                ShowShield = true,
+                ShieldImageName = "SpaceshipHitMask",
+                ShieldColor = BasePlayer.Color,
+                ShieldAlpha = 255,
+                ShieldDistance = 10,
+                ShieldSize = 4
             };
 
             SpaceshipMove.Bounced += new NoneHandler(DoBouncing);
@@ -483,7 +489,7 @@
 
             Position += SelectedCelestialBodyController.DoGlueMode();
 
-            // Manage turret to place (to always has a valid position)
+            // Manage turret to place (to always have a valid position)
             if (ActualSelection.TurretToPlace != null)
             {
                 Turret turretToPlace = ActualSelection.TurretToPlace;
@@ -494,11 +500,13 @@
                     Position = celestialBody.OuterTurretZone.NearestPointToCircumference(Position);
 
                 turretToPlace.CanPlace = celestialBody.InnerTurretZone.Outside(turretToPlace.Position);
+                turretToPlace.CanPlace = turretToPlace.CanPlace && turretToPlace.BuyPrice <= CommonStash.Cash; //multiplayer failsafe.
 
                 if (turretToPlace.CanPlace)
                     foreach (var turret in celestialBody.Turrets)
                     {
-                        turretToPlace.CanPlace = !turret.Visible ||
+                        turretToPlace.CanPlace =
+                            !turret.Visible ||
                             !Physics.CircleCicleCollision(turret.Circle, turretToPlace.Circle);
 
                         if (!turretToPlace.CanPlace)

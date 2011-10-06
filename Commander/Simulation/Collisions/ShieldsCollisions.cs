@@ -4,21 +4,18 @@
     using EphemereGames.Core.Physics;
 
 
-    class ShieldsCollisions
+    class SpaceshipShieldsCollisions
     {
         public List<KeyValuePair<ICollidable, Bullet>> Output;
 
         public List<Bullet> Bullets;
-        public List<ICollidable> Objects;
-
-        private Circle ObjectCircle;
+        public List<Spaceship> Spaceships;
 
 
-        public ShieldsCollisions()
+        public SpaceshipShieldsCollisions()
         {
-            Objects = new List<ICollidable>();
+            Spaceships = new List<Spaceship>();
             Output = new List<KeyValuePair<ICollidable, Bullet>>();
-            ObjectCircle = new Circle();
         }
 
 
@@ -26,17 +23,17 @@
         {
             Output.Clear();
 
-            foreach (var o in Objects)
+            foreach (var o in Spaceships)
             {
-                ObjectCircle.Radius = o.Circle.Radius + 10;
-                ObjectCircle.Position = o.Position;
-
                 foreach (var b in Bullets)
                 {
                     if (!(b is BasicBullet || b is MissileBullet || b is RailGunBullet))
                         continue;
 
-                    if (Physics.CircleRectangleCollision(ObjectCircle, b.Rectangle))
+                    if (b.FiredBy == o.Id)
+                        continue;
+
+                    if (Physics.CircleRectangleCollision(o.ShieldCircle, b.Rectangle))
                         Output.Add(new KeyValuePair<ICollidable, Bullet>(o, b));
                 }
             }

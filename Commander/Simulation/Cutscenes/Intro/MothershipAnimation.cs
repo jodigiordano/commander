@@ -47,7 +47,8 @@
                 ShieldImageName = "MothershipHitMask",
                 ShieldColor = Colors.Default.AlienBright,
                 ShieldAlpha = 100,
-                ShieldDistance = 10
+                ShieldDistance = 10,
+                ShieldSize = 16
             };
             Mothership.Position = new Vector3(0, -Mothership.Size.Y/2 - 360, 0);
 

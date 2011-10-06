@@ -45,6 +45,9 @@
 
             DoFire();
 
+            foreach (var b in Bullets)
+                b.FiredBy = Spaceship.Id;
+
             return Bullets;
         }
 

@@ -90,6 +90,7 @@
     <asset name="starExplosion"                type="Particles" path="particules/starExplosion"/>
     <asset name="mothershipMissile"            type="Particles" path="particules/mothership_missile"/>
     <asset name="mothershipAbduction"          type="Particles" path="particules/abduction"/>
+    <asset name="love"                         type="Particles" path="particules/love"/>
 
     
     <!-- Backgrounds -->

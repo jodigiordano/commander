@@ -43,7 +43,7 @@
         private ObjectsCollisions ObjectsCollisions;
         private PlayersCollisions PlayersCollisions;
         private StartingPathCollisions StartingPathCollisions;
-        private ShieldsCollisions ShieldsCollisions;
+        private SpaceshipShieldsCollisions ShieldsCollisions;
 
         private Action SyncOutOfBounds;
         private Action SyncEnemyInRange;
@@ -67,7 +67,7 @@
             PlayersCollisions = new PlayersCollisions();
             CelestialBodyExplosion = new CelestialBodyExplosion();
             StartingPathCollisions = new StartingPathCollisions();
-            ShieldsCollisions = new ShieldsCollisions();
+            ShieldsCollisions = new SpaceshipShieldsCollisions();
 
             SyncOutOfBounds = new Action(OutOfBounds.Sync);
             SyncEnemyInRange = new Action(EnemyInRange.Sync);
@@ -271,6 +271,10 @@
 
                 return;
             }
+
+
+            if (obj is Spaceship)
+                ShieldsCollisions.Spaceships.Remove((Spaceship) obj);
         }
 
 
@@ -282,8 +286,8 @@
             else if (obj is SpaceshipAutomaticCollector)
                 ObjectsCollisions.AutomaticCollector = (SpaceshipAutomaticCollector) obj;
 
-            else if (obj is Mothership)
-                ShieldsCollisions.Objects.Add(obj);
+            else if (obj is Spaceship)
+                ShieldsCollisions.Spaceships.Add((Spaceship) obj);
         }
 
 

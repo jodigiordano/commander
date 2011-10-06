@@ -658,7 +658,6 @@
             p1.SpaceshipMove.SteeringBehavior.Acceleration = Vector3.Zero;
             p2.SpaceshipMove.SteeringBehavior.Acceleration = Vector3.Zero;
 
-
             Inputs.VibrateControllerLowFrequency(p1.BasePlayer, 120, 0.8f);
             Inputs.VibrateControllerLowFrequency(p2.BasePlayer, 120, 0.8f);
         }

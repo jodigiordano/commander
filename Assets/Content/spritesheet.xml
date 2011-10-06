@@ -102,6 +102,7 @@
     
     
     <Item><Key>MothershipHitMask</Key><Value>spaceships/masks/mask11.png</Value></Item>
+    <Item><Key>SpaceshipHitMask</Key><Value>spaceships/masks/mask12.png</Value></Item>
     
     
     <!-- Xbox 360 Buttons -->

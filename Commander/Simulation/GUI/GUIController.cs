@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -52,6 +53,7 @@
         private GUIPlayer AdvancedViewCheckedIn;
 
         private int lastEnemiesToReleaseCount;
+        private Particle LoveEffect;
         
 
         public GUIController(Simulator simulator)
@@ -131,6 +133,8 @@
             lastEnemiesToReleaseCount = -1;
 
             GameBarPanel.Initialize();
+
+            LoveEffect = Simulator.Scene.Particles.Get("love");
         }
 
 
@@ -433,6 +437,15 @@
             HelpBar.HideMessage(HelpBarMessage.TurretMenu);
 
             Simulator.Scene.Animations.Add(new TurretMoneyAnimation(turret.SellPrice, true, turret.Position, VisualPriorities.Default.TurretUpgradedAnimation));
+        }
+
+
+        public void DoPlayersCollided(SimPlayer p1, SimPlayer p2)
+        {
+            Vector3 middle = (p2.Position + p1.Position) / 2;
+
+            LoveEffect.VisualPriority = Players[p1].Cursor.FrontImage.VisualPriority - 0.00001;
+            LoveEffect.Trigger(ref middle);
         }
 
 

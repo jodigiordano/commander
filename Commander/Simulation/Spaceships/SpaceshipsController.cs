@@ -10,15 +10,34 @@
         public List<Mineral> Minerals;
         public PowerUpsBattleship PowerUpsBattleship;
         public event PhysicalObjectHandler ObjectCreated;
+        public event PhysicalObjectHandler ObjectDestroyed;
 
         private Simulator Simulator;
         private List<Spaceship> Spaceships;
+        private Dictionary<SimPlayer, Spaceship> Players;
 
 
         public SpaceshipsController(Simulator simulator)
         {
-            this.Simulator = simulator;
-            this.Spaceships = new List<Spaceship>();
+            Simulator = simulator;
+            Spaceships = new List<Spaceship>();
+            Players = new Dictionary<SimPlayer, Spaceship>();
+        }
+
+
+        public void DoPlayerConnected(SimPlayer player)
+        {
+            Players.Add(player, player.SpaceshipMove);
+
+            NotifyObjectCreated(player.SpaceshipMove);
+        }
+
+
+        public void DoPlayerDisconnected(SimPlayer player)
+        {
+            Players.Remove(player);
+
+            NotifyObjectDestroyed(player.SpaceshipMove);
         }
 
 
@@ -83,9 +102,6 @@
 
         public void DoAddSpaceshipAsked(Spaceship spaceship)
         {
-            //if (spaceship is TheResistance)
-            //    ((TheResistance) spaceship).Enemies = Enemies;
-
             if (spaceship is SpaceshipAutomaticCollector)
                 ((SpaceshipAutomaticCollector) spaceship).Minerals = Minerals;
 
@@ -112,6 +128,13 @@
         {
             if (ObjectCreated != null)
                 ObjectCreated(objet);
+        }
+
+
+        private void NotifyObjectDestroyed(ICollidable obj)
+        {
+            if (ObjectDestroyed != null)
+                ObjectDestroyed(obj);
         }
     }
 }

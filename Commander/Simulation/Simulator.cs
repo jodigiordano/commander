@@ -101,7 +101,8 @@ namespace EphemereGames.Commander.Simulation
                     @"starExplosion",
                     @"mothershipMissile",
                     @"nextWave",
-                    @"mothershipAbduction"
+                    @"mothershipAbduction",
+                    @"love"
                 }, true);
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
@@ -170,8 +171,9 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.NextWaveAsked += new NoneHandler(EnemiesController.DoNextWaveAsked);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
-            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             SpaceshipsController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
+            SpaceshipsController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
+            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
             PlanetarySystemController.ObjectHit += new PhysicalObjectHandler(LevelsController.DoObjectHit);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(LevelsController.DoObjectDestroyed);
@@ -215,6 +217,8 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PlayerDisconnected += new SimPlayerHandler(PowerUpsController.DoPlayerDisconnected);
             SimPlayersController.PlayerConnected += new SimPlayerHandler(PanelsController.DoPlayerConnected);
             SimPlayersController.PlayerDisconnected += new SimPlayerHandler(PanelsController.DoPlayerDisconnected);
+            SimPlayersController.PlayerConnected += new SimPlayerHandler(SpaceshipsController.DoPlayerConnected);
+            SimPlayersController.PlayerDisconnected += new SimPlayerHandler(SpaceshipsController.DoPlayerDisconnected);
             SimPlayersController.ShowAdvancedViewAsked += new SimPlayerHandler(GUIController.DoShowAdvancedViewAsked);
             SimPlayersController.HideAdvancedViewAsked += new SimPlayerHandler(GUIController.DoHideAdvancedViewAsked);
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(SimPlayersController.DoObjectHit);
@@ -239,6 +243,7 @@ namespace EphemereGames.Commander.Simulation
             LevelsController.NewGameState += new NewGameStateHandler(SimPlayersController.DoNewGameState);
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(SimPlayersController.DoPlayersCollided);
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(AudioController.DoPlayersCollided);
+            CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(GUIController.DoPlayersCollided);
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(BulletsController.DoStartingPathCollision);
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(GUIController.DoStartingPathCollision);
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(AudioController.DoStartingPathCollision);
