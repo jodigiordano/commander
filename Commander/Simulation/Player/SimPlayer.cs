@@ -19,7 +19,6 @@
         public Player BasePlayer;
         public PausePlayer PausePlayer;
         public SpaceshipSpaceship SpaceshipMove;
-        public bool TurretToPlaceChanged;
         public bool GameOver;
         public SimPlayerHandler BouncedHandler;
 
@@ -61,7 +60,6 @@
 
             SpaceshipMove.Bounced += new NoneHandler(DoBouncing);
 
-            TurretToPlaceChanged = false;
             GameOver = false;
             VibrationMetronome = new Metronome(Preferences.TargetElapsedTimeMs, 100);
         }
@@ -513,8 +511,6 @@
                             break;
                     }
             }
-
-            TurretToPlaceChanged = false;
 
             if (UpdateSelectionz)
                 UpdateSelection();

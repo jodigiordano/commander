@@ -494,7 +494,6 @@
                     player.ActualSelection.TurretToPlace.CelestialBody = player.ActualSelection.CelestialBody;
                     player.ActualSelection.TurretToPlace.Position = player.Position;
                     player.ActualSelection.TurretToPlace.ToPlaceMode = true;
-                    player.TurretToPlaceChanged = true;
                     player.UpdateSelection();
 
                     NotifyTurretToPlaceSelected(player.ActualSelection.TurretToPlace, player);
@@ -518,7 +517,6 @@
                     NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace, player);
                     NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
                     player.ActualSelection.TurretToPlace = null;
-                    player.TurretToPlaceChanged = true;
                     player.UpdateSelection();
                 }
 
