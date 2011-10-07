@@ -192,7 +192,7 @@
             if (!ShowShield)
                 return;
 
-            Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, Position, hitPosition, ShieldColor, ShieldSize, VisualPriority, ShieldDistance, ShieldAlpha));
+            Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, this, hitPosition, ShieldColor, ShieldSize, VisualPriority, ShieldDistance, ShieldAlpha));
         }
 
 

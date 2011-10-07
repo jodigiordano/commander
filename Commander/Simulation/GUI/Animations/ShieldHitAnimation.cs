@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -7,18 +8,23 @@
     class ShieldHitAnimation : Animation
     {
         private Image Shield;
+        private ICollidable Obj;
+        private Vector3 RelHitPosition;
 
 
-        public ShieldHitAnimation(string shieldName, Vector3 objPosition, Vector3 hitPosition, Color color, float sizeX, double visualPriority, float distFromSpaceship, byte alpha)
+        public ShieldHitAnimation(string shieldName, ICollidable obj, Vector3 hitPosition, Color color, float sizeX, double visualPriority, float distFromSpaceship, byte alpha)
             : base(300, visualPriority)
         {
-            Vector3 direction = hitPosition - objPosition;
+            Obj = obj;
+            RelHitPosition = hitPosition - Obj.Position;
+
+            Vector3 direction = hitPosition - Obj.Position;
             direction.Normalize();
             float rotation = Core.Physics.Utilities.VectorToAngle(direction);
 
-            Vector3 position = hitPosition - direction * sizeX * 6;
+            RelHitPosition -= direction * sizeX * 6;
 
-            Shield = new Image(shieldName, position)
+            Shield = new Image(shieldName, Obj.Position + RelHitPosition)
             {
                 SizeX = sizeX,
                 Rotation = rotation,
@@ -40,6 +46,7 @@
 
         public override void Draw()
         {
+            Shield.Position = Obj.Position + RelHitPosition;
             Scene.Add(Shield);
         }
     }
