@@ -5,6 +5,7 @@
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -85,12 +86,14 @@
         {
             Initialize();
             Cutscene.Initialize();
+            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 
         public override void OnFocusLost()
         {
             Inputs.StopAllVibrators();
+            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 

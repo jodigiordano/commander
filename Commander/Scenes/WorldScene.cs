@@ -4,6 +4,7 @@
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -150,6 +151,8 @@
 
             if (LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
+
+            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 
@@ -157,6 +160,7 @@
         {
             Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
+            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 

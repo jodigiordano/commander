@@ -2,6 +2,7 @@
 {
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
+    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     
@@ -104,6 +105,8 @@
 
             if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
                 InitConnectFirstPlayer();
+
+            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 
@@ -113,6 +116,7 @@
 
             Simulator.OnFocusLost();
             Simulator.TeleportPlayers(true);
+            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 
