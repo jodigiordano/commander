@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
     using EphemereGames.Core.Visual;
-    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
 
 
@@ -80,13 +79,12 @@
             Initialize();
 
             Main.MusicController.Play("IntroNiveau");
-            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 
         public override void OnFocusLost()
         {
-            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
+
         }
     }
 }

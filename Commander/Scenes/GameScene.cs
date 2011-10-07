@@ -85,7 +85,6 @@
 
             Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
-            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 

@@ -151,8 +151,6 @@
 
             if (LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
-
-            XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
 
