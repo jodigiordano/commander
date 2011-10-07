@@ -8,6 +8,8 @@
     {
         private SimPlayer InnerPlayer;
         private Cue MovingCue;
+        private Cue InstallingTurretCue;
+        private Cue OnCelestialBodyCue;
         //private Cue FiringCue;
 
         private float ShipSpeed;
@@ -21,6 +23,8 @@
             ShipSpeedChanged = true;
             MovingCue = XACTAudio.GetCue("ShipMoving", "Sound Bank");
             //FiringCue = XACTAudio.GetCue("ShipFiring", "Sound Bank");
+            InstallingTurretCue = XACTAudio.GetCue("Empty 2"/* "TurretInstalling" */, "Sound Bank");
+            OnCelestialBodyCue = XACTAudio.GetCue("Empty 2"/* "PlanetOn" */, "Sound Bank");
         }
 
 
@@ -42,10 +46,36 @@
         }
 
 
+        public void StartInstallingTurret()
+        {
+            InstallingTurretCue.PlayOrResume();
+        }
+
+
+        public void StopInstallingTurret()
+        {
+            InstallingTurretCue.Pause();
+        }
+
+
+        public void StartOnCelestialBody()
+        {
+            OnCelestialBodyCue.PlayOrResume();
+        }
+
+
+        public void StopOnCelestialBody()
+        {
+            OnCelestialBodyCue.Pause();
+        }
+
+
         public void PauseLoopingCues()
         {
             MovingCue.MasterPause();
             //FiringCue.MasterPause();
+            InstallingTurretCue.MasterPause();
+            OnCelestialBodyCue.MasterPause();
         }
 
 
@@ -53,6 +83,8 @@
         {
             MovingCue.MasterResume();
             //FiringCue.MasterResume();
+            InstallingTurretCue.MasterResume();
+            OnCelestialBodyCue.MasterResume();
         }
 
 
@@ -60,6 +92,8 @@
         {
             MovingCue.Stop();
             //FiringCue.Stop();
+            InstallingTurretCue.Stop();
+            OnCelestialBodyCue.Stop();
         }
 
 
