@@ -534,7 +534,7 @@ namespace EphemereGames.Commander.Simulation
         {
             GUIController.TeleportPlayers(teleportOut);
 
-            if (!teleportOut && Inputs.ConnectedPlayers.Count > 0)
+            if (Inputs.ConnectedPlayers.Count > 0)
                 AudioController.TeleportPlayers(teleportOut);
         }
 
