@@ -339,22 +339,24 @@
 
         public void DoPlayerSelectionChanged(SimPlayer p)
         {
+            AudioPlayer player = Players[p];
+
+            if (p.ActualSelection.CelestialBody != p.LastSelection.CelestialBody)
+            {
+                if (p.ActualSelection.CelestialBody != null)
+                    player.StartOnCelestialBody();
+                else if (p.ActualSelection.CelestialBody == null)
+                    player.StopOnCelestialBody();
+            }
+
             if (Simulator.DemoMode)
             {
-                if (p.ActualSelection.NewGameChoiceChanged && p.LastSelection.NewGameChoice == NewGameChoice.None)
-                    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                else if (p.ActualSelection.NewGameChoiceChanged && p.LastSelection.NewGameChoice != NewGameChoice.None && p.ActualSelection.NewGameChoice == NewGameChoice.None)
-                { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                else if (p.ActualSelection.NewGameChoiceChanged)
+                if (p.ActualSelection.NewGameChoiceChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
 
                 if (Simulator.WorldMode)
                 {
-                    if (p.ActualSelection.PausedGameChoiceChanged && p.LastSelection.PausedGameChoice == PausedGameChoice.None)
-                        XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                    else if (p.ActualSelection.PausedGameChoiceChanged && p.LastSelection.PausedGameChoice != PausedGameChoice.None && p.ActualSelection.PausedGameChoice == PausedGameChoice.None)
-                    { /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                    else if (p.ActualSelection.PausedGameChoiceChanged)
+                    if (p.ActualSelection.PausedGameChoiceChanged)
                         XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
                 }
             }
@@ -367,27 +369,20 @@
             else
             {
                 // Power-Ups
-                //if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy == PowerUpType.None)
-                //    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                //else if (p.ActualSelection.PowerUpToBuyChanged && p.LastSelection.PowerUpToBuy != PowerUpType.None && p.ActualSelection.PowerUpToBuy == PowerUpType.None)
-                //{ /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                /*else*/ if (p.ActualSelection.PowerUpToBuyChanged)
+                if (p.ActualSelection.PowerUpToBuyChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
 
                 // Turrets
-                //if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy == TurretType.None)
-                //    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                //else if (p.ActualSelection.TurretToBuyChanged && p.LastSelection.TurretToBuy != TurretType.None && p.ActualSelection.TurretToBuy == TurretType.None)
-                //{ /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                /*else*/ if (p.ActualSelection.TurretToBuyChanged)
+                if (p.ActualSelection.TurretToPlaceChanged && p.ActualSelection.TurretToPlace != null)
+                    player.StartInstallingTurret();
+                else if (p.ActualSelection.TurretToPlaceChanged && p.ActualSelection.TurretToPlace == null)
+                    player.StopInstallingTurret();
+
+                if (p.ActualSelection.TurretToBuyChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
 
                 // Turret
-                //if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice == TurretChoice.None)
-                //    XACTAudio.PlayCue("ContextualMenuIn", "Sound Bank");
-                //else if (p.ActualSelection.TurretChoiceChanged && p.LastSelection.TurretChoice != TurretChoice.None && p.ActualSelection.TurretChoice == TurretChoice.None)
-                //{ /*XACTAudio.PlayCue("ContextualMenuOut", "Sound Bank");*/ }
-                /*else*/ if (p.ActualSelection.TurretChoiceChanged)
+                if (p.ActualSelection.TurretChoiceChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
             }
         }
