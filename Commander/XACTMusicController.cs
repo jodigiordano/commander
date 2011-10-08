@@ -21,7 +21,6 @@
         {
             Musics.Add("EphemereGamesLogo", null);
             Musics.Add("MainMenuMusic", null);
-            Musics.Add("Galaxy1Music", null);
             Musics.Add("WinMusic", null);
             Musics.Add("Raindrop", null);
             Musics.Add("LoseMusic", null);
@@ -33,6 +32,18 @@
 
         public void Play(string musicName)
         {
+            Play(musicName, "Sound Bank");
+        }
+
+
+        public void PlayOrResume(string musicName)
+        {
+            PlayOrResume(musicName, "Sound Bank");
+        }
+
+
+        public void Play(string musicName, string bankName)
+        {
             if (CurrentMusic != null)
                 Musics[CurrentMusic].Pause();
 
@@ -41,7 +52,7 @@
             if (music != null)
                 music.StopNow();
 
-            music = XACTAudio.GetCue(musicName, "Sound Bank");
+            music = XACTAudio.GetCue(musicName, bankName);
             Musics[musicName] = music;
 
             music.PlayOrResume();
@@ -50,7 +61,7 @@
         }
 
 
-        public void PlayOrResume(string musicName)
+        public void PlayOrResume(string musicName, string bankName)
         {
             if (CurrentMusic != null)
                 Musics[CurrentMusic].Pause();
@@ -59,7 +70,7 @@
 
             if (music == null)
             {
-                music = XACTAudio.GetCue(musicName, "Sound Bank");
+                music = XACTAudio.GetCue(musicName, bankName);
                 Musics[musicName] = music;
             }
 
@@ -116,6 +127,15 @@
                 return;
 
             Musics[CurrentMusic].Resume();
+        }
+
+
+        public void AddMusic(string musicName)
+        {
+            if (Musics.ContainsKey(musicName))
+                return;
+
+            Musics.Add(musicName, null);
         }
     }
 }

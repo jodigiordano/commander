@@ -158,7 +158,9 @@
                 UnlockedCondition = new List<int>(),
                 WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level.",
                 LastLevelId = 15,
-                Music = "Galaxy1Music"
+                Music = "Galaxy1Music",
+                MusicEnd = "Galaxy1EndMusic",
+                SfxEnd = "Galaxy1EndSfx"
             };
             WorldsDescriptors.Add(wd.Id, wd);
 
@@ -189,7 +191,9 @@
                 UnlockedCondition = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
                 WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world.",
                 LastLevelId = 30,
-                Music = "Galaxy1Music"
+                Music = "Galaxy1Music",
+                MusicEnd = "Galaxy1EndMusic",
+                SfxEnd = "Galaxy1EndSfx"
             };
             WorldsDescriptors.Add(wd.Id, wd);
 
@@ -215,7 +219,9 @@
                 UnlockedCondition = new List<int>() { -1 },
                 WarpBlockedMessage = "",
                 LastLevelId = 40,
-                Music = "Galaxy1Music"
+                Music = "Galaxy1Music",
+                MusicEnd = "Galaxy1EndMusic",
+                SfxEnd = "Galaxy1EndSfx"
             };
             WorldsDescriptors.Add(wd.Id, wd);
         }

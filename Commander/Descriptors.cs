@@ -20,6 +20,8 @@
         public string WarpBlockedMessage;
         public int LastLevelId;
         public string Music;
+        public string MusicEnd;
+        public string SfxEnd;
 
 
         public WorldDescriptor()
@@ -33,6 +35,8 @@
             WarpBlockedMessage = "";
             LastLevelId = -1;
             Music = "";
+            MusicEnd = "";
+            SfxEnd = "";
         }
 
 

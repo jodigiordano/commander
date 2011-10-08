@@ -15,8 +15,8 @@
         public Simulator Simulator;
         public bool NeedReinit;
         public bool CanGoBackToMainMenu;
+        public WorldDescriptor Descriptor;
 
-        private WorldDescriptor Descriptor;
         private Dictionary<string, string> Warps;
         private Dictionary<string, LevelDescriptor> LevelsDescriptors;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
@@ -75,6 +75,8 @@
             LevelStates.Initialize();
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
+            Main.MusicController.AddMusic(Descriptor.Music);
+            Main.MusicController.AddMusic(Descriptor.MusicEnd);
         }
 
 
@@ -139,8 +141,6 @@
 
             Simulator.OnFocus();
 
-            Main.MusicController.PlayOrResume(Descriptor.Music);
-
             if (Main.GameInProgress != null && Descriptor.ContainsLevel(Main.GameInProgress.Level.Infos.Id))
             {
                 var cb = CelestialBodies[Main.GameInProgress.Level.Infos.Id];
@@ -151,6 +151,8 @@
 
             if (LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
+            else
+                Main.MusicController.PlayOrResume(Descriptor.Music);
         }
 
 

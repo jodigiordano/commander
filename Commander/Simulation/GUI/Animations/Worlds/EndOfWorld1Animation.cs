@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using EphemereGames.Commander.Cutscenes;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
 
 
@@ -41,16 +42,11 @@
             };
 
             // Switch the music
-
-            // Stop spawning enemies
-            // Verify with Xbox 360 controller (vibration on edges)
-
-            // To check:
-
+            Main.MusicController.PlayOrResume(worldScene.Descriptor.MusicEnd);
+            XACTAudio.PlayCue(worldScene.Descriptor.SfxEnd, "Sound Bank");
 
             worldScene.NeedReinit = true;
             Simulator.SpawnEnemies = false;
-            //Path.RemoveCelestialBody(Path.FirstCelestialBody);
 
             TmpEndOfAlpha = new Text("End of demo!", "Pixelite")
             {
