@@ -89,7 +89,7 @@
             
             ScenesAreLoaded = false;
 
-            //Main.MusicController.PlayOrResume("EphemereGamesLogo");
+            Main.MusicController.PlayOrResume("EphemereGamesLogo", "LoadingSoundBank");
         }
 
 

@@ -1,9 +1,15 @@
 ﻿<Packages>
   <Package name="loading" volatile="false">
 
+    <!-- Audio -->
+    
+    <asset name="LoadingWaveBank"         type="WaveBank"  path="audio/LoadingWaveBank.xwb" />
+    <asset name="LoadingSoundBank"        type="SoundBank" path="audio/LoadingSoundBank.xsb" />
+
+
     <!-- Textures -->
 
-    <asset name="PixelBlanc"           type="Image" path="pixelBlanc" />
+    <asset name="PixelBlanc"              type="Image" path="pixelBlanc" />
 
 
     <asset name="LogoBack"                type="Image" path="GUI/Logo/ephemereBack" />
@@ -14,24 +20,24 @@
     
     <!-- Polices -->
     
-    <asset name="Pixelite"             type="Font" path="polices/pixelite" />
-    <asset name="PixelBig"             type="Font" path="polices/pixelbig" />
-    <asset name="Alien"                type="Font" path="polices/alien" />
+    <asset name="Pixelite"                type="Font" path="polices/pixelite" />
+    <asset name="PixelBig"                type="Font" path="polices/pixelbig" />
+    <asset name="Alien"                   type="Font" path="polices/alien" />
 
 
     <!-- Spritesheets -->
 
-    <asset name="spritesheet"                  type="SpriteSheet" path="spritesheet" />
-    <asset name="MothershipEyesSprite"       type="SpriteSheet" path="spaceships/mothership/mothership_eyes_sprite" />
+    <asset name="spritesheet"             type="SpriteSheet" path="spritesheet" />
+    <asset name="MothershipEyesSprite"    type="SpriteSheet" path="spaceships/mothership/mothership_eyes_sprite" />
 
 
     <!-- Textures -->
     
-    <asset name="VaisseauAlien"        type="Image" path="scenarios/vaisseauAlien" />
+    <asset name="VaisseauAlien"           type="Image" path="scenarios/vaisseauAlien" />
     
     <!-- Sprites -->
 
-    <asset name="tentacules"                 type="Sprite" path="scenarios/tentacules1" />    
+    <asset name="tentacules"              type="Sprite" path="scenarios/tentacules1" />    
     
   </Package>
   
