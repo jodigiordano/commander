@@ -392,5 +392,17 @@
         {
             XACTAudio.PlayCue("ContextualMenuSelectionError", "Sound Bank");
         }
+
+
+        public void DoPanelOpened()
+        {
+            XACTAudio.PlayCue("PanelOpen", "Sound Bank");
+        }
+
+
+        public void DoPanelClosed()
+        {
+            XACTAudio.PlayCue("PanelClose", "Sound Bank");
+        }
     }
 }
