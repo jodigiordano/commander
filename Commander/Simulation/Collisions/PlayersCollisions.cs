@@ -24,7 +24,7 @@
             for (int i = 0; i < Players.Count; i++)
                 for (int j = 0; j < Players.Count; j++)
                 {
-                    if (i == j)
+                    if (j <= i)
                         continue;
 
                     var player1 = Players[i];
