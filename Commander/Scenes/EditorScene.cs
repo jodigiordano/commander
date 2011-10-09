@@ -61,9 +61,11 @@
         #region Input Handling
 
 
-        public override void DoKeyPressedOnce(Core.Input.Player player, Keys key)
+        public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (key == KeyboardConfiguration.Back)
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.Back)
                 TransiteTo("Menu");
         }
 
@@ -76,7 +78,9 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Back)
+            var player = (Commander.Player) p;
+
+            if (button == player.GamepadConfiguration.Back)
                 TransiteTo("Menu");
         }
 

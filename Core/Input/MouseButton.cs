@@ -6,6 +6,7 @@
         Middle          = 1,
         Right           = 2,
         MiddleUp        = 3,
-        MiddleDown      = 4
+        MiddleDown      = 4,
+        None            = -1
     }
 }

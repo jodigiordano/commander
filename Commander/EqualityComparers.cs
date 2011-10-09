@@ -220,7 +220,7 @@
     }
 
 
-    class HelpBarMessageComparer : IEqualityComparer<HelpBarMessage>
+    class HelpBarMessageComparer : IEqualityComparer<HelpBarMessageType>
     {
         private static HelpBarMessageComparer instance;
         public static HelpBarMessageComparer Default
@@ -234,13 +234,13 @@
         }
 
 
-        public bool Equals(HelpBarMessage x, HelpBarMessage y)
+        public bool Equals(HelpBarMessageType x, HelpBarMessageType y)
         {
             return x == y;
         }
 
 
-        public int GetHashCode(HelpBarMessage obj)
+        public int GetHashCode(HelpBarMessageType obj)
         {
             return (int) obj;
         }

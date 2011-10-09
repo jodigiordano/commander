@@ -80,10 +80,15 @@
             GameOver = false;
             Firing = false;
 
-            if (BasePlayer.InputType == Core.Input.InputType.Mouse)
+            if (BasePlayer.InputType == Core.Input.InputType.MouseAndKeyboard)
             {
                 SpaceshipMove.SteeringBehavior = new SpaceshipMouseMBehavior(SpaceshipMove);
                 PausePlayer.SpaceshipMove.SteeringBehavior = new SpaceshipMouseMBehavior(PausePlayer.SpaceshipMove);
+            }
+            else if (BasePlayer.InputType == Core.Input.InputType.KeyboardOnly)
+            {
+                SpaceshipMove.SteeringBehavior = new SpaceshipKeyboardMBehavior(SpaceshipMove);
+                PausePlayer.SpaceshipMove.SteeringBehavior = new SpaceshipKeyboardMBehavior(PausePlayer.SpaceshipMove);
             }
             else if (BasePlayer.InputType == Core.Input.InputType.Gamepad)
             {
@@ -146,7 +151,7 @@
 
             set
             {
-                if (!firing && value && BasePlayer.InputType == Core.Input.InputType.Mouse)
+                if (!firing && value && (BasePlayer.InputType == Core.Input.InputType.MouseAndKeyboard || BasePlayer.InputType == Core.Input.InputType.KeyboardOnly))
                 {
                     LastMouseDirection = SpaceshipMove.Direction;
                 }

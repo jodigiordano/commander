@@ -166,31 +166,40 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Select)
-                DoSelectAction((Player) p);
+            var player = (Commander.Player) p;
+
+            if (button == player.MouseConfiguration.Select)
+                DoSelectAction(player);
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (key == KeyboardConfiguration.Back)
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.Select)
+                DoSelectAction(player);
+
+            else if (key == player.KeyboardConfiguration.Back)
                 DoBackAction();
 
-            if (key == KeyboardConfiguration.ChangeMusic)
+            else if (key == player.KeyboardConfiguration.ChangeMusic)
                 Main.MusicController.ToggleCurrentMusic();
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Back)
+            var player = (Commander.Player) p;
+
+            if (button == player.GamepadConfiguration.Back)
                 DoBackAction();
 
-            if (button == GamePadConfiguration.ChangeMusic)
+            else if (button == player.GamepadConfiguration.ChangeMusic)
                 Main.MusicController.ToggleCurrentMusic();
 
-            if (button == GamePadConfiguration.Select)
-                DoSelectAction((Player) p);
+            else if (button == player.GamepadConfiguration.Select)
+                DoSelectAction(player);
         }
 
 

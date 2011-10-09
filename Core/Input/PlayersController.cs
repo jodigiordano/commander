@@ -106,7 +106,7 @@
 
             ConnectedPlayers.Add(p);
 
-            if (p.InputType == InputType.Mouse)
+            if (p.InputType == InputType.MouseAndKeyboard)
             {
                 MouseInUse = true;
             }
@@ -133,7 +133,7 @@
 
             p.Profile = null;
             
-            if (p.InputType == InputType.Mouse)
+            if (p.InputType == InputType.MouseAndKeyboard)
                 MouseInUse = false;
 
             p.InputType = InputType.None;

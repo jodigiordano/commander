@@ -39,8 +39,7 @@
             {
                 ShowOnForegroundLayer = true
             };
-            HelpBar.ShowMessage(HelpBarMessage.HoldToSkip, InputType.Gamepad);
-            InputType = InputType.Gamepad;
+            InputType = InputType.None;
 
             Initialize();
         }
@@ -99,9 +98,11 @@
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Select)
+            var player = (Commander.Player) p;
+
+            if (button == player.GamepadConfiguration.Select)
             {
-                VerifyInputType(p.InputType);
+                VerifyInputType(player);
                 DoAction();
             }
         }
@@ -109,16 +110,20 @@
 
         public override void DoGamePadButtonReleased(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Select)
+            var player = (Commander.Player) p;
+
+            if (button == player.GamepadConfiguration.Select)
                 DoCancel();
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (key == KeyboardConfiguration.MoveUp)
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.MoveUp)
             {
-                VerifyInputType(p.InputType);
+                VerifyInputType(player);
                 DoAction();
             }
         }
@@ -126,16 +131,20 @@
 
         public override void DoKeyReleased(Core.Input.Player p, Keys key)
         {
-            if (key == KeyboardConfiguration.MoveUp)
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.MoveUp)
                 DoCancel();
         }
 
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Select)
+            var player = (Commander.Player) p;
+
+            if (button == player.MouseConfiguration.Select)
             {
-                VerifyInputType(p.InputType);
+                VerifyInputType(player);
                 DoAction();
             }
         }
@@ -143,7 +152,9 @@
 
         public override void DoMouseButtonReleased(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Select)
+            var player = (Commander.Player) p;
+
+            if (button == player.MouseConfiguration.Select)
                 DoCancel();
         }
 
@@ -167,14 +178,14 @@
         }
 
 
-        private void VerifyInputType(InputType input)
+        private void VerifyInputType(Commander.Player p)
         {
-            if (InputType != input)
+            if (InputType != p.InputType)
             {
-                InputType = input;
+                InputType = p.InputType;
 
                 HelpBar.HideMessage(HelpBarMessage.HoldToSkip);
-                HelpBar.ShowMessage(HelpBarMessage.HoldToSkip, input);
+                HelpBar.ShowMessage(p, HelpBarMessage.HoldToSkip);
                 HelpBar.Alpha = 0;
             }
         }

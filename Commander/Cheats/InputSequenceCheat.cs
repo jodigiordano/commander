@@ -17,7 +17,7 @@
         }
 
         protected double TimeToExecute;
-        protected List<Keys> SequenceMouse;
+        protected List<Keys> SequenceKeyboard;
         protected List<Buttons> SequenceGamepad;
 
 
@@ -30,7 +30,7 @@
             : base(name)
         {
             TimeToExecute = 0;
-            SequenceMouse = new List<Keys>();
+            SequenceKeyboard = new List<Keys>();
             SequenceGamepad = new List<Buttons>();
             CurrentSequenceId = 0;
             CurrentStatus = Status.None;
@@ -91,6 +91,8 @@
 
         void InputListener.DoKeyPressedOnce(Core.Input.Player player, Keys key)
         {
+            return; //tmp
+
             if (CurrentStatus == Status.Failed || CurrentStatus == Status.Succeed)
                 return;
 
@@ -101,11 +103,11 @@
                 CurrentSequenceId = 0;
             }
 
-            if (key == SequenceMouse[CurrentSequenceId])
+            if (key == SequenceKeyboard[CurrentSequenceId])
             {
                 CurrentSequenceId++;
 
-                if (CurrentSequenceId == SequenceMouse.Count)
+                if (CurrentSequenceId == SequenceKeyboard.Count)
                 {
                     CurrentStatus = Recurrent ? Status.None : Status.Succeed;
                     SetActivatedThisTick();
@@ -155,6 +157,8 @@
 
         void InputListener.DoGamePadButtonPressedOnce(Core.Input.Player player, Buttons button)
         {
+            return; //tmp
+
             if (CurrentStatus == Status.Failed || CurrentStatus == Status.Succeed)
                 return;
 

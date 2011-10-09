@@ -75,6 +75,32 @@
     <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - Arcade Royale|Xbox 360'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Xbox 360\Debug - Arcade Royale\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;XBOX;XBOX360</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <LangVersion>3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release - Arcade Royale|Xbox 360'">
+    <OutputPath>bin\Xbox 360\Release - Arcade Royale\</OutputPath>
+    <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <LangVersion>3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animations\AnimationCommodore.cs" />
     <Compile Include="Animations\AnimationSprite.cs" />
@@ -127,6 +153,11 @@
     <Compile Include="Panels\NewsPanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Panels\PausePanel.cs" />
+    <Compile Include="Player\InputConfigurations\GamepadInputConfiguration.cs" />
+    <Compile Include="Player\InputConfigurations\InputConfiguration.cs" />
+    <Compile Include="Player\InputConfigurations\InputsFactory.cs" />
+    <Compile Include="Player\InputConfigurations\KeyboardInputConfiguration.cs" />
+    <Compile Include="Player\InputConfigurations\MouseInputConfiguration.cs" />
     <Compile Include="SaveGameController.cs" />
     <Compile Include="Scenes\CommanderScene.cs" />
     <Compile Include="Scenes\EndOfDemoScene.cs" />
@@ -170,7 +201,6 @@
     <Compile Include="Simulation\GUI\ScoreCalculation.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Player\HighScores.cs" />
-    <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
     <Compile Include="Scenes\EditorScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
@@ -292,6 +322,7 @@
     <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipChasingABehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Automatic\SpaceshipGoHomeABehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipGamePadMBehavior.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipKeyboardMBehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipMouseMBehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\SpaceshipNoneBehavior.cs" />
     <Compile Include="Simulation\Spaceships\Steering\SpaceshipSteeringBehavior.cs" />

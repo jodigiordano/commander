@@ -84,5 +84,11 @@
         {
             TransiteTo("Menu");
         }
+
+
+        public override void PlayerKeyboardConnectionRequested(Core.Input.Player Player, Keys key)
+        {
+            TransiteTo("Menu");
+        }
     }
 }

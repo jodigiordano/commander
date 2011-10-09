@@ -75,7 +75,7 @@
 
         public bool IsKeyPressed(Player player, Keys key)
         {
-            if (player.InputType != InputType.Mouse)
+            if (player.InputType == InputType.Gamepad || player.InputType == InputType.None)
                 return false;
 
             return Sources[player].IsKeyPressed(key);
@@ -84,7 +84,7 @@
 
         public bool IsMouseButtonPressed(Player player, MouseButton button)
         {
-            if (player.InputType != InputType.Mouse)
+            if (player.InputType == InputType.Gamepad || player.InputType == InputType.None)
                 return false;
 
             return Sources[player].IsMouseButtonPressed(button);
@@ -126,6 +126,11 @@
                 if (player.State == PlayerState.Connected && player.InputType == InputType.Gamepad)
                 {
                     state.DoGamePadInput();
+                }
+
+                else if (player.State == PlayerState.Connected && player.InputType == InputType.KeyboardOnly)
+                {
+                    state.DoKeyboardInput();
                 }
 
                 else if (player.State == PlayerState.Connected)

@@ -142,7 +142,7 @@
         {
             GUIPlayer player = new GUIPlayer(
                 Simulator, AvailableTurrets, AvailableLevelsDemoMode,
-                p.Color, p.ImageName, p.BasePlayer.InputType);
+                p.Color, p.ImageName, p.BasePlayer);
 
             player.Cursor.Position = p.Position;
 
@@ -390,7 +390,7 @@
             foreach (var turret2 in turret.CelestialBody.Turrets)
                 turret2.ShowForm = true;
 
-            HelpBar.ShowMessage(HelpBarMessage.InstallTurret, p.BasePlayer.InputType);
+            HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.InstallTurret);
         }
 
 
@@ -648,9 +648,9 @@
         }
 
 
-        public void ShowHelpBarMessage(HelpBarMessage message, InputType type)
+        public void ShowHelpBarMessage(Player p, HelpBarMessage message)
         {
-            HelpBar.ShowMessage(message, type);
+            HelpBar.ShowMessage((Commander.Player) p, message);
         }
 
 
@@ -738,13 +738,13 @@
                 if (selection.CelestialBody != null)
                 {
                     if (selection.PausedGameChoice == PausedGameChoice.None && selection.CelestialBody is PinkHole)
-                        HelpBar.ShowMessage(HelpBarMessage.WorldWarp, p.BasePlayer.InputType);
+                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldWarp);
                     else if (selection.PausedGameChoice == PausedGameChoice.None)
-                        HelpBar.ShowMessage(HelpBarMessage.WorldNewGame, p.BasePlayer.InputType);
+                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldNewGame);
                     else if (selection.PausedGameChoice == PausedGameChoice.New)
-                        HelpBar.ShowMessage(HelpBarMessage.WorldToggleNewGame, p.BasePlayer.InputType);
+                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldToggleNewGame);
                     else if (selection.PausedGameChoice == PausedGameChoice.Resume)
-                        HelpBar.ShowMessage(HelpBarMessage.WorldToggleResume, p.BasePlayer.InputType);
+                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldToggleResume);
                 }
 
                 else
@@ -757,13 +757,13 @@
             {
                 // Main menu
                 if (selection.CelestialBody != null && selection.CelestialBody.Name == "save the world")
-                    HelpBar.ShowMessage(player.NewGameMenu.GetHelpBarMessage(), p.BasePlayer.InputType);
+                    HelpBar.ShowMessage(p.BasePlayer, player.NewGameMenu.GetHelpBarMessage());
                 else
                 {
                     HelpBar.HideMessage(player.NewGameMenu.GetHelpBarMessage());
 
                     if (selection.CelestialBody != null)
-                        HelpBar.ShowMessage(HelpBarMessage.Select, p.BasePlayer.InputType);
+                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.Select);
                     else
                         HelpBar.HideMessage(HelpBarMessage.Select);
                 }
@@ -781,7 +781,7 @@
                 if (selection.Turret == null && selection.TurretToPlace == null)
                 {
                     if (selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
-                        HelpBar.ShowMessage(HelpBarMessage.CallNextWave, StartingPathMenu.GetHelpBarMessage(p.BasePlayer.InputType));
+                        HelpBar.ShowMessage(HelpBarMessage.CallNextWave, StartingPathMenu.GetHelpBarMessage(p.BasePlayer));
                     else if (selection.CelestialBody != null)
                         HelpBar.ShowMessage(HelpBarMessage.CelestialBodyMenu, player.CelestialBodyMenu.GetHelpBarMessage(selection.TurretToBuy));
                     else

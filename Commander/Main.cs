@@ -33,6 +33,7 @@ namespace EphemereGames.Commander
         public static NewsController NewsController;
         public static SaveGameController SaveGameController;
         public static CheatsController CheatsController;
+        public static InputsFactory InputsFactory;
 
         public static bool GamePausedToWorld { get { return GameInProgress != null && GameInProgress.State == GameState.PausedToWorld; } }
 
@@ -67,6 +68,7 @@ namespace EphemereGames.Commander
             Instance = this;
 
             LevelsFactory = new LevelsFactory();
+            InputsFactory = new InputsFactory();
             MusicController = new XACTMusicController();
             NewsController = new NewsController();
             SaveGameController = new SaveGameController();
@@ -127,19 +129,6 @@ namespace EphemereGames.Commander
 
                         Visuals.Initialize(Graphics, (int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y, Content);
 
-                        Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
-
-                        //todo: pass the Player Class to Inputs so it can spawn players on the fly
-                        Inputs.AddPlayer(new Player());
-                        Inputs.AddPlayer(new Player());
-                        Inputs.AddPlayer(new Player());
-                        Inputs.AddPlayer(new Player());
-                        Inputs.AddPlayer(new Player());
-
-                        Inputs.Ready();
-
-                        CheatsController.Initialize();
-
                         Persistence.LoadPackage(@"loading");
                         Boot = BootSequence.LoadingMinimalPackage;
                     }
@@ -148,6 +137,31 @@ namespace EphemereGames.Commander
                 case BootSequence.LoadingMinimalPackage:
                     if (Persistence.IsPackageLoaded(@"loading"))
                     {
+                        InputsFactory.Initialize();
+                        Inputs.Initialize(new Vector2(Window.ClientBounds.Center.X, Window.ClientBounds.Center.Y));
+
+                        //todo: pass the Player Class to Inputs so it can spawn players on the fly
+                        //for mouse: a fifth player is needed
+                        if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                        {
+                            Inputs.AddPlayer(new Player());
+                            Inputs.AddPlayer(new Player());
+                            Inputs.AddPlayer(new Player());
+                            Inputs.AddPlayer(new Player());
+                        }
+
+                        else
+                        {
+                            Inputs.AddPlayer(new Player());
+                            Inputs.AddPlayer(new Player());
+                            Inputs.AddPlayer(new Player());
+                            Inputs.AddPlayer(new Player());
+                            Inputs.AddPlayer(new Player());
+                        }
+                        Inputs.Ready();
+
+                        CheatsController.Initialize();
+
                         Visuals.TransitionAnimations = new List<ITransitionAnimation>()
                         {
                             new AnimationTransitionAsteroids(500, VisualPriorities.Foreground.Transition),
@@ -195,11 +209,6 @@ namespace EphemereGames.Commander
 
         protected override void OnExiting(object sender, EventArgs args)
         {
-#if WINDOWS
-            if (Preferences.Target == Core.Utilities.Setting.WindowsDemo)
-                System.Diagnostics.Process.Start(Preferences.WebsiteURL);
-#endif
-
             base.OnExiting(sender, args);
         }
 
@@ -213,7 +222,6 @@ namespace EphemereGames.Commander
                 return;
 
             MusicController.ResumeCurrentMusic();
-            //XACTAudio.Resume();
         }
 
 
@@ -226,7 +234,6 @@ namespace EphemereGames.Commander
                 return;
 
             MusicController.PauseCurrentMusic();
-            //XACTAudio.Pause();
         }
 
 

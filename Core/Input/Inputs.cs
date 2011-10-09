@@ -4,13 +4,14 @@
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
-    
-    
+
+
     public enum InputType
     {
-        Mouse = 0x0000,
+        MouseAndKeyboard = 0x0000,
         Gamepad = 0x0100,
-        None = 0x1100
+        KeyboardOnly = 0x1001,
+        None = 0x1100,
     }
 
 
@@ -19,7 +20,7 @@
 #if WINDOWS && TRIAL
         internal static Setting Target = Setting.WindowsDemo;
 #elif WINDOWS
-        internal static Setting Target = Setting.WindowsFull;
+        internal static Setting Target = Setting.Windows;
 #else
         internal static Setting Target = Setting.Xbox360;
 #endif

@@ -228,7 +228,31 @@
                 return;
             }
 
+
+            if (Player.InputType == InputType.KeyboardOnly)
+            {
+                TellJoystick(listener);
+                return;
+            }
+
+
             TellMouse(listener);
+        }
+
+
+        private void TellJoystick(InputListener listener)
+        {
+            foreach (var keyboardkey in MappedKeys)
+            {
+                if (KeysPressed[keyboardkey])
+                    listener.DoKeyPressed(Player, keyboardkey);
+
+                if (KeysPressedOnce[keyboardkey])
+                    listener.DoKeyPressedOnce(Player, keyboardkey);
+
+                if (KeysReleased[keyboardkey])
+                    listener.DoKeyReleased(Player, keyboardkey);
+            }
         }
 
 
@@ -255,17 +279,7 @@
                 listener.DoMouseMoved(Player, MouseMoved);
 
 
-            foreach (var keyboardkey in MappedKeys)
-            {
-                if (KeysPressed[keyboardkey])
-                    listener.DoKeyPressed(Player, keyboardkey);
-
-                if (KeysPressedOnce[keyboardkey])
-                    listener.DoKeyPressedOnce(Player, keyboardkey);
-
-                if (KeysReleased[keyboardkey])
-                    listener.DoKeyReleased(Player, keyboardkey);
-            }
+            TellJoystick(listener);
         }
 
 
@@ -303,16 +317,32 @@
             }
 
 
-            if (Inputs.PlayersController.MouseInUse)
-                return;
-
-            foreach (var button in MappedMouseButtons)
+            // we suppose that if Mouse buttons are defined, the input is Mouse.
+            // count must be higher than 1 because if empty, the only button is None
+            if (MappedMouseButtons.Count > 1)
             {
-                if (MouseButtonsPressedOnce[button])
-                {
-                    Player.InputType = InputType.Mouse;
-                    listener.PlayerMouseConnectionRequested(Player, button);
+                // Only one mouse possible
+                if (Inputs.PlayersController.MouseInUse)
                     return;
+
+                foreach (var button in MappedMouseButtons)
+                {
+                    if (MouseButtonsPressedOnce[button])
+                    {
+                        Player.InputType = InputType.MouseAndKeyboard;
+                        listener.PlayerMouseConnectionRequested(Player, button);
+                        return;
+                    }
+                }
+
+                foreach (var key in MappedKeys)
+                {
+                    if (KeysPressedOnce[key])
+                    {
+                        Player.InputType = InputType.MouseAndKeyboard;
+                        listener.PlayerKeyboardConnectionRequested(Player, key);
+                        return;
+                    }
                 }
             }
 
@@ -321,7 +351,7 @@
             {
                 if (KeysPressedOnce[key])
                 {
-                    Player.InputType = InputType.Mouse;
+                    Player.InputType = InputType.KeyboardOnly;
                     listener.PlayerKeyboardConnectionRequested(Player, key);
                     return;
                 }

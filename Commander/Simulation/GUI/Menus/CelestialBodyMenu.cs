@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -29,7 +28,7 @@
         private bool AlternateSelectedText;
 
 
-        public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color, InputType inputType)
+        public CelestialBodyMenu(Simulator simulator, double visualPriority, Color color, Commander.Player p)
         {
             Simulator = simulator;
             VisualPriority = visualPriority;
@@ -41,14 +40,14 @@
             TurretDescription = new Label(new Text(@"Pixelite") { SizeX = 2f });
             
             HBMessageOneTurret = new List<KeyValuePair<string, PanelWidget>>();
-            HBMessageOneTurret.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.BuyTurret, inputType));
+            HBMessageOneTurret.AddRange(Simulator.HelpBar.GetPredefinedMessage(p, HelpBarMessage.BuyTurret));
             HBMessageOneTurret.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
             HBMessageOneTurret.Add(new KeyValuePair<string, PanelWidget>("turretDescription", TurretDescription));
 
             HBMessageManyTurrets = new List<KeyValuePair<string, PanelWidget>>();
-            HBMessageManyTurrets.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
+            HBMessageManyTurrets.AddRange(Simulator.HelpBar.GetPredefinedMessage(p, HelpBarMessage.ToggleChoices));
             HBMessageManyTurrets.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
-            HBMessageManyTurrets.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.BuyTurret, inputType));
+            HBMessageManyTurrets.AddRange(Simulator.HelpBar.GetPredefinedMessage(p, HelpBarMessage.BuyTurret));
             HBMessageManyTurrets.Add(new KeyValuePair<string, PanelWidget>("separator2", new VerticalSeparatorWidget()));
             HBMessageManyTurrets.Add(new KeyValuePair<string, PanelWidget>("turretDescription", TurretDescription));
         }

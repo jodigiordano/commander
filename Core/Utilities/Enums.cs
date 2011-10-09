@@ -2,8 +2,8 @@
 {
     public enum Setting
     {
-        WindowsDemo,
-        WindowsFull,
+        Windows,
+        ArcadeRoyale,
         Xbox360
     }
 

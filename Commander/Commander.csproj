@@ -122,6 +122,32 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - Arcade Royale|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug - Arcade Royale\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS; ARCADEROYALE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release - Arcade Royale|x86'">
+    <OutputPath>bin\x86\Release - Arcade Royale\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS; ARCADEROYALE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -157,8 +183,14 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="Player\InputConfigurations\InputConfiguration.cs" />
+    <Compile Include="Player\InputConfigurations\GamepadInputConfiguration.cs" />
+    <Compile Include="Player\InputConfigurations\MouseInputConfiguration.cs" />
+    <Compile Include="Player\InputConfigurations\KeyboardInputConfiguration.cs" />
+    <Compile Include="Player\InputConfigurations\InputsFactory.cs" />
     <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
+    <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipKeyboardMBehavior.cs" />
     <Compile Include="XACTMusicController.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />
     <Compile Include="Cheats\AllLevelsUnlockedCheat.cs" />
@@ -205,7 +237,6 @@
     <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
-    <Compile Include="Player\InputConfigurations.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Animations\AnimationCommodore.cs" />
     <Compile Include="Scenes\WorldAnnunciationScene.cs" />

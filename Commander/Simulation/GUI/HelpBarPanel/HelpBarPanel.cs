@@ -1,21 +1,14 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class HelpBarPanel : HorizontalPanel
     {
-        private Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> GamepadPredefinedMessages;
-        private Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> MousePredefinedMessages;
-
         private KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> Current;
         private Scene Scene;
-
-        private HBMessageConstructor MouseHBMessageConstructor;
-        private HBMessageConstructor GamepadHBMessageConstructor;
 
         public bool ActivePlayers;
         public bool ActiveOptions;
@@ -43,8 +36,6 @@
             ActivePlayers = true;
             ActiveOptions = true;
             ShowOnForegroundLayer = false;
-
-            InitializePredefinedMessages();
         }
 
 
@@ -60,14 +51,14 @@
         }
 
 
-        public void ShowMessage(HelpBarMessage message, InputType inputType)
+        public void ShowMessage(Commander.Player p, HelpBarMessage message)
         {
             if (Current.Key == message)
                 return;
 
             HideCurrentMessage();
 
-            var widgets = GetPredefinedMessage(message, inputType);
+            var widgets = Main.InputsFactory.GetHBMessage(p, message);
 
             foreach (var m in widgets)
                 AddWidget(m.Key, m.Value);
@@ -115,12 +106,9 @@
         }
 
 
-        public List<KeyValuePair<string, PanelWidget>> GetPredefinedMessage(HelpBarMessage message, InputType type)
+        public List<KeyValuePair<string, PanelWidget>> GetPredefinedMessage(Commander.Player p, HelpBarMessage message)
         {
-            if (type == InputType.Gamepad)
-                return GamepadPredefinedMessages[message];
-
-            return MousePredefinedMessages[message];
+            return Main.InputsFactory.GetHBMessage(p, message);
         }
 
 
@@ -133,57 +121,6 @@
                 RemoveWidget(w.Key);
 
             Current = new KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessage.None, null);
-        }
-
-
-        private void InitializePredefinedMessages()
-        {
-            MouseHBMessageConstructor = new HBMessageConstructor(InputType.Mouse);
-            GamepadHBMessageConstructor = new HBMessageConstructor(InputType.Gamepad);
-
-            GamepadPredefinedMessages = new Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessageComparer.Default);
-            MousePredefinedMessages = new Dictionary<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessageComparer.Default);
-
-            InitializeMessages(InputType.Mouse);
-            InitializeMessages(InputType.Gamepad);
-        }
-
-
-        private void InitializeMessages(InputType inputType)
-        {
-            var constructor = inputType == InputType.Gamepad ? GamepadHBMessageConstructor : MouseHBMessageConstructor;
-            var dic = inputType == InputType.Gamepad ? GamepadPredefinedMessages : MousePredefinedMessages;
-
-            dic.Add(HelpBarMessage.Select, constructor.CreateMessage(HelpBarMessageType.Select, "Select"));
-            dic.Add(HelpBarMessage.StartNewCampaign, constructor.CreateMessage(HelpBarMessageType.Select, "Start a new campaign"));
-            dic.Add(HelpBarMessage.CallNextWave, constructor.CreateMessage(HelpBarMessageType.Select, "Start next wave now"));
-            dic.Add(HelpBarMessage.BuyTurret, constructor.CreateMessage(HelpBarMessageType.Select, "Buy a turret"));
-            dic.Add(HelpBarMessage.None, new List<KeyValuePair<string, PanelWidget>>() { });
-            dic.Add(HelpBarMessage.HoldToSkip, constructor.CreateMessage(HelpBarMessageType.Select, "Hold to skip"));
-            dic.Add(HelpBarMessage.Cancel, constructor.CreateMessage(HelpBarMessageType.Cancel, "Cancel"));
-            dic.Add(HelpBarMessage.ToggleChoices, constructor.CreateMessage(HelpBarMessageType.Toggle, "Toggle choices"));
-            dic.Add(HelpBarMessage.MoveYourSpaceship, constructor.CreateMessage(HelpBarMessageType.Move, "Move your spaceship over a planet"));
-            dic.Add(HelpBarMessage.WorldNewGame, constructor.CreateMessage(HelpBarMessageType.Select, "Start a new game"));
-            dic.Add(HelpBarMessage.WorldWarp, constructor.CreateMessage(HelpBarMessageType.Select, "Travel to hyperspace"));
-
-            dic.Add(HelpBarMessage.ToggleChoicesSelect, constructor.CreateToggleSelectMessage("Toggle choices", "Select"));
-            dic.Add(HelpBarMessage.WorldToggleNewGame, constructor.CreateToggleSelectMessage("Toggle choices", "Start a new game"));
-            dic.Add(HelpBarMessage.WorldToggleResume, constructor.CreateToggleSelectMessage("Toggle choices", "Resume game"));
-            dic.Add(HelpBarMessage.GameLost, constructor.CreateSelectCancelMessage("Retry", "Go back to galaxy"));
-
-            dic.Add(HelpBarMessage.InstallTurret, constructor.CreateMessage(new List<KeyValuePair<HelpBarMessageType, string>>()
-            {
-                new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Move, "Move turret"),
-                new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Select, "Install turret"),
-                new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Cancel, "Cancel")
-            }));
-
-            dic.Add(HelpBarMessage.GameWon, constructor.CreateMessage(new List<KeyValuePair<HelpBarMessageType, string>>()
-            {
-                new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Select, "Next Level"),
-                new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Retry, "Retry level"),
-                new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Cancel, "Go back to galaxy")
-            }));
         }
     }
 }

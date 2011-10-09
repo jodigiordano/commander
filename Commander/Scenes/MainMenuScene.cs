@@ -78,7 +78,7 @@
                         Simulator.EnableInputs = true;
                         SceneState = State.PlayerConnected;
 
-                        Simulator.ShowHelpBarMessage(HelpBarMessage.MoveYourSpaceship, Inputs.MasterPlayer.InputType);
+                        Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
                         Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
                     }
                     break;
@@ -120,6 +120,13 @@
 
         #region Input Handling
 
+        public override void PlayerKeyboardConnectionRequested(Core.Input.Player p, Keys key)
+        {
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
+        }
+
+
         public override void PlayerMouseConnectionRequested(Core.Input.Player p, MouseButton button)
         {
             if (p.State == PlayerState.Disconnected)
@@ -147,24 +154,33 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
-            if (button == MouseConfiguration.Select)
-                BeginTransition((Player) p);
+            var player = (Commander.Player) p;
+
+            if (button == player.MouseConfiguration.Select)
+                BeginTransition(player);
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
-            if (button == GamePadConfiguration.Select)
-                BeginTransition((Player) p);
+            var player = (Commander.Player) p;
 
-            else if (button == GamePadConfiguration.ChangeMusic)
+            if (button == player.GamepadConfiguration.Select)
+                BeginTransition(player);
+
+            else if (button == player.GamepadConfiguration.ChangeMusic)
                 Main.MusicController.ToggleCurrentMusic();
         }
 
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (key == KeyboardConfiguration.ChangeMusic)
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.Select)
+                BeginTransition(player);
+
+            else if (key == player.KeyboardConfiguration.ChangeMusic)
                 Main.MusicController.ToggleCurrentMusic();
         }
 

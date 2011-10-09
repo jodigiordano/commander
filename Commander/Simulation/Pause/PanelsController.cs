@@ -103,21 +103,21 @@
         }
 
 
-        public void DoMoveDelta(PausePlayer player, ref Vector3 delta)
+        public void DoMoveDelta(SimPlayer p, ref Vector3 delta)
         {
             if (!IsPanelVisible)
                 return;
 
-            player.Move(ref delta, MouseConfiguration.MovingSpeed);
+            p.PausePlayer.Move(ref delta, p.BasePlayer.MovingSpeed);
         }
 
 
-        public void DoDirectionDelta(PausePlayer player, ref Vector3 delta)
+        public void DoDirectionDelta(SimPlayer p, ref Vector3 delta)
         {
             if (!IsPanelVisible)
                 return;
 
-            player.Rotate(ref delta, MouseConfiguration.RotatingSpeed);
+            p.PausePlayer.Rotate(ref delta, p.BasePlayer.RotatingSpeed);
         }
 
 

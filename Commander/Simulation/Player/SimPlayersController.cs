@@ -248,7 +248,7 @@
         {
             SimPlayer player = Players[p];
 
-            player.Move(ref delta, MouseConfiguration.MovingSpeed);
+            player.Move(ref delta, ((Commander.Player) p).MovingSpeed);
 
             if (Simulator.DemoMode)
                 return;
@@ -263,7 +263,7 @@
         {
             SimPlayer player = Players[p];
 
-            player.Rotate(ref delta, MouseConfiguration.RotatingSpeed);
+            player.Rotate(ref delta, ((Commander.Player) p).RotatingSpeed);
         }
 
 

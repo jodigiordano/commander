@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -91,11 +90,11 @@
         }
 
 
-        public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(InputType type)
+        public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(Commander.Player p)
         {
             return RemainingWaves > 0 ?
-            Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.CallNextWave, type) :
-            Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.None, type);
+            Simulator.HelpBar.GetPredefinedMessage(p, HelpBarMessage.CallNextWave) :
+            Simulator.HelpBar.GetPredefinedMessage(p, HelpBarMessage.None);
         }
 
 

@@ -27,7 +27,7 @@
         private bool AlternateSelectedText;
 
 
-        public TurretMenu(Simulator simulator, double visualPriority, Color color, InputType inputType)
+        public TurretMenu(Simulator simulator, double visualPriority, Color color, Commander.Player p)
         {
             Simulator = simulator;
 
@@ -49,7 +49,7 @@
 
             Menu = new ContextualMenu(simulator, visualPriority, color, Choices, 15);
 
-            InitializeHelpBarMessages(inputType);
+            InitializeHelpBarMessages(p);
         }
 
 
@@ -197,27 +197,33 @@
         }
 
 
-        private void InitializeHelpBarMessages(InputType inputType)
+        private void InitializeHelpBarMessages(Commander.Player p)
         {
             UpgradeTurretHBMessage = new List<KeyValuePair<string, PanelWidget>>();
             SellTurretHBMessage = new List<KeyValuePair<string, PanelWidget>>();
 
-            UpgradeTurretHBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
+            UpgradeTurretHBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(p, HelpBarMessage.ToggleChoices));
             UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
 
-            SellTurretHBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(HelpBarMessage.ToggleChoices, inputType));
+            SellTurretHBMessage.AddRange(Simulator.HelpBar.GetPredefinedMessage(p, HelpBarMessage.ToggleChoices));
             SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("separator1", new VerticalSeparatorWidget()));
 
-            if (inputType == InputType.Gamepad)
+            if (p.InputType == InputType.Gamepad)
             {
-                UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Upgrade", @"Pixelite") { SizeX = 2f })));
-                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), new Text("Sell", @"Pixelite") { SizeX = 2f })));
+                UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(p.GamepadConfiguration.ToImage[p.GamepadConfiguration.Select]), new Text("Upgrade", @"Pixelite") { SizeX = 2f })));
+                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(p.GamepadConfiguration.ToImage[p.GamepadConfiguration.Select]), new Text("Sell", @"Pixelite") { SizeX = 2f })));
+            }
+
+            else if (p.InputType == InputType.MouseAndKeyboard)
+            {
+                UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(p.MouseConfiguration.ToImage[p.MouseConfiguration.Select]), new Text("Upgrade", @"Pixelite") { SizeX = 2f })));
+                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(p.MouseConfiguration.ToImage[p.MouseConfiguration.Select]), new Text("Sell", @"Pixelite") { SizeX = 2f })));
             }
 
             else
             {
-                UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Upgrade", @"Pixelite") { SizeX = 2f })));
-                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), new Text("Sell", @"Pixelite") { SizeX = 2f })));
+                UpgradeTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(p.KeyboardConfiguration.ToImage[p.KeyboardConfiguration.Select]), new Text("Upgrade", @"Pixelite") { SizeX = 2f })));
+                SellTurretHBMessage.Add(new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(p.KeyboardConfiguration.ToImage[p.KeyboardConfiguration.Select]), new Text("Sell", @"Pixelite") { SizeX = 2f })));
             }
         }
     }

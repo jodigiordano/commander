@@ -104,7 +104,7 @@
         {
             if (newState == GameState.Won)
             {
-                Simulator.ShowHelpBarMessage(HelpBarMessage.GameWon, Inputs.MasterPlayer.InputType);
+                Simulator.ShowHelpBarMessage(Inputs.MasterPlayer, HelpBarMessage.GameWon);
                 Main.MusicController.StopCurrentMusic();
                 MusicName = "WinMusic";
                 Main.MusicController.PlayOrResume(MusicName);
@@ -116,7 +116,7 @@
 
             else if (newState == GameState.Lost)
             {
-                Simulator.ShowHelpBarMessage(HelpBarMessage.GameLost, Inputs.MasterPlayer.InputType);
+                Simulator.ShowHelpBarMessage(Inputs.MasterPlayer, HelpBarMessage.GameLost);
                 Main.MusicController.StopCurrentMusic();
                 MusicName = "LoseMusic";
                 Main.MusicController.PlayOrResume(MusicName);
@@ -140,24 +140,26 @@
 
         public override void DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
+            var player = (Commander.Player) p;
+
             if (Simulator.State == GameState.Won)
             {
-                if (button == MouseConfiguration.Select)
+                if (button == player.MouseConfiguration.Select)
                     NextLevel();
 
-                else if (button == MouseConfiguration.AlternateSelect)
+                else if (button == player.MouseConfiguration.AlternateSelect)
                     RetryLevel();
 
-                else if (button == MouseConfiguration.Cancel)
+                else if (button == player.MouseConfiguration.Cancel)
                     TransiteToWorld();
             }
 
             else if (Simulator.State == GameState.Lost)
             {
-                if (button == MouseConfiguration.Select)
+                if (button == player.MouseConfiguration.Select)
                     RetryLevel();
 
-                else if (button == MouseConfiguration.Cancel)
+                else if (button == player.MouseConfiguration.Cancel)
                     TransiteToWorld();
             }
         }
@@ -165,41 +167,51 @@
 
         public override void DoKeyPressedOnce(Core.Input.Player p, Keys key)
         {
-            if (Simulator.State == GameState.Won || Simulator.State == GameState.Lost)
+            var player = (Commander.Player) p;
+
+            if (Simulator.State == GameState.Won)
             {
-                if (key == KeyboardConfiguration.RetryLevel)
+                if (key == player.KeyboardConfiguration.Select)
+                    NextLevel();
+
+                else if (key == player.KeyboardConfiguration.AlternateSelect)
                     RetryLevel();
 
-                else if (key == KeyboardConfiguration.Back)
+                else if (key == player.KeyboardConfiguration.Cancel)
                     TransiteToWorld();
             }
 
-            else if (Simulator.State == GameState.Running)
+            else if (Simulator.State == GameState.Lost)
             {
-                //if (key == KeyboardConfiguration.ChangeMusic)
-                //    MusicController.ChangeMusic(false);
+                if (key == player.KeyboardConfiguration.Select)
+                    RetryLevel();
+
+                else if (key == player.KeyboardConfiguration.Cancel)
+                    TransiteToWorld();
             }
         }
 
 
         public override void DoGamePadButtonPressedOnce(Core.Input.Player p, Buttons button)
         {
+            var player = (Commander.Player) p;
+
             if (Simulator.State == GameState.Won)
             {
-                if (button == GamePadConfiguration.Select)
+                if (button == player.GamepadConfiguration.Select)
                     NextLevel();
 
-                else if (button == GamePadConfiguration.RetryLevel)
+                else if (button == player.GamepadConfiguration.RetryLevel)
                     RetryLevel();
-                else if (button == GamePadConfiguration.Cancel)
+                else if (button == player.GamepadConfiguration.Cancel)
                     TransiteToWorld();
             }
 
             else if (Simulator.State == GameState.Lost)
             {
-                if (button == GamePadConfiguration.Select)
+                if (button == player.GamepadConfiguration.Select)
                     RetryLevel();
-                else if (button == GamePadConfiguration.Cancel)
+                else if (button == player.GamepadConfiguration.Cancel)
                     TransiteToWorld();
             }
 

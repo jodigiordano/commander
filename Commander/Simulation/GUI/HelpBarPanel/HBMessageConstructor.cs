@@ -7,22 +7,13 @@
 
     class HBMessageConstructor
     {
-        private InputType Input;
-
-
-        public HBMessageConstructor(InputType input)
+        public List<KeyValuePair<string, PanelWidget>> CreateMessage(InputType inputType, InputConfiguration config, HelpBarMessageType messageType, string label)
         {
-            Input = input;
+            return CreateMessage(inputType, config, new List<KeyValuePair<HelpBarMessageType, string>>() { new KeyValuePair<HelpBarMessageType, string>(messageType, label) });
         }
 
 
-        public List<KeyValuePair<string, PanelWidget>> CreateMessage(HelpBarMessageType type, string label)
-        {
-            return CreateMessage(new List<KeyValuePair<HelpBarMessageType, string>>() { new KeyValuePair<HelpBarMessageType, string>(type, label) });
-        }
-
-
-        public List<KeyValuePair<string, PanelWidget>> CreateMessage(List<KeyValuePair<HelpBarMessageType, string>> subMessages)
+        public List<KeyValuePair<string, PanelWidget>> CreateMessage(InputType inputType, InputConfiguration config, List<KeyValuePair<HelpBarMessageType, string>> subMessages)
         {
             var result = new List<KeyValuePair<string, PanelWidget>>();
 
@@ -32,11 +23,11 @@
 
                 switch (msg.Key)
                 {
-                    case HelpBarMessageType.Cancel: result.Add(GenerateCancelMessage(msg.Value)); break;
-                    case HelpBarMessageType.Move: result.Add(GenerateMoveMessage(msg.Value)); break;
-                    case HelpBarMessageType.Select: result.Add(GenerateSelectMessage(msg.Value)); break;
-                    case HelpBarMessageType.Toggle: result.Add(GenerateToggleMessage(msg.Value)); break;
-                    case HelpBarMessageType.Retry: result.Add(GenerateRetryMessage(msg.Value)); break;
+                    case HelpBarMessageType.Cancel: result.Add(GenerateCancelMessage(inputType, config, msg.Value)); break;
+                    case HelpBarMessageType.Move: result.Add(GenerateMoveMessage(inputType, config, msg.Value)); break;
+                    case HelpBarMessageType.Select: result.Add(GenerateSelectMessage(inputType, config, msg.Value)); break;
+                    case HelpBarMessageType.Toggle: result.Add(GenerateToggleMessage(inputType, config, msg.Value)); break;
+                    case HelpBarMessageType.Retry: result.Add(GenerateRetryMessage(inputType, config, msg.Value)); break;
                 }
 
                 if (subMessages.Count > 1 && i != subMessages.Count - 1)
@@ -47,9 +38,9 @@
         }
 
 
-        public List<KeyValuePair<string, PanelWidget>> CreateSelectCancelMessage(string select, string cancel)
+        public List<KeyValuePair<string, PanelWidget>> CreateSelectCancelMessage(InputType inputType, InputConfiguration config, string select, string cancel)
         {
-            return CreateMessage(new List<KeyValuePair<HelpBarMessageType, string>>()
+            return CreateMessage(inputType, config, new List<KeyValuePair<HelpBarMessageType, string>>()
             {
                 new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Select, select),
                 new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Cancel, cancel)
@@ -57,9 +48,9 @@
         }
 
 
-        public List<KeyValuePair<string, PanelWidget>> CreateToggleSelectMessage(string toggle, string label)
+        public List<KeyValuePair<string, PanelWidget>> CreateToggleSelectMessage(InputType inputType, InputConfiguration config, string toggle, string label)
         {
-            return CreateMessage(new List<KeyValuePair<HelpBarMessageType, string>>()
+            return CreateMessage(inputType, config, new List<KeyValuePair<HelpBarMessageType, string>>()
             {
                 new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Toggle, toggle),
                 new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Select, label)
@@ -67,51 +58,63 @@
         }
 
 
-        private KeyValuePair<string, PanelWidget> GenerateSelectMessage(string message)
+        private KeyValuePair<string, PanelWidget> GenerateSelectMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return Input == InputType.Mouse ?
-                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Select]), GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Select]), GenerateLabel(message)));
+            return inputType == InputType.MouseAndKeyboard ?
+                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.Select]), GenerateLabel(message))) :
+                   inputType == InputType.KeyboardOnly ?
+                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Select]), GenerateLabel(message))) :
+                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Select]), GenerateLabel(message)));
         }
 
 
-        private KeyValuePair<string, PanelWidget> GenerateToggleMessage(string message)
+        private KeyValuePair<string, PanelWidget> GenerateToggleMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return Input == InputType.Mouse ?
+            return inputType == InputType.MouseAndKeyboard ?
                 new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
-                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.SelectionPrevious]),
-                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.SelectionNext])  }, GenerateLabel(message))) :
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionPrevious]),
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionNext])  }, GenerateLabel(message))) :
+                    inputType == InputType.KeyboardOnly ?
                 new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
-                    new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionPrevious]),
-                    new Image(GamePadConfiguration.ToImage[GamePadConfiguration.SelectionNext]) }, GenerateLabel(message)));
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionPrevious]),
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionNext])  }, GenerateLabel(message))) :
+                new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
+                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionPrevious]),
+                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionNext]) }, GenerateLabel(message)));
         }
 
 
-        private KeyValuePair<string, PanelWidget> GenerateMoveMessage(string message)
+        private KeyValuePair<string, PanelWidget> GenerateMoveMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return Input == InputType.Mouse ?
+            return inputType == InputType.MouseAndKeyboard ?
                 new KeyValuePair<string, PanelWidget>("move", new ImageLabel(new List<Image>() {
-                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveUp]),
-                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveLeft]),
-                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveDown]),
-                        new Image(KeyboardConfiguration.ToImage[KeyboardConfiguration.MoveRight])  }, GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("move", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.MoveCursor]), GenerateLabel(message)));
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveUp]),
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveLeft]),
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveDown]),
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveRight])  }, GenerateLabel(message))) :
+                    inputType == InputType.KeyboardOnly ?
+                new KeyValuePair<string, PanelWidget>("move", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveCursor]), GenerateLabel(message))) :
+                new KeyValuePair<string, PanelWidget>("move", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.MoveCursor]), GenerateLabel(message)));
         }
 
 
-        private KeyValuePair<string, PanelWidget> GenerateCancelMessage(string message)
+        private KeyValuePair<string, PanelWidget> GenerateCancelMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return Input == InputType.Mouse ?
-                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.Cancel]), GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.Cancel]), GenerateLabel(message)));
+            return inputType == InputType.MouseAndKeyboard ?
+                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.Cancel]), GenerateLabel(message))) :
+                   inputType == InputType.KeyboardOnly ?
+                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Cancel]), GenerateLabel(message))) :
+                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Cancel]), GenerateLabel(message)));
         }
 
 
-        private KeyValuePair<string, PanelWidget> GenerateRetryMessage(string message)
+        private KeyValuePair<string, PanelWidget> GenerateRetryMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return Input == InputType.Mouse ?
-                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(MouseConfiguration.ToImage[MouseConfiguration.AlternateSelect]), GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(GamePadConfiguration.ToImage[GamePadConfiguration.RetryLevel]), GenerateLabel(message)));
+            return inputType == InputType.MouseAndKeyboard ?
+                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.AlternateSelect]), GenerateLabel(message))) :
+                   inputType == InputType.KeyboardOnly ?
+                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.AlternateSelect]), GenerateLabel(message))) :
+                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.RetryLevel]), GenerateLabel(message)));
         }
 
 

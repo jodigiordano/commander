@@ -19,14 +19,14 @@
 #endif
 
 
-#if WINDOWS && TRIAL
+#if WINDOWS && ARCADEROYALE
         public static Vector2 DeadZoneV2 = new Vector2(0, 0);
         public static Vector3 DeadZone = new Vector3(0, 0, 0);
-        public static Setting Target = Setting.WindowsDemo;
+        public static Setting Target = Setting.ArcadeRoyale;
 #elif WINDOWS
         public static Vector2 DeadZoneV2 = new Vector2(0, 0);
         public static Vector3 DeadZone = new Vector3(0, 0, 0);
-        public static Setting Target = Setting.WindowsFull;
+        public static Setting Target = Setting.Windows;
 #else
         public static Vector2 DeadZoneV2 = new Vector2(20, 30);
         public static Vector3 DeadZone = new Vector3(20, 30, 0);

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
 
 
@@ -12,11 +13,20 @@
         public string ImageName;
         public Vector3 SpawningPosition;
 
-        private Vector3 position;
+        public float MovingSpeed;
+        public float RotatingSpeed;
 
+        public InputConfiguration InputConfiguration;
+        public KeyboardInputConfiguration KeyboardConfiguration     { get { return InputConfiguration.KeyboardConfiguration; } }
+        public MouseInputConfiguration MouseConfiguration           { get { return InputConfiguration.MouseConfiguration; } }
+        public GamepadInputConfiguration GamepadConfiguration       { get { return InputConfiguration.GamepadConfiguration; } }
+
+        private Vector3 position;
         private Vector3 InitialPosition;
         private Color InitialColor;
         private string InitialImageName;
+
+        public bool ConnectedThisTick;
 
 
         private static List<Vector3> AvailablesSpawingPositions = new List<Vector3>()
@@ -54,13 +64,22 @@
         {
             Circle = new Circle(Position, 16);
 
+            if (Preferences.Target == Setting.ArcadeRoyale)
+                InputConfiguration = Main.InputsFactory.GetNextArcadeRoyaleConfiguration();
+            else
+                InputConfiguration = Main.InputsFactory.GetDefaultConfiguration();
+
             KeysToListenTo = KeyboardConfiguration.ToList;
             MouseButtonsToListenTo = MouseConfiguration.ToList;
-            GamePadButtonsToListenTo = GamePadConfiguration.ToList;
+            GamePadButtonsToListenTo = GamepadConfiguration.ToList;
 
             InitialColor = Color.Aquamarine;
             InitialPosition = Vector3.Down;
             InitialImageName = null;
+
+            MovingSpeed = 1.5f;
+            RotatingSpeed = 0.1f;
+            ConnectedThisTick = false;
         }
 
 
