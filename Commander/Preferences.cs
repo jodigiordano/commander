@@ -8,7 +8,6 @@
     {
         public const int TimeBetweenTwoMusics = 300;
         public static float TargetElapsedTimeMs = 16;
-        public static Vector2 BackBuffer = new Vector2(1280, 720);
 
 #if DEBUG
         public static bool Debug = true;
@@ -20,17 +19,20 @@
 
 
 #if WINDOWS && ARCADEROYALE
-        public static Vector2 DeadZoneV2 = new Vector2(0, 0);
-        public static Vector3 DeadZone = new Vector3(0, 0, 0);
         public static Setting Target = Setting.ArcadeRoyale;
-#elif WINDOWS
         public static Vector2 DeadZoneV2 = new Vector2(0, 0);
         public static Vector3 DeadZone = new Vector3(0, 0, 0);
+        public static Vector2 BackBuffer = new Vector2(1280, 720);
+#elif WINDOWS
         public static Setting Target = Setting.Windows;
+        public static Vector2 DeadZoneV2 = new Vector2(0, 0);
+        public static Vector3 DeadZone = new Vector3(0, 0, 0);
+        public static Vector2 BackBuffer = new Vector2(1280, 720);
 #else
+        public static Setting Target = Setting.Xbox360;
         public static Vector2 DeadZoneV2 = new Vector2(20, 30);
         public static Vector3 DeadZone = new Vector3(20, 30, 0);
-        public static Setting Target = Setting.Xbox360;
+        public static Vector2 BackBuffer = new Vector2(1280, 720);
 #endif
 
         public static string ProductName = "commander";
