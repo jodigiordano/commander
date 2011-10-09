@@ -23,8 +23,8 @@
             ShipSpeedChanged = true;
             MovingCue = XACTAudio.GetCue("ShipMoving", "Sound Bank");
             //FiringCue = XACTAudio.GetCue("ShipFiring", "Sound Bank");
-            InstallingTurretCue = XACTAudio.GetCue("Empty 2"/* "TurretInstalling" */, "Sound Bank");
-            OnCelestialBodyCue = XACTAudio.GetCue("Empty 2"/* "PlanetOn" */, "Sound Bank");
+            InstallingTurretCue = XACTAudio.GetCue("TurretInstalling", "Sound Bank");
+            OnCelestialBodyCue = XACTAudio.GetCue("PlanetOn", "Sound Bank");
         }
 
 
