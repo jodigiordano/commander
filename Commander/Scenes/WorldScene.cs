@@ -286,7 +286,7 @@
                     currentGame.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id &&
                     Simulator.PausedGameChoice == PausedGameChoice.Resume)
                 {
-                    currentGame.Simulator.State = GameState.Running;
+                    currentGame.Simulator.TriggerNewGameState(GameState.Running);
                     TransiteTo(currentGame.Name);
                     return;
                 }
