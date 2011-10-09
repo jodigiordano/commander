@@ -22,7 +22,6 @@
 
         public void Initialize()
         {
-            //Musics.Add("EphemereGamesLogo", null);
             Musics.Add("MainMenuMusic", null);
             Musics.Add("WinMusic", null);
             Musics.Add("Raindrop", null);
@@ -84,10 +83,8 @@
 
             music = XACTAudio.GetCue(musicName, bankName);
             Musics[musicName] = music;
-
             music.PlayOrResume();
-            FadeIn(musicName);
-
+            music.SetVariable("MusicFade", 1);
             CurrentMusic = musicName;
         }
 
@@ -102,11 +99,14 @@
             {
                 music = XACTAudio.GetCue(musicName, bankName);
                 Musics[musicName] = music;
+                music.PlayOrResume();
+                music.SetVariable("MusicFade", 1);
+                CurrentMusic = musicName;
+                return;
             }
 
             music.PlayOrResume();
             FadeIn(musicName);
-
             CurrentMusic = musicName;
         }
 
@@ -172,12 +172,22 @@
 
         private void FadeIn(string musicName)
         {
+            var music = Musics[musicName];
+
+            if (Fades.ContainsKey(music))
+                Fades.Remove(music);
+
             Fades.Add(Musics[musicName], new PathEffect(Path.CreateCurve(CurveType.Linear, 500), 500, Preferences.TargetElapsedTimeMs));
         }
 
 
         private void FadeOut(string musicName)
         {
+            var music = Musics[musicName];
+
+            if (Fades.ContainsKey(music))
+                Fades.Remove(music);
+
             Fades.Add(Musics[musicName], new PathEffect(Path.CreateCurve(CurveType.InversedLinear, 500), 500, Preferences.TargetElapsedTimeMs));
         }
     }
