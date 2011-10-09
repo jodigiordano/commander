@@ -5,6 +5,7 @@
     using EphemereGames.Commander.Cutscenes;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
+    using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -90,7 +91,8 @@
             
             ScenesAreLoaded = false;
 
-            Main.MusicController.PlayOrResume("EphemereGamesLogo", "LoadingSoundBank");
+            XACTAudio.PlayCue("EphemereGamesLogo", "LoadingSoundBank");
+            //Main.MusicController.PlayOrResume("EphemereGamesLogo", "LoadingSoundBank");
         }
 
 

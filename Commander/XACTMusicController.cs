@@ -19,7 +19,7 @@
 
         public void Initialize()
         {
-            Musics.Add("EphemereGamesLogo", null);
+            //Musics.Add("EphemereGamesLogo", null);
             Musics.Add("MainMenuMusic", null);
             Musics.Add("WinMusic", null);
             Musics.Add("Raindrop", null);
