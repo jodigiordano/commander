@@ -6,6 +6,7 @@
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
 
 
     class LoadingScene : CommanderScene
@@ -136,14 +137,25 @@
 
                     if (TimeBeforeTransition <= 0)
                     {
-                        //tmp: alpha
-                        TransiteTo("Warning");
-                        //TransiteTo("Menu");
                         SceneState = State.Finished;
+
+                        if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                            TransiteTo("Menu");
+                        else
+                            TransiteTo("Warning"); //Alpha. TransiteTo("Menu");
                     }
 
                     break;
             }
+        }
+
+
+        public override void PlayerKeyboardConnectionRequested(Core.Input.Player p, Keys key)
+        {
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.Home)
+                Main.Instance.Exit();
         }
 
 

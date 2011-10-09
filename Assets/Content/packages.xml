@@ -35,10 +35,10 @@
     
     <asset name="VaisseauAlien"           type="Image" path="scenarios/vaisseauAlien" />
     
+    
     <!-- Sprites -->
 
-    <asset name="tentacules"              type="Sprite" path="scenarios/tentacules1" />    
-    
+    <asset name="tentacules"              type="Sprite" path="scenarios/tentacules1" />
   </Package>
   
   

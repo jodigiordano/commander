@@ -31,6 +31,9 @@
         public Keys RotateLeft;
         public Keys RotateRight;
         public Keys Fire;
+        public Keys Home;
+        public Keys LeftCoin;
+        public Keys RightCoin;
 
         public Dictionary<Keys, string> ToImage;
 
@@ -62,6 +65,9 @@
             RotateLeft = Keys.None;
             RotateRight = Keys.None;
             Fire = Keys.None;
+            Home = Keys.None;
+            LeftCoin = Keys.None;
+            RightCoin = Keys.None;
         }
 
 
@@ -92,7 +98,12 @@
                     AlternateSelect,
                     Cancel,
                     MoveCursor,
-                    Select
+                    Select,
+                    Home,
+                    LeftCoin,
+                    RightCoin,
+                    RotateLeft,
+                    RotateRight
                 };
             }
         }

@@ -169,6 +169,9 @@
         {
             var player = (Commander.Player) p;
 
+            if (key == player.KeyboardConfiguration.Home)
+                Main.Instance.Exit();
+
             if (Simulator.State == GameState.Won)
             {
                 if (key == player.KeyboardConfiguration.Select)
@@ -214,12 +217,6 @@
                 else if (button == player.GamepadConfiguration.Cancel)
                     TransiteToWorld();
             }
-
-            else
-            {
-                //if (button == GamePadConfiguration.ChangeMusic)
-                //    MusicController.ChangeMusic(false);
-            }
         }
 
 
@@ -243,6 +240,14 @@
 
         public override void PlayerKeyboardConnectionRequested(Core.Input.Player p, Keys key)
         {
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.LeftCoin || key == player.KeyboardConfiguration.RightCoin)
+                return;
+
+            if (key == player.KeyboardConfiguration.Home)
+                Main.Instance.Exit();
+
             if (p.State == PlayerState.Disconnected)
                 p.Connect();
         }

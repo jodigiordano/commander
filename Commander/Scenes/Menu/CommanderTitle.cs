@@ -116,7 +116,7 @@
                 "Alien", Colors.Default.AlienBright,
                 @"Pixelite", Colors.Default.NeutralBright,
                 (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a mouse button to start your engine",
-                3, true, 3000, 250, Preferences.PrioriteGUIMenuPrincipal, false)
+                3, true, 3000, 250, Commander.VisualPriority, false)
                 {
                     CenterText = true
                 };

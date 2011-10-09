@@ -61,6 +61,9 @@
                     AlternateSelect = Keys.Z,
                     Cancel = Keys.V,
                     RetryLevel = Keys.C,
+                    Home = Keys.D9,
+                    LeftCoin = Keys.D5,
+                    RightCoin = Keys.D6,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
                         { Keys.P, "KeyDelete" },

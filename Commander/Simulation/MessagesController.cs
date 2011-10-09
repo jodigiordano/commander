@@ -9,9 +9,10 @@
     class MessagesController
     {
         public List<Turret> Turrets;
+        public List<CelestialBody> CelestialBodies;
 
         private Simulator Simulator;
-        private Dictionary<ICollidable, TextBubble> TalkingTurrets;
+        private Dictionary<ICollidable, TextBubble> TalkingObjects;
         private double TimeLastQuote;
         private List<KeyValuePair<ICollidable, TextBubble>> ToDelete;
 
@@ -27,7 +28,7 @@
         };
 
 
-        private static List<string> QuotesHistoire = new List<string>()
+        private static List<string> QuotesStory = new List<string>()
         {
             "The aliens started attacking\n\nour colonies in 2050.",
             "Some say they're green.\n\nI'm sure they stink.",
@@ -89,7 +90,7 @@
         };
 
 
-        private static List<string> QuotesLaserMultiple = new List<string>()
+        private static List<string> QuotesMultipleLasers = new List<string>()
         {
             "A lot of people are afraid of heights.\n\nNot me, I'm afraid of widths.",
             "A nickel ain't\n\nworth a dime anymore.",
@@ -138,7 +139,7 @@
         };
 
 
-        private static List<string> QuotesLaserSimple = new List<string>()
+        private static List<string> QuotesLaser = new List<string>()
         {
             "I do all things with love.",
             "Friendship often ends in love;\n\nbut love in friendship - never.",
@@ -160,7 +161,7 @@
         };
 
 
-        private static List<string> QuotesGravitationnelle = new List<string>()
+        private static List<string> QuotesGravitational = new List<string>()
         {
             "Computers are useless. They\n\ncan only give you answers.",
             "I think computer viruses\n\nshould count as life.",
@@ -176,7 +177,7 @@
         };
 
 
-        private static List<string> QuotesBase = new List<string>()
+        private static List<string> QuotesBasic = new List<string>()
         {
             "I won't be old until regrets\n\ntake the place of my dreams.",
             "Dreams are illustrations...\n\nfrom the book my soul is\n\nwriting about me.",
@@ -259,7 +260,7 @@
         public MessagesController(Simulator simulator)
         {
             Simulator = simulator;
-            TalkingTurrets = new Dictionary<ICollidable, TextBubble>();
+            TalkingObjects = new Dictionary<ICollidable, TextBubble>();
 
             TimeLastQuote = 0;
 
@@ -275,7 +276,7 @@
 
             
 
-            foreach (var kvp in TalkingTurrets)
+            foreach (var kvp in TalkingObjects)
             {
                 kvp.Value.Position = kvp.Key.Position;
                 kvp.Value.Update();
@@ -290,14 +291,14 @@
 
         public void Draw()
         {
-            foreach (var t in TalkingTurrets.Values)
+            foreach (var t in TalkingObjects.Values)
                 t.Draw();
         }
 
 
         public void ShowMessage(ICollidable obj, string message, double time, double visualPriority)
         {
-            if (obj == null || TalkingTurrets.ContainsKey(obj))
+            if (obj == null || TalkingObjects.ContainsKey(obj))
                 return;
 
             Text texteInfos = new Text(message, @"Pixelite", Color.White, Vector3.Zero);
@@ -310,7 +311,7 @@
             bulle.Text.Data = message;
             bulle.ShowTime = time;
 
-            foreach (var kvp in TalkingTurrets)
+            foreach (var kvp in TalkingObjects)
                 if (kvp.Value.Dimension.Intersects(bulle.Dimension))
                     ToDelete.Add(kvp);
 
@@ -324,10 +325,187 @@
         {
             TextBubble bulle;
 
-            if (objet != null && TalkingTurrets.TryGetValue(objet, out bulle) && !double.IsNaN(bulle.FadeTime))
+            if (objet != null && TalkingObjects.TryGetValue(objet, out bulle) && !double.IsNaN(bulle.FadeTime))
             {
-                TalkingTurrets[objet].ShowTime = TalkingTurrets[objet].FadeTime;
+                TalkingObjects[objet].ShowTime = TalkingObjects[objet].FadeTime;
             }
+        }
+
+
+        public bool DoQuoteNow(string data)
+        {
+            ICollidable obj = null;
+            Turret t = null;
+            CelestialBody c = null;
+            Color color;
+
+            t = GetAvailableTurret();
+            c = GetAvailableCelestialBody();
+
+            if (t != null)
+            {
+                obj = t;
+                color = t.Color;
+            }
+
+            else if (c != null)
+            {
+                obj = c;
+                color = Colors.Default.HumansBright;
+            }
+
+            else
+                return false;
+
+            return DoQuoteNow(obj, color, data);
+        }
+
+
+        public bool DoQuoteNow()
+        {
+            string data = "";
+            ICollidable obj = null;
+            Turret t = null;
+            CelestialBody c = null;
+            Color color;
+
+            t = GetAvailableTurret();
+            c = GetAvailableCelestialBody();
+
+            if (t != null)
+            {
+                obj = t;
+                data = GetQuoteFromTurret(t);
+                color = t.Color;
+            }
+
+            else if (c != null)
+            {
+                obj = c;
+                data = GetQuoteFromCelestialBody(c);
+                color = Colors.Default.HumansBright;
+            }
+
+            else
+                return false;
+
+            return DoQuoteNow(obj, color, data);
+        }
+
+
+        public void DisplayPausedMessage(CelestialBody cb)
+        {
+            ShowMessage(cb, QuotesPausedGame[Main.Random.Next(0, QuotesPausedGame.Count)], double.MaxValue, -1);
+        }
+
+
+        public void StopPausedMessage(CelestialBody cb)
+        {
+            StopMessage(cb);
+        }
+
+
+        private Turret GetAvailableTurret()
+        {
+            Turret turret = null;
+
+            for (int i = 0; i < 20; i++)
+            {
+                turret = Turrets[Main.Random.Next(0, Turrets.Count)];
+
+                if (!turret.Visible || !turret.Watcher || TalkingObjects.ContainsKey(turret))
+                    turret = null;
+                else
+                    break;
+            }
+
+            return turret;
+        }
+
+
+        private string GetQuoteFromTurret(Turret turret)
+        {
+            string data = "";
+
+            if (Main.Random.Next(0, 10) == 1)
+            {
+                data = QuotesStory[Main.Random.Next(0, QuotesStory.Count)];
+            }
+
+            else
+            {
+                switch (turret.Type)
+                {
+                    case TurretType.Basic: data = QuotesBasic[Main.Random.Next(0, QuotesBasic.Count)]; break;
+                    case TurretType.Gravitational: data = QuotesGravitational[Main.Random.Next(0, QuotesGravitational.Count)]; break;
+                    case TurretType.MultipleLasers: data = QuotesMultipleLasers[Main.Random.Next(0, QuotesMultipleLasers.Count)]; break;
+                    case TurretType.Laser: data = QuotesLaser[Main.Random.Next(0, QuotesLaser.Count)]; break;
+                    case TurretType.Missile: data = QuotesMissile[Main.Random.Next(0, QuotesMissile.Count)]; break;
+                    case TurretType.SlowMotion: data = QuotesSlowMotion[Main.Random.Next(0, QuotesSlowMotion.Count)]; break;
+                }
+            }
+
+            return data;
+        }
+
+
+        private string GetQuoteFromCelestialBody(CelestialBody cb)
+        {
+            string data = "";
+
+            int random = Main.Random.Next(0, 7);
+
+            switch (random)
+            {
+                case 0: data = QuotesBasic[Main.Random.Next(0, QuotesBasic.Count)]; break;
+                case 1: data = QuotesGravitational[Main.Random.Next(0, QuotesGravitational.Count)]; break;
+                case 2: data = QuotesMultipleLasers[Main.Random.Next(0, QuotesMultipleLasers.Count)]; break;
+                case 3: data = QuotesLaser[Main.Random.Next(0, QuotesLaser.Count)]; break;
+                case 4: data = QuotesMissile[Main.Random.Next(0, QuotesMissile.Count)]; break;
+                case 5: data = QuotesSlowMotion[Main.Random.Next(0, QuotesSlowMotion.Count)]; break;
+                case 6: data = QuotesStory[Main.Random.Next(0, QuotesStory.Count)]; break;
+            }
+
+            return data;
+        }
+
+
+        private CelestialBody GetAvailableCelestialBody()
+        {
+            CelestialBody body = null;
+
+            for (int i = 0; i < 20; i++)
+            {
+                body = CelestialBodies[Main.Random.Next(0, CelestialBodies.Count)];
+
+                if (body.FirstOnPath || !body.Alive || body is AsteroidBelt)
+                    body = null;
+                else
+                    break;
+            }
+
+            return body;
+        }
+
+
+        private bool DoQuoteNow(ICollidable obj, Color color, string data)
+        {
+            Text text = new Text(data, @"Pixelite")
+            {
+                SizeX = 1,
+                Color = color
+            };
+
+            TextBubble bubble = new TextBubble(Simulator.Scene, text, obj.Position, 0, VisualPriorities.Default.TurretMessage);
+            bubble.ShowTime = text.Data.Length * 100;
+
+            foreach (var kvp in TalkingObjects)
+                if (kvp.Value.Dimension.Intersects(bubble.Dimension))
+                    return false;
+
+            AddTalkingTurret(obj, bubble);
+
+            return true;
         }
 
 
@@ -348,7 +526,7 @@
 
                     Turret tourelle = Turrets[Main.Random.Next(0, Turrets.Count)];
 
-                    if (!tourelle.Visible || !tourelle.Watcher || TalkingTurrets.ContainsKey(tourelle))
+                    if (!tourelle.Visible || !tourelle.Watcher || TalkingObjects.ContainsKey(tourelle))
                         return;
 
                     Text texte = new Text(@"Pixelite");
@@ -357,17 +535,17 @@
 
                     if (Main.Random.Next(0, 10) == 1)
                     {
-                        texte.Data = QuotesHistoire[Main.Random.Next(0, QuotesHistoire.Count)];
+                        texte.Data = QuotesStory[Main.Random.Next(0, QuotesStory.Count)];
                     }
 
                     else
                     {
                         switch (tourelle.Type)
                         {
-                            case TurretType.Basic: texte.Data = QuotesBase[Main.Random.Next(0, QuotesBase.Count)]; break;
-                            case TurretType.Gravitational: texte.Data = QuotesGravitationnelle[Main.Random.Next(0, QuotesGravitationnelle.Count)]; break;
-                            case TurretType.MultipleLasers: texte.Data = QuotesLaserMultiple[Main.Random.Next(0, QuotesLaserMultiple.Count)]; break;
-                            case TurretType.Laser: texte.Data = QuotesLaserSimple[Main.Random.Next(0, QuotesLaserSimple.Count)]; break;
+                            case TurretType.Basic: texte.Data = QuotesBasic[Main.Random.Next(0, QuotesBasic.Count)]; break;
+                            case TurretType.Gravitational: texte.Data = QuotesGravitational[Main.Random.Next(0, QuotesGravitational.Count)]; break;
+                            case TurretType.MultipleLasers: texte.Data = QuotesMultipleLasers[Main.Random.Next(0, QuotesMultipleLasers.Count)]; break;
+                            case TurretType.Laser: texte.Data = QuotesLaser[Main.Random.Next(0, QuotesLaser.Count)]; break;
                             case TurretType.Missile: texte.Data = QuotesMissile[Main.Random.Next(0, QuotesMissile.Count)]; break;
                             case TurretType.SlowMotion: texte.Data = QuotesSlowMotion[Main.Random.Next(0, QuotesSlowMotion.Count)]; break;
                         }
@@ -376,7 +554,7 @@
                     TextBubble bulle = new TextBubble(Simulator.Scene, texte, tourelle.Position, 0, VisualPriorities.Default.TurretMessage);
                     bulle.ShowTime = texte.Data.Length * 100;
 
-                    foreach (var kvp in TalkingTurrets)
+                    foreach (var kvp in TalkingObjects)
                         if (kvp.Value.Dimension.Intersects(bulle.Dimension))
                             return;
 
@@ -388,8 +566,8 @@
 
         private void VerifyCollisions()
         {
-            foreach (var kvp in TalkingTurrets)
-                foreach (var kvp2 in TalkingTurrets)
+            foreach (var kvp in TalkingObjects)
+                foreach (var kvp2 in TalkingObjects)
                     if (kvp.Key != kvp2.Key && !ToDelete.Contains(kvp) && kvp.Value.Dimension.Intersects(kvp2.Value.Dimension))
                         ToDelete.Add(kvp2);
 
@@ -397,24 +575,11 @@
         }
 
 
-        public void DisplayPausedMessage(CelestialBody cb)
-        {
-            ShowMessage(cb, QuotesPausedGame[Main.Random.Next(0, QuotesPausedGame.Count)], double.MaxValue, -1);
-        }
-
-
-        public void StopPausedMessage(CelestialBody cb)
-        {
-            StopMessage(cb);
-        }
-
-
         private void DeleteTalkingTurrets()
         {
             foreach (var kvp in ToDelete)
             {
-                //kvp.Value.Hide();
-                TalkingTurrets.Remove(kvp.Key);
+                TalkingObjects.Remove(kvp.Key);
             }
 
             ToDelete.Clear();
@@ -423,11 +588,13 @@
 
         private void AddTalkingTurret(ICollidable obj, TextBubble bulle)
         {
-            TalkingTurrets.Add(obj, bulle);
+            if (TalkingObjects.ContainsKey(obj))
+                return;
+
+            TalkingObjects.Add(obj, bulle);
 
             bulle.FadeIn(250);
             bulle.FadeTime = 250;
-            //bulle.Show();
         }
     }
 }

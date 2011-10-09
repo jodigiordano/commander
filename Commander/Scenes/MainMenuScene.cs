@@ -122,7 +122,15 @@
 
         public override void PlayerKeyboardConnectionRequested(Core.Input.Player p, Keys key)
         {
-            if (p.State == PlayerState.Disconnected)
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.LeftCoin || key == player.KeyboardConfiguration.RightCoin)
+                return;
+
+            if (key == player.KeyboardConfiguration.Home)
+                Main.Instance.Exit();
+
+            else if (p.State == PlayerState.Disconnected)
                 p.Connect();
         }
 
@@ -182,6 +190,9 @@
 
             else if (key == player.KeyboardConfiguration.ChangeMusic)
                 Main.MusicController.ToggleCurrentMusic();
+
+            else if (key == player.KeyboardConfiguration.Home)
+                Main.Instance.Exit();
         }
 
 

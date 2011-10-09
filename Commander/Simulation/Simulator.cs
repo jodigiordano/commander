@@ -336,6 +336,7 @@ namespace EphemereGames.Commander.Simulation
             SpaceshipsController.PowerUpsBattleship = GUIController.HumanBattleship;
             SpaceshipsController.Minerals = EnemiesController.Minerals;
             MessagesController.Turrets = TurretsController.Turrets;
+            MessagesController.CelestialBodies = PlanetarySystemController.CelestialBodies;
             EditorController.GeneralMenu = EditorGUIController.GeneralMenu;
             EditorController.Panels = EditorGUIController.Panels;
             EditorController.EditorGUIPlayers = EditorGUIController.Players;
@@ -658,6 +659,13 @@ namespace EphemereGames.Commander.Simulation
                 if (!player.ConnectedThisTick)
                     Inputs.DisconnectPlayer(p);
 
+                return;
+            }
+
+            if (key == player.KeyboardConfiguration.LeftCoin || key == player.KeyboardConfiguration.RightCoin)
+            {
+                MessagesController.DoQuoteNow();
+                MessagesController.DoQuoteNow("Thank you,\n\nCommander!");
                 return;
             }
 
@@ -1237,19 +1245,25 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        void InputListener.PlayerKeyboardConnectionRequested(Core.Input.Player player, Keys key)
+        void InputListener.PlayerKeyboardConnectionRequested(Core.Input.Player p, Keys key)
+        {
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.LeftCoin || key == player.KeyboardConfiguration.RightCoin)
+            {
+                MessagesController.DoQuoteNow();
+                MessagesController.DoQuoteNow("Thank you,\n\nCommander!");
+            }
+        }
+
+
+        void InputListener.PlayerMouseConnectionRequested(Core.Input.Player p, MouseButton button)
         {
 
         }
 
 
-        void InputListener.PlayerMouseConnectionRequested(Core.Input.Player player, MouseButton button)
-        {
-
-        }
-
-
-        void InputListener.PlayerGamePadConnectionRequested(Core.Input.Player player, Buttons button)
+        void InputListener.PlayerGamePadConnectionRequested(Core.Input.Player p, Buttons button)
         {
 
         }

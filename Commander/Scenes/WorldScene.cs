@@ -185,6 +185,9 @@
 
             else if (key == player.KeyboardConfiguration.ChangeMusic)
                 Main.MusicController.ToggleCurrentMusic();
+
+            else if (key == player.KeyboardConfiguration.Home)
+                Main.Instance.Exit();
         }
 
 
@@ -203,24 +206,32 @@
         }
 
 
-        public override void PlayerKeyboardConnectionRequested(Core.Input.Player player, Keys key)
+        public override void PlayerKeyboardConnectionRequested(Core.Input.Player p, Keys key)
         {
+            var player = (Commander.Player) p;
+
+            if (key == player.KeyboardConfiguration.LeftCoin || key == player.KeyboardConfiguration.RightCoin)
+                return;
+
+            if (key == player.KeyboardConfiguration.Home)
+                Main.Instance.Exit();
+
             if (player.State == PlayerState.Disconnected)
-                player.Connect();
+                p.Connect();
         }
 
 
-        public override void PlayerMouseConnectionRequested(Core.Input.Player player, MouseButton button)
+        public override void PlayerMouseConnectionRequested(Core.Input.Player p, MouseButton button)
         {
-            if (player.State == PlayerState.Disconnected)
-                player.Connect();
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
         }
 
 
-        public override void PlayerGamePadConnectionRequested(Core.Input.Player player, Buttons button)
+        public override void PlayerGamePadConnectionRequested(Core.Input.Player p, Buttons button)
         {
-            if (player.State == PlayerState.Disconnected)
-                player.Connect();
+            if (p.State == PlayerState.Disconnected)
+                p.Connect();
         }
 
 
