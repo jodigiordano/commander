@@ -249,7 +249,7 @@
 
         public void DoPlayersCollided(SimPlayer p1, SimPlayer p2)
         {
-            XACTAudio.PlayCue("SilentCue" /*"ShipToShipCollision"*/, "Sound Bank");
+            XACTAudio.PlayCue("ShipToShipCollision", "Sound Bank");
         }
 
 
