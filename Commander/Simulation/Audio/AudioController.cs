@@ -313,11 +313,17 @@
                 case GameState.Paused:
                     foreach (var p in Players.Values)
                         p.PauseLoopingCues();
+
+                    if (WaveNearToStartCue != null)
+                        WaveNearToStartCue.Pause();
                     break;
 
                 case GameState.Running:
                     foreach (var p in Players.Values)
                         p.ResumeLoopingCues();
+
+                    if (WaveNearToStartCue != null)
+                        WaveNearToStartCue.Resume();
                     break;
             }
         }
