@@ -10,7 +10,7 @@
         private Cue MovingCue;
         private Cue InstallingTurretCue;
         private Cue OnCelestialBodyCue;
-        //private Cue FiringCue;
+        private Cue OnMothershipCue;
 
         private float ShipSpeed;
         private bool ShipSpeedChanged;
@@ -22,9 +22,9 @@
             ShipSpeed = 0;
             ShipSpeedChanged = true;
             MovingCue = XACTAudio.GetCue("ShipMoving", "Sound Bank");
-            //FiringCue = XACTAudio.GetCue("ShipFiring", "Sound Bank");
             InstallingTurretCue = XACTAudio.GetCue("TurretInstalling", "Sound Bank");
             OnCelestialBodyCue = XACTAudio.GetCue("PlanetOn", "Sound Bank");
+            OnMothershipCue = XACTAudio.GetCue("MothershipOn", "Sound Bank");
         }
 
 
@@ -70,37 +70,48 @@
         }
 
 
+        public void StartOnMothership()
+        {
+            OnMothershipCue.PlayOrResume();
+        }
+
+
+        public void StopOnMothership()
+        {
+            OnMothershipCue.Pause();
+        }
+
+
         public void PauseLoopingCues()
         {
             MovingCue.MasterPause();
-            //FiringCue.MasterPause();
             InstallingTurretCue.MasterPause();
             OnCelestialBodyCue.MasterPause();
+            OnMothershipCue.MasterPause();
         }
 
 
         public void ResumeLoopingCues()
         {
             MovingCue.MasterResume();
-            //FiringCue.MasterResume();
             InstallingTurretCue.MasterResume();
             OnCelestialBodyCue.MasterResume();
+            OnMothershipCue.MasterResume();
         }
 
 
         public void StopLoopingCues()
         {
             MovingCue.Stop();
-            //FiringCue.Stop();
             InstallingTurretCue.Stop();
             OnCelestialBodyCue.Stop();
+            OnMothershipCue.Stop();
         }
 
 
         public void Update()
         {
             HandleMovingCue();
-            //HandleFiringCue();
         }
 
 

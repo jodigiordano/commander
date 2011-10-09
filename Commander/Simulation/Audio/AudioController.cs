@@ -349,7 +349,11 @@
 
             if (p.ActualSelection.CelestialBody != p.LastSelection.CelestialBody)
             {
-                if (p.ActualSelection.CelestialBody != null)
+                if (p.ActualSelection.CelestialBody != null && p.ActualSelection.CelestialBody.FirstOnPath)
+                    player.StartOnMothership();
+                else if (p.ActualSelection.CelestialBody == null && p.LastSelection.CelestialBody != null && p.LastSelection.CelestialBody.FirstOnPath)
+                    player.StopOnMothership();
+                else if (p.ActualSelection.CelestialBody != null)
                     player.StartOnCelestialBody();
                 else if (p.ActualSelection.CelestialBody == null)
                     player.StopOnCelestialBody();
