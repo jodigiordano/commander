@@ -9,15 +9,17 @@
     {
         public EnemiesData EnemiesData;
         public CelestialBody CelestialBodyToProtect;
+
         private Simulator Simulator;
         private Dictionary<SimPlayer, AudioPlayer> Players;
-
+        private AudioTurretsController AudioTurretsController;
         private Cue WaveNearToStartCue;
 
 
         public AudioController(Simulator simulator)
         {
             Simulator = simulator;
+            AudioTurretsController = new AudioTurretsController();
             Players = new Dictionary<SimPlayer, AudioPlayer>();
         }
 
@@ -38,12 +40,13 @@
                 XACTAudio.SetGlobalVariable("DistanceFromPlanet", (float) EnemiesData.EnemyNearHitPerc);
 
             // Deleted sound effects (need to be hooked again)
-            // - Player(s) firing
             // - Typewriter
             // - Pulse power-up
 
             foreach (var p in Players.Values)
                 p.Update();
+
+            AudioTurretsController.Update();
         }
 
 
@@ -145,7 +148,10 @@
                 return;
 
             if (WaveNearToStartCue != null)
+            {
                 WaveNearToStartCue.Stop();
+                WaveNearToStartCue = null;
+            }
 
             XACTAudio.PlayCue("NewWaveLaunching", "Sound Bank");
         }
@@ -163,27 +169,29 @@
         }
 
 
-        public void DoTurretBought(Turret turret, SimPlayer player)
+        public void DoTurretBoughtStarted(Turret turret, SimPlayer player)
         {
             if (Simulator.DemoMode)
                 return;
 
-            if (turret.Type == TurretType.Gravitational)
-                XACTAudio.PlayCue("GravitationalTurretBought", "Sound Bank");
-            else
-                XACTAudio.PlayCue("TurretBought", "Sound Bank");
+            AudioTurretsController.AddTurretBought(turret);
+            //if (turret.Type == TurretType.Gravitational)
+            //    XACTAudio.PlayCue("GravitationalTurretBought", "Sound Bank");
+            //else
+            //    XACTAudio.PlayCue("TurretBought", "Sound Bank");
         }
 
 
-        public void DoTurretUpgraded(Turret turret, SimPlayer player)
+        public void DoTurretUpgradingStarted(Turret turret, SimPlayer player)
         {
             if (Simulator.DemoMode)
                 return;
 
-            if (turret.Type == TurretType.Gravitational)
-                XACTAudio.PlayCue("GravitationalTurretUpgrade", "Sound Bank");
-            else
-                XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
+            AudioTurretsController.AddTurretUpgraded(turret);
+            //if (turret.Type == TurretType.Gravitational)
+            //    XACTAudio.PlayCue("GravitationalTurretUpgrade", "Sound Bank");
+            //else
+            //    XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
         }
 
 
@@ -208,11 +216,11 @@
         }
 
 
-        public void DoTurretReactivated(Turret turret)
-        {
-            if (!turret.BackActiveThisTickOverride)
-                XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
-        }
+        //public void DoTurretReactivated(Turret turret)
+        //{
+        //    if (!turret.BackActiveThisTickOverride)
+        //        XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
+        //}
 
 
         public void DoTurretWandered(Turret turret)
@@ -311,19 +319,11 @@
             switch (state)
             {
                 case GameState.Paused:
-                    foreach (var p in Players.Values)
-                        p.PauseLoopingCues();
-
-                    if (WaveNearToStartCue != null)
-                        WaveNearToStartCue.Pause();
+                    PauseLoopingCues();
                     break;
 
                 case GameState.Running:
-                    foreach (var p in Players.Values)
-                        p.ResumeLoopingCues();
-
-                    if (WaveNearToStartCue != null)
-                        WaveNearToStartCue.Resume();
+                    ResumeLoopingCues();
                     break;
             }
         }
@@ -331,15 +331,13 @@
 
         public void DoFocusLost()
         {
-            foreach (var p in Players.Values)
-                p.PauseLoopingCues();
+            PauseLoopingCues();
         }
 
 
         public void DoFocusGained()
         {
-            foreach (var p in Players.Values)
-                p.ResumeLoopingCues();
+            ResumeLoopingCues();
         }
 
 
@@ -413,6 +411,30 @@
         public void DoPanelClosed()
         {
             XACTAudio.PlayCue("PanelClose", "Sound Bank");
+        }
+
+
+        private void PauseLoopingCues()
+        {
+            foreach (var p in Players.Values)
+                p.PauseLoopingCues();
+
+            if (WaveNearToStartCue != null)
+                WaveNearToStartCue.Pause();
+
+            AudioTurretsController.PauseLoopingCues();
+        }
+
+
+        private void ResumeLoopingCues()
+        {
+            foreach (var p in Players.Values)
+                p.ResumeLoopingCues();
+
+            if (WaveNearToStartCue != null)
+                WaveNearToStartCue.Resume();
+
+            AudioTurretsController.ResumeLoopingCues();
         }
     }
 }

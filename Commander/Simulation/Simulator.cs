@@ -255,10 +255,10 @@ namespace EphemereGames.Commander.Simulation
             EnemiesController.WaveStarted += new NoneHandler(AudioController.DoWaveStarted);
             PowerUpsController.PowerUpStarted += new PowerUpSimPlayerHandler(AudioController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpSimPlayerHandler(AudioController.DoPowerUpStopped);
-            TurretsController.TurretBought += new TurretSimPlayerHandler(AudioController.DoTurretBought);
+            TurretsController.TurretBought += new TurretSimPlayerHandler(AudioController.DoTurretBoughtStarted);
             TurretsController.TurretSold += new TurretSimPlayerHandler(AudioController.DoTurretSold);
             TurretsController.TurretFired += new TurretHandler(AudioController.DoTurretFired);
-            TurretsController.TurretReactivated += new TurretHandler(AudioController.DoTurretReactivated);
+            //TurretsController.TurretReactivated += new TurretHandler(AudioController.DoTurretReactivated);
             PowerUpsController.PowerUpInputCanceled += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputCanceled);
             PowerUpsController.PowerUpInputPressed += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputPressed);
             PowerUpsController.PowerUpInputReleased += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputReleased);
@@ -268,7 +268,7 @@ namespace EphemereGames.Commander.Simulation
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
             SimPlayersController.PlayerBounced += new SimPlayerHandler(AudioController.DoPlayerBounced);
             TurretsController.TurretWandered += new TurretHandler(AudioController.DoTurretWandered);
-            TurretsController.TurretUpgraded += new TurretSimPlayerHandler(AudioController.DoTurretUpgraded);
+            TurretsController.TurretUpgraded += new TurretSimPlayerHandler(AudioController.DoTurretUpgradingStarted);
             BulletsController.BulletDeflected += new BulletHandler(AudioController.DoBulletDeflected);
             EnemiesController.WaveNearToStart += new NoneHandler(AudioController.DoWaveNearToStart);
             SimPlayersController.PlayerConnected += new SimPlayerHandler(AudioController.DoPlayerConnected);

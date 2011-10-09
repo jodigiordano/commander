@@ -14,7 +14,6 @@
         public Vector3 Position                     { get; set; }
         public Image CanonImage;
         public Image BaseImage;
-        public bool Disabled                        { get { return DisabledOverride && DisabledCounter > 0; } set { DisabledOverride = value; } }
         public virtual IDestroyable EnemyWatched    { get; set; }
         public double TimeLastBullet;
         public TurretType Type                      { get; protected set; }
@@ -54,11 +53,9 @@
         protected LinkedList<TurretLevel> Levels;
 
         protected Simulator Simulator;
-        private bool DisabledOverride;
         private bool CanUpdateOverride;
         private float RotationWander = 0;
         private LinkedListNode<TurretLevel> actualLevel;
-        public float DisabledCounter;
         protected double VisualPriorityBackup;
         private List<Bullet> Bullets = new List<Bullet>();
         public Image RangeImage;
@@ -75,7 +72,11 @@
         public SimPlayer PlayerCheckedIn;
         private bool showRange;
 
+        public bool Disabled { get { return DisabledOverride && DisabledCounter > 0; } set { DisabledOverride = value; } }
+        public float DisabledPercentage { get { return (PlayerControlled) ? (float) (1 - TimeLastBullet / FireRate) : (float) (DisabledCounter / BuildingTime); } }
+        public float DisabledCounter;
         private DisableBar DisableBar;
+        private bool DisabledOverride;
         private float DisabledAnnounciationCounter;
 
         
@@ -460,9 +461,7 @@
             if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulator.DemoMode && !ToPlaceMode)
             {
                 DisableBar.Position = Position;
-                DisableBar.PercentageDone = (PlayerControlled) ?
-                    (float) (1 - TimeLastBullet / FireRate) :
-                    (float) (DisabledCounter / BuildingTime);
+                DisableBar.PercentageDone = DisabledPercentage;
                 DisableBar.Draw();
             }
 
