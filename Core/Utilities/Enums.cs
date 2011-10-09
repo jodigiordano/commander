@@ -10,6 +10,7 @@
 
     public enum CurveType
     {
+        InversedLinear,
         Linear,
         Exponential,
         Log,

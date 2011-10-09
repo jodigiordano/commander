@@ -183,10 +183,11 @@ namespace EphemereGames.Commander
                     Inputs.Update(gameTime);
                     CheatsController.Update();
 
-                    if (Persistence.IsPackageLoaded(@"principal"))
-                    {
+                    //if (Persistence.IsPackageLoaded(@"principal"))
+                    //{
+                        MusicController.Update();
                         XACTAudio.Update();
-                    }
+                    //}
 
                     break;
             }

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-namespace EphemereGames.Core.Utilities
+﻿namespace EphemereGames.Core.Utilities
 {
+    using System.Collections.Generic;
+
+
     public class Metronome
     {
         public Path Path; 

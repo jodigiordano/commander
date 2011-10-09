@@ -181,6 +181,7 @@
     <Compile Include="Utilities\LinkedListWithInit.cs" />
     <Compile Include="Utilities\Metronome.cs" />
     <Compile Include="Utilities\Path.cs" />
+    <Compile Include="Utilities\PathEffect.cs" />
     <Compile Include="Utilities\Pool.cs" />
     <Compile Include="Utilities\Curve\Curve.cs" />
     <Compile Include="Utilities\Curve\CurveKey.cs" />

@@ -19,6 +19,12 @@
         }
 
 
+        public bool IsReady
+        {
+            get { return !InnerCue.IsDisposed && !InnerCue.IsStopping && !InnerCue.IsStopped; }
+        }
+
+
         public void PlayOrResume()
         {
             if (InnerCue.IsPaused)

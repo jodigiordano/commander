@@ -258,7 +258,6 @@ namespace EphemereGames.Commander.Simulation
             TurretsController.TurretBought += new TurretSimPlayerHandler(AudioController.DoTurretBoughtStarted);
             TurretsController.TurretSold += new TurretSimPlayerHandler(AudioController.DoTurretSold);
             TurretsController.TurretFired += new TurretHandler(AudioController.DoTurretFired);
-            //TurretsController.TurretReactivated += new TurretHandler(AudioController.DoTurretReactivated);
             PowerUpsController.PowerUpInputCanceled += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputCanceled);
             PowerUpsController.PowerUpInputPressed += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputPressed);
             PowerUpsController.PowerUpInputReleased += new PowerUpSimPlayerHandler(AudioController.DoPowerUpInputReleased);

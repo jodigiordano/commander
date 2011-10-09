@@ -76,5 +76,32 @@
 
             return positionAfter - positionBefore;
         }
+
+
+        public static Path CreateCurve(CurveType type, float time)
+        {
+            Path path = new Path();
+
+            switch (type)
+            {
+                case CurveType.InversedLinear:
+                    path.Initialize(new List<float>() { 1, 0 }, new List<float> { 0, time });
+                    break;
+
+                case CurveType.Linear:
+                    path.Initialize(new List<float>() { 0, 1 }, new List<float> { 0, time });
+                    break;
+
+                case CurveType.Exponential:
+                    path.Initialize(new List<float>() { 0, 0.1f, 1 }, new List<float> { 0, time / 2, time });
+                    break;
+
+                case CurveType.Log:
+                    path.Initialize(new List<float>() { 0, 0.8f, 1 }, new List<float> { 0, time / 2, time });
+                    break;
+            }
+
+            return path;
+        }
     }
 }

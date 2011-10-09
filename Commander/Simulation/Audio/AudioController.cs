@@ -175,10 +175,6 @@
                 return;
 
             AudioTurretsController.AddTurretBought(turret);
-            //if (turret.Type == TurretType.Gravitational)
-            //    XACTAudio.PlayCue("GravitationalTurretBought", "Sound Bank");
-            //else
-            //    XACTAudio.PlayCue("TurretBought", "Sound Bank");
         }
 
 
@@ -188,10 +184,6 @@
                 return;
 
             AudioTurretsController.AddTurretUpgraded(turret);
-            //if (turret.Type == TurretType.Gravitational)
-            //    XACTAudio.PlayCue("GravitationalTurretUpgrade", "Sound Bank");
-            //else
-            //    XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
         }
 
 
@@ -214,13 +206,6 @@
                 turret.Type == TurretType.SlowMotion)
                 XACTAudio.PlayCue(turret.FiringSfx, "Sound Bank");
         }
-
-
-        //public void DoTurretReactivated(Turret turret)
-        //{
-        //    if (!turret.BackActiveThisTickOverride)
-        //        XACTAudio.PlayCue("TurretUpgraded", "Sound Bank");
-        //}
 
 
         public void DoTurretWandered(Turret turret)

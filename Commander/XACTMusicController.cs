@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.XACTAudio;
 
 
@@ -8,11 +9,13 @@
     {
         private Dictionary<string, Cue> Musics;
         private string CurrentMusic;
+        private Dictionary<Cue, PathEffect> Fades;
 
 
         public XACTMusicController()
         {
             Musics = new Dictionary<string, Cue>();
+            Fades = new Dictionary<Cue, PathEffect>();
             CurrentMusic = null;
         }
 
@@ -30,6 +33,34 @@
         }
 
 
+        public void Update()
+        {
+            foreach (var cue in Musics.Values)
+            {
+                if (cue == null || !cue.IsReady)
+                    continue;
+
+                PathEffect fade = null;
+
+                if (!Fades.TryGetValue(cue, out fade))
+                    continue;
+
+                fade.Update();
+                cue.SetVariable("MusicFade", fade.Value);
+
+                if (fade.Terminated)
+                {
+                    if (fade.Value <= 0)
+                        cue.Pause();
+                    else
+                        cue.Resume();
+
+                    Fades.Remove(cue);
+                }
+            }
+        }
+
+
         public void Play(string musicName)
         {
             Play(musicName, "Sound Bank");
@@ -44,8 +75,7 @@
 
         public void Play(string musicName, string bankName)
         {
-            if (CurrentMusic != null)
-                Musics[CurrentMusic].Pause();
+            PauseCurrentMusic();
 
             Cue music = Musics[musicName];
 
@@ -56,6 +86,7 @@
             Musics[musicName] = music;
 
             music.PlayOrResume();
+            FadeIn(musicName);
 
             CurrentMusic = musicName;
         }
@@ -63,8 +94,7 @@
 
         public void PlayOrResume(string musicName, string bankName)
         {
-            if (CurrentMusic != null)
-                Musics[CurrentMusic].Pause();
+            PauseCurrentMusic();
 
             Cue music = Musics[musicName];
 
@@ -75,6 +105,7 @@
             }
 
             music.PlayOrResume();
+            FadeIn(musicName);
 
             CurrentMusic = musicName;
         }
@@ -117,7 +148,7 @@
             if (CurrentMusic == null)
                 return;
 
-            Musics[CurrentMusic].Pause();
+            FadeOut(CurrentMusic);
         }
 
 
@@ -126,7 +157,7 @@
             if (CurrentMusic == null)
                 return;
 
-            Musics[CurrentMusic].Resume();
+            FadeIn(CurrentMusic);
         }
 
 
@@ -136,6 +167,18 @@
                 return;
 
             Musics.Add(musicName, null);
+        }
+
+
+        private void FadeIn(string musicName)
+        {
+            Fades.Add(Musics[musicName], new PathEffect(Path.CreateCurve(CurveType.Linear, 500), 500, Preferences.TargetElapsedTimeMs));
+        }
+
+
+        private void FadeOut(string musicName)
+        {
+            Fades.Add(Musics[musicName], new PathEffect(Path.CreateCurve(CurveType.InversedLinear, 500), 500, Preferences.TargetElapsedTimeMs));
         }
     }
 }
