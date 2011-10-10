@@ -18,6 +18,7 @@
         public string TeleportOutSound;
         public string ShipBouncingSound;
         public string ShipShieldHitSound;
+        public string ShipTurningSound;
 
 
         public float MovingSpeed;
@@ -126,6 +127,16 @@
         };
 
 
+        private static List<string> AvailablesShipTurningSounds = new List<string>()
+        {
+            "SilentCue",
+            "SilentCue",
+            "SilentCue",
+            "SilentCue",
+            "SilentCue",
+        };
+
+
         public Player()
             : base()
         {
@@ -180,6 +191,7 @@
             TeleportOutSound = AvailablesTeleportOutSounds[index];
             ShipBouncingSound = AvailablesShipBouncingSounds[index];
             ShipShieldHitSound = AvailablesShipShieldHitSounds[index];
+            ShipTurningSound = AvailablesShipTurningSounds[index];
 
             index = Main.Random.Next(0, AvailablesSpawingPositions.Count);
             InitialPosition = AvailablesSpawingPositions[index];

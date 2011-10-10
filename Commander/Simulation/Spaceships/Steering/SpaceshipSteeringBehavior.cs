@@ -103,7 +103,12 @@
             if (direction != Vector3.Zero)
                 direction.Normalize();
 
+            bool rotated = Spaceship.Direction != direction;
+
             Spaceship.Direction = direction;
+
+            if (rotated)
+                Spaceship.NotifyRotated();
         }
 
 

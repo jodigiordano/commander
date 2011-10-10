@@ -281,6 +281,12 @@
         }
 
 
+        public void DoPlayerRotated(SimPlayer player)
+        {
+            XACTAudio.PlayCue(player.InnerPlayer.ShipTurningSound, "Sound Bank");
+        }
+
+
         public void DoBulletDeflected(Bullet b)
         {
             XACTAudio.PlayCue("VulcanoidDeflection", "Sound Bank");

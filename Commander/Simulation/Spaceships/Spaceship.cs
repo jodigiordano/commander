@@ -10,6 +10,7 @@
     class Spaceship : IDestroyable
     {
         public event NoneHandler Bounced;
+        public event NoneHandler Rotated;
 
         private static int NextId = 0;
         
@@ -184,6 +185,13 @@
         {
             if (Bounced != null)
                 Bounced();
+        }
+
+
+        public void NotifyRotated()
+        {
+            if (Rotated != null)
+                Rotated();
         }
 
 

@@ -38,6 +38,7 @@
         public event SimPlayerHandler HideAdvancedViewAsked;
         public event PhysicalObjectHandler ObjectCreated;
         public event SimPlayerHandler PlayerBounced;
+        public event SimPlayerHandler PlayerRotated;
 
         private Simulator Simulator;
         private Dictionary<Player, SimPlayer> Players;
@@ -92,7 +93,8 @@
                 UpdateSelectionz = UpdateSelection,
                 BulletAttackPoints = (float) Simulator.Level.BulletDamage,
                 PausePlayer = new PausePlayer(Simulator),
-                BouncedHandler = DoPlayerBounced
+                BouncedHandler = DoPlayerBounced,
+                RotatedHandler = DoPlayerRotated
             };
 
             simPlayer.Initialize();
@@ -669,6 +671,12 @@
         }
 
 
+        public void DoPlayerRotated(SimPlayer player)
+        {
+            NotifyPlayerRotated(player);
+        }
+
+
         private void InitializePowerUpsAndTurrets()
         {
             AvailablePowerUps.Clear();
@@ -835,6 +843,13 @@
         {
             if (PlayerBounced != null)
                 PlayerBounced(player);
+        }
+
+
+        private void NotifyPlayerRotated(SimPlayer player)
+        {
+            if (PlayerRotated != null)
+                PlayerRotated(player);
         }
 
 
