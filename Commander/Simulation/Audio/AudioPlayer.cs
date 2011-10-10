@@ -11,6 +11,7 @@
         private Cue InstallingTurretCue;
         private Cue OnCelestialBodyCue;
         private Cue OnMothershipCue;
+        private Cue OnPinkHoleCue;
 
         private float ShipSpeed;
         private bool ShipSpeedChanged;
@@ -25,6 +26,7 @@
             InstallingTurretCue = XACTAudio.GetCue("TurretInstalling", "Sound Bank");
             OnCelestialBodyCue = XACTAudio.GetCue("PlanetOn", "Sound Bank");
             OnMothershipCue = XACTAudio.GetCue("MothershipOn", "Sound Bank");
+            OnPinkHoleCue = XACTAudio.GetCue("Empty 2" /*"WarpProximity"*/, "Sound Bank");
         }
 
 
@@ -82,12 +84,25 @@
         }
 
 
+        public void StartOnPinkHole()
+        {
+            OnPinkHoleCue.PlayOrResume();
+        }
+
+
+        public void StopOnPinkHole()
+        {
+            OnPinkHoleCue.Pause();
+        }
+
+
         public void PauseLoopingCues()
         {
             MovingCue.MasterPause();
             InstallingTurretCue.MasterPause();
             OnCelestialBodyCue.MasterPause();
             OnMothershipCue.MasterPause();
+            OnPinkHoleCue.MasterPause();
         }
 
 
@@ -97,6 +112,7 @@
             InstallingTurretCue.MasterResume();
             OnCelestialBodyCue.MasterResume();
             OnMothershipCue.MasterResume();
+            OnPinkHoleCue.MasterResume();
         }
 
 
@@ -106,6 +122,7 @@
             InstallingTurretCue.Stop();
             OnCelestialBodyCue.Stop();
             OnMothershipCue.Stop();
+            OnPinkHoleCue.Stop();
         }
 
 
