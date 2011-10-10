@@ -242,6 +242,17 @@
         }
 
 
+        public void DoObjectCreated(ICollidable obj)
+        {
+            var enemy = obj as Enemy;
+
+            if (enemy == null)
+                return;
+
+            XACTAudio.PlayCue("SilentCue" /* enemy.SfxCreated */, "Sound Bank");
+        }
+
+
         public void DoShieldCollided(ICollidable i, Bullet b)
         {
             var spaceship = i as Spaceship;

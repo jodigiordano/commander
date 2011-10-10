@@ -68,6 +68,7 @@ namespace EphemereGames.Commander.Simulation
 
         public string SfxHit;
         public string SfxDie;
+        public string SfxCreated;
 
         public ILivingObject LastHitBy;
 
@@ -147,6 +148,7 @@ namespace EphemereGames.Commander.Simulation
 
             SfxHit = Simulator.TweakingController.EnemiesFactory.GetSfxHit(Type);
             SfxDie = Simulator.TweakingController.EnemiesFactory.GetSfxDie(Type);
+            SfxCreated = Simulator.TweakingController.EnemiesFactory.GetSfxCreated(Type);
 
             LastHitBy = null;
         }

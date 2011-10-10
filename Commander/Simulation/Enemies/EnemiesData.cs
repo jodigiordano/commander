@@ -33,6 +33,9 @@
 
         public void Update()
         {
+            if (Path == null)
+                return;
+
             ComputeNearestEnemyPerc();
             ComputeEnemyCountPerc();
         }

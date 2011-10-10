@@ -82,6 +82,20 @@
         };
 
 
+        private static readonly Dictionary<EnemyType, string> SfxCreated = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
+        {
+            { EnemyType.Asteroid, "AsteroidOut" },
+            { EnemyType.Comet, "CometOut" },
+            { EnemyType.Plutoid, "PlutoidOut" },
+            { EnemyType.Centaur, "CentaurOut" },
+            { EnemyType.Trojan, "TrojanOut" },
+            { EnemyType.Meteoroid, "MeteoroidOut" },
+            { EnemyType.Damacloid, "DamacloidOut" },
+            { EnemyType.Swarm, "SwarmOut" },
+            { EnemyType.Vulcanoid, "VulcanoidOut" }
+        };
+
+
         public EnemiesFactory(Simulator simulator)
         {
             Simulator = simulator;
@@ -255,6 +269,11 @@
             return SfxDie[type];
         }
 
+
+        public string GetSfxCreated(EnemyType type)
+        {
+            return SfxCreated[type];
+        }
 
 
         public static string GetTexture(EnemyType type)
