@@ -83,6 +83,8 @@
 
             NotifyNextWaveCompositionChanged();
 
+            SpawnEnemies = true;
+
             if (InfiniteWaves != null)
                 return;
 
@@ -122,8 +124,6 @@
             {
                 return (m1.Key > m2.Key) ? -1 : (m1.Key < m2.Key) ? 1 : 0;
             });
-
-            SpawnEnemies = true;
         }
 
 
