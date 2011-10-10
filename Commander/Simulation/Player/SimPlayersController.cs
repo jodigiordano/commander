@@ -380,8 +380,8 @@
                     foreach (var b in bullets)
                         NotifyObjectCreated(b);
 
-                    if (player.BasePlayer.InputType == InputType.Gamepad)
-                        StopFire(player.BasePlayer);
+                    if (player.InnerPlayer.InputType == InputType.Gamepad)
+                        StopFire(player.InnerPlayer);
                 }
 
                 NotifyPlayerChanged(player);
@@ -656,14 +656,14 @@
             p1.SpaceshipMove.SteeringBehavior.Acceleration = Vector3.Zero;
             p2.SpaceshipMove.SteeringBehavior.Acceleration = Vector3.Zero;
 
-            Inputs.VibrateControllerLowFrequency(p1.BasePlayer, 120, 0.8f);
-            Inputs.VibrateControllerLowFrequency(p2.BasePlayer, 120, 0.8f);
+            Inputs.VibrateControllerLowFrequency(p1.InnerPlayer, 120, 0.8f);
+            Inputs.VibrateControllerLowFrequency(p2.InnerPlayer, 120, 0.8f);
         }
 
 
         public void DoPlayerBounced(SimPlayer player)
         {
-            Core.Input.Inputs.VibrateControllerLowFrequency(player.BasePlayer, 150, 0.7f);
+            Core.Input.Inputs.VibrateControllerLowFrequency(player.InnerPlayer, 150, 0.7f);
 
             NotifyPlayerBounced(player);
         }

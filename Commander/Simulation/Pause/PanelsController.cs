@@ -108,7 +108,7 @@
             if (!IsPanelVisible)
                 return;
 
-            p.PausePlayer.Move(ref delta, p.BasePlayer.MovingSpeed);
+            p.PausePlayer.Move(ref delta, p.InnerPlayer.MovingSpeed);
         }
 
 
@@ -117,7 +117,7 @@
             if (!IsPanelVisible)
                 return;
 
-            p.PausePlayer.Rotate(ref delta, p.BasePlayer.RotatingSpeed);
+            p.PausePlayer.Rotate(ref delta, p.InnerPlayer.RotatingSpeed);
         }
 
 

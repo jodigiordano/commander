@@ -6,7 +6,7 @@
 
     class AudioPlayer
     {
-        private SimPlayer InnerPlayer;
+        private SimPlayer SimPlayer;
         private Cue MovingCue;
         private Cue InstallingTurretCue;
         private Cue OnCelestialBodyCue;
@@ -16,12 +16,12 @@
         private bool ShipSpeedChanged;
 
 
-        public AudioPlayer(SimPlayer innerPlayer)
+        public AudioPlayer(SimPlayer simPlayer)
         {
-            InnerPlayer = innerPlayer;
+            SimPlayer = simPlayer;
             ShipSpeed = 0;
             ShipSpeedChanged = true;
-            MovingCue = XACTAudio.GetCue("ShipMoving", "Sound Bank");
+            MovingCue = XACTAudio.GetCue(SimPlayer.InnerPlayer.MovingSound, "Sound Bank");
             InstallingTurretCue = XACTAudio.GetCue("TurretInstalling", "Sound Bank");
             OnCelestialBodyCue = XACTAudio.GetCue("PlanetOn", "Sound Bank");
             OnMothershipCue = XACTAudio.GetCue("MothershipOn", "Sound Bank");
@@ -30,19 +30,19 @@
 
         public void TeleportIn()
         {
-            Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportIn", "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue(SimPlayer.InnerPlayer.TeleportInSound, "Sound Bank");
         }
 
 
         public void TeleportOut()
         {
-            Core.XACTAudio.XACTAudio.PlayCue("ShipTeleportOut", "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue(SimPlayer.InnerPlayer.TeleportOutSound, "Sound Bank");
         }
 
 
         public void Fire()
         {
-            Core.XACTAudio.XACTAudio.PlayCue("ShipFiring", "Sound Bank");
+            Core.XACTAudio.XACTAudio.PlayCue(SimPlayer.InnerPlayer.FiringSound, "Sound Bank");
         }
 
 
@@ -128,7 +128,7 @@
 
             // Modify the cue's attribute depending on the speed of the spaceship
             if (ShipSpeedChanged)
-                MovingCue.SetVariable("ShipSpeed", ShipSpeed / InnerPlayer.MaximumSpeed);
+                MovingCue.SetVariable("ShipSpeed", ShipSpeed / SimPlayer.MaximumSpeed);
         }
 
 
@@ -143,7 +143,7 @@
 
         private void ComputeShipSpeed()
         {
-            var currentSpeed = InnerPlayer.CurrentSpeed;
+            var currentSpeed = SimPlayer.CurrentSpeed;
             var max = Math.Max(Math.Abs(currentSpeed.X), Math.Abs(currentSpeed.Y));
 
             ShipSpeedChanged = ShipSpeed != max;

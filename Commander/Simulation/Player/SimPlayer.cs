@@ -16,7 +16,7 @@
         public CommonStash CommonStash;
         public bool UpdateSelectionz;
         public PowerUpType PowerUpInUse;
-        public Player BasePlayer;
+        public Player InnerPlayer;
         public PausePlayer PausePlayer;
         public SpaceshipSpaceship SpaceshipMove;
         public bool GameOver;
@@ -43,7 +43,7 @@
         public SimPlayer(Simulator simulator, Player player)
         {
             Simulator = simulator;
-            BasePlayer = player;
+            InnerPlayer = player;
             PowerUpInUse = PowerUpType.None;
 
             SpaceshipMove = new SpaceshipSpaceship(simulator)
@@ -52,7 +52,7 @@
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
                 ShowShield = true,
                 ShieldImageName = "SpaceshipHitMask",
-                ShieldColor = BasePlayer.Color,
+                ShieldColor = InnerPlayer.Color,
                 ShieldAlpha = 255,
                 ShieldDistance = 10,
                 ShieldSize = 4
@@ -80,17 +80,17 @@
             GameOver = false;
             Firing = false;
 
-            if (BasePlayer.InputType == Core.Input.InputType.MouseAndKeyboard)
+            if (InnerPlayer.InputType == Core.Input.InputType.MouseAndKeyboard)
             {
                 SpaceshipMove.SteeringBehavior = new SpaceshipMouseMBehavior(SpaceshipMove);
                 PausePlayer.SpaceshipMove.SteeringBehavior = new SpaceshipMouseMBehavior(PausePlayer.SpaceshipMove);
             }
-            else if (BasePlayer.InputType == Core.Input.InputType.KeyboardOnly)
+            else if (InnerPlayer.InputType == Core.Input.InputType.KeyboardOnly)
             {
                 SpaceshipMove.SteeringBehavior = new SpaceshipKeyboardMBehavior(SpaceshipMove);
                 PausePlayer.SpaceshipMove.SteeringBehavior = new SpaceshipKeyboardMBehavior(PausePlayer.SpaceshipMove);
             }
-            else if (BasePlayer.InputType == Core.Input.InputType.Gamepad)
+            else if (InnerPlayer.InputType == Core.Input.InputType.Gamepad)
             {
                 SpaceshipMove.SteeringBehavior = new SpaceshipGamePadMBehavior(SpaceshipMove);
                 PausePlayer.SpaceshipMove.SteeringBehavior = new SpaceshipGamePadMBehavior(PausePlayer.SpaceshipMove);
@@ -100,10 +100,10 @@
 
         public Vector3 Position
         {
-            get { return BasePlayer.Position; }
+            get { return InnerPlayer.Position; }
             set
             {
-                BasePlayer.Position = SpaceshipMove.Position = value;
+                InnerPlayer.Position = SpaceshipMove.Position = value;
                 VerifyFrame();
             }
         }
@@ -111,25 +111,25 @@
 
         public Circle Circle
         {
-            get { return BasePlayer.Circle; }
+            get { return InnerPlayer.Circle; }
             set
             {
-                BasePlayer.Circle = value;
+                InnerPlayer.Circle = value;
             }
         }
 
 
         public Color Color
         {
-            get { return BasePlayer.Color; }
-            set { BasePlayer.Color = value; }
+            get { return InnerPlayer.Color; }
+            set { InnerPlayer.Color = value; }
         }
 
 
         public string ImageName
         {
-            get { return BasePlayer.ImageName; }
-            set { BasePlayer.ImageName = value; }
+            get { return InnerPlayer.ImageName; }
+            set { InnerPlayer.ImageName = value; }
         }
 
 
@@ -151,7 +151,7 @@
 
             set
             {
-                if (!firing && value && (BasePlayer.InputType == Core.Input.InputType.MouseAndKeyboard || BasePlayer.InputType == Core.Input.InputType.KeyboardOnly))
+                if (!firing && value && (InnerPlayer.InputType == Core.Input.InputType.MouseAndKeyboard || InnerPlayer.InputType == Core.Input.InputType.KeyboardOnly))
                 {
                     LastMouseDirection = SpaceshipMove.Direction;
                 }
@@ -531,7 +531,7 @@
                 VibrationMetronome.Update();
             
                 if (VibrationMetronome.CyclesCountThisTick != 0)
-                    Core.Input.Inputs.VibrateControllerHighFrequency(BasePlayer, 80, 0.4f);
+                    Core.Input.Inputs.VibrateControllerHighFrequency(InnerPlayer, 80, 0.4f);
             }
         }
 
@@ -545,7 +545,7 @@
 
         private void VerifyFrame()
         {
-            BasePlayer.Position = new Vector3
+            InnerPlayer.Position = new Vector3
             (
                 MathHelper.Clamp(Position.X, Simulator.Scene.CameraView.Left + Circle.Radius, Simulator.Scene.CameraView.Right - Circle.Radius),
                 MathHelper.Clamp(Position.Y, Simulator.Scene.CameraView.Top + Circle.Radius, Simulator.Scene.CameraView.Bottom - Circle.Radius),

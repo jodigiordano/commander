@@ -142,7 +142,7 @@
         {
             GUIPlayer player = new GUIPlayer(
                 Simulator, AvailableTurrets, AvailableLevelsDemoMode,
-                p.Color, p.ImageName, p.BasePlayer);
+                p.Color, p.ImageName, p.InnerPlayer);
 
             player.Cursor.Position = p.Position;
 
@@ -390,7 +390,7 @@
             foreach (var turret2 in turret.CelestialBody.Turrets)
                 turret2.ShowForm = true;
 
-            HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.InstallTurret);
+            HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.InstallTurret);
         }
 
 
@@ -738,13 +738,13 @@
                 if (selection.CelestialBody != null)
                 {
                     if (selection.PausedGameChoice == PausedGameChoice.None && selection.CelestialBody is PinkHole)
-                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldWarp);
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldWarp);
                     else if (selection.PausedGameChoice == PausedGameChoice.None)
-                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldNewGame);
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldNewGame);
                     else if (selection.PausedGameChoice == PausedGameChoice.New)
-                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldToggleNewGame);
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldToggleNewGame);
                     else if (selection.PausedGameChoice == PausedGameChoice.Resume)
-                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.WorldToggleResume);
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldToggleResume);
                 }
 
                 else
@@ -757,13 +757,13 @@
             {
                 // Main menu
                 if (selection.CelestialBody != null && selection.CelestialBody.Name == "save the world")
-                    HelpBar.ShowMessage(p.BasePlayer, player.NewGameMenu.GetHelpBarMessage());
+                    HelpBar.ShowMessage(p.InnerPlayer, player.NewGameMenu.GetHelpBarMessage());
                 else
                 {
                     HelpBar.HideMessage(player.NewGameMenu.GetHelpBarMessage());
 
                     if (selection.CelestialBody != null)
-                        HelpBar.ShowMessage(p.BasePlayer, HelpBarMessage.Select);
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.Select);
                     else
                         HelpBar.HideMessage(HelpBarMessage.Select);
                 }
@@ -781,7 +781,7 @@
                 if (selection.Turret == null && selection.TurretToPlace == null)
                 {
                     if (selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
-                        HelpBar.ShowMessage(HelpBarMessage.CallNextWave, StartingPathMenu.GetHelpBarMessage(p.BasePlayer));
+                        HelpBar.ShowMessage(HelpBarMessage.CallNextWave, StartingPathMenu.GetHelpBarMessage(p.InnerPlayer));
                     else if (selection.CelestialBody != null)
                         HelpBar.ShowMessage(HelpBarMessage.CelestialBodyMenu, player.CelestialBodyMenu.GetHelpBarMessage(selection.TurretToBuy));
                     else

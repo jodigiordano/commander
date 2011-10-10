@@ -12,6 +12,7 @@
 
         private Simulator Simulator;
         private Dictionary<SimPlayer, AudioPlayer> Players;
+        private Dictionary<int, SimPlayer> SpaceshipToSimPlayer;
         private AudioTurretsController AudioTurretsController;
         private Cue WaveNearToStartCue;
 
@@ -21,6 +22,7 @@
             Simulator = simulator;
             AudioTurretsController = new AudioTurretsController();
             Players = new Dictionary<SimPlayer, AudioPlayer>();
+            SpaceshipToSimPlayer = new Dictionary<int, SimPlayer>();
         }
 
 
@@ -240,6 +242,22 @@
         }
 
 
+        public void DoShieldCollided(ICollidable i, Bullet b)
+        {
+            var spaceship = i as Spaceship;
+
+            if (spaceship == null)
+                return;
+
+            SimPlayer player = null;
+
+            if (!SpaceshipToSimPlayer.TryGetValue(spaceship.Id, out player))
+                return;
+
+            XACTAudio.PlayCue(player.InnerPlayer.ShipShieldHitSound, "Sound Bank");
+        }
+
+
         public void DoPlayersCollided(SimPlayer p1, SimPlayer p2)
         {
             XACTAudio.PlayCue("ShipToShipCollision", "Sound Bank");
@@ -248,7 +266,7 @@
 
         public void DoPlayerBounced(SimPlayer player)
         {
-            XACTAudio.PlayCue("ShipBouncing", "Sound Bank");
+            XACTAudio.PlayCue(player.InnerPlayer.ShipBouncingSound, "Sound Bank");
         }
 
 
@@ -263,7 +281,7 @@
             var audioPlayer = new AudioPlayer(p);
 
             Players.Add(p, audioPlayer);
-
+            SpaceshipToSimPlayer.Add(p.SpaceshipMove.Id, p);
             audioPlayer.TeleportIn();
         }
 
@@ -272,9 +290,9 @@
         {
             var audioPlayer = Players[p];
 
+            SpaceshipToSimPlayer.Remove(p.SpaceshipMove.Id);
             audioPlayer.StopLoopingCues();
             audioPlayer.TeleportOut();
-
             Players.Remove(p);
         }
 

@@ -251,6 +251,7 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.StartingPathCollision += new BulletCelestialBodyHandler(AudioController.DoStartingPathCollision);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(SpaceshipsController.DoShieldCollided);
             CollisionsController.ShieldCollided += new CollidableBulletHandler(BulletsController.DoShieldCollided);
+            CollisionsController.ShieldCollided += new CollidableBulletHandler(AudioController.DoShieldCollided);
             BulletsController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
             EnemiesController.WaveStarted += new NoneHandler(AudioController.DoWaveStarted);
             PowerUpsController.PowerUpStarted += new PowerUpSimPlayerHandler(AudioController.DoPowerUpStarted);
