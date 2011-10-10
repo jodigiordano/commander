@@ -1,4 +1,6 @@
-﻿namespace EphemereGames.Core.XACTAudio
+﻿#if !WINDOWS_PHONE
+
+namespace EphemereGames.Core.XACTAudio
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
@@ -113,3 +115,5 @@
         //}
     }
 }
+
+#endif

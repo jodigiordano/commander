@@ -1,4 +1,6 @@
-﻿namespace EphemereGames.Core.XACTAudio
+﻿#if !WINDOWS_PHONE
+
+namespace EphemereGames.Core.XACTAudio
 {
     using EphemereGames.Core.Persistence;
 
@@ -71,3 +73,5 @@
         //}
     }
 }
+
+#endif
