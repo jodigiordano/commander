@@ -91,8 +91,6 @@
 
         void InputListener.DoKeyPressedOnce(Core.Input.Player player, Keys key)
         {
-            return; //tmp
-
             if (CurrentStatus == Status.Failed || CurrentStatus == Status.Succeed)
                 return;
 
@@ -157,8 +155,6 @@
 
         void InputListener.DoGamePadButtonPressedOnce(Core.Input.Player player, Buttons button)
         {
-            return; //tmp
-
             if (CurrentStatus == Status.Failed || CurrentStatus == Status.Succeed)
                 return;
 

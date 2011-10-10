@@ -1,5 +1,8 @@
 ﻿namespace EphemereGames.Commander
 {
+    using Microsoft.Xna.Framework.Input;
+
+
     class LevelWonCheat : SequenceCheat
     {
         public LevelWonCheat()
@@ -8,19 +11,13 @@
             TimeToExecute = 1000;
             Recurrent = true;
 
-            //if (p.InputType == InputType.Mouse || p.InputType == InputType.OneJoystick)
-            //{
-            //    SequenceKeyboard.Add(p.KeyboardConfiguration.Cheat1);
-            //    SequenceKeyboard.Add(p.KeyboardConfiguration.Cheat1);
-            //    SequenceKeyboard.Add(p.KeyboardConfiguration.Cheat1);
-            //}
+            SequenceKeyboard.Add(Keys.P);
+            SequenceKeyboard.Add(Keys.P);
+            SequenceKeyboard.Add(Keys.P);
 
-            //else
-            //{
-            //    SequenceGamepad.Add(p.GamepadConfiguration.Cheat1);
-            //    SequenceGamepad.Add(p.GamepadConfiguration.Cheat1);
-            //    SequenceGamepad.Add(p.GamepadConfiguration.Cheat1);
-            //}
+            SequenceGamepad.Add(Buttons.DPadRight);
+            SequenceGamepad.Add(Buttons.DPadRight);
+            SequenceGamepad.Add(Buttons.DPadRight);
         }
     }
 }
