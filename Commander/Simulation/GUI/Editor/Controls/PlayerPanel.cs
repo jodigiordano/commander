@@ -20,12 +20,12 @@
             Simulator = simulator;
 
             SetTitle("Player");
-            
-            Lives = new NumericHorizontalSlider("Starting lives", 0, 50, 0, 1, 100, 100);
-            Cash = new NumericHorizontalSlider("Starting money", 0, 50000, 0, 100, 100, 100);
-            Minerals = new NumericHorizontalSlider("Minerals", 0, 50000, 0, 100, 100, 100);
-            LifePacks = new NumericHorizontalSlider("Life packs", 0, 50, 0, 1, 100, 100);
-            BulletDamage = new NumericHorizontalSlider("Bullet damage", -1, 1000, 0, 5, 100, 100);
+
+            Lives = new NumericHorizontalSlider("Starting lives", 0, 50, 0, 1, 150, 100);
+            Cash = new NumericHorizontalSlider("Starting money", 0, 50000, 0, 100, 150, 100);
+            Minerals = new NumericHorizontalSlider("Minerals", 0, 50000, 0, 100, 150, 100);
+            LifePacks = new NumericHorizontalSlider("Life packs", 0, 50, 0, 1, 150, 100);
+            BulletDamage = new NumericHorizontalSlider("Bullet damage", -1, 1000, 0, 5, 150, 100);
 
             AddWidget("Lives", Lives);
             AddWidget("Cash", Cash);

@@ -32,7 +32,7 @@
         private Vector3 position;
 
 
-        public NumericHorizontalSlider(string label, int min, int max, int startingValue, int increment, int spaceForValue, int spaceForLabel)
+        public NumericHorizontalSlider(string label, int min, int max, int startingValue, int increment, int spaceForLabel, int spaceForValue)
         {
             Value = startingValue;
             Min = min;

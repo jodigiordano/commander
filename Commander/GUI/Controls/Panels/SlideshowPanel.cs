@@ -15,7 +15,7 @@
         public SlideshowPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
-            Slider = new NumericHorizontalSlider("", 0, 0, 0, 1, 200, 0)
+            Slider = new NumericHorizontalSlider("", 0, 0, 0, 1, 0, 200)
             {
                 Scene = scene
             };
