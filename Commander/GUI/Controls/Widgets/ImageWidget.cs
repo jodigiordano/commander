@@ -3,6 +3,7 @@
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
+    using ProjectMercury.Emitters;
 
 
     class ImageWidget : PanelWidget
@@ -25,10 +26,11 @@
         {
             Selection = Scene.Particles.Get(@"hoverRectangle");
 
-            //var emitter = (RectEmitter) Selection.Model[0];
+            var emitter = (RectEmitter) Selection.Model[0];
 
-            //emitter.Width = Image.AbsoluteSize.X + 5;
-            //emitter.Height = Image.AbsoluteSize.Y + 5;
+            emitter.Width = Image.AbsoluteSize.X + 5;
+            emitter.Height = Image.AbsoluteSize.Y + 5;
+            emitter.TriggerOffset = Image.AbsoluteSize / 2;
         }
 
 

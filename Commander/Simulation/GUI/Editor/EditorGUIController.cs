@@ -32,6 +32,15 @@
 
             Panels = new Dictionary<EditorPanel, Panel>(EditorPanelComparer.Default);
 
+            ContextualMenusCollisions = new ContextualMenusCollisions();
+        }
+
+
+        public void Initialize()
+        {
+            Players.Clear();
+            Panels.Clear();
+
             // Player's panel
             PlayerPanel playerPanel = new PlayerPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Player, playerPanel);
@@ -67,14 +76,6 @@
             deletePanel.SetTitle("Delete - No confirmation!!!");
             deletePanel.Initialize();
             Panels.Add(EditorPanel.Delete, deletePanel);
-
-            ContextualMenusCollisions = new ContextualMenusCollisions();
-        }
-
-
-        public void Initialize()
-        {
-            Players.Clear();
 
             PlayerBrowsingGeneralMenu = null;
 
