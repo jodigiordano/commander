@@ -192,6 +192,7 @@
     <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipKeyboardMBehavior.cs" />
     <Compile Include="XACTMusicController.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />

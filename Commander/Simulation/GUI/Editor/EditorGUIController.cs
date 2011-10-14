@@ -77,6 +77,11 @@
             deletePanel.Initialize();
             Panels.Add(EditorPanel.Delete, deletePanel);
 
+            // Celestial Body Assets panel
+            CelestialBodyAssetsPanel assetsPanel = new CelestialBodyAssetsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White);
+            assetsPanel.Initialize();
+            Panels.Add(EditorPanel.CelestialBodyAssets, assetsPanel);
+
             PlayerBrowsingGeneralMenu = null;
 
             foreach (var panel in Panels.Values)
@@ -224,8 +229,6 @@
 
         private void DoEditorCelestialBodyCommandExecuted(EditorCelestialBodyCommand command)
         {
-            var player = Players[command.Owner];
-
             if (command.Name == "AddPlanet")
                 CelestialBodiesPathPreviews.Sync();
             else if (command.Name == "Remove")
@@ -236,7 +239,8 @@
             else if (command.Name == "HidePathPreview")
                 command.CelestialBody.ShowPath = false;
 
-            player.CelestialBodyMenu.SyncData();
+            if (command.Owner != null)
+                Players[command.Owner].CelestialBodyMenu.SyncData();
         }
 
 

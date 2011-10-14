@@ -208,7 +208,8 @@ namespace EphemereGames.Commander.Simulation
         General = 6,
         Background = 7,
         GeneratePlanetarySystem = 8,
-        Waves = 9
+        Waves = 9,
+        CelestialBodyAssets = 10
     };
 
 

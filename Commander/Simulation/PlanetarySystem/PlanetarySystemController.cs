@@ -281,7 +281,7 @@
                 command.CelestialBody.SetSpeed(command.Speed);
             }
 
-            else if (command.Name == "ToggleAsset")
+            else if (command.Name == "ChangeAsset")
             {
                 command.CelestialBody.SetImage(command.AssetName);
             }

@@ -59,6 +59,7 @@
             Panels[EditorPanel.Waves].SetClickHandler(DoWaves);
             Panels[EditorPanel.Load].SetClickHandler(DoLoad);
             Panels[EditorPanel.Delete].SetClickHandler(DoDelete);
+            Panels[EditorPanel.CelestialBodyAssets].SetClickHandler(DoCelestialBodyAssets);
 
             foreach (var panel in Panels.Values)
                 panel.CloseButtonHandler = DoClosePanel;
@@ -366,6 +367,9 @@
 
         private void DoExecuteEditorPanelCommand(EditorPanelCommand command)
         {
+            if (command.Panel == EditorPanel.CelestialBodyAssets)
+                ((CelestialBodyAssetsPanel) Panels[command.Panel]).CelestialBody = command.Owner.SimPlayer.ActualSelection.CelestialBody;
+
             if (OpenedPanel == EditorPanel.None) // open a panel
             {
                 OpenedPanel = command.Panel;
@@ -532,6 +536,20 @@
             var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
 
             Simulator.Level.Background = new Image(img.Image.TextureName) { VisualPriority = Preferences.PrioriteFondEcran };
+        }
+
+
+        private void DoCelestialBodyAssets(PanelWidget widget)
+        {
+            var panel = (CelestialBodyAssetsPanel) Panels[EditorPanel.CelestialBodyAssets];
+            var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
+
+            NotifyEditorCommandExecuted(
+                new EditorCelestialBodyCommand("ChangeAsset")
+                {
+                    CelestialBody = panel.CelestialBody,
+                    AssetName = img.Image.TextureName.Substring(0, img.Image.TextureName.Length - 1)
+                });
         }
 
 

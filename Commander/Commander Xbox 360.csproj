@@ -189,6 +189,7 @@
     <Compile Include="Simulation\GUI\Animations\TurretMoneyAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorld1Animation.cs" />
     <Compile Include="Simulation\GUI\Animations\Worlds\EndOfWorldAnimation.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\GameBarPanel.cs" />
     <Compile Include="Simulation\GUI\HelpBarPanel\HBMessageConstructor.cs" />
     <Compile Include="Simulation\GUI\HelpBarPanel\HelpBarPanel.cs" />

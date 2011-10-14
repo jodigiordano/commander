@@ -59,6 +59,13 @@
 
         protected override bool Hover(Circle circle)
         {
+            if (ShowCloseButton && CloseButton.DoHover(circle))
+            {
+                LastHoverWidget = CloseButton;
+                return true;
+            }
+
+
             if (Slider.DoHover(circle))
             {
                 LastHoverWidget = Slider;
@@ -79,7 +86,7 @@
 
             Sticky = false;
 
-            return base.Hover(circle);
+            return false;
         }
 
 

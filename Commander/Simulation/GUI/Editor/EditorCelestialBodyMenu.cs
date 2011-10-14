@@ -62,7 +62,7 @@
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Big },
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Small },
                     }),
-                GetToggleAssets(),
+                new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 1, new EditorPanelCommand("CelestialBodyAssets", EditorPanel.CelestialBodyAssets, true)),
                 new EditorTextContextualMenuChoice("Verify", "Verify", 1, new EditorCelestialBodyCommand("Verify")),
                 new EditorTextContextualMenuChoice("StartingPosition", "Starting Position", 1, new EditorCelestialBodyCommand("StartingPosition")),
                 new EditorToggleContextualMenuChoice("ShowPath",
@@ -156,19 +156,6 @@
                 }
             }
 
-            // sync assets
-            for (int i = 0; i < EditorLevelGenerator.PossibleCelestialBodiesAssets.Count; i++)
-            {
-                if (CelestialBody.Image == null)
-                    break;
-
-                if (CelestialBody.PartialImageName == EditorLevelGenerator.PossibleCelestialBodiesAssets[i])
-                {
-                    ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("ToggleAsset")).SetChoice(i);
-                    break;
-                }
-            }
-
             // sync show path
             ((EditorToggleContextualMenuChoice) Menu.GetChoiceByName("ShowPath")).SetChoice(CelestialBody.ShowPath ? 1 : 0);
 
@@ -202,28 +189,6 @@
                 return;
 
             Menu.Draw();
-        }
-
-
-        private EditorToggleContextualMenuChoice GetToggleAssets()
-        {
-            List<string> names = new List<string>();
-
-            foreach (var a in EditorLevelGenerator.PossibleCelestialBodiesAssets)
-                names.Add("Asset: " + a);
-
-            List<EditorCommand> commands = new List<EditorCommand>();
-
-            for (int i = 0; i < EditorLevelGenerator.PossibleCelestialBodiesAssets.Count; i++)
-            {
-                var command = (i == EditorLevelGenerator.PossibleCelestialBodiesAssets.Count - 1) ?
-                    new EditorCelestialBodyCommand("ToggleAsset") { AssetName = EditorLevelGenerator.PossibleCelestialBodiesAssets[0] } :
-                    new EditorCelestialBodyCommand("ToggleAsset") { AssetName = EditorLevelGenerator.PossibleCelestialBodiesAssets[i+1] };
-
-                commands.Add(command);
-            }
-
-            return new EditorToggleContextualMenuChoice("ToggleAsset", names, 1, commands);
         }
     }
 }
