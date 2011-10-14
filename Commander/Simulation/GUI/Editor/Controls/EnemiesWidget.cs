@@ -46,6 +46,8 @@
 
         public override void Initialize()
         {
+            base.Initialize();
+
             foreach (var c in CheckBoxes.Values)
                 c.Initialize();
         }

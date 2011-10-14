@@ -4,7 +4,7 @@
     <Id>1003</Id>
     <Mission>1-1</Mission>
     <Difficulty>Easy</Difficulty>
-    <Background>background23</Background>
+    <Background>world2</Background>
   </Infos>
   <Objective>
     <CelestialBodyToProtect>16</CelestialBodyToProtect>
@@ -13,7 +13,7 @@
     <CelestialBody>
       <Name>3-1</Name>
       <Images />
-      <Image>battleship2</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Normal</Size>
@@ -40,7 +40,7 @@
     <CelestialBody>
       <Name>3-2</Name>
       <Images />
-      <Image>battleship1</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Small</Size>
@@ -94,7 +94,7 @@
     <CelestialBody>
       <Name>3-3</Name>
       <Images />
-      <Image>battleship3</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Small</Size>
@@ -121,7 +121,7 @@
     <CelestialBody>
       <Name>3-4</Name>
       <Images />
-      <Image>battleship5</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Normal</Size>
@@ -175,7 +175,7 @@
     <CelestialBody>
       <Name>3-6</Name>
       <Images />
-      <Image>battleship1</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Normal</Size>
@@ -256,7 +256,7 @@
     <CelestialBody>
       <Name>3-8</Name>
       <Images />
-      <Image>battleship5</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Big</Size>
@@ -310,7 +310,7 @@
     <CelestialBody>
       <Name>3-9</Name>
       <Images />
-      <Image>battleship3</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Normal</Size>
@@ -337,7 +337,7 @@
     <CelestialBody>
       <Name>3-10</Name>
       <Images />
-      <Image>battleship2</Image>
+      <Image>stationSpatiale1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Small</Size>

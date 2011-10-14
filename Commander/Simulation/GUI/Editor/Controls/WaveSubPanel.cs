@@ -38,16 +38,16 @@
                 DistanceBetweenTwoChoices = 15
             };
 
-            StartingTime = new NumericHorizontalSlider("Starting time", 0, 500, 0, 10, 50);
+            StartingTime = new NumericHorizontalSlider("Starting time", 0, 500, 0, 10, 50, 50);
             Enemies = new EnemiesWidget(simulator.EnemiesFactory.All, (int) size.X / 2, 3);
-            Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 50);
-            CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 100);
-            QuantityWidget = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 50);
+            Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 50, 50);
+            CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 100, 100);
+            QuantityWidget = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 50, 50);
 
             Distances = new ChoicesHorizontalSlider("Distance", WaveGenerator.DistancesStrings, 0);
-            DelayWidget = new NumericHorizontalSlider("Delay", 0, 20, 0, 1, 100);
-            ApplyDelayWidget = new NumericHorizontalSlider("Apply Delay", -1, 20, 0, 1, 100);
-            SwitchEveryWidget = new NumericHorizontalSlider("Switch every", -1, 50, 5, 5, 100);
+            DelayWidget = new NumericHorizontalSlider("Delay", 0, 20, 0, 1, 100, 100);
+            ApplyDelayWidget = new NumericHorizontalSlider("Apply Delay", -1, 20, 0, 1, 100, 100);
+            SwitchEveryWidget = new NumericHorizontalSlider("Switch every", -1, 50, 5, 5, 100, 100);
 
             SideA.AddWidget("StartingTime", StartingTime);
             SideA.AddWidget("Enemies", Enemies);

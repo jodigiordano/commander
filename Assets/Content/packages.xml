@@ -64,7 +64,8 @@
     <asset name="projectileMissileExplosion"   type="Particles" path="particules/projectileMissileParticulesExplosion"/>
     <asset name="projectileLaserMultiple"      type="Particles" path="particules/projectileLaser"/>
     <asset name="projectileLaserSimple"        type="Particles" path="particules/projectileLaserSimple"/>
-    <asset name="selectionCorpsCeleste"        type="Particles" path="particules/selectionCorpsCeleste"/>
+    <asset name="selectionCorpsCeleste"        type="Particles" path="particules/hoverCircle"/>
+    <asset name="hoverRectangle"               type="Particles" path="particules/hoverRectangle"/>
     <asset name="traineeMissile"               type="Particles" path="particules/traineeMissile"/>
     <asset name="etincelleLaser"               type="Particles" path="particules/etincelleLaser"/>
     <asset name="etincelleLaserSimple"         type="Particles" path="particules/etincelleLaserSimple"/>
@@ -101,15 +102,15 @@
     
     <!-- Backgrounds -->
       <!-- Story 1 -->
-      <asset name="background1"                 type="Image" path="backgrounds/story1/background01" />
-      <asset name="background2"                 type="Image" path="backgrounds/story1/background02" />
-      <asset name="background3"                 type="Image" path="backgrounds/story1/background03" />
-      <asset name="background4"                 type="Image" path="backgrounds/story1/background04" />
-      <asset name="background5"                 type="Image" path="backgrounds/story1/background05" />
-      <asset name="background6"                 type="Image" path="backgrounds/story1/background06" />
-      <asset name="background7"                 type="Image" path="backgrounds/story1/background07" />
-      <asset name="background8"                 type="Image" path="backgrounds/story1/background08" />
-      <asset name="background9"                 type="Image" path="backgrounds/story1/background09" />
+      <asset name="background1"                 type="Image" path="backgrounds/story1/background1" />
+      <asset name="background2"                 type="Image" path="backgrounds/story1/background2" />
+      <asset name="background3"                 type="Image" path="backgrounds/story1/background3" />
+      <asset name="background4"                 type="Image" path="backgrounds/story1/background4" />
+      <asset name="background5"                 type="Image" path="backgrounds/story1/background5" />
+      <asset name="background6"                 type="Image" path="backgrounds/story1/background6" />
+      <asset name="background7"                 type="Image" path="backgrounds/story1/background7" />
+      <asset name="background8"                 type="Image" path="backgrounds/story1/background8" />
+      <asset name="background9"                 type="Image" path="backgrounds/story1/background9" />
       <asset name="background10"                type="Image" path="backgrounds/story1/background10" />
       <asset name="background11"                type="Image" path="backgrounds/story1/background11" />
       <asset name="background12"                type="Image" path="backgrounds/story1/background12" />
@@ -119,37 +120,7 @@
       <asset name="background16"                type="Image" path="backgrounds/story1/background16" />
     
       <!-- Story 2 -->
-    <asset name="background17"                 type="Image" path="backgrounds/story2/background01" />
-    <asset name="background18"                 type="Image" path="backgrounds/story2/background02" />
-    <asset name="background19"                 type="Image" path="backgrounds/story2/background03" />
-    <asset name="background20"                type="Image" path="backgrounds/story2/background04" />
-    <asset name="background21"                type="Image" path="backgrounds/story2/background05" />
-    <asset name="background22"                type="Image" path="backgrounds/story2/background06" />
-    <asset name="background23"                type="Image" path="backgrounds/story2/background07" />
-    <asset name="background24"                type="Image" path="backgrounds/story2/background08" />
-    <asset name="background25"                type="Image" path="backgrounds/story2/background09" />
-    <asset name="background26"                type="Image" path="backgrounds/story2/background10" />
-    <asset name="background27"                 type="Image" path="backgrounds/story2/background11" />
-    <asset name="background28"                 type="Image" path="backgrounds/story2/background12" />
-    <asset name="background29"                 type="Image" path="backgrounds/story2/background13" />
-    <asset name="background30"                type="Image" path="backgrounds/story2/background14" />
-    <asset name="background31"                type="Image" path="backgrounds/story2/background15" />
-    <asset name="background32"                type="Image" path="backgrounds/story2/background16" />
-    <asset name="background33"                type="Image" path="backgrounds/story2/background17" />
-    <asset name="background34"                type="Image" path="backgrounds/story2/background18" />
-    <asset name="background35"                type="Image" path="backgrounds/story2/background19" />
-    <asset name="background36"                type="Image" path="backgrounds/story2/background20" />
-    <asset name="background37"                 type="Image" path="backgrounds/story2/background21" />
-    <asset name="background38"                 type="Image" path="backgrounds/story2/background22" />
-    <asset name="background39"                 type="Image" path="backgrounds/story2/background23" />
-    <asset name="background40"                type="Image" path="backgrounds/story2/background24" />
-    <asset name="background41"                type="Image" path="backgrounds/story2/background25" />
-    <asset name="background42"                type="Image" path="backgrounds/story2/background26" />
-    <asset name="background43"                type="Image" path="backgrounds/story2/background27" />
-    <asset name="background44"                type="Image" path="backgrounds/story2/background28" />
-    <asset name="background45"                type="Image" path="backgrounds/story2/background29" />
-    <asset name="background46"                type="Image" path="backgrounds/story2/background30" />
-    <asset name="background47"                type="Image" path="backgrounds/story2/background31" />    
+    <asset name="background17"                 type="Image" path="backgrounds/story2/background17" />
     
       <!-- Worlds -->
       <asset name="world1"                     type="Image" path="backgrounds/worlds/world1" />
@@ -158,7 +129,7 @@
 
     <!-- Cutscenes -->
     <!-- Intro -->
-    <asset name="introBackground"             type="Image" path="backgrounds/cutscenes/intro" />
+    <asset name="intro"             type="Image" path="backgrounds/cutscenes/intro" />
     
 
     <!-- GUI -->

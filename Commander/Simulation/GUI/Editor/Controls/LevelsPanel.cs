@@ -34,6 +34,8 @@
 
         public void Initialize()
         {
+            base.Initialize();
+
             PushButtons.Clear();
             Levels.ClearWidgets();
 

@@ -27,6 +27,8 @@
 
         public void Initialize()
         {
+            base.Initialize();
+
             foreach (var powerUp in Simulator.PowerUpsFactory.All)
             {
                 var widget = (PowerUpCheckBox) GetWidgetByName(powerUp.Key.ToString());

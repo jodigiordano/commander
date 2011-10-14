@@ -22,8 +22,8 @@
             SetTitle("General");
 
             Difficulty = new ChoicesHorizontalSlider("Difficulty", new List<string>() { "Easy", "Normal", "Hard" }, 0);
-            World = new NumericHorizontalSlider("World #", 1, 20, 1, 1, 100);
-            Level = new NumericHorizontalSlider("Level #", 1, 50, 1, 1, 100);
+            World = new NumericHorizontalSlider("World #", 1, 20, 1, 1, 100, 100);
+            Level = new NumericHorizontalSlider("Level #", 1, 50, 1, 1, 100, 100);
 
             AddWidget("Difficulty", Difficulty);
             AddWidget("World", World);
@@ -35,6 +35,8 @@
 
         public void Initialize()
         {
+            base.Initialize();
+
             Difficulty.Value = Simulator.LevelDescriptor.Infos.Difficulty;
 
             var worldLevel = Simulator.LevelDescriptor.Infos.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);

@@ -10,6 +10,7 @@
         public Image Image;
 
         private Circle ImageCircle;
+        private Particle Selection;
 
 
         public ImageWidget(string imageName, float size)
@@ -17,6 +18,17 @@
             Image = new Image(imageName) { SizeX = size, Origin = Vector2.Zero };
 
             ImageCircle = new Circle(Vector3.Zero, Image.AbsoluteSize.X / 2);
+        }
+
+
+        public override void Initialize()
+        {
+            Selection = Scene.Particles.Get(@"hoverRectangle");
+
+            //var emitter = (RectEmitter) Selection.Model[0];
+
+            //emitter.Width = Image.AbsoluteSize.X + 5;
+            //emitter.Height = Image.AbsoluteSize.Y + 5;
         }
 
 
@@ -30,6 +42,9 @@
             set
             {
                 Image.VisualPriority = value;
+
+                if (Selection != null)
+                    Selection.VisualPriority = value + 0.0000001;
             }
         }
 
@@ -75,7 +90,13 @@
 
         protected override bool Hover(Circle circle)
         {
-            return Physics.CircleCicleCollision(circle, ImageCircle);
+            if (Physics.CircleCicleCollision(circle, ImageCircle))
+            {
+                Selection.Trigger(ref Image.position);
+                return true;
+            }
+
+            return false;
         }
 
 

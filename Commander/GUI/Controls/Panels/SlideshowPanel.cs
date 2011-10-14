@@ -9,13 +9,13 @@
     class SlideshowPanel : Panel
     {
         protected NumericHorizontalSlider Slider;
-        private List<PanelWidget> Panels;
+        private List<Panel> Panels;
 
 
         public SlideshowPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
-            Slider = new NumericHorizontalSlider("", 0, 0, 0, 1, 200)
+            Slider = new NumericHorizontalSlider("", 0, 0, 0, 1, 200, 0)
             {
                 Scene = scene
             };
@@ -23,13 +23,13 @@
             Slider.Initialize();
             Slider.VisualPriority = visualPriority;
 
-            Panels = new List<PanelWidget>();
+            Panels = new List<Panel>();
         }
 
 
         public override void AddWidget(string name, PanelWidget widget)
         {
-            Panels.Add(widget);
+            Panels.Add((Panel) widget);
 
             Slider.Max = Panels.Count - 1;
 
@@ -59,12 +59,6 @@
 
         protected override bool Hover(Circle circle)
         {
-            if (ShowCloseButton && CloseButton.DoHover(circle))
-            {
-                LastHoverWidget = CloseButton;
-                return true;
-            }
-
             if (Slider.DoHover(circle))
             {
                 LastHoverWidget = Slider;
@@ -76,14 +70,16 @@
 
             if (Panels[Slider.Value].DoHover(circle))
             {
-                LastHoverWidget = Panels[Slider.Value];
+                //By default, a panel do not care about hover
+                LastHoverWidget = Panels[Slider.Value].LastHoverWidget;
 
-                Sticky = true;
+                //Sticky = true;
                 return true;
             }
 
             Sticky = false;
-            return false;
+
+            return base.Hover(circle);
         }
 
 

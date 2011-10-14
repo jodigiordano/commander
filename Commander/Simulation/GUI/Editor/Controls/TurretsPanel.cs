@@ -25,6 +25,8 @@
 
         public override void Initialize()
         {
+            base.Initialize();
+
             foreach (var turret in Simulator.TurretsFactory.All)
             {
                 var widget = (TurretCheckBox) GetWidgetByName(turret.Key.ToString());

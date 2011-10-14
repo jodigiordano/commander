@@ -147,7 +147,15 @@
             player.Circle.Position = p.Position;
 
             if (OpenedPanel != EditorPanel.None)
-                Panels[OpenedPanel].DoHover(player.Circle);
+            {
+                var hover = Panels[OpenedPanel].DoHover(player.Circle);
+
+                // More friction on a celestial body and a turret
+                if (hover &&
+                    player.SimPlayer.SpaceshipMove.SteeringBehavior.LastNextMovement == Vector3.Zero &&
+                    Panels[OpenedPanel].LastHoverWidget.Sticky)
+                        player.SimPlayer.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
+            }
         }
 
 

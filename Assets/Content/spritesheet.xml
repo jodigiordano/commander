@@ -2,6 +2,10 @@
 <XnaContent>
   <Asset Type="System.Collections.Generic.Dictionary[System.String, System.String]">
     <!-- Asteroids -->
+    <Item><Key>Alien1</Key><Value>asteroids/alien1.png</Value></Item>
+    <Item><Key>Alien2</Key><Value>asteroids/alien2.png</Value></Item>
+    <Item><Key>Alien3</Key><Value>asteroids/alien3.png</Value></Item>
+    <Item><Key>Alien4</Key><Value>asteroids/alien4.png</Value></Item>
     <Item><Key>Apohele</Key><Value>asteroids/apohele.png</Value></Item>
     <Item><Key>Asteroid</Key><Value>asteroids/asteroid.png</Value></Item>
     <Item><Key>Centaur</Key><Value>asteroids/centaur.png</Value></Item>
@@ -57,6 +61,9 @@
     <Item><Key>planete121</Key><Value>planetes/planet121.png</Value></Item>
     <Item><Key>planete122</Key><Value>planetes/planet122.png</Value></Item>
     <Item><Key>planete123</Key><Value>planetes/planet123.png</Value></Item>
+    <Item><Key>planete131</Key><Value>planetes/planet131.png</Value></Item>
+    <Item><Key>planete132</Key><Value>planetes/planet132.png</Value></Item>
+    <Item><Key>planete133</Key><Value>planetes/planet133.png</Value></Item>
     <Item><Key>stationSpatiale11</Key><Value>planetes/stationSpatiale11.png</Value></Item>
     <Item><Key>stationSpatiale12</Key><Value>planetes/stationSpatiale12.png</Value></Item>
     <Item><Key>stationSpatiale13</Key><Value>planetes/stationSpatiale13.png</Value></Item>
@@ -65,29 +72,23 @@
     <Item><Key>stationSpatiale23</Key><Value>planetes/stationSpatiale23.png</Value></Item>
     <Item><Key>vaisseauAlien11</Key><Value>planetes/vaisseauAlien11.png</Value></Item>
     <Item><Key>vaisseauAlien12</Key><Value>planetes/vaisseauAlien12.png</Value></Item>
-    <Item><Key>vaisseauAlien13</Key><Value>planetes/vaisseauAlien13.png</Value></Item>
+    <Item><Key>vaisseauAlien13</Key><Value>planetes/vaisseauAlien13.png</Value></Item>   
+    <Item><Key>vaisseauAlien21</Key><Value>planetes/vaisseauAlien21.png</Value></Item>
+    <Item><Key>vaisseauAlien22</Key><Value>planetes/vaisseauAlien22.png</Value></Item>
+    <Item><Key>vaisseauAlien23</Key><Value>planetes/vaisseauAlien23.png</Value></Item>
+    <Item><Key>vaisseauAlien31</Key><Value>planetes/vaisseauAlien31.png</Value></Item>
+    <Item><Key>vaisseauAlien32</Key><Value>planetes/vaisseauAlien32.png</Value></Item>
+    <Item><Key>vaisseauAlien33</Key><Value>planetes/vaisseauAlien33.png</Value></Item>
+    <Item><Key>vaisseauAlien41</Key><Value>planetes/vaisseauAlien41.png</Value></Item>
+    <Item><Key>vaisseauAlien42</Key><Value>planetes/vaisseauAlien42.png</Value></Item>
+    <Item><Key>vaisseauAlien43</Key><Value>planetes/vaisseauAlien43.png</Value></Item>
+    <Item><Key>vaisseauAlien51</Key><Value>planetes/vaisseauAlien51.png</Value></Item>
+    <Item><Key>vaisseauAlien52</Key><Value>planetes/vaisseauAlien52.png</Value></Item>
+    <Item><Key>vaisseauAlien53</Key><Value>planetes/vaisseauAlien53.png</Value></Item>
     <Item><Key>lune1</Key><Value>planetes/lune1.png</Value></Item>
     <Item><Key>lune2</Key><Value>planetes/lune2.png</Value></Item>   
     <Item><Key>lune3</Key><Value>planetes/lune3.png</Value></Item>   
-    <Item><Key>lune4</Key><Value>planetes/lune4.png</Value></Item>   
-    <Item><Key>luneVies</Key><Value>planetes/luneVies.png</Value></Item>   
-    <Item><Key>luneWin</Key><Value>planetes/luneWin.png</Value></Item>   
-    <Item><Key>luneLoose</Key><Value>planetes/luneFail.png</Value></Item>
-    <Item><Key>battleship11</Key><Value>planetes/battleship11.png</Value></Item>
-    <Item><Key>battleship12</Key><Value>planetes/battleship12.png</Value></Item>
-    <Item><Key>battleship13</Key><Value>planetes/battleship13.png</Value></Item>
-    <Item><Key>battleship21</Key><Value>planetes/battleship21.png</Value></Item>
-    <Item><Key>battleship22</Key><Value>planetes/battleship22.png</Value></Item>
-    <Item><Key>battleship23</Key><Value>planetes/battleship23.png</Value></Item>
-    <Item><Key>battleship31</Key><Value>planetes/battleship31.png</Value></Item>
-    <Item><Key>battleship32</Key><Value>planetes/battleship32.png</Value></Item>
-    <Item><Key>battleship33</Key><Value>planetes/battleship33.png</Value></Item>
-    <Item><Key>battleship41</Key><Value>planetes/battleship41.png</Value></Item>
-    <Item><Key>battleship42</Key><Value>planetes/battleship42.png</Value></Item>
-    <Item><Key>battleship43</Key><Value>planetes/battleship43.png</Value></Item>
-    <Item><Key>battleship51</Key><Value>planetes/battleship51.png</Value></Item>
-    <Item><Key>battleship52</Key><Value>planetes/battleship52.png</Value></Item>
-    <Item><Key>battleship53</Key><Value>planetes/battleship53.png</Value></Item>
+    <Item><Key>lune4</Key><Value>planetes/lune4.png</Value></Item>
     
     <!-- Masks -->
     <Item><Key>CBMask11</Key><Value>planetes/masks/mask11.png</Value></Item>
@@ -139,6 +140,7 @@
     <!-- Widgets -->
     <Item><Key>WidgetClose</Key><Value>GUI/Widgets/close.png</Value></Item>
     <Item><Key>WidgetNext</Key><Value>GUI/Widgets/next.png</Value></Item>
+    <Item><Key>WidgetNextCannot</Key><Value>GUI/Widgets/next_cant.png</Value></Item>
     <Item><Key>WidgetPush</Key><Value>GUI/Widgets/push.png</Value></Item>
     <Item><Key>WidgetChecked</Key><Value>GUI/Widgets/checked.png</Value></Item>
     

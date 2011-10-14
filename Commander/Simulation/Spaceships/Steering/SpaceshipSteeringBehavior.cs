@@ -11,6 +11,8 @@
         public bool ManualMovementInputThisTick;
         public Vector3 NextMovement;
         public Vector3 NextRotation;
+        public Vector3 LastNextMovement;
+        public Vector3 LastNextRotation;
         public float Speed;
         public float Friction;
 
@@ -38,6 +40,8 @@
             ManualMovementInputThisTick = false;
             NextMovement = Vector3.Zero;
             NextRotation = Vector3.Zero;
+            LastNextMovement = Vector3.Zero;
+            LastNextRotation = Vector3.Zero;
             Speed = 4;
         }
 
@@ -49,6 +53,9 @@
             DoUpdate();
             ApplyBouncing();
             ApplyFriction();
+
+            LastNextMovement = NextMovement;
+            LastNextRotation = NextRotation;
 
             NextMovement = Vector3.Zero;
             NextRotation = Vector3.Zero;

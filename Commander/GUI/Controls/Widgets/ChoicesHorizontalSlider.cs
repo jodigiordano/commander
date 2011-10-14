@@ -12,6 +12,8 @@
     {       
         private Image DecrementRep;
         private Image IncrementRep;
+        private Image DecrementRepCannot;
+        private Image IncrementRepCannot;
         private Text ValueText;
         private Text Label;
 
@@ -36,6 +38,8 @@
 
             DecrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, Effect = SpriteEffects.FlipHorizontally, SizeX = 4 };
             IncrementRep = new Image("WidgetNext") { Origin = Vector2.Zero, SizeX = 4 };
+            DecrementRepCannot = new Image("WidgetNextCannot") { Origin = Vector2.Zero, Effect = SpriteEffects.FlipHorizontally, SizeX = 4 };
+            IncrementRepCannot = new Image("WidgetNextCannot") { Origin = Vector2.Zero, SizeX = 4 };
 
             ValueText = new Text(Choices[ChoiceIndex], @"Pixelite") { SizeX = 2 };
             Label = new Text(label, @"Pixelite") { SizeX = 2 };
@@ -76,6 +80,8 @@
                 Label.VisualPriority = value;
                 DecrementRep.VisualPriority = value;
                 IncrementRep.VisualPriority = value;
+                DecrementRepCannot.VisualPriority = value;
+                IncrementRepCannot.VisualPriority = value;
                 ValueText.VisualPriority = value;
                 Selection.VisualPriority = value + 0.0000001;
             }
@@ -107,6 +113,10 @@
 
                 ValueText.Position += new Vector3(0, (DecrementRep.AbsoluteSize.Y - ValueText.AbsoluteSize.Y), 0);
                 ValueText.CenterIt();
+
+                // Sync cannots
+                DecrementRepCannot.Position = DecrementRep.Position;
+                IncrementRepCannot.Position = IncrementRep.Position;
             }
         }
 
@@ -114,7 +124,16 @@
         public override byte Alpha
         {
             get { return DecrementRep.Alpha; }
-            set { DecrementRep.Alpha = IncrementRep.Alpha = ValueText.Alpha = Label.Alpha = value; }
+            set
+            {
+                DecrementRep.Alpha =
+                IncrementRep.Alpha =
+                DecrementRepCannot.Alpha =
+                IncrementRepCannot.Alpha =
+                ValueText.Alpha =
+                Label.Alpha =
+                value;
+            }
         }
 
 
@@ -197,8 +216,8 @@
             ValueText.Data = Value.ToString();
 
             Scene.Add(Label);
-            Scene.Add(DecrementRep);
-            Scene.Add(IncrementRep);
+            Scene.Add(ChoiceIndex > 0 ? DecrementRep : DecrementRepCannot);
+            Scene.Add(ChoiceIndex < Choices.Count - 1 ? IncrementRep : IncrementRepCannot);
             Scene.Add(ValueText);
         }
 
@@ -210,11 +229,15 @@
             Label.Alpha = (byte) from;
             DecrementRep.Alpha = (byte) from;
             IncrementRep.Alpha = (byte) from;
+            DecrementRepCannot.Alpha = (byte) from;
+            IncrementRepCannot.Alpha = (byte) from;
             ValueText.Alpha = (byte) from;
 
             Scene.VisualEffects.Add(Label, effect);
             Scene.VisualEffects.Add(DecrementRep, effect);
             Scene.VisualEffects.Add(IncrementRep, effect);
+            Scene.VisualEffects.Add(DecrementRepCannot, effect);
+            Scene.VisualEffects.Add(IncrementRepCannot, effect);
             Scene.VisualEffects.Add(ValueText, effect);
         }
     }

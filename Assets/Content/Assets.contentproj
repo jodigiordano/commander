@@ -503,8 +503,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="particules\selectionCorpsCeleste.xml">
-      <Name>selectionCorpsCeleste</Name>
+    <Compile Include="particules\hoverCircle.xml">
+      <Name>hoverCircle</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <SubType>Designer</SubType>
@@ -562,27 +562,6 @@
   <ItemGroup>
     <None Include="planetes\lune4.png">
       <Name>lune4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="planetes\luneFail.png">
-      <Name>luneFail</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="planetes\luneVies.png">
-      <Name>luneVies</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="planetes\luneWin.png">
-      <Name>luneWin</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </None>
@@ -1470,21 +1449,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="planetes\vaisseauAlien11.png">
+    <None Include="planetes\vaisseauAlien11.png">
       <Name>vaisseauAlien11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\vaisseauAlien12.png">
+    </None>
+    <None Include="planetes\vaisseauAlien12.png">
       <Name>vaisseauAlien12</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\vaisseauAlien13.png">
+    </None>
+    <None Include="planetes\vaisseauAlien13.png">
       <Name>vaisseauAlien13</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="scenarios\level1.xml">
@@ -1813,83 +1792,6 @@
     </Compile>
     <Compile Include="planetes\planet93.png">
       <Name>planet93</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="planetes\battleship11.png">
-      <Name>battleship11</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship12.png">
-      <Name>battleship12</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship13.png">
-      <Name>battleship13</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship21.png">
-      <Name>battleship21</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship22.png">
-      <Name>battleship22</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship23.png">
-      <Name>battleship23</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship31.png">
-      <Name>battleship31</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship32.png">
-      <Name>battleship32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship33.png">
-      <Name>battleship33</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship41.png">
-      <Name>battleship41</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship42.png">
-      <Name>battleship42</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship43.png">
-      <Name>battleship43</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship51.png">
-      <Name>battleship51</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship52.png">
-      <Name>battleship52</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="planetes\battleship53.png">
-      <Name>battleship53</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -2593,6 +2495,119 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="asteroids\alien1.png">
+      <Name>alien1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="asteroids\alien2.png">
+      <Name>alien2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="asteroids\alien3.png">
+      <Name>alien3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="asteroids\alien4.png">
+      <Name>alien4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="planetes\planet131.png">
+      <Name>planet131</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\planet132.png">
+      <Name>planet132</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\planet133.png">
+      <Name>planet133</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien21.png">
+      <Name>vaisseauAlien21</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien22.png">
+      <Name>vaisseauAlien22</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien23.png">
+      <Name>vaisseauAlien23</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien31.png">
+      <Name>vaisseauAlien31</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien32.png">
+      <Name>vaisseauAlien32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien33.png">
+      <Name>vaisseauAlien33</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien41.png">
+      <Name>vaisseauAlien41</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien42.png">
+      <Name>vaisseauAlien42</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien43.png">
+      <Name>vaisseauAlien43</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien51.png">
+      <Name>vaisseauAlien51</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien52.png">
+      <Name>vaisseauAlien52</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\vaisseauAlien53.png">
+      <Name>vaisseauAlien53</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="particules\hoverRectangle.xml">
+      <Name>hoverRectangle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GUI\Widgets\next_cant.png">
+      <Name>next_cant</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -140,6 +140,7 @@
     <Compile Include="GUI\Controls\Widgets\NumericHorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\PanelWidget.cs" />
     <Compile Include="GUI\Controls\Widgets\PushButton.cs" />
+    <Compile Include="GUI\Controls\Widgets\RectangleEmitter.cs" />
     <Compile Include="GUI\Controls\Widgets\VerticalSeparatorWidget.cs" />
     <Compile Include="GUI\SandGlass.cs" />
     <Compile Include="GUI\SpaceshipCursor.cs" />

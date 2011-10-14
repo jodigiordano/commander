@@ -23,6 +23,13 @@
             Players = new Dictionary<PausePlayer, GUIPausePlayer>();
 
             Panels = new Dictionary<PanelType, Panel>(PanelTypeComparer.Default);
+        }
+
+
+        public void Initialize()
+        {
+            Players.Clear();
+            Panels.Clear();
 
             Panels.Add(PanelType.Credits, new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false });
             Panels.Add(PanelType.GeneralNews, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.NewsPanel, Color.White, NewsType.General, "What's up at Ephemere Games") { Visible = false });
@@ -31,12 +38,6 @@
             Panels.Add(PanelType.Pause, new PausePanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.PausePanel, Color.White) { Visible = false });
             Panels.Add(PanelType.Help, new HelpPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.HelpPanel, Color.White) { Visible = false });
             Panels.Add(PanelType.Controls, new ControlsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.ControlsPanel, Color.White) { Visible = false });
-        }
-
-
-        public void Initialize()
-        {
-            Players.Clear();
 
             foreach (var p in Panels.Values)
             {

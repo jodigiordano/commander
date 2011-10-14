@@ -18,8 +18,8 @@
         {
             SetTitle("Options");
 
-            Music = new NumericHorizontalSlider("Music", 0, 10, 5, 1, 100);
-            Sfx = new NumericHorizontalSlider("Sfx  ", 0, 10, 5, 1, 100);
+            Music = new NumericHorizontalSlider("Music", 0, 10, 5, 1, 100, 125);
+            Sfx = new NumericHorizontalSlider("Sfx", 0, 10, 5, 1, 100, 125);
             Fullscreen = new CheckBox("Fullscreen") { MinSpaceLabelX = 292 };
             ShowHelpBar = new CheckBox("Show help bar") { MinSpaceLabelX = 292 };
 
