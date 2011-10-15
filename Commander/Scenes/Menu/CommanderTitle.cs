@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
@@ -7,7 +8,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class CommanderTitle
+    class CommanderTitle : IVisual
     {
         private Text Commander;
         private Image Filter;
@@ -17,10 +18,14 @@
         private List<int> VisualEffectsIds;
         private List<int> PhysicalEffectsIds;
 
+        private byte alpha;
+
 
         public CommanderTitle(Scene scene, Vector3 position, double visualPriority)
         {
             Scene = scene;
+
+            alpha = 0;
 
             Commander = new Text("Commander", @"Pixelite", position)
             {
@@ -47,6 +52,20 @@
         public void Initialize()
         {
             //
+        }
+
+
+        public byte Alpha
+        {
+            get { return alpha; }
+            set
+            {
+                alpha = value;
+
+                PressStart.Alpha = value;
+                Commander.Alpha = value;
+                Filter.Alpha = Math.Min(value, (byte) 100);
+            }
         }
 
 
@@ -115,7 +134,9 @@
                 Scene, new Vector3(0, 65, 0),
                 "Alien", Colors.Default.AlienBright,
                 @"Pixelite", Colors.Default.NeutralBright,
-                (Preferences.Target == Core.Utilities.Setting.Xbox360) ? "Press a button to start your engine" : "Click a mouse button to start your engine",
+                (Preferences.Target == Setting.Xbox360 || Preferences.Target == Setting.ArcadeRoyale) ?
+                "Press a button to start your engine" :
+                "Click a mouse button to start your engine",
                 3, true, 3000, 250, Commander.VisualPriority, false)
                 {
                     CenterText = true
@@ -130,6 +151,33 @@
 
             VisualEffectsIds.Clear();
             PhysicalEffectsIds.Clear();
+        }
+
+
+        Rectangle IVisual.VisiblePart
+        {
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        Vector2 IVisual.Origin
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        Vector2 IVisual.Size
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        Color IVisual.Color
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
         }
     }
 }

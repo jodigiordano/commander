@@ -246,7 +246,10 @@
         {
             if (Inputs.ConnectedPlayers.Count == 0)
             {
-                TransitingTo = "Menu";
+                TransitingTo = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ?
+                    Main.LevelsFactory.GetWorldStringId(1) :
+                    "Menu";
+
                 TransiteTo(TransitingTo);
             }
         }

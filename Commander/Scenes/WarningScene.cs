@@ -34,8 +34,6 @@
         public WarningScene() :
             base("Warning")
         {
-            ClearColor = Color.White;
-
             Continue = new Text(
                 Preferences.Target == Core.Utilities.Setting.Xbox360 ?
                 "Press a button to continue." :

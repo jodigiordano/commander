@@ -75,11 +75,12 @@
                 var l = PoolOfLists.Get();
                 l.Clear();
                 l.Add(obj);
-                Effects.Add(effect.Id, effect);
-                Objects.Add(effect.Id, l);
 
                 effect.TerminatedCallback = callback;
                 effect.Initialize();
+
+                Effects.Add(effect.Id, effect);
+                Objects.Add(effect.Id, l);
             }
 
             return effect.Id;

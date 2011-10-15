@@ -17,6 +17,10 @@
             CameraView = new PhysicalRectangle();
             CameraOuterView = new PhysicalRectangle();
             Camera.Changed += new Core.CameraHandler(DoCameraChanged);
+
+            if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                Camera.Zoom = 0.50f;
+
             DoCameraChanged(Camera);
         }
 

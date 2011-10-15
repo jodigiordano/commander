@@ -26,7 +26,7 @@
 
 
         public GameBarPanel(Simulator simulator, double visualPriority)
-            : base(simulator.Scene, new Vector3(0, (-simulator.Scene.Height / 2) + 34, 0), new Vector2(simulator.Scene.Width, 45), visualPriority, Color.White)
+            : base(simulator.Scene, new Vector3(0, (-simulator.Scene.CameraView.Height / 2) + 34, 0), new Vector2(simulator.Scene.CameraView.Width, 45), visualPriority, Color.White)
         {
             Simulator = simulator;
 

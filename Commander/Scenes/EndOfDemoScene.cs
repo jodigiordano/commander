@@ -32,8 +32,6 @@
         public EndOfDemoScene() :
             base("EndOfDemo")
         {
-            ClearColor = Color.White;
-
             Continue = new Text(
                 Preferences.Target == Core.Utilities.Setting.Xbox360 ?
                 "Press a button to continue." :

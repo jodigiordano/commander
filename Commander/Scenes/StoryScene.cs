@@ -27,7 +27,6 @@
         public StoryScene(string name, string transiteTo, Cutscene cutscene) :
             base(name)
         {
-            ClearColor = Color.White;
             WorldToTransiteTo = transiteTo;
             Cutscene = cutscene;
 

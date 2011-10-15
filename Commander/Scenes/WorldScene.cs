@@ -18,6 +18,17 @@
         public bool CanGoBackToMainMenu;
         public WorldDescriptor Descriptor;
 
+        private enum State
+        {
+            Transition,
+            ConnectPlayer,
+            ConnectingPlayer,
+            LoadSaveGame,
+            PlayerConnected
+        }
+
+        private State SceneState;
+        private CommanderTitle Title;
         private Dictionary<string, string> Warps;
         private Dictionary<string, int> LevelsDescriptors;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
@@ -36,8 +47,13 @@
             CelestialBodies = new Dictionary<int, CelestialBody>();
             LevelStates = new LevelStates(this);
             NeedReinit = false;
-            CanGoBackToMainMenu = true;
+            CanGoBackToMainMenu = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale;
             EditorMode = false;
+
+            Title = new CommanderTitle(this, new Vector3(0, -10, 0), VisualPriorities.Default.Title);
+            Title.Initialize();
+
+            SceneState = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? State.Transition : State.PlayerConnected;
         }
 
 
@@ -49,7 +65,8 @@
                 DemoMode = true,
                 WorldMode = true,
                 EditorWorldMode = EditorMode,
-                AvailableLevelsWorldMode = LevelsDescriptors
+                AvailableLevelsWorldMode = LevelsDescriptors,
+                EnableInputs = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale
             };
 
             Simulator.Initialize();
@@ -73,6 +90,9 @@
 
             // Keep track of celestial bodies and pink holes
             InitializeCelestialBodies();
+
+            if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                LevelStates.AllLevelsUnlockedOverride = true;
 
             LevelStates.CelestialBodies = CelestialBodies;
             LevelStates.Descriptor = Descriptor;
@@ -104,6 +124,9 @@
         {
             get
             {
+                if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                    return false;
+
                 bool unlocked = true;
 
                 foreach (var level in Descriptor.UnlockedCondition)
@@ -127,6 +150,42 @@
         protected override void UpdateLogic(GameTime gameTime)
         {
             Simulator.Update();
+
+            if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                Title.Update();
+
+            switch (SceneState)
+            {
+                case State.ConnectPlayer:
+                    Title.Show();
+                    LevelStates.Hide();
+
+                    SceneState = State.ConnectingPlayer;
+                    break;
+
+                case State.ConnectingPlayer:
+                    break;
+
+
+                case State.LoadSaveGame:
+                    if (Main.SaveGameController.IsPlayerSaveGameLoaded)
+                    {
+                        Title.Hide();
+                        LevelStates.Show();
+
+                        if (!Simulator.EnableInputs)
+                            Simulator.SyncPlayers();
+
+                        Simulator.EnableInputs = true;
+                        SceneState = State.PlayerConnected;
+
+                        Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
+                        Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
+
+                        Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
+                    }
+                    break;
+            }
         }
 
 
@@ -135,6 +194,9 @@
             Simulator.Draw();
 
             LevelStates.Draw();
+
+            if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                Title.Draw();
         }
 
 
@@ -159,11 +221,11 @@
                 if (GameInProgress != null)
                 {
                     GameInProgress.Simulator.SyncLevel();
-                    Main.LevelsFactory.Descriptors[GameInProgress.Simulator.LevelDescriptor.Infos.Id] = GameInProgress.Simulator.LevelDescriptor;
+                    Main.LevelsFactory.SetLevelDescriptor(GameInProgress.Simulator.LevelDescriptor.Infos.Id, GameInProgress.Simulator.LevelDescriptor);
                 }
             }
 
-            else
+            else if (Preferences.Target != Core.Utilities.Setting.ArcadeRoyale)
             {
                 Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
             }
@@ -178,10 +240,13 @@
             else
                 Simulator.TeleportPlayers(false);
 
-            if (LastLevelWon)
+            if (!Simulator.EditorWorldMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
             else
                 Main.MusicController.PlayOrResume(Descriptor.Music);
+
+            if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
+                InitConnectFirstPlayer();
         }
 
 
@@ -268,14 +333,31 @@
         {
             var player = (Player) p;
 
+            if (Inputs.ConnectedPlayers.Count == 1)
+                ReloadPlayerData(player);
+
             player.ChooseAssets();
         }
 
 
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
-            if (Inputs.ConnectedPlayers.Count == 0)
-                TransiteTo("Menu");
+            if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+            {
+                if (Inputs.ConnectedPlayers.Count == 0)
+                    InitConnectFirstPlayer();
+                else if (Main.SaveGameController.CurrentPlayer == player)
+                {
+                    ReloadPlayerData((Player) Inputs.MasterPlayer);
+                    SceneState = State.LoadSaveGame;
+                }
+            }
+
+            else
+            {
+                if (Inputs.ConnectedPlayers.Count == 0)
+                    TransiteTo("Menu");
+            }
         }
 
 
@@ -365,7 +447,7 @@
             {
                 if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
                 {
-                    Main.LevelsFactory.Descriptors[level.Infos.Id] = Main.LevelsFactory.GetEmptyDescriptor(level.Infos.Id, level.Infos.Mission);
+                    Main.LevelsFactory.SetLevelDescriptor(level.Infos.Id, Main.LevelsFactory.GetEmptyDescriptor(level.Infos.Id, level.Infos.Mission));
                     Main.LevelsFactory.SaveDescriptorOnDisk(level.Infos.Id);
                 }
 
@@ -412,7 +494,7 @@
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
-            return c != null ? Main.LevelsFactory.Descriptors[LevelsDescriptors[c.Name]] : null;
+            return c != null ? Main.LevelsFactory.GetLevelDescriptor(LevelsDescriptors[c.Name]) : null;
         }
 
 
@@ -488,6 +570,26 @@
 
                 Main.SaveGameController.SaveAll();
             }
+        }
+
+
+        private void ReloadPlayerData(Player p)
+        {
+            Main.SaveGameController.ReloadPlayerData(p);
+            SceneState = State.LoadSaveGame;
+        }
+
+
+        private void InitConnectFirstPlayer()
+        {
+            Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 0, 1000);
+            Title.Initialize();
+            SceneState = State.ConnectPlayer;
+            Simulator.EnableInputs = false;
+            Simulator.SyncPlayers();
+
+            if (Main.SelectedWorld != null)
+                Main.SelectedWorld.GameInProgress = null;
         }
     }
 }

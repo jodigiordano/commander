@@ -193,12 +193,20 @@
             Stars.Position = CelestialBody.Position + new Vector3(5, CelestialBody.Circle.Radius + 20, 0);
             Stars.BrightCount = descriptor.GetStarsCount(score);
             Stars.Draw();
+
+            if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+            {
+                Highscore.Data = score.ToString();
+                Highscore.CenterIt();
+                Highscore.Position = CelestialBody.Position + new Vector3(0, CelestialBody.Circle.Radius + 50, 0);
+                Simulator.Scene.Add(Highscore);
+            }
         }
 
 
         private LevelDescriptor CurrentLevelDescriptor
         {
-            get { return Main.LevelsFactory.Descriptors[Simulator.AvailableLevelsWorldMode[CelestialBody.Name]]; }
+            get { return Main.LevelsFactory.GetLevelDescriptor(Simulator.AvailableLevelsWorldMode[CelestialBody.Name]); }
         }
     }
 }

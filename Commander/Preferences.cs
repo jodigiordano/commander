@@ -22,7 +22,7 @@
         public static Setting Target = Setting.ArcadeRoyale;
         public static Vector2 DeadZoneV2 = new Vector2(0, 0);
         public static Vector3 DeadZone = new Vector3(0, 0, 0);
-        public static Vector2 BackBuffer = new Vector2(1280, 720);
+        public static Vector2 BackBuffer = new Vector2(640, 480);
 #elif WINDOWS
         public static Setting Target = Setting.Windows;
         public static Vector2 DeadZoneV2 = new Vector2(0, 0);

@@ -15,8 +15,8 @@
         public bool ShowOnForegroundLayer;
 
 
-        public HelpBarPanel(Scene scene, double visualPriority)
-            : base(scene, new Vector3(0, scene.Height / 2 - 30, 0), new Vector2(scene.Width, 35), visualPriority, Color.White)
+        public HelpBarPanel(CommanderScene scene, double visualPriority)
+            : base(scene, new Vector3(0, scene.CameraView.Height / 2 - 30, 0), new Vector2(scene.CameraView.Width, 35), visualPriority, Color.White)
         {
             Scene = scene;
 

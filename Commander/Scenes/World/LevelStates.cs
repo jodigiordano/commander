@@ -27,6 +27,8 @@
 
         public bool AllLevelsUnlockedOverride;
 
+        private int VisualEffectsId;
+
 
         public LevelStates(WorldScene scene)
         {
@@ -37,7 +39,7 @@
 
             LockedMaxAlpha = 100;
             GamePausedMaxAlpha = 200;
-            alpha = 255;
+            alpha = (byte) (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 0 : 255);
             NumbersMaxAlpha = 200;
 
             AllLevelsUnlockedOverride = false;
@@ -51,7 +53,7 @@
             {
                 var cb = CelestialBodies[level.Key];
 
-                LevelsNumbers.Add(level.Key, new Text(Main.LevelsFactory.Descriptors[LevelsDescriptors[cb.Name]].Infos.Mission, @"Pixelite")
+                LevelsNumbers.Add(level.Key, new Text(Main.LevelsFactory.GetLevelDescriptor(LevelsDescriptors[cb.Name]).Infos.Mission, @"Pixelite")
                 {
                     SizeX = 3,
                     VisualPriority = cb.VisualPriority + 0.00001,
@@ -193,6 +195,28 @@
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
+        }
+
+
+        public void Show()
+        {
+            ClearActiveEffect();
+
+            VisualEffectsId = Scene.VisualEffects.Add(this, Core.Visual.VisualEffects.Fade(Alpha, 255, 500, 500));
+        }
+
+
+        public void Hide()
+        {
+            ClearActiveEffect();
+
+            VisualEffectsId = Scene.VisualEffects.Add(this, Core.Visual.VisualEffects.Fade(Alpha, 0, 500, 500));
+        }
+
+
+        private void ClearActiveEffect()
+        {
+            Scene.VisualEffects.CancelEffect(VisualEffectsId);
         }
     }
 }

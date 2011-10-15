@@ -36,7 +36,6 @@
             Progress = ProgressType.Linear;
             Delay = 0;
             Length = 0;
-            Id = Ids.NextEffectId++;
 
             Initialize();
         }
@@ -44,6 +43,7 @@
 
         internal void Initialize()
         {
+            Id = Ids.NextEffectId++;
             ElaspedTime = 0;
             RemainingBeforeEnd = Length;
             RemainingBeforeStart = Delay;

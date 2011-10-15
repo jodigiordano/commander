@@ -82,7 +82,6 @@
             "The purpose of my life\n\nis a life of purpose.",
             "This life is worth living\n\nbecause it is what I make it.",
             "What I play is life.",
-            "Happiness is overrated.",
             "I'm happy now that I stopped\n\nlooking for the meaning of life.",
             "A mistake is simply\n\nanother way of doing things.",
             "Adapt or perish, now as ever,\n\nis nature's inexorable imperative.",
@@ -492,7 +491,7 @@
         {
             Text text = new Text(data, @"Pixelite")
             {
-                SizeX = 1,
+                SizeX = 2,
                 Color = color
             };
 
@@ -529,9 +528,11 @@
                     if (!tourelle.Visible || !tourelle.Watcher || TalkingObjects.ContainsKey(tourelle))
                         return;
 
-                    Text texte = new Text(@"Pixelite");
-                    texte.SizeX = 1;
-                    texte.Color = tourelle.Color;
+                    Text texte = new Text(@"Pixelite")
+                    {
+                        SizeX = 2,
+                        Color = tourelle.Color
+                    };
 
                     if (Main.Random.Next(0, 10) == 1)
                     {

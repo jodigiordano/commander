@@ -142,7 +142,7 @@
                         SceneState = State.Finished;
 
                         if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
-                            TransiteTo("Menu");
+                            TransiteTo(Main.LevelsFactory.GetWorldStringId(1));
                         else
                             TransiteTo("Warning"); //Alpha. TransiteTo("Menu");
                     }

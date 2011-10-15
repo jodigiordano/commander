@@ -9,8 +9,7 @@
 
     class LevelsFactory
     {
-        public Dictionary<int, LevelDescriptor> Descriptors;
-        public Dictionary<int, LevelDescriptor> UserDescriptors;
+        private Dictionary<int, LevelDescriptor> Descriptors;
         public Dictionary<int, LevelDescriptor> CutsceneDescriptors;
 
         public LevelDescriptor Menu;
@@ -19,21 +18,18 @@
         private XmlSerializer LevelSerializer;
         private XmlSerializer WorldSerializer;
 
-        private string UserDescriptorsDirectory;
         private string DescriptorsDirectory;
 
 
         public LevelsFactory()
         {
             Descriptors = new Dictionary<int, LevelDescriptor>();
-            UserDescriptors = new Dictionary<int, LevelDescriptor>();
             CutsceneDescriptors = new Dictionary<int, LevelDescriptor>();
             WorldsDescriptors = new Dictionary<int, WorldDescriptor>();
 
             LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
             WorldSerializer = new XmlSerializer(typeof(WorldDescriptor));
 
-            UserDescriptorsDirectory = @".\UserContent\scenarios";
             DescriptorsDirectory = @".\Content\scenarios";
         }
 
@@ -41,13 +37,9 @@
         public void Initialize()
         {
             Descriptors.Clear();
-            UserDescriptors.Clear();
-
-            CreateDirectory(UserDescriptorsDirectory);
 
             LoadLevels(DescriptorsDirectory, "level", Descriptors);
             LoadLevels(DescriptorsDirectory, "worldlayout", Descriptors);
-            LoadLevels(UserDescriptorsDirectory, "level", UserDescriptors);
             LoadWorlds();
             LoadCutscenes();
             LoadMenuDescriptor();
@@ -83,6 +75,12 @@
             }
 
             return d;
+        }
+
+
+        public void SetLevelDescriptor(int id, LevelDescriptor descriptor)
+        {
+            Descriptors[id] = descriptor;
         }
 
 

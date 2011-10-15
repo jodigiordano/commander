@@ -81,7 +81,7 @@
                     SpriteBatch.Begin(
                         SpriteSortMode.Immediate,
                         BlendState.AlphaBlend,
-                        SamplerState.LinearClamp,
+                        SamplerState.PointClamp,
                         DepthStencilState.None,
                         RasterizerState.CullNone,
                         null,
