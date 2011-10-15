@@ -52,8 +52,8 @@
             LoadCutscenes();
             LoadMenuDescriptor();
 
-            PrepareWorldLayout(WorldsDescriptors[1].Layout); //todo: do others
-            PrepareWorldLayout(WorldsDescriptors[2].Layout); //todo: do others
+            foreach (var w in WorldsDescriptors.Values)
+                PrepareWorldLayout(w.Layout);
         }
 
 
@@ -224,6 +224,39 @@
                 SfxEnd = "Galaxy1EndSfx"
             };
             WorldsDescriptors.Add(wd.Id, wd);
+
+            wd = new WorldDescriptor()
+            {
+                Id = 999,
+                Name = "God mode",
+                Levels = new List<KeyValuePair<int, List<int>>>()
+                {
+                    new KeyValuePair<int, List<int>>(901, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(902, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(903, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(904, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(905, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(906, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(907, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(908, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(909, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(910, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(911, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(912, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(913, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(914, new List<int>() {}),
+                    new KeyValuePair<int, List<int>>(915, new List<int>() {})
+                },
+                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, GetWorldStringId(2)) },
+                Layout = 1999,
+                UnlockedCondition = new List<int>(),
+                WarpBlockedMessage = "",
+                LastLevelId = 915,
+                Music = "Galaxy1Music",
+                MusicEnd = "Galaxy1EndMusic",
+                SfxEnd = "Galaxy1EndSfx"
+            };
+            WorldsDescriptors.Add(wd.Id, wd);
         }
 
 
@@ -246,20 +279,20 @@
             using (StreamReader reader = new StreamReader(path))
                 return (LevelDescriptor) LevelSerializer.Deserialize(reader.BaseStream);
         }
+        
 
-
-        public void SaveUserDescriptorOnDisk(int id)
+        public void SaveDescriptorOnDisk(int id)
         {
-            using(StreamWriter writer = new StreamWriter(UserDescriptorsDirectory + @"\level" + id + ".xml"))
-                LevelSerializer.Serialize(writer.BaseStream, UserDescriptors[id]);
+            using (StreamWriter writer = new StreamWriter(DescriptorsDirectory + @"\level" + id + ".xml"))
+                LevelSerializer.Serialize(writer.BaseStream, Descriptors[id]);
         }
 
 
-        public void DeleteUserDescriptorFromDisk(int id)
-        {
-            if (File.Exists(UserDescriptorsDirectory + @"\level" + id + ".xml"))
-                File.Delete(UserDescriptorsDirectory + @"\level" + id + ".xml");
-        }
+        //public void DeleteUserDescriptorFromDisk(int id)
+        //{
+        //    if (File.Exists(UserDescriptorsDirectory + @"\level" + id + ".xml"))
+        //        File.Delete(UserDescriptorsDirectory + @"\level" + id + ".xml");
+        //}
 
 
         public int GetWorldFromLevelId(int id)
@@ -452,14 +485,14 @@
         }
 
 
-        public LevelDescriptor GetEmptyDescriptor()
+        public LevelDescriptor GetEmptyDescriptor(int id, string mission)
         {
             var l = new LevelDescriptor();
 
             l.AddAsteroidBelt();
 
-            l.Infos.Id = GetHighestId() + 1;
-            l.Infos.Mission = "1-" + (GetHighestWorld1Level() + 1).ToString();
+            l.Infos.Id = id;
+            l.Infos.Mission = mission;
 
             return l;
         }

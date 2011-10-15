@@ -319,46 +319,46 @@
 
             else if (command.Name == "RestartSimulation")
             {
-                if (Simulator.EditorState == EditorState.Editing)
-                    Simulator.SyncLevel();
+                //if (Simulator.EditorState == EditorState.Editing)
+                //    Simulator.SyncLevel();
                 
-                Simulator.Initialize();
-                Simulator.SyncPlayers();
+                //Simulator.Initialize();
+                //Simulator.SyncPlayers();
             }
 
             else if (command.Name == "PauseSimulation")
             {
-                Simulator.State = GameState.Paused;
+                //Simulator.State = GameState.Paused;
             }
 
             else if (command.Name == "ResumeSimulation")
             {
-                Simulator.State = GameState.Running;
+                //Simulator.State = GameState.Running;
             }
 
             else if (command.Name == "NewLevel")
             {
-                Simulator.LevelDescriptor = Main.LevelsFactory.GetEmptyDescriptor();
-                Simulator.Initialize();
-                Simulator.SyncPlayers();
+                //Simulator.LevelDescriptor = Main.LevelsFactory.GetEmptyDescriptor();
+                //Simulator.Initialize();
+                //Simulator.SyncPlayers();
             }
 
-            else if (command.Name == "SaveLevel")
-            {
-                Simulator.SyncLevel();
+            //else if (command.Name == "SaveLevel")
+            //{
+            //    Simulator.SyncLevel();
 
-                var descriptor = Simulator.LevelDescriptor;
+            //    var descriptor = Simulator.LevelDescriptor;
 
-                if (!Main.LevelsFactory.UserDescriptors.ContainsKey(descriptor.Infos.Id))
-                {
-                    Main.LevelsFactory.UserDescriptors.Add(descriptor.Infos.Id, descriptor);
+            //    if (!Main.LevelsFactory.UserDescriptors.ContainsKey(descriptor.Infos.Id))
+            //    {
+            //        Main.LevelsFactory.UserDescriptors.Add(descriptor.Infos.Id, descriptor);
 
-                    ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
-                    ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
-                }
+            //        ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
+            //        ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
+            //    }
 
-                Main.LevelsFactory.SaveUserDescriptorOnDisk(descriptor.Infos.Id);
-            }
+            //    Main.LevelsFactory.SaveUserDescriptorOnDisk(descriptor.Infos.Id);
+            //}
 
 
             NotifyEditorCommandExecuted(command);
@@ -600,18 +600,18 @@
 
         private void DoDelete(PanelWidget widget)
         {
-            var panel = (LevelsPanel) widget;
+            //var panel = (LevelsPanel) widget;
 
-            if (panel.ClickedLevel != null)
-            {
-                var descriptor = Simulator.LevelDescriptor;
+            //if (panel.ClickedLevel != null)
+            //{
+            //    var descriptor = Simulator.LevelDescriptor;
 
-                Main.LevelsFactory.DeleteUserDescriptorFromDisk(descriptor.Infos.Id);
-                Main.LevelsFactory.Descriptors.Remove(descriptor.Infos.Id);
+            //    Main.LevelsFactory.DeleteUserDescriptorFromDisk(descriptor.Infos.Id);
+            //    Main.LevelsFactory.Descriptors.Remove(descriptor.Infos.Id);
 
-                ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
-                ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
-            }
+            //    ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
+            //    ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
+            //}
         }
 
 

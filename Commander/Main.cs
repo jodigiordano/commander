@@ -25,7 +25,6 @@ namespace EphemereGames.Commander
 
 
         public static Options Options;
-        public static GameScene GameInProgress;
         public static Main Instance;
         public static WorldScene SelectedWorld;
         public static LevelsFactory LevelsFactory;
@@ -34,8 +33,6 @@ namespace EphemereGames.Commander
         public static SaveGameController SaveGameController;
         public static CheatsController CheatsController;
         public static InputsFactory InputsFactory;
-
-        public static bool GamePausedToWorld { get { return GameInProgress != null && GameInProgress.State == GameState.PausedToWorld; } }
 
         private GraphicsDeviceManager Graphics;
         private BootSequence Boot;

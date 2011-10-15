@@ -167,17 +167,17 @@
             ScenesLoaded.Add(new WarningScene());
             ScenesLoaded.Add(new EndOfDemoScene());
             ScenesLoaded.Add(new MainMenuScene());
-            ScenesLoaded.Add(new EditorScene());
 
-            LoadWorld(1);
-            LoadWorld(2);
-            LoadWorld(3);
+            LoadWorld(1, false);
+            LoadWorld(2, false);
+            LoadWorld(3, false);
+            LoadWorld(999, true);
 
             ScenesAreLoaded = true;
         }
 
 
-        private void LoadWorld(int id)
+        private void LoadWorld(int id, bool editorMode)
         {
             WorldDescriptor wd;
             WorldScene ws;
@@ -191,6 +191,7 @@
             ScenesLoaded.Add(was);
             ScenesLoaded.Add(ws);
 
+            ws.EditorMode = editorMode;
             ws.Initialize();
             was.Initialize();
         }

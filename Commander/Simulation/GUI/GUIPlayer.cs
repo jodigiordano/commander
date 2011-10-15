@@ -23,7 +23,6 @@
         public GUIPlayer(
             Simulator simulator,
             Dictionary<TurretType, bool> availableTurrets,
-            Dictionary<string, LevelDescriptor> levelsDescriptors,
             Color color,
             string representation,
             Commander.Player p)
@@ -42,7 +41,7 @@
             CelestialBodyMenu.AvailableTurrets = availableTurrets;
             CelestialBodyMenu.Initialize();
 
-            WorldMenu = new WorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, levelsDescriptors, color);
+            WorldMenu = new WorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, color);
             NewGameMenu = new NewGameMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, color);
 
             PowerUpInputMode = false;

@@ -222,7 +222,9 @@
             SceneState = State.ConnectPlayer;
             Simulator.EnableInputs = false;
             Simulator.SyncPlayers();
-            Main.GameInProgress = null;
+
+            if (Main.SelectedWorld != null)
+                Main.SelectedWorld.GameInProgress = null;
         }
 
 
@@ -260,7 +262,7 @@
 
                 case "how to play": Simulator.ShowPanel(PanelType.Help, true); break;
                 case "options": Simulator.ShowPanel(PanelType.Options, true); break;
-                case "editor": if (Preferences.Debug) { TransiteTo("Editeur"); } break;
+                case "editor": if (Preferences.Debug) { TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(999)); } break;
                 case "credits": Simulator.ShowPanel(PanelType.Credits, true); break;
                 case "quit": Main.Instance.Exit(); break;
             }

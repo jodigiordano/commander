@@ -58,7 +58,7 @@
 
             if (Length <= 0)
             {
-                TransiteTo(Descriptor.Id > 1 ? "EndOfDemo" : Main.LevelsFactory.GetWorldStringId(Descriptor.Id)); //tmp
+                TransiteTo(Descriptor.Id > 1 && Descriptor.Id != 999 ? "EndOfDemo" : Main.LevelsFactory.GetWorldStringId(Descriptor.Id)); //tmp
                 TransitionInProgress = true;
             }
 

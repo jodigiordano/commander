@@ -11,6 +11,7 @@
 
     class WorldScene : CommanderScene
     {
+        public GameScene GameInProgress;
         public LevelStates LevelStates;
         public Simulator Simulator;
         public bool NeedReinit;
@@ -18,9 +19,11 @@
         public WorldDescriptor Descriptor;
 
         private Dictionary<string, string> Warps;
-        private Dictionary<string, LevelDescriptor> LevelsDescriptors;
+        private Dictionary<string, int> LevelsDescriptors;
         private Dictionary<CelestialBody, string> WarpsCelestialBodies;
         private Dictionary<int, CelestialBody> CelestialBodies;
+
+        public bool EditorMode;
 
 
         public WorldScene(WorldDescriptor descriptor) :
@@ -28,12 +31,13 @@
         {
             Descriptor = descriptor;
             Warps = new Dictionary<string, string>();
-            LevelsDescriptors = new Dictionary<string, LevelDescriptor>();
+            LevelsDescriptors = new Dictionary<string, int>();
             WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
             CelestialBodies = new Dictionary<int, CelestialBody>();
             LevelStates = new LevelStates(this);
             NeedReinit = false;
             CanGoBackToMainMenu = true;
+            EditorMode = false;
         }
 
 
@@ -44,7 +48,8 @@
             {
                 DemoMode = true,
                 WorldMode = true,
-                AvailableLevelsDemoMode = LevelsDescriptors
+                EditorWorldMode = EditorMode,
+                AvailableLevelsWorldMode = LevelsDescriptors
             };
 
             Simulator.Initialize();
@@ -56,13 +61,13 @@
             foreach (var level in Descriptor.Levels)
             {
                 LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
-                LevelsDescriptors.Add(d.Infos.Mission, d);
+                LevelsDescriptors.Add(d.Infos.Mission, level.Key);
             }
 
             foreach (var level in Descriptor.Warps)
             {
                 LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
-                LevelsDescriptors.Add(d.Infos.Mission, d);
+                LevelsDescriptors.Add(d.Infos.Mission, level.Key);
                 Warps.Add(d.Infos.Mission, level.Value);
             }
 
@@ -77,6 +82,15 @@
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.MusicController.AddMusic(Descriptor.Music);
             Main.MusicController.AddMusic(Descriptor.MusicEnd);
+        }
+
+
+        public bool GamePausedToWorld
+        {
+            get
+            {
+                return !EditorMode && GameInProgress != null && GameInProgress.State == GameState.PausedToWorld;
+            }
         }
 
 
@@ -136,14 +150,29 @@
             }
 
             InitializeLevelsStates();
+
             Main.SelectedWorld = this;
-            Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
+
+            if (Simulator.EditorWorldMode)
+            {
+                // sync the level descriptor so it can be saved.
+                if (GameInProgress != null)
+                {
+                    GameInProgress.Simulator.SyncLevel();
+                    Main.LevelsFactory.Descriptors[GameInProgress.Simulator.LevelDescriptor.Infos.Id] = GameInProgress.Simulator.LevelDescriptor;
+                }
+            }
+
+            else
+            {
+                Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
+            }
 
             Simulator.OnFocus();
 
-            if (Main.GameInProgress != null && Descriptor.ContainsLevel(Main.GameInProgress.Level.Infos.Id))
+            if (GameInProgress != null && Descriptor.ContainsLevel(GameInProgress.Level.Infos.Id))
             {
-                var cb = CelestialBodies[Main.GameInProgress.Level.Infos.Id];
+                var cb = CelestialBodies[GameInProgress.Level.Infos.Id];
                 Simulator.TeleportPlayers(false, cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
             }
             else
@@ -261,6 +290,12 @@
 
         private void DoSelectAction(Player p)
         {
+            if (EditorMode)
+            {
+                DoSelectActionEditor(p);
+                return;
+            }
+
             // Select a warp
             var world = GetWorldSelected(p);
 
@@ -279,10 +314,11 @@
 
             if (level != null)
             {
-                GameScene currentGame = Main.GameInProgress;
+                
+                GameScene currentGame = GameInProgress;
 
                 // Resume Game
-                if (Main.GamePausedToWorld &&
+                if (GamePausedToWorld &&
                     currentGame.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id &&
                     Simulator.PausedGameChoice == PausedGameChoice.Resume)
                 {
@@ -296,7 +332,8 @@
                     currentGame.StopMusic();
 
                 currentGame = new GameScene("Game1", level);
-                Main.GameInProgress = currentGame;
+                currentGame.Initialize();
+                GameInProgress = currentGame;
                 currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
 
                 if (Visuals.GetScene(currentGame.Name) == null)
@@ -311,6 +348,60 @@
         }
 
 
+        public void DoSelectActionEditor(Player p)
+        {
+            // Select a warp
+            var world = GetWorldSelected(p);
+
+            if (world != null)
+            {
+                return; //todo: go to another world?
+            }
+
+            // Select a level
+            var level = GetSelectedLevel(p);
+
+            if (level != null)
+            {
+                if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
+                {
+                    Main.LevelsFactory.Descriptors[level.Infos.Id] = Main.LevelsFactory.GetEmptyDescriptor(level.Infos.Id, level.Infos.Mission);
+                    Main.LevelsFactory.SaveDescriptorOnDisk(level.Infos.Id);
+                }
+
+                else if (Simulator.EditorWorldChoice == EditorWorldChoice.Save)
+                {
+                    Main.LevelsFactory.SaveDescriptorOnDisk(level.Infos.Id);
+                }
+
+                else
+                {
+                    GameScene currentGame = GameInProgress;
+
+                    // Start a new game
+                    if (currentGame != null)
+                        currentGame.StopMusic();
+
+                    currentGame = new GameScene("Game1", level)
+                    {
+                        EditorMode = EditorMode,
+                        EditorState = Simulator.EditorWorldChoice == EditorWorldChoice.Edit ? EditorState.Editing : EditorState.Playtest
+                    };
+                    currentGame.Initialize();
+                    GameInProgress = currentGame;
+                    currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
+
+                    if (Visuals.GetScene(currentGame.Name) == null)
+                        Visuals.AddScene(currentGame);
+                    else
+                        Visuals.UpdateScene(currentGame.Name, currentGame);
+
+                    TransiteTo(currentGame.Name);
+                }
+            }
+        }
+
+
         public void DoNewGameState(GameState gameState)
         {
             InitializeLevelsStates();
@@ -321,7 +412,7 @@
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
-            return c != null ? LevelsDescriptors[c.Name] : null;
+            return c != null ? Main.LevelsFactory.Descriptors[LevelsDescriptors[c.Name]] : null;
         }
 
 
@@ -345,7 +436,7 @@
         {
             get
             {
-                return Main.GameInProgress != null && Main.GameInProgress.State == GameState.Won && Main.GameInProgress.Level.Infos.Id == Descriptor.LastLevelId;
+                return GameInProgress != null && GameInProgress.State == GameState.Won && GameInProgress.Level.Infos.Id == Descriptor.LastLevelId;
             }
         }
 
@@ -374,7 +465,7 @@
             foreach (var celestialBody in Simulator.PlanetarySystemController.CelestialBodies)
             {
                 if (LevelsDescriptors.ContainsKey(celestialBody.Name) && !(celestialBody is PinkHole))
-                    CelestialBodies.Add(LevelsDescriptors[celestialBody.Name].Infos.Id, celestialBody);
+                    CelestialBodies.Add(LevelsDescriptors[celestialBody.Name], celestialBody);
 
                 if (celestialBody is PinkHole)
                     WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);

@@ -13,6 +13,9 @@
         public Simulator Simulator;
         public LevelDescriptor Level;
 
+        public bool EditorMode;
+        public EditorState EditorState;
+
         private string TransitingTo;
         private FutureJobsController FutureJobs;
 
@@ -26,14 +29,25 @@
 
             TransitingTo = "";
 
-            Simulator = new Simulator(this, level);
-            Simulator.Initialize();
-            Simulator.AddNewGameStateListener(DoNewGameState);
-            Inputs.AddListener(Simulator);
-
             FutureJobs = new FutureJobsController();
 
             MusicName = "BattleMusic";
+
+            EditorMode = false;
+            EditorState = EditorState.Editing;
+        }
+
+
+        public void Initialize()
+        {
+            Simulator = new Simulator(this, Level)
+            {
+                EditorMode = EditorMode,
+                EditorState = EditorState
+            };
+            Simulator.Initialize();
+            Simulator.AddNewGameStateListener(DoNewGameState);
+            Inputs.AddListener(Simulator);
         }
 
 
@@ -297,8 +311,13 @@
         {
             Main.MusicController.StopCurrentMusic();
 
-            var newGame = new GameScene(Name == "Game1" ? "Game2" : "Game1", level);
-            Main.GameInProgress = newGame;
+            var newGame = new GameScene(Name == "Game1" ? "Game2" : "Game1", level)
+            {
+                EditorMode = EditorMode,
+                EditorState = EditorState
+            };
+            newGame.Initialize();
+            Main.SelectedWorld.GameInProgress = newGame;
             newGame.Simulator.AddNewGameStateListener(Main.SelectedWorld.DoNewGameState);
 
             if (Visuals.GetScene(newGame.Name) == null)

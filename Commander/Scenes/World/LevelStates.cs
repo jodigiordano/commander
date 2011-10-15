@@ -10,7 +10,7 @@
     class LevelStates : IVisual
     {
         public Dictionary<int, CelestialBody> CelestialBodies;
-        public Dictionary<string, LevelDescriptor> LevelsDescriptors;
+        public Dictionary<string, int> LevelsDescriptors;
         public WorldDescriptor Descriptor;
         
         private Dictionary<int, bool> LevelUnlockedStates;
@@ -18,7 +18,7 @@
         private Text GamePausedText;
         private Dictionary<int, Text> LevelsNumbers;
 
-        private Scene Scene;
+        private WorldScene Scene;
 
         private byte alpha;
         private byte LockedMaxAlpha;
@@ -28,7 +28,7 @@
         public bool AllLevelsUnlockedOverride;
 
 
-        public LevelStates(Scene scene)
+        public LevelStates(WorldScene scene)
         {
             Scene = scene;
             LevelUnlockedStates = new Dictionary<int, bool>();
@@ -51,7 +51,7 @@
             {
                 var cb = CelestialBodies[level.Key];
 
-                LevelsNumbers.Add(level.Key, new Text(LevelsDescriptors[cb.Name].Infos.Mission, @"Pixelite")
+                LevelsNumbers.Add(level.Key, new Text(Main.LevelsFactory.Descriptors[LevelsDescriptors[cb.Name]].Infos.Mission, @"Pixelite")
                 {
                     SizeX = 3,
                     VisualPriority = cb.VisualPriority + 0.00001,
@@ -100,7 +100,7 @@
         {
             foreach (var level in Descriptor.Levels)
             {
-                bool unlocked = Descriptor.Id < 2; //tmp Alpha (instead of true)
+                bool unlocked = Descriptor.Id < 2 || Descriptor.Id == 999; //tmp Alpha (instead of true)
 
                 if (!AllLevelsUnlockedOverride)
                 {
@@ -138,7 +138,7 @@
                 }
             }
 
-            if (Main.GamePausedToWorld)
+            if (Scene.GamePausedToWorld)
             {
                 var cb = GetPausedGameCelestialBody();
                 GamePausedText.Position = cb.Position + new Vector3(0, cb.Circle.Radius + 10, 0);
@@ -159,7 +159,7 @@
 
         private CelestialBody GetPausedGameCelestialBody()
         {
-            return CelestialBodies[Main.GameInProgress.Level.Infos.Id];
+            return CelestialBodies[Scene.GameInProgress.Level.Infos.Id];
         }
 
 

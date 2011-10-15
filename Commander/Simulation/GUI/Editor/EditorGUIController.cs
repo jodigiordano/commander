@@ -193,19 +193,6 @@
 
         public void DoEditorCommandExecuted(EditorCommand command)
         {
-            if (command.Name == "PlaytestState" || command.Name == "EditState")
-            {
-                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(4)).Next();
-                return;
-            }
-
-
-            if (command.Name == "PauseSimulation" || command.Name == "ResumeSimulation")
-            {
-                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.File].GetChoice(6)).Next();
-                return;
-            }
-
             if (command.Name == "ShowCelestialBodiesPaths" || command.Name == "HideCelestialBodiesPaths")
             {
                 ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.Battlefield].GetChoice(1)).Next();

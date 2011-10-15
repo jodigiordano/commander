@@ -222,15 +222,30 @@
         {
             ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
 
-            if (ActualSelection.CelestialBody != null && Main.GamePausedToWorld &&
-                Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == ActualSelection.CelestialBody.Name &&
+            if (Simulator.EditorWorldMode)
+            {
+                if (ActualSelection.CelestialBody != null &&
+                    Simulator.Scene.EnableInputs &&
+                    ActualSelection.EditorWorldChoice == EditorWorldChoice.None)
+                {
+                    NextEditorWorldChoice();
+                }
+
+                else if (ActualSelection.CelestialBody == null || !Simulator.Scene.EnableInputs)
+                {
+                    ActualSelection.EditorWorldChoice = EditorWorldChoice.None;
+                }
+            }
+
+            else if (ActualSelection.CelestialBody != null && Main.SelectedWorld.GamePausedToWorld &&
+                Main.SelectedWorld.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == ActualSelection.CelestialBody.Name &&
                 Simulator.Scene.EnableInputs &&
                 ActualSelection.PausedGameChoice == PausedGameChoice.None) //todo: take it from WorldMenu
             {
                 NextPausedGameChoice();
             }
 
-            else if (Main.GameInProgress == null || ActualSelection.CelestialBody == null || Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission != ActualSelection.CelestialBody.Name)
+            else if (Main.SelectedWorld.GameInProgress == null || ActualSelection.CelestialBody == null || Main.SelectedWorld.GameInProgress.Simulator.LevelDescriptor.Infos.Mission != ActualSelection.CelestialBody.Name)
             {
                 ActualSelection.PausedGameChoice = PausedGameChoice.None;
             }
@@ -392,6 +407,34 @@
                 actual = nbChoices - 1;
 
             ActualSelection.PausedGameChoice = (PausedGameChoice) actual;
+        }
+
+
+        public void NextEditorWorldChoice()
+        {
+            int actual = (int) ActualSelection.EditorWorldChoice;
+            int nbChoices = 4;
+
+            actual += 1;
+
+            if (actual >= nbChoices)
+                actual = 0;
+
+            ActualSelection.EditorWorldChoice = (EditorWorldChoice) actual;
+        }
+
+
+        public void PreviousEditorWorldChoice()
+        {
+            int actual = (int) ActualSelection.EditorWorldChoice;
+            int nbChoices = 4;
+
+            actual -= 1;
+
+            if (actual < 0)
+                actual = nbChoices - 1;
+
+            ActualSelection.EditorWorldChoice = (EditorWorldChoice) actual;
         }
 
 

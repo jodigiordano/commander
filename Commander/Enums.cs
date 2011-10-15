@@ -170,6 +170,16 @@ namespace EphemereGames.Commander.Simulation
     };
 
 
+    public enum EditorWorldChoice
+    {
+        None = -1,
+        Edit = 0,
+        Playtest = 1,
+        Save = 2,
+        Reset = 3
+    };
+
+
     public enum NewGameChoice
     {
         None = -1,
@@ -189,10 +199,9 @@ namespace EphemereGames.Commander.Simulation
     enum EditorGeneralMenuChoice
     {
         None = -1,
-        File = 0,
-        Waves = 1,
-        Battlefield = 2,
-        Gameplay = 3
+        Waves = 0,
+        Battlefield = 1,
+        Gameplay = 2
     };
 
 

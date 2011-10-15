@@ -205,7 +205,6 @@
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />
-    <Compile Include="Scenes\EditorScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\LoadingScene.cs" />
     <Compile Include="Scenes\MainMenuScene.cs" />
@@ -241,7 +240,6 @@
     <Compile Include="Simulation\Editor\EditorLevelGenerator.cs" />
     <Compile Include="Simulation\Editor\EditorPlayer.cs" />
     <Compile Include="Simulation\Editor\EditorPlayerSelection.cs" />
-    <Compile Include="Simulation\Editor\LiteSimulator.cs" />
     <Compile Include="Simulation\Enemies\EnemiesController.cs" />
     <Compile Include="Simulation\Enemies\InfiniteWave.cs" />
     <Compile Include="Simulation\Enemies\UpfrontInfiniteWave.cs" />

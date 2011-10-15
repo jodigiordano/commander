@@ -8,8 +8,6 @@
 
     class EditorLevelGenerator
     {
-        private static LiteSimulator LiteSimulator = new LiteSimulator();
-
         public static List<Size> PossibleSizes = new List<Size>()
         {
             Size.Small,

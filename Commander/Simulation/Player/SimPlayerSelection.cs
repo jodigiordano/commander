@@ -15,6 +15,7 @@
         protected TurretType turretToBuy;
         protected Turret turretToPlace;
         protected PausedGameChoice pausedGameChoice;
+        protected EditorWorldChoice editorWorldChoice;
         protected NewGameChoice newGameChoice;
         protected EditorEditingState editingState;
 
@@ -25,6 +26,7 @@
         public bool TurretToBuyChanged;
         public bool TurretToPlaceChanged;
         public bool PausedGameChoiceChanged;
+        public bool EditorWorldChoiceChanged;
         public bool NewGameChoiceChanged;
         public bool EditingStateChanged;
 
@@ -60,6 +62,7 @@
             TurretChoice = TurretChoice.None;
             TurretToPlace = null;
             PausedGameChoice = PausedGameChoice.None;
+            EditorWorldChoice = EditorWorldChoice.None;
             NewGameChoice = NewGameChoice.None;
             EditingState = EditorEditingState.None;
 
@@ -76,6 +79,7 @@
             TurretToBuyChanged = false;
             TurretToPlaceChanged = false;
             PausedGameChoiceChanged = false;
+            EditorWorldChoiceChanged = false;
             NewGameChoiceChanged = false;
             EditingStateChanged = false;
         }
@@ -130,6 +134,13 @@
         }
 
 
+        public EditorWorldChoice EditorWorldChoice
+        {
+            get { return editorWorldChoice; }
+            set { EditorWorldChoiceChanged = editorWorldChoice != value; editorWorldChoice = value; }
+        }
+
+
         public NewGameChoice NewGameChoice
         {
             get { return newGameChoice; }
@@ -153,6 +164,7 @@
             turretToBuy = other.turretToBuy;
             turretToPlace = other.turretToPlace;
             pausedGameChoice = other.pausedGameChoice;
+            editorWorldChoice = other.editorWorldChoice;
             newGameChoice = other.newGameChoice;
             editingState = other.editingState;
         }

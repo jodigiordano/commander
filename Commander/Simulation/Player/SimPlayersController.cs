@@ -285,6 +285,22 @@
         }
 
 
+        public void DoEditorWorldChoice(Player p, int delta)
+        {
+            var player = Players[p];
+
+            if (player.ActualSelection.EditorWorldChoice == EditorWorldChoice.None)
+                return;
+
+            if (delta > 0)
+                player.NextEditorWorldChoice();
+            else
+                player.PreviousEditorWorldChoice();
+
+            return;
+        }
+
+
         public void DoNewGameChoice(Player p, int delta)
         {
             var player = Players[p];

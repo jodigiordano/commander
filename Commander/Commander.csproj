@@ -363,8 +363,6 @@
     <Compile Include="Simulation\Spaceships\SpaceshipsController.cs" />
     <Compile Include="Simulation\MessagesController.cs" />
     <Compile Include="Simulation\Enemies\WaveGenerator.cs" />
-    <Compile Include="Scenes\EditorScene.cs" />
-    <Compile Include="Simulation\Editor\LiteSimulator.cs" />
     <Compile Include="Descriptors.cs" />
     <Compile Include="Simulation\Editor\EditorLevelGenerator.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsFactory.cs" />

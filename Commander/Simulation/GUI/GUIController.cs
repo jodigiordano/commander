@@ -13,7 +13,6 @@
         public List<CelestialBody> CelestialBodies;
         public List<Turret> Turrets;
         public Level Level;
-        public Dictionary<string, LevelDescriptor> AvailableLevelsDemoMode;
         public List<Enemy> Enemies;
         public InfiniteWave InfiniteWaves;
         public LinkedList<Wave> Waves;
@@ -141,7 +140,7 @@
         public void DoPlayerConnected(SimPlayer p)
         {
             GUIPlayer player = new GUIPlayer(
-                Simulator, AvailableTurrets, AvailableLevelsDemoMode,
+                Simulator, AvailableTurrets,
                 p.Color, p.ImageName, p.InnerPlayer);
 
             player.Cursor.Position = p.Position;
@@ -502,17 +501,18 @@
             {
                 player.WorldMenu.CelestialBody = selection.CelestialBody;
                 player.WorldMenu.PausedGameChoice = selection.PausedGameChoice;
+                player.WorldMenu.EditorChoice = selection.EditorWorldChoice;
 
                 if (GamePausedMenuPlayerCheckedIn == null && player.WorldMenu.PausedGameMenuVisible)
                 {
                     GamePausedMenuPlayerCheckedIn = player;
-                    player.WorldMenu.PausedGameMenuCheckedIn = true;
+                    player.WorldMenu.MenuCheckedIn = true;
                 }
 
                 else if (GamePausedMenuPlayerCheckedIn == player && selection.CelestialBody == null)
                 {
                     GamePausedMenuPlayerCheckedIn = null;
-                    player.WorldMenu.PausedGameMenuCheckedIn = false;
+                    player.WorldMenu.MenuCheckedIn = false;
                 }
             }
 

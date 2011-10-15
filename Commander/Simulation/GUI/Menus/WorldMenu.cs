@@ -8,8 +8,8 @@
     class WorldMenu
     {
         public CelestialBody CelestialBody;
-        private Dictionary<string, LevelDescriptor> AvailableLevels;
         public PausedGameChoice PausedGameChoice;
+        public EditorWorldChoice EditorChoice;
 
         private Text Title;
         private Text Difficulty;
@@ -17,20 +17,21 @@
         private double VisualPriority;
         private ScoreStars Stars;
 
-        public bool PausedGameMenuCheckedIn;
+        public bool MenuCheckedIn;
         public ContextualMenu PausedGameMenu;
+        public ContextualMenu EditorMenu;
 
         private List<ContextualMenuChoice> PausedGameChoices;
+        private List<ContextualMenuChoice> EditorChoices;
 
         private Simulator Simulator;
         private bool AlternateSelectedText;
 
 
-        public WorldMenu(Simulator simulator, double visualPriority, Dictionary<string, LevelDescriptor> availableLevels, Color color)
+        public WorldMenu(Simulator simulator, double visualPriority, Color color)
         {
             Simulator = simulator;
             VisualPriority = visualPriority;
-            AvailableLevels = availableLevels;
 
             AlternateSelectedText = color == Colors.Spaceship.Yellow;
 
@@ -42,6 +43,16 @@
             };
 
             PausedGameMenu = new ContextualMenu(simulator, visualPriority, color, PausedGameChoices, 15);
+
+            EditorChoices = new List<ContextualMenuChoice>()
+            {
+                new TextContextualMenuChoice("edit", new Text("edit", @"Pixelite") { SizeX = 2 }),
+                new TextContextualMenuChoice("playtest", new Text("playtest", @"Pixelite") { SizeX = 2 }),
+                new TextContextualMenuChoice("save", new Text("save", @"Pixelite") { SizeX = 2 }),
+                new TextContextualMenuChoice("reset", new Text("reset", @"Pixelite") { SizeX = 2 }),
+            };
+
+            EditorMenu = new ContextualMenu(simulator, visualPriority, color, EditorChoices, 15);
 
             Title = new Text(@"Pixelite")
             {
@@ -66,7 +77,7 @@
 
             Stars = new ScoreStars(Simulator.Scene, 0, VisualPriorities.Default.LevelHighScore).CenterIt();
 
-            PausedGameMenuCheckedIn = false;
+            MenuCheckedIn = false;
         }
 
 
@@ -76,15 +87,31 @@
             {
                 return
                     CelestialBody != null &&
-                    Main.GamePausedToWorld &&
-                    Main.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == CelestialBody.Name;
+                    Main.SelectedWorld != null &&
+                    Main.SelectedWorld.GamePausedToWorld &&
+                    Main.SelectedWorld.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == CelestialBody.Name;
+            }
+        }
+
+
+        public bool EditorMenuVisible
+        {
+            get
+            {
+                return
+                    CelestialBody != null &&
+                    Simulator.EditorWorldMode;
             }
         }
 
 
         public Vector3 Position
         {
-            set { PausedGameMenu.Position = value; }
+            set
+            {
+                PausedGameMenu.Position = value;
+                EditorMenu.Position = value;
+            }
         }
 
 
@@ -104,7 +131,24 @@
             if (CelestialBody is PinkHole)
                 return;
 
-            if (PausedGameMenuCheckedIn && PausedGameMenuVisible)
+            if (EditorMenuVisible)
+            {
+                int newIndex = (int) EditorChoice;
+
+                //if (AlternateSelectedText && EditorMenu.Choices.Count > 0 && newIndex != EditorMenu.SelectedIndex)
+                //{
+                //    if (EditorMenu.SelectedIndex >= 0)
+                //        ((TextContextualMenuChoice) PausedGameMenu.Choices[PausedGameMenu.SelectedIndex]).SetColor(Color.White);
+
+                //    if (newIndex >= 0)
+                //        ((TextContextualMenuChoice) PausedGameMenu.Choices[newIndex]).SetColor(Colors.Spaceship.Selected);
+                //}
+
+                EditorMenu.SelectedIndex = newIndex;
+                EditorMenu.Draw();
+            }
+
+            else if (MenuCheckedIn && PausedGameMenuVisible)
             {
                 int newIndex = (int) PausedGameChoice;
 
@@ -130,31 +174,31 @@
 
         private void DrawInfos()
         {
-            LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
+            LevelDescriptor descriptor = CurrentLevelDescriptor;
 
             Title.Data = descriptor.Infos.Mission;
             Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 20, 0);
             Title.Origin = Title.Center;
-            //Difficulty.Data = descriptor.Infos.Difficulty;
-            //Difficulty.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y + CelestialBody.Circle.Radius + 16, 0);
-            //Difficulty.Origin = Difficulty.Center;
-
 
             Simulator.Scene.Add(Title);
-            //Simulator.Scene.Add(Difficulty);
-
         }
 
 
         private void DrawHighScore()
         {
-            LevelDescriptor descriptor = AvailableLevels[CelestialBody.Name];
+            LevelDescriptor descriptor = CurrentLevelDescriptor;
 
             int score = Main.SaveGameController.GetPlayerHighScore(descriptor.Infos.Id);
 
             Stars.Position = CelestialBody.Position + new Vector3(5, CelestialBody.Circle.Radius + 20, 0);
             Stars.BrightCount = descriptor.GetStarsCount(score);
             Stars.Draw();
+        }
+
+
+        private LevelDescriptor CurrentLevelDescriptor
+        {
+            get { return Main.LevelsFactory.Descriptors[Simulator.AvailableLevelsWorldMode[CelestialBody.Name]]; }
         }
     }
 }
