@@ -66,12 +66,12 @@
                     RightCoin = Keys.D6,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
-                        { Keys.P, "KeyDelete" },
-                        { Keys.Z, "KeyDelete" },
-                        { Keys.X, "KeyDelete" },
-                        { Keys.C, "KeyDelete" },
-                        { Keys.V, "KeyDelete" },
-                        { Keys.D1, "KeyDelete" },
+                        { Keys.P, "ArcadeStick" },
+                        { Keys.Z, "ArcadeA" },
+                        { Keys.X, "ArcadeB" },
+                        { Keys.C, "ArcadeC" },
+                        { Keys.V, "ArcadeD" },
+                        { Keys.D1, "ArcadeStart" },
                     }
                 }
             };
@@ -101,12 +101,12 @@
                     RetryLevel = Keys.Q,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
-                        { Keys.P, "KeyDelete" },
-                        { Keys.A, "KeyDelete" },
-                        { Keys.S, "KeyDelete" },
-                        { Keys.Q, "KeyDelete" },
-                        { Keys.W, "KeyDelete" },
-                        { Keys.D2, "KeyDelete" },
+                        { Keys.P, "ArcadeStick" },
+                        { Keys.A, "ArcadeA" },
+                        { Keys.S, "ArcadeB" },
+                        { Keys.Q, "ArcadeC" },
+                        { Keys.W, "ArcadeD" },
+                        { Keys.D2, "ArcadeStart" },
                     }
                 }
             };
@@ -134,12 +134,12 @@
                     RetryLevel = Keys.Y,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
-                        { Keys.P, "KeyDelete" },
-                        { Keys.H, "KeyDelete" },
-                        { Keys.J, "KeyDelete" },
-                        { Keys.Y, "KeyDelete" },
-                        { Keys.U, "KeyDelete" },
-                        { Keys.D3, "KeyDelete" },
+                        { Keys.P, "ArcadeStick" },
+                        { Keys.H, "ArcadeA" },
+                        { Keys.J, "ArcadeB" },
+                        { Keys.Y, "ArcadeC" },
+                        { Keys.U, "ArcadeD" },
+                        { Keys.D3, "ArcadeStart" },
                     }
                 }
             };
@@ -167,12 +167,12 @@
                     RetryLevel = Keys.M,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
-                        { Keys.P, "KeyDelete" },
-                        { Keys.B, "KeyDelete" },
-                        { Keys.N, "KeyDelete" },
-                        { Keys.M, "KeyDelete" },
-                        { Keys.OemComma, "KeyDelete" },
-                        { Keys.D4, "KeyDelete" },
+                        { Keys.P, "ArcadeStick" },
+                        { Keys.B, "ArcadeA" },
+                        { Keys.N, "ArcadeB" },
+                        { Keys.M, "ArcadeC" },
+                        { Keys.OemComma, "ArcadeD" },
+                        { Keys.D4, "ArcadeStart" },
                     }
                 }
             };

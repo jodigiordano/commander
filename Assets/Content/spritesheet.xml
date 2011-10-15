@@ -135,6 +135,13 @@
     <Item><Key>MouseMiddle</Key><Value>GUI/Buttons/Windows/mouseMiddlePress.png</Value></Item>
     <Item><Key>MouseMiddleRoll</Key><Value>GUI/Buttons/Windows/mouseMiddleRoll.png</Value></Item>
     
+    <!-- Arcade Buttons -->
+    <Item><Key>ArcadeA</Key><Value>GUI/Buttons/Arcade/a.png</Value></Item>
+    <Item><Key>ArcadeB</Key><Value>GUI/Buttons/Arcade/b.png</Value></Item>
+    <Item><Key>ArcadeC</Key><Value>GUI/Buttons/Arcade/c.png</Value></Item>
+    <Item><Key>ArcadeD</Key><Value>GUI/Buttons/Arcade/d.png</Value></Item>
+    <Item><Key>ArcadeStart</Key><Value>GUI/Buttons/Arcade/start.png</Value></Item>
+    <Item><Key>ArcadeStick</Key><Value>GUI/Buttons/Arcade/stick.png</Value></Item>
     
     <!-- Widgets -->
     <Item><Key>WidgetClose</Key><Value>GUI/Widgets/close.png</Value></Item>
