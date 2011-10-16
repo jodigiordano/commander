@@ -8,8 +8,8 @@
         public PowerUpType PowerUp;
 
 
-        public PowerUpCheckBox(string label, PowerUpType type)
-            : base(new Image(label) { SizeX = 6 })
+        public PowerUpCheckBox(string label, PowerUpType type, float sizeX)
+            : base(new Image(label) { SizeX = sizeX })
         {
             PowerUp = type;
         }

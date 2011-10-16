@@ -1,13 +1,14 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class WaveSubPanel : HorizontalPanel
     {
         private NumericHorizontalSlider StartingTime;
-        private EnemiesWidget Enemies;
+        private PushButton Enemies;
         private NumericHorizontalSlider Level;
         private NumericHorizontalSlider CashValue;
         private NumericHorizontalSlider QuantityWidget;
@@ -39,7 +40,7 @@
             };
 
             StartingTime = new NumericHorizontalSlider("Starting time", 0, 500, 0, 10, 50, 50);
-            Enemies = new EnemiesWidget(simulator.EnemiesFactory.All, (int) size.X / 2, 3);
+            Enemies = new PushButton(new Text("Enemies", "Pixelite")) { ClickHandler = EnemiesButtonClicked };
             Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 50, 50);
             CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 100, 100);
             QuantityWidget = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 50, 50);
@@ -67,7 +68,7 @@
 
         public int EnemiesCount
         {
-            get { return Enemies.ClickedCount; }
+            get { return /* Enemies.ClickedCount */ 0; }
         }
 
 
@@ -80,7 +81,7 @@
         public void Sync(WaveDescriptor descriptor)
         {
             StartingTime.Value = (int) descriptor.StartingTime / 1000;
-            Enemies.Sync(descriptor.Enemies);
+            //Enemies.Sync(descriptor.Enemies);
             Level.Value = descriptor.LivesLevel;
             CashValue.Value = descriptor.CashValue;
             QuantityWidget.Value = descriptor.Quantity;
@@ -97,7 +98,7 @@
             return new WaveDescriptor()
             {
                 StartingTime = StartingTime.Value * 1000,
-                Enemies = Enemies.GetEnemies(),
+                //Enemies = Enemies.GetEnemies(),
                 LivesLevel = Level.Value,
                 SpeedLevel = Level.Value,
                 CashValue = CashValue.Value,
@@ -135,6 +136,12 @@
         {
             get { return SwitchEveryWidget.Value; }
             set { SwitchEveryWidget.Value = value; }
+        }
+
+
+        private void EnemiesButtonClicked(PanelWidget p)
+        {
+
         }
     }
 }

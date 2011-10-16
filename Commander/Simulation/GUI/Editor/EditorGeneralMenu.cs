@@ -26,9 +26,8 @@
 
             Menus = new Dictionary<EditorGeneralMenuChoice, Image>(EditorGeneralMenuChoiceComparer.Default);
 
-            Menus.Add(EditorGeneralMenuChoice.Gameplay, new Image("EditorGameplay", position + new Vector3(50, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
-            Menus.Add(EditorGeneralMenuChoice.Waves, new Image("EditorWaves", position + new Vector3(100, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
-            Menus.Add(EditorGeneralMenuChoice.Battlefield, new Image("EditorBattlefield", position + new Vector3(150, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
+            Menus.Add(EditorGeneralMenuChoice.Gameplay, new Image("EditorGameplay", position + new Vector3(0, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
+            Menus.Add(EditorGeneralMenuChoice.Battlefield, new Image("EditorBattlefield", position + new Vector3(50, 0, 0)) { SizeX = 4, VisualPriority = visualPriority });
 
             SubMenus = new Dictionary<EditorGeneralMenuChoice, ContextualMenu>(EditorGeneralMenuChoiceComparer.Default);
 
@@ -37,13 +36,13 @@
             var choices = new List<ContextualMenuChoice>()
             {
                 new EditorTextContextualMenuChoice("Background", "Background", 2, new EditorPanelCommand("ShowPanel", EditorPanel.Background, true)),
-                new EditorTextContextualMenuChoice("General", "General", 2, new EditorPanelCommand("ShowPanel", EditorPanel.General, true)),
                 new EditorTextContextualMenuChoice("Turrets", "Turrets", 2, new EditorPanelCommand("ShowPanel", EditorPanel.Turrets, true)),
                 new EditorTextContextualMenuChoice("PowerUps", "Power-ups", 2, new EditorPanelCommand("ShowPanel", EditorPanel.PowerUps, true)),
-                new EditorTextContextualMenuChoice("Player", "Player", 2, new EditorPanelCommand("ShowPanel", EditorPanel.Player, true))
+                new EditorTextContextualMenuChoice("Player", "Player", 2, new EditorPanelCommand("ShowPanel", EditorPanel.Player, true)),
+                new EditorTextContextualMenuChoice("Waves", "Waves", 2, new EditorPanelCommand("ShowPanel", EditorPanel.Waves, true)),
             };
 
-            var menu = new ContextualMenu(simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, Color.White, choices, 5);
+            var menu = new ContextualMenu(simulator, VisualPriority - 0.00001, Color.White, choices, 5);
             menu.SetTitle("Gameplay");
             SubMenus.Add(EditorGeneralMenuChoice.Gameplay, menu);
 
@@ -56,20 +55,9 @@
                 new EditorTextContextualMenuChoice("Clear", "Clear", 2, new EditorCelestialBodyCommand("Clear")),
             };
 
-            menu = new ContextualMenu(simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, Color.White, choices, 5);
+            menu = new ContextualMenu(simulator, VisualPriority - 0.00001, Color.White, choices, 5);
             menu.SetTitle("Battlefield");
             SubMenus.Add(EditorGeneralMenuChoice.Battlefield, menu);
-
-            //=================================================================
-
-            choices = new List<ContextualMenuChoice>()
-            {
-                new EditorTextContextualMenuChoice("Edit", "Edit...", 2, new EditorPanelCommand("ShowPanel", EditorPanel.Waves, true)),
-            };
-
-            menu = new ContextualMenu(simulator, Preferences.PrioriteGUIPanneauGeneral - 0.001, Color.White, choices, 5);
-            menu.SetTitle("Waves");
-            SubMenus.Add(EditorGeneralMenuChoice.Waves, menu);
 
             //=================================================================
 

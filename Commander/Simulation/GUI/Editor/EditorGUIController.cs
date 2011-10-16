@@ -24,7 +24,10 @@
         {
             Simulator = simulator;
 
-            GeneralMenu = new EditorGeneralMenu(simulator, new Vector3(400, 300, 0), VisualPriorities.Default.EditorGeneralMenu);
+            GeneralMenu = new EditorGeneralMenu(
+                simulator,
+                new Vector3(simulator.Scene.CameraView.Right - 150, simulator.Scene.CameraView.Bottom - 30, 0),
+                VisualPriorities.Default.EditorGeneralMenu);
 
             Players = new Dictionary<EditorPlayer, EditorGUIPlayer>();
 
@@ -42,43 +45,44 @@
             Panels.Clear();
 
             // Player's panel
-            PlayerPanel playerPanel = new PlayerPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            var playerPanel = new PlayerPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Player, playerPanel);
 
             // Turrets' panel
-            TurretsPanel turretsPanel = new TurretsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            var turretsPanel = new TurretsAssetsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            turretsPanel.Initialize();
+            turretsPanel.Sync();
             Panels.Add(EditorPanel.Turrets, turretsPanel);
 
             // PowerUps' panel
-            PowerUpsPanel powerUpsPanel = new PowerUpsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            var powerUpsPanel = new PowerUpsAssetsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            powerUpsPanel.Initialize();
+            powerUpsPanel.Sync();
             Panels.Add(EditorPanel.PowerUps, powerUpsPanel);
 
-            // General panel
-            GeneralPanel generalPanel = new GeneralPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
-            Panels.Add(EditorPanel.General, generalPanel);
-
             // Background panel
-            BackgroundsPanel backgroundPanel = new BackgroundsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            var backgroundPanel = new BackgroundsAssetsPanel(Simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            backgroundPanel.Initialize();
             Panels.Add(EditorPanel.Background, backgroundPanel);
 
             // Waves panel
-            WavesPanel wavesPanel = new WavesPanel(Simulator, Vector3.Zero, new Vector2(1000, 600), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            var wavesPanel = new WavesPanel(Simulator, Vector3.Zero, new Vector2(1000, 600), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Waves, wavesPanel);
 
             // Load panel
-            LevelsPanel loadPanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
+            var loadPanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
             loadPanel.SetTitle("Load");
             loadPanel.Initialize();
             Panels.Add(EditorPanel.Load, loadPanel);
 
             // Save panel
-            LevelsPanel deletePanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
+            var deletePanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
             deletePanel.SetTitle("Delete - No confirmation!!!");
             deletePanel.Initialize();
             Panels.Add(EditorPanel.Delete, deletePanel);
 
             // Celestial Body Assets panel
-            CelestialBodyAssetsPanel assetsPanel = new CelestialBodyAssetsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White);
+            var assetsPanel = new CelestialBodyAssetsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White);
             assetsPanel.Initialize();
             Panels.Add(EditorPanel.CelestialBodyAssets, assetsPanel);
 

@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
+    using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -31,6 +32,9 @@
 
         private Vector3 position;
 
+        private Dictionary<int, string> Aliases;
+        private Text Alias;
+
 
         public NumericHorizontalSlider(string label, int min, int max, int startingValue, int increment, int spaceForLabel, int spaceForValue)
         {
@@ -46,6 +50,7 @@
             IncrementRepCannot = new Image("WidgetNextCannot") { Origin = Vector2.Zero, SizeX = 4 };
 
             ValueText = new Text(Value.ToString(), @"Pixelite") { SizeX = 2 }.CenterIt();
+            Alias = new Text("Pixelite") { SizeX = 2 }.CenterIt();
             Label = new Text(label, @"Pixelite") { SizeX = 2 };
 
             DecrementCircle = new Circle(Vector3.Zero, DecrementRep.AbsoluteSize.X / 2);
@@ -53,6 +58,8 @@
 
             SpaceForLabel = spaceForLabel;
             SpaceForValue = spaceForValue;
+
+            Aliases = new Dictionary<int, string>();
         }
 
 
@@ -61,6 +68,12 @@
             Selection = Scene.Particles.Get(@"selectionCorpsCeleste");
 
             ((CircleEmitter) Selection.Model[0]).Radius = DecrementCircle.Radius + 5;
+        }
+
+
+        public void AddAlias(int value, string alias)
+        {
+            Aliases.Add(value, alias);
         }
 
 
@@ -79,6 +92,7 @@
                 DecrementRepCannot.VisualPriority = value;
                 IncrementRepCannot.VisualPriority = value;
                 ValueText.VisualPriority = value;
+                Alias.VisualPriority = value;
                 Selection.VisualPriority = value + 0.0000001;
             }
         }
@@ -109,6 +123,10 @@
                 ValueText.Position += new Vector3(SpaceForValue / 2, DecrementRep.AbsoluteSize.Y / 2, 0);
                 ValueText.CenterIt();
 
+                // Sync alias
+                Alias.Position = ValueText.Position;
+                Alias.CenterIt();
+
                 // Sync cannots
                 DecrementRepCannot.Position = DecrementRep.Position;
                 IncrementRepCannot.Position = IncrementRep.Position;
@@ -126,6 +144,7 @@
                 DecrementRepCannot.Alpha =
                 IncrementRepCannot.Alpha =
                 ValueText.Alpha =
+                Alias.Alpha =
                 Label.Alpha = value;
             }
         }
@@ -188,12 +207,23 @@
 
         public override void Draw()
         {
-            ValueText.Data = Value.ToString();
+            if (Aliases.ContainsKey(Value))
+            {
+                Alias.Data = Aliases[Value];
+                Alias.CenterIt();
+                Scene.Add(Alias);
+            }
+
+            else
+            {
+                ValueText.Data = Value.ToString();
+                ValueText.CenterIt();
+                Scene.Add(ValueText);
+            }
 
             Scene.Add(Label);
             Scene.Add(Value > Min ? DecrementRep : DecrementRepCannot);
             Scene.Add(Value < Max ? IncrementRep : IncrementRepCannot);
-            Scene.Add(ValueText);
         }
 
 
@@ -207,6 +237,7 @@
             DecrementRepCannot.Alpha = (byte) from;
             IncrementRepCannot.Alpha = (byte) from;
             ValueText.Alpha = (byte) from;
+            Alias.Alpha = (byte) from;
 
             Scene.VisualEffects.Add(Label, effect);
             Scene.VisualEffects.Add(DecrementRep, effect);
@@ -214,6 +245,7 @@
             Scene.VisualEffects.Add(DecrementRepCannot, effect);
             Scene.VisualEffects.Add(IncrementRepCannot, effect);
             Scene.VisualEffects.Add(ValueText, effect);
+            Scene.VisualEffects.Add(Alias, effect);
         }
 
 

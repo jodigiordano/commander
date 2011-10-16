@@ -40,9 +40,6 @@
             OpenedPanel = EditorPanel.None;
 
             ((PlayerPanel) Panels[EditorPanel.Player]).Initialize();
-            ((TurretsPanel) Panels[EditorPanel.Turrets]).Initialize();
-            ((PowerUpsPanel) Panels[EditorPanel.PowerUps]).Initialize();
-            ((GeneralPanel) Panels[EditorPanel.General]).Initialize();
             ((WavesPanel) Panels[EditorPanel.Waves]).Initialize();
 
             Panels[EditorPanel.Player].SetClickHandler("Lives", DoLives);
@@ -50,9 +47,6 @@
             Panels[EditorPanel.Player].SetClickHandler("Minerals", DoMinerals);
             Panels[EditorPanel.Player].SetClickHandler("BulletDamage", DoBulletDamage);
             Panels[EditorPanel.Player].SetClickHandler("LifePacks", DoLifePacks);
-            Panels[EditorPanel.General].SetClickHandler("Difficulty", DoDifficulty);
-            Panels[EditorPanel.General].SetClickHandler("World", DoWorld);
-            Panels[EditorPanel.General].SetClickHandler("Level", DoLevel);
             Panels[EditorPanel.Turrets].SetClickHandler(DoTurrets);
             Panels[EditorPanel.PowerUps].SetClickHandler(DoPowerUps);
             Panels[EditorPanel.Background].SetClickHandler(DoBackgrounds);
@@ -457,7 +451,7 @@
 
             var command = new EditorPlayerCommand("AddOrRemoveBulletDamage")
             {
-                BulletDamage = slider.Value / 10f,
+                BulletDamage = slider.Value,
                 Owner = CurrentOpenedPanelPlayer
             };
 
@@ -509,7 +503,7 @@
 
         private void DoTurrets(PanelWidget widget)
         {
-            var checkbox = (TurretCheckBox) widget;
+            var checkbox = (TurretCheckBox) ((GridPanel) widget).LastClickedWidget;
 
             if (checkbox.Value)
                 Simulator.TurretsFactory.Availables.Add(checkbox.Turret.Type, checkbox.Turret);

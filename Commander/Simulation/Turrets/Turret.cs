@@ -78,6 +78,7 @@
         private DisableBar DisableBar;
         private bool DisabledOverride;
         private float DisabledAnnounciationCounter;
+        private byte alpha;
 
         
         public Turret(Simulator simulator)
@@ -147,6 +148,7 @@
             DisableBar = new DisableBar(Simulator.Scene);
             DisabledAnnounciationCounter = float.NaN;
             NewWanderThisTick = false;
+            alpha = 255;
         }
 
 
@@ -407,6 +409,23 @@
             }
 
             return Bullets;
+        }
+
+
+        //todo: better handling
+        public byte Alpha
+        {
+            get { return alpha; }
+            set
+            {
+                alpha = value;
+
+                CanonImage.Alpha = value;
+                BaseImage.Alpha = value;
+                //RangeImage.Alpha = value; //todo
+                //FormImage.Alpha = value;
+                //DisableBar.Alpha = value;
+            }
         }
 
 

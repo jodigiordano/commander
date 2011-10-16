@@ -37,7 +37,6 @@
 
         // spaceship
         public double BulletDamage;
-        public bool SaveBulletDamage;
 
         private Simulator Simulator;
         private double NextCelestialBodyVisualPriority = VisualPriorities.Default.CelestialBody;
@@ -88,8 +87,6 @@
             LifePacks = Descriptor.Minerals.LifePacks;
 
             HelpTexts = Descriptor.HelpTexts;
-
-            SaveBulletDamage = false;
         }
 
 
@@ -152,8 +149,7 @@
                 asteroidBelt.Images.Add(e.ToString("g"));
 
             // Bullet damage
-            if (SaveBulletDamage)
-                Descriptor.Player.BulletDamage = BulletDamage;
+            Descriptor.Player.BulletDamage = BulletDamage;
         }
 
 
@@ -330,7 +326,7 @@
         private void InitializeSpaceship()
         {
             // Bullet damage
-            if (Descriptor.Player.BulletDamage > 0)
+            if (Descriptor.Player.BulletDamage >= 0)
             {
                 BulletDamage = Descriptor.Player.BulletDamage;
                 return;

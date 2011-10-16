@@ -199,9 +199,8 @@ namespace EphemereGames.Commander.Simulation
     enum EditorGeneralMenuChoice
     {
         None = -1,
-        Waves = 0,
-        Battlefield = 1,
-        Gameplay = 2
+        Gameplay = 0,
+        Battlefield = 1
     };
 
 
@@ -214,11 +213,10 @@ namespace EphemereGames.Commander.Simulation
         Delete = 3,
         PowerUps = 4,
         Turrets = 5,
-        General = 6,
-        Background = 7,
-        GeneratePlanetarySystem = 8,
-        Waves = 9,
-        CelestialBodyAssets = 10
+        Background = 6,
+        GeneratePlanetarySystem = 7,
+        Waves = 8,
+        CelestialBodyAssets = 9
     };
 
 

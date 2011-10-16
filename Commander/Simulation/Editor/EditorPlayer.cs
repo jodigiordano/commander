@@ -10,6 +10,7 @@
         public EditorGeneralMenu GeneralMenu;
 
         public EditorPlayerSelection ActualSelection;
+        public EditorPlayerSelection LastSelection;
         public Circle Circle { get { return SimPlayer.Circle; } }
         public Color Color { get { return SimPlayer.Color; } }
 
@@ -21,6 +22,7 @@
             Simulator = simulator;
 
             ActualSelection = new EditorPlayerSelection();
+            LastSelection = new EditorPlayerSelection();
         }
 
 
@@ -32,14 +34,18 @@
 
         public void Update()
         {
+            LastSelection.Sync(ActualSelection);
+
             CheckGeneralMenu();
 
             // main menu
             if (ActualSelection.GeneralMenuChoice == EditorGeneralMenuChoice.None)
                 ActualSelection.GeneralMenuSubMenuIndex = -1;
 
-            if (ActualSelection.GeneralMenuChoice != EditorGeneralMenuChoice.None && ActualSelection.GeneralMenuSubMenuIndex == -1)
+            if ((ActualSelection.GeneralMenuChoice != EditorGeneralMenuChoice.None && ActualSelection.GeneralMenuSubMenuIndex == -1) ||
+                ActualSelection.GeneralMenuChoiceChanged)
                 ActualSelection.GeneralMenuSubMenuIndex = 0;
+
 
             // celestial body
             if (SimPlayer.ActualSelection.CelestialBody == null)

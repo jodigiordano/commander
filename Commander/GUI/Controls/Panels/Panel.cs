@@ -31,6 +31,7 @@
         private Vector2 padding;
         private Vector3 position;
         private List<PanelWidget> TitleBarWidgets;
+        private Vector2 size;
 
         protected bool RecomputePositions;
 
@@ -39,6 +40,7 @@
         {
             Position = position - new Vector3(size / 2f, 0);
             VisualPriority = visualPriority;
+            this.size = size;
 
             RecomputePositions = true;
 
@@ -106,6 +108,13 @@
                 base.Scene = value;
                 CloseButton.Scene = value;
             }
+        }
+
+
+        public new Vector2 Size
+        {
+            get { return size; }
+            set { }
         }
 
 

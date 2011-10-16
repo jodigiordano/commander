@@ -65,6 +65,8 @@
                 DemoMode = true,
                 WorldMode = true,
                 EditorWorldMode = EditorMode,
+                //EditorMode = EditorMode,
+                //EditorState = EditorState.Editing,
                 AvailableLevelsWorldMode = LevelsDescriptors,
                 EnableInputs = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale
             };

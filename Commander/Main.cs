@@ -51,7 +51,7 @@ namespace EphemereGames.Commander
             Graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = (int) Preferences.BackBuffer.X,
-                PreferredBackBufferHeight = (int) Preferences.BackBuffer.Y,
+                PreferredBackBufferHeight = (int) Preferences.BackBuffer.Y
             };
 
             IsFixedTimeStep = true;

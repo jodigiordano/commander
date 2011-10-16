@@ -21,11 +21,13 @@
 
             SetTitle("Player");
 
-            Lives = new NumericHorizontalSlider("Starting lives", 0, 50, 0, 1, 150, 100);
-            Cash = new NumericHorizontalSlider("Starting money", 0, 50000, 0, 100, 150, 100);
-            Minerals = new NumericHorizontalSlider("Minerals", 0, 50000, 0, 100, 150, 100);
-            LifePacks = new NumericHorizontalSlider("Life packs", 0, 50, 0, 1, 150, 100);
-            BulletDamage = new NumericHorizontalSlider("Bullet damage", -1, 1000, 0, 5, 150, 100);
+            Lives = new NumericHorizontalSlider("Starting lives", 0, 50, 0, 1, 350, 200);
+            Cash = new NumericHorizontalSlider("Starting money", 0, 50000, 0, 100, 350, 200);
+            Minerals = new NumericHorizontalSlider("Minerals", 0, 50000, 0, 100, 350, 200);
+            LifePacks = new NumericHorizontalSlider("Life packs", 0, 50, 0, 1, 350, 200);
+
+            BulletDamage = new NumericHorizontalSlider("Bullet damage", -1, 100, 0, 1, 350, 200);
+            BulletDamage.AddAlias(-1, "automatic");
 
             AddWidget("Lives", Lives);
             AddWidget("Cash", Cash);
@@ -33,11 +35,13 @@
             AddWidget("LifePacks", LifePacks);
             AddWidget("BulletDamage", BulletDamage);
 
+            Alpha = 0;
+
             Initialize();
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             base.Initialize();
 
@@ -45,7 +49,7 @@
             Cash.Value = Simulator.LevelDescriptor.Player.Money;
             Minerals.Value = Simulator.LevelDescriptor.Minerals.Cash;
             LifePacks.Value = Simulator.LevelDescriptor.Minerals.LifePacks;
-            BulletDamage.Value = (int) (Simulator.LevelDescriptor.Player.BulletDamage * 10);
+            BulletDamage.Value = (int) (Simulator.LevelDescriptor.Player.BulletDamage);
         }
     }
 }

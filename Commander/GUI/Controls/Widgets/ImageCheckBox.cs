@@ -29,6 +29,18 @@
         }
 
 
+        public override byte Alpha
+        {
+            get { return base.Alpha; }
+            set
+            {
+                Label.Alpha = value;
+
+                base.Alpha = value;
+            }
+        }
+
+
         public override Vector3 Position
         {
             get

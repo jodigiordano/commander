@@ -30,7 +30,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <PublishUrl>C:\Users\Jodi\Desktop\Release\</PublishUrl>
+    <PublishUrl>C:\Users\Jodi\Desktop\ArcadeRoyale\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -192,7 +192,8 @@
     <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\CelestialBodyAssetsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\AssetsPanel.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipKeyboardMBehavior.cs" />
     <Compile Include="XACTMusicController.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />
@@ -307,14 +308,13 @@
     <Compile Include="Simulation\GUI\Menus\NextWaveContextualMenuChoice.cs" />
     <Compile Include="Simulation\GUI\Menus\StartingPathMenu.cs" />
     <Compile Include="Simulation\GUI\PlayerCash.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\BackgroundsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\BackgroundsAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WavesPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\GeneralPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\PowerUpsPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\TurretsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\PowerUpsAssetsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\TurretsAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PlayerPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\LevelsPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\EnemiesWidget.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemiesAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PowerUpCheckBox.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\TurretCheckBox.cs" />
