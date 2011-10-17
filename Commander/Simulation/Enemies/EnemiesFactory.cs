@@ -14,29 +14,37 @@
 
         public static readonly Dictionary<EnemyType, string> ImagesEnemies = new Dictionary<EnemyType, string>(EnemyTypeComparer.Default)
         {
-            { EnemyType.Asteroid, @"Asteroid" },
-            { EnemyType.Comet, @"Comet" },
-            { EnemyType.Plutoid, @"Plutoid" },
-            { EnemyType.Centaur, @"Centaur" },
-            { EnemyType.Trojan, @"Trojan" },
-            { EnemyType.Meteoroid, @"Meteoroid" },
-            { EnemyType.Damacloid, @"Damacloid" },
-            { EnemyType.Swarm, @"Swarm" },
-            { EnemyType.Vulcanoid, @"Vulcanoid" }
+            { EnemyType.Asteroid, "Asteroid" },
+            { EnemyType.Comet, "Comet" },
+            { EnemyType.Plutoid, "Plutoid" },
+            { EnemyType.Centaur, "Centaur" },
+            { EnemyType.Trojan, "Trojan" },
+            { EnemyType.Meteoroid, "Meteoroid" },
+            { EnemyType.Damacloid, "Damacloid" },
+            { EnemyType.Swarm, "Swarm" },
+            { EnemyType.Vulcanoid, "Vulcanoid" },
+            { EnemyType.Alien1, "Alien1" },
+            { EnemyType.Alien2, "Alien2" },
+            { EnemyType.Alien3, "Alien3" },
+            { EnemyType.Alien4, "Alien4" }
         };
 
 
         public static readonly Dictionary<string, EnemyType> EnemiesImages = new Dictionary<string, EnemyType>()
         {
-            { @"Asteroid", EnemyType.Asteroid },
-            { @"Comet", EnemyType.Comet },
-            { @"Plutoid", EnemyType.Plutoid },
-            { @"Centaur", EnemyType.Centaur },
-            { @"Trojan", EnemyType.Trojan },
-            { @"Meteoroid", EnemyType.Meteoroid },
-            { @"Damacloid", EnemyType.Damacloid },
-            { @"Swarm", EnemyType.Swarm },
-            { @"Vulcanoid", EnemyType.Vulcanoid }
+            { "Asteroid", EnemyType.Asteroid },
+            { "Comet", EnemyType.Comet },
+            { "Plutoid", EnemyType.Plutoid },
+            { "Centaur", EnemyType.Centaur },
+            { "Trojan", EnemyType.Trojan },
+            { "Meteoroid", EnemyType.Meteoroid },
+            { "Damacloid", EnemyType.Damacloid },
+            { "Swarm", EnemyType.Swarm },
+            { "Vulcanoid", EnemyType.Vulcanoid },
+            { "Alien1", EnemyType.Alien1 },
+            { "Alien2", EnemyType.Alien2 },
+            { "Alien3", EnemyType.Alien3 },
+            { "Alien4", EnemyType.Alien4 }
         };
 
 
@@ -50,7 +58,11 @@
             { EnemyType.Meteoroid, new Color(239, 0, 0) },
             { EnemyType.Damacloid, new Color(255, 0, 170) },
             { EnemyType.Swarm, new Color(255, 0, 170) },
-            { EnemyType.Vulcanoid, new Color(0, 76, 255) }
+            { EnemyType.Vulcanoid, new Color(0, 76, 255) },
+            { EnemyType.Alien1, Colors.Default.AlienBright },
+            { EnemyType.Alien2, Colors.Default.AlienBright },
+            { EnemyType.Alien3, Colors.Default.AlienBright },
+            { EnemyType.Alien4, Colors.Default.AlienBright }
         };
 
 
@@ -64,7 +76,11 @@
             { EnemyType.Meteoroid, "MeteoroidHit" },
             { EnemyType.Damacloid, "DamacloidHit" },
             { EnemyType.Swarm, "SwarmHit" },
-            { EnemyType.Vulcanoid, "VulcanoidHit" }
+            { EnemyType.Vulcanoid, "VulcanoidHit" },
+            { EnemyType.Alien1, "AsteroidHit" },
+            { EnemyType.Alien2, "AsteroidHit" },
+            { EnemyType.Alien3, "AsteroidHit" },
+            { EnemyType.Alien4, "AsteroidHit" }
         };
 
 
@@ -78,7 +94,11 @@
             { EnemyType.Meteoroid, "MeteoroidDestroyed" },
             { EnemyType.Damacloid, "DamacloidDestroyed" },
             { EnemyType.Swarm, "SwarmDestroyed" },
-            { EnemyType.Vulcanoid, "VulcanoidDestroyed" }
+            { EnemyType.Vulcanoid, "VulcanoidDestroyed" },
+            { EnemyType.Alien1, "AsteroidDestroyed" },
+            { EnemyType.Alien2, "AsteroidDestroyed" },
+            { EnemyType.Alien3, "AsteroidDestroyed" },
+            { EnemyType.Alien4, "AsteroidDestroyed" }
         };
 
 
@@ -92,7 +112,11 @@
             { EnemyType.Meteoroid, "MeteoroidOut" },
             { EnemyType.Damacloid, "DamacloidOut" },
             { EnemyType.Swarm, "SwarmOut" },
-            { EnemyType.Vulcanoid, "VulcanoidOut" }
+            { EnemyType.Vulcanoid, "VulcanoidOut" },
+            { EnemyType.Alien1, "AsteroidOut" },
+            { EnemyType.Alien2, "AsteroidOut" },
+            { EnemyType.Alien3, "AsteroidOut" },
+            { EnemyType.Alien4, "AsteroidOut" }
         };
 
 
@@ -117,6 +141,10 @@
             EnemiesPools.Add(EnemyType.Damacloid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Vulcanoid, new Pool<Enemy>());
             EnemiesPools.Add(EnemyType.Swarm, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Alien1, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Alien2, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Alien3, new Pool<Enemy>());
+            EnemiesPools.Add(EnemyType.Alien4, new Pool<Enemy>());
 
             All.Clear();
             All.Add(Get(EnemyType.Asteroid, 1, 1, 1));
@@ -128,6 +156,10 @@
             All.Add(Get(EnemyType.Damacloid, 1, 1, 1));
             All.Add(Get(EnemyType.Vulcanoid, 1, 1, 1));
             All.Add(Get(EnemyType.Swarm, 1, 1, 1));
+            All.Add(Get(EnemyType.Alien1, 1, 1, 1));
+            All.Add(Get(EnemyType.Alien2, 1, 1, 1));
+            All.Add(Get(EnemyType.Alien3, 1, 1, 1));
+            All.Add(Get(EnemyType.Alien4, 1, 1, 1));
         }
 
 
@@ -147,6 +179,7 @@
             e.FadeInTime = (type == EnemyType.Swarm) ? 250 : 1000;
             e.ImpulseSpeed = (type == EnemyType.Swarm) ? 1f : 0;
             e.ImpulseTime = (type == EnemyType.Swarm) ? 250 : 0;
+            e.FollowPath = type == EnemyType.Alien1 || type == EnemyType.Alien2 || type == EnemyType.Alien3 || type == EnemyType.Alien4;
 
             if (type == EnemyType.Swarm)
             {
@@ -177,6 +210,7 @@
 
             switch (type)
             {
+                // Asteroids
                 case EnemyType.Asteroid:   lives = 5 + 10 * (livesLevel - 1); break;
                 case EnemyType.Plutoid:    lives = 10 + 15 * (livesLevel - 1); break;
                 case EnemyType.Centaur:    lives = 20 + 20 * (livesLevel - 1); break;
@@ -186,6 +220,12 @@
                 case EnemyType.Damacloid:  lives = 5 + 10 * (livesLevel - 1); break;
                 case EnemyType.Vulcanoid:  lives = 5 + 10 * (livesLevel - 1); break;
                 case EnemyType.Swarm:      lives = 1 + 1 * (livesLevel - 1); break;
+
+                // Aliens
+                case EnemyType.Alien1: lives = 5 + 10 * (livesLevel - 1); break;
+                case EnemyType.Alien2: lives = 10 + 15 * (livesLevel - 1); break;
+                case EnemyType.Alien3: lives = 20 + 20 * (livesLevel - 1); break;
+                case EnemyType.Alien4: lives = 5 + 2 * (livesLevel - 1); break;
             }
 
             return lives;
@@ -198,6 +238,7 @@
 
             switch (type)
             {
+                // Asteroids
                 case EnemyType.Asteroid: speed = 1 + 0 * (speedLevel - 1); break;
                 case EnemyType.Centaur: speed = 0.8f + 0 * (speedLevel - 1); break;
                 case EnemyType.Comet: speed = 4f + 0 * (speedLevel - 1); break;
@@ -208,6 +249,11 @@
                 case EnemyType.Vulcanoid: speed = 1 + 0 * (speedLevel - 1); break;
                 case EnemyType.Swarm: speed = 1 + 0 * (speedLevel - 1); break;
 
+                // Aliens
+                case EnemyType.Alien1: speed = 1 + 0 * (speedLevel - 1); break;
+                case EnemyType.Alien2: speed = 0.8f + 0 * (speedLevel - 1); break;
+                case EnemyType.Alien3: speed = 4f + 0 * (speedLevel - 1); break;
+                case EnemyType.Alien4: speed = 1.5f + 0 * (speedLevel - 1); break;
             }
 
             return speed;
@@ -220,6 +266,7 @@
 
             switch (type)
             {
+                // Asteroids
                 case EnemyType.Asteroid: size = 35; break;
                 case EnemyType.Centaur: size = 30; break;
                 case EnemyType.Comet: size = 10; break;
@@ -229,6 +276,12 @@
                 case EnemyType.Damacloid: size = 24; break;
                 case EnemyType.Vulcanoid: size = 20; break;
                 case EnemyType.Swarm: size = 10; break;
+
+                // Aliens
+                case EnemyType.Alien1: size = 35; break;
+                case EnemyType.Alien2: size = 30; break;
+                case EnemyType.Alien3: size = 10; break;
+                case EnemyType.Alien4: size = 35; break;
             }
 
             return size;
@@ -243,6 +296,7 @@
                 
             switch (type)
             {
+                // Asteroids
                 case EnemyType.Asteroid: vp -= 0.00001; break;
                 case EnemyType.Centaur: vp -= 0.00002; break;
                 case EnemyType.Comet: vp -= 0.00003; break;
@@ -252,6 +306,12 @@
                 case EnemyType.Damacloid: vp -= 0.00007; break;
                 case EnemyType.Vulcanoid: vp -= 0.00008; break;
                 case EnemyType.Swarm: vp -= 0.00009; break;
+
+                // Aliens
+                case EnemyType.Alien1: vp -= 0.00010; break;
+                case EnemyType.Alien2: vp -= 0.00011; break;
+                case EnemyType.Alien3: vp -= 0.00012; break;
+                case EnemyType.Alien4: vp -= 0.00013; break;
             }
 
             return vp;

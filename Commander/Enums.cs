@@ -101,7 +101,11 @@ namespace EphemereGames.Commander.Simulation
         Meteoroid = 6,
         Damacloid = 7,
         Vulcanoid = 8,
-        Swarm = 9
+        Swarm = 9,
+        Alien1 = 10,
+        Alien2 = 11,
+        Alien3 = 12,
+        Alien4 = 13
     };
 
 

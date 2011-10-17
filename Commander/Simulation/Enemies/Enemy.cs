@@ -27,6 +27,7 @@ namespace EphemereGames.Commander.Simulation
         public Image Image;
         public Particle ExplodingEffect;
         public Particle MovingEffect;
+        public bool FollowPath;
         public float RotationSpeed;
         public Path Path;
         public Path PathPreview;
@@ -94,6 +95,7 @@ namespace EphemereGames.Commander.Simulation
             SfxHit = "";
             SfxDie = "";
             LastHitBy = null;
+            FollowPath = true;
         }
 
 
@@ -194,7 +196,10 @@ namespace EphemereGames.Commander.Simulation
             Circle.Position.X = Position.X;
             Circle.Position.Y = Position.Y;
 
-            Image.Rotation += RotationSpeed;
+            if (!FollowPath)
+                Image.Rotation += RotationSpeed;
+            else
+                Image.Rotation = MathHelper.PiOver2 + Path.GetRotation(Displacement);
 
             if (NanobotsInfectionTime > 0 && LifePoints > 0)
             {
