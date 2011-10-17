@@ -491,7 +491,7 @@
         {
             Text text = new Text(data, @"Pixelite")
             {
-                SizeX = 2,
+                SizeX = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 2 : 1,
                 Color = color
             };
 
@@ -530,7 +530,7 @@
 
                     Text texte = new Text(@"Pixelite")
                     {
-                        SizeX = 2,
+                        SizeX = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 2 : 1,
                         Color = tourelle.Color
                     };
 
