@@ -84,13 +84,19 @@
         };
 
 
-        public static CelestialBody GenerateCelestialBody(Simulator simulator, List<CelestialBody> CelestialBodies, double visualPriority)
+        public static CelestialBody GenerateCelestialBody(Simulator simulator, double visualPriority)
         {
-            return new CelestialBody(simulator, GenerateCelestialBody(CelestialBodies), visualPriority);
+            return new CelestialBody(simulator, GenerateCelestialBody(), visualPriority);
         }
 
 
-        private static CelestialBodyDescriptor GenerateCelestialBody(List<CelestialBody> CelestialBodies)
+        public static CelestialBody GeneratePinkHole(Simulator simulator, double visualPriority)
+        {
+            return new PinkHole(simulator, GeneratePinkHole(), visualPriority);
+        }
+
+
+        private static CelestialBodyDescriptor GenerateCelestialBody()
         {
             CelestialBodyDescriptor d = new CelestialBodyDescriptor()
             {
@@ -113,6 +119,26 @@
             d.StartingPosition = 0;
 
             return d;
+        }
+
+
+        private static CelestialBodyDescriptor GeneratePinkHole()
+        {
+            return new CelestialBodyDescriptor()
+            {
+                Name = "Planete" + Main.Random.Next(0, int.MaxValue),
+                Invincible = false,
+                InBackground = false,
+                CanSelect = true,
+                PathPriority = -1,
+                ParticulesEffect = "trouRose",
+                Speed = float.MaxValue,
+                Path = Vector3.Zero,
+                Position = Vector3.Zero,
+                Rotation = 0,
+                StartingPosition = 0,
+                Size = Size.Normal
+            };
         }
     }
 }

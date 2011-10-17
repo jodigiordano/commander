@@ -194,6 +194,7 @@
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\AssetsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemyCheckBox.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipKeyboardMBehavior.cs" />
     <Compile Include="XACTMusicController.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />
@@ -316,8 +317,8 @@
     <Compile Include="Simulation\GUI\Editor\Controls\LevelsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemiesAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WaveSubPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\PowerUpCheckBox.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\TurretCheckBox.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\PowerUpCheckBox.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\TurretCheckBox.cs" />
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorCelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorGeneralMenu.cs" />

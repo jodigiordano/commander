@@ -31,7 +31,7 @@
         private int SpaceForValue;
 
 
-        public ChoicesHorizontalSlider(string label, List<string> choices, int startingIndex)
+        public ChoicesHorizontalSlider(string label, List<string> choices, int spaceForLabel, int spaceForValue, int startingIndex)
         {
             Choices = choices;
             ChoiceIndex = startingIndex;
@@ -55,8 +55,8 @@
             DecrementCircle = new Circle(Vector3.Zero, DecrementRep.AbsoluteSize.X / 2);
             IncrementCircle = new Circle(Vector3.Zero, IncrementRep.AbsoluteSize.X / 2);
 
-            SpaceForLabel = 200;
-            SpaceForValue = 200;
+            SpaceForLabel = spaceForLabel;
+            SpaceForValue = spaceForValue;
         }
 
 

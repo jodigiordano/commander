@@ -51,6 +51,7 @@
             choices = new List<ContextualMenuChoice>()
             {
                 new EditorTextContextualMenuChoice("AddPlanet", "Add a planet", 2, new EditorCelestialBodyCommand("AddPlanet")),
+                new EditorTextContextualMenuChoice("AddPinkHole", "Add a pink hole", 2, new EditorCelestialBodyCommand("AddPinkHole")),
                 new EditorToggleContextualMenuChoice("ShowPaths", new List<string>() { "Show paths", "Hide paths" }, 2, new List<EditorCommand>() { new EditorCommand("ShowCelestialBodiesPaths"), new EditorCommand("HideCelestialBodiesPaths") }),
                 new EditorTextContextualMenuChoice("Clear", "Clear", 2, new EditorCelestialBodyCommand("Clear")),
             };

@@ -28,11 +28,12 @@
 
             AllNews = new List<NewsWidget>();
 
-            Sync = new PushButton(new Text("Reload", @"Pixelite") { SizeX = 2 });
+            var syncText = new Text("Reload", @"Pixelite") { SizeX = 2 };
+            Sync = new PushButton(syncText, (int) syncText.AbsoluteSize.X + 20);
             Sync.ClickHandler = DoReloadClicked;
 
             var vwText = new Text("Visit website", @"Pixelite") { SizeX = 2 };
-            VisitWebsite = new PushButton(vwText) { MinSpaceForValue = (int) vwText.AbsoluteSize.X + 20 };
+            VisitWebsite = new PushButton(vwText, (int) vwText.AbsoluteSize.X + 20);
             VisitWebsite.ClickHandler = DoVisitWebsiteClicked;
 
             AddTitleBarWidget(VisitWebsite);

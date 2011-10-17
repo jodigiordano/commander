@@ -66,25 +66,18 @@
             Panels.Add(EditorPanel.Background, backgroundPanel);
 
             // Waves panel
-            var wavesPanel = new WavesPanel(Simulator, Vector3.Zero, new Vector2(1000, 600), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
+            var wavesPanel = new WavesPanel(Simulator, Vector3.Zero, new Vector2(1200, 600), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Waves, wavesPanel);
-
-            // Load panel
-            var loadPanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
-            loadPanel.SetTitle("Load");
-            loadPanel.Initialize();
-            Panels.Add(EditorPanel.Load, loadPanel);
-
-            // Save panel
-            var deletePanel = new LevelsPanel(Simulator.Scene, Vector3.Zero, new Vector2(800, 500), VisualPriorities.Default.EditorPanel, Color.White);
-            deletePanel.SetTitle("Delete - No confirmation!!!");
-            deletePanel.Initialize();
-            Panels.Add(EditorPanel.Delete, deletePanel);
 
             // Celestial Body Assets panel
             var assetsPanel = new CelestialBodyAssetsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White);
             assetsPanel.Initialize();
             Panels.Add(EditorPanel.CelestialBodyAssets, assetsPanel);
+
+            // Enemies Assets panel
+            var enemiesPanel = new EnemiesAssetsPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White);
+            enemiesPanel.Initialize();
+            Panels.Add(EditorPanel.Enemies, enemiesPanel);
 
             PlayerBrowsingGeneralMenu = null;
 

@@ -13,18 +13,16 @@
         private Circle BoxCircle;
         private Particle Selection;
 
-        public int MinSpaceForValue;
-        public int MaxSpaceForValue;
+        public int SpaceForLabel;
 
         private Vector3 position;
 
 
-        public PushButton(Text label)
+        public PushButton(Text label, int spaceForLabel)
             : this()
         {
             Label = label;
-            MinSpaceForValue = 300;
-            MaxSpaceForValue = 400;
+            SpaceForLabel = spaceForLabel;
         }
 
 
@@ -72,7 +70,7 @@
                 position = value;
 
                 Label.Position = value;
-                Box.Position = Label.Data.Length == 0 ? value : Label.Position + new Vector3(MathHelper.Clamp(Label.AbsoluteSize.X, MinSpaceForValue, MaxSpaceForValue), 0, 0);
+                Box.Position = Label.Data.Length == 0 ? value : Label.Position + new Vector3(SpaceForLabel, 0, 0);
 
                 // Sync circles
                 BoxCircle.Position = Box.Position + new Vector3(Box.AbsoluteSize / 2f, 0);
@@ -92,7 +90,7 @@
 
         public override Vector3 Dimension
         {
-            get { return new Vector3(Box.AbsoluteSize.X + Label.Data.Length == 0 ? 0 : MathHelper.Clamp(Label.AbsoluteSize.X, MinSpaceForValue, MaxSpaceForValue), Box.AbsoluteSize.Y, 0); }
+            get { return new Vector3(Box.AbsoluteSize.X + Label.Data.Length == 0 ? 0 : SpaceForLabel, Box.AbsoluteSize.Y, 0); }
             set { }
         }
 

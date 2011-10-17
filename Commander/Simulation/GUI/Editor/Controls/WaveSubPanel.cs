@@ -1,65 +1,88 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
+    using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class WaveSubPanel : HorizontalPanel
     {
-        private NumericHorizontalSlider StartingTime;
-        private PushButton Enemies;
-        private NumericHorizontalSlider Level;
-        private NumericHorizontalSlider CashValue;
-        private NumericHorizontalSlider QuantityWidget;
+        public int Id;
+        public List<EnemyType> Enemies;
 
+        private Label WaveEmitterLabel;
+        private NumericHorizontalSlider StartingTime;
         private ChoicesHorizontalSlider Distances;
         private NumericHorizontalSlider DelayWidget;
         private NumericHorizontalSlider ApplyDelayWidget;
         private NumericHorizontalSlider SwitchEveryWidget;
 
+        private Label EnemiesLabel;
+        private NumericHorizontalSlider QuantityWidget;
+        private NumericHorizontalSlider Level;
+        private NumericHorizontalSlider CashValue;
+        private PushButton EnemiesButton;
+
         private VerticalPanel SideA;
         private VerticalPanel SideB;
 
+        private Simulator Simulator;
 
-        public WaveSubPanel(Simulator simulator, Vector2 size, double visualPriority, Color color)
+        public WaveSubPanel(Simulator simulator, Vector2 size, double visualPriority, Color color, int id)
             : base(simulator.Scene, Vector3.Zero, size, visualPriority, color)
         {
+            Simulator = simulator;
             OnlyShowWidgets = true;
+            Id = id;
 
-            SideA = new VerticalPanel(simulator.Scene, new Vector3(), new Vector2(size.X / 2, size.Y), visualPriority, color)
+            Enemies = new List<EnemyType>();
+
+            var spaceAvailable = size - new Vector2(50, 200);
+
+            SideA = new VerticalPanel(simulator.Scene, new Vector3(), new Vector2(spaceAvailable.X / 2, spaceAvailable.Y), visualPriority, color)
             {
-                OnlyShowWidgets = true,
+                ShowCloseButton = false,
+                ShowFrame = false,
+                ShowBackground = true,
                 DistanceBetweenTwoChoices = 15
             };
 
-            SideB = new VerticalPanel(simulator.Scene, new Vector3(), new Vector2(size.X / 2, size.Y), visualPriority, color)
+            SideB = new VerticalPanel(simulator.Scene, new Vector3(), new Vector2(spaceAvailable.X / 2, spaceAvailable.Y), visualPriority, color)
             {
-                OnlyShowWidgets = true,
+                ShowCloseButton = false,
+                ShowFrame = false,
+                ShowBackground = true,
                 DistanceBetweenTwoChoices = 15
             };
 
-            StartingTime = new NumericHorizontalSlider("Starting time", 0, 500, 0, 10, 50, 50);
-            Enemies = new PushButton(new Text("Enemies", "Pixelite")) { ClickHandler = EnemiesButtonClicked };
-            Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 50, 50);
-            CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 100, 100);
-            QuantityWidget = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 50, 50);
+            WaveEmitterLabel = new Label(new Text("Wave emitter", "Pixelite") { SizeX = 2 });
+            StartingTime = new NumericHorizontalSlider("Starting time", 0, 500, 0, 10, 250, 150);
+            Distances = new ChoicesHorizontalSlider("Distance", WaveGenerator.DistancesStrings, 250, 150, 0);
+            DelayWidget = new NumericHorizontalSlider("Delay", 0, 20, 0, 1, 250, 150);
+            ApplyDelayWidget = new NumericHorizontalSlider("Apply Delay", -1, 20, 0, 1, 250, 150);
+            ApplyDelayWidget.AddAlias(-1, "None");
+            SwitchEveryWidget = new NumericHorizontalSlider("Switch every", -1, 50, 5, 5, 250, 150);
+            SwitchEveryWidget.AddAlias(-1, "None");
 
-            Distances = new ChoicesHorizontalSlider("Distance", WaveGenerator.DistancesStrings, 0);
-            DelayWidget = new NumericHorizontalSlider("Delay", 0, 20, 0, 1, 100, 100);
-            ApplyDelayWidget = new NumericHorizontalSlider("Apply Delay", -1, 20, 0, 1, 100, 100);
-            SwitchEveryWidget = new NumericHorizontalSlider("Switch every", -1, 50, 5, 5, 100, 100);
+            EnemiesLabel = new Label(new Text("Enemies", "Pixelite") { SizeX = 2 });
+            QuantityWidget = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 250, 150);
+            Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 250, 150);
+            CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 250, 150);
+            EnemiesButton = new PushButton(new Text("Enemies", "Pixelite") { SizeX = 2 }, 250);
 
+            SideA.AddWidget("WaveEmitterLabel", WaveEmitterLabel);
             SideA.AddWidget("StartingTime", StartingTime);
-            SideA.AddWidget("Enemies", Enemies);
-            SideA.AddWidget("Level", Level);
-            SideA.AddWidget("CashValue", CashValue);
-            
+            SideA.AddWidget("Distances", Distances);
+            SideA.AddWidget("Delay", DelayWidget);
+            SideA.AddWidget("ApplyDelay", ApplyDelayWidget);
+            SideA.AddWidget("SwitchEvery", SwitchEveryWidget);
+
+            SideB.AddWidget("EnemiesLabel", EnemiesLabel);
             SideB.AddWidget("Quantity", QuantityWidget);
-            SideB.AddWidget("Distances", Distances);
-            SideB.AddWidget("Delay", DelayWidget);
-            SideB.AddWidget("ApplyDelay", ApplyDelayWidget);
-            SideB.AddWidget("SwitchEvery", SwitchEveryWidget);
+            SideB.AddWidget("Enemies", EnemiesButton);
+            SideB.AddWidget("Level", Level);
+            SideB.AddWidget("CashValue", CashValue);
 
             AddWidget("SideA", SideA);
             AddWidget("SideB", SideB);
@@ -68,7 +91,7 @@
 
         public int EnemiesCount
         {
-            get { return /* Enemies.ClickedCount */ 0; }
+            get { return Enemies.Count; }
         }
 
 
@@ -81,7 +104,7 @@
         public void Sync(WaveDescriptor descriptor)
         {
             StartingTime.Value = (int) descriptor.StartingTime / 1000;
-            //Enemies.Sync(descriptor.Enemies);
+            Enemies = descriptor.Enemies;
             Level.Value = descriptor.LivesLevel;
             CashValue.Value = descriptor.CashValue;
             QuantityWidget.Value = descriptor.Quantity;
@@ -98,7 +121,7 @@
             return new WaveDescriptor()
             {
                 StartingTime = StartingTime.Value * 1000,
-                //Enemies = Enemies.GetEnemies(),
+                Enemies = Enemies,
                 LivesLevel = Level.Value,
                 SpeedLevel = Level.Value,
                 CashValue = CashValue.Value,
@@ -136,12 +159,6 @@
         {
             get { return SwitchEveryWidget.Value; }
             set { SwitchEveryWidget.Value = value; }
-        }
-
-
-        private void EnemiesButtonClicked(PanelWidget p)
-        {
-
         }
     }
 }

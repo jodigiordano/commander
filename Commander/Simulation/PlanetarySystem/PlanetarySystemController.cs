@@ -262,7 +262,7 @@
 
             var command = (EditorCelestialBodyCommand) c;
 
-            if (command.Name == "AddPlanet")
+            if (command.Name == "AddPlanet" || command.Name == "AddPinkHole")
             {
                 command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
                 command.CelestialBody.AliveOverride = true;

@@ -19,12 +19,12 @@
         {
             SetTitle("Game Paused");
 
-            Resume = new PushButton(new Text("Resume", @"Pixelite") { SizeX = 2 });
-            Restart = new PushButton(new Text("Restart", @"Pixelite") { SizeX = 2 });
-            GoBackToWorld = new PushButton(new Text("Go to galaxy", @"Pixelite") { SizeX = 2 });
-            Options = new PushButton(new Text("Options", @"Pixelite") { SizeX = 2 });
-            Help = new PushButton(new Text("How to play", @"Pixelite") { SizeX = 2 });
-            Controls = new PushButton(new Text("Controls", @"Pixelite") { SizeX = 2 });
+            Resume = new PushButton(new Text("Resume", @"Pixelite") { SizeX = 2 }, 300);
+            Restart = new PushButton(new Text("Restart", @"Pixelite") { SizeX = 2 }, 300);
+            GoBackToWorld = new PushButton(new Text("Go to galaxy", @"Pixelite") { SizeX = 2 }, 300);
+            Options = new PushButton(new Text("Options", @"Pixelite") { SizeX = 2 }, 300);
+            Help = new PushButton(new Text("How to play", @"Pixelite") { SizeX = 2 }, 300);
+            Controls = new PushButton(new Text("Controls", @"Pixelite") { SizeX = 2 }, 300);
 
             AddWidget("Resume", Resume);
             AddWidget("Options", Options);

@@ -28,6 +28,25 @@
         }
 
 
+        public PinkHole(Simulator simulator, CelestialBodyDescriptor celestialBodyDescriptor, double visualPriority)
+            : base(
+            simulator, 
+            celestialBodyDescriptor.Name,
+            celestialBodyDescriptor.Path,
+            celestialBodyDescriptor.Position,
+            celestialBodyDescriptor.Rotation,
+            celestialBodyDescriptor.Size,
+            celestialBodyDescriptor.Speed,
+            celestialBodyDescriptor.Image,
+            celestialBodyDescriptor.StartingPosition,
+            visualPriority,
+            celestialBodyDescriptor.HasMoons)
+        {
+            Effect = simulator.Scene.Particles.Get(celestialBodyDescriptor.ParticulesEffect);
+            Effect.VisualPriority = visualPriority;
+        }
+
+
         public Color Color
         {
             set

@@ -193,7 +193,10 @@
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\BackgroundsAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemiesAssetsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemyCheckBox.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\PowerUpCheckBox.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\PowerUpsAssetsPanel.cs" />
+    <Compile Include="Simulation\GUI\Editor\Controls\Assets\TurretCheckBox.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\TurretsAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\GameBarPanel.cs" />
     <Compile Include="Simulation\GUI\HelpBarPanel\HBMessageConstructor.cs" />
@@ -258,8 +261,6 @@
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\LevelsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PlayerPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\PowerUpCheckBox.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\TurretCheckBox.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WavesPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\EditorCelestialBodyMenu.cs" />

@@ -24,7 +24,7 @@
             {
                 new EditorTextContextualMenuChoice("Move", "Move", 1, new EditorCelestialBodyCommand("Move")),
                 new EditorTextContextualMenuChoice("Rotate", "Rotate", 1, new EditorCelestialBodyCommand("Rotate")),
-                new EditorTextContextualMenuChoice("Shrink", "Shrink", 1, new EditorCelestialBodyCommand("Shrink")),
+                new EditorTextContextualMenuChoice("Trajectory", "Trajectory", 1, new EditorCelestialBodyCommand("Shrink")),
                 new EditorTextContextualMenuChoice("Remove", "Remove", 1, new EditorCelestialBodyCommand("Remove")),
                 new EditorToggleContextualMenuChoice("Speed",
                     new List<string>() { "Speed: 0", "Speed: 1", "Speed: 2", "Speed: 3", "Speed: 4", "Speed: 5", "Speed: 6", "Speed: 7", "Speed: 8", "Speed: 9", "Speed: 10" },

@@ -208,15 +208,12 @@ namespace EphemereGames.Commander.Simulation
     {
         None = -1,
         Player = 0,
-        Load = 1,
-        Save = 2,
-        Delete = 3,
-        PowerUps = 4,
-        Turrets = 5,
-        Background = 6,
-        GeneratePlanetarySystem = 7,
-        Waves = 8,
-        CelestialBodyAssets = 9
+        PowerUps = 1,
+        Turrets = 2,
+        Background = 3,
+        Waves = 4,
+        CelestialBodyAssets = 5,
+        Enemies = 6
     };
 
 

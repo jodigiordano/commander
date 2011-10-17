@@ -39,8 +39,8 @@
 
             OpenedPanel = EditorPanel.None;
 
-            ((PlayerPanel) Panels[EditorPanel.Player]).Initialize();
-            ((WavesPanel) Panels[EditorPanel.Waves]).Initialize();
+            Panels[EditorPanel.Player].Initialize();
+            Panels[EditorPanel.Waves].Initialize();
 
             Panels[EditorPanel.Player].SetClickHandler("Lives", DoLives);
             Panels[EditorPanel.Player].SetClickHandler("Cash", DoCash);
@@ -51,8 +51,6 @@
             Panels[EditorPanel.PowerUps].SetClickHandler(DoPowerUps);
             Panels[EditorPanel.Background].SetClickHandler(DoBackgrounds);
             Panels[EditorPanel.Waves].SetClickHandler(DoWaves);
-            Panels[EditorPanel.Load].SetClickHandler(DoLoad);
-            Panels[EditorPanel.Delete].SetClickHandler(DoDelete);
             Panels[EditorPanel.CelestialBodyAssets].SetClickHandler(DoCelestialBodyAssets);
 
             foreach (var panel in Panels.Values)
@@ -146,10 +144,20 @@
                 var hover = Panels[OpenedPanel].DoHover(player.Circle);
 
                 // More friction on a celestial body and a turret
-                if (hover &&
-                    player.SimPlayer.SpaceshipMove.SteeringBehavior.LastNextMovement == Vector3.Zero &&
-                    Panels[OpenedPanel].LastHoverWidget.Sticky)
+                if (hover && player.SimPlayer.SpaceshipMove.SteeringBehavior.LastNextMovement == Vector3.Zero)
+                {
+                    var panel = Panels[OpenedPanel];
+
+                    if (panel.LastHoverWidget.Sticky)
+                    {
                         player.SimPlayer.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
+                    }
+
+                    else if (OpenedPanel == EditorPanel.Waves && ((Panel) panel.LastHoverWidget).LastHoverWidget.Sticky)
+                    {
+                        player.SimPlayer.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
+                    }
+                }
             }
         }
 
@@ -364,6 +372,9 @@
             if (command.Panel == EditorPanel.CelestialBodyAssets)
                 ((CelestialBodyAssetsPanel) Panels[command.Panel]).CelestialBody = command.Owner.SimPlayer.ActualSelection.CelestialBody;
 
+            if (command.Panel == EditorPanel.Waves && !command.Show)
+                SyncWaves();
+
             if (OpenedPanel == EditorPanel.None) // open a panel
             {
                 OpenedPanel = command.Panel;
@@ -395,7 +406,9 @@
         private void DoExecuteEditorCelestialBodyCommand(EditorCelestialBodyCommand command)
         {
             if (command.Name == "AddPlanet")
-                command.CelestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, CelestialBodies, VisualPriorities.Default.CelestialBody);
+                command.CelestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, VisualPriorities.Default.CelestialBody);
+            else if (command.Name == "AddPinkHole")
+                command.CelestialBody = EditorLevelGenerator.GeneratePinkHole(Simulator, VisualPriorities.Default.CelestialBody);
             else
                 command.CelestialBody = command.Owner.SimPlayer.ActualSelection.CelestialBody;
 
@@ -549,7 +562,28 @@
 
         private void DoWaves(PanelWidget widget)
         {
-            // Prepare the waves
+            var clickedWidget = ((Panel) ((Panel) widget).LastClickedWidget).LastClickedWidget;
+            var waveId = ((WaveSubPanel) widget).Id;
+
+            if (clickedWidget.Name == "Enemies")
+            {
+                var enemiesAssets = (EnemiesAssetsPanel) Panels[EditorPanel.Enemies];
+
+                if (waveId < Simulator.LevelDescriptor.Waves.Count)
+                    enemiesAssets.Enemies = Simulator.LevelDescriptor.Waves[waveId].Enemies;
+                else
+                    enemiesAssets.Enemies = new List<EnemyType>();
+
+                enemiesAssets.Sync();
+
+                ExecuteCommand(new EditorPanelCommand("ShowPanel", EditorPanel.Enemies, true));
+                return;
+            }
+        }
+
+
+        private void SyncWaves()
+        {
             List<WaveDescriptor> descriptors = new List<WaveDescriptor>();
 
             var panel = Panels[EditorPanel.Waves];
@@ -571,41 +605,17 @@
 
         private void DoClosePanel(PanelWidget widget)
         {
-            var closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false) { Owner = CurrentOpenedPanelPlayer };
+            EditorPanelCommand closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false) { Owner = CurrentOpenedPanelPlayer };
 
-            OpenedPanel = EditorPanel.None;
-
-            NotifyEditorCommandExecuted(closeCommand);
-        }
-
-
-        private void DoLoad(PanelWidget widget)
-        {
-            var panel = (LevelsPanel) widget;
-
-            if (panel.ClickedLevel != null)
+            if (OpenedPanel == EditorPanel.Enemies)
             {
-                Simulator.LevelDescriptor = panel.ClickedLevel;
-                Simulator.Initialize();
-                Simulator.SyncPlayers();
+                var enemiesAssets = (EnemiesAssetsPanel) Panels[EditorPanel.Enemies];
+                ((WavesPanel) Panels[EditorPanel.Waves]).SyncEnemiesCurrentWave(enemiesAssets.Enemies);
+
+                closeCommand = new EditorPanelCommand("OpenPanel", EditorPanel.Waves, true) { Owner = CurrentOpenedPanelPlayer };
             }
-        }
 
-
-        private void DoDelete(PanelWidget widget)
-        {
-            //var panel = (LevelsPanel) widget;
-
-            //if (panel.ClickedLevel != null)
-            //{
-            //    var descriptor = Simulator.LevelDescriptor;
-
-            //    Main.LevelsFactory.DeleteUserDescriptorFromDisk(descriptor.Infos.Id);
-            //    Main.LevelsFactory.Descriptors.Remove(descriptor.Infos.Id);
-
-            //    ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
-            //    ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
-            //}
+            ExecuteCommand(closeCommand);
         }
 
 
