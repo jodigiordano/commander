@@ -577,6 +577,8 @@
             
                 if (VibrationMetronome.CyclesCountThisTick != 0)
                     Core.Input.Inputs.VibrateControllerHighFrequency(InnerPlayer, 80, 0.4f);
+
+                LastMouseDirection = SpaceshipMove.Direction;
             }
         }
 
