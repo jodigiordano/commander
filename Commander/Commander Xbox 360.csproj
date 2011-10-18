@@ -255,11 +255,9 @@
     <Compile Include="Simulation\GUI\Annunciations\LevelEndedAnnunciation.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Simulation\GUI\Annunciations\LevelStartedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\Bubbles\GameEndedBubble.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\CelestialBodiesPathPreviews.cs" />
     <Compile Include="Simulation\GUI\Editor\ContextualMenusCollisions.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\LevelsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PlayerPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WavesPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WaveSubPanel.cs" />

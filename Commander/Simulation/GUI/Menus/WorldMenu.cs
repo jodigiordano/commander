@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -85,11 +86,14 @@
         {
             get
             {
-                return
-                    CelestialBody != null &&
-                    Main.SelectedWorld != null &&
-                    Main.SelectedWorld.GamePausedToWorld &&
-                    Main.SelectedWorld.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == CelestialBody.Name;
+                if (Main.SelectedWorld == null)
+                    return false;
+
+                foreach (var p in Inputs.ConnectedPlayers)
+                    if (Main.SelectedWorld.GetGamePausedSelected((Commander.Player) p))
+                        return true;
+
+                return false;
             }
         }
 
@@ -174,9 +178,18 @@
 
         private void DrawInfos()
         {
-            LevelDescriptor descriptor = CurrentLevelDescriptor;
+            if (Simulator.AvailableWarpsWorldMode.ContainsKey(CelestialBody))
+            {
+                Title.Data = Main.LevelsFactory.GetWorldStringId(Simulator.AvailableWarpsWorldMode[CelestialBody]);
+            }
 
-            Title.Data = descriptor.Infos.Mission;
+            else
+            {
+                var descriptor = CurrentLevelDescriptor;
+
+                Title.Data = Main.LevelsFactory.GetLevelStringId(descriptor.Infos.Id);
+            }
+
             Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 20, 0);
             Title.Origin = Title.Center;
 
@@ -206,7 +219,10 @@
 
         private LevelDescriptor CurrentLevelDescriptor
         {
-            get { return Main.LevelsFactory.GetLevelDescriptor(Simulator.AvailableLevelsWorldMode[CelestialBody.Name]); }
+            get
+            {
+                return Main.LevelsFactory.GetLevelDescriptor(Simulator.AvailableLevelsWorldMode[CelestialBody]);
+            }
         }
     }
 }

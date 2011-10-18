@@ -11,7 +11,8 @@ namespace EphemereGames.Commander.Simulation
     class Simulator : InputListener
     {
         public CommanderScene Scene;
-        public Dictionary<string, int> AvailableLevelsWorldMode;
+        public Dictionary<CelestialBody, int> AvailableLevelsWorldMode;
+        public Dictionary<CelestialBody, int> AvailableWarpsWorldMode;
         public bool DebugMode;
         public bool WorldMode;
         public bool DemoMode;

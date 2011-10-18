@@ -10,7 +10,7 @@
     class LevelStates : IVisual
     {
         public Dictionary<int, CelestialBody> CelestialBodies;
-        public Dictionary<string, int> LevelsDescriptors;
+        //public Dictionary<string, int> LevelsDescriptors;
         public WorldDescriptor Descriptor;
         
         private Dictionary<int, bool> LevelUnlockedStates;
@@ -51,9 +51,9 @@
             // Level numbers
             foreach (var level in Descriptor.Levels)
             {
-                var cb = CelestialBodies[level.Key];
+                var cb = CelestialBodies[level];
 
-                LevelsNumbers.Add(level.Key, new Text(Main.LevelsFactory.GetLevelDescriptor(LevelsDescriptors[cb.Name]).Infos.Mission, @"Pixelite")
+                LevelsNumbers.Add(level, new Text(Main.LevelsFactory.GetLevelStringId(level), @"Pixelite")
                 {
                     SizeX = 3,
                     VisualPriority = cb.VisualPriority + 0.00001,
@@ -64,8 +64,8 @@
             // Lock state
             foreach (var level in Descriptor.Levels)
             {
-                LevelUnlockedStates.Add(level.Key, false);
-                LockedTexts.Add(level.Key, new Text("Locked", @"Pixelite")
+                LevelUnlockedStates.Add(level, false);
+                LockedTexts.Add(level, new Text("Locked", @"Pixelite")
                 {
                     SizeX = 2,
                     Alpha = LockedMaxAlpha,
@@ -100,22 +100,17 @@
 
         public void Sync()
         {
-            foreach (var level in Descriptor.Levels)
+            for (int i = Descriptor.Levels.Count - 1; i > -1; i--)
             {
+                var level = Descriptor.Levels[i];
+
                 bool unlocked = Descriptor.Id < 2 || Descriptor.Id == 999; //tmp Alpha (instead of true)
 
-                if (!AllLevelsUnlockedOverride)
-                {
-                    foreach (var other in level.Value)
-                        if (!Main.SaveGameController.IsLevelUnlocked(other))
-                        {
-                            unlocked = false;
-                            break;
-                        }
-                }
+                if (i != 0 && !AllLevelsUnlockedOverride)
+                    unlocked = Main.SaveGameController.IsLevelUnlocked(Descriptor.Levels[i - 1]);
 
-                LevelUnlockedStates[level.Key] = unlocked;
-                CelestialBodies[level.Key].CanSelect = unlocked;
+                LevelUnlockedStates[level] = unlocked;
+                CelestialBodies[level].CanSelect = unlocked;
             }
         }
 

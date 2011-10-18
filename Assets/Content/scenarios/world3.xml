@@ -1,0 +1,27 @@
+﻿<?xml version="1.0"?>
+<World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>3</Id>
+  <Name>Battle for Earth</Name>
+  <Levels>
+    <Level>31</Level>
+    <Level>32</Level>
+    <Level>33</Level>
+    <Level>34</Level>
+    <Level>35</Level>
+    <Level>36</Level>
+    <Level>37</Level>
+    <Level>38</Level>
+    <Level>39</Level>
+    <Level>40</Level>
+  </Levels>
+  <Warps>
+    <World>2</World>
+    <World>4</World>
+  </Warps>
+  <Layout>1003</Layout>
+  <UnlockedCondition>2</UnlockedCondition>
+  <WarpBlockedMessage>Finish all the levels\n\nto access this world!</WarpBlockedMessage>
+  <Music>Galaxy1Music</Music>
+  <MusicEnd>Galaxy1EndMusic</MusicEnd>
+  <SfxEnd>Galaxy1EndSfx</SfxEnd>
+</World>

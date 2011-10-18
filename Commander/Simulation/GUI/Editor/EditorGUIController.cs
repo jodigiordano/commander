@@ -192,7 +192,7 @@
         {
             if (command.Name == "ShowCelestialBodiesPaths" || command.Name == "HideCelestialBodiesPaths")
             {
-                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.Battlefield].GetChoice(1)).Next();
+                ((EditorToggleContextualMenuChoice) GeneralMenu.SubMenus[EditorGeneralMenuChoice.Battlefield].GetChoice(2)).Next();
                 return;
             }
 

@@ -237,15 +237,17 @@
                 }
             }
 
-            else if (ActualSelection.CelestialBody != null && Main.SelectedWorld.GamePausedToWorld &&
-                Main.SelectedWorld.GameInProgress.Simulator.LevelDescriptor.Infos.Mission == ActualSelection.CelestialBody.Name &&
+            else if (
                 Simulator.Scene.EnableInputs &&
-                ActualSelection.PausedGameChoice == PausedGameChoice.None) //todo: take it from WorldMenu
+                Main.SelectedWorld.GetGamePausedSelected(InnerPlayer) &&
+                ActualSelection.PausedGameChoice == PausedGameChoice.None)
             {
                 NextPausedGameChoice();
             }
 
-            else if (Main.SelectedWorld.GameInProgress == null || ActualSelection.CelestialBody == null || Main.SelectedWorld.GameInProgress.Simulator.LevelDescriptor.Infos.Mission != ActualSelection.CelestialBody.Name)
+            else if (Main.SelectedWorld.GameInProgress == null ||
+                     ActualSelection.CelestialBody == null ||
+                    !Main.SelectedWorld.GetGamePausedSelected(InnerPlayer))
             {
                 ActualSelection.PausedGameChoice = PausedGameChoice.None;
             }

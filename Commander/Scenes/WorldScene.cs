@@ -29,10 +29,11 @@
 
         private State SceneState;
         private CommanderTitle Title;
-        private Dictionary<string, string> Warps;
-        private Dictionary<string, int> LevelsDescriptors;
-        private Dictionary<CelestialBody, string> WarpsCelestialBodies;
-        private Dictionary<int, CelestialBody> CelestialBodies;
+        //private Dictionary<string, string> Warps;
+        //private Dictionary<string, int> LevelsDescriptors;
+        private Dictionary<CelestialBody, int> CBtoWarp;
+        private Dictionary<int, CelestialBody> LeveltoCB;
+        private Dictionary<CelestialBody, int> CBtoLevel;
 
         public bool EditorMode;
 
@@ -41,10 +42,11 @@
             base(Main.LevelsFactory.GetWorldStringId(descriptor.Id))
         {
             Descriptor = descriptor;
-            Warps = new Dictionary<string, string>();
-            LevelsDescriptors = new Dictionary<string, int>();
-            WarpsCelestialBodies = new Dictionary<CelestialBody, string>();
-            CelestialBodies = new Dictionary<int, CelestialBody>();
+            //Warps = new Dictionary<string, string>();
+            //LevelsDescriptors = new Dictionary<string, int>();
+            CBtoWarp = new Dictionary<CelestialBody, int>();
+            LeveltoCB = new Dictionary<int, CelestialBody>();
+            CBtoLevel = new Dictionary<CelestialBody, int>();
             LevelStates = new LevelStates(this);
             NeedReinit = false;
             CanGoBackToMainMenu = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale;
@@ -67,7 +69,8 @@
                 EditorWorldMode = EditorMode,
                 //EditorMode = EditorMode,
                 //EditorState = EditorState.Editing,
-                AvailableLevelsWorldMode = LevelsDescriptors,
+                AvailableLevelsWorldMode = CBtoLevel,
+                AvailableWarpsWorldMode = CBtoWarp,
                 EnableInputs = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale
             };
 
@@ -77,18 +80,18 @@
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
 
             // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
-            foreach (var level in Descriptor.Levels)
-            {
-                LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
-                LevelsDescriptors.Add(d.Infos.Mission, level.Key);
-            }
+            //foreach (var level in Descriptor.Levels)
+            //{
+            //    LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
+            //    LevelsDescriptors.Add(d.Infos.Mission, level.Key);
+            //}
 
-            foreach (var level in Descriptor.Warps)
-            {
-                LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
-                LevelsDescriptors.Add(d.Infos.Mission, level.Key);
-                Warps.Add(d.Infos.Mission, level.Value);
-            }
+            //foreach (var level in Descriptor.Warps)
+            //{
+            //    LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
+            //    LevelsDescriptors.Add(d.Infos.Mission, level.Key);
+            //    Warps.Add(d.Infos.Mission, level.Value);
+            //}
 
             // Keep track of celestial bodies and pink holes
             InitializeCelestialBodies();
@@ -96,9 +99,9 @@
             if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                 LevelStates.AllLevelsUnlockedOverride = true;
 
-            LevelStates.CelestialBodies = CelestialBodies;
+            LevelStates.CelestialBodies = LeveltoCB;
             LevelStates.Descriptor = Descriptor;
-            LevelStates.LevelsDescriptors = LevelsDescriptors;
+            //LevelStates.LevelsDescriptors = LevelsDescriptors;
             LevelStates.Initialize();
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
@@ -116,6 +119,18 @@
         }
 
 
+        public bool GetGamePausedSelected(Player p)
+        {
+            CelestialBody c = Simulator.GetSelectedCelestialBody(p);
+
+            return
+                c != null &&
+                !CBtoWarp.ContainsKey(c) &&
+                GamePausedToWorld &&
+                GameInProgress.Simulator.Level.Id == CBtoLevel[c];
+        }
+
+
         public bool CanSelectCelestialBodies
         {
             set { Simulator.CanSelectCelestialBodies = value; }
@@ -129,16 +144,7 @@
                 if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                     return false;
 
-                bool unlocked = true;
-
-                foreach (var level in Descriptor.UnlockedCondition)
-                    if (!Main.SaveGameController.IsLevelUnlocked(level))
-                    {
-                        unlocked = false;
-                        break;
-                    }
-
-                return unlocked;
+                return Main.LevelsFactory.IsWorldUnlocked(Descriptor.UnlockedCondition);
             }
         }
 
@@ -220,7 +226,7 @@
             if (Simulator.EditorWorldMode)
             {
                 // sync the level descriptor so it can be saved.
-                if (GameInProgress != null)
+                if (GameInProgress != null && GameInProgress.Simulator.EditorState != EditorState.Playtest)
                 {
                     GameInProgress.Simulator.SyncLevel();
                     Main.LevelsFactory.SetLevelDescriptor(GameInProgress.Simulator.LevelDescriptor.Infos.Id, GameInProgress.Simulator.LevelDescriptor);
@@ -236,7 +242,7 @@
 
             if (GameInProgress != null && Descriptor.ContainsLevel(GameInProgress.Level.Infos.Id))
             {
-                var cb = CelestialBodies[GameInProgress.Level.Infos.Id];
+                var cb = LeveltoCB[GameInProgress.Level.Infos.Id];
                 Simulator.TeleportPlayers(false, cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
             }
             else
@@ -449,7 +455,7 @@
             {
                 if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
                 {
-                    Main.LevelsFactory.SetLevelDescriptor(level.Infos.Id, Main.LevelsFactory.GetEmptyDescriptor(level.Infos.Id, level.Infos.Mission));
+                    Main.LevelsFactory.SetLevelDescriptor(level.Infos.Id, Main.LevelsFactory.GetEmptyDescriptor(level.Infos.Id));
                     Main.LevelsFactory.SaveDescriptorOnDisk(level.Infos.Id);
                 }
 
@@ -496,7 +502,8 @@
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
-            return c != null ? Main.LevelsFactory.GetLevelDescriptor(LevelsDescriptors[c.Name]) : null;
+            return c != null ?
+                Main.LevelsFactory.GetLevelDescriptor(CBtoLevel[c]) : null;
         }
 
 
@@ -504,7 +511,8 @@
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
-            return (c != null && c is PinkHole) ? (WorldScene) Visuals.GetScene(Warps[c.Name]) : null;
+            return (c != null && c is PinkHole) ?
+                (WorldScene) Visuals.GetScene(Main.LevelsFactory.GetWorldStringId(CBtoWarp[c])) : null;
         }
 
 
@@ -520,7 +528,10 @@
         {
             get
             {
-                return GameInProgress != null && GameInProgress.State == GameState.Won && GameInProgress.Level.Infos.Id == Descriptor.LastLevelId;
+                return
+                    GameInProgress != null &&
+                    GameInProgress.State == GameState.Won &&
+                    GameInProgress.Level.Infos.Id == Descriptor.Levels[Descriptor.Levels.Count - 1];
             }
         }
 
@@ -528,10 +539,10 @@
         private void InitializeLevelsStates()
         {
             // Warps
-            foreach (var warp in WarpsCelestialBodies)
+            foreach (var w in CBtoWarp)
             {
-                var pinkHole = (PinkHole) warp.Key;
-                var unlocked = ((WorldScene) Visuals.GetScene(warp.Value)).Unlocked;
+                var pinkHole = (PinkHole) w.Key;
+                var unlocked = ((WorldScene) Visuals.GetScene(Main.LevelsFactory.GetWorldStringId(w.Value))).Unlocked;
 
                 pinkHole.BlendType = unlocked ? BlendType.Add : BlendType.Substract;
                 pinkHole.Color = unlocked ? new Color(255, 0, 255) : new Color(0, 0, 0);
@@ -543,16 +554,32 @@
 
         private void InitializeCelestialBodies()
         {
-            CelestialBodies.Clear();
-            WarpsCelestialBodies.Clear();
+            LeveltoCB.Clear();
+            CBtoWarp.Clear();
 
-            foreach (var celestialBody in Simulator.PlanetarySystemController.CelestialBodies)
+            int levelIndex = 0;
+            int warpIndex = 0;
+
+            Simulator.PlanetarySystemController.CelestialBodies.Sort(delegate(CelestialBody cb1, CelestialBody cb2)
             {
-                if (LevelsDescriptors.ContainsKey(celestialBody.Name) && !(celestialBody is PinkHole))
-                    CelestialBodies.Add(LevelsDescriptors[celestialBody.Name], celestialBody);
+                return cb1.PathPriority > cb2.PathPriority ? 1 : cb1.PathPriority < cb2.PathPriority ? -1 : 0;
+            });
 
-                if (celestialBody is PinkHole)
-                    WarpsCelestialBodies.Add(celestialBody, celestialBody.Name);
+            foreach (var c in Simulator.PlanetarySystemController.CelestialBodies)
+            {
+                if (c is AsteroidBelt || c.FirstOnPath)
+                    continue;
+
+                if (c is PinkHole)
+                    CBtoWarp.Add(c, Descriptor.Warps[warpIndex++]);
+
+                else
+                {
+                    LeveltoCB.Add(Descriptor.Levels[levelIndex], c);
+                    CBtoLevel.Add(c, Descriptor.Levels[levelIndex]);
+
+                    levelIndex++;
+                }
             }
         }
 
@@ -565,7 +592,7 @@
             if (name == "AllLevelsUnlocked")
             {
                 foreach (var l in Descriptor.Levels)
-                    Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, GameState.Won, l.Key, 0);
+                    Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, GameState.Won, l, 0);
 
                 LevelStates.AllLevelsUnlockedOverride = true;
                 InitializeLevelsStates();

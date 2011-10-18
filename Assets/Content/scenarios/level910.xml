@@ -2,8 +2,6 @@
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
     <Id>910</Id>
-    <Mission>999-10</Mission>
-    <Difficulty>Easy</Difficulty>
     <Background>background11</Background>
   </Infos>
   <Objective>

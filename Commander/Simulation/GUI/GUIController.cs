@@ -37,7 +37,6 @@
 
         //not player-related
         private GameMenu GameMenu;
-        private LevelStartedAnnunciation LevelStartedAnnunciation;
         private LevelEndedAnnunciation LevelEndedAnnunciation;
         //private PlayerLivesLiteral PlayerLives;
         private CelestialBodyNearHitAnimation CelestialBodyNearHit;
@@ -88,7 +87,6 @@
             };
             GamePausedResistance.Initialize();
             
-            LevelStartedAnnunciation = new LevelStartedAnnunciation(Simulator, Level);
             LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, Path, Level);
 
             PathPreviewing = new PathPreview(PathPreview, Path);
@@ -579,7 +577,6 @@
             if (Simulator.State != GameState.Paused)
             {
                 StartingPathMenu.Update();
-                LevelStartedAnnunciation.Update();
                 LevelEndedAnnunciation.Update();
                 MenuPowerUps.Update();
                 PathPreviewing.Update();

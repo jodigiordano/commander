@@ -2,8 +2,6 @@
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
     <Id>1003</Id>
-    <Mission>1-1</Mission>
-    <Difficulty>Easy</Difficulty>
     <Background>world2</Background>
   </Infos>
   <Objective>
@@ -202,8 +200,8 @@
     <CelestialBody>
       <Name>World 2</Name>
       <Images />
-      <Image>planete7</Image>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <ParticleEffect>trouRose</ParticleEffect>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Big</Size>
       <Speed>-2.14748365E+09</Speed>
@@ -283,7 +281,7 @@
     <CelestialBody>
       <Name>World 4</Name>
       <Images />
-      <Image>planete7</Image>
+      <ParticleEffect>trouRose</ParticleEffect>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Big</Size>

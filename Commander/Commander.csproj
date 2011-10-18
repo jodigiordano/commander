@@ -314,7 +314,6 @@
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\PowerUpsAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\TurretsAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\PlayerPanel.cs" />
-    <Compile Include="Simulation\GUI\Editor\Controls\LevelsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemiesAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\WaveSubPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\PowerUpCheckBox.cs" />
@@ -389,7 +388,6 @@
     <Compile Include="GUI\Controls\Widgets\HorizontalSlider.cs" />
     <Compile Include="Simulation\GUI\Menus\PowerUpsMenu.cs" />
     <Compile Include="GUI\Cursor.cs" />
-    <Compile Include="Simulation\GUI\Annunciations\LevelStartedAnnunciation.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\EnemiesLives.cs" />
     <Compile Include="Simulation\GUI\Menus\Core\ContextualMenu.cs" />
     <Compile Include="Simulation\GUI\PlayerLivesMoons.cs" />

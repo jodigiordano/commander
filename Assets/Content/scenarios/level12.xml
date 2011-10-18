@@ -2,8 +2,6 @@
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
     <Id>12</Id>
-    <Mission>1-12</Mission>
-    <Difficulty>Easy</Difficulty>
     <Background>background6</Background>
   </Infos>
   <Objective>

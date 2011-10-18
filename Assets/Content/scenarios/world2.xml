@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>2</Id>
+  <Name>The invasion</Name>
+  <Levels>
+    <Level>22</Level>
+    <Level>23</Level>
+    <Level>24</Level>
+    <Level>25</Level>
+    <Level>26</Level>
+    <Level>27</Level>
+    <Level>28</Level>
+    <Level>29</Level>
+    <Level>30</Level>
+    <Level>31</Level>
+    <Level>32</Level>
+    <Level>33</Level>
+    <Level>34</Level>
+    <Level>35</Level>
+    <Level>36</Level>
+    <Level>37</Level>
+  </Levels>
+  <Warps>
+    <World>1</World>
+    <World>3</World>
+  </Warps>
+  <Layout>1002</Layout>
+  <UnlockedCondition>1</UnlockedCondition>
+  <WarpBlockedMessage>Finish all the levels\n\nto access this world!</WarpBlockedMessage>
+  <Music>Galaxy1Music</Music>
+  <MusicEnd>Galaxy1EndMusic</MusicEnd>
+  <SfxEnd>Galaxy1EndSfx</SfxEnd>
+</World>

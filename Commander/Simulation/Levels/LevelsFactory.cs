@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
@@ -39,7 +38,7 @@
             Descriptors.Clear();
 
             LoadLevels(DescriptorsDirectory, "level", Descriptors);
-            LoadLevels(DescriptorsDirectory, "worldlayout", Descriptors);
+            LoadLevels(DescriptorsDirectory, "layoutworld", Descriptors);
             LoadWorlds();
             LoadCutscenes();
             LoadMenuDescriptor();
@@ -51,30 +50,7 @@
 
         public LevelDescriptor GetLevelDescriptor(int id)
         {
-            LevelDescriptor d = null;
-
-            if (id >= 2000 && id <= 3000)
-            {
-                d = new LevelDescriptor();
-                d.Infos.Id = id;
-                d.Infos.Difficulty = "";
-
-                if (id == 2001)
-                    d.Infos.Mission = GetWorldStringId(2);
-                else if (id == 2002)
-                    d.Infos.Mission = GetWorldStringId(3);
-                else if (id == 2003)
-                    d.Infos.Mission = GetWorldStringId(1);
-                else if (id == 2004)
-                    d.Infos.Mission = GetWorldStringId(2);
-            }
-
-            else
-            {
-                d = Descriptors[id];
-            }
-
-            return d;
+            return Descriptors[id];
         }
 
 
@@ -87,6 +63,16 @@
         public string GetWorldStringId(int id)
         {
             return "World " + id;
+        }
+
+
+        public string GetLevelStringId(int id)
+        {
+            foreach (var w in WorldsDescriptors.Values)
+                if (w.Levels.Contains(id))
+                    return w.Id + "-" + id;
+
+            return "";
         }
 
 
@@ -111,6 +97,21 @@
         }
 
 
+        public bool IsWorldUnlocked(int worldId)
+        {
+            if (worldId == -1)
+                return true;
+
+            var descriptor = WorldsDescriptors[worldId];
+
+            foreach (var level in descriptor.Levels)
+                if (!Main.SaveGameController.IsLevelUnlocked(level))
+                    return false;
+
+            return true;
+        }
+
+
         private void LoadLevels(string root, string startingWith, Dictionary<int, LevelDescriptor> to)
         {
             string[] levelsFiles = Directory.GetFiles(root, startingWith + "*.xml");
@@ -127,134 +128,13 @@
         {
             WorldsDescriptors.Clear();
 
-            WorldDescriptor wd;
+            string[] files = Directory.GetFiles(DescriptorsDirectory, "world" + "*.xml");
 
-            wd = new WorldDescriptor()
+            foreach (var f in files)
             {
-                Id = 1,
-                Name = "The colonies",
-                Levels = new List<KeyValuePair<int, List<int>>>()
-                {
-                    new KeyValuePair<int, List<int>>(1, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(2, new List<int>() { 1 }),
-                    new KeyValuePair<int, List<int>>(3, new List<int>() { 2 }),
-                    new KeyValuePair<int, List<int>>(4, new List<int>() { 3 }),
-                    new KeyValuePair<int, List<int>>(5, new List<int>() { 4 }),
-                    new KeyValuePair<int, List<int>>(6, new List<int>() { 5 }),
-                    new KeyValuePair<int, List<int>>(7, new List<int>() { 6 }),
-                    new KeyValuePair<int, List<int>>(8, new List<int>() { 7 }),
-                    new KeyValuePair<int, List<int>>(9, new List<int>() { 8 }),
-                    new KeyValuePair<int, List<int>>(10, new List<int>() { 9 }),
-                    new KeyValuePair<int, List<int>>(11, new List<int>() { 10 }),
-                    new KeyValuePair<int, List<int>>(12, new List<int>() { 11 }),
-                    new KeyValuePair<int, List<int>>(13, new List<int>() { 12 }),
-                    new KeyValuePair<int, List<int>>(14, new List<int>() { 13 }),
-                    new KeyValuePair<int, List<int>>(15, new List<int>() { 14 })
-                },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, GetWorldStringId(2)) },
-                Layout = 1001,
-                UnlockedCondition = new List<int>(),
-                WarpBlockedMessage = "You're not Commander\n\nenough to ascend to\n\na higher level.",
-                LastLevelId = 15,
-                Music = "Galaxy1Music",
-                MusicEnd = "Galaxy1EndMusic",
-                SfxEnd = "Galaxy1EndSfx"
-            };
-            WorldsDescriptors.Add(wd.Id, wd);
-
-            wd = new WorldDescriptor()
-            {
-                Id = 2,
-                Name = "The invasion",
-                Levels = new List<KeyValuePair<int, List<int>>>()
-                {
-                    new KeyValuePair<int, List<int>>(16, new List<int>() { 15 }),
-                    new KeyValuePair<int, List<int>>(17, new List<int>() { 16 }),
-                    new KeyValuePair<int, List<int>>(18, new List<int>() { 17 }),
-                    new KeyValuePair<int, List<int>>(19, new List<int>() { 18 }),
-                    new KeyValuePair<int, List<int>>(20, new List<int>() { 19 }),
-                    new KeyValuePair<int, List<int>>(21, new List<int>() { 20 }),
-                    new KeyValuePair<int, List<int>>(22, new List<int>() { 21 }),
-                    new KeyValuePair<int, List<int>>(23, new List<int>() { 22 }),
-                    new KeyValuePair<int, List<int>>(24, new List<int>() { 23 }),
-                    new KeyValuePair<int, List<int>>(25, new List<int>() { 24 }),
-                    new KeyValuePair<int, List<int>>(26, new List<int>() { 25 }),
-                    new KeyValuePair<int, List<int>>(27, new List<int>() { 26 }),
-                    new KeyValuePair<int, List<int>>(28, new List<int>() { 27 }),
-                    new KeyValuePair<int, List<int>>(29, new List<int>() { 28 }),
-                    new KeyValuePair<int, List<int>>(30, new List<int>() { 29 })
-                },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2002, GetWorldStringId(3)), new KeyValuePair<int, string>(2003, GetWorldStringId(1)) },
-                Layout = 1002,
-                UnlockedCondition = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
-                WarpBlockedMessage = "Only a true Commander\n\nmay enjoy a better world.",
-                LastLevelId = 30,
-                Music = "Galaxy1Music",
-                MusicEnd = "Galaxy1EndMusic",
-                SfxEnd = "Galaxy1EndSfx"
-            };
-            WorldsDescriptors.Add(wd.Id, wd);
-
-            wd = new WorldDescriptor()
-            {
-                Id = 3,
-                Name = "Battle for Earth",
-                Levels = new List<KeyValuePair<int, List<int>>>()
-                {
-                    new KeyValuePair<int, List<int>>(31, new List<int>() { 30 }),
-                    new KeyValuePair<int, List<int>>(32, new List<int>() { 31 }),
-                    new KeyValuePair<int, List<int>>(33, new List<int>() { 32 }),
-                    new KeyValuePair<int, List<int>>(34, new List<int>() { 33 }),
-                    new KeyValuePair<int, List<int>>(35, new List<int>() { 34 }),
-                    new KeyValuePair<int, List<int>>(36, new List<int>() { 35 }),
-                    new KeyValuePair<int, List<int>>(37, new List<int>() { 36 }),
-                    new KeyValuePair<int, List<int>>(38, new List<int>() { 37 }),
-                    new KeyValuePair<int, List<int>>(39, new List<int>() { 38 }),
-                    new KeyValuePair<int, List<int>>(40, new List<int>() { 39 })
-                },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2004, GetWorldStringId(3)) },
-                Layout = 1003,
-                UnlockedCondition = new List<int>() { -1 },
-                WarpBlockedMessage = "",
-                LastLevelId = 40,
-                Music = "Galaxy1Music",
-                MusicEnd = "Galaxy1EndMusic",
-                SfxEnd = "Galaxy1EndSfx"
-            };
-            WorldsDescriptors.Add(wd.Id, wd);
-
-            wd = new WorldDescriptor()
-            {
-                Id = 999,
-                Name = "God mode",
-                Levels = new List<KeyValuePair<int, List<int>>>()
-                {
-                    new KeyValuePair<int, List<int>>(901, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(902, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(903, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(904, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(905, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(906, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(907, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(908, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(909, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(910, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(911, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(912, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(913, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(914, new List<int>() {}),
-                    new KeyValuePair<int, List<int>>(915, new List<int>() {})
-                },
-                Warps = new List<KeyValuePair<int, string>>() { new KeyValuePair<int, string>(2001, GetWorldStringId(2)) },
-                Layout = 1999,
-                UnlockedCondition = new List<int>(),
-                WarpBlockedMessage = "",
-                LastLevelId = 915,
-                Music = "Galaxy1Music",
-                MusicEnd = "Galaxy1EndMusic",
-                SfxEnd = "Galaxy1EndSfx"
-            };
-            WorldsDescriptors.Add(wd.Id, wd);
+                var descriptor = LoadWorldDescriptor(f);
+                WorldsDescriptors.Add(descriptor.Id, descriptor);
+            }
         }
 
 
@@ -277,6 +157,13 @@
             using (StreamReader reader = new StreamReader(path))
                 return (LevelDescriptor) LevelSerializer.Deserialize(reader.BaseStream);
         }
+
+
+        private WorldDescriptor LoadWorldDescriptor(string path)
+        {
+            using (StreamReader reader = new StreamReader(path))
+                return (WorldDescriptor) WorldSerializer.Deserialize(reader.BaseStream);
+        }
         
 
         public void SaveDescriptorOnDisk(int id)
@@ -297,7 +184,7 @@
         {
             foreach (var w in WorldsDescriptors.Values)
                 foreach (var kvp in w.Levels)
-                    if (kvp.Key == id)
+                    if (kvp == id)
                         return w.Id;
 
             return 1;
@@ -308,14 +195,14 @@
         {
             var otherLevels = WorldsDescriptors[worldId].Levels;
 
-            otherLevels.Sort(delegate(KeyValuePair<int, List<int>> level1, KeyValuePair<int, List<int>> level2)
+            otherLevels.Sort(delegate(int level1, int level2)
             {
-                return level1.Key > level2.Key ? 1 : level1.Key < level2.Key ? -1 : 0;
+                return level1 > level2 ? 1 : level1 < level2 ? -1 : 0;
             });
 
             foreach (var other in otherLevels)
-                if (other.Key > currentLevelId)
-                    return other.Key;
+                if (other > currentLevelId)
+                    return other;
 
             return -1;
         }
@@ -483,14 +370,13 @@
         }
 
 
-        public LevelDescriptor GetEmptyDescriptor(int id, string mission)
+        public LevelDescriptor GetEmptyDescriptor(int id)
         {
             var l = new LevelDescriptor();
 
             l.AddAsteroidBelt();
 
             l.Infos.Id = id;
-            l.Infos.Mission = mission;
 
             return l;
         }
@@ -504,23 +390,6 @@
             {
                 if (d.Infos.Id > highest)
                     highest = d.Infos.Id;
-            }
-
-            return highest;
-        }
-
-
-        private int GetHighestWorld1Level()
-        {
-            int highest = -1;
-
-            foreach (var d in Descriptors.Values)
-            {
-                string[] worldLevel = d.Infos.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
-                int level = int.Parse(worldLevel[1]);
-
-                if (worldLevel[0] == "1" && level > highest)
-                    highest = level;
             }
 
             return highest;
@@ -557,26 +426,26 @@
                 d.InfiniteWaves = v;
             }
 
-            var pinkHolesToAdd = new List<CelestialBodyDescriptor>();
+            //var pinkHolesToAdd = new List<CelestialBodyDescriptor>();
 
-            // switch some planets for pink holes
-            for (int i = d.PlanetarySystem.Count - 1; i > -1; i--)
-            {
-                var cb = d.PlanetarySystem[i];
+            //// switch some planets for pink holes
+            //for (int i = d.PlanetarySystem.Count - 1; i > -1; i--)
+            //{
+            //    var cb = d.PlanetarySystem[i];
 
-                if (!cb.Name.StartsWith("World"))
-                    continue;
+            //    if (!cb.Name.StartsWith("World"))
+            //        continue;
 
-                var pinkHole = d.CreatePinkHole(cb.Position, cb.Name, (int) cb.Speed, cb.PathPriority);
-                pinkHole.AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false, false);
+            //    var pinkHole = d.CreatePinkHole(cb.Position, cb.Name, (int) cb.Speed, cb.PathPriority);
+            //    pinkHole.AddTurret(TurretType.Gravitational, 1, new Vector3(1, -2, 0), false, false);
 
-                pinkHolesToAdd.Add(pinkHole);
+            //    pinkHolesToAdd.Add(pinkHole);
 
-                d.PlanetarySystem.RemoveAt(i);
-            }
+            //    d.PlanetarySystem.RemoveAt(i);
+            //}
 
-            foreach (var pink in pinkHolesToAdd)
-                d.PlanetarySystem.Add(pink);
+            //foreach (var pink in pinkHolesToAdd)
+            //    d.PlanetarySystem.Add(pink);
 
         }
 

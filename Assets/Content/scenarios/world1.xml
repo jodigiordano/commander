@@ -1,0 +1,39 @@
+﻿<?xml version="1.0"?>
+<World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>1</Id>
+  <Name>The colonies</Name>
+  <Levels>
+    <Level>1</Level>
+    <Level>2</Level>
+    <Level>3</Level>
+    <Level>4</Level>
+    <Level>5</Level>
+    <Level>6</Level>
+    <Level>7</Level>
+    <Level>8</Level>
+    <Level>9</Level>
+    <Level>10</Level>
+    <Level>11</Level>
+    <Level>12</Level>
+    <Level>13</Level>
+    <Level>14</Level>
+    <Level>15</Level>
+    <Level>16</Level>
+    <Level>17</Level>
+    <Level>18</Level>
+    <Level>19</Level>
+    <Level>20</Level>
+    <Level>21</Level>
+    <Level>22</Level>
+    <Level>23</Level>
+  </Levels>
+  <Warps>
+    <World>2</World>
+  </Warps>
+  <Layout>1001</Layout>
+  <UnlockedCondition>-1</UnlockedCondition>
+  <WarpBlockedMessage>Finish all the levels\n\nto access this world!</WarpBlockedMessage>
+  <Music>Galaxy1Music</Music>
+  <MusicEnd>Galaxy1EndMusic</MusicEnd>
+  <SfxEnd>Galaxy1EndSfx</SfxEnd>
+</World>

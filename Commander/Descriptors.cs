@@ -13,12 +13,16 @@
     {
         public int Id;
         public string Name;
-        public List<KeyValuePair<int, List<int>>> Levels;
-        public List<KeyValuePair<int, string>> Warps;
+
+        [XmlArrayItem("Level")]
+        public List<int> Levels;
+
+        [XmlArrayItem("World")]
+        public List<int> Warps;
+        
         public int Layout;
-        public List<int> UnlockedCondition;
+        public int UnlockedCondition;
         public string WarpBlockedMessage;
-        public int LastLevelId;
         public string Music;
         public string MusicEnd;
         public string SfxEnd;
@@ -28,12 +32,11 @@
         {
             Id = -1;
             Name = "";
-            Levels = new List<KeyValuePair<int, List<int>>>();
-            Warps = new List<KeyValuePair<int, string>>();
+            Levels = new List<int>();
+            Warps = new List<int>();
             Layout = -1;
-            UnlockedCondition = new List<int>();
+            UnlockedCondition = -1;
             WarpBlockedMessage = "";
-            LastLevelId = -1;
             Music = "";
             MusicEnd = "";
             SfxEnd = "";
@@ -43,7 +46,7 @@
         public bool ContainsLevel(int id)
         {
             foreach (var l in Levels)
-                if (l.Key == id)
+                if (l == id)
                     return true;
 
             return false;
@@ -129,7 +132,7 @@
                 PathPriority = priority,
                 Size = Size.Small,
                 Speed = speed,
-                ParticulesEffect = "trouRose"
+                ParticleEffect = "trouRose"
             };
         }
 
@@ -232,16 +235,12 @@
     public class InfosDescriptor
     {
         public int Id;
-        public string Mission;
-        public string Difficulty;
         public string Background;
 
 
         public InfosDescriptor()
         {
             Id = -1;
-            Mission = "1-1";
-            Difficulty = "Easy";
             Background = "background4";
         }
     }
@@ -309,7 +308,7 @@
         public Size Size;
 
         [ContentSerializer(Optional = true)]
-        public string ParticulesEffect;
+        public string ParticleEffect;
 
         public float Speed;
         public int PathPriority;
@@ -341,7 +340,7 @@
         {
             Name = "CorpsCeleste";
             Image = null;
-            ParticulesEffect = null;
+            ParticleEffect = null;
             HasGravitationalTurret = false;
             StartingTurrets = new List<TurretDescriptor>();
             Speed = 0;

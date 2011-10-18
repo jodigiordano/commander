@@ -1,0 +1,31 @@
+﻿<?xml version="1.0"?>
+<World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>999</Id>
+  <Name>God mode</Name>
+  <Levels>
+    <Level>901</Level>
+    <Level>902</Level>
+    <Level>903</Level>
+    <Level>904</Level>
+    <Level>905</Level>
+    <Level>906</Level>
+    <Level>907</Level>
+    <Level>908</Level>
+    <Level>909</Level>
+    <Level>910</Level>
+    <Level>911</Level>
+    <Level>912</Level>
+    <Level>913</Level>
+    <Level>914</Level>
+    <Level>915</Level>
+  </Levels>
+  <Warps>
+    <World>2</World>
+  </Warps>
+  <Layout>1999</Layout>
+  <UnlockedCondition>-1</UnlockedCondition>
+  <WarpBlockedMessage>Finish all the levels\n\nto access this world!</WarpBlockedMessage>
+  <Music>Galaxy1Music</Music>
+  <MusicEnd>Galaxy1EndMusic</MusicEnd>
+  <SfxEnd>Galaxy1EndSfx</SfxEnd>
+</World>

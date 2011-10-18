@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
-    <Id>8</Id>
+    <Id>47</Id>
     <Background>background8</Background>
   </Infos>
   <Objective>
@@ -14,8 +14,6 @@
         <string>Comet</string>
         <string>Asteroid</string>
         <string>Plutoid</string>
-        <string>Plutoid</string>
-        <string>Centaur</string>
         <string>Centaur</string>
       </Images>
       <HasGravitationalTurret>false</HasGravitationalTurret>
@@ -45,7 +43,7 @@
       <Image>vaisseauAlien1</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
-      <Size>Big</Size>
+      <Size>Normal</Size>
       <Speed>900000</Speed>
       <PathPriority>-8</PathPriority>
       <Path>
@@ -142,7 +140,7 @@
     <CelestialBody>
       <Name>Planete70433217</Name>
       <Images />
-      <Image>planete7</Image>
+      <Image>planete2</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Big</Size>

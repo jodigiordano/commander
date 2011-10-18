@@ -42,7 +42,7 @@
             visualPriority,
             celestialBodyDescriptor.HasMoons)
         {
-            Effect = simulator.Scene.Particles.Get(celestialBodyDescriptor.ParticulesEffect);
+            Effect = simulator.Scene.Particles.Get(celestialBodyDescriptor.ParticleEffect);
             Effect.VisualPriority = visualPriority;
         }
 
@@ -112,6 +112,17 @@
         public override void Draw()
         {
 
+        }
+
+
+        public override CelestialBodyDescriptor GenerateDescriptor()
+        {
+            var d = base.GenerateDescriptor();
+
+            d.ParticleEffect = Effect.Name;
+            d.HasMoons = false;
+
+            return d;
         }
     }
 }

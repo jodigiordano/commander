@@ -131,7 +131,7 @@
                 InBackground = false,
                 CanSelect = true,
                 PathPriority = -1,
-                ParticulesEffect = "trouRose",
+                ParticleEffect = "trouRose",
                 Speed = float.MaxValue,
                 Path = Vector3.Zero,
                 Position = Vector3.Zero,

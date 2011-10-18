@@ -2,8 +2,6 @@
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
     <Id>1999</Id>
-    <Mission>1-1</Mission>
-    <Difficulty>Easy</Difficulty>
     <Background>world1</Background>
   </Infos>
   <Objective>
@@ -495,9 +493,10 @@
     <CelestialBody>
       <Name>World 2</Name>
       <Images />
-      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <ParticleEffect>trouRose</ParticleEffect>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
-      <Size>Small</Size>
+      <Size>Normal</Size>
       <Speed>-2.14748365E+09</Speed>
       <PathPriority>17</PathPriority>
       <Path>
@@ -516,7 +515,7 @@
       <Invincible>true</Invincible>
       <StartingPosition>0</StartingPosition>
       <FollowPath>false</FollowPath>
-      <HasMoons>true</HasMoons>
+      <HasMoons>false</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
   </PlanetarySystem>

@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -483,34 +482,6 @@
             };
 
             NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoDifficulty(PanelWidget widget)
-        {
-            var slider = (ChoicesHorizontalSlider) widget;
-
-            Simulator.Level.Difficulty = slider.Value;
-        }
-
-
-        private void DoWorld(PanelWidget widget)
-        {
-            var slider = (NumericHorizontalSlider) widget;
-
-            Simulator.Level.Mission =
-                slider.Value + "-" +
-                Simulator.Level.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[1];
-        }
-
-
-        private void DoLevel(PanelWidget widget)
-        {
-            var slider = (NumericHorizontalSlider) widget;
-
-            Simulator.Level.Mission =
-                Simulator.Level.Mission.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[0] + "-" +
-                slider.Value;
         }
 
 

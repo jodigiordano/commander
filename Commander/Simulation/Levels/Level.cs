@@ -13,8 +13,6 @@
 
         // infos
         public int Id;
-        public string Mission;
-        public string Difficulty;
         public double ParTime;
         public Image Background;
 
@@ -52,8 +50,6 @@
         public void Initialize()
         {
             Id = Descriptor.Infos.Id;
-            Mission = Descriptor.Infos.Mission;
-            Difficulty = Descriptor.Infos.Difficulty;
             ParTime = Descriptor.ParTime;
 
             Background = new Image(Descriptor.Infos.Background, Vector3.Zero);
@@ -109,8 +105,6 @@
 
             // Sync info
             Descriptor.Infos.Background = Background.TextureName;
-            Descriptor.Infos.Difficulty = Difficulty;
-            Descriptor.Infos.Mission = Mission;
 
             // Sync player
             Descriptor.Player.Lives = CommonStash.Lives;
@@ -199,8 +193,8 @@
 
                 // Pink Hole
                 if (descriptor.Image == null &&
-                    descriptor.ParticulesEffect != null &&
-                    descriptor.ParticulesEffect == "trouRose")
+                    descriptor.ParticleEffect != null &&
+                    descriptor.ParticleEffect == "trouRose")
                 {
                     c = new PinkHole
                     (
@@ -210,7 +204,7 @@
                        descriptor.Position,
                        descriptor.Size,
                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
-                       Simulator.Scene.Particles.Get(descriptor.ParticulesEffect),
+                       Simulator.Scene.Particles.Get(descriptor.ParticleEffect),
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001
                     );

@@ -1791,8 +1791,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\worldlayout3.xml">
-      <Name>worldlayout3</Name>
+    <None Include="scenarios\layoutworld3.xml">
+      <Name>layoutworld3</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1934,8 +1934,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\worldlayout1.xml">
-      <Name>worldlayout1</Name>
+    <None Include="scenarios\layoutworld1.xml">
+      <Name>layoutworld1</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -2023,8 +2023,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\worldlayout2.xml">
-      <Name>worldlayout2</Name>
+    <None Include="scenarios\layoutworld2.xml">
+      <Name>layoutworld2</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -2604,20 +2604,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\worldlayout999.xml">
+    <None Include="scenarios\layoutworld999.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>worldlayout999</Name>
+      <Name>layoutworld999</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\level901.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level901</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2765,6 +2757,103 @@
       <Name>stick</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level901.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level901</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level47.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level47</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level46.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level46</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level45.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level45</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level44.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level44</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level43.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level43</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level42.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level42</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\level41.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level41</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\world1.xml">
+      <Name>world1</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\world3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>world3</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\world2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>world2</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\world999.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>world999</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
