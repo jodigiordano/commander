@@ -32,21 +32,6 @@
         }
 
 
-        public int LastUnlockedWorld
-        {
-            get
-            {
-                int highestLevelDone = -1;
-
-                foreach (var l in Progress.Keys)
-                    if (l > highestLevelDone)
-                        highestLevelDone = l;
-
-                return Main.LevelsFactory.GetWorldFromLevelId(highestLevelDone);
-            }
-        }
-
-
         public void ClearAndSave()
         {
             Progress.Clear();

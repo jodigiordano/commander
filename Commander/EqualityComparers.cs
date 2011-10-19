@@ -247,33 +247,6 @@
     }
 
 
-    class NewGameChoiceComparer : IEqualityComparer<NewGameChoice>
-    {
-        private static NewGameChoiceComparer instance;
-        public static NewGameChoiceComparer Default
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new NewGameChoiceComparer();
-                return instance;
-            }
-        }
-
-
-        public bool Equals(NewGameChoice x, NewGameChoice y)
-        {
-            return x == y;
-        }
-
-
-        public int GetHashCode(NewGameChoice obj)
-        {
-            return (int) obj;
-        }
-    }
-
-
     class PanelTypeComparer : IEqualityComparer<PanelType>
     {
         private static PanelTypeComparer instance;

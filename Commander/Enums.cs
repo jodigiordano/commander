@@ -184,22 +184,6 @@ namespace EphemereGames.Commander.Simulation
     };
 
 
-    public enum NewGameChoice
-    {
-        None = -1,
-        Continue = 0,
-        WrapToWorld1 = 1,
-        WrapToWorld2 = 2,
-        WrapToWorld3 = 3,
-        WrapToWorld4 = 4,
-        WrapToWorld5 = 5,
-        WrapToWorld6 = 6,
-        WrapToWorld7 = 7,
-        WrapToWorld8 = 8,
-        NewGame = 9,
-    };
-
-
     enum EditorGeneralMenuChoice
     {
         None = -1,

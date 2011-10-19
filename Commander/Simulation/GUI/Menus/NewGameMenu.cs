@@ -9,7 +9,7 @@
     class NewGameMenu : ContextualMenu
     {
         public CelestialBody CelestialBody;
-        public NewGameChoice NewGameChoice;
+        public int NewGameChoice;
 
         private bool AlternateSelectedText;
 
@@ -29,14 +29,13 @@
                 return;
 
             AddChoice(new TextContextualMenuChoice("continue", new Text("Continue (World " + Main.SaveGameController.PlayerSaveGame.CurrentWorld + ")", @"Pixelite") { SizeX = 2 }));
-
-            var maxWorld = Main.SaveGameController.PlayerSaveGame.LastUnlockedWorld;
-
-            if (maxWorld > 1)
-                for (int i = 1; i <= maxWorld; i++)
-                    AddChoice(new TextContextualMenuChoice("jumpto", new Text("Jump to World " + i, @"Pixelite") { SizeX = 2 }));
-
             AddChoice(new TextContextualMenuChoice("new", new Text("New campaign", @"Pixelite") { SizeX = 2 }));
+
+            foreach (var w in Main.LevelsFactory.WorldsDescriptors.Keys)
+            {
+                if (Main.LevelsFactory.IsWorldUnlocked(w))
+                    AddChoice(new TextContextualMenuChoice("jumpto", new Text("Jump to World " + w, @"Pixelite") { SizeX = 2 }));
+            }
         }
 
 
@@ -69,7 +68,6 @@
 
         public override void Draw()
         {
-
             var newIndex = Math.Min((int) NewGameChoice, Choices.Count - 1);
 
             if (AlternateSelectedText && Choices.Count > 0 && newIndex != SelectedIndex)

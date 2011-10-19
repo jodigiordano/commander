@@ -245,17 +245,17 @@
                 case "save the world":
                     switch (Simulator.NewGameChoice)
                     {
-                        case NewGameChoice.None:
-                        case NewGameChoice.NewGame:
+                        case -1:
+                        case 1:
                             Main.SaveGameController.PlayerSaveGame.ClearAndSave();
                             TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(1));
                             //tmp alpha: TransiteTo("Cutscene1");
                             break;
-                        case NewGameChoice.Continue:
+                        case 0:
                             TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(Main.SaveGameController.PlayerSaveGame.CurrentWorld));
                             break;
                         default:
-                            TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId((int) Simulator.NewGameChoice));
+                            TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(Main.LevelsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2)));
                             break;
                     }
                     break;

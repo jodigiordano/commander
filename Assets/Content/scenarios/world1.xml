@@ -3,6 +3,8 @@
   <Id>1</Id>
   <Name>The colonies</Name>
   <Levels>
+    <Level>48</Level>
+    <Level>49</Level>
     <Level>1</Level>
     <Level>2</Level>
     <Level>3</Level>
@@ -24,8 +26,6 @@
     <Level>19</Level>
     <Level>20</Level>
     <Level>21</Level>
-    <Level>22</Level>
-    <Level>23</Level>
   </Levels>
   <Warps>
     <World>2</World>

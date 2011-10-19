@@ -27,7 +27,7 @@ namespace EphemereGames.Commander.Simulation
         public bool HelpMode { get { return LevelsController.Help.Active; } }
         public PausedGameChoice PausedGameChoice;
         public EditorWorldChoice EditorWorldChoice;
-        public NewGameChoice NewGameChoice;
+        public int NewGameChoice;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
 
 
@@ -152,7 +152,7 @@ namespace EphemereGames.Commander.Simulation
             DebugMode = Preferences.Debug;
             PausedGameChoice = PausedGameChoice.None;
             EditorWorldChoice = EditorWorldChoice.None;
-            NewGameChoice = NewGameChoice.None;
+            NewGameChoice = -1;
 
 
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);

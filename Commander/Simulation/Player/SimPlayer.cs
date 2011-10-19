@@ -260,13 +260,13 @@
 
             if (ActualSelection.CelestialBody != null &&
                 ActualSelection.CelestialBody.Name == @"save the world" &&
-                ActualSelection.NewGameChoice == NewGameChoice.None)
+                ActualSelection.NewGameChoice == -1)
             {
                 NextNewGameChoice();
             }
 
             else if (ActualSelection.CelestialBody == null || ActualSelection.CelestialBody.Name != @"save the world")
-                ActualSelection.NewGameChoice = NewGameChoice.None;
+                ActualSelection.NewGameChoice = -1;
         }
 
 
@@ -453,14 +453,14 @@
                 if (actual >= nbChoices)
                     actual = 0;
 
-                if (ActualSelection.AvailableNewGameChoices[(NewGameChoice) actual])
+                if (ActualSelection.AvailableNewGameChoices[actual])
                 {
                     next = actual;
                     break;
                 }
             }
 
-            ActualSelection.NewGameChoice = (NewGameChoice) next;
+            ActualSelection.NewGameChoice = next;
         }
 
 
@@ -477,14 +477,14 @@
                 if (actual < 0)
                     actual = nbChoices - 1;
 
-                if (ActualSelection.AvailableNewGameChoices[(NewGameChoice) actual])
+                if (ActualSelection.AvailableNewGameChoices[actual])
                 {
                     previous = actual;
                     break;
                 }
             }
 
-            ActualSelection.NewGameChoice = (NewGameChoice) previous;
+            ActualSelection.NewGameChoice = previous;
         }
 
 
@@ -617,32 +617,20 @@
             ActualSelection.AvailableTurretOptions[TurretChoice.Update] =
                 ActualSelection.Turret.CanUpdate &&
                 ActualSelection.Turret.UpgradePrice <= CommonStash.Cash;
-
-            //des que l'option de maj redevient disponible, elle est selectionnee
-            //if (majEtaitIndisponible && ActualSelection.AvailableTurretOptions[TurretChoice.Update])
-            //    ActualSelection.TurretChoice = TurretChoice.Update;
-
-            //change automatiquement la selection de cette option quand elle n'est pas disponible
-            //if (!ActualSelection.AvailableTurretOptions[TurretChoice.Update] && ActualSelection.TurretChoice == TurretChoice.Update)
-            //    ActualSelection.TurretChoice = TurretChoice.Sell;
         }
 
 
         private void CheckAvailableNewGameChoices()
         {
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.Continue] = Main.SaveGameController.PlayerSaveGame.CurrentWorld > 0;
+            ActualSelection.AvailableNewGameChoices.Clear();
+            ActualSelection.AvailableNewGameChoices.Add(0, Main.SaveGameController.PlayerSaveGame.CurrentWorld > 0);
+            ActualSelection.AvailableNewGameChoices.Add(1, true);
 
-            var maxWorld = Main.SaveGameController.PlayerSaveGame.LastUnlockedWorld;
+            int index = 2;
 
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld1] = maxWorld > 1;
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld2] = maxWorld >= 2;
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld3] = maxWorld >= 3;
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld4] = maxWorld >= 4;
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld5] = maxWorld >= 5;
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld6] = maxWorld >= 6;
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld7] = maxWorld >= 7;
-            ActualSelection.AvailableNewGameChoices[NewGameChoice.WrapToWorld8] = maxWorld >= 8;
-
+            foreach (var w in Main.LevelsFactory.WorldsDescriptors.Keys)
+                if (Main.LevelsFactory.IsWorldUnlocked(w))
+                    ActualSelection.AvailableNewGameChoices.Add(index++, true);
         }
 
 

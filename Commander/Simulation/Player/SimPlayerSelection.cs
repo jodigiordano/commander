@@ -6,7 +6,7 @@
     class SimPlayerSelection
     {
         public Dictionary<TurretChoice, bool> AvailableTurretOptions;
-        public Dictionary<NewGameChoice, bool> AvailableNewGameChoices;
+        public Dictionary<int, bool> AvailableNewGameChoices;
 
         protected CelestialBody celestialBody;
         protected PowerUpType powerUpToBuy;
@@ -16,7 +16,7 @@
         protected Turret turretToPlace;
         protected PausedGameChoice pausedGameChoice;
         protected EditorWorldChoice editorWorldChoice;
-        protected NewGameChoice newGameChoice;
+        protected int newGameChoice;
         protected EditorEditingState editingState;
 
         public bool CelestialBodyChanged;
@@ -37,17 +37,7 @@
             AvailableTurretOptions.Add(TurretChoice.Sell, false);
             AvailableTurretOptions.Add(TurretChoice.Update, false);
 
-            AvailableNewGameChoices = new Dictionary<NewGameChoice, bool>(NewGameChoiceComparer.Default);
-            AvailableNewGameChoices.Add(NewGameChoice.Continue, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld1, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld2, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld3, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld4, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld5, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld6, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld7, false);
-            AvailableNewGameChoices.Add(NewGameChoice.WrapToWorld8, false);
-            AvailableNewGameChoices.Add(NewGameChoice.NewGame, true);
+            AvailableNewGameChoices = new Dictionary<int,bool>();
 
             Initialize();
         }
@@ -63,7 +53,7 @@
             TurretToPlace = null;
             PausedGameChoice = PausedGameChoice.None;
             EditorWorldChoice = EditorWorldChoice.None;
-            NewGameChoice = NewGameChoice.None;
+            NewGameChoice = -1;
             EditingState = EditorEditingState.None;
 
             Update();
@@ -141,7 +131,7 @@
         }
 
 
-        public NewGameChoice NewGameChoice
+        public int NewGameChoice
         {
             get { return newGameChoice; }
             set { NewGameChoiceChanged = newGameChoice != value; newGameChoice = value; }

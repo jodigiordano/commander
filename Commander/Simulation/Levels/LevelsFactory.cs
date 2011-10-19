@@ -69,8 +69,9 @@
         public string GetLevelStringId(int id)
         {
             foreach (var w in WorldsDescriptors.Values)
-                if (w.Levels.Contains(id))
-                    return w.Id + "-" + id;
+                for (int i = 0; i < w.Levels.Count; i++)
+                    if (w.Levels[i] == id)
+                        return w.Id + "-" + (i + 1);
 
             return "";
         }
@@ -79,6 +80,25 @@
         public string GetWorldAnnounciationStringId(int id)
         {
             return GetWorldStringId(id) + "Annunciation";
+        }
+
+
+        public int GetUnlockedWorldIdByIndex(int index)
+        {
+            var current = 0;
+
+            foreach (var w in WorldsDescriptors.Keys)
+            {
+                if (!IsWorldUnlocked(w))
+                    continue;
+
+                if (current == index)
+                    return w;
+
+                current++;
+            }
+
+            return -1;
         }
 
 
