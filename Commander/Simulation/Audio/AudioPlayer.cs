@@ -139,7 +139,7 @@
 
             // Pause the cue if the spaceship is not moving (and resume it otherwise)
             if (ShipSpeed == 0)
-                MovingCue.Pause();
+                MovingCue.Stop();
             else
                 MovingCue.PlayOrResume();
 
