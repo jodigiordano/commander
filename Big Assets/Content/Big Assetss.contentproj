@@ -1498,6 +1498,23 @@
       <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="audio\music\EndOfWorld1_2011_10_16.wav">
+      <Name>EndOfWorld1_2011_10_16</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\EphemereGamesLogo_2011_10_16.wav">
+      <Name>EphemereGamesLogo_2011_10_16</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\IntroMusic_2011_10_16.wav">
+      <Name>IntroMusic_2011_10_16</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
