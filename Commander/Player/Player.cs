@@ -72,8 +72,7 @@
             "ShipFiring",
             "Ship2Firing",
             "Ship3Firing",
-            "Ship4Firing",
-            "Ship4Firing",
+            "Ship4Firing"
         };
 
 
@@ -82,8 +81,7 @@
             "ShipMoving",
             "Ship2Moving",
             "Ship3Moving",
-            "Ship4Moving",
-            "Ship4Moving",
+            "Ship4Moving"
         };
 
 
@@ -92,8 +90,7 @@
             "ShipTeleportIn",
             "Ship2TeleportIn",
             "Ship3TeleportIn",
-            "Ship4TeleportIn",
-            "Ship4TeleportIn",
+            "Ship4TeleportIn"
         };
 
 
@@ -102,8 +99,7 @@
             "ShipTeleportOut",
             "Ship2TeleportOut",
             "Ship3TeleportOut",
-            "Ship4TeleportOut",
-            "Ship4TeleportOut",
+            "Ship4TeleportOut"
         };
 
 
@@ -112,8 +108,7 @@
             "ShipBouncing",
             "Ship2Bouncing",
             "Ship3Bouncing",
-            "Ship4Bouncing",
-            "Ship4Bouncing",
+            "Ship4Bouncing"
         };
 
 
@@ -122,8 +117,7 @@
             "ShipShieldHit",
             "Ship2ShieldHit",
             "Ship3ShieldHit",
-            "Ship4ShieldHit",
-            "Ship4ShieldHit",
+            "Ship4ShieldHit"
         };
 
 
@@ -132,8 +126,7 @@
             "SilentCue",
             "SilentCue",
             "SilentCue",
-            "SilentCue",
-            "SilentCue",
+            "SilentCue"
         };
 
 
