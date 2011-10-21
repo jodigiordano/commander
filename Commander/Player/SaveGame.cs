@@ -8,7 +8,6 @@
     {
         public SerializableDictionaryProxy<int, int> Progress;
         public SerializableDictionaryProxy<int, int> Scores;
-        public SerializableDictionaryProxy<int, int> Tutorials;
         public int CurrentWorld;
 
 
@@ -36,7 +35,6 @@
         {
             Progress.Clear();
             Scores.Clear();
-            Tutorials.Clear();
             CurrentWorld = 0;
 
             Save();
@@ -61,12 +59,10 @@
 
             Progress = d.Progress;
             Scores = d.Scores;
-            Tutorials = d.Tutorials;
             CurrentWorld = d.CurrentWorld;
 
             Progress.Initialize();
             Scores.Initialize();
-            Tutorials.Initialize();
         }
 
 
@@ -92,7 +88,6 @@
 
             Progress.InitializeToSave();
             Scores.InitializeToSave();
-            Tutorials.InitializeToSave();
         }
 
 
@@ -106,7 +101,6 @@
         {
             Progress = new SerializableDictionaryProxy<int, int>();
             Scores = new SerializableDictionaryProxy<int, int>();
-            Tutorials = new SerializableDictionaryProxy<int, int>();
 
             CurrentWorld = 0;
 

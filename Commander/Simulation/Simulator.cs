@@ -24,7 +24,6 @@ namespace EphemereGames.Commander.Simulation
         internal EditorState EditorState;
         internal Level Level;
 
-        public bool HelpMode { get { return LevelsController.Help.Active; } }
         public PausedGameChoice PausedGameChoice;
         public EditorWorldChoice EditorWorldChoice;
         public int NewGameChoice;
@@ -439,14 +438,13 @@ namespace EphemereGames.Commander.Simulation
             {
                 var player = (Commander.Player) p;
 
+                //Scene.Camera.Position = player.Position;
+
                 player.ConnectedThisTick = false;
 
                 if (p.InputType == InputType.MouseAndKeyboard || p.InputType == InputType.KeyboardOnly)
                     MoveKeyboard(player);
             }
-
-            if (LevelsController.Help.Active)
-                return;
 
             if (State != GameState.Paused)
             {
@@ -687,18 +685,6 @@ namespace EphemereGames.Commander.Simulation
                     TweakingController.Sync();
             }
 
-            if (LevelsController.Help.Active)
-            {
-                if (key ==player. KeyboardConfiguration.Back)
-                    LevelsController.Help.Skip();
-                if (key == player.KeyboardConfiguration.Next)
-                    LevelsController.Help.NextDirective();
-                if (key == player.KeyboardConfiguration.Previous)
-                    LevelsController.Help.PreviousDirective();
-
-                return;
-            }
-
             var simPlayer = SimPlayersController.GetPlayer(player);
 
             if (simPlayer == null) // disconnected
@@ -897,9 +883,6 @@ namespace EphemereGames.Commander.Simulation
             if (DebugMode && key == player.KeyboardConfiguration.Debug)
                 CollisionsController.Debug = false;
 
-            if (LevelsController.Help.Active)
-                return;
-
             // Stop Moving
             var simPlayer = SimPlayersController.GetPlayer(player);
 
@@ -929,16 +912,6 @@ namespace EphemereGames.Commander.Simulation
         void InputListener.DoMouseButtonPressedOnce(Core.Input.Player p, MouseButton button)
         {
             var player = (Commander.Player) p;
-
-            if (LevelsController.Help.Active)
-            {
-                if (button == player.MouseConfiguration.Next)
-                    LevelsController.Help.NextDirective();
-                else if (button == player.MouseConfiguration.Previous)
-                    LevelsController.Help.PreviousDirective();
-
-                return;
-            }
 
             var simPlayer = SimPlayersController.GetPlayer(p);
 
@@ -1000,9 +973,6 @@ namespace EphemereGames.Commander.Simulation
         {
             var player = (Commander.Player) p;
 
-            if (LevelsController.Help.Active)
-                return;
-
             var simPlayer = SimPlayersController.GetPlayer(p);
 
             if (simPlayer == null) // disconnected
@@ -1027,9 +997,6 @@ namespace EphemereGames.Commander.Simulation
 
         void InputListener.DoMouseScrolled(Core.Input.Player p, int delta)
         {
-            if (LevelsController.Help.Active)
-                return;
-
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
@@ -1058,9 +1025,6 @@ namespace EphemereGames.Commander.Simulation
 
         void InputListener.DoMouseMoved(Core.Input.Player p, Vector3 delta)
         {
-            if (LevelsController.Help.Active)
-                return;
-
             var player = (Player) p;
             var simPlayer = SimPlayersController.GetPlayer(p);
 
@@ -1096,19 +1060,6 @@ namespace EphemereGames.Commander.Simulation
                     TweakingController.Sync();
                     Main.LevelsFactory.Initialize();
                 }
-            }
-
-
-            if (LevelsController.Help.Active)
-            {
-                if (button == player.GamepadConfiguration.SelectionNext || button == player.GamepadConfiguration.AlternateSelectionNext)
-                    LevelsController.Help.NextDirective();
-                else if (button == player.GamepadConfiguration.SelectionPrevious || button == player.GamepadConfiguration.AlternateSelectionPrevious)
-                    LevelsController.Help.PreviousDirective();
-                else if (button == player.GamepadConfiguration.Cancel)
-                    LevelsController.Help.Skip();
-
-                return;
             }
 
             var simPlayer = SimPlayersController.GetPlayer(p);
@@ -1214,9 +1165,6 @@ namespace EphemereGames.Commander.Simulation
             if (DebugMode && button == player.GamepadConfiguration.Debug)
                 CollisionsController.Debug = false;
 
-            if (LevelsController.Help.Active)
-                return;
-
             var simPlayer = SimPlayersController.GetPlayer(player);
 
             if (simPlayer == null) // disconnected
@@ -1244,9 +1192,6 @@ namespace EphemereGames.Commander.Simulation
         void InputListener.DoGamePadJoystickMoved(Core.Input.Player p, Buttons button, Vector3 delta)
         {
             var player = (Commander.Player) p;
-
-            if (LevelsController.Help.Active)
-                return;
 
             var simPlayer = SimPlayersController.GetPlayer(player);
 

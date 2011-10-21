@@ -215,16 +215,15 @@
         {
             var otherLevels = WorldsDescriptors[worldId].Levels;
 
-            otherLevels.Sort(delegate(int level1, int level2)
-            {
-                return level1 > level2 ? 1 : level1 < level2 ? -1 : 0;
-            });
+            int currentIndex = otherLevels.FindIndex(l => l == currentLevelId);
 
-            foreach (var other in otherLevels)
-                if (other > currentLevelId)
-                    return other;
+            if (currentIndex == otherLevels.Count - 1)
+                currentIndex = -1;
 
-            return -1;
+            if (currentIndex != -1)
+                currentIndex = otherLevels[currentIndex + 1];
+
+            return currentIndex;
         }
 
 

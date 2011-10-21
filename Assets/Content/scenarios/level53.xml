@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
-    <Id>11</Id>
-    <Background>background1</Background>
+    <Id>53</Id>
+    <Background>background12</Background>
   </Infos>
   <Objective>
-    <CelestialBodyToProtect>12</CelestialBodyToProtect>
+    <CelestialBodyToProtect>2</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
     <CelestialBody>
@@ -39,78 +39,22 @@
       <StraightLine>false</StraightLine>
     </CelestialBody>
     <CelestialBody>
-      <Name>Planete2023636316</Name>
-      <Images />
-      <Image>stationSpatiale1</Image>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Normal</Size>
-      <Speed>-2.14748365E+09</Speed>
-      <PathPriority>11</PathPriority>
-      <Path>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>146.556992</X>
-        <Y>177.100174</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-      <FollowPath>false</FollowPath>
-      <HasMoons>true</HasMoons>
-      <StraightLine>false</StraightLine>
-    </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1195138324</Name>
-      <Images />
-      <Image>vaisseauAlien1</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Big</Size>
-      <Speed>10000</Speed>
-      <PathPriority>-2</PathPriority>
-      <Path>
-        <X>67.60207</X>
-        <Y>-146.091339</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-456.4552</X>
-        <Y>87.80301</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-      <FollowPath>false</FollowPath>
-      <HasMoons>false</HasMoons>
-      <StraightLine>false</StraightLine>
-    </CelestialBody>
-    <CelestialBody>
-      <Name>Planete898041910</Name>
+      <Name>Planete1889868259</Name>
       <Images />
       <Image>planete7</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Big</Size>
-      <Speed>10000</Speed>
-      <PathPriority>12</PathPriority>
+      <Speed>30000</Speed>
+      <PathPriority>2</PathPriority>
       <Path>
-        <X>185.024673</X>
-        <Y>-68.47633</Y>
+        <X>240</X>
+        <Y>-60</Y>
         <Z>0</Z>
       </Path>
       <Position>
-        <X>180.325882</X>
-        <Y>-101.3403</Y>
+        <X>-126.600029</X>
+        <Y>-195.880112</Y>
         <Z>0</Z>
       </Position>
       <Rotation>0</Rotation>
@@ -123,22 +67,106 @@
       <StraightLine>false</StraightLine>
     </CelestialBody>
     <CelestialBody>
-      <Name>Planete566655369</Name>
+      <Name>Planete2103477742</Name>
       <Images />
-      <Image>stationSpatiale2</Image>
+      <Image>vaisseauAlien3</Image>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Big</Size>
+      <Speed>60000</Speed>
+      <PathPriority>0</PathPriority>
+      <Path>
+        <X>45</X>
+        <Y>-255</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>410.5602</X>
+        <Y>10.5600052</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>0</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+      <FollowPath>false</FollowPath>
+      <HasMoons>true</HasMoons>
+      <StraightLine>false</StraightLine>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete204864911</Name>
+      <Images />
+      <Image>planete5</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Normal</Size>
+      <Speed>60000</Speed>
+      <PathPriority>-3</PathPriority>
+      <Path>
+        <X>-83.7868042</X>
+        <Y>-96.2131958</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>75.48004</X>
+        <Y>113.640175</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>0</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+      <FollowPath>false</FollowPath>
+      <HasMoons>true</HasMoons>
+      <StraightLine>false</StraightLine>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete359551677</Name>
+      <Images />
+      <Image>planete2</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Normal</Size>
+      <Speed>360000</Speed>
+      <PathPriority>1</PathPriority>
+      <Path>
+        <X>30</X>
+        <Y>-180</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>-504.640167</X>
+        <Y>71.9203339</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>0</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+      <FollowPath>false</FollowPath>
+      <HasMoons>true</HasMoons>
+      <StraightLine>false</StraightLine>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete823632317</Name>
+      <Images />
+      <Image>planete10</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Normal</Size>
       <Speed>-2.14748365E+09</Speed>
-      <PathPriority>10</PathPriority>
+      <PathPriority>-4</PathPriority>
       <Path>
         <X>0</X>
         <Y>0</Y>
         <Z>0</Z>
       </Path>
       <Position>
-        <X>-217.069</X>
-        <Y>-173.513992</Y>
+        <X>-216.840027</X>
+        <Y>48.80001</Y>
         <Z>0</Z>
       </Position>
       <Rotation>0</Rotation>
@@ -157,11 +185,11 @@
       <Enemies>
         <EnemyType>Asteroid</EnemyType>
       </Enemies>
-      <SpeedLevel>1</SpeedLevel>
-      <LivesLevel>1</LivesLevel>
-      <CashValue>50</CashValue>
-      <Quantity>30</Quantity>
-      <Distance>Near</Distance>
+      <SpeedLevel>2</SpeedLevel>
+      <LivesLevel>2</LivesLevel>
+      <CashValue>40</CashValue>
+      <Quantity>50</Quantity>
+      <Distance>Normal</Distance>
       <Delay>0</Delay>
       <ApplyDelayEvery>0</ApplyDelayEvery>
       <SwitchEvery>5</SwitchEvery>
@@ -171,19 +199,25 @@
       <Enemies>
         <EnemyType>Plutoid</EnemyType>
       </Enemies>
-      <SpeedLevel>3</SpeedLevel>
-      <LivesLevel>3</LivesLevel>
-      <CashValue>100</CashValue>
-      <Quantity>5</Quantity>
-      <Distance>Far</Distance>
-      <Delay>5000</Delay>
-      <ApplyDelayEvery>5000</ApplyDelayEvery>
-      <SwitchEvery>0</SwitchEvery>
+      <SpeedLevel>1</SpeedLevel>
+      <LivesLevel>1</LivesLevel>
+      <CashValue>30</CashValue>
+      <Quantity>80</Quantity>
+      <Distance>Normal</Distance>
+      <Delay>0</Delay>
+      <ApplyDelayEvery>0</ApplyDelayEvery>
+      <SwitchEvery>5</SwitchEvery>
     </Wave>
   </Waves>
   <Player>
     <Money>1000</Money>
-    <Lives>3</Lives>
+    <Lives>5</Lives>
+    <StartingPosition>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </StartingPosition>
+    <BulletDamage>2</BulletDamage>
   </Player>
   <AvailableTurrets>
     <TurretType>Gravitational</TurretType>
@@ -193,5 +227,5 @@
     <Cash>0</Cash>
     <LifePacks>0</LifePacks>
   </Minerals>
-  <HelpText>Dead enemies give money!</HelpText>
+  <HelpText>You can upgrade installed turrets!</HelpText>
 </Level>

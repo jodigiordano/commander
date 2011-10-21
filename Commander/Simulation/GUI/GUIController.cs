@@ -582,6 +582,8 @@
                 PathPreviewing.Update();
                 GameMenu.Update();
             }
+
+            GameBarPanel.Update();
         }
 
 
@@ -779,7 +781,7 @@
                 {
                     if (selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
                         HelpBar.ShowMessage(HelpBarMessage.CallNextWave, StartingPathMenu.GetHelpBarMessage(p.InnerPlayer));
-                    else if (selection.CelestialBody != null)
+                    else if (selection.CelestialBody != null && selection.TurretToBuy != TurretType.None)
                         HelpBar.ShowMessage(HelpBarMessage.CelestialBodyMenu, player.CelestialBodyMenu.GetHelpBarMessage(selection.TurretToBuy));
                     else
                     {

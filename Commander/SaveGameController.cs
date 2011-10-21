@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System.Collections.Generic;
     using EphemereGames.Core.Persistence;
 
 
@@ -37,21 +36,6 @@
         public Core.Input.Player CurrentPlayer
         {
             get { return PlayerSaveGame == null ? null : PlayerSaveGame.Player; }
-        }
-
-        
-        public bool ShowTutorial(int levelId)
-        {
-            return PlayerSaveGame.Tutorials.ContainsKey(levelId) && PlayerSaveGame.Tutorials[levelId] > 2;
-        }
-
-
-        public void SyncTutorial(int levelId)
-        {
-            if (!PlayerSaveGame.Tutorials.ContainsKey(levelId))
-                PlayerSaveGame.Tutorials.Add(new KeyValuePair<int, int>(levelId, 0));
-
-            PlayerSaveGame.Tutorials[levelId]++;
         }
 
 

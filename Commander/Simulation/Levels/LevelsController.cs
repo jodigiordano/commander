@@ -13,8 +13,6 @@
         public event NewGameStateHandler NewGameState;
         public event CommonStashHandler CommonStashChanged;
 
-        public Help Help;
-
         public List<CelestialBody> CelestialBodies                   { get { return Level.PlanetarySystem; } }
         public InfiniteWave InfiniteWaves                            { get { return Level.InfiniteWaves; } }
         public LinkedList<Wave> Waves                                { get { return Level.Waves; } }
@@ -42,34 +40,15 @@
             WavesCounter = 0;
             ElapsedTime = 0;
 
-            if (Simulator.DemoMode ||
-                Simulator.WorldMode ||
-                Simulator.EditorMode ||
-                Main.SaveGameController.ShowTutorial(Level.Id))
+            if (!Simulator.DemoMode && !Simulator.WorldMode && !Simulator.EditorMode && Level.HelpText != "")
             {
-                Help = new Help(Simulator, new List<string>());
-                HelpSaved = true;
-            }
-
-            else
-            {
-                Help = new Help(Simulator, Level.HelpTexts);
-                HelpSaved = false;
+                Simulator.Scene.Add(new HelpAnimation(Level.HelpText));
             }
         }
 
 
         public void Update()
         {
-            if (Help.Active)
-                Help.Update();
-            else if (!HelpSaved)
-            {
-                Main.SaveGameController.SyncTutorial(Level.Id);
-
-                HelpSaved = true;
-            }
-
             ElapsedTime += Preferences.TargetElapsedTimeMs;
         }
 
@@ -85,9 +64,6 @@
             Simulator.Scene.BeginBackground();
             Simulator.Scene.Add(Level.Background);
             Simulator.Scene.EndBackground();
-
-            if (!Simulator.DemoMode && Help.Active)
-                Help.Draw();
         }
 
 

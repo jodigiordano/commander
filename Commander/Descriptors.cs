@@ -77,7 +77,7 @@
         public MineralsDescriptor Minerals;
 
         [ContentSerializer(Optional = true)]
-        public List<string> HelpTexts;
+        public string HelpText;
 
 
         public LevelDescriptor()
@@ -95,7 +95,7 @@
 
             Minerals = new MineralsDescriptor();
 
-            HelpTexts = new List<string>();
+            HelpText = "";
         }
 
 

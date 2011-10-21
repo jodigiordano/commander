@@ -27,7 +27,7 @@
         public CommonStash CommonStash;
         public Dictionary<TurretType, Turret> AvailableTurrets;
         public Dictionary<PowerUpType, PowerUp> AvailablePowerUps;
-        public List<string> HelpTexts;
+        public string HelpText;
         
         // minerals
         public int Minerals;
@@ -82,7 +82,7 @@
             Minerals = Descriptor.Minerals.Cash;
             LifePacks = Descriptor.Minerals.LifePacks;
 
-            HelpTexts = Descriptor.HelpTexts;
+            HelpText = Descriptor.HelpText;
         }
 
 

@@ -63,6 +63,8 @@
         public const double GameBar = 0.42;
         public const double PlayerCash = 0.42;
 
+        public const double HelpMessage = 0.43;
+
         public const double EditorGeneralMenu = 0.45;
         public const double EditorPanel = 0.46;
 

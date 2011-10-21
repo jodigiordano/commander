@@ -116,6 +116,9 @@
             if (CelestialBody == null)
                 return;
 
+            if (AvailableTurrets.Count == 0)
+                return;
+
             int slotCounter = 0;
 
             foreach (var kvp in AvailableTurrets)

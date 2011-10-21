@@ -192,6 +192,7 @@
     <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
+    <Compile Include="Simulation\GUI\Animations\HelpAnimation.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\AssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemyCheckBox.cs" />
@@ -373,7 +374,6 @@
     <Compile Include="Simulation\GUI\Animations\MineralTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
     <Compile Include="GUI\Bubbles\Bubble.cs" />
-    <Compile Include="Simulation\GUI\Help.cs" />
     <Compile Include="Simulation\GUI\Menus\TurretMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\CelestialBodyMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\WorldMenu.cs" />

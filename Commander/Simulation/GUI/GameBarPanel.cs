@@ -95,6 +95,12 @@
         }
 
 
+        public void Update()
+        {
+            Position = new Vector3(0, (-Simulator.Scene.CameraView.Height / 2) + 34, 0);
+        }
+
+
         public int Cash
         {
             set { CashWidget.SetData(value.ToString()); }

@@ -183,6 +183,7 @@
     <Compile Include="Simulation\GUI\Animations\CashTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyNearHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\CelestialBodyShieldHitAnimation.cs" />
+    <Compile Include="Simulation\GUI\Animations\HelpAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\PinkHoleLite.cs" />
     <Compile Include="Simulation\GUI\Animations\ShieldHitAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\TeleportAnimation.cs" />
@@ -336,7 +337,6 @@
     <Compile Include="Simulation\GUI\AdvancedView\FinalSolutionPreview.cs" />
     <Compile Include="Simulation\GUI\Animations\MineralTakenAnimation.cs" />
     <Compile Include="Simulation\GUI\Animations\SelectedCelestialBodyAnimation.cs" />
-    <Compile Include="Simulation\GUI\Help.cs" />
     <Compile Include="Simulation\Player\CommonStash.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Simulation\Player\SelectedPowerUpController.cs" />
