@@ -139,9 +139,12 @@
 
             // Pause the cue if the spaceship is not moving (and resume it otherwise)
             if (ShipSpeed == 0)
-                MovingCue.Pause();
+                MovingCue.Stop();
             else
+            {
+                MovingCue = XACTAudio.GetCue(SimPlayer.InnerPlayer.MovingSound, "Sound Bank");
                 MovingCue.PlayOrResume();
+            }
 
             // Modify the cue's attribute depending on the speed of the spaceship
             if (ShipSpeedChanged)
