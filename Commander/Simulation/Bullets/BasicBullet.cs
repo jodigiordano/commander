@@ -8,12 +8,16 @@
 
     class BasicBullet : Bullet
     {
+        public Color Color;
+
+
         public BasicBullet()
             : base()
         {
             Shape = Shape.Rectangle;
             Rectangle = new PhysicalRectangle();
             Deflectable = true;
+            Color = Color.White;
         }
 
 
@@ -42,6 +46,7 @@
 
             MovingEffect = Scene.Particles.Get(@"projectileMissileDeplacement");
             ExplodingEffect = Scene.Particles.Get(@"projectileBaseExplosion");
+            ExplodingEffect.Model[1].ReleaseColour = Color.ToVector3();
 
             Image.VisualPriority = VisualPriority + 0.001f;
             MovingEffect.VisualPriority = VisualPriority + 0.001f;

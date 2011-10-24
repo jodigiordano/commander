@@ -23,7 +23,7 @@
 
             Vector3 translation = ParallelDirection * Main.Random.Next(-12, 12);
 
-            var p = Simulator.BulletsFactory.Get(BulletType.Base);
+            var p = (BasicBullet) Simulator.BulletsFactory.Get(BulletType.Base);
 
             p.Position = Spaceship.Position + translation;
             p.Direction = Spaceship.Direction;
@@ -32,6 +32,7 @@
             p.Speed = 10;
             p.Image.SizeX = 0.75f;
             p.ShowMovingEffect = false;
+            p.Color = Spaceship.ShieldColor;
 
             Bullets.Add(p);
         }

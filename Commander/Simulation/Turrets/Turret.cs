@@ -298,6 +298,7 @@
                             p.ShowMovingEffect = true;
                             p.Image.SizeX = 1f;
                             p.FiredBy = -1;
+                            p.Color = Color.White;
                             
                             Bullets.Add(p);
                         }

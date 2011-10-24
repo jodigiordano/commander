@@ -34,6 +34,7 @@
             
             ExplodingEffect = Scene.Particles.Get(@"projectileBaseExplosion");
             ExplodingEffect.VisualPriority = VisualPriorities.Default.DefaultBullet;
+            ExplodingEffect.Model[1].ReleaseColour = Color.White.ToVector3();
 
             TurretEffect = Scene.Particles.Get(@"gunnerTurret");
             TurretEffect.Model[0].ReleaseColour = Turret.Color.ToVector3();
