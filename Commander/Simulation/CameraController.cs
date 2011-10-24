@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
-    using EphemereGames.Core.Input;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
 
 
@@ -21,7 +21,9 @@
         private EffectState State;
         private int CurrentZoomEffectId;
 
-        private float MaxCameraSpeed;
+        private float MaxCameraMovingSpeed;
+        private float MaxCameraZoomSpeed;
+        private List<SimPlayer> Players;
 
 
         public CameraController(Simulator simulator)
@@ -31,7 +33,10 @@
             CurrentZoomEffectId = -1;
             State = EffectState.None;
 
-            MaxCameraSpeed = 10;
+            MaxCameraMovingSpeed = 10;
+            MaxCameraZoomSpeed = 0.002f;
+
+            Players = new List<SimPlayer>();
         }
 
 
@@ -41,35 +46,30 @@
             MaxZoomOut = Math.Max(
                 Simulator.Scene.CameraView.Width / (float) Simulator.Battlefield.Width,
                 Simulator.Scene.CameraView.Height / (float) Simulator.Battlefield.Height);
+
+            Players.Clear();
+        }
+
+
+        public void DoPlayerConnected(SimPlayer p)
+        {
+            Players.Add(p);
+        }
+
+
+        public void DoPlayerDisconnected(SimPlayer p)
+        {
+            Players.Remove(p);
         }
 
 
         public void Update()
         {
-            var player = (Commander.Player) Inputs.MasterPlayer;
-
-            if (player == null || player.State != PlayerState.Connected)
+            if (Players.Count == 0)
                 return;
 
-            if (Simulator.EditorMode && Simulator.EditorState == Simulation.EditorState.Editing)
-            {
-                Simulator.Scene.Camera.Position = player.Position;
-            }
-
-            else
-            {
-                var newPosition = new Vector3(
-                    MathHelper.Clamp(player.Position.X, Simulator.Battlefield.Left + Simulator.Scene.CameraView.Width / 2, Simulator.Battlefield.Right - Simulator.Scene.CameraView.Width / 2),
-                    MathHelper.Clamp(player.Position.Y, Simulator.Battlefield.Top + Simulator.Scene.CameraView.Height / 2, Simulator.Battlefield.Bottom - Simulator.Scene.CameraView.Height / 2),
-                    0);
-
-                var delta = newPosition - Simulator.Scene.Camera.Position;
-
-                delta.X = MathHelper.Clamp(delta.X, -MaxCameraSpeed, MaxCameraSpeed);
-                delta.Y = MathHelper.Clamp(delta.Y, -MaxCameraSpeed, MaxCameraSpeed);
-
-                Simulator.Scene.Camera.Position += delta;
-            }
+            ComputeNewCameraPosition();
+            ComputeNewCameraZoom();
         }
 
 
@@ -116,6 +116,75 @@
         {
             CurrentZoomEffectId = -1;
             State = EffectState.None;
+        }
+
+
+        private void ComputeNewCameraPosition()
+        {
+            Vector3 avgPosition = new Vector3();
+
+            foreach (var p in Players)
+                avgPosition += p.Position;
+
+            Vector3.Divide(ref avgPosition, Players.Count, out avgPosition);
+
+            var newPosition = new Vector3(
+                MathHelper.Clamp(avgPosition.X, Simulator.Battlefield.Left + Simulator.Scene.CameraView.Width / 2, Simulator.Battlefield.Right - Simulator.Scene.CameraView.Width / 2),
+                MathHelper.Clamp(avgPosition.Y, Simulator.Battlefield.Top + Simulator.Scene.CameraView.Height / 2, Simulator.Battlefield.Bottom - Simulator.Scene.CameraView.Height / 2),
+                0);
+
+            var delta = newPosition - Simulator.Scene.Camera.Position;
+
+            delta.X = MathHelper.Clamp(delta.X, -MaxCameraMovingSpeed, MaxCameraMovingSpeed);
+            delta.Y = MathHelper.Clamp(delta.Y, -MaxCameraMovingSpeed, MaxCameraMovingSpeed);
+
+            Simulator.Scene.Camera.Position += delta;
+        }
+
+
+        private void ComputeNewCameraZoom()
+        {
+            float minX = Players[0].Position.X;
+            float maxX = Players[0].Position.X;
+            float minY = Players[0].Position.Y;
+            float maxY = Players[0].Position.Y;
+
+            foreach (var p in Players)
+            {
+                if (p.Position.X < minX)
+                    minX = p.Position.X;
+
+                if (p.Position.X > maxX)
+                    maxX = p.Position.X;
+
+                if (p.Position.Y < minY)
+                    minY = p.Position.Y;
+
+                if (p.Position.Y > maxY)
+                    maxY = p.Position.Y;
+            }
+
+            float width = Math.Abs(maxX - minX) + 100; //padding
+            float height = Math.Abs(maxY - minY) + 100; //padding
+            float maxZoomWidth = Preferences.BattlefieldBoundaries.X * Preferences.BackBufferZoom;
+            float maxZoomHeight = Preferences.BattlefieldBoundaries.Y * Preferences.BackBufferZoom;
+
+            float newZoom = Math.Min(maxZoomWidth / width, maxZoomHeight / height);
+
+            // no need to zoom the camera
+            if (newZoom >= Preferences.BackBufferZoom)
+                return;
+
+            // no need to zoom the camera
+            // reduce events
+            if (newZoom == Simulator.Scene.Camera.Zoom)
+                return;
+
+            float delta = newZoom - Simulator.Scene.Camera.Zoom;
+
+            delta = MathHelper.Clamp(delta, -MaxCameraZoomSpeed, MaxCameraZoomSpeed);
+
+            Simulator.Scene.Camera.Zoom += delta;
         }
     }
 }

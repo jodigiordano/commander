@@ -228,6 +228,8 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PlayerDisconnected += new SimPlayerHandler(PanelsController.DoPlayerDisconnected);
             SimPlayersController.PlayerConnected += new SimPlayerHandler(SpaceshipsController.DoPlayerConnected);
             SimPlayersController.PlayerDisconnected += new SimPlayerHandler(SpaceshipsController.DoPlayerDisconnected);
+            SimPlayersController.PlayerConnected += new SimPlayerHandler(CameraController.DoPlayerConnected);
+            SimPlayersController.PlayerDisconnected += new SimPlayerHandler(CameraController.DoPlayerDisconnected);
             SimPlayersController.ShowAdvancedViewAsked += new SimPlayerHandler(GUIController.DoShowAdvancedViewAsked);
             SimPlayersController.HideAdvancedViewAsked += new SimPlayerHandler(GUIController.DoHideAdvancedViewAsked);
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(SimPlayersController.DoObjectHit);
