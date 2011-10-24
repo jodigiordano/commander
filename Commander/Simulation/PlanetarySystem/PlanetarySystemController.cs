@@ -7,6 +7,7 @@
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using ParallelTasks;
+    using ProjectMercury.Emitters;
 
 
     class PlanetarySystemController
@@ -63,7 +64,9 @@
             PathPreview.Initialize();
 
             Stars = Simulator.Scene.Particles.Get(@"etoilesScintillantes");
-            Stars.VisualPriority = Preferences.PrioriteGUIEtoiles;
+            ((RectEmitter) Stars.Model[0]).Width = Simulator.Battlefield.Width;
+            ((RectEmitter) Stars.Model[0]).Height = Simulator.Battlefield.Height;
+            Stars.VisualPriority = VisualPriorities.Default.Stars;
             StarsEmitter = 0;
 
             DeadlyShootingStars = false;
@@ -460,7 +463,7 @@
             {
                 ShootingStar ss = ShootingStarsFactory.Get();
                 ss.Scene = Simulator.Scene;
-                ss.Terrain = Simulator.Scene.CameraOuterView;
+                ss.Terrain = Simulator.OuterBattlefield;
                 ss.LoadContent();
                 ss.Initialize();
 

@@ -214,8 +214,7 @@
                 // Normal
                 else if (descriptor.Image != null)
                 {
-                    c = new CelestialBody
-                    (
+                    c = new CelestialBody (
                        Simulator,
                        descriptor.Name,
                        descriptor.Path,
@@ -226,8 +225,11 @@
                        descriptor.Image,
                        descriptor.StartingPosition,
                        NextCelestialBodyVisualPriority -= 0.001,
-                       descriptor.HasMoons
-                    ) { FollowPath = descriptor.FollowPath, StraightLine = descriptor.StraightLine };
+                       descriptor.HasMoons)
+                       {
+                           FollowPath = descriptor.FollowPath,
+                           StraightLine = descriptor.StraightLine
+                       };
                 }
 
                 // Asteroids belt
@@ -237,7 +239,8 @@
                     (
                         Simulator,
                         descriptor.Name,
-                        descriptor.Path,
+                        new Vector3(Simulator.Battlefield.Width / 2, Simulator.Battlefield.Height / 2, 0),
+                        new Vector3(Simulator.Battlefield.X + Simulator.Battlefield.Width / 2, Simulator.Battlefield.Y + Simulator.Battlefield.Height / 2, 0),
                         descriptor.Size,
                         descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                         descriptor.Images,

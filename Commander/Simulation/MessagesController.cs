@@ -305,7 +305,7 @@
 
             visualPriority = (visualPriority == -1) ? VisualPriorities.Default.TurretMessage : visualPriority;
 
-            TextBubble bulle = new TextBubble(Simulator.Scene, texteInfos, obj.Position, 0, visualPriority);
+            TextBubble bulle = new TextBubble(Simulator, texteInfos, obj.Position, 0, visualPriority);
 
             bulle.Text.Data = message;
             bulle.ShowTime = time;
@@ -495,7 +495,7 @@
                 Color = color
             };
 
-            TextBubble bubble = new TextBubble(Simulator.Scene, text, obj.Position, 0, VisualPriorities.Default.TurretMessage);
+            TextBubble bubble = new TextBubble(Simulator, text, obj.Position, 0, VisualPriorities.Default.TurretMessage);
             bubble.ShowTime = text.Data.Length * 100;
 
             foreach (var kvp in TalkingObjects)
@@ -552,7 +552,7 @@
                         }
                     }
 
-                    TextBubble bulle = new TextBubble(Simulator.Scene, texte, tourelle.Position, 0, VisualPriorities.Default.TurretMessage);
+                    TextBubble bulle = new TextBubble(Simulator, texte, tourelle.Position, 0, VisualPriorities.Default.TurretMessage);
                     bulle.ShowTime = texte.Data.Length * 100;
 
                     foreach (var kvp in TalkingObjects)

@@ -188,22 +188,22 @@
 
             if (Simulator.State == GameState.Won)
             {
-                if (key == player.KeyboardConfiguration.Select)
+                if (key == player.KeyboardConfiguration.NextLevel)
                     NextLevel();
 
-                else if (key == player.KeyboardConfiguration.AlternateSelect)
+                else if (key == player.KeyboardConfiguration.RetryLevel)
                     RetryLevel();
 
-                else if (key == player.KeyboardConfiguration.Cancel)
+                else if (key == player.KeyboardConfiguration.GoBackToWorld)
                     TransiteToWorld();
             }
 
             else if (Simulator.State == GameState.Lost)
             {
-                if (key == player.KeyboardConfiguration.Select)
+                if (key == player.KeyboardConfiguration.NextLevel)
                     RetryLevel();
 
-                else if (key == player.KeyboardConfiguration.Cancel)
+                else if (key == player.KeyboardConfiguration.GoBackToWorld)
                     TransiteToWorld();
             }
         }

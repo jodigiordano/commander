@@ -60,7 +60,9 @@
                     SelectionPrevious = Keys.Z,
                     AlternateSelect = Keys.Z,
                     Cancel = Keys.V,
-                    RetryLevel = Keys.C,
+                    RetryLevel = Keys.V,
+                    NextLevel = Keys.Z,
+                    GoBackToWorld = Keys.C,
                     Home = Keys.D9,
                     LeftCoin = Keys.D5,
                     RightCoin = Keys.D6,
@@ -98,7 +100,9 @@
                     SelectionPrevious = Keys.S,
                     AlternateSelect = Keys.A,
                     Cancel = Keys.W,
-                    RetryLevel = Keys.Q,
+                    RetryLevel = Keys.W,
+                    NextLevel = Keys.A,
+                    GoBackToWorld = Keys.Q,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
                         { Keys.P, "ArcadeStick" },
@@ -131,7 +135,9 @@
                     SelectionPrevious = Keys.J,
                     AlternateSelect = Keys.H,
                     Cancel = Keys.U,
-                    RetryLevel = Keys.Y,
+                    RetryLevel = Keys.U,
+                    NextLevel = Keys.H,
+                    GoBackToWorld = Keys.Y,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
                         { Keys.P, "ArcadeStick" },
@@ -164,7 +170,9 @@
                     SelectionPrevious = Keys.N,
                     AlternateSelect = Keys.B,
                     Cancel = Keys.OemComma,
-                    RetryLevel = Keys.M,
+                    RetryLevel = Keys.OemComma,
+                    NextLevel = Keys.B,
+                    GoBackToWorld = Keys.M,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
                         { Keys.P, "ArcadeStick" },
@@ -187,7 +195,7 @@
             {
                 KeyboardConfiguration = new KeyboardInputConfiguration()
                 {
-                    AdvancedView = Keys.R,
+                    AdvancedView = Keys.LeftShift,
                     Next = Keys.D,
                     Previous = Keys.A,
                     Back = Keys.Escape,
@@ -196,7 +204,6 @@
                     Editor = Keys.F2,
                     Disconnect = Keys.Delete,
                     Tweaking = Keys.T,
-                    RetryLevel = Keys.R,
                     MoveUp = Keys.W,
                     MoveLeft = Keys.A,
                     MoveDown = Keys.S,
@@ -205,6 +212,8 @@
                     SelectionNext = Keys.E,
                     SelectionPrevious = Keys.Q,
                     Cheat1 = Keys.P,
+                    ZoomIn = Keys.R,
+                    ZoomOut = Keys.F,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
                         { Keys.W, "KeyW" },
@@ -244,8 +253,10 @@
                     Back = Buttons.Start,
                     Cancel = Buttons.B,
                     ChangeMusic = Buttons.DPadLeft,
-                    Debug = Buttons.LeftShoulder,
-                    Tweaking = Buttons.RightShoulder,
+                    ZoomIn = Buttons.RightShoulder,
+                    ZoomOut = Buttons.LeftShoulder,
+                    /* Debug = Buttons.LeftShoulder,
+                    Tweaking = Buttons.RightShoulder, */
                     Select = Buttons.A,
                     AlternateSelect = Buttons.X,
                     AdvancedView = Buttons.Y,

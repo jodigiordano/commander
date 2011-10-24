@@ -15,16 +15,18 @@
         private int DistanceY;
 
         private int PreviousLayoutId;
+        private Simulator Simulator;
 
 
-        public GameEndedBubble(CommanderScene scene, double visualPriority, string quote, Color quoteColor, CommonStash commonStash, int nbStars)
-            : base(scene, new PhysicalRectangle(), visualPriority)
+        public GameEndedBubble(Simulator simulator, double visualPriority, string quote, Color quoteColor, CommonStash commonStash, int nbStars)
+            : base(simulator, new PhysicalRectangle(), visualPriority)
         {
+            Simulator = simulator;
             DistanceY = 45;
 
             Quote = new Text(quote, @"Pixelite") { SizeX = 2, Color = quoteColor, VisualPriority = visualPriority - 0.00001 };
-            Stars = new ScoreStars(Scene, nbStars, visualPriority - 0.00001);
-            Score = new ScoreCalculation(Scene, commonStash.TotalCash, commonStash.TotalLives, commonStash.TotalTime, (commonStash.TotalScore * 100) / commonStash.PotentialScore, visualPriority - 0.00001);
+            Stars = new ScoreStars(Simulator.Scene, nbStars, visualPriority - 0.00001);
+            Score = new ScoreCalculation(Simulator.Scene, commonStash.TotalCash, commonStash.TotalLives, commonStash.TotalTime, (commonStash.TotalScore * 100) / commonStash.PotentialScore, visualPriority - 0.00001);
 
             ComputeSize();
 
@@ -85,16 +87,16 @@
                 {
                     SetLayout(PreviousLayoutId);
 
-                    tooFarRight = Dimension.X + Dimension.Width + 50 > Scene.CameraView.Right;
-                    tooFarBottom = Dimension.Y + Dimension.Height > Scene.CameraView.Bottom;
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > Simulator.Battlefield.Right;
+                    tooFarBottom = Dimension.Y + Dimension.Height > Simulator.Battlefield.Bottom;
                 }
 
                 if (tooFarRight || tooFarBottom)
                 {
                     base.Position = value;
 
-                    tooFarRight = Dimension.X + Dimension.Width + 50 > Scene.CameraView.Right;
-                    tooFarBottom = Dimension.Y + Dimension.Height > Scene.CameraView.Bottom;
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > Simulator.Battlefield.Right;
+                    tooFarBottom = Dimension.Y + Dimension.Height > Simulator.Battlefield.Bottom;
 
                     if (tooFarRight && tooFarBottom)
                         SetLayout(0);
@@ -125,7 +127,7 @@
             Score.Position = new Vector3(Dimension.X, Quote.Position.Y + DistanceY, 0);
             Stars.Position = new Vector3(Dimension.X + Score.AbsoluteSize.X + 20, Score.Position.Y - 5, 0);
 
-            Scene.Add(Quote);
+            Simulator.Scene.Add(Quote);
             Score.Draw();
             Stars.Draw();
         }

@@ -19,6 +19,7 @@
         public List<SimPlayer> Players;
         public Path Path;
         public bool Debug;
+        public PhysicalRectangle Battlefield;
 
         public event PhysicalObjectHandler ObjectOutOfBounds;
         public event PhysicalObjectPhysicalObjectHandler ObjectHit;
@@ -30,7 +31,6 @@
         public event CollidableBulletHandler ShieldCollided;
 
         private Simulator Simulator;
-        private PhysicalRectangle Battlefield;
         private GridWorld EnemiesGrid;
         private GridWorld TurretsGrid;
 
@@ -54,9 +54,6 @@
         public CollisionsController(Simulator simulator)
         {
             Simulator = simulator;
-            Battlefield = Simulator.Scene.CameraOuterView;
-            EnemiesGrid = new GridWorld(Battlefield, 50);
-            TurretsGrid = new GridWorld(Battlefield, 50);
             
             HiddenEnemies = new HiddenEnemies();
             BoostedTurrets = new BoostedTurrets();
@@ -79,6 +76,9 @@
         public void Initialize()
         {
             Debug = false;
+
+            EnemiesGrid = new GridWorld(Battlefield, 50);
+            TurretsGrid = new GridWorld(Battlefield, 50);
 
             HiddenEnemies.CelestialBodies = CelestialBodies;
             HiddenEnemies.Enemies = Enemies;

@@ -18,7 +18,7 @@
             BlowUpZoneVisual = new Image("CercleBlanc")
             {
                 Color = new Color(255, 0, 0, 100),
-                VisualPriority = Preferences.PrioriteGUIEtoiles - 0.002f
+                VisualPriority = VisualPriorities.Default.PowerUpFinalSolution
             };
         }
 

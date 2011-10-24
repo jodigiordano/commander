@@ -93,12 +93,24 @@
     <Item><Key>CBMask11</Key><Value>planetes/masks/mask11.png</Value></Item>
     <Item><Key>CBMask12</Key><Value>planetes/masks/mask12.png</Value></Item>
     <Item><Key>CBMask13</Key><Value>planetes/masks/mask13.png</Value></Item>
-    <Item><Key>CBMask21</Key><Value>planetes/masks/mask21.png</Value></Item>
-    <Item><Key>CBMask22</Key><Value>planetes/masks/mask22.png</Value></Item>
-    <Item><Key>CBMask23</Key><Value>planetes/masks/mask23.png</Value></Item>
     <Item><Key>CBMask31</Key><Value>planetes/masks/mask31.png</Value></Item>
     <Item><Key>CBMask32</Key><Value>planetes/masks/mask32.png</Value></Item>
     <Item><Key>CBMask33</Key><Value>planetes/masks/mask33.png</Value></Item>
+    <Item><Key>AlienAngryMask11</Key><Value>planetes/masks/mask21.png</Value></Item>
+    <Item><Key>AlienAngryMask12</Key><Value>planetes/masks/mask22.png</Value></Item>
+    <Item><Key>AlienAngryMask13</Key><Value>planetes/masks/mask23.png</Value></Item>
+    <Item><Key>AlienAngryMask21</Key><Value>planetes/masks/mask41.png</Value></Item>
+    <Item><Key>AlienAngryMask22</Key><Value>planetes/masks/mask42.png</Value></Item>
+    <Item><Key>AlienAngryMask23</Key><Value>planetes/masks/mask43.png</Value></Item>
+    <Item><Key>AlienAngryMask31</Key><Value>planetes/masks/mask51.png</Value></Item>
+    <Item><Key>AlienAngryMask32</Key><Value>planetes/masks/mask52.png</Value></Item>
+    <Item><Key>AlienAngryMask33</Key><Value>planetes/masks/mask53.png</Value></Item>
+    <Item><Key>AlienAngryMask41</Key><Value>planetes/masks/mask71.png</Value></Item>
+    <Item><Key>AlienAngryMask42</Key><Value>planetes/masks/mask72.png</Value></Item>
+    <Item><Key>AlienAngryMask43</Key><Value>planetes/masks/mask73.png</Value></Item>
+    <Item><Key>AlienAngryMask51</Key><Value>planetes/masks/mask61.png</Value></Item>
+    <Item><Key>AlienAngryMask52</Key><Value>planetes/masks/mask62.png</Value></Item>
+    <Item><Key>AlienAngryMask53</Key><Value>planetes/masks/mask63.png</Value></Item>
     
     
     <Item><Key>MothershipHitMask</Key><Value>spaceships/masks/mask11.png</Value></Item>

@@ -58,6 +58,8 @@
 
         public const double DefaultSpaceship = 0.41;
 
+        public const double PlayerName = 0.415;
+
         public const double PowerUpsMenu = 0.42;
 
         public const double GameBar = 0.42;
@@ -111,6 +113,10 @@
 
         public const double HelpBar = 0.95;
 
+        public const double PowerUpFinalSolution = 0.98;
+
         public const double MenuChoices = 0.99;
+
+        public const double Stars = 0.995;
     }
 }

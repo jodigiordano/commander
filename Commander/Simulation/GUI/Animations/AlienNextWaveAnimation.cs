@@ -14,7 +14,7 @@
         private CelestialBody celestialBody;
         private Simulator Simulator;
 
-        private Dictionary<Size, Image> NearHitMasks;
+        private Dictionary<string, Image> NearHitMasks;
         private Image SelectedMask;
         private Metronome Metronome;
 
@@ -28,14 +28,12 @@
         {
             Simulator = simulator;
 
-            NearHitMasks = new Dictionary<Size, Image>()
-            {
-                { Size.Small, CreateMaskImage(GetMaskName(Size.Small)) },
-                { Size.Normal, CreateMaskImage(GetMaskName(Size.Normal)) },
-                { Size.Big, CreateMaskImage(GetMaskName(Size.Big)) },
-            };
+            NearHitMasks = new Dictionary<string, Image>();
 
-            Alpha = 0;
+            for (int i = 1; i < 6; i++)
+                NearHitMasks.Add("vaisseauAlien" + i, CreateMaskImage("AlienAngryMask" + i + "" + 3));
+
+                Alpha = 0;
             MinTimeKickIn = 10000;
             MinTimeFlash = 3000;
             TimeNextWave = double.MaxValue;
@@ -54,7 +52,13 @@
                 if (celestialBody == null)
                     return;
 
-                SelectedMask = NearHitMasks[celestialBody.Size];
+                if (celestialBody.PartialImageName == null || celestialBody.PartialImageName == "")
+                {
+                    celestialBody = null;
+                    return;
+                }
+
+                SelectedMask = NearHitMasks[celestialBody.PartialImageName];
                 SelectedMask.VisualPriority = celestialBody.VisualPriority - 0.000001;
             }
         }
@@ -68,6 +72,7 @@
 
         public void Draw()
         {
+            return;
             if (celestialBody == null || !celestialBody.Alive)
                 return;
 
@@ -100,12 +105,6 @@
             SelectedMask.Rotation = CelestialBody.Image.Rotation;
 
             Simulator.Scene.Add(SelectedMask);
-        }
-
-
-        private string GetMaskName(Size size)
-        {
-            return "CBMask2" + ((size == Size.Small) ? 1 : (size == Size.Normal) ? 2 : 3).ToString();
         }
 
 

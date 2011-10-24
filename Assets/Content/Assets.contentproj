@@ -2906,6 +2906,68 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="planetes\masks\mask41.png">
+      <Name>mask41</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask42.png">
+      <Name>mask42</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask43.png">
+      <Name>mask43</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask51.png">
+      <Name>mask51</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask52.png">
+      <Name>mask52</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask53.png">
+      <Name>mask53</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask61.png">
+      <Name>mask61</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask62.png">
+      <Name>mask62</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask63.png">
+      <Name>mask63</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask71.png">
+      <Name>mask71</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask72.png">
+      <Name>mask72</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+    <None Include="planetes\masks\mask73.png">
+      <Name>mask73</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

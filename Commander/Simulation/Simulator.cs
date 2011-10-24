@@ -23,6 +23,8 @@ namespace EphemereGames.Commander.Simulation
         public bool EditorMode;
         internal EditorState EditorState;
         internal Level Level;
+        internal PhysicalRectangle Battlefield;
+        internal PhysicalRectangle OuterBattlefield;
 
         public PausedGameChoice PausedGameChoice;
         public EditorWorldChoice EditorWorldChoice;
@@ -44,6 +46,7 @@ namespace EphemereGames.Commander.Simulation
         private EditorController EditorController;
         private EditorGUIController EditorGUIController;
         private PanelsController PanelsController;
+        internal CameraController CameraController;
         internal TweakingController TweakingController;
         private AudioController AudioController;
         internal TurretsFactory TurretsFactory;
@@ -140,6 +143,7 @@ namespace EphemereGames.Commander.Simulation
             EditorGUIController = new EditorGUIController(this);
             PanelsController = new PanelsController(this);
             AudioController = new AudioController(this);
+            CameraController = new Simulation.CameraController(this);
 
             WorldMode = false;
             DemoMode = false;
@@ -303,6 +307,13 @@ namespace EphemereGames.Commander.Simulation
             TweakingController.PowerUpsFactory = PowerUpsFactory;
             TweakingController.TurretsFactory = TurretsFactory;
 
+            if (EditorMode && EditorState == EditorState.Editing)
+                Battlefield = new PhysicalRectangle(-5000, -5000, 10000, 10000);
+            else
+                Battlefield = Level.Descriptor.GetBoundaries(DemoMode ? Vector3.Zero : new Vector3(6 * (int) Size.Big));
+
+            OuterBattlefield = new PhysicalRectangle(Battlefield.X - 200, Battlefield.Y - 200, Battlefield.Width + 400, Battlefield.Height + 400);
+
             Level.Initialize();
 
             LevelsController.Level = Level;
@@ -315,6 +326,7 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.CelestialBodies = LevelsController.CelestialBodies;
             CollisionsController.Minerals = EnemiesController.Minerals;
             CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
+            CollisionsController.Battlefield = OuterBattlefield;
             SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
             SimPlayersController.CommonStash = LevelsController.CommonStash;
             SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
@@ -368,6 +380,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.Initialize(); // Must be done after the PowerUpsController
             CollisionsController.Initialize();
             AudioController.Initialize();
+            CameraController.Initialize();
 
             if (EditorMode)
             {
@@ -438,8 +451,6 @@ namespace EphemereGames.Commander.Simulation
             {
                 var player = (Commander.Player) p;
 
-                //Scene.Camera.Position = player.Position;
-
                 player.ConnectedThisTick = false;
 
                 if (p.InputType == InputType.MouseAndKeyboard || p.InputType == InputType.KeyboardOnly)
@@ -472,6 +483,8 @@ namespace EphemereGames.Commander.Simulation
                 EditorGUIController.Update();
                 EditorController.Update();
             }
+
+            CameraController.Update();
         }
 
 
@@ -675,6 +688,11 @@ namespace EphemereGames.Commander.Simulation
                 MessagesController.DoQuoteNow("Thank you,\n\nCommander!");
                 return;
             }
+
+            if (key == player.KeyboardConfiguration.ZoomIn)
+                CameraController.ZoomIn();
+            else if (key == player.KeyboardConfiguration.ZoomOut)
+                CameraController.ZoomOut();
 
             if (DebugMode)
             {
@@ -1049,6 +1067,11 @@ namespace EphemereGames.Commander.Simulation
                 Inputs.DisconnectPlayer(p);
                 return;
             }
+
+            if (button == player.GamepadConfiguration.ZoomIn)
+                CameraController.ZoomIn();
+            else if (button == player.GamepadConfiguration.ZoomOut)
+                CameraController.ZoomOut();
 
             if (DebugMode)
             {

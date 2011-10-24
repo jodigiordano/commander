@@ -66,6 +66,11 @@
             get { return RectanglePrimitif.Bottom; }
         }
 
+        public Point Center
+        {
+            get { return RectanglePrimitif.Center; }
+        }
+
         public bool Intersects(PhysicalRectangle autre)
         {
             bool resultat;

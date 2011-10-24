@@ -67,10 +67,14 @@
 
             HelpBar = new HelpBarPanel(simulator.Scene, VisualPriorities.Default.HelpBar)
             {
-                Alpha = 0
+                Alpha = 0,
+                ShowOnForegroundLayer = true
             };
 
-            GameBarPanel = new Simulation.GameBarPanel(Simulator, VisualPriorities.Default.GameBar);
+            GameBarPanel = new Simulation.GameBarPanel(Simulator, VisualPriorities.Default.GameBar)
+            {
+                ShowOnForegroundLayer = true
+            };
 
             NextWavePreview = new NextWavePreview(simulator, VisualPriorities.Default.NextWavePreview);
         }
@@ -242,6 +246,8 @@
             LevelEndedAnnunciation.DoGameStateChanged(newGameState);
 
             SyncNewGameMenu();
+
+            HelpBar.ActivePlayers = true;
         }
 
 
@@ -570,7 +576,7 @@
             if (PowerUpsToBuyCount == 0)
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
 
-            ShowGameBarHBMessage();
+            //ShowGameBarHBMessage(); tmp: for now.
 
             AlienNextWaveAnimation.TimeNextWave = Math.Max(0, AlienNextWaveAnimation.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
@@ -582,8 +588,6 @@
                 PathPreviewing.Update();
                 GameMenu.Update();
             }
-
-            GameBarPanel.Update();
         }
 
 
@@ -768,7 +772,7 @@
                 }
             }
 
-            else if (!Simulator.EditorMode)
+            else if (!Simulator.EditorMode || (Simulator.EditorMode && Simulator.EditorState != EditorState.Editing))
             {
                 // Turret Menu
                 if (selection.Turret != null && !selection.Turret.Disabled)

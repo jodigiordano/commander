@@ -23,6 +23,8 @@
         public Buttons Disconnect;
         public Buttons RetryLevel;
         public Buttons Cheat1;
+        public Buttons ZoomIn;
+        public Buttons ZoomOut;
 
         public Dictionary<Buttons, string> ToImage;
 
@@ -46,6 +48,8 @@
             Disconnect = Buttons.BigButton;
             RetryLevel = Buttons.BigButton;
             Cheat1 = Buttons.BigButton;
+            ZoomIn = Buttons.BigButton;
+            ZoomOut = Buttons.BigButton;
         }
 
 
@@ -69,7 +73,9 @@
                     RetryLevel,
                     AlternateSelectionNext,
                     AlternateSelectionPrevious,
-                    Cheat1
+                    Cheat1,
+                    ZoomIn,
+                    ZoomOut
                 };
             }
         }

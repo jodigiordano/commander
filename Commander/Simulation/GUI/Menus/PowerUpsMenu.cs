@@ -58,7 +58,7 @@
                 VisualPriority = VisualPriority + 0.001f
             };
 
-            PowerUpPriceBubble = new Bubble(Simulator.Scene, new PhysicalRectangle(0, 0, 100, 30), VisualPriority + 0.002)
+            PowerUpPriceBubble = new Bubble(Simulator, new PhysicalRectangle(0, 0, 100, 30), VisualPriority + 0.002)
             {
                 BlaPosition = 3
             };

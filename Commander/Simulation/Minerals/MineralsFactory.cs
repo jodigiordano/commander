@@ -86,7 +86,7 @@
 
             m.Definition = Minerals[type];
             m.VisualPriority = visualPriority;
-            m.Scene = Simulator.Scene;
+            m.Simulator = Simulator;
 
             m.Initialize();
 

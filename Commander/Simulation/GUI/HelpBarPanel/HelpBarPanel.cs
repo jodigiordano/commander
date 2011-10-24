@@ -8,7 +8,6 @@
     class HelpBarPanel : HorizontalPanel
     {
         private KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>> Current;
-        private Scene Scene;
 
         public bool ActivePlayers;
         public bool ActiveOptions;
@@ -16,20 +15,12 @@
 
 
         public HelpBarPanel(CommanderScene scene, double visualPriority)
-            : base(scene, new Vector3(0, scene.CameraView.Height / 2 - 30, 0), new Vector2(scene.CameraView.Width, 35), visualPriority, Color.White)
+            : base(scene, Vector3.Zero, new Vector2(scene.CameraView.Width, 35), visualPriority, Color.White)
         {
-            Scene = scene;
-
             ShowCloseButton = false;
             ShowFrame = false;
             Padding = new Vector2(10, 0);
             BackgroundAlpha = 100;
-
-            if (Preferences.Target == Core.Utilities.Setting.Xbox360)
-            {
-                Position -= new Vector3(0, Preferences.DeadZoneV2.Y, 0);
-                Padding = new Vector2(10 + Preferences.DeadZoneV2.X, 0);
-            }
 
             Current = new KeyValuePair<HelpBarMessage, List<KeyValuePair<string, PanelWidget>>>(HelpBarMessage.None, null);
 
@@ -39,7 +30,7 @@
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             HideCurrentMessage();
         }
@@ -91,7 +82,15 @@
                 return;
 
             if (ShowOnForegroundLayer)
+            {
                 Scene.BeginForeground();
+
+                Position = new Vector3(-Preferences.BackBuffer.X / 2, Preferences.BackBuffer.Y / 2 - 50, 0);
+            }
+            else
+            {
+                Position = new Vector3(((CommanderScene) Scene).CameraView.Left, ((CommanderScene) Scene).CameraView.Bottom - 50, 0);
+            }
 
             base.Draw();
 

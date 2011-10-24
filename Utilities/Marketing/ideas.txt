@@ -1,3 +1,35 @@
 - how to get people in the funnel
 - build a list of future customers
 - find channels to customers
+
+== When I produce a screenshot…
+1. Add the screenshot on Flickr
+2. Add a note on Facebook
+3. Add a note on Twitter
+
+== When I produce a movie…
+1. Add the movie on Youtube
+2. Add a note on Facebook
+3. Add a note on Twitter
+
+== When I produce a commander news post…
+1. Add a post on my devlog on TIGsource
+2. Add a post on my devlog on IndieGamer
+3. Add a post on my devlog on Desura
+4. Add a note on Facebook
+5. Add a note on Twitter
+
+== Tasks of "Social Friday"
+1. Produce a list of added features / dev log / what you've done this week
+2. If thing is cool enough, produce screenshots or movie
+3. Spread the word about that
+4. Check out the alerts and respond to them
+
+== Social medias
+. LinkedIn
+. Youtube
+. Flickr
+. Dev blog
+. Facebook
+. Twitter
+. Google+

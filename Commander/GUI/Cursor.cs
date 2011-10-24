@@ -152,21 +152,21 @@
         }
 
 
-        #region IObjetPhysique Membres
+        #region ICollidable Membres
         //not implemented
         public Vector3 Direction { get; set; }
         public float Rotation { get; set; }
-        public PhysicalRectangle Rectangle { get; set; }
-        public Line Line { get; set; }
+        PhysicalRectangle ICollidable.Rectangle { get; set; }
+        Line ICollidable.Line { get; set; }
 
         #endregion
 
-        public Rectangle VisiblePart
+        Rectangle IVisual.VisiblePart
         {
             set { throw new System.NotImplementedException(); }
         }
 
-        public Vector2 Origin
+        Vector2 IVisual.Origin
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
@@ -178,7 +178,7 @@
             set { throw new System.NotImplementedException(); }
         }
 
-        public Color Color
+        Color IVisual.Color
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }

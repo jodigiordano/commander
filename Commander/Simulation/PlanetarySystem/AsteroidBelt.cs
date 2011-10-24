@@ -29,6 +29,7 @@
         public AsteroidBelt(
             Simulator simulator,
             string name,
+            Vector3 path,
             Vector3 basePosition,
             Size size,
             float speed,
@@ -37,8 +38,8 @@
             : base(
                 simulator,
                 name,
+                path,
                 basePosition,
-                Vector3.Zero,
                 0,
                 size,
                 speed,

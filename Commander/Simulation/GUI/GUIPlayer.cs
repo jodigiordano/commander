@@ -1,6 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.Input;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -18,6 +20,7 @@
         public NewGameMenu NewGameMenu;
 
         private Simulator Simulator;
+        private Text Name;
 
         
         public GUIPlayer(
@@ -46,6 +49,12 @@
 
             PowerUpInputMode = false;
             PowerUpFinalSolution = false;
+
+            Name = new Text(p.Index.ToString(), "Pixelite", color, p.Position)
+            {
+                SizeX = 2,
+                VisualPriority = VisualPriorities.Default.PlayerName
+            }.CenterIt();
         }
 
 
@@ -93,6 +102,14 @@
             Cursor.Draw();
             Crosshair.Draw();
             SelectedCelestialBodyAnimation.Draw();
+
+            if (Inputs.ConnectedPlayers.Count > 1)
+            {
+                Name.Position = Simulator.CameraController.ClampToCamera(Cursor.FrontImage.Position, new Vector3(Cursor.FrontImage.AbsoluteSize, 0));
+                Name.Origin = new Vector2(Name.AbsoluteSize.X / 4, -Cursor.FrontImage.Size.Y - 5);
+                Name.Rotation = Cursor.FrontImage.Rotation;
+                Simulator.Scene.Add(Name);
+            }
 
             if (Simulator.WorldMode)
                 WorldMenu.Draw();

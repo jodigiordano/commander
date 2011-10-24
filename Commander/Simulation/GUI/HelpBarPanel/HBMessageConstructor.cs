@@ -7,6 +7,15 @@
 
     class HBMessageConstructor
     {
+        private float LabelSize;
+
+
+        public HBMessageConstructor()
+        {
+            LabelSize = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 1 : 2;
+        }
+
+
         public List<KeyValuePair<string, PanelWidget>> CreateMessage(InputType inputType, InputConfiguration config, HelpBarMessageType messageType, string label)
         {
             return CreateMessage(inputType, config, new List<KeyValuePair<HelpBarMessageType, string>>() { new KeyValuePair<HelpBarMessageType, string>(messageType, label) });
@@ -126,7 +135,7 @@
 
         private Text GenerateLabel(string message)
         {
-            return new Text(message, @"Pixelite") { SizeX = 2f };
+            return new Text(message, @"Pixelite") { SizeX = LabelSize };
         }
     }
 }

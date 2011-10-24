@@ -20,8 +20,8 @@
         public int Value                            { get { return Definition.Value; } }
         public MineralDefinition Definition;
         public double VisualPriority;
-        public CommanderScene Scene;
         public string SfxDie;
+        public Simulator Simulator;
 
         private Vector3 AnciennePosition;
         private Vector3 position;
@@ -33,7 +33,7 @@
         public void Initialize()
         {
             Speed = Main.Random.Next(10, 20);
-            RepresentationParticules = Scene.Particles.Get(Definition.ParticulesRepresentation);
+            RepresentationParticules = Simulator.Scene.Particles.Get(Definition.ParticulesRepresentation);
             RepresentationParticules.VisualPriority = VisualPriority - 0.001f;
             TempsExistence = Definition.TimeAlive;
             Circle = new Circle(this, Definition.Radius);
@@ -75,21 +75,21 @@
 
         public void DoDie()
         {
-            Scene.Particles.Return(RepresentationParticules);
+            Simulator.Scene.Particles.Return(RepresentationParticules);
 
             if (TempsExistence <= 0)
                 return;
 
-            Particle pris = Scene.Particles.Get(@"mineralPris");
+            Particle pris = Simulator.Scene.Particles.Get(@"mineralPris");
             pris.Trigger(ref this.position);
-            Scene.Particles.Return(pris);
-            Scene.Animations.Add(new MineralTakenAnimation(Scene, Definition, Position, RepresentationParticules.VisualPriority - 0.0001));
+            Simulator.Scene.Particles.Return(pris);
+            Simulator.Scene.Animations.Add(new MineralTakenAnimation(Simulator.Scene, Definition, Position, RepresentationParticules.VisualPriority - 0.0001));
         }
 
 
         private void DoBouncing()
         {
-            if (Position.X > Scene.CameraView.Right - 20)
+            if (Position.X > Simulator.Battlefield.Right - 20)
             {
                 Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -97,7 +97,7 @@
                 Speed = 0;
             }
 
-            if (Position.X < Scene.CameraView.Left + Circle.Radius)
+            if (Position.X < Simulator.Battlefield.Left + Circle.Radius)
             {
                 Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -105,7 +105,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y > Scene.CameraView.Bottom - Circle.Radius)
+            if (Position.Y > Simulator.Battlefield.Bottom - Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Speed);
@@ -113,7 +113,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y < Scene.CameraView.Top + Circle.Radius)
+            if (Position.Y < Simulator.Battlefield.Top + Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Speed);

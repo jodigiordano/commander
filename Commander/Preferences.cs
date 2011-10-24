@@ -23,16 +23,22 @@
         public static Vector2 DeadZoneV2 = new Vector2(0, 0);
         public static Vector3 DeadZone = new Vector3(0, 0, 0);
         public static Vector2 BackBuffer = new Vector2(640, 480);
+        public static Vector2 BattlefieldBoundaries = new Vector2(1280, 720);
+        public const float BackBufferZoom = 0.5f;
 #elif WINDOWS
         public static Setting Target = Setting.Windows;
         public static Vector2 DeadZoneV2 = new Vector2(0, 0);
         public static Vector3 DeadZone = new Vector3(0, 0, 0);
         public static Vector2 BackBuffer = new Vector2(1280, 720);
+        public static Vector2 BattlefieldBoundaries = new Vector2(1280, 720);
+        public const float BackBufferZoom = 1f;
 #else
         public static Setting Target = Setting.Xbox360;
         public static Vector2 DeadZoneV2 = new Vector2(20, 30);
         public static Vector3 DeadZone = new Vector3(20, 30, 0);
         public static Vector2 BackBuffer = new Vector2(1280, 720);
+        public static Vector2 BattlefieldBoundaries = new Vector2(1280, 720);
+        public const float BackBufferZoom = 1f;
 #endif
 
         public static string ProductName = "commander";
@@ -46,7 +52,6 @@
         public const float PrioriteFondEcran = 1f;
         public const float PrioriteTransitionScene = 0f;
 
-        public const float PrioriteGUIEtoiles = PrioriteFondEcran - 0.01f;
         public const float PrioriteGUIVueAvanceeTrajectoiresCorpsCeleste = PrioriteFondEcran - 0.03f;
         public const float PrioriteGUIVUeAvanceeZonesActivations = PrioriteFondEcran - 0.04f;
         public const float PrioriteSimulationCeintureAsteroides = PrioriteFondEcran - 0.05f;

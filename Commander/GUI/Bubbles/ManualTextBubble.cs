@@ -11,8 +11,8 @@
         public bool Visible;
 
 
-        public ManualTextBubble(CommanderScene scene, Text text, Vector3 position, double visualPriority)
-            : base(scene, new PhysicalRectangle(), visualPriority)
+        public ManualTextBubble(Simulator simulator, Text text, Vector3 position, double visualPriority)
+            : base(simulator, new PhysicalRectangle(), visualPriority)
         {
             Text = text;
             Text.VisualPriority = visualPriority - 0.00001;
@@ -66,7 +66,7 @@
             base.Draw();
 
             Text.Position = new Vector3(Dimension.X, Dimension.Y, 0);
-            Scene.Add(Text);
+            Simulator.Scene.Add(Text);
         }
 
 
@@ -75,7 +75,7 @@
             base.FadeIn(duration);
 
             Text.Alpha = 0;
-            Scene.VisualEffects.Add(Text, VisualEffects.FadeInFrom0(255, 0, duration));
+            Simulator.Scene.VisualEffects.Add(Text, VisualEffects.FadeInFrom0(255, 0, duration));
         }
 
 
@@ -83,7 +83,7 @@
         {
             base.FadeOut(duration);
 
-            Scene.VisualEffects.Add(Text, VisualEffects.FadeOutTo0(255, 0, duration));
+            Simulator.Scene.VisualEffects.Add(Text, VisualEffects.FadeOutTo0(255, 0, duration));
         }
 
 
@@ -98,8 +98,8 @@
 
         private void ComputePosition()
         {
-            bool tooMuchRight = Dimension.X + Dimension.Width + 50 > Scene.CameraView.Right;
-            bool tooMuchBottom = Dimension.Y + Dimension.Height > Scene.CameraView.Bottom;
+            bool tooMuchRight = Dimension.X + Dimension.Width + 50 > Simulator.Battlefield.Right;
+            bool tooMuchBottom = Dimension.Y + Dimension.Height > Simulator.Battlefield.Bottom;
 
             if (tooMuchRight && tooMuchBottom)
             {

@@ -222,6 +222,7 @@
             SceneState = State.ConnectPlayer;
             Simulator.EnableInputs = false;
             Simulator.SyncPlayers();
+            Camera.Position = Vector3.Zero;
 
             if (Main.SelectedWorld != null)
                 Main.SelectedWorld.GameInProgress = null;

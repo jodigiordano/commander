@@ -10,8 +10,8 @@
         public double FadeTime;
 
 
-        public TextBubble(CommanderScene scene, Text text, Vector3 position, double showTime, double visualPriority)
-            : base(scene, text, position, visualPriority)
+        public TextBubble(Simulator simulator, Text text, Vector3 position, double showTime, double visualPriority)
+            : base(simulator, text, position, visualPriority)
         {
             ShowTime = showTime;
             FadeTime = double.MaxValue;

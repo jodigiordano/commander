@@ -1,8 +1,10 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System;
     using System.Collections.Generic;
     using System.Xml.Serialization;
     using EphemereGames.Commander.Simulation;
+    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
@@ -228,6 +230,45 @@
 
             return null;
         }
+
+
+        public PhysicalRectangle GetBoundaries(Vector3 padding)
+        {
+            PhysicalRectangle boundaries = new PhysicalRectangle();
+
+            boundaries.X = (int) -Preferences.BattlefieldBoundaries.X / 2;
+            boundaries.Y = (int) -Preferences.BattlefieldBoundaries.Y / 2;
+            boundaries.Width = (int) Preferences.BattlefieldBoundaries.X;
+            boundaries.Height = (int) Preferences.BattlefieldBoundaries.Y;
+
+            foreach (var cb in PlanetarySystem)
+            {
+                // don't include asteroid belt
+                if (cb.Images.Count != 0)
+                    continue;
+
+                var b = cb.GetBoundaries();
+
+                if (b.Left < boundaries.Left)
+                    boundaries.X = b.Left;
+
+                if (b.Right > boundaries.Right)
+                    boundaries.Width += b.Right - boundaries.Right;
+
+                if (b.Top < boundaries.Top)
+                    boundaries.Y = b.Top;
+
+                if (b.Bottom > boundaries.Bottom)
+                    boundaries.Height += b.Bottom  - boundaries.Bottom;
+            }
+
+            boundaries.X -= (int) (padding.X / 2);
+            boundaries.Y -= (int) (padding.Y / 2);
+            boundaries.Width += (int) padding.X;
+            boundaries.Height += (int) padding.Y;
+
+            return boundaries;
+        }
     }
 
 
@@ -334,7 +375,8 @@
         [ContentSerializer(Optional = true)]
         public bool StraightLine;
 
-        
+        private Matrix RotationMatrix;
+
 
         public CelestialBodyDescriptor()
         {
@@ -357,6 +399,7 @@
             HasMoons = true;
             StraightLine = false;
             Rotation = 0;
+            RotationMatrix = new Matrix();
         }
 
 
@@ -390,6 +433,44 @@
                 CanUpgrade = canUpgrade,
                 CanSelect = canSelect
             };
+        }
+
+
+        public PhysicalRectangle GetBoundaries()
+        {
+            Matrix.CreateRotationZ(Rotation, out RotationMatrix);
+
+            Vector3 position1 = Position;
+            Vector3 position2 = Position;
+            Vector3 position3 = Position;
+            Vector3 position4 = Position;
+
+            CelestialBody.Move(Speed, Speed * 0.00f, ref Path, ref Position, ref RotationMatrix, ref position1);
+            CelestialBody.Move(Speed, Speed * 0.25f, ref Path, ref Position, ref RotationMatrix, ref position2);
+            CelestialBody.Move(Speed, Speed * 0.50f, ref Path, ref Position, ref RotationMatrix, ref position3);
+            CelestialBody.Move(Speed, Speed * 0.75f, ref Path, ref Position, ref RotationMatrix, ref position4);
+
+            var left = Math.Min(position1.X, position2.X);
+            left = Math.Min(left, position3.X);
+            left = Math.Min(left, position4.X);
+
+            var right = Math.Max(position1.X, position2.X);
+            right = Math.Max(right, position3.X);
+            right = Math.Max(right, position4.X);
+
+            var top = Math.Min(position1.Y, position2.Y);
+            top = Math.Min(top, position3.Y);
+            top = Math.Min(top, position4.Y);
+
+            var bottom = Math.Max(position1.Y, position2.Y);
+            bottom = Math.Max(bottom, position3.Y);
+            bottom = Math.Max(bottom, position4.Y);
+
+            return new PhysicalRectangle(
+                (int) left,
+                (int) top,
+                (int) (Math.Abs(right - left)),
+                (int) (Math.Abs(bottom - top)));
         }
     }
 

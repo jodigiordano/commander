@@ -54,7 +54,7 @@
                 return;
 
             Bubble = new GameEndedBubble(
-                Simulator.Scene,
+                Simulator,
                 VisualPriorities.Default.GameEndedAnimation,
                 state == GameState.Won ? WonQuotes[Main.Random.Next(0, WonQuotes.Count)] : LostQuotes[Main.Random.Next(0, LostQuotes.Count)],
                 state == GameState.Won ? Colors.Default.HumansBright : Colors.Default.AlienBright,

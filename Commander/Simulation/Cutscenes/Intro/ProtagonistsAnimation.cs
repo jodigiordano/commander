@@ -53,7 +53,7 @@
             Protagonist.FadeIn();
             Wife.FadeIn();
 
-            ProtagonistText = new ManualTextBubble(Simulator.Scene, new Text("I must warn the\n\nother colonies!", @"Pixelite") { SizeX = 2 }, Protagonist.Position, VisualPriorities.Cutscenes.IntroProtagonist - 0.00001) { Alpha = 0 };
+            ProtagonistText = new ManualTextBubble(Simulator, new Text("I must warn the\n\nother colonies!", @"Pixelite") { SizeX = 2 }, Protagonist.Position, VisualPriorities.Cutscenes.IntroProtagonist - 0.00001) { Alpha = 0 };
 
             State = ProtagonistState.None;
 

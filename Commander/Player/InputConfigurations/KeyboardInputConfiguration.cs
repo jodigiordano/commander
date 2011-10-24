@@ -16,6 +16,8 @@
         public Keys Disconnect;
         public Keys Tweaking;
         public Keys RetryLevel;
+        public Keys NextLevel;
+        public Keys GoBackToWorld;
         public Keys MoveUp;
         public Keys MoveLeft;
         public Keys MoveDown;
@@ -34,6 +36,8 @@
         public Keys Home;
         public Keys LeftCoin;
         public Keys RightCoin;
+        public Keys ZoomIn;
+        public Keys ZoomOut;
 
         public Dictionary<Keys, string> ToImage;
 
@@ -50,6 +54,8 @@
             Disconnect = Keys.None;
             Tweaking = Keys.None;
             RetryLevel = Keys.None;
+            NextLevel = Keys.None;
+            GoBackToWorld = Keys.None;
             MoveUp = Keys.None;
             MoveLeft = Keys.None;
             MoveDown = Keys.None;
@@ -68,6 +74,8 @@
             Home = Keys.None;
             LeftCoin = Keys.None;
             RightCoin = Keys.None;
+            ZoomIn = Keys.None;
+            ZoomOut = Keys.None;
         }
 
 
@@ -87,6 +95,8 @@
                     Disconnect,
                     Tweaking,
                     RetryLevel,
+                    NextLevel,
+                    GoBackToWorld,
                     MoveDown,
                     MoveLeft,
                     MoveRight,
@@ -103,7 +113,9 @@
                     LeftCoin,
                     RightCoin,
                     RotateLeft,
-                    RotateRight
+                    RotateRight,
+                    ZoomIn,
+                    ZoomOut
                 };
             }
         }

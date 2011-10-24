@@ -10,7 +10,7 @@
 
     class Bubble : IVisual, IPhysical
     {
-        protected CommanderScene Scene;
+        protected Simulator Simulator;
 
         private List<Image> Corners;
         private List<Image> Edges;
@@ -22,9 +22,9 @@
         public byte FilterAlpha;
 
 
-        public Bubble(CommanderScene scene, PhysicalRectangle dimension, double visualPriority)
+        public Bubble(Simulator simulator, PhysicalRectangle dimension, double visualPriority)
         {
-            Scene = scene;
+            Simulator = simulator;
             Dimension = dimension;
             FilterAlpha = 200;
 
@@ -174,12 +174,12 @@
 
             for (int i = 0; i < 4; i++)
             {
-                Scene.Add(Edges[i]);
-                Scene.Add(Corners[i]);
+                Simulator.Scene.Add(Edges[i]);
+                Simulator.Scene.Add(Corners[i]);
             }
 
-            Scene.Add(Filter);
-            Scene.Add(Bla);
+            Simulator.Scene.Add(Filter);
+            Simulator.Scene.Add(Bla);
         }
 
 
@@ -190,16 +190,16 @@
             var effect = VisualEffects.Fade(from, to, 0, length);
 
             foreach (var corner in Corners)
-                Scene.VisualEffects.Add(corner, effect, callback);
+                Simulator.Scene.VisualEffects.Add(corner, effect, callback);
 
             foreach (var edge in Edges)
-                Scene.VisualEffects.Add(edge, effect);
+                Simulator.Scene.VisualEffects.Add(edge, effect);
 
-            Scene.VisualEffects.Add(Bla, effect);
+            Simulator.Scene.VisualEffects.Add(Bla, effect);
 
             effect = VisualEffects.Fade(Math.Min(from, FilterAlpha), Math.Min(to, FilterAlpha), 0, length);
 
-            Scene.VisualEffects.Add(Filter, effect);
+            Simulator.Scene.VisualEffects.Add(Filter, effect);
         }
 
 
@@ -217,8 +217,8 @@
 
         protected void ClampPositionInView()
         {
-            Dimension.X = (int) MathHelper.Clamp(Dimension.X, Scene.CameraView.Left, Scene.CameraView.Right - Dimension.Width / 2);
-            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, Scene.CameraView.Top + Dimension.Height / 2, Scene.CameraView.Bottom - Dimension.Height / 2);
+            Dimension.X = (int) MathHelper.Clamp(Dimension.X, Simulator.Battlefield.Left, Simulator.Battlefield.Right - Dimension.Width / 2);
+            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, Simulator.Battlefield.Top + Dimension.Height / 2, Simulator.Battlefield.Bottom - Dimension.Height / 2);
         }
 
 

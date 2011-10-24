@@ -53,28 +53,6 @@
         }
 
 
-        public static List<Effect<IVisual>> DrawPartiallyNow(Rectangle visiblePart, Vector2 newOrigin)
-        {
-            var effects = new List<Effect<IVisual>>();
-
-            DrawPartiallyEffect dpe = DrawPartiallyEffect.Pool.Get();
-
-            dpe.DrawPartially = true;
-            dpe.VisiblePart = visiblePart;
-            dpe.Progress = Effect<IVisual>.ProgressType.Now;
-            dpe.Length = 500;
-            effects.Add(dpe);
-
-            RecenterEffect re = RecenterEffect.Pool.Get();
-
-            re.OriginStart = newOrigin;
-            re.Length = 500;
-            effects.Add(re);
-
-            return effects;
-        }
-
-
         public static FadeColorEffect FadeInFrom0(int to, double delay, double length)
         {
             return Fade(0, to, delay, length);

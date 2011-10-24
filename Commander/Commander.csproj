@@ -30,7 +30,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <PublishUrl>C:\Users\Jodi\Desktop\ArcadeRoyale\</PublishUrl>
+    <PublishUrl>C:\Users\Jodi\Desktop\ArcadeRoyale2\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -192,6 +192,7 @@
     <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
+    <Compile Include="Simulation\CameraController.cs" />
     <Compile Include="Simulation\GUI\Animations\HelpAnimation.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\AssetsPanel.cs" />

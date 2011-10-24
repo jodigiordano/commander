@@ -9,6 +9,8 @@
 
     class GameBarPanel : Panel
     {
+        public bool ShowOnForegroundLayer;
+
         private Simulator Simulator;
 
         private ImageLabel CashWidget;
@@ -26,7 +28,7 @@
 
 
         public GameBarPanel(Simulator simulator, double visualPriority)
-            : base(simulator.Scene, new Vector3(0, (-simulator.Scene.CameraView.Height / 2) + 34, 0), new Vector2(simulator.Scene.CameraView.Width, 45), visualPriority, Color.White)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(simulator.Scene.CameraView.Width, 45), visualPriority, Color.White)
         {
             Simulator = simulator;
 
@@ -34,40 +36,27 @@
             ShowFrame = false;
             BackgroundAlpha = 100;
 
-            if (Preferences.Target == Core.Utilities.Setting.Xbox360)
-            {
-                Position += new Vector3(0, Preferences.DeadZoneV2.Y, 0);
-                Padding = new Vector2(10 + Preferences.DeadZoneV2.X, 0);
-            }
-
             CashWidget = new ImageLabel(new Image("ScoreMoney") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(50, 0, 0),
                 CanHover = true
             };
 
             LivesWidget = new ImageLabel(new Image("ScoreLives") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(250, 0, 0),
                 CanHover = true
             };
 
             TimeNextWaveText = new ImageLabel(new Image("ScoreTime") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(850, 0, 0),
                 CanHover = true
             };
 
             RemainingWavesWidget = new ImageLabel(new Image("ScoreWaves") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
             {
-                Position = Position + new Vector3(700, 0, 0),
                 CanHover = true
             };
 
-            NextWaveWidget = new NextWaveWidget()
-            {
-                Position = Position + new Vector3(1050, 0, 0)
-            };
+            NextWaveWidget = new NextWaveWidget();
 
             HBMessages = new Dictionary<string, List<KeyValuePair<string, PanelWidget>>>()
             {
@@ -80,10 +69,12 @@
             };
 
             TimeNextWaveBuilder = new StringBuilder();
+
+            ShowOnForegroundLayer = false;
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             ClearWidgets();
 
@@ -92,12 +83,6 @@
             AddWidget(@"Remaining", RemainingWavesWidget);
             AddWidget(@"Time", TimeNextWaveText);
             AddWidget(@"NextWave", NextWaveWidget);
-        }
-
-
-        public void Update()
-        {
-            //Position = new Vector3(0, (-Simulator.Scene.CameraView.Height / 2) + 34, 0);
         }
 
 
@@ -141,8 +126,6 @@
 
                 TimeNextWaveBuilder.Length = 0;
                 TimeNextWaveBuilder.AppendNumber((int) TimeNextWave / 1000);
-                //TimeNextWaveBuilder.Append(".");
-                //TimeNextWaveBuilder.AppendNumber(((int) TimeNextWave % 1000) / 10);
 
                 TimeNextWaveText.SetData(TimeNextWaveBuilder.ToString());
             }
@@ -171,6 +154,45 @@
                 return msg;
             else
                 return HBMessages[@"none"];
+        }
+
+
+        public override void Draw()
+        {
+            if (ShowOnForegroundLayer)
+            {
+                Scene.BeginForeground();
+
+                Position = new Vector3(-Preferences.BackBuffer.X / 2, -Preferences.BackBuffer.Y / 2 + 10, 0);
+            }
+
+            else
+            {
+                Position = new Vector3(Simulator.Scene.CameraView.Left, Simulator.Scene.CameraView.Top + 10, 0);
+            }
+
+            if (Preferences.Target == Setting.ArcadeRoyale)
+            {
+                CashWidget.Position = Position + new Vector3(50, 0, 0);
+                LivesWidget.Position = Position + new Vector3(200, 0, 0);
+                TimeNextWaveText.Position = Position + new Vector3(350, 0, 0);
+                RemainingWavesWidget.Position = Position + new Vector3(500, 0, 0);
+                NextWaveWidget.Position = Position + new Vector3(10000, 0, 0);
+            }
+
+            else
+            {
+                CashWidget.Position = Position + new Vector3(50, 0, 0);
+                LivesWidget.Position = Position + new Vector3(250, 0, 0);
+                TimeNextWaveText.Position = Position + new Vector3(850, 0, 0);
+                RemainingWavesWidget.Position = Position + new Vector3(700, 0, 0);
+                NextWaveWidget.Position = Position + new Vector3(1050, 0, 0);
+            }
+
+            base.Draw();
+
+            if (ShowOnForegroundLayer)
+                Scene.EndForeground();
         }
     }
 }
