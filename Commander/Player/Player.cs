@@ -30,12 +30,18 @@
         public GamepadInputConfiguration GamepadConfiguration       { get { return InputConfiguration.GamepadConfiguration; } }
 
         private Vector3 position;
-        private Vector3 InitialPosition;
-        private Color InitialColor;
-        private string InitialImageName;
+        private int InitialIndex;
 
         public bool ConnectedThisTick;
 
+
+        private static List<int> AvailableIndexes = new List<int>()
+        {
+            0,
+            1,
+            2,
+            3
+        };
 
         private static List<Vector3> AvailablesSpawingPositions = new List<Vector3>()
         {
@@ -151,9 +157,7 @@
             MouseButtonsToListenTo = MouseConfiguration.ToList;
             GamePadButtonsToListenTo = GamepadConfiguration.ToList;
 
-            InitialColor = Color.Aquamarine;
-            InitialPosition = Vector3.Down;
-            InitialImageName = null;
+            InitialIndex = -1;
 
             MovingSpeed = 1.5f;
             RotatingSpeed = 0.1f;
@@ -164,27 +168,16 @@
         public void ChooseAssets()
         {
             // put the data back in the available lists
-            if (InitialColor != Color.Aquamarine)
-                AvailablesColors.Add(InitialColor);
-
-            if (InitialPosition != Vector3.Down)
-                AvailablesSpawingPositions.Add(InitialPosition);
-
-            if (InitialImageName != null)
-                AvailablesImages.Add(InitialImageName);
-
+            if (InitialIndex != -1)
+                AvailableIndexes.Add(InitialIndex);
 
             // select random data
-            int index = 0;
+            int index = AvailableIndexes[Main.Random.Next(0, AvailableIndexes.Count)];
+            InitialIndex = index;
+            AvailableIndexes.Remove(index);
 
-            index = Main.Random.Next(0, AvailablesColors.Count);
-            InitialColor = AvailablesColors[index];
-            AvailablesColors.RemoveAt(index);
-
-            index = Main.Random.Next(0, AvailablesImages.Count);
+            Color = AvailablesColors[index];
             ImageName = AvailablesImages[index];
-            AvailablesImages.RemoveAt(index);
-
             FiringSound = AvailablesFiringSounds[index];
             MovingSound = AvailablesMovingSounds[index];
             TeleportInSound = AvailablesTeleportInSounds[index];
@@ -192,16 +185,7 @@
             ShipBouncingSound = AvailablesShipBouncingSounds[index];
             ShipShieldHitSound = AvailablesShipShieldHitSounds[index];
             ShipTurningSound = AvailablesShipTurningSounds[index];
-
-            index = Main.Random.Next(0, AvailablesSpawingPositions.Count);
-            InitialPosition = AvailablesSpawingPositions[index];
-            AvailablesSpawingPositions.RemoveAt(index);
-
-
-            // keep track of selected data
-            Color = InitialColor;
-            SpawningPosition = InitialPosition;
-            InitialImageName = ImageName;
+            SpawningPosition = AvailablesSpawingPositions[index];
         }
 
 
