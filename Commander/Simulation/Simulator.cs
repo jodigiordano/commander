@@ -312,7 +312,7 @@ namespace EphemereGames.Commander.Simulation
             if (EditorMode && EditorState == EditorState.Editing)
                 Battlefield = new PhysicalRectangle(-5000, -5000, 10000, 10000);
             else
-                Battlefield = Level.Descriptor.GetBoundaries(DemoMode ? Vector3.Zero : new Vector3(6 * (int) Size.Big));
+                Battlefield = Level.Descriptor.GetBoundaries(new Vector3(6 * (int) Size.Big));
 
             OuterBattlefield = new PhysicalRectangle(Battlefield.X - 200, Battlefield.Y - 200, Battlefield.Width + 400, Battlefield.Height + 400);
 
