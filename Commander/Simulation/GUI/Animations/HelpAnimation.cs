@@ -21,15 +21,18 @@
         {
             base.Initialize();
 
+            var position = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? new Vector3(0, -150, 0) : new Vector3(0, -250, 0);
+            var size = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 2 : 3;
+
             Translator = new Translator(
                 Scene,
-                new Vector3(0, -250, 0),
+                position,
                 "Alien",
                 Colors.Default.AlienBright,
                 "Pixelite",
                 Colors.Default.NeutralBright,
                 Message,
-                3,
+                size,
                 true,
                 3000,
                 100,
