@@ -59,7 +59,7 @@
 
             Asteroids = new List<Asteroid>(NbAsteroids);
 
-            var sizeMultiplier = Math.Max(path.X, path.Y) / (Math.Min(Preferences.BackBuffer.X, Preferences.BackBuffer.Y) * Preferences.BackBufferZoom);
+            var sizeMultiplier = Math.Max(path.X, path.Y) / Math.Min(Preferences.BackBuffer.X, Preferences.BackBuffer.Y);
 
             for (int i = 0; i < NbAsteroids; i++)
             {
