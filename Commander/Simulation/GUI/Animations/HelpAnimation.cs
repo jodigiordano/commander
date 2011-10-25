@@ -51,9 +51,11 @@
 
         public override void Draw()
         {
-            base.Draw();
+            Scene.BeginForeground();
 
             Translator.Draw();
+
+            Scene.EndForeground();
         }
     }
 }

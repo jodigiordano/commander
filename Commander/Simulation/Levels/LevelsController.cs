@@ -26,8 +26,6 @@
         private int WavesCounter;
         private double ElapsedTime;
 
-        private bool HelpSaved;
-
 
         public LevelsController(Simulator simulator)
         {
