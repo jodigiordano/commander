@@ -64,8 +64,14 @@
             PathPreview.Initialize();
 
             Stars = Simulator.Scene.Particles.Get(@"etoilesScintillantes");
-            ((RectEmitter) Stars.Model[0]).Width = Simulator.Battlefield.Width;
-            ((RectEmitter) Stars.Model[0]).Height = Simulator.Battlefield.Height;
+
+            var emitter = (RectEmitter) Stars.Model[0];
+
+            emitter.TriggerOffset = new Vector2(Simulator.Battlefield.Center.X, Simulator.Battlefield.Center.Y);
+            emitter.Width = Simulator.Battlefield.Width;
+            emitter.Height = Simulator.Battlefield.Height;
+            emitter.ReleaseQuantity = (int) Math.Ceiling((Math.Max(Simulator.Battlefield.Width, Simulator.Battlefield.Height) / Math.Max(Preferences.BackBuffer.X, Preferences.BackBuffer.Y)));
+
             Stars.VisualPriority = VisualPriorities.Default.Stars;
             StarsEmitter = 0;
 
