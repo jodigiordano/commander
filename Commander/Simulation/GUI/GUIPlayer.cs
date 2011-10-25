@@ -52,7 +52,6 @@
 
             Name = new Text(p.Index.ToString(), "Pixelite", color, p.Position)
             {
-                SizeX = 2,
                 VisualPriority = VisualPriorities.Default.PlayerName
             }.CenterIt();
         }
@@ -105,9 +104,9 @@
 
             if (Inputs.ConnectedPlayers.Count > 1)
             {
-                Name.Position = Simulator.CameraController.ClampToCamera(Cursor.FrontImage.Position, new Vector3(Cursor.FrontImage.AbsoluteSize, 0));
-                Name.Origin = new Vector2(Name.AbsoluteSize.X / 4, -Cursor.FrontImage.Size.Y - 5);
-                Name.Rotation = Cursor.FrontImage.Rotation;
+                Name.Position = Simulator.CameraController.ClampToCamera(
+                    Cursor.FrontImage.Position + new Vector3(0, Cursor.FrontImage.AbsoluteSize.Y / 2 + 5, 0),
+                    new Vector3(Cursor.FrontImage.AbsoluteSize, 0));
                 Simulator.Scene.Add(Name);
             }
 
