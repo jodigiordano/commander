@@ -13,7 +13,7 @@
     class ShootingStar : ICollidable, ILivingObject
     {
         public Scene Scene;
-        public PhysicalRectangle Terrain;
+        public PhysicalRectangle Battlefield;
         private bool ContentLoaded;
 
         public Vector3 Position         { get { return position; } set { position = value; } }
@@ -83,7 +83,7 @@
 
         public void Initialize()
         {
-            Vector2 startingPosition = new Vector2(Terrain.Width / 2 + 100, 0);
+            Vector2 startingPosition = new Vector2(Battlefield.Width / 2, 0);
             Vector2 middlePosition;
             Vector2 endingPosition;
 
@@ -101,14 +101,17 @@
             endingPosition.Normalize();
             Vector2.Multiply(ref endingPosition, Main.Random.Next(200, 400), out endingPosition);
 
-            double time = Main.Random.Next(800, 2000);
+            double time = Main.Random.Next(800, 2000) * (Math.Max(Battlefield.Width, Battlefield.Height) / Math.Max(Preferences.BackBuffer.X, Preferences.BackBuffer.Y));
+            time /= 2;
 
-            Positions[0] = startingPosition;
-            Positions[1] = endingPosition;
-            Positions[2] = middlePosition;
+            var center = new Vector2(Battlefield.Center.X, Battlefield.Center.Y);
+
+            Positions[0] = center + startingPosition;
+            Positions[1] = center + endingPosition;
+            Positions[2] = center + middlePosition;
 
             Times[0] = 0;
-            Times[1] = time / 2;
+            Times[1] = time * 0.75;
             Times[2] = time * 2;
 
             Path.Initialize(Positions, Times);

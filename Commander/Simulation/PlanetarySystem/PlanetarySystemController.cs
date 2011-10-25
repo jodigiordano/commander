@@ -469,7 +469,7 @@
             {
                 ShootingStar ss = ShootingStarsFactory.Get();
                 ss.Scene = Simulator.Scene;
-                ss.Terrain = Simulator.OuterBattlefield;
+                ss.Battlefield = Simulator.OuterBattlefield;
                 ss.LoadContent();
                 ss.Initialize();
 
