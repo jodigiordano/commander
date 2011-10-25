@@ -631,34 +631,6 @@
       <StraightLine>false</StraightLine>
     </CelestialBody>
     <CelestialBody>
-      <Name>1-21</Name>
-      <Images />
-      <Image>planete11</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Small</Size>
-      <Speed>480000</Speed>
-      <PathPriority>24</PathPriority>
-      <Path>
-        <X>0</X>
-        <Y>-30</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-482.799927</X>
-        <Y>538.0804</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-      <FollowPath>false</FollowPath>
-      <HasMoons>true</HasMoons>
-      <StraightLine>false</StraightLine>
-    </CelestialBody>
-    <CelestialBody>
       <Name>1-22</Name>
       <Images />
       <Image>planete12</Image>
@@ -675,34 +647,6 @@
       <Position>
         <X>-669.0408</X>
         <Y>498.7599</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-      <FollowPath>false</FollowPath>
-      <HasMoons>true</HasMoons>
-      <StraightLine>false</StraightLine>
-    </CelestialBody>
-    <CelestialBody>
-      <Name>1-23</Name>
-      <Images />
-      <Image>planete10</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Normal</Size>
-      <Speed>-2.14748365E+09</Speed>
-      <PathPriority>22</PathPriority>
-      <Path>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-769.1202</X>
-        <Y>286.6401</Y>
         <Z>0</Z>
       </Position>
       <Rotation>0</Rotation>
