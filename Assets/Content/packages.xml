@@ -33,12 +33,12 @@
 
     <!-- Textures -->
     
-    <asset name="VaisseauAlien"           type="Image" path="scenarios/vaisseauAlien" />
+    <asset name="VaisseauAlien"           type="Image" path="spaceships/vaisseauAlien" />
     
     
     <!-- Sprites -->
 
-    <asset name="tentacules"              type="Sprite" path="scenarios/tentacules1" />
+    <asset name="tentacules"              type="Sprite" path="spaceships/tentacules1" />
   </Package>
   
   
@@ -130,12 +130,6 @@
     <!-- Cutscenes -->
     <!-- Intro -->
     <asset name="intro"             type="Image" path="backgrounds/cutscenes/intro" />
-    
-
-    <!-- GUI -->
-    <asset name="bulle"                            type="Image" path="scenarios/bulle" />
-    <asset name="bulleRenversee"                   type="Image" path="scenarios/bulleRenversee" />
-    <asset name="lieutenant"                       type="Image" path="scenarios/lieutenant" />    
 
     
     <!-- Promo -->
@@ -160,6 +154,6 @@
 
 
     <!-- Textures -->
-    <asset name="HumanBattleship"      type="Image" path="scenarios/humanBattleship" />
+    <asset name="HumanBattleship"      type="Image" path="spaceships/humanBattleship" />
   </Package>
 </Packages>

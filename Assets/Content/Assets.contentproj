@@ -791,42 +791,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\bulle.png">
-      <Name>bulle</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="scenarios\bulleRenversee.png">
-      <Name>bulleRenversee</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="scenarios\lieutenant.png">
-      <Name>lieutenant</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="scenarios\tentacules.png">
+    <Compile Include="spaceships\tentacules.png">
       <Name>tentacules</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\tentacules1.xml">
+    <Compile Include="spaceships\tentacules1.xml">
       <Name>tentacules1</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\vaisseauAlien.png">
+    <Compile Include="spaceships\vaisseauAlien.png">
       <Name>vaisseauAlien</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1234,7 +1213,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="scenarios\humanBattleship.png">
+    <Compile Include="spaceships\humanBattleship.png">
       <Name>humanBattleship</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
