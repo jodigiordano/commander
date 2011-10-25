@@ -10,7 +10,7 @@ namespace EphemereGames.Commander.Simulation
         {
             Type = TurretType.Basic;
             Name = @"Basic";
-            Description = @"A basic turret that shoot basic bullets.";
+            Description = @"Shoot basic bullets";
             Color = new Color(57, 216, 17);
 
             Levels = simulator.TurretsFactory.TurretsLevels[Type];

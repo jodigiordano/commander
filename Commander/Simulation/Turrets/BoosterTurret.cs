@@ -14,7 +14,7 @@ namespace EphemereGames.Commander.Simulation
         {
             Type = TurretType.Booster;
             Name = @"Booster";
-            Description = @"Boost other turrets in it's range";
+            Description = @"Boost other turrets";
             Color = new Color( 71, 190, 255 );
 
             Levels = simulator.TurretsFactory.TurretsLevels[Type];
