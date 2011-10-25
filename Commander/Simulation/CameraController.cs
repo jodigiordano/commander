@@ -106,8 +106,8 @@
         public Vector3 ClampToCamera(Vector3 input, Vector3 padding)
         {
             return new Vector3(
-                MathHelper.Clamp(input.X, Simulator.Scene.CameraView.Left - padding.X, Simulator.Scene.CameraView.Right - padding.X),
-                MathHelper.Clamp(input.Y, Simulator.Scene.CameraView.Top - padding.Y, Simulator.Scene.CameraView.Bottom - padding.Y),
+                MathHelper.Clamp(input.X, Simulator.Scene.CameraView.Left + padding.X, Simulator.Scene.CameraView.Right - padding.X),
+                MathHelper.Clamp(input.Y, Simulator.Scene.CameraView.Top + padding.Y, Simulator.Scene.CameraView.Bottom - padding.Y),
                 0);
         }
 
@@ -169,7 +169,7 @@
             float maxZoomWidth = Preferences.BattlefieldBoundaries.X * Preferences.BackBufferZoom;
             float maxZoomHeight = Preferences.BattlefieldBoundaries.Y * Preferences.BackBufferZoom;
 
-            float newZoom = Math.Min(maxZoomWidth / width, maxZoomHeight / height);
+            float newZoom = Math.Max(maxZoomWidth / width, maxZoomHeight / height);
 
             // no need to zoom the camera
             if (newZoom >= Preferences.BackBufferZoom)
