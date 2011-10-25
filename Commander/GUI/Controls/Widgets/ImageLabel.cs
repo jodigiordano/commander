@@ -81,7 +81,12 @@
                     actual.Position = previous.Position + new Vector3(previous.AbsoluteSize.X + DistanceBetweenImages.X, DistanceBetweenImages.Y, 0);
                 }
 
-                Text.Position = Images[Images.Count - 1].Position + new Vector3(Images[Images.Count - 1].AbsoluteSize.X + DistanceBetweenImageAndText.X, DistanceBetweenImageAndText.Y, 0);
+                Text.Position =
+                    Images[Images.Count - 1].Position +
+                    new Vector3(Images[Images.Count - 1].AbsoluteSize.X + DistanceBetweenImageAndText.X, DistanceBetweenImageAndText.Y, 0);
+
+                // Center text verticaly
+                Text.Position += new Vector3(0, Images[Images.Count - 1].AbsoluteSize.Y / 2 - Text.AbsoluteSize.Y / 2, 0);
             }
         }
 

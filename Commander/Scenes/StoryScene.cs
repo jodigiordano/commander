@@ -34,7 +34,7 @@
 
             Particles.Add(@"selectionCorpsCeleste");
 
-            HelpBar = new HelpBarPanel(this, VisualPriorities.Cutscenes.HelpBar)
+            HelpBar = new HelpBarPanel(this, 35, VisualPriorities.Cutscenes.HelpBar)
             {
                 ShowOnForegroundLayer = true
             };

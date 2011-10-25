@@ -65,13 +65,19 @@
 
             ContextualMenusCollisions = new ContextualMenusCollisions();
 
-            HelpBar = new HelpBarPanel(simulator.Scene, VisualPriorities.Default.HelpBar)
+            HelpBar = new HelpBarPanel(
+                simulator.Scene,
+                Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 25 : 35,
+                VisualPriorities.Default.HelpBar)
             {
                 Alpha = 0,
                 ShowOnForegroundLayer = true
             };
 
-            GameBarPanel = new Simulation.GameBarPanel(Simulator, VisualPriorities.Default.GameBar)
+            GameBarPanel = new Simulation.GameBarPanel(
+                Simulator,
+                Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 25 : 45,
+                VisualPriorities.Default.GameBar)
             {
                 ShowOnForegroundLayer = true
             };
@@ -166,6 +172,8 @@
             Players.Remove(p);
 
             player.Cursor.TeleportOut();
+
+            HelpBar.ActivePlayers = Players.Count <= 1;
         }
 
 

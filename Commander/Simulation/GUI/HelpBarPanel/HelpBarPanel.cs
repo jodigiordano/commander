@@ -14,8 +14,8 @@
         public bool ShowOnForegroundLayer;
 
 
-        public HelpBarPanel(CommanderScene scene, double visualPriority)
-            : base(scene, Vector3.Zero, new Vector2(scene.CameraView.Width, 35), visualPriority, Color.White)
+        public HelpBarPanel(CommanderScene scene, float height, double visualPriority)
+            : base(scene, Vector3.Zero, new Vector2(scene.CameraView.Width, height), visualPriority, Color.White)
         {
             ShowCloseButton = false;
             ShowFrame = false;
@@ -27,6 +27,7 @@
             ActivePlayers = true;
             ActiveOptions = true;
             ShowOnForegroundLayer = false;
+            DistanceBetweenTwoChoices = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 10 : 30;
         }
 
 
@@ -85,11 +86,15 @@
             {
                 Scene.BeginForeground();
 
-                Position = new Vector3(-Preferences.BackBuffer.X / 2, Preferences.BackBuffer.Y / 2 - 50, 0);
+                Position = new Vector3(
+                    -Preferences.BackBuffer.X / 2,
+                    Preferences.BackBuffer.Y / 2 - (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 20 : 50), 0);
             }
             else
             {
-                Position = new Vector3(((CommanderScene) Scene).CameraView.Left, ((CommanderScene) Scene).CameraView.Bottom - 50, 0);
+                Position = new Vector3(
+                    ((CommanderScene) Scene).CameraView.Left,
+                    ((CommanderScene) Scene).CameraView.Bottom - (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 20 : 50), 0);
             }
 
             base.Draw();

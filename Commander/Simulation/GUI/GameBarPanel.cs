@@ -27,36 +27,38 @@
         private StringBuilder TimeNextWaveBuilder;
 
 
-        public GameBarPanel(Simulator simulator, double visualPriority)
-            : base(simulator.Scene, Vector3.Zero, new Vector2(simulator.Scene.CameraView.Width, 45), visualPriority, Color.White)
+        public GameBarPanel(Simulator simulator, float height, double visualPriority)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(simulator.Scene.CameraView.Width, height), visualPriority, Color.White)
         {
             Simulator = simulator;
 
             ShowCloseButton = false;
             ShowFrame = false;
             BackgroundAlpha = 100;
+            
+            float widgetSize = Preferences.Target == Setting.ArcadeRoyale ? 2 : 4;
 
-            CashWidget = new ImageLabel(new Image("ScoreMoney") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
+            CashWidget = new ImageLabel(new Image("ScoreMoney") { SizeX = widgetSize }, new Text(@"Pixelite") { SizeX = widgetSize - 1 })
             {
                 CanHover = true
             };
 
-            LivesWidget = new ImageLabel(new Image("ScoreLives") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
+            LivesWidget = new ImageLabel(new Image("ScoreLives") { SizeX = widgetSize }, new Text(@"Pixelite") { SizeX = widgetSize - 1 })
             {
                 CanHover = true
             };
 
-            TimeNextWaveText = new ImageLabel(new Image("ScoreTime") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
+            TimeNextWaveText = new ImageLabel(new Image("ScoreTime") { SizeX = widgetSize }, new Text(@"Pixelite") { SizeX = widgetSize - 1 })
             {
                 CanHover = true
             };
 
-            RemainingWavesWidget = new ImageLabel(new Image("ScoreWaves") { SizeX = 4 }, new Text(@"Pixelite") { SizeX = 3 })
+            RemainingWavesWidget = new ImageLabel(new Image("ScoreWaves") { SizeX = widgetSize }, new Text(@"Pixelite") { SizeX = widgetSize - 1 })
             {
                 CanHover = true
             };
 
-            NextWaveWidget = new NextWaveWidget();
+            NextWaveWidget = new NextWaveWidget(widgetSize);
 
             HBMessages = new Dictionary<string, List<KeyValuePair<string, PanelWidget>>>()
             {
@@ -174,18 +176,18 @@
             if (Preferences.Target == Setting.ArcadeRoyale)
             {
                 CashWidget.Position = Position + new Vector3(50, 0, 0);
-                LivesWidget.Position = Position + new Vector3(200, 0, 0);
-                TimeNextWaveText.Position = Position + new Vector3(350, 0, 0);
-                RemainingWavesWidget.Position = Position + new Vector3(500, 0, 0);
-                NextWaveWidget.Position = Position + new Vector3(10000, 0, 0);
+                LivesWidget.Position = Position + new Vector3(150, 0, 0);
+                RemainingWavesWidget.Position = Position + new Vector3(300, 0, 0);
+                TimeNextWaveText.Position = Position + new Vector3(375, 0, 0);
+                NextWaveWidget.Position = Position + new Vector3(450, 0, 0);
             }
 
             else
             {
                 CashWidget.Position = Position + new Vector3(50, 0, 0);
                 LivesWidget.Position = Position + new Vector3(250, 0, 0);
-                TimeNextWaveText.Position = Position + new Vector3(850, 0, 0);
                 RemainingWavesWidget.Position = Position + new Vector3(700, 0, 0);
+                TimeNextWaveText.Position = Position + new Vector3(850, 0, 0);
                 NextWaveWidget.Position = Position + new Vector3(1050, 0, 0);
             }
 

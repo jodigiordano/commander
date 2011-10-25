@@ -20,7 +20,7 @@
         private PhysicalRectangle Rectangle;
 
 
-        public NextWaveWidget()
+        public NextWaveWidget(float size)
         {
             EnemiesImages = new Dictionary<EnemyType, Image>();
 
@@ -29,14 +29,14 @@
                 Image im = new Image(kvp.Value)
                 {
                     Origin = Vector2.Zero,
-                    SizeX = 4
+                    SizeX = size
                 };
 
                 EnemiesImages.Add(kvp.Key, im);
             }
 
             Enemies = new List<Image>();
-            Quantity = new Text(@"Pixelite") { SizeX = 3 };
+            Quantity = new Text(@"Pixelite") { SizeX = size - 1 };
 
             DistanceEnemiesX = 10;
             DistanceQuantityX = 10;
@@ -76,6 +76,9 @@
             {
                 position = value;
 
+                if (Enemies.Count <= 0)
+                    return;
+
                 for (int i = 0; i < Enemies.Count; i++)
                 {
                     var e = Enemies[i];
@@ -83,7 +86,10 @@
                     e.Position = position + new Vector3((i * e.AbsoluteSize.X) + (i * DistanceEnemiesX), 5, 0);
                 }
 
-                Quantity.Position = Enemies.Count <= 0 ? value : Enemies[Enemies.Count - 1].Position + new Vector3(Enemies[Enemies.Count - 1].AbsoluteSize.X, -5, 0);
+                var last = Enemies[Enemies.Count - 1];
+
+                // Position after the last enemy and center text verticaly
+                Quantity.Position = last.Position + new Vector3(last.AbsoluteSize.X + DistanceQuantityX, last.AbsoluteSize.Y / 2 - Quantity.AbsoluteSize.Y / 2, 0);
             }
         }
 
