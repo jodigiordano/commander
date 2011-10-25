@@ -10,8 +10,8 @@
         private string Message;
 
 
-        public HelpAnimation(string message)
-            : base(5000, VisualPriorities.Default.HelpMessage)
+        public HelpAnimation(string message, double visualPriority)
+            : base(5000, visualPriority)
         {
             Message = message;
         }

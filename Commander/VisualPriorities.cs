@@ -6,7 +6,10 @@
 
     class Foreground
     {
-        public const double Transition = 0.5;
+        public const double Transition = 0;
+        public const double HelpBar = 0.5;
+        public const double GameBar = 0.5;
+        public const double HelpMessage = 0.5;
     }
 
     class Cutscenes

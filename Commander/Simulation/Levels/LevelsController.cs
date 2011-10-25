@@ -40,7 +40,7 @@
 
             if (!Simulator.DemoMode && !Simulator.WorldMode && !Simulator.EditorMode && Level.HelpText != "")
             {
-                Simulator.Scene.Add(new HelpAnimation(Level.HelpText));
+                Simulator.Scene.Add(new HelpAnimation(Level.HelpText, VisualPriorities.Foreground.HelpMessage));
             }
         }
 

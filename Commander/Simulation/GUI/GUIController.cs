@@ -68,7 +68,7 @@
             HelpBar = new HelpBarPanel(
                 simulator.Scene,
                 Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 25 : 35,
-                VisualPriorities.Default.HelpBar)
+                VisualPriorities.Foreground.HelpBar)
             {
                 Alpha = 0,
                 ShowOnForegroundLayer = true
@@ -77,7 +77,7 @@
             GameBarPanel = new Simulation.GameBarPanel(
                 Simulator,
                 Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? 25 : 45,
-                VisualPriorities.Default.GameBar)
+                VisualPriorities.Foreground.GameBar)
             {
                 ShowOnForegroundLayer = true
             };
