@@ -240,7 +240,7 @@
                         Simulator,
                         descriptor.Name,
                         new Vector3(Simulator.Battlefield.Width / 2, Simulator.Battlefield.Height / 2, 0),
-                        new Vector3(Simulator.Battlefield.X + Simulator.Battlefield.Width / 2, Simulator.Battlefield.Y + Simulator.Battlefield.Height / 2, 0),
+                        new Vector3(Simulator.Battlefield.Center.X, Simulator.Battlefield.Center.Y, 0),
                         descriptor.Size,
                         descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                         descriptor.Images,
