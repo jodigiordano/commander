@@ -25,6 +25,7 @@
         public Buttons Cheat1;
         public Buttons ZoomIn;
         public Buttons ZoomOut;
+        public Buttons QuickToggle;
 
         public Dictionary<Buttons, string> ToImage;
 
@@ -50,6 +51,7 @@
             Cheat1 = Buttons.BigButton;
             ZoomIn = Buttons.BigButton;
             ZoomOut = Buttons.BigButton;
+            QuickToggle = Buttons.BigButton;
         }
 
 
@@ -75,7 +77,8 @@
                     AlternateSelectionPrevious,
                     Cheat1,
                     ZoomIn,
-                    ZoomOut
+                    ZoomOut,
+                    QuickToggle
                 };
             }
         }

@@ -43,14 +43,19 @@
             for (int i = 0; i < subMessages.Count; i++)
             {
                 var msg = subMessages[i];
+                var type = 
+                    Preferences.Target == Core.Utilities.Setting.ArcadeRoyale &&
+                    msg.Key == HelpBarMessageType.Toggle &&
+                    inputType == InputType.KeyboardOnly ? HelpBarMessageType.QuickToggle : msg.Key;
 
-                switch (msg.Key)
+                switch (type)
                 {
                     case HelpBarMessageType.Cancel: result.Add(GenerateCancelMessage(inputType, config, msg.Value)); break;
                     case HelpBarMessageType.Move: result.Add(GenerateMoveMessage(inputType, config, msg.Value)); break;
                     case HelpBarMessageType.Select: result.Add(GenerateSelectMessage(inputType, config, msg.Value)); break;
                     case HelpBarMessageType.Toggle: result.Add(GenerateToggleMessage(inputType, config, msg.Value)); break;
                     case HelpBarMessageType.Retry: result.Add(GenerateRetryMessage(inputType, config, msg.Value)); break;
+                    case HelpBarMessageType.QuickToggle: result.Add(GenerateAltSelectMessage(inputType, config, msg.Value)); break;
                 }
 
                 if (subMessages.Count > 1 && i != subMessages.Count - 1)
@@ -91,6 +96,14 @@
         }
 
 
+        private KeyValuePair<string, PanelWidget> GenerateAltSelectMessage(InputType inputType, InputConfiguration config, string message)
+        {
+            return (inputType == InputType.MouseAndKeyboard || inputType == InputType.KeyboardOnly) ?
+                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize }, GenerateLabel(message))) :
+                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.QuickToggle]) { SizeX = ImageSize }, GenerateLabel(message)));
+        }
+
+
         private KeyValuePair<string, PanelWidget> GenerateToggleMessage(InputType inputType, InputConfiguration config, string message)
         {
             return inputType == InputType.MouseAndKeyboard ?
@@ -99,8 +112,8 @@
                         new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionNext]) { SizeX = ImageSize } }, GenerateLabel(message))) :
                     inputType == InputType.KeyboardOnly ?
                 new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionPrevious]) { SizeX = ImageSize },
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionNext]) { SizeX = ImageSize } }, GenerateLabel(message))) :
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize },
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize } }, GenerateLabel(message))) :
                 new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
                     new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionPrevious]) { SizeX = ImageSize },
                     new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionNext]) { SizeX = ImageSize } }, GenerateLabel(message)));
@@ -136,7 +149,7 @@
             return inputType == InputType.MouseAndKeyboard ?
                 new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.AlternateSelect]) { SizeX = ImageSize }, GenerateLabel(message))) :
                    inputType == InputType.KeyboardOnly ?
-                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.AlternateSelect]) { SizeX = ImageSize }, GenerateLabel(message))) :
+                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.RetryLevel]) { SizeX = ImageSize }, GenerateLabel(message))) :
                 new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.RetryLevel]) { SizeX = ImageSize }, GenerateLabel(message)));
         }
 

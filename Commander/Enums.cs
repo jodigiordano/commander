@@ -65,8 +65,9 @@
         Select = 1,
         Cancel = 2,
         Toggle = 3,
-        Move = 4,
-        Retry = 5
+        QuickToggle = 4,
+        Move = 5,
+        Retry = 6
     };
 }
 
@@ -253,7 +254,8 @@ namespace EphemereGames.Commander.Simulation
         ToggleChoicesSelect = 16,
         StartNewCampaign = 17,
         GameBar = 18,
-        WorldWarp = 19
+        WorldWarp = 19,
+        QuickToggle = 20
     };
 }
 
