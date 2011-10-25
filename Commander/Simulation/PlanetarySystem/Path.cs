@@ -10,8 +10,8 @@
 
     class Path : IVisual
     {
-        private const int MaxVisibleLines = 300;
-        private const int MaxCurvePoints = 300;
+        private const int MaxVisibleLines = 400;
+        private const int MaxCurvePoints = 400;
         private const int CelestialBodyDistance = 70;
 
         public List<CelestialBody> CelestialBodies;
