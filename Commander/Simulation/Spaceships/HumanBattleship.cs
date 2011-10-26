@@ -63,6 +63,7 @@
             t.VisualPriority = VisualPriority - 0.01;
             t.Position = Position;
             t.EnemyWatched = Target;
+            t.Owner = this.Id;
 
             Turrets.Add(t);
         }

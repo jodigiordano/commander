@@ -10,6 +10,7 @@
 
     abstract class Turret : ICollidable
     {
+        public int Owner;
         public Vector3 RelativePosition;
         public Vector3 Position                     { get; set; }
         public Image CanonImage;
@@ -149,6 +150,8 @@
             DisabledAnnounciationCounter = float.NaN;
             NewWanderThisTick = false;
             alpha = 255;
+
+            Owner = -1;
         }
 
 
@@ -297,8 +300,8 @@
                             p.VisualPriority = CanonImage.VisualPriority;
                             p.ShowMovingEffect = true;
                             p.Image.SizeX = 1f;
-                            p.FiredBy = -1;
                             p.Color = Color.White;
+                            p.Owner = Owner;
                             
                             Bullets.Add(p);
                         }
@@ -317,7 +320,7 @@
                         pm.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         pm.Big = BulletType == BulletType.Missile2;
                         pm.SfxExplosion = ActualLevel.Value.BulletExplosionSfx;
-                        pm.FiredBy = -1;
+                        pm.Owner = Owner;
 
                         Bullets.Add(pm);
                         
@@ -400,7 +403,7 @@
                         rgb.Speed = ActualLevel.Value.BulletSpeed * boostLevel.BulletSpeedMultiplier;
                         rgb.ExplosionRange = ActualLevel.Value.BulletExplosionRange * boostLevel.BulletExplosionRangeMultiplier;
                         rgb.VisualPriority = CanonImage.VisualPriority;
-                        rgb.FiredBy = -1;
+                        rgb.Owner = Owner;
                         
                         Bullets.Add(rgb);
                         break;

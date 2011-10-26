@@ -7,7 +7,7 @@ namespace EphemereGames.Commander.Simulation
 
     class Bullet : ICollidable, ILivingObject
     {
-        public int FiredBy                                          { get; set; }
+        public int Owner                                          { get; set; }
         protected Vector3 position;
         public Vector3 Position                                     { get { return position; } set { position = value; } }
         public float Speed                                          { get; set; }
@@ -54,7 +54,7 @@ namespace EphemereGames.Commander.Simulation
             SfxExplosion = "";
             Deflectable = false;
             Deflected = false;
-            FiredBy = -1;
+            Owner = -1;
         }
 
 

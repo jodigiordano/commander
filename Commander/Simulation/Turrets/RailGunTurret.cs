@@ -30,7 +30,7 @@ namespace EphemereGames.Commander.Simulation
             var result = base.BulletsThisTick();
 
             foreach (var bullet in result)
-                ((RailGunBullet) bullet).Owner = Owner;
+                ((RailGunBullet) bullet).OwnerPlayer = Owner;
 
             return result;
         }

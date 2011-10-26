@@ -30,7 +30,7 @@
                     if (!(b is BasicBullet || b is MissileBullet || b is RailGunBullet))
                         continue;
 
-                    if (b.FiredBy == o.Id)
+                    if (b.Owner == o.Id)
                         continue;
 
                     if (Physics.CircleRectangleCollision(o.ShieldCircle, b.Rectangle))

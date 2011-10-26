@@ -7,7 +7,7 @@
 
     class RailGunBullet : Bullet
     {
-        public SimPlayer Owner;
+        public SimPlayer OwnerPlayer;
 
 
         public RailGunBullet()

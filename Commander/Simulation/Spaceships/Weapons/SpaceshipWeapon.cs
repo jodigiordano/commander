@@ -46,7 +46,7 @@
             DoFire();
 
             foreach (var b in Bullets)
-                b.FiredBy = Spaceship.Id;
+                b.Owner = Spaceship.Id;
 
             return Bullets;
         }
