@@ -111,6 +111,7 @@
             Descriptor.Player.Money = CommonStash.Cash;
             Descriptor.Minerals.Cash = Minerals;
             Descriptor.Minerals.LifePacks = LifePacks;
+            Descriptor.Player.StartingPosition = CommonStash.StartingPosition;
 
             // Sync planet to protect
             if (CelestialBodyToProtect != null)
