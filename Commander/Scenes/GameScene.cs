@@ -96,6 +96,7 @@
             EnableUpdate = true;
 
             Main.MusicController.PlayOrResume(MusicName);
+            XACTAudio.ChangeCategoryVolume("Turrets", 10);
 
             Simulator.OnFocus();
             Simulator.TeleportPlayers(false);

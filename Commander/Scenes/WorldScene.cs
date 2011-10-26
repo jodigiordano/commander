@@ -29,8 +29,6 @@
 
         private State SceneState;
         private CommanderTitle Title;
-        //private Dictionary<string, string> Warps;
-        //private Dictionary<string, int> LevelsDescriptors;
         private Dictionary<CelestialBody, int> CBtoWarp;
         private Dictionary<int, CelestialBody> LeveltoCB;
         private Dictionary<CelestialBody, int> CBtoLevel;
@@ -42,8 +40,6 @@
             base(Main.LevelsFactory.GetWorldStringId(descriptor.Id))
         {
             Descriptor = descriptor;
-            //Warps = new Dictionary<string, string>();
-            //LevelsDescriptors = new Dictionary<string, int>();
             CBtoWarp = new Dictionary<CelestialBody, int>();
             LeveltoCB = new Dictionary<int, CelestialBody>();
             CBtoLevel = new Dictionary<CelestialBody, int>();
@@ -79,20 +75,6 @@
             Simulator.EnableInputs = false;
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
 
-            // Initialize the descriptions of each level (name, difficulty, highscore, etc.)
-            //foreach (var level in Descriptor.Levels)
-            //{
-            //    LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
-            //    LevelsDescriptors.Add(d.Infos.Mission, level.Key);
-            //}
-
-            //foreach (var level in Descriptor.Warps)
-            //{
-            //    LevelDescriptor d = Main.LevelsFactory.GetLevelDescriptor(level.Key);
-            //    LevelsDescriptors.Add(d.Infos.Mission, level.Key);
-            //    Warps.Add(d.Infos.Mission, level.Value);
-            //}
-
             // Keep track of celestial bodies and pink holes
             InitializeCelestialBodies();
 
@@ -101,7 +83,6 @@
 
             LevelStates.CelestialBodies = LeveltoCB;
             LevelStates.Descriptor = Descriptor;
-            //LevelStates.LevelsDescriptors = LevelsDescriptors;
             LevelStates.Initialize();
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
@@ -251,7 +232,10 @@
             if (!Simulator.EditorWorldMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
             else
+            {
                 Main.MusicController.PlayOrResume(Descriptor.Music);
+                XACTAudio.ChangeCategoryVolume("Turrets", 0);
+            }
 
             if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
                 InitConnectFirstPlayer();
