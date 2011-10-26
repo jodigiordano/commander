@@ -197,7 +197,7 @@
             else
                 SkipCounter = Math.Max(SkipCounter - Preferences.TargetElapsedTimeMs, 0);
 
-            if (SkipCounter >= SkippingTime)
+            if (!TransitionOutInProgress && SkipCounter >= SkippingTime)
             {
                 Cutscene.Stop();
                 TransiteToWorld();
