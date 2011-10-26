@@ -228,7 +228,7 @@ namespace EphemereGames.Commander
             if (!Persistence.IsPackageLoaded(@"principal"))
                 return;
 
-            MusicController.PauseCurrentMusic();
+            MusicController.PauseCurrentMusicNow();
         }
 
 

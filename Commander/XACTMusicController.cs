@@ -143,6 +143,15 @@
         }
 
 
+        public void PauseCurrentMusicNow()
+        {
+            if (CurrentMusic == null)
+                return;
+
+            Musics[CurrentMusic].Pause();
+        }
+
+
         public void PauseCurrentMusic()
         {
             if (CurrentMusic == null)
