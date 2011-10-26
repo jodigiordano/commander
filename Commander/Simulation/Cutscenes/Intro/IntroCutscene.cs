@@ -82,7 +82,7 @@
 
         public override void Stop()
         {
-
+            Main.MusicController.Stop("CinematicIntro");
         }
 
 
