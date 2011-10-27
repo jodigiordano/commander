@@ -73,7 +73,6 @@
 
         public void Draw()
         {
-            return;
             if (celestialBody == null || !celestialBody.Alive)
                 return;
 
