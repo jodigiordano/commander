@@ -25,6 +25,8 @@
         private float MaxCameraZoomSpeed;
         private List<SimPlayer> Players;
 
+        private bool UsePausePlayer;
+
 
         public CameraController(Simulator simulator)
         {
@@ -48,6 +50,7 @@
                 Simulator.Scene.CameraView.Height / (float) Simulator.Battlefield.Height);
 
             Players.Clear();
+            UsePausePlayer = false;
         }
 
 
@@ -60,6 +63,18 @@
         public void DoPlayerDisconnected(SimPlayer p)
         {
             Players.Remove(p);
+        }
+
+
+        public void DoPanelOpened()
+        {
+            UsePausePlayer = true;
+        }
+
+
+        public void DoPanelClosed()
+        {
+            UsePausePlayer = false;
         }
 
 
@@ -124,7 +139,7 @@
             Vector3 newPosition = new Vector3();
 
             foreach (var p in Players)
-                newPosition += p.Position;
+                newPosition += UsePausePlayer ? p.PausePlayer.Position : p.Position;
 
             Vector3.Divide(ref newPosition, Players.Count, out newPosition);
 
@@ -139,28 +154,10 @@
 
         private void ComputeNewCameraZoom()
         {
-            float minX = Players[0].Position.X;
-            float maxX = Players[0].Position.X;
-            float minY = Players[0].Position.Y;
-            float maxY = Players[0].Position.Y;
+            var boundaries = UsePausePlayer ? GetPausePlayersBoundaries() : GetPlayersBoundaries();
 
-            foreach (var p in Players)
-            {
-                if (p.Position.X < minX)
-                    minX = p.Position.X;
-
-                if (p.Position.X > maxX)
-                    maxX = p.Position.X;
-
-                if (p.Position.Y < minY)
-                    minY = p.Position.Y;
-
-                if (p.Position.Y > maxY)
-                    maxY = p.Position.Y;
-            }
-
-            float width = Math.Abs(maxX - minX) + 100; //padding
-            float height = Math.Abs(maxY - minY) + 100; //padding
+            float width = Math.Abs(boundaries.Y - boundaries.X) + 100; //padding
+            float height = Math.Abs(boundaries.W - boundaries.Z) + 100; //padding
             float maxZoomWidth = Preferences.BattlefieldBoundaries.X * Preferences.BackBufferZoom;
             float maxZoomHeight = Preferences.BattlefieldBoundaries.Y * Preferences.BackBufferZoom;
 
@@ -180,6 +177,60 @@
             delta = MathHelper.Clamp(delta, -MaxCameraZoomSpeed, MaxCameraZoomSpeed);
 
             Simulator.Scene.Camera.Zoom += delta;
+        }
+
+
+        private Vector4 GetPlayersBoundaries()
+        {
+            var result = new Vector4(
+                Players[0].Position.X,
+                Players[0].Position.X,
+                Players[0].Position.Y,
+                Players[0].Position.Y);
+
+            foreach (var p in Players)
+            {
+                if (p.Position.X < result.X)
+                    result.X = p.Position.X;
+
+                if (p.Position.X > result.Y)
+                    result.Y = p.Position.X;
+
+                if (p.Position.Y < result.Z)
+                    result.Z = p.Position.Y;
+
+                if (p.Position.Y > result.W)
+                    result.W = p.Position.Y;
+            }
+
+            return result;
+        }
+
+
+        private Vector4 GetPausePlayersBoundaries()
+        {
+            var result = new Vector4(
+                Players[0].PausePlayer.Position.X,
+                Players[0].PausePlayer.Position.X,
+                Players[0].PausePlayer.Position.Y,
+                Players[0].PausePlayer.Position.Y);
+
+            foreach (var p in Players)
+            {
+                if (p.PausePlayer.Position.X < result.X)
+                    result.X = p.PausePlayer.Position.X;
+
+                if (p.PausePlayer.Position.X > result.Y)
+                    result.Y = p.PausePlayer.Position.X;
+
+                if (p.PausePlayer.Position.Y < result.Z)
+                    result.Z = p.PausePlayer.Position.Y;
+
+                if (p.PausePlayer.Position.Y > result.W)
+                    result.W = p.PausePlayer.Position.Y;
+            }
+
+            return result;
         }
     }
 }
