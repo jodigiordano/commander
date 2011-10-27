@@ -52,7 +52,8 @@
                 if (celestialBody == null)
                     return;
 
-                if (celestialBody.PartialImageName == null || celestialBody.PartialImageName == "")
+                if (celestialBody.PartialImageName == null || celestialBody.PartialImageName == "" ||
+                    !NearHitMasks.ContainsKey(celestialBody.PartialImageName))
                 {
                     celestialBody = null;
                     return;
