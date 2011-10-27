@@ -200,7 +200,12 @@
             if (!ShowShield)
                 return;
 
-            Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, this, hitPosition, ShieldColor, ShieldSize, VisualPriority, ShieldDistance, ShieldAlpha));
+            Vector3 direction = hitPosition - Position;
+            float lengthSquared = direction.LengthSquared();
+            float cbLengthSquared = (Image.AbsoluteSize.X + ShieldDistance) * (Image.AbsoluteSize.X + ShieldDistance);
+
+            if (lengthSquared >= cbLengthSquared)
+                Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, this, hitPosition, ShieldColor, ShieldSize, VisualPriority, ShieldDistance, ShieldAlpha));
         }
 
 
