@@ -277,7 +277,8 @@ namespace EphemereGames.Commander.Simulation
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
             PlanetarySystemController.ObjectHit += new PhysicalObjectHandler(AudioController.DoObjectHit);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(AudioController.DoObjectDestroyed);
-            SimPlayersController.PlayerBounced += new SimPlayerHandler(AudioController.DoPlayerBounced);
+            SimPlayersController.PlayerBounced += new SimPlayerDirectionHandler(AudioController.DoPlayerBounced);
+            SimPlayersController.PlayerBounced += new SimPlayerDirectionHandler(GUIController.DoPlayerBounced);
             SimPlayersController.PlayerRotated += new SimPlayerHandler(AudioController.DoPlayerRotated);
             TurretsController.TurretWandered += new TurretHandler(AudioController.DoTurretWandered);
             TurretsController.TurretUpgraded += new TurretSimPlayerHandler(AudioController.DoTurretUpgradingStarted);

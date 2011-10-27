@@ -11,6 +11,7 @@
     delegate void NewsTypeHandler(NewsType t);
     delegate void NewsTypeNewsHandler(NewsType t, List<News> n);
     delegate void StringHandler(string s);
+    delegate void DirectionHandler(Direction d);
 }
 
 
@@ -22,6 +23,7 @@ namespace EphemereGames.Commander.Simulation
     delegate void PhysicalObjectHandler(ICollidable o);
     delegate void PhysicalObjectPhysicalObjectHandler(ICollidable o1, ICollidable o2);
     delegate void SimPlayerHandler(SimPlayer p);
+    delegate void SimPlayerDirectionHandler(SimPlayer p, Direction d);
     delegate void PausePlayerHandler(PausePlayer p);
     delegate void CommonStashHandler(CommonStash s);
     delegate void CelestialBodyHandler(CelestialBody c);

@@ -177,6 +177,34 @@
         }
 
 
+        public void DoPlayerBounced(SimPlayer p, Direction d)
+        {
+            float rotation = 0;
+            Vector3 position = p.Position;
+
+            switch (d)
+            {
+                case Direction.Left:
+                    position -= new Vector3(25, 0, 0);
+                    rotation = MathHelper.ToRadians(180);
+                    break;
+                case Direction.Right:
+                    position += new Vector3(25, 0, 0);
+                    break;
+                case Direction.Up:
+                    position -= new Vector3(0, 25, 0);
+                    rotation = MathHelper.ToRadians(-90);
+                    break;
+                case Direction.Down:
+                    position += new Vector3(0, 25, 0);
+                    rotation = MathHelper.ToRadians(90);
+                    break;
+            }
+
+            Simulator.Scene.Add(new CelestialBodyShieldHitAnimation("BorderField", position, rotation, p.Color, VisualPriorities.Default.BattlefieldBorder, 255));
+        }
+
+
         public void SyncPlayer(SimPlayer p)
         {
             GUIPlayer current;
@@ -227,7 +255,9 @@
             Vector3 position = b.Position - direction * 30;
 
             if (lengthSquared >= cbLengthSquared)
-                Simulator.Scene.Add(new CelestialBodyShieldHitAnimation(cb.Size, position, rotation, Colors.Default.AlienBright, VisualPriorities.Default.CelestialBodyShield));
+                Simulator.Scene.Add(new CelestialBodyShieldHitAnimation(
+                    cb.Size == Size.Small ? "CBMask31" : cb.Size == Size.Normal ? "CBMask32" : "CBMask33",
+                    position, rotation, Colors.Default.AlienBright, VisualPriorities.Default.CelestialBodyShield, 200));
         }
 
 

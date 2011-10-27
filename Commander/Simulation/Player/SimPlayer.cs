@@ -20,7 +20,7 @@
         public PausePlayer PausePlayer;
         public SpaceshipSpaceship SpaceshipMove;
         public bool GameOver;
-        public SimPlayerHandler BouncedHandler;
+        public SimPlayerDirectionHandler BouncedHandler;
         public SimPlayerHandler RotatedHandler;
 
         // for keyboard/mouse
@@ -59,7 +59,7 @@
                 ShieldSize = 4
             };
 
-            SpaceshipMove.Bounced += new NoneHandler(DoBounced);
+            SpaceshipMove.Bounced += new DirectionHandler(DoBounced);
             SpaceshipMove.Rotated += new NoneHandler(DoRotated);
 
             GameOver = false;
@@ -634,10 +634,10 @@
         }
 
 
-        private void DoBounced()
+        private void DoBounced(Direction d)
         {
             if (BouncedHandler != null)
-                BouncedHandler(this);
+                BouncedHandler(this, d);
         }
 
 

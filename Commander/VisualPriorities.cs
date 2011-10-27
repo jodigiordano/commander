@@ -87,6 +87,7 @@
 
         public const double PowerUpShield = 0.69;
         public const double CelestialBodyShield = 0.69;
+        public const double BattlefieldBorder = 0.69;
 
         public const double CelestialBody = 0.7;
         public const double CelestialBodySelection = 0.71;

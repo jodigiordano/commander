@@ -301,6 +301,7 @@
     <Item><Key>sablier</Key><Value>GUI/sablier.png</Value></Item>
     <Item><Key>Curseur</Key><Value>GUI/Curseur.png</Value></Item>
     <Item><Key>checkbox</Key><Value>GUI/checkbox.png</Value></Item>
+    <Item><Key>BorderField</Key><Value>GUI/borderfield.png</Value></Item>
     
     <!-- Editor -->
     <Item><Key>EditorFile</Key><Value>Editor/disk.png</Value></Item>

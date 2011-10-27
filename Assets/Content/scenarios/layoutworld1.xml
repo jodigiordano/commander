@@ -707,27 +707,6 @@
     <Upfront>true</Upfront>
     <NbWaves>10</NbWaves>
   </InfiniteWaves>
-  <Waves>
-    <Wave>
-      <StartingTime>40479</StartingTime>
-      <Enemies>
-        <EnemyType>Asteroid</EnemyType>
-        <EnemyType>Plutoid</EnemyType>
-        <EnemyType>Comet</EnemyType>
-        <EnemyType>Centaur</EnemyType>
-        <EnemyType>Trojan</EnemyType>
-        <EnemyType>Meteoroid</EnemyType>
-      </Enemies>
-      <SpeedLevel>10</SpeedLevel>
-      <LivesLevel>10</LivesLevel>
-      <CashValue>1</CashValue>
-      <Quantity>11</Quantity>
-      <Distance>Normal</Distance>
-      <Delay>2620</Delay>
-      <ApplyDelayEvery>1</ApplyDelayEvery>
-      <SwitchEvery>1</SwitchEvery>
-    </Wave>
-  </Waves>
   <Player>
     <Money>100</Money>
     <Lives>1</Lives>

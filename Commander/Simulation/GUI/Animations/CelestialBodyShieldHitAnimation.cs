@@ -9,16 +9,16 @@
         private Image Shield;
 
 
-        public CelestialBodyShieldHitAnimation(Size size, Vector3 position, float rotation, Color color, double visualPriority)
+        public CelestialBodyShieldHitAnimation(string maskName, Vector3 position, float rotation, Color color, double visualPriority, byte alpha)
             : base(300, visualPriority)
         {
-            Shield = new Image(size == Size.Small ? "CBMask31" : size == Size.Normal ? "CBMask32" : "CBMask33", position)
+            Shield = new Image(maskName, position)
             {
                 SizeX = 6,
                 Rotation = rotation,
                 VisualPriority = visualPriority,
                 Color = color,
-                Alpha = 200,
+                Alpha = alpha,
                 Blend = BlendType.Add
             };
         }

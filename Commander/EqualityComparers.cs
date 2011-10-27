@@ -326,4 +326,31 @@
             return (int) obj;
         }
     }
+
+
+    class DirectionComparer : IEqualityComparer<Direction>
+    {
+        private static DirectionComparer instance;
+        public static DirectionComparer Default
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new DirectionComparer();
+                return instance;
+            }
+        }
+
+
+        public bool Equals(Direction x, Direction y)
+        {
+            return x == y;
+        }
+
+
+        public int GetHashCode(Direction obj)
+        {
+            return (int) obj;
+        }
+    }
 }

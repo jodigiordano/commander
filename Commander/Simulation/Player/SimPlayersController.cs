@@ -37,7 +37,7 @@
         public event SimPlayerHandler ShowAdvancedViewAsked;
         public event SimPlayerHandler HideAdvancedViewAsked;
         public event PhysicalObjectHandler ObjectCreated;
-        public event SimPlayerHandler PlayerBounced;
+        public event SimPlayerDirectionHandler PlayerBounced;
         public event SimPlayerHandler PlayerRotated;
 
         private Simulator Simulator;
@@ -679,11 +679,11 @@
         }
 
 
-        public void DoPlayerBounced(SimPlayer player)
+        public void DoPlayerBounced(SimPlayer player, Direction d)
         {
             Core.Input.Inputs.VibrateControllerLowFrequency(player.InnerPlayer, 150, 0.7f);
 
-            NotifyPlayerBounced(player);
+            NotifyPlayerBounced(player, d);
         }
 
 
@@ -855,10 +855,10 @@
         }
 
 
-        private void NotifyPlayerBounced(SimPlayer player)
+        private void NotifyPlayerBounced(SimPlayer player, Direction d)
         {
             if (PlayerBounced != null)
-                PlayerBounced(player);
+                PlayerBounced(player, d);
         }
 
 

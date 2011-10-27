@@ -128,7 +128,7 @@
 
         protected virtual void ApplyBouncing()
         {
-            bool bouncing = false;
+            Direction d = Direction.None;
 
             if (Spaceship.Position.X > Spaceship.Simulator.Battlefield.Right - Spaceship.Circle.Radius)
             {
@@ -138,7 +138,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                bouncing = true;
+                d = Direction.Right;
             }
 
             if (Spaceship.Position.X < Spaceship.Simulator.Battlefield.Left + Spaceship.Circle.Radius)
@@ -149,7 +149,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                bouncing = true;
+                d = Direction.Left;
             }
 
             if (Spaceship.Position.Y > Spaceship.Simulator.Battlefield.Bottom - Spaceship.Circle.Radius)
@@ -160,7 +160,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                bouncing = true;
+                d = Direction.Down;
             }
 
             if (Spaceship.Position.Y < Spaceship.Simulator.Battlefield.Top + Spaceship.Circle.Radius)
@@ -171,7 +171,7 @@
                 Acceleration.X = 0;
                 Acceleration.Y = 0;
 
-                bouncing = true;
+                d = Direction.Up;
             }
 
             Spaceship.Position += Bouncing;
@@ -186,8 +186,8 @@
             else if (Bouncing.Y < 0)
                 Bouncing.Y = Math.Min(0, Bouncing.Y + 0.6f);
 
-            if (bouncing)
-                Spaceship.NotifyBounced();
+            if (d != Direction.None)
+                Spaceship.NotifyBounced(d);
         }
 
 

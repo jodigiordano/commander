@@ -275,7 +275,7 @@
         }
 
 
-        public void DoPlayerBounced(SimPlayer player)
+        public void DoPlayerBounced(SimPlayer player, Direction d)
         {
             XACTAudio.PlayCue(player.InnerPlayer.ShipBouncingSound, "Sound Bank");
         }
