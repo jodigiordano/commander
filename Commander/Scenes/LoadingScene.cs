@@ -168,10 +168,8 @@
             ScenesLoaded.Add(new EndOfDemoScene());
             ScenesLoaded.Add(new MainMenuScene());
 
-            LoadWorld(1, false);
-            LoadWorld(2, false);
-            LoadWorld(3, false);
-            LoadWorld(999, true);
+            foreach (var id in Main.LevelsFactory.WorldsDescriptors.Keys)
+                LoadWorld(id, id == 999);
 
             ScenesAreLoaded = true;
         }
