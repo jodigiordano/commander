@@ -43,7 +43,7 @@
         public void Initialize()
         {
             MaxZoomIn = Preferences.BackBufferZoom;
-            MaxZoomOut = Math.Max(
+            MaxZoomOut = Math.Min(
                 Simulator.Scene.CameraView.Width / (float) Simulator.Battlefield.Width,
                 Simulator.Scene.CameraView.Height / (float) Simulator.Battlefield.Height);
 
@@ -121,17 +121,12 @@
 
         private void ComputeNewCameraPosition()
         {
-            Vector3 avgPosition = new Vector3();
+            Vector3 newPosition = new Vector3();
 
             foreach (var p in Players)
-                avgPosition += p.Position;
+                newPosition += p.Position;
 
-            Vector3.Divide(ref avgPosition, Players.Count, out avgPosition);
-
-            var newPosition = new Vector3(
-                MathHelper.Clamp(avgPosition.X, Simulator.Battlefield.Left + Simulator.Scene.CameraView.Width / 2, Simulator.Battlefield.Right - Simulator.Scene.CameraView.Width / 2),
-                MathHelper.Clamp(avgPosition.Y, Simulator.Battlefield.Top + Simulator.Scene.CameraView.Height / 2, Simulator.Battlefield.Bottom - Simulator.Scene.CameraView.Height / 2),
-                0);
+            Vector3.Divide(ref newPosition, Players.Count, out newPosition);
 
             var delta = newPosition - Simulator.Scene.Camera.Position;
 
@@ -169,7 +164,7 @@
             float maxZoomWidth = Preferences.BattlefieldBoundaries.X * Preferences.BackBufferZoom;
             float maxZoomHeight = Preferences.BattlefieldBoundaries.Y * Preferences.BackBufferZoom;
 
-            float newZoom = Math.Max(maxZoomWidth / width, maxZoomHeight / height);
+            float newZoom = Math.Min(maxZoomWidth / width, maxZoomHeight / height);
 
             // no need to zoom the camera
             if (newZoom >= Preferences.BackBufferZoom)
