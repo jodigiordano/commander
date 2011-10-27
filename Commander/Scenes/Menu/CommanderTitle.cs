@@ -13,7 +13,7 @@
         private Text Commander;
         private Image Filter;
         private Translator PressStart;
-        private Scene Scene;
+        private CommanderScene Scene;
 
         private List<int> VisualEffectsIds;
         private List<int> PhysicalEffectsIds;
@@ -21,7 +21,7 @@
         private byte alpha;
 
 
-        public CommanderTitle(Scene scene, Vector3 position, double visualPriority)
+        public CommanderTitle(CommanderScene scene, Vector3 position, double visualPriority)
         {
             Scene = scene;
 
@@ -36,7 +36,6 @@
 
             Filter = new Image("PixelBlanc")
             {
-                Size = new Vector2(1800, 200),
                 Color = Color.Transparent,
                 VisualPriority = visualPriority + 0.00001,
                 Origin = Vector2.Zero
@@ -51,7 +50,7 @@
 
         public void Initialize()
         {
-            //
+            Filter.Size = new Vector2(Scene.CameraView.Width * 1.5f, 200);
         }
 
 
@@ -103,9 +102,9 @@
                 Progress = Core.Utilities.Effect<IPhysical>.ProgressType.Linear,
                 InnerPath = new Path2D(new List<Vector2>()
                         {
-                            new Vector2(-1920, -85),
-                            new Vector2(-1000, -85),
-                            new Vector2(-740, -85)
+                            new Vector2(Scene.CameraView.Left - Filter.AbsoluteSize.X, -85),
+                            new Vector2(Scene.CameraView.Left - Filter.AbsoluteSize.X / 5, -85),
+                            new Vector2(Scene.CameraView.Left, -85)
                         }, new List<double>()
                         {
                             0,
