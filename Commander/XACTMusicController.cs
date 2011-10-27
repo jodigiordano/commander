@@ -122,6 +122,9 @@
 
         public void Stop(string musicName)
         {
+            if (!Musics.ContainsKey(musicName) || Musics[musicName] == null)
+                return;
+
             Musics[musicName].Stop();
             Musics[musicName] = null;
 
