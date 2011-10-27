@@ -248,9 +248,8 @@
                     switch (Simulator.NewGameChoice)
                     {
                         case -1:
-                        case 1:
+                        case 1: //new game
                             Main.SaveGameController.PlayerSaveGame.ClearAndSave();
-                            //TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(1));
                             TransiteTo("Cutscene1");
                             break;
                         case 0:

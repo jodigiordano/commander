@@ -55,7 +55,7 @@
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             // Initialize the simulator
             Simulator = new Simulator(this, Main.LevelsFactory.GetLevelDescriptor(Descriptor.Layout))
@@ -88,6 +88,8 @@
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.MusicController.AddMusic(Descriptor.Music);
             Main.MusicController.AddMusic(Descriptor.MusicEnd);
+
+            GameInProgress = null;
         }
 
 

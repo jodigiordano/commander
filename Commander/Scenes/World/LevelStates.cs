@@ -48,6 +48,10 @@
 
         public void Initialize()
         {
+            LevelUnlockedStates.Clear();
+            LockedTexts.Clear();
+            LevelsNumbers.Clear();
+
             // Level numbers
             foreach (var level in Descriptor.Levels)
             {

@@ -77,6 +77,9 @@
         }
 
 
+        public virtual void Initialize() { }
+
+
         public virtual void CleanUp()
         {
             Inputs.RemoveListener(this);

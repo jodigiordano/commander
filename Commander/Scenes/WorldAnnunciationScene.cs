@@ -34,7 +34,7 @@
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             Length = 2500;
             TransitionInProgress = false;

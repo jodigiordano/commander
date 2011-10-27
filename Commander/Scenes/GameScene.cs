@@ -38,7 +38,7 @@
         }
 
 
-        public void Initialize()
+        public override void Initialize()
         {
             Simulator = new Simulator(this, Level)
             {

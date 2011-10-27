@@ -44,7 +44,7 @@
         }
 
 
-        protected void Initialize()
+        public override void Initialize()
         {
             HelpBar.Alpha = 0;
             SkipCounter = 0;
