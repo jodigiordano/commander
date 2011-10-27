@@ -20,7 +20,7 @@
         private List<KeyValuePair<Vector3, float>> PathPositions;
 
         private float LineSizeX;
-        private const int MaxNormalLines = 200;
+        private const int MaxNormalLines = 600;
         private const int MaxHighlightLines = 30;
 
 
