@@ -90,7 +90,7 @@
                 AvailablePowerUps = AvailablePowerUps,
                 Color = player.Color,
                 ImageName = player.ImageName,
-                UpdateSelectionz = UpdateSelection,
+                UpdateSelectionz = true,
                 BulletAttackPoints = (float) Simulator.Level.BulletDamage,
                 PausePlayer = new PausePlayer(Simulator),
                 BouncedHandler = DoPlayerBounced,
@@ -154,8 +154,6 @@
         {
             if (powerUp.Type == PowerUpType.FinalSolution)
                 ((PowerUpLastSolution) powerUp).Selection = p.ActualSelection;
-
-            p.UpdateSelection();
         }
 
 
@@ -169,8 +167,6 @@
 
             if (powerUp.Type == PowerUpType.FinalSolution && ((PowerUpLastSolution) powerUp).GoAhead)
                 DoPowerUpUse(p);
-
-            p.UpdateSelection();
         }
 
 
@@ -222,9 +218,6 @@
                     CommonStash.Score += ennemi.PointsValue;
                     CommonStash.TotalScore += ennemi.PointsValue;
 
-                    foreach (var player in Players.Values)
-                        player.UpdateSelection();
-
                     NotifyCommonStashChanged(CommonStash);
                 }
 
@@ -237,10 +230,8 @@
             if (celestialBody != null)
             {
                 foreach (var player in Players.Values)
-                {
                     player.DoCelestialBodyDestroyed();
-                    player.UpdateSelection();
-                }
+
                 return;
             }
         }
@@ -320,15 +311,8 @@
         public void DoNewGameState(GameState state)
         {
             if (state == GameState.Won || state == GameState.Lost)
-            {
                 foreach (var p in Players.Values)
-                {
                     p.GameOver = true;
-                    p.UpdateSelection();
-
-                    NotifyPlayerChanged(p);
-                }
-            }
         }
 
 
@@ -336,9 +320,6 @@
         {
             CommonStash.Cash -= turret.BuyPrice;
             NotifyCommonStashChanged(CommonStash);
-
-            foreach (var p in Players.Values)
-                p.UpdateSelection();
         }
 
 
@@ -346,9 +327,6 @@
         {
             CommonStash.Cash += turret.SellPrice;
             NotifyCommonStashChanged(CommonStash);
-
-            foreach (var p in Players.Values)
-                p.UpdateSelection();
         }
 
 
@@ -356,16 +334,12 @@
         {
             CommonStash.Cash -= turret.BuyPrice; //parce qu'effectue une fois la tourelle mise a jour
             NotifyCommonStashChanged(CommonStash);
-
-            foreach (var p in Players.Values)
-                p.UpdateSelection();
         }
 
 
         public void DoTurretReactivated(Turret turret)
         {
-            foreach (var player in Players.Values)
-                player.UpdateSelection();
+
         }
 
 
@@ -490,8 +464,6 @@
                         CommonStash.Cash -= p.BuyPrice;
                         NotifyCommonStashChanged(CommonStash);
                     }
-
-                    player.UpdateSelection();
                 }
 
                 return;
@@ -512,7 +484,6 @@
                     player.ActualSelection.TurretToPlace.CelestialBody = player.ActualSelection.CelestialBody;
                     player.ActualSelection.TurretToPlace.Position = player.Position;
                     player.ActualSelection.TurretToPlace.ToPlaceMode = true;
-                    player.UpdateSelection();
 
                     NotifyTurretToPlaceSelected(player.ActualSelection.TurretToPlace, player);
                 }
@@ -535,7 +506,6 @@
                     NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace, player);
                     NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
                     player.ActualSelection.TurretToPlace = null;
-                    player.UpdateSelection();
                 }
 
                 return;
@@ -562,8 +532,6 @@
                         }
                         break;
                 }
-
-                player.UpdateSelection();
 
                 return;
             }
@@ -593,7 +561,6 @@
 
             NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
             player.ActualSelection.TurretToPlace = null;
-            player.UpdateSelection();
         }
 
 
@@ -640,8 +607,6 @@
                         player.ActualSelection.CelestialBody = null;
                         player.ActualSelection.Turret = null;
                         player.ActualSelection.TurretToPlace = null;
-
-                        NotifyPlayerChanged(player);
                     }
 
                     UpdateSelection = false;
@@ -718,8 +683,6 @@
 
             CommonStash.Cash -= p.UsePrice;
             NotifyCommonStashChanged(CommonStash);
-
-            player.UpdateSelection();
 
             if (CommonStash.Cash < p.UsePrice)
                 NotifyDesactivatePowerUpAsked(player.PowerUpInUse, player);
