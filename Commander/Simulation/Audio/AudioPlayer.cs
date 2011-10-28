@@ -24,9 +24,6 @@
             ShipSpeedChanged = true;
             MovingCue = XACTAudio.GetCue(SimPlayer.InnerPlayer.MovingSound, "Sound Bank");
             InstallingTurretCue = XACTAudio.GetCue("TurretInstalling", "Sound Bank");
-            OnCelestialBodyCue = XACTAudio.GetCue("PlanetOn", "Sound Bank");
-            OnMothershipCue = XACTAudio.GetCue("MothershipOn", "Sound Bank");
-            OnPinkHoleCue = XACTAudio.GetCue("Empty 2" /*"WarpProximity"*/, "Sound Bank");
         }
 
 
@@ -62,37 +59,40 @@
 
         public void StartOnCelestialBody()
         {
+            OnCelestialBodyCue = XACTAudio.GetCue("PlanetOn", "Sound Bank");
             OnCelestialBodyCue.PlayOrResume();
         }
 
 
         public void StopOnCelestialBody()
         {
-            OnCelestialBodyCue.Pause();
+            OnCelestialBodyCue.Stop();
         }
 
 
         public void StartOnMothership()
         {
+            OnMothershipCue = XACTAudio.GetCue("MothershipOn", "Sound Bank");
             OnMothershipCue.PlayOrResume();
         }
 
 
         public void StopOnMothership()
         {
-            OnMothershipCue.Pause();
+            OnMothershipCue.Stop();
         }
 
 
         public void StartOnPinkHole()
         {
+            OnPinkHoleCue = XACTAudio.GetCue("WarpProximity", "Sound Bank");
             OnPinkHoleCue.PlayOrResume();
         }
 
 
         public void StopOnPinkHole()
         {
-            OnPinkHoleCue.Pause();
+            OnPinkHoleCue.Stop();
         }
 
 
@@ -100,9 +100,15 @@
         {
             MovingCue.MasterPause();
             InstallingTurretCue.MasterPause();
-            OnCelestialBodyCue.MasterPause();
-            OnMothershipCue.MasterPause();
-            OnPinkHoleCue.MasterPause();
+
+            if (OnCelestialBodyCue != null && OnCelestialBodyCue.IsReady)
+                OnCelestialBodyCue.MasterPause();
+
+            if (OnMothershipCue != null && OnMothershipCue.IsReady)
+                OnMothershipCue.MasterPause();
+
+            if (OnPinkHoleCue != null && OnPinkHoleCue.IsReady)
+                OnPinkHoleCue.MasterPause();
         }
 
 
@@ -110,9 +116,15 @@
         {
             MovingCue.MasterResume();
             InstallingTurretCue.MasterResume();
-            OnCelestialBodyCue.MasterResume();
-            OnMothershipCue.MasterResume();
-            OnPinkHoleCue.MasterResume();
+
+            if (OnCelestialBodyCue != null && OnCelestialBodyCue.IsReady)
+                OnCelestialBodyCue.MasterResume();
+
+            if (OnMothershipCue != null && OnMothershipCue.IsReady)
+                OnMothershipCue.MasterResume();
+
+            if (OnPinkHoleCue != null && OnPinkHoleCue.IsReady)
+                OnPinkHoleCue.MasterResume();
         }
 
 
@@ -120,9 +132,15 @@
         {
             MovingCue.Stop();
             InstallingTurretCue.Stop();
-            OnCelestialBodyCue.Stop();
-            OnMothershipCue.Stop();
-            OnPinkHoleCue.Stop();
+
+            if (OnCelestialBodyCue != null)
+                OnCelestialBodyCue.Stop();
+
+            if (OnMothershipCue != null)
+                OnMothershipCue.Stop();
+
+            if (OnPinkHoleCue != null)
+                OnPinkHoleCue.Stop();
         }
 
 
