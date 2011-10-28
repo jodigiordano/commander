@@ -54,8 +54,8 @@
             if (CurrentLivesChanged)
                 XACTAudio.SetGlobalVariable("PlanetHealth", CurrentLivesNormalized);
 
-            //if (CameraData.ZoomChanged)
-            //    XACTAudio.SetGlobalVariable("Zoom", CameraData.ZoomPerc);
+            if (CameraData.ZoomChanged)
+                XACTAudio.SetGlobalVariable("Zoom", CameraData.ZoomPerc);
 
             foreach (var p in Players.Values)
                 p.Update();
