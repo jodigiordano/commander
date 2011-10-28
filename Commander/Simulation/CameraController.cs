@@ -7,6 +7,8 @@
 
     class CameraController
     {
+        public CameraData CameraData;
+
         private enum EffectState
         {
             ZoomingIn,
@@ -15,8 +17,6 @@
         }
 
         private Simulator Simulator;
-        private float MaxZoomIn;
-        private float MaxZoomOut;
 
         private EffectState State;
         private int CurrentZoomEffectId;
@@ -39,13 +39,14 @@
             MaxCameraZoomSpeed = 0.002f;
 
             Players = new List<SimPlayer>();
+            CameraData = new CameraData();
         }
 
 
         public void Initialize()
         {
-            MaxZoomIn = Preferences.BackBufferZoom;
-            MaxZoomOut = Math.Min(
+            CameraData.MaxZoomIn = Preferences.BackBufferZoom;
+            CameraData.MaxZoomOut = Math.Min(
                 Simulator.Scene.CameraView.Width / (float) Simulator.Battlefield.Width,
                 Simulator.Scene.CameraView.Height / (float) Simulator.Battlefield.Height);
 
@@ -85,6 +86,8 @@
 
             ComputeNewCameraPosition();
             ComputeNewCameraZoom();
+            CameraData.Zoom = Simulator.Scene.Camera.Zoom;
+            CameraData.Update();
         }
 
 
@@ -97,7 +100,7 @@
 
             CurrentZoomEffectId = Simulator.Scene.VisualEffects.Add(
                 Simulator.Scene.Camera,
-                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, MaxZoomIn, 0, 500), EffectTerminated);
+                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, CameraData.MaxZoomIn, 0, 500), EffectTerminated);
 
             State = EffectState.ZoomingIn;
         }
@@ -112,7 +115,7 @@
 
             CurrentZoomEffectId = Simulator.Scene.VisualEffects.Add(
                 Simulator.Scene.Camera,
-                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, MaxZoomOut, 0, 500), EffectTerminated);
+                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, CameraData.MaxZoomOut, 0, 500), EffectTerminated);
 
             State = EffectState.ZoomingOut;
         }

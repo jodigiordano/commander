@@ -193,6 +193,7 @@
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
     <Compile Include="Simulation\CameraController.cs" />
+    <Compile Include="Simulation\CameraData.cs" />
     <Compile Include="Simulation\GUI\Animations\HelpAnimation.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\AssetsPanel.cs" />

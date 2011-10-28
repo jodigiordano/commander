@@ -10,6 +10,7 @@
     {
         public EnemiesData EnemiesData;
         public CommonStash CommonStash;
+        public CameraData CameraData;
         public CelestialBody CelestialBodyToProtect;
 
         private Simulator Simulator;
@@ -52,6 +53,9 @@
 
             if (CurrentLivesChanged)
                 XACTAudio.SetGlobalVariable("PlanetHealth", CurrentLivesNormalized);
+
+            //if (CameraData.ZoomChanged)
+            //    XACTAudio.SetGlobalVariable("Zoom", CameraData.ZoomPerc);
 
             foreach (var p in Players.Values)
                 p.Update();

@@ -375,6 +375,7 @@ namespace EphemereGames.Commander.Simulation
             AudioController.EnemiesData = EnemiesController.EnemiesData;
             AudioController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
             AudioController.CommonStash = LevelsController.CommonStash;
+            AudioController.CameraData = CameraController.CameraData;
 
             TweakingController.Initialize();
             LevelsController.Initialize();
