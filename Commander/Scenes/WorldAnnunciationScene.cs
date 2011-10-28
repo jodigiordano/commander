@@ -1,12 +1,14 @@
 ﻿namespace EphemereGames.Commander
 {
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class WorldAnnunciationScene : CommanderScene
     {
-        private WorldDescriptor Descriptor;
+        public World World;
+
         private Text WorldId;
         private Translator WorldName;
         private Image Background;
@@ -15,22 +17,16 @@
         private bool TransitionInProgress;
 
 
-        public WorldAnnunciationScene(WorldDescriptor descriptor) :
-            base(Main.LevelsFactory.GetWorldAnnounciationStringId(descriptor.Id))
+        public WorldAnnunciationScene() :
+            base("WorldAnnunciation")
         {
-            Descriptor = descriptor;
-
-            WorldId = new Text(Main.LevelsFactory.GetWorldStringId(Descriptor.Id), @"Pixelite")
+            WorldId = new Text("Pixelite")
             {
                 SizeX = 4,
                 Color = Color.Black
-            }.CenterIt();
-
-            Background = new Image("WhiteBg", Vector3.Zero)
-            {
-                VisualPriority = 1,
-                Alpha = 0
             };
+
+            Background = new Image("WhiteBg", Vector3.Zero) { VisualPriority = 1 };
         }
 
 
@@ -39,7 +35,10 @@
             Length = 2500;
             TransitionInProgress = false;
 
-            WorldName = new Translator(this, new Vector3(0, 50, 0), "Alien", Colors.Default.AlienBright, @"Pixelite", Colors.Default.NeutralDark, Descriptor.Name, 3, true, 1500, 100, Preferences.PrioriteGUIPanneauGeneral, false);
+            WorldId.Data = World.StringId;
+            WorldId.CenterIt();
+
+            WorldName = new Translator(this, new Vector3(0, 50, 0), "Alien", Colors.Default.AlienBright, @"Pixelite", Colors.Default.NeutralDark, World.Name, 3, true, 1500, 100, Preferences.PrioriteGUIPanneauGeneral, false);
             WorldName.CenterText = true;
 
             VisualEffects.Add(WorldName.ToTranslate, Core.Visual.VisualEffects.FadeInFrom0(255, 0, 1000));
@@ -58,7 +57,7 @@
 
             if (Length <= 0)
             {
-                TransiteTo(Descriptor.Id > 1 && Descriptor.Id != 999 ? "EndOfDemo" : Main.LevelsFactory.GetWorldStringId(Descriptor.Id)); //tmp
+                TransiteTo(World.Id > 1 && World.Id != 999 ? "EndOfDemo" : "World"); //tmp
                 TransitionInProgress = true;
             }
 

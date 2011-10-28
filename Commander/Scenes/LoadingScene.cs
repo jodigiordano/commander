@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Commander.Cutscenes;
     using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Visual;
     using EphemereGames.Core.XACTAudio;
@@ -142,9 +141,14 @@
                         SceneState = State.Finished;
 
                         if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
-                            TransiteTo(Main.LevelsFactory.GetWorldStringId(1));
+                        {
+                            Main.SetCurrentWorld(Main.LevelsFactory.Worlds[1]);
+                            TransiteTo("World");
+                        }
                         else
+                        {
                             TransiteTo("Warning"); //Alpha. TransiteTo("Menu");
+                        }
                     }
 
                     break;
@@ -167,31 +171,10 @@
             ScenesLoaded.Add(new WarningScene());
             ScenesLoaded.Add(new EndOfDemoScene());
             ScenesLoaded.Add(new MainMenuScene());
-
-            foreach (var id in Main.LevelsFactory.WorldsDescriptors.Keys)
-                LoadWorld(id, id == 999);
+            ScenesLoaded.Add(new WorldScene());
+            ScenesLoaded.Add(new WorldAnnunciationScene());
 
             ScenesAreLoaded = true;
-        }
-
-
-        private void LoadWorld(int id, bool editorMode)
-        {
-            WorldDescriptor wd;
-            WorldScene ws;
-            WorldAnnunciationScene was;
-
-            wd = Main.LevelsFactory.WorldsDescriptors[id];
-            ws = new WorldScene(wd);
-            was = new WorldAnnunciationScene(wd);
-
-            ScenesLoaded.Add(new StoryScene("Cutscene" + wd.Id, was.Name, new IntroCutscene()));
-            ScenesLoaded.Add(was);
-            ScenesLoaded.Add(ws);
-
-            ws.EditorMode = editorMode;
-            ws.Initialize();
-            was.Initialize();
         }
 
 

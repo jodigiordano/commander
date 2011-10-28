@@ -248,7 +248,7 @@
             if (Inputs.ConnectedPlayers.Count == 0)
             {
                 TransitingTo = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ?
-                    Main.LevelsFactory.GetWorldStringId(1) :
+                    LevelsFactory.GetWorldStringId(1) :
                     "Menu";
 
                 TransiteTo(TransitingTo);
@@ -299,15 +299,15 @@
 
         private void NextLevel()
         {
-            var nextLevelId = Main.LevelsFactory.GetNextLevel(Main.SelectedWorld.Id, Level.Infos.Id);
+            var nextLevel = Main.CurrentWorld.World.GetNextLevel(Level.Infos.Id);
 
-            if (nextLevelId == -1)
+            if (nextLevel == null)
             {
                 TransiteToWorld();
                 return;
             }
 
-            TransiteToNewGame(Main.LevelsFactory.GetLevelDescriptor(nextLevelId));
+            TransiteToNewGame(nextLevel);
         }
 
 
@@ -321,8 +321,8 @@
                 EditorState = EditorState
             };
             newGame.Initialize();
-            Main.SelectedWorld.GameInProgress = newGame;
-            newGame.Simulator.AddNewGameStateListener(Main.SelectedWorld.DoNewGameState);
+            Main.CurrentGame = newGame;
+            newGame.Simulator.AddNewGameStateListener(Main.CurrentWorld.DoNewGameState);
 
             if (Visuals.GetScene(newGame.Name) == null)
                 Visuals.AddScene(newGame);
@@ -336,8 +336,7 @@
 
         private void TransiteToWorld()
         {
-            TransitingTo = Main.SelectedWorld.Name;
-            TransiteTo(TransitingTo);
+            TransiteTo("World");
         }
 
 

@@ -86,11 +86,11 @@
         {
             get
             {
-                if (Main.SelectedWorld == null)
+                if (Main.CurrentWorld == null)
                     return false;
 
                 foreach (var p in Inputs.ConnectedPlayers)
-                    if (Main.SelectedWorld.GetGamePausedSelected((Commander.Player) p))
+                    if (Main.CurrentWorld.GetGamePausedSelected((Commander.Player) p))
                         return true;
 
                 return false;
@@ -180,14 +180,14 @@
         {
             if (Simulator.AvailableWarpsWorldMode.ContainsKey(CelestialBody))
             {
-                Title.Data = Main.LevelsFactory.GetWorldStringId(Simulator.AvailableWarpsWorldMode[CelestialBody]);
+                Title.Data = LevelsFactory.GetWorldStringId(Simulator.AvailableWarpsWorldMode[CelestialBody]);
             }
 
-            else
+            else if (Simulator.AvailableLevelsWorldMode.ContainsKey(CelestialBody))
             {
                 var descriptor = CurrentLevelDescriptor;
 
-                Title.Data = Main.LevelsFactory.GetLevelStringId(descriptor.Infos.Id);
+                Title.Data = Main.CurrentWorld.World.GetLevelStringId(descriptor.Infos.Id);
             }
 
             Title.Position = new Vector3(CelestialBody.Position.X, CelestialBody.Position.Y - CelestialBody.Circle.Radius - 20, 0);
@@ -221,7 +221,7 @@
         {
             get
             {
-                return Main.LevelsFactory.GetLevelDescriptor(Simulator.AvailableLevelsWorldMode[CelestialBody]);
+                return Main.CurrentWorld.World.GetLevelDescriptor(Simulator.AvailableLevelsWorldMode[CelestialBody]);
             }
         }
     }

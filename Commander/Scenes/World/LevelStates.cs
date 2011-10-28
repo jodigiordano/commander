@@ -57,7 +57,7 @@
             {
                 var cb = CelestialBodies[level];
 
-                LevelsNumbers.Add(level, new Text(Main.LevelsFactory.GetLevelStringId(level), @"Pixelite")
+                LevelsNumbers.Add(level, new Text(Scene.World.GetLevelStringId(level), @"Pixelite")
                 {
                     SizeX = 3,
                     VisualPriority = cb.VisualPriority + 0.00001,
@@ -160,7 +160,7 @@
 
         private CelestialBody GetPausedGameCelestialBody()
         {
-            return CelestialBodies[Scene.GameInProgress.Level.Infos.Id];
+            return CelestialBodies[Main.CurrentGame.Level.Infos.Id];
         }
 
 

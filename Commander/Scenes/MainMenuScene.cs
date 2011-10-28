@@ -225,8 +225,7 @@
             Simulator.SyncPlayers();
             Camera.Position = Vector3.Zero;
 
-            if (Main.SelectedWorld != null)
-                Main.SelectedWorld.GameInProgress = null;
+            Main.CurrentGame = null;
         }
 
 
@@ -244,7 +243,7 @@
 
             switch (c.Name)
             {
-                case "save the world":
+                case "campaign":
                     switch (Simulator.NewGameChoice)
                     {
                         case -1:
@@ -253,17 +252,23 @@
                             TransiteTo("Cutscene1");
                             break;
                         case 0:
-                            TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(Main.SaveGameController.PlayerSaveGame.CurrentWorld));
+                            Main.SetCurrentWorld(Main.SaveGameController.PlayerSaveGame.CurrentWorld);
+                            TransiteTo("WorldAnnunciation");
                             break;
                         default:
-                            TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(Main.LevelsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2)));
+                            Main.SetCurrentWorld(Main.LevelsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2));
+                            TransiteTo("WorldAnnunciation");
                             break;
                     }
                     break;
 
                 case "how to play": Simulator.ShowPanel(PanelType.Help, true); break;
                 case "options": Simulator.ShowPanel(PanelType.Options, true); break;
-                case "editor": if (Preferences.Debug) { TransiteTo(Main.LevelsFactory.GetWorldAnnounciationStringId(999)); } break;
+                case "universe": if (Preferences.Debug)
+                {
+                    Main.SetCurrentWorld(999);
+                    TransiteTo("WorldAnnunciation");
+                } break;
                 case "credits": Simulator.ShowPanel(PanelType.Credits, true); break;
                 case "quit": Main.Instance.Exit(); break;
             }

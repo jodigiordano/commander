@@ -339,7 +339,7 @@
 
             else if (command.Name == "NewLevel")
             {
-                //Simulator.LevelDescriptor = Main.LevelsFactory.GetEmptyDescriptor();
+                //Simulator.LevelDescriptor = Main.LevelsFactory.GetEmptyLevelDescriptor();
                 //Simulator.Initialize();
                 //Simulator.SyncPlayers();
             }

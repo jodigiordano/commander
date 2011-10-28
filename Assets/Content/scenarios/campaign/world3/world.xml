@@ -3,16 +3,16 @@
   <Id>3</Id>
   <Name>Battle for Earth</Name>
   <Levels>
-    <Level>31</Level>
-    <Level>32</Level>
-    <Level>33</Level>
-    <Level>34</Level>
-    <Level>35</Level>
-    <Level>36</Level>
-    <Level>37</Level>
     <Level>38</Level>
     <Level>39</Level>
     <Level>40</Level>
+    <Level>41</Level>
+    <Level>42</Level>
+    <Level>43</Level>
+    <Level>44</Level>
+    <Level>45</Level>
+    <Level>46</Level>
+    <Level>47</Level>
   </Levels>
   <Warps>
     <World>2</World>

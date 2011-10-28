@@ -42,8 +42,8 @@
             };
 
             // Switch the music
-            Main.MusicController.PlayOrResume(worldScene.Descriptor.MusicEnd);
-            XACTAudio.PlayCue(worldScene.Descriptor.SfxEnd, "Sound Bank");
+            Main.MusicController.PlayOrResume(worldScene.World.Descriptor.MusicEnd);
+            XACTAudio.PlayCue(worldScene.World.Descriptor.SfxEnd, "Sound Bank");
 
             worldScene.NeedReinit = true;
             Simulator.SpawnEnemies = false;

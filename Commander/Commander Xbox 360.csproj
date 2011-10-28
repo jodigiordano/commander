@@ -212,6 +212,7 @@
     <Compile Include="Simulation\GUI\PlayerLivesLiteral.cs" />
     <Compile Include="Simulation\GUI\PlayerLivesMoons.cs" />
     <Compile Include="Simulation\GUI\ScoreCalculation.cs" />
+    <Compile Include="Simulation\Levels\World.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Player\SharedSaveGame.cs" />

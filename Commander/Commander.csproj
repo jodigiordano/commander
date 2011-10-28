@@ -197,6 +197,7 @@
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\AssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemyCheckBox.cs" />
+    <Compile Include="Simulation\Levels\World.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipKeyboardMBehavior.cs" />
     <Compile Include="XACTMusicController.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />

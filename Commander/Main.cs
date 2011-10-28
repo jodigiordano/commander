@@ -26,7 +26,9 @@ namespace EphemereGames.Commander
 
         public static Options Options;
         public static Main Instance;
-        public static WorldScene SelectedWorld;
+        public static GameScene CurrentGame;
+        public static WorldScene CurrentWorld;
+        public static WorldAnnunciationScene CurrentWorldAnnounciation;
         public static LevelsFactory LevelsFactory;
         public static XACTMusicController MusicController;
         public static NewsController NewsController;
@@ -78,6 +80,29 @@ namespace EphemereGames.Commander
         }
 
 
+        public static void SetCurrentWorld(int id)
+        {
+            SetCurrentWorld(LevelsFactory.Worlds[id]);
+        }
+
+
+        public static void SetCurrentWorld(World world)
+        {
+            if (CurrentWorld == null)
+                CurrentWorld = (WorldScene) Visuals.GetScene("World");
+
+            if (CurrentWorldAnnounciation == null)
+                CurrentWorldAnnounciation = (WorldAnnunciationScene) Visuals.GetScene("WorldAnnunciation");
+
+            CurrentWorld.World = world;
+            CurrentWorld.EditorMode = world.EditorMode;
+            CurrentWorld.Initialize();
+
+            CurrentWorldAnnounciation.World = world;
+            CurrentWorldAnnounciation.Initialize();
+        }
+
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -87,7 +112,6 @@ namespace EphemereGames.Commander
 
             SaveGameController.Initialize();
             MusicController.Initialize();
-            LevelsFactory.Initialize();
         }
 
 
@@ -165,6 +189,8 @@ namespace EphemereGames.Commander
                             new AnimationTransitionAlienBattleship(500, VisualPriorities.Foreground.Transition),
                             new AnimationTransitionAlienMothership(750, VisualPriorities.Foreground.Transition)
                         };
+
+                        LevelsFactory.Initialize();
 
                         Visuals.AddScene(new LoadingScene());
 

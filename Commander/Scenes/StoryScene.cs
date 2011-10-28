@@ -12,7 +12,7 @@
 
     class StoryScene : CommanderScene
     {
-        private string WorldToTransiteTo;
+        private int WorldToTransiteTo;
         private double SkipCounter;
         private bool Skipping;
         private bool TransitionOutInProgress;
@@ -24,7 +24,7 @@
         private InputType InputType;
 
 
-        public StoryScene(string name, string transiteTo, Cutscene cutscene) :
+        public StoryScene(string name, int transiteTo, Cutscene cutscene) :
             base(name)
         {
             WorldToTransiteTo = transiteTo;
@@ -210,7 +210,8 @@
             if (TransitionOutInProgress)
                 return;
 
-            TransiteTo(WorldToTransiteTo);
+            Main.SetCurrentWorld(WorldToTransiteTo);
+            TransiteTo("WorldAnnunciation");
             TransitionOutInProgress = true;
         }
     }

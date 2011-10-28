@@ -11,12 +11,11 @@
 
     class WorldScene : CommanderScene
     {
-        public GameScene GameInProgress;
+        public World World;
         public LevelStates LevelStates;
         public Simulator Simulator;
         public bool NeedReinit;
         public bool CanGoBackToMainMenu;
-        public WorldDescriptor Descriptor;
 
         private enum State
         {
@@ -36,10 +35,9 @@
         public bool EditorMode;
 
 
-        public WorldScene(WorldDescriptor descriptor) :
-            base(Main.LevelsFactory.GetWorldStringId(descriptor.Id))
+        public WorldScene() :
+            base("World")
         {
-            Descriptor = descriptor;
             CBtoWarp = new Dictionary<CelestialBody, int>();
             LeveltoCB = new Dictionary<int, CelestialBody>();
             CBtoLevel = new Dictionary<CelestialBody, int>();
@@ -57,8 +55,11 @@
 
         public override void Initialize()
         {
+            if (Simulator != null)
+                Simulator.CleanUp();
+
             // Initialize the simulator
-            Simulator = new Simulator(this, Main.LevelsFactory.GetLevelDescriptor(Descriptor.Layout))
+            Simulator = new Simulator(this, World.Layout)
             {
                 DemoMode = true,
                 WorldMode = true,
@@ -82,14 +83,14 @@
                 LevelStates.AllLevelsUnlockedOverride = true;
 
             LevelStates.CelestialBodies = LeveltoCB;
-            LevelStates.Descriptor = Descriptor;
+            LevelStates.Descriptor = World.Descriptor;
             LevelStates.Initialize();
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
-            Main.MusicController.AddMusic(Descriptor.Music);
-            Main.MusicController.AddMusic(Descriptor.MusicEnd);
+            Main.MusicController.AddMusic(World.Descriptor.Music);
+            Main.MusicController.AddMusic(World.Descriptor.MusicEnd);
 
-            GameInProgress = null;
+            Main.CurrentGame = null;
         }
 
 
@@ -97,7 +98,7 @@
         {
             get
             {
-                return !EditorMode && GameInProgress != null && GameInProgress.State == GameState.PausedToWorld;
+                return !EditorMode && Main.CurrentGame != null && Main.CurrentGame.State == GameState.PausedToWorld;
             }
         }
 
@@ -110,31 +111,13 @@
                 c != null &&
                 !CBtoWarp.ContainsKey(c) &&
                 GamePausedToWorld &&
-                GameInProgress.Simulator.Level.Id == CBtoLevel[c];
+                Main.CurrentGame.Simulator.Level.Id == CBtoLevel[c];
         }
 
 
         public bool CanSelectCelestialBodies
         {
             set { Simulator.CanSelectCelestialBodies = value; }
-        }
-
-
-        public bool Unlocked
-        {
-            get
-            {
-                if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
-                    return false;
-
-                return Main.LevelsFactory.IsWorldUnlocked(Descriptor.UnlockedCondition);
-            }
-        }
-
-
-        public int Id
-        {
-            get { return Descriptor.Id; }
         }
 
 
@@ -173,7 +156,7 @@
                         Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
                         Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
 
-                        Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
+                        Main.SaveGameController.PlayerSaveGame.CurrentWorld = World.Id;
                     }
                     break;
             }
@@ -204,38 +187,38 @@
 
             InitializeLevelsStates();
 
-            Main.SelectedWorld = this;
+            Main.CurrentWorld = this;
 
             if (Simulator.EditorWorldMode)
             {
                 // sync the level descriptor so it can be saved.
-                if (GameInProgress != null && GameInProgress.Simulator.EditorState != EditorState.Playtest)
+                if (Main.CurrentGame != null && Main.CurrentGame.Simulator.EditorState != EditorState.Playtest)
                 {
-                    GameInProgress.Simulator.SyncLevel();
-                    Main.LevelsFactory.SetLevelDescriptor(GameInProgress.Simulator.LevelDescriptor.Infos.Id, GameInProgress.Simulator.LevelDescriptor);
+                    Main.CurrentGame.Simulator.SyncLevel();
+                    World.SetLevelDescriptor(Main.CurrentGame.Simulator.LevelDescriptor.Infos.Id, Main.CurrentGame.Simulator.LevelDescriptor);
                 }
             }
 
             else if (Preferences.Target != Core.Utilities.Setting.ArcadeRoyale)
             {
-                Main.SaveGameController.PlayerSaveGame.CurrentWorld = Descriptor.Id;
+                Main.SaveGameController.PlayerSaveGame.CurrentWorld = World.Id;
             }
 
             Simulator.OnFocus();
 
-            if (GameInProgress != null && Descriptor.ContainsLevel(GameInProgress.Level.Infos.Id))
+            if (Main.CurrentGame != null && World.Descriptor.ContainsLevel(Main.CurrentGame.Level.Infos.Id))
             {
-                var cb = LeveltoCB[GameInProgress.Level.Infos.Id];
+                var cb = LeveltoCB[Main.CurrentGame.Level.Infos.Id];
                 Simulator.TeleportPlayers(false, cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
             }
             else
                 Simulator.TeleportPlayers(false);
 
             if (!Simulator.EditorWorldMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
-                Add(Main.LevelsFactory.GetEndOfWorldAnimation(this));
+                Add(Main.LevelsFactory.GetEndOfWorldAnimation(World.Id, this));
             else
             {
-                Main.MusicController.PlayOrResume(Descriptor.Music);
+                Main.MusicController.PlayOrResume(World.Descriptor.Music);
                 XACTAudio.ChangeCategoryVolume("Turrets", 0);
             }
 
@@ -378,9 +361,14 @@
             if (world != null)
             {
                 if (world.Unlocked)
-                    TransiteTo(world.Name + "Annunciation");
+                {
+                    Main.SetCurrentWorld(world);
+                    TransiteTo("WorldAnnunciation");
+                }
                 else
+                {
                     ShowWarpBlockedMessage(p);
+                }
 
                 return;
             }
@@ -390,8 +378,8 @@
 
             if (level != null)
             {
-                
-                GameScene currentGame = GameInProgress;
+
+                GameScene currentGame = Main.CurrentGame;
 
                 // Resume Game
                 if (GamePausedToWorld &&
@@ -409,7 +397,7 @@
 
                 currentGame = new GameScene("Game1", level);
                 currentGame.Initialize();
-                GameInProgress = currentGame;
+                Main.CurrentGame = currentGame;
                 currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
 
                 if (Visuals.GetScene(currentGame.Name) == null)
@@ -441,18 +429,18 @@
             {
                 if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
                 {
-                    Main.LevelsFactory.SetLevelDescriptor(level.Infos.Id, Main.LevelsFactory.GetEmptyDescriptor(level.Infos.Id));
-                    Main.LevelsFactory.SaveDescriptorOnDisk(level.Infos.Id);
+                    World.SetLevelDescriptor(level.Infos.Id, Main.LevelsFactory.GetEmptyLevelDescriptor(level.Infos.Id));
+                    Main.LevelsFactory.SaveWorldOnDisk(World.Id);
                 }
 
                 else if (Simulator.EditorWorldChoice == EditorWorldChoice.Save)
                 {
-                    Main.LevelsFactory.SaveDescriptorOnDisk(level.Infos.Id);
+                    Main.LevelsFactory.SaveWorldOnDisk(World.Id);
                 }
 
                 else
                 {
-                    GameScene currentGame = GameInProgress;
+                    GameScene currentGame = Main.CurrentGame;
 
                     // Start a new game
                     if (currentGame != null)
@@ -464,7 +452,7 @@
                         EditorState = Simulator.EditorWorldChoice == EditorWorldChoice.Edit ? EditorState.Editing : EditorState.Playtest
                     };
                     currentGame.Initialize();
-                    GameInProgress = currentGame;
+                    Main.CurrentGame = currentGame;
                     currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
 
                     if (Visuals.GetScene(currentGame.Name) == null)
@@ -489,24 +477,24 @@
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
             return c != null ?
-                Main.LevelsFactory.GetLevelDescriptor(CBtoLevel[c]) : null;
+                World.GetLevelDescriptor(CBtoLevel[c]) : null;
         }
 
 
-        public WorldScene GetWorldSelected(Player p)
+        private World GetWorldSelected(Player p)
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
             return (c != null && c is PinkHole) ?
-                (WorldScene) Visuals.GetScene(Main.LevelsFactory.GetWorldStringId(CBtoWarp[c])) : null;
+                Main.LevelsFactory.Worlds[CBtoWarp[c]] : null;
         }
 
 
-        public void ShowWarpBlockedMessage(Player p)
+        private void ShowWarpBlockedMessage(Player p)
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
-            Simulator.MessagesController.ShowMessage(c, Descriptor.WarpBlockedMessage, 5000, -1);
+            Simulator.MessagesController.ShowMessage(c, World.Descriptor.WarpBlockedMessage, 5000, -1);
         }
 
 
@@ -515,9 +503,9 @@
             get
             {
                 return
-                    GameInProgress != null &&
-                    GameInProgress.State == GameState.Won &&
-                    GameInProgress.Level.Infos.Id == Descriptor.Levels[Descriptor.Levels.Count - 1];
+                    Main.CurrentGame != null &&
+                    Main.CurrentGame.State == GameState.Won &&
+                    Main.CurrentGame.Level.Infos.Id == World.LastLevel;
             }
         }
 
@@ -528,7 +516,7 @@
             foreach (var w in CBtoWarp)
             {
                 var pinkHole = (PinkHole) w.Key;
-                var unlocked = ((WorldScene) Visuals.GetScene(Main.LevelsFactory.GetWorldStringId(w.Value))).Unlocked;
+                var unlocked = Main.LevelsFactory.Worlds[w.Value].Unlocked;
 
                 pinkHole.BlendType = unlocked ? BlendType.Add : BlendType.Substract;
                 pinkHole.Color = unlocked ? new Color(255, 0, 255) : new Color(0, 0, 0);
@@ -557,12 +545,12 @@
                     continue;
 
                 if (c is PinkHole)
-                    CBtoWarp.Add(c, Descriptor.Warps[warpIndex++]);
+                    CBtoWarp.Add(c, World.Descriptor.Warps[warpIndex++]);
 
-                else
+                else if (levelIndex < World.Descriptor.Levels.Count)
                 {
-                    LeveltoCB.Add(Descriptor.Levels[levelIndex], c);
-                    CBtoLevel.Add(c, Descriptor.Levels[levelIndex]);
+                    LeveltoCB.Add(World.Descriptor.Levels[levelIndex], c);
+                    CBtoLevel.Add(c, World.Descriptor.Levels[levelIndex]);
 
                     levelIndex++;
                 }
@@ -577,7 +565,7 @@
 
             if (name == "AllLevelsUnlocked")
             {
-                foreach (var l in Descriptor.Levels)
+                foreach (var l in World.Descriptor.Levels)
                     Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, GameState.Won, l, 0);
 
                 LevelStates.AllLevelsUnlockedOverride = true;
@@ -604,8 +592,7 @@
             Simulator.SyncPlayers();
             Camera.Position = Vector3.Zero;
 
-            if (Main.SelectedWorld != null)
-                Main.SelectedWorld.GameInProgress = null;
+            Main.CurrentGame = null;
         }
     }
 }

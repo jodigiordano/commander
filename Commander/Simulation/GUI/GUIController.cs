@@ -797,7 +797,7 @@
             else if (Simulator.DemoMode)
             {
                 // Main menu
-                if (selection.CelestialBody != null && selection.CelestialBody.Name == "save the world")
+                if (selection.CelestialBody != null && LevelsFactory.IsCampaignCB(selection.CelestialBody))
                     HelpBar.ShowMessage(p.InnerPlayer, player.NewGameMenu.GetHelpBarMessage());
                 else
                 {

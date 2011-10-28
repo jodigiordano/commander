@@ -15,7 +15,7 @@
             WorldScene = worldScene;
             Simulator = worldScene.Simulator;
 
-            Main.SelectedWorld.GameInProgress = null;
+            Main.CurrentGame = null;
             WorldScene.CanSelectCelestialBodies = false;
             WorldScene.CanGoBackToMainMenu = false;
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 0, 500);

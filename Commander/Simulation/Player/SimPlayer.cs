@@ -239,15 +239,15 @@
 
             else if (
                 Simulator.Scene.EnableInputs &&
-                Main.SelectedWorld.GetGamePausedSelected(InnerPlayer) &&
+                Main.CurrentWorld.GetGamePausedSelected(InnerPlayer) &&
                 ActualSelection.PausedGameChoice == PausedGameChoice.None)
             {
                 NextPausedGameChoice();
             }
 
-            else if (Main.SelectedWorld.GameInProgress == null ||
+            else if (Main.CurrentGame == null ||
                      ActualSelection.CelestialBody == null ||
-                    !Main.SelectedWorld.GetGamePausedSelected(InnerPlayer))
+                    !Main.CurrentWorld.GetGamePausedSelected(InnerPlayer))
             {
                 ActualSelection.PausedGameChoice = PausedGameChoice.None;
             }
@@ -259,13 +259,13 @@
             ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
 
             if (ActualSelection.CelestialBody != null &&
-                ActualSelection.CelestialBody.Name == @"save the world" &&
+                LevelsFactory.IsCampaignCB(ActualSelection.CelestialBody) &&
                 ActualSelection.NewGameChoice == -1)
             {
                 NextNewGameChoice();
             }
 
-            else if (ActualSelection.CelestialBody == null || ActualSelection.CelestialBody.Name != @"save the world")
+            else if (ActualSelection.CelestialBody == null || !LevelsFactory.IsCampaignCB(ActualSelection.CelestialBody))
                 ActualSelection.NewGameChoice = -1;
         }
 
@@ -628,8 +628,8 @@
 
             int index = 2;
 
-            foreach (var w in Main.LevelsFactory.WorldsDescriptors.Keys)
-                if (Main.LevelsFactory.IsWorldUnlocked(w))
+            foreach (var w in Main.LevelsFactory.Worlds.Values)
+                if (w.Unlocked)
                     ActualSelection.AvailableNewGameChoices.Add(index++, true);
         }
 

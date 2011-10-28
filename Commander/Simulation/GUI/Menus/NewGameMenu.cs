@@ -31,10 +31,10 @@
             AddChoice(new TextContextualMenuChoice("continue", new Text("Continue (World " + Main.SaveGameController.PlayerSaveGame.CurrentWorld + ")", @"Pixelite") { SizeX = 2 }));
             AddChoice(new TextContextualMenuChoice("new", new Text("New campaign", @"Pixelite") { SizeX = 2 }));
 
-            foreach (var w in Main.LevelsFactory.WorldsDescriptors.Keys)
+            foreach (var w in Main.LevelsFactory.Worlds.Values)
             {
-                if (Main.LevelsFactory.IsWorldUnlocked(w))
-                    AddChoice(new TextContextualMenuChoice("jumpto", new Text("Jump to World " + w, @"Pixelite") { SizeX = 2 }));
+                if (w.Unlocked)
+                    AddChoice(new TextContextualMenuChoice("jumpto", new Text("Jump to World " + w.Id, @"Pixelite") { SizeX = 2 }));
             }
         }
 
@@ -46,7 +46,7 @@
                 return
                     Choices.Count != 0 &&
                     CelestialBody != null &&
-                    CelestialBody.Name == "save the world";
+                    LevelsFactory.IsCampaignCB(CelestialBody);
             }
 
             set { base.Visible = value; }
