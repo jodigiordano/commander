@@ -110,6 +110,7 @@
                 return;
 
             State = GameState.Lost;
+            CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints;
 
             ComputeFinalScore();
 
