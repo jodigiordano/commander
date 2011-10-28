@@ -43,7 +43,7 @@
 
             else
             {
-                XACTAudio.PlayCue("TurretBought" /*"TurretUpgradingStart"*/, "Sound Bank");
+                XACTAudio.PlayCue("TurretUpgradingStart", "Sound Bank");
                 AddDisabledTurret(t);
             }
         }
