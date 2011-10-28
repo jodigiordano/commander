@@ -124,6 +124,32 @@ Global Settings
 
     Category
     {
+        Name = Hits;
+        Public = 1;
+        Background Music = 0;
+        Volume = 0;
+
+        Category Entry
+        {
+            Name = Ennemies;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 255;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Category
+    {
         Name = Turrets;
         Public = 1;
         Background Music = 0;
@@ -5157,18 +5183,18 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Entry Names = 1;
     Seek Tables = 1;
-    Compression Preset Name = <none>;
+    Compression Preset Name = ADPCM;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 2240341530;
-    Bank Last Revised High = 30184894;
+    Bank Last Revised Low = 700631008;
+    Bank Last Revised High = 30184896;
 
     Wave
     {
         Name = MarcheFunebre_intro_2011_09_27;
         File = Music\MarcheFunebre_intro_2011_09_27.wav;
-        Build Settings Last Modified Low = 2240341530;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5190,8 +5216,8 @@ Wave Bank
     {
         Name = MarcheFunebreAliens_2011_09_27;
         File = Music\MarcheFunebreAliens_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5213,8 +5239,8 @@ Wave Bank
     {
         Name = MarcheFunebrePiano_2011_09_27;
         File = Music\MarcheFunebrePiano_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5236,8 +5262,8 @@ Wave Bank
     {
         Name = NocturneOp27no2IntroPiano_2011_09_27;
         File = Music\NocturneOp27no2IntroPiano_2011_09_27.wav;
-        Build Settings Last Modified Low = 2201029461;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5259,8 +5285,8 @@ Wave Bank
     {
         Name = NocturneOp27no2Piano_2011_09_27;
         File = Music\NocturneOp27no2Piano_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5282,8 +5308,8 @@ Wave Bank
     {
         Name = PolonaiseAb(Menu)_2011_09_27;
         File = Music\PolonaiseAb(Menu)_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5305,8 +5331,8 @@ Wave Bank
     {
         Name = PolonaiseAb(Menu)Intro_2011_09_27;
         File = Music\PolonaiseAb(Menu)Intro_2011_09_27.wav;
-        Build Settings Last Modified Low = 2151733374;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5328,8 +5354,8 @@ Wave Bank
     {
         Name = PolonaiseOp44Piano_2011_09_27;
         File = Music\PolonaiseOp44Piano_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5351,8 +5377,8 @@ Wave Bank
     {
         Name = PolonaiseOp44PianoIntro_2011_09_27;
         File = Music\PolonaiseOp44PianoIntro_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5374,8 +5400,8 @@ Wave Bank
     {
         Name = Raindrop2Intro_2011_09_27;
         File = Music\Raindrop2Intro_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5397,8 +5423,8 @@ Wave Bank
     {
         Name = RaindropPiano_2011_09_27;
         File = Music\RaindropPiano_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5420,8 +5446,8 @@ Wave Bank
     {
         Name = SonateBm(Defeat);
         File = Music\SonateBm(Defeat).wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5443,8 +5469,8 @@ Wave Bank
     {
         Name = Spianato(Galaxy)_2011_09_27;
         File = Music\Spianato(Galaxy)_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5466,8 +5492,8 @@ Wave Bank
     {
         Name = ValseBrillante(Galaxy)_2011_09_27;
         File = Music\ValseBrillante(Galaxy)_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5489,8 +5515,8 @@ Wave Bank
     {
         Name = ValseBrillanteIntro(Galaxy)_2011_09_27;
         File = Music\ValseBrillanteIntro(Galaxy)_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5512,8 +5538,8 @@ Wave Bank
     {
         Name = ValseMinute(Victory)_2011_09_27;
         File = Music\ValseMinute(Victory)_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5535,8 +5561,8 @@ Wave Bank
     {
         Name = ValseMinute(Victory)Intro_2011_09_27;
         File = Music\ValseMinute(Victory)Intro_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5558,8 +5584,8 @@ Wave Bank
     {
         Name = Etude12op25Piano_2011_09_27;
         File = Music\Etude12op25Piano_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5581,8 +5607,8 @@ Wave Bank
     {
         Name = IntroNiveau(ValseEb);
         File = Music\IntroNiveau(ValseEb).wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5604,8 +5630,8 @@ Wave Bank
     {
         Name = Empty;
         File = Sfx\Empty.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5627,8 +5653,8 @@ Wave Bank
     {
         Name = Spianato(Galaxy)Intro_2011_09_27;
         File = Music\Spianato(Galaxy)Intro_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5650,8 +5676,8 @@ Wave Bank
     {
         Name = Raindrop2Zic+Aliens_2011_09_27;
         File = Music\Raindrop2Zic+Aliens_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5673,8 +5699,8 @@ Wave Bank
     {
         Name = NocturneOp27no2Zic+Aliens_2011_09_27;
         File = Music\NocturneOp27no2Zic+Aliens_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5696,8 +5722,8 @@ Wave Bank
     {
         Name = NocturneOp27no2IntroZic+Aliens_2011_09_27;
         File = Music\NocturneOp27no2IntroZic+Aliens_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5719,8 +5745,8 @@ Wave Bank
     {
         Name = PolonaiseOp44Aliens+ZicIntro_2011_09_27;
         File = Music\PolonaiseOp44Aliens+ZicIntro_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5742,8 +5768,8 @@ Wave Bank
     {
         Name = PolonaiseOp44Zic+Aliens_2011_09_27;
         File = Music\PolonaiseOp44Zic+Aliens_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
@@ -5765,8 +5791,8 @@ Wave Bank
     {
         Name = Etude12op25Zic+Aliens_2011_09_27;
         File = Music\Etude12op25Zic+Aliens_2011_09_27.wav;
-        Build Settings Last Modified Low = 271673858;
-        Build Settings Last Modified High = 30184894;
+        Build Settings Last Modified Low = 700631008;
+        Build Settings Last Modified High = 30184896;
 
         Cache
         {
