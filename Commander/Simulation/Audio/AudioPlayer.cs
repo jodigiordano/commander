@@ -59,6 +59,9 @@
 
         public void StartOnCelestialBody()
         {
+            if (OnCelestialBodyCue != null && OnCelestialBodyCue.IsReady)
+                OnCelestialBodyCue.Stop();
+
             OnCelestialBodyCue = XACTAudio.GetCue("PlanetOn", "Sound Bank");
             OnCelestialBodyCue.PlayOrResume();
         }
@@ -66,12 +69,16 @@
 
         public void StopOnCelestialBody()
         {
-            OnCelestialBodyCue.Stop();
+            if (OnCelestialBodyCue != null)
+                OnCelestialBodyCue.Stop();
         }
 
 
         public void StartOnMothership()
         {
+            if (OnMothershipCue != null && OnMothershipCue.IsReady)
+                OnMothershipCue.Stop();
+
             OnMothershipCue = XACTAudio.GetCue("MothershipOn", "Sound Bank");
             OnMothershipCue.PlayOrResume();
         }
@@ -79,12 +86,16 @@
 
         public void StopOnMothership()
         {
-            OnMothershipCue.Stop();
+            if (OnMothershipCue != null)
+                OnMothershipCue.Stop();
         }
 
 
         public void StartOnPinkHole()
         {
+            if (OnPinkHoleCue != null && OnPinkHoleCue.IsReady)
+                OnPinkHoleCue.Stop();
+
             OnPinkHoleCue = XACTAudio.GetCue("WarpProximity", "Sound Bank");
             OnPinkHoleCue.PlayOrResume();
         }
@@ -92,6 +103,7 @@
 
         public void StopOnPinkHole()
         {
+            if (OnPinkHoleCue != null)
             OnPinkHoleCue.Stop();
         }
 

@@ -378,21 +378,26 @@
         {
             AudioPlayer player = Players[p];
 
-            if (p.ActualSelection.CelestialBody != p.LastSelection.CelestialBody)
+            if (p.ActualSelection.CelestialBody != p.LastSelection.CelestialBody || p.ActualSelection.CelestialBodyChanged)
             {
-                if (p.ActualSelection.CelestialBody != null && p.ActualSelection.CelestialBody.FirstOnPath)
-                    player.StartOnMothership();
-                else if (p.ActualSelection.CelestialBody == null && p.LastSelection.CelestialBody != null && p.LastSelection.CelestialBody.FirstOnPath)
-                    player.StopOnMothership();
-                else if (p.ActualSelection.CelestialBody != null && p.ActualSelection.CelestialBody is PinkHole)
-                    player.StartOnPinkHole();
-                else if (p.ActualSelection.CelestialBody == null && p.LastSelection.CelestialBody != null && p.LastSelection.CelestialBody is PinkHole)
-                    player.StopOnPinkHole();
-                else if (p.ActualSelection.CelestialBody != null)
-                    player.StartOnCelestialBody();
-                else if (p.ActualSelection.CelestialBody == null)
+                if (p.ActualSelection.CelestialBody != null)
+                {
+                    if (p.ActualSelection.CelestialBody.FirstOnPath)
+                        player.StartOnMothership();
+                    else if (p.ActualSelection.CelestialBody is PinkHole)
+                        player.StartOnPinkHole();
+                    else
+                        player.StartOnCelestialBody();
+                }
+
+                else
+                {
                     player.StopOnCelestialBody();
+                    player.StopOnMothership();
+                    player.StopOnPinkHole();
+                }
             }
+
 
             if (Simulator.DemoMode)
             {
