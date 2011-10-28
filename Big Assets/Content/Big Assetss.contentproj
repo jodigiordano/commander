@@ -243,223 +243,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="audio\music\Etude12op25Aliens_2011_09_27.wav">
-      <Name>Etude12op25Aliens_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\ValseMinute%28Victory%29Intro_2011_09_27.wav">
-      <Name>ValseMinute%28Victory%29Intro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\Etude12op25Piano_2011_09_27.wav">
-      <Name>Etude12op25Piano_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\Etude12op25Zic_2011_09_27.wav">
-      <Name>Etude12op25Zic_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\IntroNiveau%28ValseEb%29.wav">
-      <Name>IntroNiveau%28ValseEb%29</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\MarcheFunebre_intro_2011_09_27.wav">
-      <Name>MarcheFunebre_intro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\MarcheFunebreAliens_2011_09_27.wav">
-      <Name>MarcheFunebreAliens_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\MarcheFunebrePiano_2011_09_27.wav">
-      <Name>MarcheFunebrePiano_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\NocturneOp27Aliens_2011_09_27.wav">
-      <Name>NocturneOp27Aliens_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\NocturneOp27no2IntroPiano_2011_09_27.wav">
-      <Name>NocturneOp27no2IntroPiano_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\NocturneOp27no2IntroZic_2011_09_27.wav">
-      <Name>NocturneOp27no2IntroZic_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\NocturneOp27no2Piano_2011_09_27.wav">
-      <Name>NocturneOp27no2Piano_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\NocturneOp27no2Zic_2011_09_27.wav">
-      <Name>NocturneOp27no2Zic_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseAb%28Menu%29_2011_09_27.wav">
-      <Name>PolonaiseAb%28Menu%29_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseAb%28Menu%29Intro_2011_09_27.wav">
-      <Name>PolonaiseAb%28Menu%29Intro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseOp44Aliens_2011_09_27.wav">
-      <Name>PolonaiseOp44Aliens_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseOp44AliensIntro_2011_09_27.wav">
-      <Name>PolonaiseOp44AliensIntro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseOp44Piano_2011_09_27.wav">
-      <Name>PolonaiseOp44Piano_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseOp44PianoIntro_2011_09_27.wav">
-      <Name>PolonaiseOp44PianoIntro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseOp44Zic_2011_09_27.wav">
-      <Name>PolonaiseOp44Zic_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\PolonaiseOp44ZicIntro_2011_09_27.wav">
-      <Name>PolonaiseOp44ZicIntro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\Raindrop2Aliens_2011_09_27.wav">
-      <Name>Raindrop2Aliens_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\Raindrop2Intro_2011_09_27.wav">
-      <Name>Raindrop2Intro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\Raindrop2Zic_2011_09_27.wav">
-      <Name>Raindrop2Zic_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\RaindropPiano_2011_09_27.wav">
-      <Name>RaindropPiano_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\SonateBm%28Defeat%29.wav">
-      <Name>SonateBm%28Defeat%29</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\Spianato%28Galaxy%29_2011_09_27.wav">
-      <Name>Spianato%28Galaxy%29_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\Spianato%28Galaxy%29Intro_2011_09_27.wav">
-      <Name>Spianato%28Galaxy%29Intro_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27.wav">
-      <Name>ValseBrillante%28Galaxy%29_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\ValseBrillanteIntro%28Galaxy%29_2011_09_27.wav">
-      <Name>ValseBrillanteIntro%28Galaxy%29_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio\music\ValseMinute%28Victory%29_2011_09_27.wav">
-      <Name>ValseMinute%28Victory%29_2011_09_27</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="audio\sfx\AsteroidDestroyed.wav">
       <Name>AsteroidDestroyed</Name>
       <Importer>XactImporter</Importer>
@@ -1467,13 +1250,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27-ancien1.wav">
-      <Name>ValseBrillante%28Galaxy%29_2011_09_27-ancien1</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="audio\sfx\SlowMotionTurret_2011_10_02_1.wav">
       <Name>SlowMotionTurret_2011_10_02_1</Name>
       <Importer>XactImporter</Importer>
@@ -1499,6 +1275,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="audio\sfx\PlanetOn_loop.wav">
+      <Name>PlanetOn_loop</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="audio\music\EndOfWorld1_2011_10_16.wav">
       <Name>EndOfWorld1_2011_10_16</Name>
       <Importer>WavImporter</Importer>
@@ -1509,50 +1292,146 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </None>
+    <None Include="audio\music\Etude12op25Piano_2011_09_27.wav">
+      <Name>Etude12op25Piano_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\Etude12op25Zic+Aliens_2011_09_27.wav">
+      <Name>Etude12op25Zic+Aliens_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
     <None Include="audio\music\IntroMusic_2011_10_16.wav">
       <Name>IntroMusic_2011_10_16</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="audio\sfx\PlanetOn_loop.wav">
-      <Name>PlanetOn_loop</Name>
+    <None Include="audio\music\IntroNiveau%28ValseEb%29.wav">
+      <Name>IntroNiveau%28ValseEb%29</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="audio\music\Etude12op25Zic+Aliens_2011_09_27.wav">
-      <Name>Etude12op25Zic+Aliens_2011_09_27</Name>
+    </None>
+    <None Include="audio\music\MarcheFunebreAliens_2011_09_27.wav">
+      <Name>MarcheFunebreAliens_2011_09_27</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\music\NocturneOp27no2IntroZic+Aliens_2011_09_27.wav">
+    </None>
+    <None Include="audio\music\MarcheFunebrePiano_2011_09_27.wav">
+      <Name>MarcheFunebrePiano_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\MarcheFunebre_intro_2011_09_27.wav">
+      <Name>MarcheFunebre_intro_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\NocturneOp27no2IntroPiano_2011_09_27.wav">
+      <Name>NocturneOp27no2IntroPiano_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\NocturneOp27no2IntroZic+Aliens_2011_09_27.wav">
       <Name>NocturneOp27no2IntroZic+Aliens_2011_09_27</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\music\NocturneOp27no2Zic+Aliens_2011_09_27.wav">
+    </None>
+    <None Include="audio\music\NocturneOp27no2Piano_2011_09_27.wav">
+      <Name>NocturneOp27no2Piano_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\NocturneOp27no2Zic+Aliens_2011_09_27.wav">
       <Name>NocturneOp27no2Zic+Aliens_2011_09_27</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\music\PolonaiseOp44Aliens+ZicIntro_2011_09_27.wav">
+    </None>
+    <None Include="audio\music\PolonaiseAb%28Menu%29Intro_2011_09_27.wav">
+      <Name>PolonaiseAb%28Menu%29Intro_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\PolonaiseAb%28Menu%29_2011_09_27.wav">
+      <Name>PolonaiseAb%28Menu%29_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\PolonaiseOp44Aliens+ZicIntro_2011_09_27.wav">
       <Name>PolonaiseOp44Aliens+ZicIntro_2011_09_27</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\music\PolonaiseOp44Zic+Aliens_2011_09_27.wav">
+    </None>
+    <None Include="audio\music\PolonaiseOp44PianoIntro_2011_09_27.wav">
+      <Name>PolonaiseOp44PianoIntro_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\PolonaiseOp44Piano_2011_09_27.wav">
+      <Name>PolonaiseOp44Piano_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\PolonaiseOp44Zic+Aliens_2011_09_27.wav">
       <Name>PolonaiseOp44Zic+Aliens_2011_09_27</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="audio\music\Raindrop2Zic+Aliens_2011_09_27.wav">
+    </None>
+    <None Include="audio\music\Raindrop2Intro_2011_09_27.wav">
+      <Name>Raindrop2Intro_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\Raindrop2Zic+Aliens_2011_09_27.wav">
       <Name>Raindrop2Zic+Aliens_2011_09_27</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+    </None>
+    <None Include="audio\music\RaindropPiano_2011_09_27.wav">
+      <Name>RaindropPiano_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\SonateBm%28Defeat%29.wav">
+      <Name>SonateBm%28Defeat%29</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\Spianato%28Galaxy%29Intro_2011_09_27.wav">
+      <Name>Spianato%28Galaxy%29Intro_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\Spianato%28Galaxy%29_2011_09_27.wav">
+      <Name>Spianato%28Galaxy%29_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27-ancien1.wav">
+      <Name>ValseBrillante%28Galaxy%29_2011_09_27-ancien1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\ValseBrillante%28Galaxy%29_2011_09_27.wav">
+      <Name>ValseBrillante%28Galaxy%29_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\ValseBrillanteIntro%28Galaxy%29_2011_09_27.wav">
+      <Name>ValseBrillanteIntro%28Galaxy%29_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\ValseMinute%28Victory%29Intro_2011_09_27.wav">
+      <Name>ValseMinute%28Victory%29Intro_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\music\ValseMinute%28Victory%29_2011_09_27.wav">
+      <Name>ValseMinute%28Victory%29_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
