@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.XACTAudio;
+    using Microsoft.Xna.Framework;
 
 
     class AudioController
     {
         public EnemiesData EnemiesData;
+        public CommonStash CommonStash;
         public CelestialBody CelestialBodyToProtect;
 
         private Simulator Simulator;
@@ -15,6 +17,9 @@
         private Dictionary<int, SimPlayer> SpaceshipToSimPlayer;
         private AudioTurretsController AudioTurretsController;
         private Cue WaveNearToStartCue;
+
+        private float CurrentLivesNormalized;
+        private bool CurrentLivesChanged;
 
 
         public AudioController(Simulator simulator)
@@ -30,6 +35,10 @@
         {
             XACTAudio.SetGlobalVariable("DistanceFromPlanet", 0);
             XACTAudio.SetGlobalVariable("NumberOfAliens", 0);
+            XACTAudio.SetGlobalVariable("PlanetHealth", 1);
+
+            CurrentLivesNormalized = 1;
+            CurrentLivesChanged = false;
         }
 
 
@@ -41,14 +50,14 @@
             if (EnemiesData.EnemyNearHitPercChanged)
                 XACTAudio.SetGlobalVariable("DistanceFromPlanet", (float) EnemiesData.EnemyNearHitPerc);
 
-            // Deleted sound effects (need to be hooked again)
-            // - Typewriter
-            // - Pulse power-up
+            if (CurrentLivesChanged)
+                XACTAudio.SetGlobalVariable("PlanetHealth", CurrentLivesNormalized);
 
             foreach (var p in Players.Values)
                 p.Update();
 
             AudioTurretsController.Update();
+            ComputeCurrentLives();
         }
 
 
@@ -459,6 +468,28 @@
                 WaveNearToStartCue.Resume();
 
             AudioTurretsController.ResumeLoopingCues();
+        }
+
+
+        private void ComputeCurrentLives()
+        {
+            float current = MathHelper.Clamp(CommonStash.Lives, 0, Simulator.LevelDescriptor.Player.Lives);
+            float normalized = current / Simulator.LevelDescriptor.Player.Lives;
+
+            float delta = normalized - CurrentLivesNormalized;
+            delta = MathHelper.Clamp(delta, -0.01f, 0.01f);
+
+            if (delta != 0)
+            {
+                CurrentLivesNormalized += delta;
+                CurrentLivesNormalized = MathHelper.Clamp(CurrentLivesNormalized, 0, 1);
+                CurrentLivesChanged = true;
+            }
+
+            else
+            {
+                CurrentLivesChanged = false;
+            }
         }
     }
 }

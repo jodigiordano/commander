@@ -41,6 +41,10 @@
                 TimeDeparture = 5000
             };
 
+            MothershipAnimation.Mothership.Position = new Vector3(
+                worldScene.Simulator.Battlefield.Center.X,
+                worldScene.Simulator.Battlefield.Top - MothershipAnimation.Mothership.Size.Y / 2 - 360, 0);
+
             // Switch the music
             Main.MusicController.PlayOrResume(worldScene.World.Descriptor.MusicEnd);
             XACTAudio.PlayCue(worldScene.World.Descriptor.SfxEnd, "Sound Bank");
