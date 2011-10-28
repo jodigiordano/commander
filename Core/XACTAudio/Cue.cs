@@ -71,7 +71,7 @@ namespace EphemereGames.Core.XACTAudio
 
         public void Stop()
         {
-            if (InnerCue.IsDisposed)
+            if (InnerCue.IsStopping || InnerCue.IsStopped || InnerCue.IsDisposed)
                 return;
 
             InnerCue.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
