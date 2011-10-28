@@ -477,7 +477,7 @@
             float normalized = current / Simulator.LevelDescriptor.Player.Lives;
 
             float delta = normalized - CurrentLivesNormalized;
-            delta = MathHelper.Clamp(delta, -0.001f, 0.001f);
+            delta = MathHelper.Clamp(delta, -0.02f, 0.02f);
 
             if (delta != 0)
             {

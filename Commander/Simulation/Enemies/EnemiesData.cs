@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
 
 
     class EnemiesData
@@ -65,11 +66,15 @@
 
         private void ComputeEnemyCountPerc()
         {
-            double newEnemyCountPerc = (float) Enemies.Count / MaxEnemiesForCountPerc;
+            float newEnemyCountPerc = (float) Enemies.Count / MaxEnemiesForCountPerc;
 
-            EnemyCountPercChanged = EnemyCountPerc != newEnemyCountPerc;
+            newEnemyCountPerc = MathHelper.Clamp(newEnemyCountPerc, 0, 1);
 
-            EnemyCountPerc = newEnemyCountPerc;
+            EnemyCountPercChanged = EnemyCountPerc - newEnemyCountPerc != 0;
+
+            var delta = MathHelper.Clamp(newEnemyCountPerc - (float) EnemyCountPerc, -0.02f, 0.02f);
+
+            EnemyCountPerc = MathHelper.Clamp((float) EnemyCountPerc + delta, 0, 1);
         }
     }
 }
