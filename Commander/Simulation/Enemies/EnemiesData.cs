@@ -72,7 +72,7 @@
 
             EnemyCountPercChanged = EnemyCountPerc - newEnemyCountPerc != 0;
 
-            var delta = MathHelper.Clamp(newEnemyCountPerc - (float) EnemyCountPerc, -0.02f, 0.02f);
+            var delta = MathHelper.Clamp(newEnemyCountPerc - (float) EnemyCountPerc, -0.01f, 0.01f);
 
             EnemyCountPerc = MathHelper.Clamp((float) EnemyCountPerc + delta, 0, 1);
         }
