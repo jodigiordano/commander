@@ -1515,6 +1515,45 @@
       <Processor>SoundEffectProcessor</Processor>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="audio\sfx\PlanetOn_loop.wav">
+      <Name>PlanetOn_loop</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="audio\music\Etude12op25Zic+Aliens_2011_09_27.wav">
+      <Name>Etude12op25Zic+Aliens_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\music\NocturneOp27no2IntroZic+Aliens_2011_09_27.wav">
+      <Name>NocturneOp27no2IntroZic+Aliens_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\music\NocturneOp27no2Zic+Aliens_2011_09_27.wav">
+      <Name>NocturneOp27no2Zic+Aliens_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\music\PolonaiseOp44Aliens+ZicIntro_2011_09_27.wav">
+      <Name>PolonaiseOp44Aliens+ZicIntro_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\music\PolonaiseOp44Zic+Aliens_2011_09_27.wav">
+      <Name>PolonaiseOp44Zic+Aliens_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="audio\music\Raindrop2Zic+Aliens_2011_09_27.wav">
+      <Name>Raindrop2Zic+Aliens_2011_09_27</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
