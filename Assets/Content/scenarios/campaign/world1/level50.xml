@@ -357,7 +357,7 @@
       <Y>0</Y>
       <Z>0</Z>
     </StartingPosition>
-    <BulletDamage>0</BulletDamage>
+    <BulletDamage>1</BulletDamage>
   </Player>
   <AvailableTurrets>
     <TurretType>Gravitational</TurretType>
