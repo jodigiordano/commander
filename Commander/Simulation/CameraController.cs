@@ -35,8 +35,8 @@
             CurrentZoomEffectId = -1;
             State = EffectState.None;
 
-            MaxCameraMovingSpeed = 10;
-            MaxCameraZoomSpeed = 0.002f;
+            MaxCameraMovingSpeed = 5;
+            MaxCameraZoomSpeed = 0.001f;
 
             Players = new List<SimPlayer>();
             CameraData = new CameraData();
