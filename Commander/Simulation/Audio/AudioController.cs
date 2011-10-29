@@ -351,6 +351,11 @@
         {
             switch (state)
             {
+                case GameState.Won:
+                case GameState.Lost:
+                    StopLoopingCues();
+                    break;
+
                 case GameState.Paused:
                     PauseLoopingCues();
                     break;
@@ -453,6 +458,18 @@
         public void DoPanelClosed()
         {
             XACTAudio.PlayCue("PanelClose", "Sound Bank");
+        }
+
+
+        private void StopLoopingCues()
+        {
+            foreach (var p in Players.Values)
+                p.StopLoopingCues();
+
+            if (WaveNearToStartCue != null)
+                WaveNearToStartCue.Stop();
+
+            AudioTurretsController.StopLoopingCues();
         }
 
 

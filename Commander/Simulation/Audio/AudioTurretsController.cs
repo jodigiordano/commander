@@ -49,6 +49,15 @@
         }
 
 
+        public void StopLoopingCues()
+        {
+            foreach (var t in DisabledTurrets.Values)
+                t.Stop();
+
+            DisabledTurrets.Clear();
+        }
+
+
         public void PauseLoopingCues()
         {
             foreach (var t in DisabledTurrets.Values)

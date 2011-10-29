@@ -171,7 +171,12 @@
             if (ShipSpeed == 0)
                 MovingCue.Pause();
             else
+            {
+                if (!MovingCue.IsReady)
+                    MovingCue = XACTAudio.GetCue(SimPlayer.InnerPlayer.MovingSound, "Sound Bank");
+
                 MovingCue.PlayOrResume();
+            }
 
             // Modify the cue's attribute depending on the speed of the spaceship
             if (ShipSpeedChanged)
