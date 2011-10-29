@@ -216,7 +216,7 @@
 
             if (!Simulator.EditorWorldMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(World.Id, this));
-            else
+            else if (!Simulator.EditorWorldMode)
             {
                 Main.MusicController.PlayOrResume(World.Descriptor.Music);
             }

@@ -92,7 +92,8 @@
 
             EnableUpdate = true;
 
-            Main.MusicController.PlayOrResume(MusicName);
+            if (!EditorMode)
+                Main.MusicController.PlayOrResume(MusicName);
 
             Simulator.OnFocus();
             Simulator.TeleportPlayers(false);
