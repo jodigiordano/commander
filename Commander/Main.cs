@@ -201,7 +201,7 @@ namespace EphemereGames.Commander
                 case BootSequence.Running:
                     if (!IsActive)
                         return;
-                    
+
                     Visuals.Update(gameTime);
                     Inputs.Update(gameTime);
                     CheatsController.Update();
@@ -288,7 +288,10 @@ namespace EphemereGames.Commander
     {
         static void Main(string[] args)
         {
-            Core.Utilities.ErrorHandling.Run<Main>((int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y, Preferences.FullScreen, GetRunningVersion());
+            if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
+                Core.Utilities.SilentErrorHandling.Run<Main>();
+            else
+                Core.Utilities.ErrorHandling.Run<Main>((int) Preferences.BackBuffer.X, (int) Preferences.BackBuffer.Y, Preferences.FullScreen, GetRunningVersion());
         }
 
 

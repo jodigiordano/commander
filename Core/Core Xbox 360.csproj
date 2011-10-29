@@ -171,6 +171,7 @@
     <Compile Include="Utilities\PathEffect.cs" />
     <Compile Include="Utilities\Pool.cs" />
     <Compile Include="Utilities\SerializableDictionaryProxy.cs" />
+    <Compile Include="Utilities\SilentErrorHandling.cs" />
     <Compile Include="Utilities\StringBuilderExtensions.cs" />
     <Compile Include="Visual\Animations\Animation.cs" />
     <Compile Include="Visual\Animations\AnimationsController.cs" />

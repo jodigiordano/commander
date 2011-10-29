@@ -155,6 +155,7 @@
     <Compile Include="Audio\Preferences.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="Input\PlayerIndexAlt.cs" />
+    <Compile Include="Utilities\SilentErrorHandling.cs" />
     <Compile Include="Utilities\PathEffect.cs" />
     <Compile Include="Utilities\StringBuilderExtensions.cs" />
     <Compile Include="XACTAudio\AudioController.cs" />
