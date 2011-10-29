@@ -16,7 +16,6 @@
         public bool EditorMode;
         public EditorState EditorState;
 
-        private string TransitingTo;
         private FutureJobsController FutureJobs;
 
         private string MusicName;
@@ -26,8 +25,6 @@
             : base(name)
         {
             Level = level;
-
-            TransitingTo = "";
 
             FutureJobs = new FutureJobsController();
 
@@ -246,13 +243,7 @@
         public override void DoPlayerDisconnected(Core.Input.Player player)
         {
             if (Inputs.ConnectedPlayers.Count == 0)
-            {
-                TransitingTo = Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ?
-                    LevelsFactory.GetWorldStringId(1) :
-                    "Menu";
-
-                TransiteTo(TransitingTo);
-            }
+                TransiteTo(Preferences.Target == Core.Utilities.Setting.ArcadeRoyale ? "World" : "Menu");
         }
 
 
@@ -329,8 +320,7 @@
             else
                 Visuals.UpdateScene(newGame.Name, newGame);
 
-            TransitingTo = newGame.Name;
-            TransiteTo(TransitingTo);
+            TransiteTo(newGame.Name);
         }
 
 
