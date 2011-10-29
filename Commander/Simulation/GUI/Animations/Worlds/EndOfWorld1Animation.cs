@@ -49,7 +49,6 @@
             Main.MusicController.PlayOrResume(worldScene.World.Descriptor.MusicEnd);
             XACTAudio.PlayCue(worldScene.World.Descriptor.SfxEnd, "Sound Bank");
 
-            worldScene.NeedReinit = true;
             Simulator.SpawnEnemies = false;
 
             TmpEndOfAlpha = new Text("End of demo!", "Pixelite")

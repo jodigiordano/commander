@@ -11,23 +11,6 @@
         private Particle Effect;
 
 
-        public PinkHole(
-            Simulator simulator,
-            string name,
-            Vector3 path,
-            Vector3 position,
-            Size size,
-            float speed,
-            Particle effect,
-            int startingPourc,
-            double visualPriority)
-            : base (simulator, name, path, position, 0, size, speed, null, startingPourc, visualPriority, false)
-        {
-            Effect = effect;
-            Effect.VisualPriority = visualPriority;
-        }
-
-
         public PinkHole(Simulator simulator, CelestialBodyDescriptor celestialBodyDescriptor, double visualPriority)
             : base(
             simulator, 
@@ -44,6 +27,7 @@
         {
             Effect = simulator.Scene.Particles.Get(celestialBodyDescriptor.ParticleEffect);
             Effect.VisualPriority = visualPriority;
+            Radius = (int) Size;
         }
 
 
@@ -97,7 +81,7 @@
 
         public override void Update()
         {
-            this.LastPosition = this.Position;
+            LastPosition = Position;
             ((RadialGravityModifier) Effect.Model[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
 
             Vector3 deplacement;

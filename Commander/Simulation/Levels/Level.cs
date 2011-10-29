@@ -193,44 +193,17 @@
                 CelestialBody c;
 
                 // Pink Hole
-                if (descriptor.Image == null &&
-                    descriptor.ParticleEffect != null &&
-                    descriptor.ParticleEffect == "trouRose")
-                {
-                    c = new PinkHole
-                    (
-                       Simulator,
-                       descriptor.Name,
-                       descriptor.Path,
-                       descriptor.Position,
-                       descriptor.Size,
-                       descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
-                       Simulator.Scene.Particles.Get(descriptor.ParticleEffect),
-                       descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001
-                    );
-
-                }
+                if (descriptor.Image == null && descriptor.ParticleEffect != null && descriptor.ParticleEffect == "trouRose")
+                    c = new PinkHole(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001);
 
                 // Normal
                 else if (descriptor.Image != null)
                 {
-                    c = new CelestialBody (
-                       Simulator,
-                       descriptor.Name,
-                       descriptor.Path,
-                       descriptor.Position,
-                       descriptor.Rotation,
-                       descriptor.Size,
-                       descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
-                       descriptor.Image,
-                       descriptor.StartingPosition,
-                       NextCelestialBodyVisualPriority -= 0.001,
-                       descriptor.HasMoons)
-                       {
-                           FollowPath = descriptor.FollowPath,
-                           StraightLine = descriptor.StraightLine
-                       };
+                    c = new CelestialBody(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001)
+                    {
+                        FollowPath = descriptor.FollowPath,
+                        StraightLine = descriptor.StraightLine
+                    };
                 }
 
                 // Asteroids belt

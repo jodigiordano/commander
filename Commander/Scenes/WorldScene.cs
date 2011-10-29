@@ -14,7 +14,6 @@
         public World World;
         public LevelStates LevelStates;
         public Simulator Simulator;
-        public bool NeedReinit;
         public bool CanGoBackToMainMenu;
 
         private enum State
@@ -42,7 +41,6 @@
             LeveltoCB = new Dictionary<int, CelestialBody>();
             CBtoLevel = new Dictionary<CelestialBody, int>();
             LevelStates = new LevelStates(this);
-            NeedReinit = false;
             CanGoBackToMainMenu = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale;
             EditorMode = false;
 
@@ -176,15 +174,6 @@
 
         public override void OnFocus()
         {
-            if (NeedReinit)
-            {
-                Simulator.Initialize();
-                InitializeCelestialBodies();
-                LevelStates.Alpha = 255;
-
-                NeedReinit = false;
-            }
-
             InitializeLevelsStates();
 
             Main.CurrentWorld = this;
@@ -209,10 +198,8 @@
             if (Main.CurrentGame != null && World.Descriptor.ContainsLevel(Main.CurrentGame.Level.Infos.Id))
             {
                 var cb = LeveltoCB[Main.CurrentGame.Level.Infos.Id];
-                Simulator.TeleportPlayers(false, cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
+                Simulator.MovePlayers(cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
             }
-            else
-                Simulator.TeleportPlayers(false);
 
             if (!Simulator.EditorWorldMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
                 Add(Main.LevelsFactory.GetEndOfWorldAnimation(World.Id, this));
@@ -229,7 +216,6 @@
         public override void OnFocusLost()
         {
             Simulator.OnFocusLost();
-            Simulator.TeleportPlayers(true);
             XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 

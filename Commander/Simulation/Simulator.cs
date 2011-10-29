@@ -108,7 +108,8 @@ namespace EphemereGames.Commander.Simulation
                     "mothershipMissile",
                     "nextWave",
                     "mothershipAbduction",
-                    "love"
+                    "love",
+                    "teleport"
                 }, true);
 
             Scene.Particles.SetMaxInstances(@"toucherTerre", 3);
@@ -414,6 +415,11 @@ namespace EphemereGames.Commander.Simulation
             EnableInputs = true;
             AudioController.DoFocusGained();
             CameraController.DoFocusGained();
+
+            GUIController.TeleportPlayers(false);
+
+            if (Inputs.ConnectedPlayers.Count > 0)
+                AudioController.TeleportPlayers(false);
         }
 
 
@@ -421,6 +427,11 @@ namespace EphemereGames.Commander.Simulation
         {
             EnableInputs = false;
             AudioController.DoFocusLost();
+
+            GUIController.TeleportPlayers(true);
+
+            if (Inputs.ConnectedPlayers.Count > 0)
+                AudioController.TeleportPlayers(true);
         }
 
 
@@ -558,20 +569,9 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void TeleportPlayers(bool teleportOut, Vector3 position)
+        public void MovePlayers(Vector3 position)
         {
             SimPlayersController.MovePlayers(position);
-
-            TeleportPlayers(teleportOut);
-        }
-
-
-        public void TeleportPlayers(bool teleportOut)
-        {
-            GUIController.TeleportPlayers(teleportOut);
-
-            if (Inputs.ConnectedPlayers.Count > 0)
-                AudioController.TeleportPlayers(teleportOut);
         }
 
 

@@ -98,6 +98,7 @@
     <asset name="mothershipMissile"            type="Particles" path="particules/mothership_missile"/>
     <asset name="mothershipAbduction"          type="Particles" path="particules/abduction"/>
     <asset name="love"                         type="Particles" path="particules/love"/>
+    <asset name="teleport"                     type="Particles" path="particules/teleport"/>
 
     
     <!-- Backgrounds -->

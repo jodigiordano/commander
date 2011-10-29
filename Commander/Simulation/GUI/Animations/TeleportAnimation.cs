@@ -71,7 +71,7 @@
         {
             base.Initialize();
 
-            PinkHole = new PinkHoleLite(Scene, Components[0].Position, Scene.Particles.Get(@"trouRose"), VisualPriority - 0.000001);
+            PinkHole = new PinkHoleLite(Scene, Components[0].Position, Scene.Particles.Get("teleport"), VisualPriority - 0.000001);
             PinkHole.Radius = 1;
             PinkHole.Color = Color;
             PinkHole.ParticleVelocity = 20;

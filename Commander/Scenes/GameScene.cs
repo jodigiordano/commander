@@ -96,7 +96,7 @@
                 Main.MusicController.PlayOrResume(MusicName);
 
             Simulator.OnFocus();
-            Simulator.TeleportPlayers(false);
+            //Simulator.TeleportPlayers(false);
         }
 
 
@@ -107,7 +107,7 @@
             EnableUpdate = false;
 
             Simulator.OnFocusLost();
-            Simulator.TeleportPlayers(true);
+            //Simulator.TeleportPlayers(true);
             XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 

@@ -101,7 +101,7 @@
             Main.MusicController.PlayOrResume("MainMenuMusic");
 
             Simulator.OnFocus();
-            Simulator.TeleportPlayers(false);
+            //Simulator.TeleportPlayers(false);
 
             if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
                 InitConnectFirstPlayer();
@@ -113,7 +113,7 @@
             base.OnFocusLost();
 
             Simulator.OnFocusLost();
-            Simulator.TeleportPlayers(true);
+            //Simulator.TeleportPlayers(true);
             XACTAudio.PlayCue("ScreenChange", "Sound Bank");
         }
 
