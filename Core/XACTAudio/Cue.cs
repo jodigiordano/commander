@@ -63,6 +63,12 @@ namespace EphemereGames.Core.XACTAudio
         }
 
 
+        public float GetVariable(string variable)
+        {
+            return InnerCue.GetVariable(variable);
+        }
+
+
         public void SetVariable(string variable, float value)
         {
             InnerCue.SetVariable(variable, value);
