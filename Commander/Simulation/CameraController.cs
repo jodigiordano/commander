@@ -21,11 +21,14 @@
         private EffectState State;
         private int CurrentZoomEffectId;
 
+        private float MaxZoomWidth;
+        private float MaxZoomHeight;
         private float MaxCameraMovingSpeed;
         private float MaxCameraZoomSpeed;
         private List<SimPlayer> Players;
 
         private bool UsePausePlayer;
+        private bool ManualZoom;
 
 
         public CameraController(Simulator simulator)
@@ -35,11 +38,15 @@
             CurrentZoomEffectId = -1;
             State = EffectState.None;
 
+            MaxZoomWidth = Preferences.BattlefieldBoundaries.X * Preferences.BackBufferZoom;
+            MaxZoomHeight = Preferences.BattlefieldBoundaries.Y * Preferences.BackBufferZoom;
             MaxCameraMovingSpeed = 10;
             MaxCameraZoomSpeed = 0.001f;
 
             Players = new List<SimPlayer>();
             CameraData = new CameraData();
+
+            ManualZoom = false;
         }
 
 
@@ -47,8 +54,8 @@
         {
             CameraData.MaxZoomIn = Preferences.BackBufferZoom;
             CameraData.MaxZoomOut = Math.Min(
-                Simulator.Scene.CameraView.Width / (float) Simulator.Battlefield.Width,
-                Simulator.Scene.CameraView.Height / (float) Simulator.Battlefield.Height);
+                MaxZoomWidth / Simulator.Battlefield.Width,
+                MaxZoomHeight / Simulator.Battlefield.Height);
 
             Players.Clear();
             UsePausePlayer = false;
@@ -85,7 +92,10 @@
                 return;
 
             ComputeNewCameraPosition();
-            ComputeNewCameraZoom();
+
+            if (!ManualZoom)
+                ComputeNewCameraZoom();
+
             CameraData.Zoom = Simulator.Scene.Camera.Zoom;
             CameraData.Update();
         }
@@ -103,6 +113,7 @@
                 Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, CameraData.MaxZoomIn, 0, 500), EffectTerminated);
 
             State = EffectState.ZoomingIn;
+            ManualZoom = false;
         }
 
 
@@ -118,6 +129,7 @@
                 Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, CameraData.MaxZoomOut, 0, 500), EffectTerminated);
 
             State = EffectState.ZoomingOut;
+            ManualZoom = true;
         }
 
 
@@ -167,14 +179,8 @@
 
             float width = Math.Abs(boundaries.Y - boundaries.X) + 100; //padding
             float height = Math.Abs(boundaries.W - boundaries.Z) + 100; //padding
-            float maxZoomWidth = Preferences.BattlefieldBoundaries.X * Preferences.BackBufferZoom;
-            float maxZoomHeight = Preferences.BattlefieldBoundaries.Y * Preferences.BackBufferZoom;
 
-            float newZoom = Math.Min(maxZoomWidth / width, maxZoomHeight / height);
-
-            // no need to zoom the camera
-            if (newZoom >= Preferences.BackBufferZoom)
-                return;
+            float newZoom = MathHelper.Clamp(Math.Min(MaxZoomWidth / width, MaxZoomHeight / height), CameraData.MaxZoomOut, CameraData.MaxZoomIn);
 
             // no need to zoom the camera
             // reduce events
