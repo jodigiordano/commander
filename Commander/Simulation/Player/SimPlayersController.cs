@@ -312,8 +312,12 @@
         public void DoNewGameState(GameState state)
         {
             if (state == GameState.Won || state == GameState.Lost)
-                foreach (var p in Players.Values)
-                    p.GameOver = true;
+                foreach (var p in Players)
+                {
+                    DoCancelAction(p.Key);
+                    p.Value.ActualSelection.Initialize();
+                    p.Value.UpdateSelectionz = false;
+                }
         }
 
 

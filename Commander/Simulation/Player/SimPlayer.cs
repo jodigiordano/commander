@@ -19,7 +19,6 @@
         public Player InnerPlayer;
         public PausePlayer PausePlayer;
         public SpaceshipSpaceship SpaceshipMove;
-        public bool GameOver;
         public SimPlayerDirectionHandler BouncedHandler;
         public SimPlayerHandler RotatedHandler;
 
@@ -62,7 +61,6 @@
             SpaceshipMove.Bounced += new DirectionHandler(DoBounced);
             SpaceshipMove.Rotated += new NoneHandler(DoRotated);
 
-            GameOver = false;
             VibrationMetronome = new Metronome(Preferences.TargetElapsedTimeMs, 100);
         }
 
@@ -79,7 +77,6 @@
             MovingLeft = MovingRight = MovingUp = MovingDown = false;
             LastMouseDirection = Vector3.Zero;
 
-            GameOver = false;
             Firing = false;
 
             if (InnerPlayer.InputType == Core.Input.InputType.MouseAndKeyboard)
@@ -273,13 +270,6 @@
         public void UpdateSelection()
         {
             LastSelection.Sync(ActualSelection);
-
-            if (GameOver)
-            {
-                ActualSelection.Initialize();
-
-                return;
-            }
 
             // In a power-up
             if (PowerUpInUse != PowerUpType.None)
