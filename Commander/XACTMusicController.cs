@@ -9,13 +9,13 @@
     {
         private Dictionary<string, Cue> Musics;
         private string CurrentMusic;
-        private Dictionary<Cue, PathEffect> Fades;
+        private Dictionary<Cue, MusicFade> Fades;
 
 
         public XACTMusicController()
         {
             Musics = new Dictionary<string, Cue>();
-            Fades = new Dictionary<Cue, PathEffect>();
+            Fades = new Dictionary<Cue, MusicFade>();
             CurrentMusic = null;
         }
 
@@ -39,23 +39,15 @@
                 if (cue == null || !cue.IsReady)
                     continue;
 
-                PathEffect fade = null;
+                MusicFade fade = null;
 
                 if (!Fades.TryGetValue(cue, out fade))
                     continue;
 
                 fade.Update();
-                cue.SetVariable("MusicFade", fade.Value);
 
                 if (fade.Terminated)
-                {
-                    if (fade.Value <= 0)
-                        cue.Pause();
-                    else
-                        cue.Resume();
-
                     Fades.Remove(cue);
-                }
             }
         }
 
@@ -106,7 +98,7 @@
             }
 
             music.PlayOrResume();
-            FadeIn(musicName);
+            FadeIn(musicName, true, 1);
             CurrentMusic = musicName;
         }
 
@@ -160,7 +152,7 @@
             if (CurrentMusic == null)
                 return;
 
-            FadeOut(CurrentMusic);
+            FadeOut(CurrentMusic, true, 0);
         }
 
 
@@ -169,7 +161,7 @@
             if (CurrentMusic == null)
                 return;
 
-            FadeIn(CurrentMusic);
+            FadeIn(CurrentMusic, true, 1);
         }
 
 
@@ -182,25 +174,91 @@
         }
 
 
-        private void FadeIn(string musicName)
+        public void FadeIn(string musicName, bool pauseOrResumeAfter, float to)
         {
+            if (!Musics.ContainsKey(musicName) || Musics[musicName] == null)
+                return;
+
             var music = Musics[musicName];
 
             if (Fades.ContainsKey(music))
                 Fades.Remove(music);
 
-            Fades.Add(Musics[musicName], new PathEffect(Path.CreateCurve(CurveType.Linear, 500), 500, Preferences.TargetElapsedTimeMs));
+            Fades.Add(music, new MusicFade(music, pauseOrResumeAfter, to));
         }
 
 
-        private void FadeOut(string musicName)
+        public void FadeOut(string musicName, bool pauseOrResumeAfter, float to)
         {
+            if (!Musics.ContainsKey(musicName) || Musics[musicName] == null)
+                return;
+
             var music = Musics[musicName];
 
             if (Fades.ContainsKey(music))
                 Fades.Remove(music);
 
-            Fades.Add(Musics[musicName], new PathEffect(Path.CreateCurve(CurveType.InversedLinear, 500), 500, Preferences.TargetElapsedTimeMs));
+            Fades.Add(music, new MusicFade(music, pauseOrResumeAfter, to));
+        }
+
+
+        public void FadeInCurrentMusic(bool pauseOrResumeAfter, float to)
+        {
+            if (CurrentMusic == null)
+                return;
+
+            FadeIn(CurrentMusic, pauseOrResumeAfter, to);
+        }
+
+
+        public void FadeOutCurrentMusic(bool pauseOrResumeAfter, float to)
+        {
+            if (CurrentMusic == null)
+                return;
+
+            FadeOut(CurrentMusic, pauseOrResumeAfter, to);
+        }
+    }
+
+
+    class MusicFade
+    {
+        private Cue Cue;
+        private PathEffect Effect;
+        private bool PauseOrResumeAfter;
+        private float To;
+
+
+        public MusicFade(Cue cue, bool pauseOrResumeAfter, float to)
+        {
+            Cue = cue;
+            Effect = new PathEffect(Path.CreateCurve(CurveType.Linear, Cue.GetVariable("MusicFade"), to, 500), 500, Preferences.TargetElapsedTimeMs);
+            PauseOrResumeAfter = pauseOrResumeAfter;
+            To = to;
+        }
+
+
+        public bool Terminated
+        {
+            get { return Effect.Terminated; }
+        }
+
+
+        public void Update()
+        {
+            if (Terminated)
+                return;
+
+            Effect.Update();
+            Cue.SetVariable("MusicFade", Effect.Value);
+
+            if (Terminated && PauseOrResumeAfter)
+            {
+                if (Effect.Value <= 0)
+                    Cue.Pause();
+                else
+                    Cue.Resume();
+            }
         }
     }
 }

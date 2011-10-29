@@ -452,12 +452,15 @@
         public void DoPanelOpened()
         {
             XACTAudio.PlayCue("PanelOpen", "Sound Bank");
+            Main.MusicController.FadeOutCurrentMusic(false, 0.8f);
+
         }
 
 
         public void DoPanelClosed()
         {
             XACTAudio.PlayCue("PanelClose", "Sound Bank");
+            Main.MusicController.FadeInCurrentMusic(false, 1f);
         }
 
 
