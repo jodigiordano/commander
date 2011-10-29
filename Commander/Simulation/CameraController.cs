@@ -30,6 +30,9 @@
         private bool UsePausePlayer;
         private bool ManualZoom;
 
+        private int MaxZoomLevel;
+        private int ZoomLevel;
+
 
         public CameraController(Simulator simulator)
         {
@@ -47,6 +50,9 @@
             CameraData = new CameraData();
 
             ManualZoom = false;
+
+            MaxZoomLevel = 2;
+            ZoomLevel = 2;
         }
 
 
@@ -56,6 +62,7 @@
             CameraData.MaxZoomOut = Math.Min(
                 MaxZoomWidth / Simulator.Battlefield.Width,
                 MaxZoomHeight / Simulator.Battlefield.Height);
+            CameraData.MaxDelta = Math.Abs(CameraData.MaxZoomIn - CameraData.MaxZoomOut);
 
             Players.Clear();
             UsePausePlayer = false;
@@ -103,30 +110,38 @@
 
         public void ZoomIn()
         {
-            if (State == EffectState.ZoomingIn)
+            if (ZoomLevel >= MaxZoomLevel)
                 return;
 
             Simulator.Scene.VisualEffects.CancelEffect(CurrentZoomEffectId);
 
+            ZoomLevel++;
+            var zoom = CameraData.MaxZoomIn - (ZoomLevel >= MaxZoomLevel ? 0 : (CameraData.MaxDelta * ZoomLevel / MaxZoomLevel));
+
             CurrentZoomEffectId = Simulator.Scene.VisualEffects.Add(
                 Simulator.Scene.Camera,
-                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, CameraData.MaxZoomIn, 0, 500), EffectTerminated);
+                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, zoom, 0, 500), EffectTerminated);
 
             State = EffectState.ZoomingIn;
-            ManualZoom = false;
+            
+            if (ZoomLevel >= MaxZoomLevel)
+                ManualZoom = false;
         }
 
 
         public void ZoomOut()
         {
-            if (State == EffectState.ZoomingOut)
+            if (ZoomLevel <= 0)
                 return;
 
             Simulator.Scene.VisualEffects.CancelEffect(CurrentZoomEffectId);
 
+            ZoomLevel--;
+            var zoom = CameraData.MaxZoomOut + (ZoomLevel <= 0 ? 0 : (CameraData.MaxDelta * ZoomLevel / MaxZoomLevel));
+
             CurrentZoomEffectId = Simulator.Scene.VisualEffects.Add(
                 Simulator.Scene.Camera,
-                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, CameraData.MaxZoomOut, 0, 500), EffectTerminated);
+                Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, zoom, 0, 500), EffectTerminated);
 
             State = EffectState.ZoomingOut;
             ManualZoom = true;

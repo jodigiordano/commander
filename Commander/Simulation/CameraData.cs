@@ -7,6 +7,7 @@
     {
         public float MaxZoomIn;
         public float MaxZoomOut;
+        public float MaxDelta;
         public float Zoom;
         public float ZoomPerc;
         public bool ZoomChanged;
