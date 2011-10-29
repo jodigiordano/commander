@@ -127,25 +127,25 @@
             var newGame = Menu.PlanetarySystem[6];
 
             newGame.Name = "campaign";
-            newGame.AddTurret(TurretType.Basic, 5, new Vector3(10, -14, 0), true, false);
+            newGame.AddTurret(TurretType.Basic, 3, new Vector3(10, -14, 0), true, false);
             newGame.Invincible = true;
 
             var options = Menu.PlanetarySystem[1];
             options.Name = "options";
-            options.AddTurret(TurretType.Basic, 2, new Vector3(-20, -5, 0), true, false);
+            options.AddTurret(TurretType.Basic, 1, new Vector3(-20, -5, 0), true, false);
             options.AddTurret(TurretType.MultipleLasers, 4, new Vector3(12, 0, 0), true, false);
 
             var editor = Menu.PlanetarySystem[2];
             editor.Name = "universe";
-            editor.AddTurret(TurretType.Laser, 7, new Vector3(3, -7, 0), true, false);
-            editor.AddTurret(TurretType.Missile, 3, new Vector3(-8, 0, 0), true, false);
+            editor.AddTurret(TurretType.Laser, 2, new Vector3(3, -7, 0), true, false);
+            editor.AddTurret(TurretType.Missile, 1, new Vector3(-8, 0, 0), true, false);
 
             var quit = Menu.PlanetarySystem[3];
             quit.Name = "quit";
 
             var help = Menu.PlanetarySystem[4];
             help.Name = "how to play";
-            help.AddTurret(TurretType.SlowMotion, 3, new Vector3(-10, -3, 0), true, false);
+            help.AddTurret(TurretType.SlowMotion, 2, new Vector3(-10, -3, 0), true, false);
 
             var credits = Menu.PlanetarySystem[5];
             credits.Name = "credits";

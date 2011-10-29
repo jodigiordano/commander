@@ -219,7 +219,6 @@
             else
             {
                 Main.MusicController.PlayOrResume(World.Descriptor.Music);
-                XACTAudio.ChangeCategoryVolume("Turrets", 0);
             }
 
             if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
