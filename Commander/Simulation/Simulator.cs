@@ -413,6 +413,7 @@ namespace EphemereGames.Commander.Simulation
             SyncPlayers();
             EnableInputs = true;
             AudioController.DoFocusGained();
+            CameraController.DoFocusGained();
         }
 
 

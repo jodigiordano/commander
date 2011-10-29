@@ -35,7 +35,7 @@
             CurrentZoomEffectId = -1;
             State = EffectState.None;
 
-            MaxCameraMovingSpeed = 5;
+            MaxCameraMovingSpeed = 10;
             MaxCameraZoomSpeed = 0.001f;
 
             Players = new List<SimPlayer>();
@@ -127,6 +127,12 @@
                 MathHelper.Clamp(input.X, Simulator.Scene.CameraView.Left + padding.X, Simulator.Scene.CameraView.Right - padding.X),
                 MathHelper.Clamp(input.Y, Simulator.Scene.CameraView.Top + padding.Y, Simulator.Scene.CameraView.Bottom - padding.Y),
                 0);
+        }
+
+
+        public void DoFocusGained()
+        {
+            CameraData.ZoomChangedOverride = true;
         }
 
 

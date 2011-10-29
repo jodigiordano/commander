@@ -10,6 +10,7 @@
         public float Zoom;
         public float ZoomPerc;
         public bool ZoomChanged;
+        public bool ZoomChangedOverride;
 
 
         public CameraData()
@@ -18,6 +19,7 @@
             MaxZoomOut = 0;
             ZoomPerc = 0;
             ZoomChanged = false;
+            ZoomChangedOverride = false;
         }
 
 
@@ -28,7 +30,8 @@
 
             float delta = newZoom - currentZoom;
 
-            ZoomChanged = delta != 0;
+            ZoomChanged = ZoomChangedOverride || delta != 0;
+            ZoomChangedOverride = false;
 
             ZoomPerc = MathHelper.Clamp(ZoomPerc + delta, 0, 1);
         }

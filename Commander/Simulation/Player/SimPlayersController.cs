@@ -111,6 +111,7 @@
             var simPlayer = Players[player];
 
             DoAdvancedViewAction(player, false);
+            DoCancelAction(player);
 
             Players.Remove(player);
             PlayersList.Remove(simPlayer);
