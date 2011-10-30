@@ -81,7 +81,7 @@
 
         public Vector3 CurrentSpeed
         {
-            get { return SpaceshipMove.SteeringBehavior.CurrentSpeed; }
+            get { return SpaceshipMove.SteeringBehavior.Momentum; }
         }
 
 

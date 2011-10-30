@@ -15,7 +15,7 @@
     <XnaCrossPlatformGroupID>55a79d11-a65d-458c-a9ca-fc9011e650ac</XnaCrossPlatformGroupID>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <ManifestCertificateThumbprint>69CE875ADF4DB895B0CA570592D31A7B5036F141</ManifestCertificateThumbprint>
     <ManifestKeyFile>
     </ManifestKeyFile>
@@ -30,9 +30,9 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <PublishUrl>C:\Users\Jodi\Desktop\ArcadeRoyale3\</PublishUrl>
+    <PublishUrl>http://www.ephemeregames.com/commander/arcaderoyale/</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
+    <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
@@ -43,6 +43,7 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>Commander</ProductName>
     <PublisherName>Ephemere Games</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>0</ApplicationRevision>

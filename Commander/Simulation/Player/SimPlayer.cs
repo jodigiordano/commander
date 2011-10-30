@@ -189,13 +189,13 @@
 
         public Vector3 CurrentSpeed
         {
-            get { return SpaceshipMove.SteeringBehavior.CurrentSpeed; }
+            get { return SpaceshipMove.SteeringBehavior.Momentum; }
         }
 
 
         public float MaximumSpeed
         {
-            get { return SpaceshipMove.SteeringBehavior.MaximumSpeed; }
+            get { return SpaceshipMove.SteeringBehavior.MaximumMomentum; }
         }
 
 

@@ -65,13 +65,13 @@
         protected abstract void DoUpdate();
 
 
-        public Vector3 CurrentSpeed
+        public Vector3 Momentum
         {
             get { return Speed * Acceleration; }
         }
 
 
-        public float MaximumSpeed
+        public float MaximumMomentum
         {
             get { return Speed * MaxAcceleration; }
         }

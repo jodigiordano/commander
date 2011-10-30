@@ -19,6 +19,7 @@
         // Movement
         public virtual Vector3 Position         { get; set; }
         public float Speed                      { get { return SteeringBehavior.Speed; } set { SteeringBehavior.Speed = value; } }
+        public Vector3 Momentum                 { get { return SteeringBehavior.Momentum; } }
         public Vector3 Direction                { get; set; }
         private Vector3 LastPosition;
 

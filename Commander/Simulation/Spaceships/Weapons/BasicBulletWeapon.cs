@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System;
     using Microsoft.Xna.Framework;
 
 
@@ -29,10 +30,23 @@
             p.Direction = Spaceship.Direction;
             p.AttackPoints = AttackPoints;
             p.VisualPriority = VisualPriorities.Default.DefaultBullet;
-            p.Speed = 10;
             p.Image.SizeX = 0.75f;
             p.ShowMovingEffect = false;
             p.Color = Spaceship.ShieldColor;
+
+            var moving = Spaceship.Momentum;
+
+            if (moving != Vector3.Zero)
+                moving.Normalize();
+
+            var movingAngle = Core.Physics.Utilities.VectorToAngle(moving);
+            var firingAngle = Core.Physics.Utilities.VectorToAngle(Spaceship.Direction);
+            var delta = movingAngle - firingAngle;
+
+            if (delta > -MathHelper.PiOver2 && delta < MathHelper.PiOver2)
+                p.Speed = Math.Min(Spaceship.Momentum.Length() + 10, 20);
+            else
+                p.Speed = 10;
 
             Bullets.Add(p);
         }
