@@ -87,7 +87,9 @@
                 if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                     return false;
 
-                foreach (var level in Descriptor.Levels)
+                var other = Main.LevelsFactory.Worlds[Descriptor.UnlockedCondition];
+
+                foreach (var level in other.Descriptor.Levels)
                     if (!Main.SaveGameController.IsLevelUnlocked(level))
                         return false;
 
