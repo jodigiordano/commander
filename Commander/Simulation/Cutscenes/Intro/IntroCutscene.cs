@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Cutscenes
 {
     using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
 
 
     class IntroCutscene : Cutscene
@@ -43,6 +44,9 @@
             Resistance = new ResistanceAnimation(Simulator.Simulator, Mothership.Mothership);
             Mothership.Battleships = Resistance.Battleships;
             Mothership.CelestialBodies = Simulator.Simulator.PlanetarySystemController.CelestialBodies;
+            Mothership.StartingPosition = new Vector3(Scene.CameraView.Center.X, Scene.CameraView.Top - Mothership.Mothership.Size.Y / 2, 0);
+            Mothership.ArrivingPosition = new Vector3(Scene.CameraView.Center.X, Scene.CameraView.Top - Mothership.Mothership.Size.Y / 2 + 360, 0);
+            Mothership.DeparturePosition = new Vector3(Scene.CameraView.Center.X, Scene.CameraView.Bottom + Mothership.Mothership.Size.Y, 0);
 
             Length = 82000;
 

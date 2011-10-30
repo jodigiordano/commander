@@ -2,10 +2,10 @@
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Infos>
     <Id>901</Id>
-    <Background>background16</Background>
+    <Background>intro</Background>
   </Infos>
   <Objective>
-    <CelestialBodyToProtect>-7</CelestialBodyToProtect>
+    <CelestialBodyToProtect>-1</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
     <CelestialBody>
@@ -28,155 +28,180 @@
       </Position>
       <Rotation>0</Rotation>
       <InBackground>false</InBackground>
-      <CanSelect>false</CanSelect>
+      <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
     <CelestialBody>
-      <Name>Planete1508144689</Name>
+      <Name>Planete1029154169</Name>
       <Images />
-      <Image>planete5</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <Image>planete7</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Big</Size>
+      <Speed>360000</Speed>
+      <PathPriority>-1</PathPriority>
+      <Path>
+        <X>-40.74264</X>
+        <Y>49.3337326</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>-373.7226</X>
+        <Y>127.21727</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>69</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete203394438</Name>
+      <Images />
+      <Image>planete4</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Big</Size>
+      <Speed>240000</Speed>
+      <PathPriority>-2</PathPriority>
+      <Path>
+        <X>108.279671</X>
+        <Y>59.21435</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>160.326965</X>
+        <Y>148.5251465</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>-104</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete1552541406</Name>
+      <Images />
+      <Image>planete3</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Small</Size>
       <Speed>360000</Speed>
-      <PathPriority>-9</PathPriority>
+      <PathPriority>-3</PathPriority>
       <Path>
-        <X>-54.6729431</X>
-        <Y>53.6440277</Y>
+        <X>-59.40546</X>
+        <Y>65.94086</Y>
         <Z>0</Z>
       </Path>
       <Position>
-        <X>-24.8519363</X>
-        <Y>118.317932</Y>
+        <X>21.27469</X>
+        <Y>75.81785</Y>
         <Z>0</Z>
       </Position>
-      <Rotation>229</Rotation>
+      <Rotation>-30</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
     <CelestialBody>
-      <Name>Planete1659819423</Name>
+      <Name>Planete1894663957</Name>
       <Images />
       <Image>planete6</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Normal</Size>
-      <Speed>480000</Speed>
-      <PathPriority>-11</PathPriority>
-      <Path>
-        <X>-3.048235</X>
-        <Y>-12.0318356</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-397.9912</X>
-        <Y>-154.0669</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>-268</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1694538142</Name>
-      <Images />
-      <Image>vaisseauAlien1</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Big</Size>
-      <Speed>480000</Speed>
-      <PathPriority>-12</PathPriority>
-      <Path>
-        <X>-39.4869041</X>
-        <Y>-32.8181038</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>-481.6061</X>
-        <Y>170.621735</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>112</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1834692204</Name>
-      <Images />
-      <Image>planete3</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Normal</Size>
-      <Speed>240000</Speed>
-      <PathPriority>-8</PathPriority>
-      <Path>
-        <X>-25</X>
-        <Y>28</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>372.847015</X>
-        <Y>135.995</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>240</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1188043442</Name>
-      <Images />
-      <Image>planete4</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
       <StartingTurrets />
       <Size>Small</Size>
-      <Speed>480000</Speed>
-      <PathPriority>-10</PathPriority>
+      <Speed>240000</Speed>
+      <PathPriority>-4</PathPriority>
       <Path>
-        <X>-35.2445755</X>
-        <Y>62.6993866</Y>
+        <X>33</X>
+        <Y>26</Y>
         <Z>0</Z>
       </Path>
       <Position>
-        <X>-56.7035866</X>
-        <Y>-147.12796</Y>
+        <X>-149.010284</X>
+        <Y>-49.21379</Y>
         <Z>0</Z>
       </Position>
-      <Rotation>-165</Rotation>
+      <Rotation>356</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
     <CelestialBody>
-      <Name>Planete1606613491</Name>
+      <Name>Planete589828541</Name>
       <Images />
-      <Image>planete7</Image>
-      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <Image>planete1</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
       <StartingTurrets />
-      <Size>Big</Size>
-      <Speed>120000</Speed>
-      <PathPriority>-7</PathPriority>
+      <Size>Small</Size>
+      <Speed>240000</Speed>
+      <PathPriority>-5</PathPriority>
       <Path>
-        <X>56.10266</X>
-        <Y>-30.30249</Y>
+        <X>-81.66661</X>
+        <Y>-40.89426</Y>
         <Z>0</Z>
       </Path>
       <Position>
-        <X>396.855835</X>
-        <Y>-159.021179</Y>
+        <X>-250.9283</X>
+        <Y>-142.703186</Y>
         <Z>0</Z>
       </Position>
-      <Rotation>323</Rotation>
+      <Rotation>30</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete1726861962</Name>
+      <Images />
+      <Image>planete4</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Small</Size>
+      <Speed>60000</Speed>
+      <PathPriority>-6</PathPriority>
+      <Path>
+        <X>67</X>
+        <Y>-25</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>152.060471</X>
+        <Y>-183.972687</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>-269</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete1158360598</Name>
+      <Images />
+      <Image>planete3</Image>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Normal</Size>
+      <Speed>10000</Speed>
+      <PathPriority>-7</PathPriority>
+      <Path>
+        <X>18</X>
+        <Y>-1</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>-430.553284</X>
+        <Y>-149.604721</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>222</Rotation>
       <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
@@ -187,11 +212,6 @@
   <Player>
     <Money>100</Money>
     <Lives>1</Lives>
-    <StartingPosition>
-      <X>175</X>
-      <Y>-150</Y>
-      <Z>0</Z>
-    </StartingPosition>
   </Player>
   <AvailableTurrets />
   <AvailablePowerUps />

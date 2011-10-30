@@ -32,6 +32,10 @@
         public float ArrivalZoom;
         public float DepartureZoom;
 
+        public Vector3 ArrivingPosition;
+        public Vector3 DeparturePosition;
+        public float CameraZoomOut;
+
         private Simulator Simulator;
         private MothershipState State;
 
@@ -50,12 +54,17 @@
                 ShieldDistance = 10,
                 ShieldSize = 16
             };
-            Mothership.Position = new Vector3(0, -Mothership.Size.Y/2 - 360, 0);
 
             Simulator.AddSpaceship(Mothership);
 
             State = MothershipState.None;
             Simulator.Scene.Camera.Zoom = 1f;
+        }
+
+
+        public Vector3 StartingPosition
+        {
+            set { Mothership.Position = value; }
         }
 
 
@@ -71,7 +80,7 @@
                 case MothershipState.None:
                     if (TimeBeforeArrival <= 0)
                     {
-                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(Simulator.Battlefield.Center.X, Simulator.Battlefield.Top - Mothership.Size.Y / 2, 0), 0, TimeArrival));
+                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(ArrivingPosition, 0, TimeArrival));
                         Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(1f, ArrivalZoom, 0, TimeArrival));
 
                         foreach (var player in Inputs.Players)
@@ -107,7 +116,7 @@
                     {
                         Mothership.DeactivateDeadlyLights(Simulator.Scene, TimeDeparture / 6);
                         Mothership.CoverInvasionShips(Simulator.Scene, TimeDeparture / 4);
-                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(Simulator.Battlefield.Center.X, Simulator.Battlefield.Bottom + Mothership.Size.Y, 0), 0, TimeDeparture));
+                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(DeparturePosition, 0, TimeDeparture));
                         Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(ArrivalZoom, DepartureZoom, TimeDeparture / 6, TimeDeparture));
 
                         foreach (var player in Inputs.Players)

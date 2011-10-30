@@ -12,6 +12,7 @@
         public float ZoomPerc;
         public bool ZoomChanged;
         public bool ZoomChangedOverride;
+        public bool ManualZoom;
 
 
         public CameraData()
@@ -21,6 +22,7 @@
             ZoomPerc = 0;
             ZoomChanged = false;
             ZoomChangedOverride = false;
+            ManualZoom = false;
         }
 
 

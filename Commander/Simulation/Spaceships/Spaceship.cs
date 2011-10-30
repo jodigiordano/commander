@@ -117,7 +117,7 @@
             {
                 Image.SizeX = value;
                 Circle.Radius = Image.AbsoluteSize.X / 2;
-                ShieldCircle.Radius = Image.AbsoluteSize.X + 10;
+                ShieldCircle.Radius = Circle.Radius + 10;
             }
         }
 
@@ -202,7 +202,7 @@
 
             Vector3 direction = hitPosition - Position;
             float lengthSquared = direction.LengthSquared();
-            float cbLengthSquared = (Image.AbsoluteSize.X + ShieldDistance) * (Image.AbsoluteSize.X + ShieldDistance);
+            float cbLengthSquared = ShieldCircle.Radius * ShieldCircle.Radius;
 
             if (lengthSquared >= cbLengthSquared)
                 Simulator.Scene.Add(new ShieldHitAnimation(ShieldImageName, this, hitPosition, ShieldColor, ShieldSize, VisualPriority, ShieldDistance, ShieldAlpha));

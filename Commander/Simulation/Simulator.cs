@@ -19,6 +19,7 @@ namespace EphemereGames.Commander.Simulation
         public bool CutsceneMode;
         public bool EditorWorldMode;
         public bool CanSelectCelestialBodies;
+        public bool AsteroidBeltOverride;
         
         public bool EditorMode;
         internal EditorState EditorState;
@@ -151,6 +152,7 @@ namespace EphemereGames.Commander.Simulation
             CutsceneMode = false;
             EditorMode = false;
             EditorWorldMode = false;
+            AsteroidBeltOverride = false;
             CanSelectCelestialBodies = true;
             EditorState = EditorState.Editing;
             DebugMode = Preferences.Debug;

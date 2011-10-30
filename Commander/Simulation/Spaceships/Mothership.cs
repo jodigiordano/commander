@@ -85,9 +85,8 @@
                 VisualPriority = visualPriority + 0.000010
             };
 
+
             SizeX = 16;
-            Circle.Radius = Image.AbsoluteSize.X / 2;
-            ShieldCircle.Radius = Circle.Radius + 10;
 
             Missiles = new List<Missile>();
 
@@ -307,7 +306,7 @@
                 FollowEffect follow = new FollowEffect()
                 {
                     Delay = delay,
-                    Length = 100000,
+                    Length = 150000,
                     FollowedObject = FollowedObject,
                     Speed = 1.5f,
                     Progress = Core.Utilities.Effect<IPhysical>.ProgressType.Linear

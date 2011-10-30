@@ -80,6 +80,7 @@
             LevelStates.CelestialBodies = LeveltoCB;
             LevelStates.Descriptor = World.Descriptor;
             LevelStates.Initialize();
+            LevelStates.Show();
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
             Main.MusicController.AddMusic(World.Descriptor.Music);

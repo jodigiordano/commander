@@ -30,7 +30,8 @@
             Simulator = new Simulator(scene, Main.LevelsFactory.CutsceneDescriptors[1])
             {
                 DemoMode = true,
-                CutsceneMode = true
+                CutsceneMode = true,
+                AsteroidBeltOverride = true
             };
             Simulator.Initialize();
 

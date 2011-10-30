@@ -28,7 +28,6 @@
         private List<SimPlayer> Players;
 
         private bool UsePausePlayer;
-        private bool ManualZoom;
 
         private int MaxZoomLevel;
         private int ZoomLevel;
@@ -48,8 +47,6 @@
 
             Players = new List<SimPlayer>();
             CameraData = new CameraData();
-
-            ManualZoom = false;
 
             MaxZoomLevel = 2;
             ZoomLevel = 2;
@@ -100,7 +97,7 @@
 
             ComputeNewCameraPosition();
 
-            if (!ManualZoom)
+            if (!CameraData.ManualZoom)
                 ComputeNewCameraZoom();
 
             CameraData.Zoom = Simulator.Scene.Camera.Zoom;
@@ -125,7 +122,7 @@
             State = EffectState.ZoomingIn;
             
             if (ZoomLevel >= MaxZoomLevel)
-                ManualZoom = false;
+                CameraData.ManualZoom = false;
         }
 
 
@@ -144,7 +141,7 @@
                 Core.Visual.VisualEffects.ChangeSize(Simulator.Scene.Camera.Zoom, zoom, 0, 500), EffectTerminated);
 
             State = EffectState.ZoomingOut;
-            ManualZoom = true;
+            CameraData.ManualZoom = true;
         }
 
 

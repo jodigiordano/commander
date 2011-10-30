@@ -29,8 +29,8 @@
 
             MothershipAnimation = new MothershipAnimation(Simulator)
             {
-                ArrivalZoom = 0.7f,
-                DepartureZoom = 1f,
+                ArrivalZoom = Simulator.CameraController.CameraData.MaxZoomOut,
+                DepartureZoom = Simulator.CameraController.CameraData.MaxZoomOut + Simulator.CameraController.CameraData.MaxDelta / 2,
                 CelestialBodies = CelestialBodiesToDestroy,
                 TimeBeforeArrival = 0,
                 TimeArrival = 5500,
@@ -41,9 +41,17 @@
                 TimeDeparture = 5000
             };
 
-            MothershipAnimation.Mothership.Position = new Vector3(
+            MothershipAnimation.StartingPosition = new Vector3(
                 worldScene.Simulator.Battlefield.Center.X,
                 worldScene.Simulator.Battlefield.Top - MothershipAnimation.Mothership.Size.Y / 2 - 360, 0);
+            MothershipAnimation.ArrivingPosition = new Vector3(
+                Simulator.Battlefield.Center.X,
+                Simulator.Battlefield.Top - MothershipAnimation.Mothership.Size.Y * 0.2f, 0);
+            MothershipAnimation.DeparturePosition = new Vector3(
+                Simulator.Battlefield.Center.X,
+                Simulator.Battlefield.Bottom + MothershipAnimation.Mothership.Size.Y, 0);
+
+            Simulator.CameraController.CameraData.ManualZoom = true;
 
             // Switch the music
             Main.MusicController.PlayOrResume(worldScene.World.Descriptor.MusicEnd);
@@ -51,13 +59,14 @@
 
             Simulator.SpawnEnemies = false;
 
-            TmpEndOfAlpha = new Text("End of demo!", "Pixelite")
+            TmpEndOfAlpha = new Text("End of demo!", "Pixelite", new Vector3(0, 200, 0))
             {
                 SizeX = 4,
                 Alpha = 0,
                 VisualPriority = VisualPriorities.Default.Path + 0.01
             }.CenterIt();
             Simulator.Scene.VisualEffects.Add(TmpEndOfAlpha, VisualEffects.FadeInFrom0(255, 20000, 2000));
+            Simulator.Scene.VisualEffects.Add(TmpEndOfAlpha, VisualEffects.FadeOutTo0(255, 25000, 2000));
         }
 
 
@@ -72,7 +81,10 @@
         public override void Draw()
         {
             MothershipAnimation.Draw();
-            Scene.Add(TmpEndOfAlpha);
+
+            Scene.BeginForeground();
+                Scene.Add(TmpEndOfAlpha);
+            Scene.EndForeground();
         }
     }
 }

@@ -3,9 +3,9 @@
   <Asset Type="ProjectMercury.ParticleEffect">
     <Item Type="Emitters:CircleEmitter">
       <Name>Emitter02</Name>
-      <Budget>100</Budget>
+      <Budget>50</Budget>
       <Term>9</Term>
-      <ReleaseQuantity>100</ReleaseQuantity>
+      <ReleaseQuantity>50</ReleaseQuantity>
       <Enabled>true</Enabled>
       <ReleaseSpeed>
         <Value>25</Value>
