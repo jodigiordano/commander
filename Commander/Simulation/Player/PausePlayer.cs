@@ -6,7 +6,7 @@
 
     class PausePlayer
     {
-        public SpaceshipSpaceship SpaceshipMove;
+        public Spaceship SpaceshipMove;
 
         // for keyboard
         public bool MovingLeft;
@@ -25,7 +25,7 @@
         {
             Simulator = simulator;
 
-            SpaceshipMove = new SpaceshipSpaceship(simulator)
+            SpaceshipMove = new Spaceship(simulator)
             {
                 Speed = 4,
                 VisualPriority = VisualPriorities.Default.PlayerPanelCursor

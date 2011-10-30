@@ -49,7 +49,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            Bullet = (PulseBullet) Simulation.BulletsFactory.Get(BulletType.Pulse);
+            Bullet = (PulseBullet) Simulator.BulletsFactory.Get(BulletType.Pulse);
 
             Bullet.AttackPoints = 50;
             Bullet.LifePoints = float.MaxValue;

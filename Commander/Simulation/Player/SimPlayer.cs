@@ -18,7 +18,7 @@
         public PowerUpType PowerUpInUse;
         public Player InnerPlayer;
         public PausePlayer PausePlayer;
-        public SpaceshipSpaceship SpaceshipMove;
+        public Spaceship SpaceshipMove;
         public SimPlayerDirectionHandler BouncedHandler;
         public SimPlayerHandler RotatedHandler;
 
@@ -46,7 +46,7 @@
             InnerPlayer = player;
             PowerUpInUse = PowerUpType.None;
 
-            SpaceshipMove = new SpaceshipSpaceship(simulator)
+            SpaceshipMove = new Spaceship(simulator)
             {
                 Speed = 4,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
@@ -54,9 +54,11 @@
                 ShieldImageName = "SpaceshipHitMask",
                 ShieldColor = InnerPlayer.Color,
                 ShieldAlpha = 255,
-                ShieldDistance = 10,
+                ShieldDistance = 32,
                 ShieldSize = 4
             };
+            SpaceshipMove.Weapon = new BasicBulletWeapon(Simulator, SpaceshipMove, 100, 1);
+            SpaceshipMove.SizeX = 4;
 
             SpaceshipMove.Bounced += new DirectionHandler(DoBounced);
             SpaceshipMove.Rotated += new NoneHandler(DoRotated);
@@ -164,7 +166,7 @@
         {
             set
             {
-                SpaceshipMove.BulletAttackPoints = value;
+                SpaceshipMove.Weapon.AttackPoints = value;
             }
         }
 

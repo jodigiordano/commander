@@ -117,7 +117,7 @@
             {
                 Image.SizeX = value;
                 Circle.Radius = Image.AbsoluteSize.X / 2;
-                ShieldCircle.Radius = Circle.Radius + 10;
+                ShieldCircle.Radius = Circle.Radius + ShieldDistance;
             }
         }
 

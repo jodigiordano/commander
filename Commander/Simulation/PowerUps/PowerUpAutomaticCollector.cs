@@ -36,7 +36,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            AutomaticCollector = new SpaceshipAutomaticCollector(Simulation)
+            AutomaticCollector = new SpaceshipAutomaticCollector(Simulator)
             {
                 Speed = 8,
                 StartingObject = HumanBattleship,

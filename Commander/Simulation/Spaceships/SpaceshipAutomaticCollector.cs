@@ -5,7 +5,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class SpaceshipAutomaticCollector : SpaceshipSpaceship
+    class SpaceshipAutomaticCollector : Spaceship
     {
         public List<Mineral> Minerals;
 

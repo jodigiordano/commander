@@ -3,7 +3,7 @@
     using EphemereGames.Core.Visual;
 
 
-    class SpaceshipCollector : SpaceshipSpaceship
+    class SpaceshipCollector : Spaceship
     {
         public SpaceshipCollector(Simulator simulator)
             : base(simulator)
@@ -14,12 +14,12 @@
             };
 
             BuyPrice = 0;
-            ShootingFrequency = double.NaN;
             Active = true;
             SfxOut = "sfxPowerUpCollecteurOut";
             SfxIn = "sfxPowerUpCollecteurIn";
             Active = true;
             ShowTrail = true;
+            Weapon = new NoWeapon(simulator, this);
         }
 
 

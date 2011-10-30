@@ -54,7 +54,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            Collector = new SpaceshipCollector(Simulation)
+            Collector = new SpaceshipCollector(Simulator)
             {
                 Position = HumanBattleship.Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,

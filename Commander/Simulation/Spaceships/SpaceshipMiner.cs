@@ -3,7 +3,7 @@
     using EphemereGames.Core.Visual;
 
 
-    class SpaceshipMiner : SpaceshipSpaceship
+    class SpaceshipMiner : Spaceship
     {
         public SimPlayer Owner;
 

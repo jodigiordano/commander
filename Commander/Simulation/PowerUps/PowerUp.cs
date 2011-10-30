@@ -26,12 +26,12 @@
         public string SfxIn                 { get; protected set; }
         public string SfxOut                { get; protected set; }
 
-        protected Simulator Simulation;
+        protected Simulator Simulator;
 
 
         public PowerUp(Simulator simulator)
         {
-            Simulation = simulator;
+            Simulator = simulator;
             Type = PowerUpType.None;
             PayOnActivation = true;
             PayOnUse = false;

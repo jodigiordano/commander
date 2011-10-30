@@ -48,7 +48,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            Bullet = (ShieldBullet) Simulation.BulletsFactory.Get(BulletType.Shield);
+            Bullet = (ShieldBullet) Simulator.BulletsFactory.Get(BulletType.Shield);
 
             Bullet.AttackPoints = float.MaxValue;
             Bullet.LifePoints = float.MaxValue;

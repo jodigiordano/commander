@@ -21,7 +21,7 @@ namespace EphemereGames.Commander.Simulation
             Position = Vector3.Zero;
 
             CorpsCeleste = new CelestialBody(
-                    Simulation,
+                    Simulator,
                     "",
                     Vector3.Zero,
                     Vector3.Zero,

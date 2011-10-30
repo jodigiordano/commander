@@ -75,7 +75,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Start()
         {
-            Miner = new SpaceshipMiner(Simulation)
+            Miner = new SpaceshipMiner(Simulator)
             {
                 Position = HumanBattleship.Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,

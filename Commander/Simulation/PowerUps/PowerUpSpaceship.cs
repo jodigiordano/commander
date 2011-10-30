@@ -5,7 +5,7 @@ namespace EphemereGames.Commander.Simulation
 
     class PowerUpSpaceship : PowerUp
     {
-        public Spaceship SpaceshipSpaceship { get; private set; }
+        public Spaceship Spaceship { get; private set; }
 
         private PowerUpsBattleship HumanBattleship;
         private float ActiveTime;
@@ -30,7 +30,7 @@ namespace EphemereGames.Commander.Simulation
 
         public override void Update()
         {
-            Position = SpaceshipSpaceship.Position;
+            Position = Spaceship.Position;
         }
 
 
@@ -39,30 +39,29 @@ namespace EphemereGames.Commander.Simulation
 
         public override void DoInputMovedDelta(Vector3 delta)
         {
-            SpaceshipSpaceship.SteeringBehavior.NextMovement = delta;
+            Spaceship.SteeringBehavior.NextMovement = delta;
         }
 
 
         public override void Start()
         {
-            SpaceshipSpaceship = new SpaceshipSpaceship(Simulation)
+            Spaceship = new Spaceship(Simulator)
             {
-                ShootingFrequency = 100,
-                BulletAttackPoints = 50,
                 Position = Position,
                 VisualPriority = VisualPriorities.Default.PlayerCursor,
                 StartingObject = HumanBattleship
             };
-            SpaceshipSpaceship.SteeringBehavior.ApplySafeBouncing();
+            Spaceship.SteeringBehavior.ApplySafeBouncing();
+            Spaceship.Weapon = new BasicBulletWeapon(Simulator, Spaceship, 100, 50);
 
-            SfxIn = SpaceshipSpaceship.SfxIn;
-            SfxOut = SpaceshipSpaceship.SfxOut;
+            SfxIn = Spaceship.SfxIn;
+            SfxOut = Spaceship.SfxOut;
         }
 
 
         public override bool Terminated
         {
-            get { return TerminatedOverride || !SpaceshipSpaceship.Active; }
+            get { return TerminatedOverride || !Spaceship.Active; }
         }
     }
 }

@@ -421,7 +421,6 @@
     <Compile Include="Simulation\Spaceships\SpaceshipAutomaticCollector.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipMiner.cs" />
     <Compile Include="Simulation\Spaceships\PowerUpsBattleship.cs" />
-    <Compile Include="Simulation\Spaceships\SpaceshipSpaceship.cs" />
     <Compile Include="Simulation\Turrets\BoosterTurret.cs" />
     <Compile Include="Simulation\Turrets\RailGunTurret.cs" />
     <Compile Include="Simulation\Turrets\GunnerTurret.cs" />

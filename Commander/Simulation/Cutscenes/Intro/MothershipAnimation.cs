@@ -34,7 +34,6 @@
 
         public Vector3 ArrivingPosition;
         public Vector3 DeparturePosition;
-        public float CameraZoomOut;
 
         private Simulator Simulator;
         private MothershipState State;
@@ -51,7 +50,7 @@
                 ShieldImageName = "MothershipHitMask",
                 ShieldColor = Colors.Default.AlienBright,
                 ShieldAlpha = 100,
-                ShieldDistance = 10,
+                ShieldDistance = 40,
                 ShieldSize = 16
             };
 
