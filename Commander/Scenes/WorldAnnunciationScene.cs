@@ -8,6 +8,7 @@
     class WorldAnnunciationScene : CommanderScene
     {
         public World World;
+        public bool InitWorld;
 
         private Text WorldId;
         private Translator WorldName;
@@ -27,6 +28,8 @@
             };
 
             Background = new Image("WhiteBg", Vector3.Zero) { VisualPriority = 1 };
+
+            InitWorld = false;
         }
 
 
@@ -57,6 +60,12 @@
 
             if (Length <= 0)
             {
+                if (InitWorld)
+                {
+                    Main.CurrentWorld.World = World;
+                    Main.CurrentWorld.Initialize();
+                    InitWorld = false;
+                }
                 TransiteTo(World.Id > 1 && World.Id != 999 ? "EndOfDemo" : "World"); //tmp
                 TransitionInProgress = true;
             }

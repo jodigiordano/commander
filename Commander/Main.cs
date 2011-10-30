@@ -80,13 +80,13 @@ namespace EphemereGames.Commander
         }
 
 
-        public static void SetCurrentWorld(int id)
+        public static void SetCurrentWorld(int id, bool initNow)
         {
-            SetCurrentWorld(LevelsFactory.Worlds[id]);
+            SetCurrentWorld(LevelsFactory.Worlds[id], initNow);
         }
 
 
-        public static void SetCurrentWorld(World world)
+        public static void SetCurrentWorld(World world, bool initNow)
         {
             if (CurrentWorld == null)
                 CurrentWorld = (WorldScene) Visuals.GetScene("World");
@@ -94,11 +94,14 @@ namespace EphemereGames.Commander
             if (CurrentWorldAnnounciation == null)
                 CurrentWorldAnnounciation = (WorldAnnunciationScene) Visuals.GetScene("WorldAnnunciation");
 
-            CurrentWorld.World = world;
-            CurrentWorld.EditorMode = world.EditorMode;
-            CurrentWorld.Initialize();
+            if (initNow)
+            {
+                CurrentWorld.World = world;
+                CurrentWorld.Initialize();
+            }
 
             CurrentWorldAnnounciation.World = world;
+            CurrentWorldAnnounciation.InitWorld = !initNow;
             CurrentWorldAnnounciation.Initialize();
         }
 

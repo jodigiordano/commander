@@ -31,8 +31,6 @@
         private Dictionary<int, CelestialBody> LeveltoCB;
         private Dictionary<CelestialBody, int> CBtoLevel;
 
-        public bool EditorMode;
-
 
         public WorldScene() :
             base("World")
@@ -42,7 +40,6 @@
             CBtoLevel = new Dictionary<CelestialBody, int>();
             LevelStates = new LevelStates(this);
             CanGoBackToMainMenu = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale;
-            EditorMode = false;
 
             Title = new CommanderTitle(this, new Vector3(0, -10, 0), VisualPriorities.Default.Title);
             Title.Initialize();
@@ -61,7 +58,7 @@
             {
                 DemoMode = true,
                 WorldMode = true,
-                EditorWorldMode = EditorMode,
+                EditorWorldMode = World.EditorMode,
                 //EditorMode = EditorMode,
                 //EditorState = EditorState.Editing,
                 AvailableLevelsWorldMode = CBtoLevel,
@@ -96,7 +93,7 @@
         {
             get
             {
-                return !EditorMode && Main.CurrentGame != null && Main.CurrentGame.State == GameState.PausedToWorld;
+                return !World.EditorMode && Main.CurrentGame != null && Main.CurrentGame.State == GameState.PausedToWorld;
             }
         }
 
@@ -334,7 +331,7 @@
 
         private void DoSelectAction(Player p)
         {
-            if (EditorMode)
+            if (World.EditorMode)
             {
                 DoSelectActionEditor(p);
                 return;
@@ -347,7 +344,7 @@
             {
                 if (world.Unlocked)
                 {
-                    Main.SetCurrentWorld(world);
+                    Main.SetCurrentWorld(world, false);
                     TransiteTo("WorldAnnunciation");
                 }
                 else
@@ -433,7 +430,7 @@
 
                     currentGame = new GameScene("Game1", level)
                     {
-                        EditorMode = EditorMode,
+                        EditorMode = World.EditorMode,
                         EditorState = Simulator.EditorWorldChoice == EditorWorldChoice.Edit ? EditorState.Editing : EditorState.Playtest
                     };
                     currentGame.Initialize();

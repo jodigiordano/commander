@@ -71,14 +71,11 @@
                 case MothershipState.None:
                     if (TimeBeforeArrival <= 0)
                     {
-                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, -Mothership.Size.Y / 2, 0), 0, TimeArrival));
+                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(Simulator.Battlefield.Center.X, Simulator.Battlefield.Top - Mothership.Size.Y / 2, 0), 0, TimeArrival));
                         Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(1f, ArrivalZoom, 0, TimeArrival));
 
                         foreach (var player in Inputs.Players)
-                        {
-                            //Inputs.VibrateControllerHighFrequency(player, TimeArrival, 0.1f);
                             Inputs.VibrateControllerLowFrequency(player, TimeArrival, 0.4f);
-                        }
 
                         State = MothershipState.Arrival;
                     }
@@ -110,14 +107,11 @@
                     {
                         Mothership.DeactivateDeadlyLights(Simulator.Scene, TimeDeparture / 6);
                         Mothership.CoverInvasionShips(Simulator.Scene, TimeDeparture / 4);
-                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(0, Mothership.Position.Y + 5000, 0), 0, TimeDeparture));
+                        Simulator.Scene.PhysicalEffects.Add(Mothership, Core.Physics.PhysicalEffects.Move(new Vector3(Simulator.Battlefield.Center.X, Simulator.Battlefield.Bottom + Mothership.Size.Y, 0), 0, TimeDeparture));
                         Simulator.Scene.VisualEffects.Add(Simulator.Scene.Camera, Core.Visual.VisualEffects.ChangeSize(ArrivalZoom, DepartureZoom, TimeDeparture / 6, TimeDeparture));
 
                         foreach (var player in Inputs.Players)
-                        {
-                            //Inputs.VibrateControllerHighFrequency(player, TimeDeparture / 3, 0.1f);
                             Inputs.VibrateControllerLowFrequency(player, TimeDeparture / 3, 0.4f);
-                        }
 
                         State = MothershipState.Departure;
                     }

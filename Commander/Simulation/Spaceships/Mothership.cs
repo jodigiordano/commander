@@ -307,7 +307,7 @@
                 FollowEffect follow = new FollowEffect()
                 {
                     Delay = delay,
-                    Length = 15000,
+                    Length = 100000,
                     FollowedObject = FollowedObject,
                     Speed = 1.5f,
                     Progress = Core.Utilities.Effect<IPhysical>.ProgressType.Linear

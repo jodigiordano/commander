@@ -249,11 +249,11 @@
                             TransiteTo("Cutscene1");
                             break;
                         case 0:
-                            Main.SetCurrentWorld(Main.SaveGameController.PlayerSaveGame.CurrentWorld);
+                            Main.SetCurrentWorld(Main.SaveGameController.PlayerSaveGame.CurrentWorld, true);
                             TransiteTo("WorldAnnunciation");
                             break;
                         default:
-                            Main.SetCurrentWorld(Main.LevelsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2));
+                            Main.SetCurrentWorld(Main.LevelsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2), true);
                             TransiteTo("WorldAnnunciation");
                             break;
                     }
@@ -263,7 +263,7 @@
                 case "options": Simulator.ShowPanel(PanelType.Options, true); break;
                 case "universe": if (Preferences.Debug)
                 {
-                    Main.SetCurrentWorld(999);
+                    Main.SetCurrentWorld(999, true);
                     TransiteTo("WorldAnnunciation");
                 } break;
                 case "credits": Simulator.ShowPanel(PanelType.Credits, true); break;

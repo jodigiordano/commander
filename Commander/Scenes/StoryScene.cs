@@ -210,7 +210,7 @@
             if (TransitionOutInProgress)
                 return;
 
-            Main.SetCurrentWorld(WorldToTransiteTo);
+            Main.SetCurrentWorld(WorldToTransiteTo, true);
             TransiteTo("WorldAnnunciation");
             TransitionOutInProgress = true;
         }
