@@ -123,44 +123,44 @@
 
             pointA = new Vector2(Left, Top);
             pointB = new Vector2(Right, Top);
-            pointC = ligne.DebutV2;
-            pointD = ligne.FinV2;
+            pointC = ligne.StartV2;
+            pointD = ligne.EndV2;
 
             if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
-                return ligne.pointIntersection(ref pointA, ref pointB);
+                return ligne.IntersectPoint(ref pointA, ref pointB);
 
 
             // Bas
 
             pointA.X = Left; pointA.Y = Bottom;
             pointB.X = Right; pointB.Y = Bottom;
-            pointC = ligne.DebutV2;
-            pointD = ligne.FinV2;
+            pointC = ligne.StartV2;
+            pointD = ligne.EndV2;
 
             if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
-                return ligne.pointIntersection(ref pointA, ref pointB);
+                return ligne.IntersectPoint(ref pointA, ref pointB);
 
 
             // Gauche
 
             pointA.X = Left; pointA.Y = Top;
             pointB.X = Left; pointB.Y = Bottom;
-            pointC = ligne.DebutV2;
-            pointD = ligne.FinV2;
+            pointC = ligne.StartV2;
+            pointD = ligne.EndV2;
 
             if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
-                return ligne.pointIntersection(ref pointA, ref pointB);
+                return ligne.IntersectPoint(ref pointA, ref pointB);
 
 
             // Gauche
 
             pointA.X = Right; pointA.Y = Top;
             pointB.X = Right; pointB.Y = Bottom;
-            pointC = ligne.DebutV2;
-            pointD = ligne.FinV2;
+            pointC = ligne.StartV2;
+            pointD = ligne.EndV2;
 
             if (Collisions.LineLineCollision(ref pointA, ref pointB, ref pointC, ref pointD))
-                return ligne.pointIntersection(ref pointA, ref pointB);
+                return ligne.IntersectPoint(ref pointA, ref pointB);
 
 
             throw new Exception("ne pas appeler s'il n'y a pas lieu.");

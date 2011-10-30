@@ -59,8 +59,8 @@
 
         public static bool LineRectangleCollision(Line line, PhysicalRectangle rectangle)
         {
-            Vector2 debut = line.DebutV2;
-            Vector2 fin = line.FinV2;
+            Vector2 debut = line.StartV2;
+            Vector2 fin = line.EndV2;
 
             return LineRectangleCollision(ref debut, ref fin, rectangle);
         }

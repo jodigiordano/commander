@@ -1,135 +1,116 @@
-//=============================================================================
-//
-// 
-//
-//=============================================================================
-
 namespace EphemereGames.Core.Physics
 {
     using Microsoft.Xna.Framework;
-    using System;
+
 
     public class Line
     {
-
-        //=============================================================================
-        // Attributs
-        //=============================================================================
-
-        public Vector3 Debut;
-        public Vector3 Fin;
+        public Vector3 Start;
+        public Vector3 End;
 
 
-        //=============================================================================
-        // Constructeurs
-        //=============================================================================
-
-        public Line(Vector2 Debut, Vector2 Fin)
+        public Line(Vector2 start, Vector2 end)
         {
-            this.Debut = new Vector3(Debut, 0);
-            this.Fin = new Vector3(Fin, 0);
+            Start = new Vector3(start, 0);
+            End = new Vector3(end, 0);
         }
 
 
-        public Line(Vector3 Debut, Vector3 Fin)
+        public Line(Vector3 start, Vector3 end)
         {
-            this.Debut = Debut;
-            this.Fin = Fin;
+            Start = start;
+            End = end;
         }
 
 
-        //=============================================================================
-        // Services
-        //=============================================================================
-
-        public Vector2 DebutV2
+        public Vector2 StartV2
         {
-            get { return new Vector2(Debut.X, Debut.Y); }
+            get { return new Vector2(Start.X, Start.Y); }
         }
 
 
-        public Vector2 FinV2
+        public Vector2 EndV2
         {
-            get { return new Vector2(Fin.X, Fin.Y); }
+            get { return new Vector2(End.X, End.Y); }
         }
 
 
-        public float Longueur
+        public float Length
         {
             get
             {
-                return (Fin - Debut).Length();
+                return (End - Start).Length();
             }
         }
 
 
-        public Vector3 pointPlusProche(Vector3 point)
+        public Vector3 NearestPoint(Vector3 point)
         {
-            double xDelta = Fin.X - Debut.X;
-            double yDelta = Fin.Y - Debut.Y;
+            double xDelta = End.X - Start.X;
+            double yDelta = End.Y - Start.Y;
 
             if (xDelta == 0 && yDelta == 0)
                 return point;
 
-            double u = ((point.X - Debut.X) * xDelta + (point.Y - Debut.Y) * yDelta) / (xDelta * xDelta + yDelta * yDelta);
+            double u = ((point.X - Start.X) * xDelta + (point.Y - Start.Y) * yDelta) / (xDelta * xDelta + yDelta * yDelta);
 
-            return (u < 0) ? Debut :
-                   (u > 1) ? Fin :
-                   new Vector3((float) (Debut.X + u * xDelta), (float) (Debut.Y + u * yDelta), Debut.Z);
+            return (u < 0) ? Start :
+                   (u > 1) ? End :
+                   new Vector3((float) (Start.X + u * xDelta), (float) (Start.Y + u * yDelta), Start.Z);
         }
 
 
-        public static void PointPlusProche(ref Vector3 ligneDebut, ref Vector3 ligneFin, ref Vector3 point, ref Vector3 resultat)
+        public static void NearestPoint(ref Vector3 start, ref Vector3 end, ref Vector3 point, ref Vector3 result)
         {
-            double xDelta = ligneFin.X - ligneDebut.X;
-            double yDelta = ligneFin.Y - ligneDebut.Y;
-            double zDelta = ligneFin.Z - ligneDebut.Z;
+            double xDelta = end.X - start.X;
+            double yDelta = end.Y - start.Y;
+            double zDelta = end.Z - start.Z;
 
             if (xDelta == 0 && yDelta == 0)
             {
-                resultat.X = point.X;
-                resultat.Y = point.Y;
-                resultat.Z = point.Z;
+                result.X = point.X;
+                result.Y = point.Y;
+                result.Z = point.Z;
 
                 return;
             }
 
-            double u = ((point.X - ligneDebut.X) * xDelta + (point.Y - ligneDebut.Y) * yDelta) / (xDelta * xDelta + yDelta * yDelta);
+            double u = ((point.X - start.X) * xDelta + (point.Y - start.Y) * yDelta) / (xDelta * xDelta + yDelta * yDelta);
 
             if (u < 0)
             {
-                resultat.X = ligneDebut.X;
-                resultat.Y = ligneDebut.Y;
-                resultat.Z = ligneDebut.Z;
+                result.X = start.X;
+                result.Y = start.Y;
+                result.Z = start.Z;
 
                 return;
             }
 
             if (u > 1)
             {
-                resultat.X = ligneFin.X;
-                resultat.Y = ligneFin.Y;
-                resultat.Z = ligneFin.Z;
+                result.X = end.X;
+                result.Y = end.Y;
+                result.Z = end.Z;
 
                 return;
             }
 
 
-            resultat.X = (float)(ligneDebut.X + u * xDelta);
-            resultat.Y = (float)(ligneDebut.Y + u * yDelta);
-            resultat.Z = (float)(ligneDebut.Z + u * zDelta);
+            result.X = (float)(start.X + u * xDelta);
+            result.Y = (float)(start.Y + u * yDelta);
+            result.Z = (float)(start.Z + u * zDelta);
         }
 
 
-        public double distanceDuPointSquared(Vector3 point)
+        public double DistanceFromPointSquared(Vector3 point)
         {
-            return (point - pointPlusProche(point)).LengthSquared();
+            return (point - NearestPoint(point)).LengthSquared();
         }
 
 
-        public void directionRelative(float radians, ref Vector3 resultat)
+        public void RelativeDirection(float radians, ref Vector3 resultat)
         {
-          Vector3 ligne = Fin - Debut;
+          Vector3 ligne = End - Start;
           Vector3 direction;
           Matrix matriceRotation;
 
@@ -142,30 +123,13 @@ namespace EphemereGames.Core.Physics
         }
 
 
-        public Vector2 pointIntersection(Line autreLigne)
+        public Vector2 IntersectPoint(Line other)
         {
-            float slopOfA = getSlop();
-            float bOfA = getB();
+            float slopOfA = GetSlop();
+            float bOfA = GetB();
 
-            float slopOfB = autreLigne.getSlop();
-            float bOfB = autreLigne.getB();
-
-            float slopSum = slopOfA - slopOfB;
-            float bSum = bOfB - bOfA;
-
-            float x = bSum / slopSum;
-            float y = slopOfB * x + bOfB;
-
-            return new Vector2(x, y);
-        }
-
-        public Vector2 pointIntersection(ref Vector2 autreDebut, ref Vector2 autreFin)
-        {
-            float slopOfA = getSlop();
-            float bOfA = getB();
-
-            float slopOfB = (autreDebut.Y - autreFin.Y) / (autreDebut.X - autreFin.X);
-            float bOfB = autreDebut.Y - (autreDebut.X * slopOfB);
+            float slopOfB = other.GetSlop();
+            float bOfB = other.GetB();
 
             float slopSum = slopOfA - slopOfB;
             float bSum = bOfB - bOfA;
@@ -177,17 +141,35 @@ namespace EphemereGames.Core.Physics
         }
 
 
-        public float getSlop()
+        public Vector2 IntersectPoint(ref Vector2 otherStart, ref Vector2 otherEnd)
         {
-            return (Debut.Y - Fin.Y) / (Debut.X - Fin.X);
+            float slopOfA = GetSlop();
+            float bOfA = GetB();
+
+            float slopOfB = (otherStart.Y - otherEnd.Y) / (otherStart.X - otherEnd.X);
+            float bOfB = otherStart.Y - (otherStart.X * slopOfB);
+
+            float slopSum = slopOfA - slopOfB;
+            float bSum = bOfB - bOfA;
+
+            float x = bSum / slopSum;
+            float y = slopOfB * x + bOfB;
+
+            return new Vector2(x, y);
         }
 
 
-        public float getB()
+        private float GetSlop()
         {
-            float slop = getSlop();
+            return (Start.Y - End.Y) / (Start.X - End.X);
+        }
 
-            return Debut.Y - (Debut.X * slop);
+
+        private float GetB()
+        {
+            float slop = GetSlop();
+
+            return Start.Y - (Start.X * slop);
         }
     }
 }

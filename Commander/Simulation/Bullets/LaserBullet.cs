@@ -33,15 +33,15 @@
             MovingEffect = Scene.Particles.Get(@"projectileLaserSimple");
             MovingEffect.VisualPriority = VisualPriority + 0.001f;
 
-            Line.Debut = Turret.Position;
-            Line.Fin = Target.Position;
+            Line.Start = Turret.Position;
+            Line.End = Target.Position;
 
             LineEmitter emitter = (LineEmitter)MovingEffect.Model[0];
-            emitter.Length = Line.Longueur;
+            emitter.Length = Line.Length;
             emitter = (LineEmitter)MovingEffect.Model[1];
-            emitter.Length = Line.Longueur;
+            emitter.Length = Line.Length;
 
-            MovingEffect2 = new VisualLine(Line.Debut, Line.Fin, new Color(255, 0, 110), 4);
+            MovingEffect2 = new VisualLine(Line.Start, Line.End, new Color(255, 0, 110), 4);
             MovingEffect2.VisualPriority = VisualPriority + 0.002f;
 
             LifePoints = Int16.MaxValue;
@@ -67,8 +67,8 @@
 
             Position = Turret.Position;
 
-            Line.Debut = this.Position;
-            Line.Fin = Target.Position;
+            Line.Start = this.Position;
+            Line.End = Target.Position;
 
             LifeSpan -= Preferences.TargetElapsedTimeMs;
 
@@ -103,8 +103,8 @@
             emitter2.Length = emitter1.Length;
             emitter2.TriggerOffset = emitter1.TriggerOffset;
 
-            MovingEffect2.Start = Line.Debut;
-            MovingEffect2.End = Line.Fin;
+            MovingEffect2.Start = Line.Start;
+            MovingEffect2.End = Line.End;
 
             Scene.Add(MovingEffect2);
 

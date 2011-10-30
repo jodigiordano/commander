@@ -34,8 +34,8 @@
 
             Position = Turret.Position + TargetOffset;
             
-            Line.Debut = Position;
-            Line.Fin = Direction * LONGUEUR_LIGNE;
+            Line.Start = Position;
+            Line.End = Direction * LONGUEUR_LIGNE;
 
             MovingEffect = Scene.Particles.Get(@"projectileLaserMultiple");
             LineEmitter emitter = (LineEmitter)MovingEffect.Model[0];
@@ -66,8 +66,8 @@
             else
                 Orphelin = true;
 
-            Line.Debut = this.Position;
-            Line.Fin = this.Position + this.Direction * LONGUEUR_LIGNE;
+            Line.Start = this.Position;
+            Line.End = this.Position + this.Direction * LONGUEUR_LIGNE;
 
             LifeSpan -= Preferences.TargetElapsedTimeMs;
 
@@ -96,8 +96,8 @@
             emitter.Angle = MathHelper.Pi + (float)Math.Atan2(Direction.Y, Direction.X);
             emitter.TriggerOffset = new Vector2(this.Direction.X * (LONGUEUR_LIGNE/2), this.Direction.Y * (LONGUEUR_LIGNE/2));
 
-            MovingEffect2.Start = Line.Debut;
-            MovingEffect2.End = Line.Fin;
+            MovingEffect2.Start = Line.Start;
+            MovingEffect2.End = Line.End;
 
             Scene.Add(MovingEffect2);
 

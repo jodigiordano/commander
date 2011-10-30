@@ -156,10 +156,10 @@
 
         public void GetItems(Line line, IntegerHandler callback)
         {
-            Vector2 start = line.DebutV2;
-            Vector2 direction = line.FinV2 - start;
+            Vector2 start = line.StartV2;
+            Vector2 direction = line.EndV2 - start;
             Vector2 multipliedDirection;
-            float length = line.Longueur;
+            float length = line.Length;
 
             direction.Normalize();
 
@@ -229,10 +229,10 @@
 
         public IEnumerable<int> GetItems(Line line)
         {
-            Vector2 start = line.DebutV2;
-            Vector2 direction = line.FinV2 - start;
+            Vector2 start = line.StartV2;
+            Vector2 direction = line.EndV2 - start;
             Vector2 multipliedDirection;
-            float length = line.Longueur;
+            float length = line.Length;
 
             direction.Normalize();
 
