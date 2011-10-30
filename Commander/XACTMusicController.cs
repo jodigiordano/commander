@@ -190,7 +190,7 @@
 
         public void FadeOut(string musicName, bool pauseOrResumeAfter, float to)
         {
-            if (!Musics.ContainsKey(musicName) || Musics[musicName] == null)
+            if (!Musics.ContainsKey(musicName) || Musics[musicName] == null || !Musics[musicName].IsReady)
                 return;
 
             var music = Musics[musicName];
