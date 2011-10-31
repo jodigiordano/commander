@@ -54,11 +54,12 @@
 
         public override void Draw()
         {
-            Scene.BeginForeground();
+            //Scene.BeginForeground();
 
+            Translator.Position = new Vector3(((CommanderScene) Scene).CameraView.Center.X, ((CommanderScene) Scene).CameraView.Top + 200, 0); 
             Translator.Draw();
 
-            Scene.EndForeground();
+            //Scene.EndForeground();
         }
     }
 }

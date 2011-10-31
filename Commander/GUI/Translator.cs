@@ -16,7 +16,6 @@
         private double[] TimeTranslationElapsed;
         private bool ShowTranslation;
         private Scene Scene;
-        private Vector3 Position;
         private double TotalTimeTranslation;
         private double TotalTimeElapsed;
 
@@ -26,7 +25,6 @@
         public Translator(Scene scene, Vector3 position, string alienFontName, Color alienColor, string knownFont, Color knownColor, string text, float size, bool showTranslation, int timeTranslation, int timeBetweenTwoTranslation, double visualPriority, bool visible)
         {
             Scene = scene;
-            Position = position;
             ShowTranslation = showTranslation;
             TotalTimeTranslation = timeTranslation;
             TotalTimeElapsed = 0;
@@ -48,8 +46,6 @@
                 VisualPriority = visualPriority,
                 Alpha = visible ? knownColor.A : (byte) 0
             };
-
-
 
             PartNotTranslated = new char[text.Length];
             PartTranslated = new char[text.Length];
@@ -74,6 +70,16 @@
                 }
             }
 
+        }
+
+
+        public Vector3 Position
+        {
+            set
+            {
+                ToTranslate.Position = value;
+                Translated.Position = value;
+            }
         }
 
 
