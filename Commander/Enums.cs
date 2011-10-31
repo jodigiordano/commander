@@ -77,7 +77,8 @@
         Toggle = 3,
         QuickToggle = 4,
         Move = 5,
-        Retry = 6
+        Retry = 6,
+        Fire = 7
     };
 }
 

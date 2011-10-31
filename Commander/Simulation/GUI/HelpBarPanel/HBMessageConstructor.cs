@@ -56,6 +56,7 @@
                     case HelpBarMessageType.Toggle: result.Add(GenerateToggleMessage(inputType, config, msg.Value)); break;
                     case HelpBarMessageType.Retry: result.Add(GenerateRetryMessage(inputType, config, msg.Value)); break;
                     case HelpBarMessageType.QuickToggle: result.Add(GenerateAltSelectMessage(inputType, config, msg.Value)); break;
+                    case HelpBarMessageType.Fire: result.Add(GenerateFireMessage(inputType, config, msg.Value)); break;
                 }
 
                 if (subMessages.Count > 1 && i != subMessages.Count - 1)
@@ -86,71 +87,151 @@
         }
 
 
-        private KeyValuePair<string, PanelWidget> GenerateSelectMessage(InputType inputType, InputConfiguration config, string message)
+        public List<Image> CreateSelectImage(InputType inputType, InputConfiguration config)
         {
             return inputType == InputType.MouseAndKeyboard ?
-                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.Select]) { SizeX = ImageSize }, GenerateLabel(message))) :
+                new List<Image>() { new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.Select]) { SizeX = ImageSize } } :
                    inputType == InputType.KeyboardOnly ?
-                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Select]) { SizeX = ImageSize }, GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Select]) { SizeX = ImageSize }, GenerateLabel(message)));
+                new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Select]) { SizeX = ImageSize } } :
+                new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Select]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateAltSelectImage(InputType inputType, InputConfiguration config)
+        {
+            return (inputType == InputType.MouseAndKeyboard || inputType == InputType.KeyboardOnly) ?
+                new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize } } :
+                new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.QuickToggle]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateToggleImage(InputType inputType, InputConfiguration config)
+        {
+            return inputType == InputType.MouseAndKeyboard ?
+                new List<Image>() {
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionPrevious]) { SizeX = ImageSize },
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionNext]) { SizeX = ImageSize } } :
+                    inputType == InputType.KeyboardOnly ?
+                new List<Image>() {
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize },
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize } } :
+                new List<Image>() {
+                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionPrevious]) { SizeX = ImageSize },
+                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionNext]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateMoveImage(InputType inputType, InputConfiguration config)
+        {
+            return inputType == InputType.MouseAndKeyboard ?
+                new List<Image>() {
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveUp]) { SizeX = ImageSize },
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveLeft]) { SizeX = ImageSize },
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveDown]) { SizeX = ImageSize },
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveRight]) { SizeX = ImageSize } } :
+                    inputType == InputType.KeyboardOnly ?
+                new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveCursor]) { SizeX = ImageSize } } :
+                new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.MoveCursor]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateCancelImage(InputType inputType, InputConfiguration config)
+        {
+            return inputType == InputType.MouseAndKeyboard ?
+                       new List<Image>() { new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.Cancel]) { SizeX = ImageSize } } :
+                   inputType == InputType.KeyboardOnly ?
+                       new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Cancel]) { SizeX = ImageSize } } :
+                       new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Cancel]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateRetryImage(InputType inputType, InputConfiguration config)
+        {
+            return inputType == InputType.MouseAndKeyboard ?
+                new List<Image>() { new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.AlternateSelect]) { SizeX = ImageSize } } :
+                   inputType == InputType.KeyboardOnly ?
+                new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.RetryLevel]) { SizeX = ImageSize } } :
+                new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.RetryLevel]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateFireImage(InputType inputType, InputConfiguration config)
+        {
+            return inputType == InputType.MouseAndKeyboard ?
+                new List<Image>() { new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.Fire]) { SizeX = ImageSize } } :
+                   inputType == InputType.KeyboardOnly ?
+                new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Fire]) { SizeX = ImageSize } } :
+                new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.DirectionCursor]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateBackImage(InputType inputType, InputConfiguration config)
+        {
+            return (inputType == InputType.MouseAndKeyboard || inputType == InputType.KeyboardOnly) ?
+                new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Back]) { SizeX = ImageSize } } :
+                new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Back]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateDisconnectImage(InputType inputType, InputConfiguration config)
+        {
+            return (inputType == InputType.MouseAndKeyboard || inputType == InputType.KeyboardOnly) ?
+                new List<Image>() { new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Disconnect]) { SizeX = ImageSize } } :
+                new List<Image>() { new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Disconnect]) { SizeX = ImageSize } };
+        }
+
+
+        public List<Image> CreateZoomImage(InputType inputType, InputConfiguration config)
+        {
+            return (inputType == InputType.MouseAndKeyboard || inputType == InputType.KeyboardOnly) ?
+                new List<Image>() {
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.ZoomIn]) { SizeX = ImageSize },
+                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.ZoomOut]) { SizeX = ImageSize } } :
+                new List<Image>() {
+                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.ZoomIn]) { SizeX = ImageSize },
+                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.ZoomOut]) { SizeX = ImageSize } };
+        }
+
+
+        private KeyValuePair<string, PanelWidget> GenerateSelectMessage(InputType inputType, InputConfiguration config, string message)
+        {
+            return new KeyValuePair<string, PanelWidget>("select", new ImageLabel(CreateSelectImage(inputType, config), GenerateLabel(message)));
         }
 
 
         private KeyValuePair<string, PanelWidget> GenerateAltSelectMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return (inputType == InputType.MouseAndKeyboard || inputType == InputType.KeyboardOnly) ?
-                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize }, GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("select", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.QuickToggle]) { SizeX = ImageSize }, GenerateLabel(message)));
+            return new KeyValuePair<string, PanelWidget>("select", new ImageLabel(CreateAltSelectImage(inputType, config), GenerateLabel(message)));
+        }
+
+
+        private KeyValuePair<string, PanelWidget> GenerateFireMessage(InputType inputType, InputConfiguration config, string message)
+        {
+            return new KeyValuePair<string, PanelWidget>("fire", new ImageLabel(CreateFireImage(inputType, config), GenerateLabel(message)));
         }
 
 
         private KeyValuePair<string, PanelWidget> GenerateToggleMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return inputType == InputType.MouseAndKeyboard ?
-                new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionPrevious]) { SizeX = ImageSize },
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.SelectionNext]) { SizeX = ImageSize } }, GenerateLabel(message))) :
-                    inputType == InputType.KeyboardOnly ?
-                new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize },
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.QuickToggle]) { SizeX = ImageSize } }, GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(new List<Image>() {
-                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionPrevious]) { SizeX = ImageSize },
-                    new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.SelectionNext]) { SizeX = ImageSize } }, GenerateLabel(message)));
+            return new KeyValuePair<string, PanelWidget>("toggle", new ImageLabel(CreateToggleImage(inputType, config), GenerateLabel(message)));
         }
 
 
         private KeyValuePair<string, PanelWidget> GenerateMoveMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return inputType == InputType.MouseAndKeyboard ?
-                new KeyValuePair<string, PanelWidget>("move", new ImageLabel(new List<Image>() {
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveUp]) { SizeX = ImageSize },
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveLeft]) { SizeX = ImageSize },
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveDown]) { SizeX = ImageSize },
-                        new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveRight]) { SizeX = ImageSize } }, GenerateLabel(message))) :
-                    inputType == InputType.KeyboardOnly ?
-                new KeyValuePair<string, PanelWidget>("move", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.MoveCursor]) { SizeX = ImageSize }, GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("move", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.MoveCursor]) { SizeX = ImageSize }, GenerateLabel(message)));
+            return new KeyValuePair<string, PanelWidget>("move", new ImageLabel(CreateMoveImage(inputType, config), GenerateLabel(message)));
         }
 
 
         private KeyValuePair<string, PanelWidget> GenerateCancelMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return inputType == InputType.MouseAndKeyboard ?
-                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.Cancel]) { SizeX = ImageSize }, GenerateLabel(message))) :
-                   inputType == InputType.KeyboardOnly ?
-                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.Cancel]) { SizeX = ImageSize }, GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.Cancel]) { SizeX = ImageSize }, GenerateLabel(message)));
+            return new KeyValuePair<string, PanelWidget>("cancel", new ImageLabel(CreateCancelImage(inputType, config), GenerateLabel(message)));
         }
 
 
         private KeyValuePair<string, PanelWidget> GenerateRetryMessage(InputType inputType, InputConfiguration config, string message)
         {
-            return inputType == InputType.MouseAndKeyboard ?
-                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.MouseConfiguration.ToImage[config.MouseConfiguration.AlternateSelect]) { SizeX = ImageSize }, GenerateLabel(message))) :
-                   inputType == InputType.KeyboardOnly ?
-                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.KeyboardConfiguration.ToImage[config.KeyboardConfiguration.RetryLevel]) { SizeX = ImageSize }, GenerateLabel(message))) :
-                new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(new Image(config.GamepadConfiguration.ToImage[config.GamepadConfiguration.RetryLevel]) { SizeX = ImageSize }, GenerateLabel(message)));
+            return new KeyValuePair<string, PanelWidget>("alselect", new ImageLabel(CreateRetryImage(inputType, config), GenerateLabel(message)));
         }
 
 

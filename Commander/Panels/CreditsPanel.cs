@@ -7,10 +7,19 @@
 
     class CreditsPanel : SlideshowPanel
     {
+        private PushButton VisitWebsite;
+
+
         public CreditsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
             : base(scene, position, size, visualPriority, color)
         {
             SetTitle("Credits");
+
+            var vwText = new Text("Visit website", @"Pixelite") { SizeX = 2 };
+            VisitWebsite = new PushButton(vwText, (int) vwText.AbsoluteSize.X + 20);
+            VisitWebsite.ClickHandler = DoVisitWebsiteClicked;
+
+            AddTitleBarWidget(VisitWebsite);
 
             Slider.SpaceForValue = 400;
 
@@ -25,6 +34,14 @@
             Slider.AddAlias(1, "Associations");
             Slider.AddAlias(2, "Librairies and assets");
             Slider.AddAlias(3, "Special Thanks");
+        }
+
+
+        private void DoVisitWebsiteClicked(PanelWidget widget)
+        {
+#if WINDOWS
+            System.Diagnostics.Process.Start(Preferences.WebsiteURL);
+#endif
         }
 
 

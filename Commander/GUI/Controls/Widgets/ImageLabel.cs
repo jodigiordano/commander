@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
@@ -8,8 +9,8 @@
 
     class ImageLabel : PanelWidget
     {
-        public Vector3 DistanceBetweenImages = new Vector3(10, 0, 0);
-        public Vector3 DistanceBetweenImageAndText = new Vector3(15, 0, 0);
+        public int SpaceBetweenImages;
+        public int SpaceForImage;
 
         private List<Image> Images;
         private Text Text;
@@ -27,6 +28,14 @@
 
         public ImageLabel(List<Image> images, Text text)
         {
+            SpaceBetweenImages = 10;
+            SpaceForImage = 0;
+
+            foreach (var img in images)
+                SpaceForImage += (int) img.AbsoluteSize.X;
+
+            SpaceForImage += Math.Max(0, images.Count - 1) * SpaceBetweenImages + 15;
+
             Images = images;
 
             foreach (var img in images)
@@ -78,12 +87,10 @@
                     var previous = Images[i - 1];
                     var actual = Images[i];
 
-                    actual.Position = previous.Position + new Vector3(previous.AbsoluteSize.X + DistanceBetweenImages.X, DistanceBetweenImages.Y, 0);
+                    actual.Position = previous.Position + new Vector3(previous.AbsoluteSize.X + SpaceBetweenImages, 0, 0);
                 }
 
-                Text.Position =
-                    Images[Images.Count - 1].Position +
-                    new Vector3(Images[Images.Count - 1].AbsoluteSize.X + DistanceBetweenImageAndText.X, DistanceBetweenImageAndText.Y, 0);
+                Text.Position = value + new Vector3(SpaceForImage, 0, 0);
 
                 // Center text verticaly
                 Text.Position += new Vector3(0, Images[Images.Count - 1].AbsoluteSize.Y / 2 - Text.AbsoluteSize.Y / 2, 0);
@@ -108,10 +115,7 @@
         {
             get
             {
-                return new Vector3(
-                    Text.Position.X + Text.AbsoluteSize.X - Images[0].Position.X,
-                    Images[0].AbsoluteSize.Y,
-                    0);
+                return new Vector3(SpaceForImage + Text.AbsoluteSize.X, Images[0].AbsoluteSize.Y, 0);
             }
 
             set { }

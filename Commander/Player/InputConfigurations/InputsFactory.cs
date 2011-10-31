@@ -216,7 +216,8 @@
                         { Keys.F, "KeyF" },
                         { Keys.E, "KeyE" },
                         { Keys.Q, "KeyQ" },
-                        { Keys.Delete, "KeyDelete" }
+                        { Keys.Delete, "KeyDelete" },
+                        { Keys.Escape, "KeyEscape" }
                     }
                 },
 

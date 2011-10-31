@@ -71,6 +71,12 @@
         }
 
 
+        public void ClearAliases()
+        {
+            Aliases.Clear();
+        }
+
+
         public void AddAlias(int value, string alias)
         {
             Aliases.Add(value, alias);

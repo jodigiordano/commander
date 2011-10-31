@@ -136,7 +136,7 @@
             options.AddTurret(TurretType.MultipleLasers, 4, new Vector3(12, 0, 0), true, false);
 
             var editor = Menu.PlanetarySystem[2];
-            editor.Name = "universe";
+            editor.Name = "credits";
             editor.AddTurret(TurretType.Laser, 2, new Vector3(3, -7, 0), true, false);
             editor.AddTurret(TurretType.Missile, 1, new Vector3(-8, 0, 0), true, false);
 
@@ -144,11 +144,11 @@
             quit.Name = "quit";
 
             var help = Menu.PlanetarySystem[4];
-            help.Name = "how to play";
+            help.Name = "universe";
             help.AddTurret(TurretType.SlowMotion, 2, new Vector3(-10, -3, 0), true, false);
 
             var credits = Menu.PlanetarySystem[5];
-            credits.Name = "credits";
+            credits.Name = "how to play";
             credits.AddTurret(TurretType.SlowMotion, 1, new Vector3(-10, -3, 0), true, false);
 
 
