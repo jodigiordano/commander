@@ -184,6 +184,7 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="GUI\Controls\Widgets\ColoredLabel.cs" />
     <Compile Include="GUI\Controls\Widgets\RectangleEmitter.cs" />
     <Compile Include="Player\InputConfigurations\InputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\GamepadInputConfiguration.cs" />

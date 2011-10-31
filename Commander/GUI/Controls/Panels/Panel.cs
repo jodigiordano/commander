@@ -367,6 +367,8 @@
 
         public Color Color
         {
+            get { return Edges[0].Color; }
+
             set
             {
                 for (int i = 0; i < 4; i++)

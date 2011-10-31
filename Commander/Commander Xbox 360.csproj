@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="GUI\Controls\Widgets\ChoicesHorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\CloseButton.cs" />
+    <Compile Include="GUI\Controls\Widgets\ColoredLabel.cs" />
     <Compile Include="GUI\Controls\Widgets\HorizontalSlider.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageCheckBox.cs" />
     <Compile Include="GUI\Controls\Widgets\ImageLabel.cs" />

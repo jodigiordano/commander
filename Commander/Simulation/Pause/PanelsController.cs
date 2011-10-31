@@ -31,7 +31,7 @@
             Players.Clear();
             Panels.Clear();
 
-            Panels.Add(PanelType.Credits, new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 500), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false });
+            Panels.Add(PanelType.Credits, new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 550), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false });
             Panels.Add(PanelType.GeneralNews, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.NewsPanel, Color.White, NewsType.General, "What's up at Ephemere Games") { Visible = false });
             Panels.Add(PanelType.UpdatesNews, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.NewsPanel, Color.White, NewsType.Updates, "You've just been updated!") { Visible = false });
             Panels.Add(PanelType.Options, new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 400), VisualPriorities.Default.OptionsPanel, Color.White) { Visible = false });

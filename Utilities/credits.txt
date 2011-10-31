@@ -19,6 +19,6 @@ License:
 To write: Music by Frederic Chopin. Additional music and sound design by FX Dupas.
 
 What: Font
-Who: 
-License: 
-To write: 
+Who: CK from freakyfonts.de
+License: Donation
+To write: Pixelite font by CK (freakyfonts.de)
