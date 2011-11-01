@@ -246,7 +246,7 @@
 
                 case "how to play": Simulator.ShowPanel(PanelType.Help, true); break;
                 case "options": Simulator.ShowPanel(PanelType.Options, true); break;
-                case "universe": if (Preferences.Debug)
+                case "multiverse": if (Preferences.Debug)
                 {
                     Main.SetCurrentWorld(999, true);
                     TransiteTo("WorldAnnunciation");

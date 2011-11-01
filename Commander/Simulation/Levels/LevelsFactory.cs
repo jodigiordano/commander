@@ -151,7 +151,7 @@
             quit.Name = "quit";
 
             var help = Menu.PlanetarySystem[4];
-            help.Name = "universe";
+            help.Name = "multiverse";
             help.AddTurret(TurretType.SlowMotion, 2, new Vector3(-10, -3, 0), true, false);
 
             var credits = Menu.PlanetarySystem[5];
