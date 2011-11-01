@@ -9,7 +9,7 @@
         public WorldDescriptor Descriptor;
         public LevelDescriptor Layout;
         public Dictionary<int, LevelDescriptor> LevelsDescriptors;
-        public Dictionary<int, HighScores> HighScores;
+        public HighScores HighScores;
         public bool EditorMode;
 
 
@@ -18,7 +18,7 @@
             Descriptor = null;
             Layout = null;
             LevelsDescriptors = new Dictionary<int, LevelDescriptor>();
-            HighScores = new Dictionary<int, HighScores>();
+            HighScores = new HighScores();
             EditorMode = false;
         }
 
@@ -90,7 +90,7 @@
                 var other = Main.LevelsFactory.Worlds[Descriptor.UnlockedCondition];
 
                 foreach (var level in other.Descriptor.Levels)
-                    if (!Main.SaveGameController.IsLevelUnlocked(level))
+                    if (!other.IsLevelUnlocked(level))
                         return false;
 
                 return true;
@@ -139,6 +139,20 @@
                     return Id + "-" + (i + 1);
 
             return "";
+        }
+
+
+        public bool IsLevelUnlocked(int id)
+        {
+            // the highscore is only saved if the game is won.
+            return HighScores.ContainsHighScores(id);
+        }
+
+
+        public void UnlockAllLevels()
+        {
+            foreach (var l in Descriptor.Levels)
+                HighScores.Add(l, "cheater", 1);
         }
     }
 }

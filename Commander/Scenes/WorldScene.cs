@@ -21,7 +21,7 @@
             Transition,
             ConnectPlayer,
             ConnectingPlayer,
-            LoadSaveGame,
+            FadeOutTitleScreen,
             PlayerConnected
         }
 
@@ -137,23 +137,20 @@
                     break;
 
 
-                case State.LoadSaveGame:
-                    if (Main.SaveGameController.IsPlayerSaveGameLoaded)
-                    {
-                        Title.Hide();
-                        LevelStates.Show();
+                case State.FadeOutTitleScreen:
+                    Title.Hide();
+                    LevelStates.Show();
 
-                        if (!Simulator.EnableInputs)
-                            Simulator.SyncPlayers();
+                    if (!Simulator.EnableInputs)
+                        Simulator.SyncPlayers();
 
-                        Simulator.EnableInputs = true;
-                        SceneState = State.PlayerConnected;
+                    Simulator.EnableInputs = true;
+                    SceneState = State.PlayerConnected;
 
-                        Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
-                        Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
+                    Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
+                    Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
 
-                        Main.SaveGameController.PlayerSaveGame.CurrentWorld = World.Id;
-                    }
+                    Main.PlayersController.CampaignData.CurrentWorld = World.Id;
                     break;
             }
         }
@@ -188,7 +185,7 @@
 
             else if (Preferences.Target != Core.Utilities.Setting.ArcadeRoyale)
             {
-                Main.SaveGameController.PlayerSaveGame.CurrentWorld = World.Id;
+                Main.PlayersController.CampaignData.CurrentWorld = World.Id;
             }
 
             Simulator.OnFocus();
@@ -294,7 +291,7 @@
             var player = (Player) p;
 
             if (Inputs.ConnectedPlayers.Count == 1)
-                ReloadPlayerData(player);
+                SceneState = State.FadeOutTitleScreen;
 
             player.ChooseAssets();
         }
@@ -306,11 +303,6 @@
             {
                 if (Inputs.ConnectedPlayers.Count == 0)
                     InitConnectFirstPlayer();
-                else if (Main.SaveGameController.CurrentPlayer == player)
-                {
-                    ReloadPlayerData((Player) Inputs.MasterPlayer);
-                    SceneState = State.LoadSaveGame;
-                }
             }
 
             else
@@ -548,21 +540,13 @@
 
             if (name == "AllLevelsUnlocked")
             {
-                foreach (var l in World.Descriptor.Levels)
-                    Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, GameState.Won, l, 0);
+                World.UnlockAllLevels();
 
                 LevelStates.AllLevelsUnlockedOverride = true;
                 InitializeLevelsStates();
 
-                Main.SaveGameController.SaveAll();
+                Main.PlayersController.SaveAll();
             }
-        }
-
-
-        private void ReloadPlayerData(Player p)
-        {
-            Main.SaveGameController.ReloadPlayerData(p);
-            SceneState = State.LoadSaveGame;
         }
 
 

@@ -111,7 +111,7 @@
                 bool unlocked = Descriptor.Id < 2 || Descriptor.Id == 999; //tmp Alpha (instead of true)
 
                 if (i != 0 && !AllLevelsUnlockedOverride)
-                    unlocked = Main.SaveGameController.IsLevelUnlocked(Descriptor.Levels[i - 1]);
+                    unlocked = Scene.World.IsLevelUnlocked(Descriptor.Levels[i - 1]);
 
                 LevelUnlockedStates[level] = unlocked;
                 CelestialBodies[level].CanSelect = unlocked;

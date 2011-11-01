@@ -615,7 +615,7 @@
         private void CheckAvailableNewGameChoices()
         {
             ActualSelection.AvailableNewGameChoices.Clear();
-            ActualSelection.AvailableNewGameChoices.Add(0, Main.SaveGameController.PlayerSaveGame.CurrentWorld > 0);
+            ActualSelection.AvailableNewGameChoices.Add(0, Main.PlayersController.CampaignData.CurrentWorld > 0);
             ActualSelection.AvailableNewGameChoices.Add(1, true);
 
             int index = 2;

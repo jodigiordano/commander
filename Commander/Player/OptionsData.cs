@@ -1,47 +1,32 @@
 ﻿namespace EphemereGames.Commander
 {
-    using EphemereGames.Core.Persistence;
-    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.SimplePersistence;
 
 
-    public class SharedSaveGame : SharedData
+    public class OptionsData : SimpleData
     {
         public int MusicVolume;
         public int SfxVolume;
         public bool FullScreen;
         public bool ShowHelpBar;
 
-        public SerializableDictionaryProxy<int, HighScores> HighScores;
 
-
-        public SharedSaveGame()
+        public OptionsData()
         {
-            Name = "SharedSaveGame";
-            Folder = "Commander";
-            File = "SharedSaveGame.xml";
+            Name = "Options";
+            Directory = "UserData";
+            File = "Options.xml";
         }
 
 
         protected override void DoInitialize(object data)
         {
-            SharedSaveGame d = data as SharedSaveGame;
+            OptionsData d = data as OptionsData;
 
             MusicVolume = d.MusicVolume;
             SfxVolume = d.SfxVolume;
-            HighScores = d.HighScores;
             FullScreen = d.FullScreen;
             ShowHelpBar = d.ShowHelpBar;
-            
-            HighScores.Initialize();
-        }
-
-
-        public void UpdateProgress(string name, int level, int score)
-        {
-            if (!HighScores.ContainsKey(level))
-                HighScores.Add(level, new HighScores(level));
-
-            HighScores[level].Add(name, score);
         }
 
 
@@ -64,8 +49,6 @@
         protected override void DoSaveStarted()
         {
             base.DoSaveStarted();
-
-            HighScores.InitializeToSave();
         }
 
 
@@ -85,9 +68,7 @@
             FullScreen = Main.Options.FullScreen;
             ShowHelpBar = Main.Options.ShowHelpBar;
 
-            HighScores = new SerializableDictionaryProxy<int, HighScores>();
-
-            Save();
+            Persistence.SaveData(this);
 
             Loaded = true;
         }

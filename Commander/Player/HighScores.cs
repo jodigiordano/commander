@@ -2,57 +2,158 @@
 {
     using System.Collections.Generic;
     using System.Xml.Serialization;
-    using EphemereGames.Core.Utilities;
+    using EphemereGames.Core.SimplePersistence;
 
 
-    public class HighScores
+    public class HighScores : SimpleData
     {
-        public int Level { get; set; }
+        [XmlArrayItem("Level")]
+        public List<LevelScores> Scores;
 
-        [XmlArrayItem("Scores")]
-        public List<KeyAndValue<string, int>> Scores { get; set; }
-
-        private IComparer<KeyAndValue<string, int>> Comparer;
+        private Dictionary<int, LevelScores> InternalScores;
 
 
         public HighScores()
         {
-            Level = -1;
-            Scores = new List<KeyAndValue<string, int>>();
-            Comparer = new ComparerKeyValuePairs();
+            Scores = new List<LevelScores>();
+            InternalScores = new Dictionary<int, LevelScores>();
+
+            Name = "Highscores";
+            File = "highscores.xml";
         }
 
 
-        public HighScores(int id)
+        public void Add(int level, string player, int score)
         {
-            Level = id;
-            Scores = new List<KeyAndValue<string, int>>();
-            Comparer = new ComparerKeyValuePairs();
+            if (!InternalScores.ContainsKey(level))
+            {
+                var levelScore = new LevelScores() { id = level };
+                InternalScores.Add(level, levelScore);
+                Scores.Add(levelScore);
+            }
+
+            InternalScores[level].Add(player, score);
         }
 
 
-        public void Add(string playerName, int score)
+        public bool ContainsHighScores(int level)
         {
-            Scores.Add(new KeyAndValue<string, int>(playerName, score));
-            Scores.Sort(Comparer);
+            return GetHighScore(level) != null;
+        }
+
+
+        public LevelScore GetHighScore(int level)
+        {
+            LevelScores levelScores;
+
+            if (!InternalScores.TryGetValue(level, out levelScores))
+                return null;
+
+            return levelScores.GetHighest();
+        }
+
+
+        public void Clear()
+        {
+            foreach (var s in Scores)
+                s.Clear();
+        }
+
+
+        protected override void DoInitialize(object data)
+        {
+            var d = data as HighScores;
+
+            Scores = d.Scores;
+
+
+            InternalScores.Clear();
+
+            foreach (var s in Scores)
+                InternalScores.Add(s.id, s);
+        }
+
+
+        public override void DoFileNotFound()
+        {
+            base.DoFileNotFound();
+
+            FirstLoad();
+        }
+
+
+        protected override void DoLoadFailed()
+        {
+            base.DoLoadFailed();
+
+            FirstLoad();
+        }
+
+
+        private void FirstLoad()
+        {
+            Scores = new List<LevelScores>();
+            InternalScores = new Dictionary<int, LevelScores>();
+
+            Persistence.SaveData(this);
+            Loaded = true;
+        }
+    }
+
+
+    public class LevelScores
+    {
+        [XmlAttribute("level")]
+        public int id;
+
+        [XmlArrayItem("Score")]
+        public List<LevelScore> Scores;
+
+
+        public LevelScores()
+        {
+            id = -1;
+            Scores = new List<LevelScore>();
+        }
+
+
+        public void Add(string player, int score)
+        {
+            Scores.Add(new LevelScore() { Player = player, Score = score });
+
+            Scores.Sort(delegate(LevelScore s1, LevelScore s2) { return -s1.Score.CompareTo(s2.Score); });
 
             if (Scores.Count > 10)
                 Scores.RemoveAt(9);
         }
 
 
-        private class ComparerKeyValuePairs : IComparer<KeyAndValue<string, int>>
+        public LevelScore GetHighest()
         {
-            public int Compare(KeyAndValue<string, int> x, KeyAndValue<string, int> y)
-            {
-                if (x.Value < y.Value)
-                    return 1;
+            return Scores.Count > 0 ? Scores[0] : null;
+        }
 
-                if (x.Value > y.Value)
-                    return -1;
 
-                return 0;
-            }
+        public void Clear()
+        {
+            Scores.Clear();
+        }
+    }
+
+
+    public class LevelScore
+    {
+        [XmlAttribute("player")]
+        public string Player;
+
+        [XmlAttribute("score")]
+        public int Score;
+
+
+        public LevelScore()
+        {
+            Player = "";
+            Score = 0;
         }
     }
 }

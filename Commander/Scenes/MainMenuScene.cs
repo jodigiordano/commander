@@ -16,7 +16,7 @@
             Transition,
             ConnectPlayer,
             ConnectingPlayer,
-            LoadSaveGame,
+            FadeOutTitleScreen,
             PlayerConnected
         }
 
@@ -66,21 +66,18 @@
                     break;
 
 
-                case State.LoadSaveGame:
-                    if (Main.SaveGameController.IsPlayerSaveGameLoaded)
-                    {
-                        Title.Hide();
-                        Choices.Show();
+                case State.FadeOutTitleScreen:
+                    Title.Hide();
+                    Choices.Show();
 
-                        if (!Simulator.EnableInputs)
-                            Simulator.SyncPlayers();
+                    if (!Simulator.EnableInputs)
+                        Simulator.SyncPlayers();
 
-                        Simulator.EnableInputs = true;
-                        SceneState = State.PlayerConnected;
+                    Simulator.EnableInputs = true;
+                    SceneState = State.PlayerConnected;
 
-                        Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
-                        Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
-                    }
+                    Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
+                    Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
                     break;
             }
         }
@@ -152,7 +149,7 @@
             var player = (Player) p;
 
             if (Inputs.ConnectedPlayers.Count == 1)
-                ReloadPlayerData(player);
+                SceneState = State.FadeOutTitleScreen;
 
             player.ChooseAssets();
         }
@@ -198,18 +195,6 @@
         {
             if (Inputs.ConnectedPlayers.Count == 0)
                 InitConnectFirstPlayer();
-            else if (Main.SaveGameController.CurrentPlayer == player)
-            {
-                ReloadPlayerData((Player) Inputs.MasterPlayer);
-                SceneState = State.LoadSaveGame;
-            }
-        }
-
-
-        private void ReloadPlayerData(Player p)
-        {
-            Main.SaveGameController.ReloadPlayerData(p);
-            SceneState = State.LoadSaveGame;
         }
 
 
@@ -245,11 +230,11 @@
                     {
                         case -1:
                         case 1: //new game
-                            Main.SaveGameController.PlayerSaveGame.ClearAndSave();
+                            Main.PlayersController.ResetCampaign();
                             TransiteTo("Cutscene1");
                             break;
                         case 0:
-                            Main.SetCurrentWorld(Main.SaveGameController.PlayerSaveGame.CurrentWorld, true);
+                            Main.SetCurrentWorld(Main.PlayersController.CampaignData.CurrentWorld, true);
                             TransiteTo("WorldAnnunciation");
                             break;
                         default:

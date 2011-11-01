@@ -25,10 +25,10 @@
         {
             Choices.Clear();
 
-            if (Main.SaveGameController.PlayerSaveGame.LevelsFinishedCount == 0 && Main.SaveGameController.PlayerSaveGame.CurrentWorld == 0)
+            if (Main.PlayersController.CampaignData.CurrentWorld == 0)
                 return;
 
-            AddChoice(new TextContextualMenuChoice("continue", new Text("Continue (World " + Main.SaveGameController.PlayerSaveGame.CurrentWorld + ")", @"Pixelite") { SizeX = 2 }));
+            AddChoice(new TextContextualMenuChoice("continue", new Text("Continue (World " + Main.PlayersController.CampaignData.CurrentWorld + ")", @"Pixelite") { SizeX = 2 }));
             AddChoice(new TextContextualMenuChoice("new", new Text("New campaign", @"Pixelite") { SizeX = 2 }));
 
             foreach (var w in Main.LevelsFactory.Worlds.Values)

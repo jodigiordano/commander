@@ -62,7 +62,7 @@
 
         public void SaveOnDisk()
         {
-            Main.SaveGameController.SharedSaveGame.Save();
+            Main.PlayersController.SaveOptions();
         }
     }
 }

@@ -270,7 +270,7 @@
 
         public void DoCommonStashChanged(CommonStash stash)
         {
-            //GameMenu.Score = stash.TotalScore;
+            //GameMenu.LevelScore = stash.TotalScore;
             GameMenu.Cash = stash.Cash;
             GameMenu.Lives = stash.Lives;
 

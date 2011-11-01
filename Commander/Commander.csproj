@@ -191,6 +191,7 @@
     <Compile Include="Player\InputConfigurations\MouseInputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\KeyboardInputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\InputsFactory.cs" />
+    <Compile Include="Player\PlayerController.cs" />
     <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
@@ -210,7 +211,6 @@
     <Compile Include="Cheats\LevelWonCheat.cs" />
     <Compile Include="Cheats\InputSequenceCheat.cs" />
     <Compile Include="Options.cs" />
-    <Compile Include="SaveGameController.cs" />
     <Compile Include="FutureJobsController.cs" />
     <Compile Include="GUI\Controls\Widgets\NewsWidget.cs" />
     <Compile Include="News\News.cs" />
@@ -247,7 +247,7 @@
     <Compile Include="MusicController.cs" />
     <Compile Include="Panels\PausePanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
-    <Compile Include="Player\SharedSaveGame.cs" />
+    <Compile Include="Player\OptionsData.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Animations\AnimationCommodore.cs" />
     <Compile Include="Scenes\WorldAnnunciationScene.cs" />
@@ -437,7 +437,7 @@
     <Compile Include="Simulation\Enemies\EnemiesFactory.cs" />
     <Compile Include="Simulation\Turrets\TurretBoostLevel.cs" />
     <Compile Include="Simulation\Turrets\TurretLevel.cs" />
-    <Compile Include="Player\SaveGame.cs" />
+    <Compile Include="Player\CampaignData.cs" />
     <Compile Include="Simulation\Levels\Level.cs" />
     <Compile Include="Simulation\Simulator.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />

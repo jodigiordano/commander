@@ -4,6 +4,7 @@
     using System.IO;
     using System.Xml.Serialization;
     using EphemereGames.Commander.Cutscenes;
+    using EphemereGames.Core.SimplePersistence;
     using Microsoft.Xna.Framework;
 
 
@@ -16,10 +17,13 @@
 
         private XmlSerializer LevelSerializer;
         private XmlSerializer WorldSerializer;
+        private XmlSerializer HighscoresSerializer;
 
         private string CampaignDirectory;
         private string MenuDirectory;
         private string EditorDirectory;
+
+        private XmlSerializer Serializer;
 
 
         public LevelsFactory()
@@ -29,6 +33,7 @@
 
             LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
             WorldSerializer = new XmlSerializer(typeof(WorldDescriptor));
+            HighscoresSerializer = new XmlSerializer(typeof(HighScores));
 
             CampaignDirectory = @".\Content\scenarios\campaign\";
             MenuDirectory = @".\Content\scenarios\";
@@ -111,11 +116,13 @@
         {
             LoadCutscenes();
             
-            var worlds = Directory.GetDirectories(CampaignDirectory, "world*");
+            var directories = Directory.GetDirectories(CampaignDirectory, "world*");
 
-            foreach (var w in worlds)
+            foreach (var d in directories)
             {
-                LoadWorld(w);
+                var world = LoadWorld(d);
+
+                Core.Visual.Visuals.AddScene(new StoryScene("Cutscene" + world.Id, world.Id, new IntroCutscene()));
             }
         }
 
@@ -187,6 +194,9 @@
 
             w.Descriptor = LoadWorldDescriptor(directory + @"\world.xml");
             w.Layout = LoadLevelDescriptor(directory + @"\layout.xml");
+            w.HighScores = new HighScores() { Directory = directory };
+
+            Persistence.LoadData(w.HighScores);
 
             var levels = Directory.GetFiles(directory, @"level*.xml");
 
@@ -197,8 +207,6 @@
             }
 
             w.Initialize();
-
-            Core.Visual.Visuals.AddScene(new StoryScene("Cutscene" + w.Id, w.Id, new IntroCutscene()));
 
             Worlds.Add(w.Descriptor.Id, w);
 
@@ -365,15 +373,6 @@
             l.Infos.Id = id;
 
             return l;
-        }
-
-
-        private void CreateDirectory(string directory)
-        {
-            if (Directory.Exists(directory))
-                return;
-
-            Directory.CreateDirectory(directory);
         }
     }
 }

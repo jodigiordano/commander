@@ -201,7 +201,8 @@
         {
             LevelDescriptor descriptor = CurrentLevelDescriptor;
 
-            int score = Main.SaveGameController.GetPlayerHighScore(descriptor.Infos.Id);
+            var highscore = Main.CurrentWorld.World.HighScores.GetHighScore(descriptor.Infos.Id);
+            int score = highscore == null ? 0 : highscore.Score;
 
             Stars.Position = CelestialBody.Position + new Vector3(5, CelestialBody.Circle.Radius + 20, 0);
             Stars.BrightCount = descriptor.GetStarsCount(score);

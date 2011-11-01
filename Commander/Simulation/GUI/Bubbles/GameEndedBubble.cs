@@ -10,7 +10,7 @@
     {
         private Text Quote;
         private ScoreStars Stars;
-        //private Text Score;
+        //private Text LevelScore;
         private ScoreCalculation Score;
         private int DistanceY;
 

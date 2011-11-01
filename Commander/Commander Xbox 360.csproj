@@ -155,12 +155,14 @@
     <Compile Include="Panels\NewsPanel.cs" />
     <Compile Include="Panels\OptionsPanel.cs" />
     <Compile Include="Panels\PausePanel.cs" />
+    <Compile Include="Player\PlayerController.cs" />
+    <Compile Include="Player\CampaignData.cs" />
     <Compile Include="Player\InputConfigurations\GamepadInputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\InputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\InputsFactory.cs" />
     <Compile Include="Player\InputConfigurations\KeyboardInputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\MouseInputConfiguration.cs" />
-    <Compile Include="SaveGameController.cs" />
+    <Compile Include="Player\OptionsData.cs" />
     <Compile Include="Scenes\CommanderScene.cs" />
     <Compile Include="Scenes\EndOfDemoScene.cs" />
     <Compile Include="Scenes\Menu\CommanderTitle.cs" />
@@ -217,7 +219,6 @@
     <Compile Include="Simulation\Levels\World.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Player\HighScores.cs" />
-    <Compile Include="Player\SharedSaveGame.cs" />
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\LoadingScene.cs" />
     <Compile Include="Scenes\MainMenuScene.cs" />
@@ -374,7 +375,6 @@
     <Compile Include="Simulation\Enemies\EnemiesFactory.cs" />
     <Compile Include="Simulation\Turrets\TurretBoostLevel.cs" />
     <Compile Include="Simulation\Turrets\TurretLevel.cs" />
-    <Compile Include="Player\SaveGame.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />
     <Compile Include="Simulation\Turrets\LaserTurret.cs" />
     <Compile Include="Simulation\Bullets\LaserBullet.cs" />

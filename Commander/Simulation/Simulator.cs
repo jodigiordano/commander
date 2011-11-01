@@ -615,13 +615,9 @@ namespace EphemereGames.Commander.Simulation
 
         private void DoNewGameState(GameState state)
         {
-            if (state == GameState.Won || state == GameState.Lost)
+            if (state == GameState.Won)
             {
-                int levelId = LevelsController.Level.Id;
-                int score = LevelsController.Level.CommonStash.TotalScore;
-
-                Main.SaveGameController.UpdateProgress(Inputs.MasterPlayer.Name, state, levelId, score);
-                Main.SaveGameController.SaveAll();
+                Main.PlayersController.UpdateProgress(Main.CurrentWorld.World.Id, Level.Id, Inputs.MasterPlayer.Name, Level.CommonStash.TotalScore);
             }
         }
 

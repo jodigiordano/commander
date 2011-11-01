@@ -32,7 +32,7 @@ namespace EphemereGames.Commander
         public static LevelsFactory LevelsFactory;
         public static XACTMusicController MusicController;
         public static NewsController NewsController;
-        public static SaveGameController SaveGameController;
+        public static PlayersController PlayersController;
         public static CheatsController CheatsController;
         public static InputsFactory InputsFactory;
 
@@ -70,7 +70,7 @@ namespace EphemereGames.Commander
             InputsFactory = new InputsFactory();
             MusicController = new XACTMusicController();
             NewsController = new NewsController();
-            SaveGameController = new SaveGameController();
+            PlayersController = new PlayersController();
             CheatsController = new CheatsController();
 
             Boot = BootSequence.Initial;
@@ -111,9 +111,9 @@ namespace EphemereGames.Commander
             base.Initialize();
 
             Persistence.Initialize("Content", "packages.xml", Services);
+            Core.SimplePersistence.Persistence.Initialize();
             Physics.Initialize();
 
-            SaveGameController.Initialize();
             MusicController.Initialize();
         }
 
@@ -125,25 +125,26 @@ namespace EphemereGames.Commander
             switch (Boot)
             {
                 case BootSequence.Initial:
-                    SaveGameController.LoadSharedSave();
+                    PlayersController.LoadOptions();
+                    PlayersController.LoadCampaign();
                     Boot = BootSequence.LoadingSharedSaveGame;
                     break;
 
                 case BootSequence.LoadingSharedSaveGame:
-                    if (SaveGameController.IsSharedSaveGameLoaded)
+                    if (PlayersController.IsOptionsLoaded && PlayersController.IsCampaignLoaded)
                     {
-                        Options.ShowHelpBar = SaveGameController.SharedSaveGame.ShowHelpBar;
-                        Options.FullScreen = SaveGameController.SharedSaveGame.FullScreen;
-                        Options.MusicVolume = SaveGameController.SharedSaveGame.MusicVolume;
-                        Options.SfxVolume = SaveGameController.SharedSaveGame.SfxVolume;
+                        Options.ShowHelpBar = PlayersController.OptionsData.ShowHelpBar;
+                        Options.FullScreen = PlayersController.OptionsData.FullScreen;
+                        Options.MusicVolume = PlayersController.OptionsData.MusicVolume;
+                        Options.SfxVolume = PlayersController.OptionsData.SfxVolume;
                         Options.FullScreenChanged += new BooleanHandler(DoFullScreenChanged);
                         Options.ShowHelpBarChanged += new BooleanHandler(DoShowHelpBarChanged);
                         Options.VolumeMusicChanged += new Integer2Handler(DoVolumeMusicChanged);
                         Options.VolumeSfxChanged += new Integer2Handler(DoVolumeSfxChanged);
-                        Options.FullScreenChanged += new BooleanHandler(SaveGameController.DoFullScreenChanged);
-                        Options.ShowHelpBarChanged += new BooleanHandler(SaveGameController.DoShowHelpBarChanged);
-                        Options.VolumeMusicChanged += new Integer2Handler(SaveGameController.DoVolumeMusicChanged);
-                        Options.VolumeSfxChanged += new Integer2Handler(SaveGameController.DoVolumeSfxChanged);
+                        Options.FullScreenChanged += new BooleanHandler(PlayersController.DoFullScreenChanged);
+                        Options.ShowHelpBarChanged += new BooleanHandler(PlayersController.DoShowHelpBarChanged);
+                        Options.VolumeMusicChanged += new Integer2Handler(PlayersController.DoVolumeMusicChanged);
+                        Options.VolumeSfxChanged += new Integer2Handler(PlayersController.DoVolumeSfxChanged);
 
                         XACTAudio.Initialize(Content.RootDirectory + @"\audio\Audio.xgs");
                         DoVolumeMusicChanged(Options.MusicVolume);
