@@ -4,13 +4,14 @@
     using System.IO;
     using System.Xml.Serialization;
     using EphemereGames.Commander.Cutscenes;
-    using EphemereGames.Core.SimplePersistence;
     using Microsoft.Xna.Framework;
 
 
     class LevelsFactory
     {
         public Dictionary<int, World> Worlds;
+        public Dictionary<int, World> CampaignWorlds;
+        public Dictionary<int, World> MultiverseWorlds;
         public Dictionary<int, LevelDescriptor> CutsceneDescriptors;
 
         public LevelDescriptor Menu;
@@ -29,6 +30,8 @@
         public LevelsFactory()
         {
             Worlds = new Dictionary<int, World>();
+            CampaignWorlds = new Dictionary<int, World>();
+            MultiverseWorlds = new Dictionary<int, World>();
             CutsceneDescriptors = new Dictionary<int, LevelDescriptor>();
 
             LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
@@ -43,7 +46,8 @@
 
         public void Initialize()
         {
-            Worlds.Clear();
+            CampaignWorlds.Clear();
+            MultiverseWorlds.Clear();
 
             LoadCampaign();
             LoadMenu();
@@ -73,7 +77,7 @@
         {
             var current = 0;
 
-            foreach (var w in Worlds)
+            foreach (var w in CampaignWorlds)
             {
                 if (!w.Value.Unlocked)
                     continue;
@@ -90,8 +94,8 @@
 
         public void SaveWorldOnDisk(int id)
         {
-            World w = Worlds[id];
-
+            World w = MultiverseWorlds[id];
+            
             //using (StreamWriter writer = new StreamWriter(DescriptorsDirectory + @"\level" + id + ".xml"))
             //    LevelSerializer.Serialize(writer.BaseStream, Descriptors[id]);
         }
@@ -121,6 +125,10 @@
             foreach (var d in directories)
             {
                 var world = LoadWorld(d);
+                world.LoadHighscores(Main.PlayersController.CampaignData.Directory + @"\world" + world.Id);
+
+                Worlds.Add(world.Descriptor.Id, world);
+                CampaignWorlds.Add(world.Descriptor.Id, world);
 
                 Core.Visual.Visuals.AddScene(new StoryScene("Cutscene" + world.Id, world.Id, new IntroCutscene()));
             }
@@ -185,6 +193,9 @@
             var w = LoadWorld(EditorDirectory);
 
             w.EditorMode = true;
+
+            Worlds.Add(w.Descriptor.Id, w);
+            MultiverseWorlds.Add(w.Descriptor.Id, w);
         }
 
 
@@ -194,9 +205,6 @@
 
             w.Descriptor = LoadWorldDescriptor(directory + @"\world.xml");
             w.Layout = LoadLevelDescriptor(directory + @"\layout.xml");
-            w.HighScores = new HighScores() { Directory = directory };
-
-            Persistence.LoadData(w.HighScores);
 
             var levels = Directory.GetFiles(directory, @"level*.xml");
 
@@ -207,8 +215,6 @@
             }
 
             w.Initialize();
-
-            Worlds.Add(w.Descriptor.Id, w);
 
             return w;
         }
@@ -251,7 +257,7 @@
 
         public LevelDescriptor GetNextLevel(int worldId, int currentLevelId)
         {
-            return Worlds[worldId].GetNextLevel(currentLevelId);
+            return CampaignWorlds[worldId].GetNextLevel(currentLevelId);
         }
 
 

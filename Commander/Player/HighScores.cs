@@ -95,6 +95,7 @@
             Scores = new List<LevelScores>();
             InternalScores = new Dictionary<int, LevelScores>();
 
+            Main.PlayersController.CreateDirectory(Directory);
             Persistence.SaveData(this);
             Loaded = true;
         }

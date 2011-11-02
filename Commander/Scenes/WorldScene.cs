@@ -150,7 +150,7 @@
                     Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.MoveYourSpaceship);
                     Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 1000);
 
-                    Main.PlayersController.CampaignData.CurrentWorld = World.Id;
+                    Main.PlayersController.SetCampaignWorld(World.Id);
                     break;
             }
         }
@@ -185,7 +185,7 @@
 
             else if (Preferences.Target != Core.Utilities.Setting.ArcadeRoyale)
             {
-                Main.PlayersController.CampaignData.CurrentWorld = World.Id;
+                Main.PlayersController.SetCampaignWorld(World.Id);
             }
 
             Simulator.OnFocus();

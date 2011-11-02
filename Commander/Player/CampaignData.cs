@@ -6,22 +6,15 @@
     public class CampaignData : SimpleData
     {
         public int CurrentWorld;
+        public int Version;
 
 
         public CampaignData()
         {
             Name = "Campaign";
-            Directory = "UserData";
+            Directory = @"UserData\Campaign";
             File = "Campaign.xml";
         }
-
-
-        //public void ClearAndSave()
-        //{
-        //    CurrentWorld = 0;
-
-        //    Save();
-        //}
 
 
         protected override void DoInitialize(object donnee)
@@ -29,6 +22,7 @@
             CampaignData d = donnee as CampaignData;
 
             CurrentWorld = d.CurrentWorld;
+            Version = d.Version;
         }
 
 
@@ -51,7 +45,9 @@
         private void FirstLoad()
         {
             CurrentWorld = 0;
+            Version = Preferences.CampaignVersion;
 
+            Main.PlayersController.CreateDirectory(Directory);
             Persistence.SaveData(this);
             Loaded = true;
         }

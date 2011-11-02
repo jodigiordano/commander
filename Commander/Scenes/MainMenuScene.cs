@@ -45,6 +45,8 @@
             SceneState = State.Transition;
 
             Choices = new MainMenuChoices(Simulator, VisualPriorities.Default.MenuChoices);
+
+            Main.PlayersController.VerifyCampaign();
         }
 
 

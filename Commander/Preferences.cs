@@ -62,5 +62,7 @@
         public const string GeneralNewsURL = "/feeds/news.rss";
         public const string UpdatesNewsURL = "/feeds/updates.rss";
         public const string DLCNewsURL = "/feeds/dlc.rss";
+
+        public const int CampaignVersion = 1;
     }
 }

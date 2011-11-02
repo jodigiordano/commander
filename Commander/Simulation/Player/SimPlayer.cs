@@ -620,7 +620,7 @@
 
             int index = 2;
 
-            foreach (var w in Main.LevelsFactory.Worlds.Values)
+            foreach (var w in Main.LevelsFactory.CampaignWorlds.Values)
                 if (w.Unlocked)
                     ActualSelection.AvailableNewGameChoices.Add(index++, true);
         }

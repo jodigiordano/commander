@@ -31,7 +31,7 @@
             AddChoice(new TextContextualMenuChoice("continue", new Text("Continue (World " + Main.PlayersController.CampaignData.CurrentWorld + ")", @"Pixelite") { SizeX = 2 }));
             AddChoice(new TextContextualMenuChoice("new", new Text("New campaign", @"Pixelite") { SizeX = 2 }));
 
-            foreach (var w in Main.LevelsFactory.Worlds.Values)
+            foreach (var w in Main.LevelsFactory.CampaignWorlds.Values)
             {
                 if (w.Unlocked)
                     AddChoice(new TextContextualMenuChoice("jumpto", new Text("Jump to World " + w.Id, @"Pixelite") { SizeX = 2 }));

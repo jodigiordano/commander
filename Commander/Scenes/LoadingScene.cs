@@ -142,7 +142,7 @@
 
                         if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                         {
-                            Main.SetCurrentWorld(Main.LevelsFactory.Worlds[1], true);
+                            Main.SetCurrentWorld(Main.LevelsFactory.CampaignWorlds[1], true);
                             TransiteTo("World");
                         }
                         else

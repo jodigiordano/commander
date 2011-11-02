@@ -75,14 +75,22 @@
 
         public void ResetCampaign()
         {
-            CampaignData.CurrentWorld = 0;
+            SetCampaignWorld(0);
+            CampaignData.Version = Preferences.CampaignVersion;
             SaveCampaign();
 
-            foreach (var w in Main.LevelsFactory.Worlds.Values)
+            foreach (var w in Main.LevelsFactory.CampaignWorlds.Values)
             {
                 w.HighScores.Clear();
                 Persistence.SaveData(w.HighScores);
             }
+        }
+
+
+        public void VerifyCampaign()
+        {
+            if (CampaignData.Version != Preferences.CampaignVersion)
+                ResetCampaign();
         }
 
 
@@ -110,12 +118,22 @@
         }
 
 
-        private void CreateDirectory(string directory)
+        public void CreateDirectory(string directory)
         {
             if (Directory.Exists(directory))
                 return;
 
             Directory.CreateDirectory(directory);
+        }
+
+
+        public void SetCampaignWorld(int id)
+        {
+            if (id != 0 && !Main.LevelsFactory.CampaignWorlds.ContainsKey(id))
+                return;
+
+            CampaignData.CurrentWorld = id;
+            SaveCampaign();
         }
     }
 }

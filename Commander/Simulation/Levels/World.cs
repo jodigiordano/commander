@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Core.SimplePersistence;
     using Microsoft.Xna.Framework;
 
     
@@ -156,6 +157,14 @@
         {
             foreach (var l in Descriptor.Levels)
                 HighScores.Add(l, "cheater", 1);
+        }
+
+
+        public void LoadHighscores(string to)
+        {
+            HighScores = new HighScores() { Directory = to };
+
+            Persistence.LoadData(HighScores);
         }
     }
 }
