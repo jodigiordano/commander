@@ -81,6 +81,9 @@
         {
             get
             {
+                if (Id == 999 && !Preferences.Debug)
+                    return false;
+
                 if (Descriptor.UnlockedCondition == -1)
                     return true;
 
