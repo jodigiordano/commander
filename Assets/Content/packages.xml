@@ -138,17 +138,6 @@
     <asset name="buy2"                   type="Image" path="GUI/buy2" />
 
     
-    <!-- Help stuff -->
-    
-    <asset name="HelpBattlefield"                  type="Image" path="help/battlefield" />
-    <asset name="HelpControls"                     type="Image" path="help/controls" />
-    <asset name="HelpControlsWin"                  type="Image" path="help/controlsWin" />
-    <asset name="HelpMercenaries"                  type="Image" path="help/mercenaries" />
-    <asset name="HelpTheResistance"                type="Image" path="help/theResistance" />
-    <asset name="HelpMercenariesWin"               type="Image" path="help/mercenariesWin" />
-    <asset name="HelpTheResistanceWin"             type="Image" path="help/theResistanceWin" />
-
-    
     <!-- Sprites -->    
     
     <asset name="mine"                       type="Sprite" path="projectiles/mine1" />
