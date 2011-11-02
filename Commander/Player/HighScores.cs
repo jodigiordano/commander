@@ -103,7 +103,7 @@
 
     public class LevelScores
     {
-        [XmlAttribute("level")]
+        [XmlAttribute("id")]
         public int id;
 
         [XmlArrayItem("Score")]
