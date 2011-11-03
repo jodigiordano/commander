@@ -335,7 +335,7 @@ Global Settings
         Name = Music;
         Public = 1;
         Background Music = 1;
-        Volume = 300;
+        Volume = -100;
 
         Category Entry
         {
@@ -617,7 +617,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::b359635b-0a2a-4b75-a3fc-c383d9d98494;
+            Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -645,7 +645,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::da94cbc3-d0ff-42df-ae90-afa7f22b176e;
+            Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
             Property = 3;
             Sound = 0;
             Line Color = 4294934656;
@@ -687,7 +687,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::5a5a4c15-1fe1-437a-a5f5-2e2dde8d584e;
+            Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -715,7 +715,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::4888ecc2-651b-4cfd-9348-021267c04b7c;
+            Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
             Property = 3;
             Sound = 0;
             Line Color = 4294934656;
@@ -757,7 +757,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::2071f336-e1da-4d9f-b936-c6ea520079b2;
+            Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
             Property = 0;
             Sound = 0;
             Line Color = 4278190335;
@@ -778,7 +778,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::5649fca4-17c1-4f91-ac29-dd70fbb28c2c;
+            Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
             Property = 3;
             Sound = 0;
             Line Color = 4286611711;
@@ -820,7 +820,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::ca5350fd-9050-4777-998d-5c38458899a8;
+            Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
             Property = 0;
             Sound = 0;
             Line Color = 4278190335;
@@ -841,7 +841,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::f84ed724-5b64-4076-ae3d-740f784c61fe;
+            Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
             Property = 3;
             Sound = 0;
             Line Color = 4286611711;
@@ -883,7 +883,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::fd4403f0-7214-453e-80dc-40ae79035354;
+            Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
             Property = 4;
             Sound = 0;
             Line Color = 4294967040;
@@ -925,7 +925,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::5659abb2-1daf-444a-94d1-fb9b997f5df7;
+            Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
             Property = 4;
             Sound = 0;
             Line Color = 4294967168;
@@ -967,7 +967,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::e9f1fd0a-4234-4e3f-8aae-391361b77ffe;
+            Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
             Property = 4;
             Sound = 0;
             Line Color = 4294967040;
@@ -1009,7 +1009,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::96230f81-acf9-4876-9bdc-4ac5be23d363;
+            Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
             Property = 4;
             Sound = 0;
             Line Color = 4294967168;
@@ -1056,7 +1056,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::12133001-1621-471a-86fe-7cc3b4b0ac76;
+            Name = Sound::69f5511c-2ef5-4cf7-9543-faf96c61edbb;
             Property = 1;
             Sound = 1;
             Line Color = 4294934528;
@@ -1084,7 +1084,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::6588b0ed-32aa-420b-9615-928e7b468a56;
+            Name = Sound::9106233b-b8a9-4476-ad74-63bae61d1e63;
             Property = 0;
             Sound = 1;
             Line Color = 4286611711;
@@ -1117,7 +1117,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+            Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             Property = 0;
             Sound = 0;
             Line Color = 4294901888;
@@ -1145,7 +1145,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+            Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             Property = 0;
             Sound = 0;
             Line Color = 4286578943;
@@ -1173,7 +1173,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
+            Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             Property = 0;
             Sound = 0;
             Line Color = 4288398196;
@@ -1201,7 +1201,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+            Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
             Property = 0;
             Sound = 0;
             Line Color = 4292575452;
@@ -1229,7 +1229,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+            Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
             Property = 0;
             Sound = 0;
             Line Color = 4280457368;
@@ -1257,7 +1257,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+            Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             Property = 0;
             Sound = 0;
             Line Color = 4286849205;
@@ -1285,7 +1285,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+            Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             Property = 0;
             Sound = 0;
             Line Color = 4288308548;
@@ -1313,7 +1313,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+            Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             Property = 0;
             Sound = 0;
             Line Color = 4286366965;
@@ -1341,7 +1341,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+            Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             Property = 0;
             Sound = 0;
             Line Color = 4292474686;
@@ -1374,7 +1374,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::1851a2f3-3e30-41e0-a277-50dae1f56aef;
+            Name = Sound::3b14376a-4456-47e4-b5f5-62384b667842;
             Property = 0;
             Sound = 1;
             Line Color = 4286463624;
@@ -1414,7 +1414,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::13ef5ac5-51c3-4351-aa73-6586932ceec1;
+            Name = Sound::2f3b62e1-8094-4e80-b497-9f817b2e2922;
             Property = 0;
             Sound = 1;
             Line Color = 4287324834;
@@ -1447,7 +1447,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+            Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             Property = 0;
             Sound = 0;
             Line Color = 4294901888;
@@ -1475,7 +1475,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+            Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             Property = 0;
             Sound = 0;
             Line Color = 4284687502;
@@ -1508,7 +1508,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::e838cdd0-8605-4b6f-9880-e2894afe05e9;
+            Name = 1::e9b04d04-faa0-4570-b3eb-8c316228d8d2;
             Property = 0;
             Sound = 0;
             Line Color = 4294901888;
@@ -1536,7 +1536,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::b2b2a8d0-36f5-44a3-b0c1-e949205494b7;
+            Name = 1::69ba32ca-28a5-4ce2-aa76-d106a0c51625;
             Property = 0;
             Sound = 0;
             Line Color = 4279399669;
@@ -1569,7 +1569,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::13a17ebf-6e42-497d-8d66-2c269271b4b8;
+            Name = Sound::5d628615-892a-47a0-8ba8-1220e5348e32;
             Property = 0;
             Sound = 1;
             Line Color = 4285242768;
@@ -1621,22 +1621,16 @@ Wave Bank
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
-    Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 1927205799;
-    Bank Last Revised High = 30184881;
+    Compression Preset Name = ADPCM;
+    Bank Last Revised Low = 1126482844;
+    Bank Last Revised High = 30185928;
 
     Wave
     {
         Name = Empty;
         File = Sfx\Empty.wav;
-        Build Settings Last Modified Low = 2549822981;
-        Build Settings Last Modified High = 30175808;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1658,8 +1652,8 @@ Wave Bank
     {
         Name = NewWaveComing;
         File = Sfx\NewWaveComing.wav;
-        Build Settings Last Modified Low = 3358339735;
-        Build Settings Last Modified High = 30176031;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1681,8 +1675,8 @@ Wave Bank
     {
         Name = ShootingStar;
         File = Sfx\ShootingStar.wav;
-        Build Settings Last Modified Low = 1230678232;
-        Build Settings Last Modified High = 30176032;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1704,8 +1698,8 @@ Wave Bank
     {
         Name = MissileTurretLaunching;
         File = Sfx\MissileTurretLaunching.wav;
-        Build Settings Last Modified Low = 3587460269;
-        Build Settings Last Modified High = 30176032;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1727,8 +1721,8 @@ Wave Bank
     {
         Name = Select;
         File = Sfx\Select.wav;
-        Build Settings Last Modified Low = 3840944515;
-        Build Settings Last Modified High = 30176396;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1750,8 +1744,8 @@ Wave Bank
     {
         Name = ShipBouncing;
         File = Sfx\ShipBouncing.wav;
-        Build Settings Last Modified Low = 2309780193;
-        Build Settings Last Modified High = 30176033;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1773,8 +1767,8 @@ Wave Bank
     {
         Name = NewWaveLaunching;
         File = Sfx\NewWaveLaunching.wav;
-        Build Settings Last Modified Low = 3688592590;
-        Build Settings Last Modified High = 30176033;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1796,8 +1790,8 @@ Wave Bank
     {
         Name = NewWaveLaunching2;
         File = Sfx\NewWaveLaunching2.wav;
-        Build Settings Last Modified Low = 3688592590;
-        Build Settings Last Modified High = 30176033;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1819,8 +1813,8 @@ Wave Bank
     {
         Name = NewWaveLaunching3;
         File = Sfx\NewWaveLaunching3.wav;
-        Build Settings Last Modified Low = 3688592590;
-        Build Settings Last Modified High = 30176033;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1842,8 +1836,8 @@ Wave Bank
     {
         Name = CentaurDestroyed;
         File = Sfx\CentaurDestroyed.wav;
-        Build Settings Last Modified Low = 326260462;
-        Build Settings Last Modified High = 30176406;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1865,8 +1859,8 @@ Wave Bank
     {
         Name = LaserTurretFiring1;
         File = Sfx\LaserTurretFiring1.wav;
-        Build Settings Last Modified Low = 2727935014;
-        Build Settings Last Modified High = 30176034;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1888,8 +1882,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2;
         File = Sfx\LaserTurretFiring2.wav;
-        Build Settings Last Modified Low = 2727935014;
-        Build Settings Last Modified High = 30176034;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1911,8 +1905,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3;
         File = Sfx\LaserTurretFiring3.wav;
-        Build Settings Last Modified Low = 2727935014;
-        Build Settings Last Modified High = 30176034;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1934,8 +1928,8 @@ Wave Bank
     {
         Name = LaserTurretFiring4;
         File = Sfx\LaserTurretFiring4.wav;
-        Build Settings Last Modified Low = 2727935014;
-        Build Settings Last Modified High = 30176034;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1957,8 +1951,8 @@ Wave Bank
     {
         Name = LaserTurretFiring5;
         File = Sfx\LaserTurretFiring5.wav;
-        Build Settings Last Modified Low = 2727935014;
-        Build Settings Last Modified High = 30176034;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -1980,8 +1974,8 @@ Wave Bank
     {
         Name = LaserTurretFiring6;
         File = Sfx\LaserTurretFiring6.wav;
-        Build Settings Last Modified Low = 2727935014;
-        Build Settings Last Modified High = 30176034;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2003,8 +1997,8 @@ Wave Bank
     {
         Name = LaserTurretFiring7;
         File = Sfx\LaserTurretFiring7.wav;
-        Build Settings Last Modified Low = 2727935014;
-        Build Settings Last Modified High = 30176034;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2026,8 +2020,8 @@ Wave Bank
     {
         Name = VulcanoidDestroyed;
         File = Sfx\VulcanoidDestroyed.wav;
-        Build Settings Last Modified Low = 367661828;
-        Build Settings Last Modified High = 30176036;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2049,8 +2043,8 @@ Wave Bank
     {
         Name = AsteroidDestroyed;
         File = Sfx\AsteroidDestroyed.wav;
-        Build Settings Last Modified Low = 3450350369;
-        Build Settings Last Modified High = 30176037;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2072,8 +2066,8 @@ Wave Bank
     {
         Name = TrojanDestroyed;
         File = Sfx\TrojanDestroyed.wav;
-        Build Settings Last Modified Low = 3678218587;
-        Build Settings Last Modified High = 30176038;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2095,8 +2089,8 @@ Wave Bank
     {
         Name = TurretBought;
         File = Sfx\TurretBought.wav;
-        Build Settings Last Modified Low = 2259973543;
-        Build Settings Last Modified High = 30176039;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2118,8 +2112,8 @@ Wave Bank
     {
         Name = MeteoroidDestroyed;
         File = Sfx\MeteoroidDestroyed.wav;
-        Build Settings Last Modified Low = 1479344356;
-        Build Settings Last Modified High = 30176631;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2141,8 +2135,8 @@ Wave Bank
     {
         Name = DamacloidDestroyed;
         File = Sfx\DamacloidDestroyed.wav;
-        Build Settings Last Modified Low = 4181719386;
-        Build Settings Last Modified High = 30176040;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2164,8 +2158,8 @@ Wave Bank
     {
         Name = MothershipOn;
         File = Sfx\MothershipOn.wav;
-        Build Settings Last Modified Low = 3338604945;
-        Build Settings Last Modified High = 30176042;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2187,8 +2181,8 @@ Wave Bank
     {
         Name = RailgunTurretCharging;
         File = Sfx\RailgunTurretCharging.wav;
-        Build Settings Last Modified Low = 3860903563;
-        Build Settings Last Modified High = 30176043;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2210,8 +2204,8 @@ Wave Bank
     {
         Name = PlanetToProtectHit;
         File = Sfx\PlanetToProtectHit.wav;
-        Build Settings Last Modified Low = 3576077273;
-        Build Settings Last Modified High = 30176044;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2233,8 +2227,8 @@ Wave Bank
     {
         Name = PlanetDestroyed;
         File = Sfx\PlanetDestroyed.wav;
-        Build Settings Last Modified Low = 998065530;
-        Build Settings Last Modified High = 30176045;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2256,8 +2250,8 @@ Wave Bank
     {
         Name = CentaurHit;
         File = Sfx\CentaurHit.wav;
-        Build Settings Last Modified Low = 926201117;
-        Build Settings Last Modified High = 30176382;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2279,8 +2273,8 @@ Wave Bank
     {
         Name = DamacloidHit;
         File = Sfx\DamacloidHit.wav;
-        Build Settings Last Modified Low = 4294385502;
-        Build Settings Last Modified High = 30176383;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2302,8 +2296,8 @@ Wave Bank
     {
         Name = CometHit;
         File = Sfx\CometHit.wav;
-        Build Settings Last Modified Low = 1886229851;
-        Build Settings Last Modified High = 30176394;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2325,8 +2319,8 @@ Wave Bank
     {
         Name = SwarmDestroyed;
         File = Sfx\SwarmDestroyed.wav;
-        Build Settings Last Modified Low = 578579238;
-        Build Settings Last Modified High = 30176395;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2348,8 +2342,8 @@ Wave Bank
     {
         Name = ShipFiring;
         File = Sfx\ShipFiring.wav;
-        Build Settings Last Modified Low = 2443440542;
-        Build Settings Last Modified High = 30176400;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2371,8 +2365,8 @@ Wave Bank
     {
         Name = Cancel;
         File = Sfx\Cancel.wav;
-        Build Settings Last Modified Low = 514405041;
-        Build Settings Last Modified High = 30176402;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2394,8 +2388,8 @@ Wave Bank
     {
         Name = Validate;
         File = Sfx\Validate.wav;
-        Build Settings Last Modified Low = 1781217146;
-        Build Settings Last Modified High = 30176403;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2417,8 +2411,8 @@ Wave Bank
     {
         Name = ScreenChange;
         File = Sfx\ScreenChange.wav;
-        Build Settings Last Modified Low = 523477745;
-        Build Settings Last Modified High = 30176404;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2440,8 +2434,8 @@ Wave Bank
     {
         Name = PlutoidDestroyed;
         File = Sfx\PlutoidDestroyed.wav;
-        Build Settings Last Modified Low = 2006184490;
-        Build Settings Last Modified High = 30176631;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2463,8 +2457,8 @@ Wave Bank
     {
         Name = AsteroidHit;
         File = Sfx\AsteroidHit.wav;
-        Build Settings Last Modified Low = 2028497812;
-        Build Settings Last Modified High = 30177019;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2486,8 +2480,8 @@ Wave Bank
     {
         Name = ShipMoving2;
         File = Sfx\ShipMoving2.wav;
-        Build Settings Last Modified Low = 1675212864;
-        Build Settings Last Modified High = 30177028;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2509,8 +2503,8 @@ Wave Bank
     {
         Name = ShipMoving3;
         File = Sfx\ShipMoving3.wav;
-        Build Settings Last Modified Low = 1675222865;
-        Build Settings Last Modified High = 30177028;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2532,8 +2526,8 @@ Wave Bank
     {
         Name = ShipMoving4;
         File = Sfx\ShipMoving4.wav;
-        Build Settings Last Modified Low = 1675232866;
-        Build Settings Last Modified High = 30177028;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2555,8 +2549,8 @@ Wave Bank
     {
         Name = ShipMoving5;
         File = Sfx\ShipMoving5.wav;
-        Build Settings Last Modified Low = 1675242866;
-        Build Settings Last Modified High = 30177028;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2578,8 +2572,8 @@ Wave Bank
     {
         Name = ShipMoving6;
         File = Sfx\ShipMoving6.wav;
-        Build Settings Last Modified Low = 1675252867;
-        Build Settings Last Modified High = 30177028;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2601,8 +2595,8 @@ Wave Bank
     {
         Name = ShipMoving7;
         File = Sfx\ShipMoving7.wav;
-        Build Settings Last Modified Low = 1675262867;
-        Build Settings Last Modified High = 30177028;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2624,8 +2618,8 @@ Wave Bank
     {
         Name = ShipMoving;
         File = Sfx\ShipMoving.wav;
-        Build Settings Last Modified Low = 2004701710;
-        Build Settings Last Modified High = 30177028;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2647,8 +2641,8 @@ Wave Bank
     {
         Name = BasicTurretFiringx2_2011_09_26 1;
         File = Sfx\BasicTurretFiringx2_2011_09_26 1.wav;
-        Build Settings Last Modified Low = 2599902238;
-        Build Settings Last Modified High = 30178440;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2670,8 +2664,8 @@ Wave Bank
     {
         Name = BasicTurretFiringx3_2011_09_26 1;
         File = Sfx\BasicTurretFiringx3_2011_09_26 1.wav;
-        Build Settings Last Modified Low = 2599912239;
-        Build Settings Last Modified High = 30178440;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2693,8 +2687,8 @@ Wave Bank
     {
         Name = BasicTurretFiringx4_2011_09_26 1;
         File = Sfx\BasicTurretFiringx4_2011_09_26 1.wav;
-        Build Settings Last Modified Low = 2599912239;
-        Build Settings Last Modified High = 30178440;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2716,8 +2710,8 @@ Wave Bank
     {
         Name = BasicTurretFiring_2011_09_26 1;
         File = Sfx\BasicTurretFiring_2011_09_26 1.wav;
-        Build Settings Last Modified Low = 2599922239;
-        Build Settings Last Modified High = 30178440;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2739,8 +2733,8 @@ Wave Bank
     {
         Name = ContextualMenuIn_2011_09_26;
         File = Sfx\ContextualMenuIn_2011_09_26.wav;
-        Build Settings Last Modified Low = 980946363;
-        Build Settings Last Modified High = 30178442;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2762,8 +2756,8 @@ Wave Bank
     {
         Name = ContextualMenuSelect_2011_09_26;
         File = Sfx\ContextualMenuSelect_2011_09_26.wav;
-        Build Settings Last Modified Low = 2255459261;
-        Build Settings Last Modified High = 30178442;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2785,8 +2779,8 @@ Wave Bank
     {
         Name = WrongChoice_2011_09_26;
         File = Sfx\WrongChoice_2011_09_26.wav;
-        Build Settings Last Modified Low = 3495020160;
-        Build Settings Last Modified High = 30178442;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2808,8 +2802,8 @@ Wave Bank
     {
         Name = GravitationalTurretBought_2011_09_26;
         File = Sfx\GravitationalTurretBought_2011_09_26.wav;
-        Build Settings Last Modified Low = 1294602666;
-        Build Settings Last Modified High = 30178443;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2831,8 +2825,8 @@ Wave Bank
     {
         Name = GravitationalTurretUpgrade_2011_09_26;
         File = Sfx\GravitationalTurretUpgrade_2011_09_26.wav;
-        Build Settings Last Modified Low = 1333954916;
-        Build Settings Last Modified High = 30178443;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2854,8 +2848,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_01;
         File = Sfx\LaserTurretFiring2_01.wav;
-        Build Settings Last Modified Low = 467135422;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2877,8 +2871,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_02;
         File = Sfx\LaserTurretFiring2_02.wav;
-        Build Settings Last Modified Low = 467145423;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2900,8 +2894,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_03;
         File = Sfx\LaserTurretFiring2_03.wav;
-        Build Settings Last Modified Low = 467155423;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2923,8 +2917,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_04;
         File = Sfx\LaserTurretFiring2_04.wav;
-        Build Settings Last Modified Low = 467155423;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2946,8 +2940,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_05;
         File = Sfx\LaserTurretFiring2_05.wav;
-        Build Settings Last Modified Low = 467165424;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2969,8 +2963,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_06;
         File = Sfx\LaserTurretFiring2_06.wav;
-        Build Settings Last Modified Low = 467175424;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -2992,8 +2986,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_07;
         File = Sfx\LaserTurretFiring2_07.wav;
-        Build Settings Last Modified Low = 467185425;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3015,8 +3009,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_08;
         File = Sfx\LaserTurretFiring2_08.wav;
-        Build Settings Last Modified Low = 467195426;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3038,8 +3032,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_09;
         File = Sfx\LaserTurretFiring2_09.wav;
-        Build Settings Last Modified Low = 467195426;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3061,8 +3055,8 @@ Wave Bank
     {
         Name = LaserTurretFiring2_10;
         File = Sfx\LaserTurretFiring2_10.wav;
-        Build Settings Last Modified Low = 467205426;
-        Build Settings Last Modified High = 30178494;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3084,8 +3078,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_01;
         File = Sfx\MothershipShieldHit1_01.wav;
-        Build Settings Last Modified Low = 2684400605;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3107,8 +3101,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_02;
         File = Sfx\MothershipShieldHit1_02.wav;
-        Build Settings Last Modified Low = 2684400605;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3130,8 +3124,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_03;
         File = Sfx\MothershipShieldHit1_03.wav;
-        Build Settings Last Modified Low = 2684410605;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3153,8 +3147,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_04;
         File = Sfx\MothershipShieldHit1_04.wav;
-        Build Settings Last Modified Low = 2684410605;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3176,8 +3170,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_05;
         File = Sfx\MothershipShieldHit1_05.wav;
-        Build Settings Last Modified Low = 2684410605;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3199,8 +3193,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_06;
         File = Sfx\MothershipShieldHit1_06.wav;
-        Build Settings Last Modified Low = 2684420606;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3222,8 +3216,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_07;
         File = Sfx\MothershipShieldHit1_07.wav;
-        Build Settings Last Modified Low = 2684420606;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3245,8 +3239,8 @@ Wave Bank
     {
         Name = MothershipShieldHit1_08;
         File = Sfx\MothershipShieldHit1_08.wav;
-        Build Settings Last Modified Low = 2684430606;
-        Build Settings Last Modified High = 30178495;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3268,8 +3262,8 @@ Wave Bank
     {
         Name = MissileTurretLaunching_2011_09_26_2;
         File = Sfx\MissileTurretLaunching_2011_09_26_2.wav;
-        Build Settings Last Modified Low = 3244020975;
-        Build Settings Last Modified High = 30178496;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3291,8 +3285,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_01;
         File = Sfx\MultipleLasersTurretFiring1_01.wav;
-        Build Settings Last Modified Low = 430310796;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3314,8 +3308,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_02;
         File = Sfx\MultipleLasersTurretFiring1_02.wav;
-        Build Settings Last Modified Low = 430310796;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3337,8 +3331,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_03;
         File = Sfx\MultipleLasersTurretFiring1_03.wav;
-        Build Settings Last Modified Low = 430310796;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3360,8 +3354,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_04;
         File = Sfx\MultipleLasersTurretFiring1_04.wav;
-        Build Settings Last Modified Low = 430320797;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3383,8 +3377,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_05;
         File = Sfx\MultipleLasersTurretFiring1_05.wav;
-        Build Settings Last Modified Low = 430320797;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3406,8 +3400,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_06;
         File = Sfx\MultipleLasersTurretFiring1_06.wav;
-        Build Settings Last Modified Low = 430330797;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3429,8 +3423,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_07;
         File = Sfx\MultipleLasersTurretFiring1_07.wav;
-        Build Settings Last Modified Low = 430330797;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3452,8 +3446,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_08;
         File = Sfx\MultipleLasersTurretFiring1_08.wav;
-        Build Settings Last Modified Low = 430340798;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3475,8 +3469,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_09;
         File = Sfx\MultipleLasersTurretFiring1_09.wav;
-        Build Settings Last Modified Low = 430340798;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3498,8 +3492,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_10;
         File = Sfx\MultipleLasersTurretFiring1_10.wav;
-        Build Settings Last Modified Low = 430350798;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3521,8 +3515,8 @@ Wave Bank
     {
         Name = MultipleLasersTurretFiring1_11;
         File = Sfx\MultipleLasersTurretFiring1_11.wav;
-        Build Settings Last Modified Low = 430350798;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3544,8 +3538,8 @@ Wave Bank
     {
         Name = ShipFiring_2011_09_26;
         File = Sfx\ShipFiring_2011_09_26.wav;
-        Build Settings Last Modified Low = 3689307200;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3567,8 +3561,8 @@ Wave Bank
     {
         Name = ShipFiring_2011_09_26_02;
         File = Sfx\ShipFiring_2011_09_26_02.wav;
-        Build Settings Last Modified Low = 3689307200;
-        Build Settings Last Modified High = 30178501;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3590,8 +3584,8 @@ Wave Bank
     {
         Name = ShipMoving_2011_09_26;
         File = Sfx\ShipMoving_2011_09_26.wav;
-        Build Settings Last Modified Low = 271510075;
-        Build Settings Last Modified High = 30178502;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3613,8 +3607,8 @@ Wave Bank
     {
         Name = TurretBought_2011_09_26;
         File = Sfx\TurretBought_2011_09_26.wav;
-        Build Settings Last Modified Low = 2649536091;
-        Build Settings Last Modified High = 30178502;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3636,8 +3630,8 @@ Wave Bank
     {
         Name = Upgraded_2011_09_26;
         File = Sfx\Upgraded_2011_09_26.wav;
-        Build Settings Last Modified Low = 3199137526;
-        Build Settings Last Modified High = 30178502;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3659,8 +3653,8 @@ Wave Bank
     {
         Name = Upgrading_2011_09_26;
         File = Sfx\Upgrading_2011_09_26.wav;
-        Build Settings Last Modified Low = 3244440117;
-        Build Settings Last Modified High = 30178502;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3682,8 +3676,8 @@ Wave Bank
     {
         Name = ShipTeleportOut3_2011_09_26;
         File = Sfx\ShipTeleportOut3_2011_09_26.wav;
-        Build Settings Last Modified Low = 101508714;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3705,8 +3699,8 @@ Wave Bank
     {
         Name = ShipTeleportIn3_2011_09_26;
         File = Sfx\ShipTeleportIn3_2011_09_26.wav;
-        Build Settings Last Modified Low = 239886629;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3728,8 +3722,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection8;
         File = Sfx\VulcanoidDeflection8.wav;
-        Build Settings Last Modified Low = 2650544510;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3751,8 +3745,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection9;
         File = Sfx\VulcanoidDeflection9.wav;
-        Build Settings Last Modified Low = 2650544510;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3774,8 +3768,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection10;
         File = Sfx\VulcanoidDeflection10.wav;
-        Build Settings Last Modified Low = 2650554511;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3797,8 +3791,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection11;
         File = Sfx\VulcanoidDeflection11.wav;
-        Build Settings Last Modified Low = 2650554511;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3820,8 +3814,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection15;
         File = Sfx\VulcanoidDeflection15.wav;
-        Build Settings Last Modified Low = 2650574512;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3843,8 +3837,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection16;
         File = Sfx\VulcanoidDeflection16.wav;
-        Build Settings Last Modified Low = 2650574512;
-        Build Settings Last Modified High = 30178503;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3866,8 +3860,8 @@ Wave Bank
     {
         Name = WaveDestroyed_2011_09_26;
         File = Sfx\WaveDestroyed_2011_09_26.wav;
-        Build Settings Last Modified Low = 2236699202;
-        Build Settings Last Modified High = 30178504;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3889,8 +3883,8 @@ Wave Bank
     {
         Name = ContextualMenuIn_2011_09_27_2;
         File = Sfx\ContextualMenuIn_2011_09_27_2.wav;
-        Build Settings Last Modified Low = 1875039045;
-        Build Settings Last Modified High = 30178699;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3912,8 +3906,8 @@ Wave Bank
     {
         Name = ContextualMenuIn_2011_09_27_3;
         File = Sfx\ContextualMenuIn_2011_09_27_3.wav;
-        Build Settings Last Modified Low = 1875039045;
-        Build Settings Last Modified High = 30178699;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3935,8 +3929,8 @@ Wave Bank
     {
         Name = WaveDestroyed2_2011_09_26;
         File = Sfx\WaveDestroyed2_2011_09_26.wav;
-        Build Settings Last Modified Low = 3416783311;
-        Build Settings Last Modified High = 30178699;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3958,8 +3952,8 @@ Wave Bank
     {
         Name = PlanetToProtectHit2;
         File = Sfx\PlanetToProtectHit2.wav;
-        Build Settings Last Modified Low = 2253904761;
-        Build Settings Last Modified High = 30179257;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -3981,8 +3975,8 @@ Wave Bank
     {
         Name = BasicTurretFiring1;
         File = Sfx\BasicTurretFiring1.wav;
-        Build Settings Last Modified Low = 2090918028;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4004,8 +3998,8 @@ Wave Bank
     {
         Name = BasicTurretFiring2;
         File = Sfx\BasicTurretFiring2.wav;
-        Build Settings Last Modified Low = 2090928029;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4027,8 +4021,8 @@ Wave Bank
     {
         Name = BasicTurretFiring3;
         File = Sfx\BasicTurretFiring3.wav;
-        Build Settings Last Modified Low = 2090938029;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4050,8 +4044,8 @@ Wave Bank
     {
         Name = BasicTurretFiring4;
         File = Sfx\BasicTurretFiring4.wav;
-        Build Settings Last Modified Low = 2090948030;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4073,8 +4067,8 @@ Wave Bank
     {
         Name = CometDestroyed;
         File = Sfx\CometDestroyed.wav;
-        Build Settings Last Modified Low = 2114189359;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4096,8 +4090,8 @@ Wave Bank
     {
         Name = EnemyDestroyed1_2011_09_30;
         File = Sfx\EnemyDestroyed1_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150741450;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4119,8 +4113,8 @@ Wave Bank
     {
         Name = EnemyDestroyed2_2011_09_30;
         File = Sfx\EnemyDestroyed2_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150751451;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4142,8 +4136,8 @@ Wave Bank
     {
         Name = EnemyDestroyed3_2011_09_30;
         File = Sfx\EnemyDestroyed3_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150761451;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4165,8 +4159,8 @@ Wave Bank
     {
         Name = EnemyDestroyed4_2011_09_30;
         File = Sfx\EnemyDestroyed4_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150771452;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4188,8 +4182,8 @@ Wave Bank
     {
         Name = EnemyDestroyed5_2011_09_30;
         File = Sfx\EnemyDestroyed5_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150781452;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4211,8 +4205,8 @@ Wave Bank
     {
         Name = EnemyDestroyed6_2011_09_30;
         File = Sfx\EnemyDestroyed6_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150791453;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4234,8 +4228,8 @@ Wave Bank
     {
         Name = EnemyDestroyed7_2011_09_30;
         File = Sfx\EnemyDestroyed7_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150801453;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4257,8 +4251,8 @@ Wave Bank
     {
         Name = EnemyDestroyed8_2011_09_30;
         File = Sfx\EnemyDestroyed8_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150811454;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4280,8 +4274,8 @@ Wave Bank
     {
         Name = EnemyDestroyed9_2011_09_30;
         File = Sfx\EnemyDestroyed9_2011_09_30.wav;
-        Build Settings Last Modified Low = 2150811454;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4303,8 +4297,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3_01;
         File = Sfx\LaserTurretFiring3_01.wav;
-        Build Settings Last Modified Low = 2208334744;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4326,8 +4320,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3_02;
         File = Sfx\LaserTurretFiring3_02.wav;
-        Build Settings Last Modified Low = 2208344745;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4349,8 +4343,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3_03;
         File = Sfx\LaserTurretFiring3_03.wav;
-        Build Settings Last Modified Low = 2208344745;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4372,8 +4366,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3_04;
         File = Sfx\LaserTurretFiring3_04.wav;
-        Build Settings Last Modified Low = 2208354745;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4395,8 +4389,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3_05;
         File = Sfx\LaserTurretFiring3_05.wav;
-        Build Settings Last Modified Low = 2208364746;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4418,8 +4412,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3_06;
         File = Sfx\LaserTurretFiring3_06.wav;
-        Build Settings Last Modified Low = 2208364746;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4441,8 +4435,8 @@ Wave Bank
     {
         Name = LaserTurretFiring3_07;
         File = Sfx\LaserTurretFiring3_07.wav;
-        Build Settings Last Modified Low = 2208374746;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4464,8 +4458,8 @@ Wave Bank
     {
         Name = MissileExplosion_2011_09_26;
         File = Sfx\MissileExplosion_2011_09_26.wav;
-        Build Settings Last Modified Low = 2228085874;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4487,8 +4481,8 @@ Wave Bank
     {
         Name = MothershipHit_2011_09_30;
         File = Sfx\MothershipHit_2011_09_30.wav;
-        Build Settings Last Modified Low = 2235566302;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4510,8 +4504,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_26;
         File = Sfx\MultipleLasersFiring_2011_09_26.wav;
-        Build Settings Last Modified Low = 2271528359;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4533,8 +4527,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_30_01;
         File = Sfx\MultipleLasersFiring_2011_09_30_01.wav;
-        Build Settings Last Modified Low = 2271538359;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4556,8 +4550,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_30_02;
         File = Sfx\MultipleLasersFiring_2011_09_30_02.wav;
-        Build Settings Last Modified Low = 2271548360;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4579,8 +4573,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_30_03;
         File = Sfx\MultipleLasersFiring_2011_09_30_03.wav;
-        Build Settings Last Modified Low = 2271548360;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4602,8 +4596,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_30_04;
         File = Sfx\MultipleLasersFiring_2011_09_30_04.wav;
-        Build Settings Last Modified Low = 2271558360;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4625,8 +4619,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_30_05;
         File = Sfx\MultipleLasersFiring_2011_09_30_05.wav;
-        Build Settings Last Modified Low = 2271558360;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4648,8 +4642,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_30_06;
         File = Sfx\MultipleLasersFiring_2011_09_30_06.wav;
-        Build Settings Last Modified Low = 2271568361;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4671,8 +4665,8 @@ Wave Bank
     {
         Name = MultipleLasersFiring_2011_09_30_07;
         File = Sfx\MultipleLasersFiring_2011_09_30_07.wav;
-        Build Settings Last Modified Low = 2271578361;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4694,8 +4688,8 @@ Wave Bank
     {
         Name = ShipTeleportIn;
         File = Sfx\ShipTeleportIn.wav;
-        Build Settings Last Modified Low = 2362503562;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4717,8 +4711,8 @@ Wave Bank
     {
         Name = ShipTeleportIn2;
         File = Sfx\ShipTeleportIn2.wav;
-        Build Settings Last Modified Low = 2362633570;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4740,8 +4734,8 @@ Wave Bank
     {
         Name = ShipTeleportOut;
         File = Sfx\ShipTeleportOut.wav;
-        Build Settings Last Modified Low = 2364263663;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4763,8 +4757,8 @@ Wave Bank
     {
         Name = ShipTeleportOut2;
         File = Sfx\ShipTeleportOut2.wav;
-        Build Settings Last Modified Low = 2364473675;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4786,8 +4780,8 @@ Wave Bank
     {
         Name = Upgraded_2011_09_30;
         File = Sfx\Upgraded_2011_09_30.wav;
-        Build Settings Last Modified Low = 2391625228;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4809,8 +4803,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection1;
         File = Sfx\VulcanoidDeflection1.wav;
-        Build Settings Last Modified Low = 2398105598;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4832,8 +4826,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection2;
         File = Sfx\VulcanoidDeflection2.wav;
-        Build Settings Last Modified Low = 2398215605;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4855,8 +4849,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection3;
         File = Sfx\VulcanoidDeflection3.wav;
-        Build Settings Last Modified Low = 2398355613;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4878,8 +4872,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection4;
         File = Sfx\VulcanoidDeflection4.wav;
-        Build Settings Last Modified Low = 2398495621;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4901,8 +4895,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection5;
         File = Sfx\VulcanoidDeflection5.wav;
-        Build Settings Last Modified Low = 2398625628;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4924,8 +4918,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection6;
         File = Sfx\VulcanoidDeflection6.wav;
-        Build Settings Last Modified Low = 2398795638;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4947,8 +4941,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection7;
         File = Sfx\VulcanoidDeflection7.wav;
-        Build Settings Last Modified Low = 2398905644;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4970,8 +4964,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection12;
         File = Sfx\VulcanoidDeflection12.wav;
-        Build Settings Last Modified Low = 2411116343;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -4993,8 +4987,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection13;
         File = Sfx\VulcanoidDeflection13.wav;
-        Build Settings Last Modified Low = 2411226349;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5016,8 +5010,8 @@ Wave Bank
     {
         Name = VulcanoidDeflection14;
         File = Sfx\VulcanoidDeflection14.wav;
-        Build Settings Last Modified Low = 2411306353;
-        Build Settings Last Modified High = 30179295;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5039,8 +5033,8 @@ Wave Bank
     {
         Name = SlowMotionTurret_2011_10_02_1;
         File = Sfx\SlowMotionTurret_2011_10_02_1.wav;
-        Build Settings Last Modified Low = 3821190685;
-        Build Settings Last Modified High = 30179616;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5062,8 +5056,8 @@ Wave Bank
     {
         Name = SlowMotionTurret_2011_10_02_2;
         File = Sfx\SlowMotionTurret_2011_10_02_2.wav;
-        Build Settings Last Modified Low = 3821210686;
-        Build Settings Last Modified High = 30179616;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5085,8 +5079,8 @@ Wave Bank
     {
         Name = SlowMotionTurret_2011_10_02_3;
         File = Sfx\SlowMotionTurret_2011_10_02_3.wav;
-        Build Settings Last Modified Low = 3821220686;
-        Build Settings Last Modified High = 30179616;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5108,8 +5102,8 @@ Wave Bank
     {
         Name = IntroMusic_2011_10_16;
         File = Music\IntroMusic_2011_10_16.wav;
-        Build Settings Last Modified Low = 44861741;
-        Build Settings Last Modified High = 30183455;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5131,8 +5125,8 @@ Wave Bank
     {
         Name = EndOfWorld1_2011_10_16;
         File = Music\EndOfWorld1_2011_10_16.wav;
-        Build Settings Last Modified Low = 3977878335;
-        Build Settings Last Modified High = 30183454;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5154,8 +5148,8 @@ Wave Bank
     {
         Name = PlanetOn_loop;
         File = Sfx\PlanetOn_loop.wav;
-        Build Settings Last Modified Low = 1804385243;
-        Build Settings Last Modified High = 30184846;
+        Build Settings Last Modified Low = 1126482844;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5184,6 +5178,10 @@ Wave Bank
     Entry Names = 1;
     Seek Tables = 1;
     Compression Preset Name = ADPCM;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
     Bank Last Revised Low = 700631008;
@@ -5819,22 +5817,18 @@ Wave Bank
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
-    Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
+    Compression Preset Name = ADPCM;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 4009225629;
-    Bank Last Revised High = 30184892;
+    Bank Last Revised Low = 1068450742;
+    Bank Last Revised High = 30185928;
 
     Wave
     {
         Name = Empty;
         File = Sfx\Empty.wav;
-        Build Settings Last Modified Low = 4009225629;
-        Build Settings Last Modified High = 30184892;
+        Build Settings Last Modified Low = 1068450742;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -5856,8 +5850,8 @@ Wave Bank
     {
         Name = EphemereGamesLogo_2011_10_16;
         File = Music\EphemereGamesLogo_2011_10_16.wav;
-        Build Settings Last Modified Low = 4009225629;
-        Build Settings Last Modified High = 30184892;
+        Build Settings Last Modified Low = 1068450742;
+        Build Settings Last Modified High = 30185928;
 
         Cache
         {
@@ -6358,13 +6352,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -6723,13 +6717,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -8501,25 +8495,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::e838cdd0-8605-4b6f-9880-e2894afe05e9;
+                RPC Curve Name = 1::e9b04d04-faa0-4570-b3eb-8c316228d8d2;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::b2b2a8d0-36f5-44a3-b0c1-e949205494b7;
+                RPC Curve Name = 1::69ba32ca-28a5-4ce2-aa76-d106a0c51625;
             }
         }
     }
@@ -9123,7 +9117,7 @@ Sound Bank
     {
         Name = Select;
         Volume = -2200;
-        Pitch = 0;
+        Pitch = 302;
         Priority = 0;
 
         Category Entry
@@ -9327,13 +9321,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -9524,13 +9518,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -10054,13 +10048,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -10121,13 +10115,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -11580,31 +11574,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::2071f336-e1da-4d9f-b936-c6ea520079b2;
+                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::5649fca4-17c1-4f91-ac29-dd70fbb28c2c;
+                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::fd4403f0-7214-453e-80dc-40ae79035354;
+                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
             }
         }
 
@@ -11648,31 +11642,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::b359635b-0a2a-4b75-a3fc-c383d9d98494;
+                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::da94cbc3-d0ff-42df-ae90-afa7f22b176e;
+                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::5659abb2-1daf-444a-94d1-fb9b997f5df7;
+                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
             }
         }
 
@@ -11716,13 +11710,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -11766,25 +11760,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::ca5350fd-9050-4777-998d-5c38458899a8;
+                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::f84ed724-5b64-4076-ae3d-740f784c61fe;
+                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::e9f1fd0a-4234-4e3f-8aae-391361b77ffe;
+                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
             }
         }
 
@@ -11828,25 +11822,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::5a5a4c15-1fe1-437a-a5f5-2e2dde8d584e;
+                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::4888ecc2-651b-4cfd-9348-021267c04b7c;
+                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::96230f81-acf9-4876-9bdc-4ac5be23d363;
+                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
             }
         }
 
@@ -11890,7 +11884,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -11961,31 +11955,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::2071f336-e1da-4d9f-b936-c6ea520079b2;
+                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::5649fca4-17c1-4f91-ac29-dd70fbb28c2c;
+                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::fd4403f0-7214-453e-80dc-40ae79035354;
+                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
             }
         }
 
@@ -12028,31 +12022,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::b359635b-0a2a-4b75-a3fc-c383d9d98494;
+                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::da94cbc3-d0ff-42df-ae90-afa7f22b176e;
+                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::5659abb2-1daf-444a-94d1-fb9b997f5df7;
+                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
             }
         }
 
@@ -12095,13 +12089,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -12145,25 +12139,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::ca5350fd-9050-4777-998d-5c38458899a8;
+                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::f84ed724-5b64-4076-ae3d-740f784c61fe;
+                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::e9f1fd0a-4234-4e3f-8aae-391361b77ffe;
+                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
             }
         }
 
@@ -12207,25 +12201,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::5a5a4c15-1fe1-437a-a5f5-2e2dde8d584e;
+                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::4888ecc2-651b-4cfd-9348-021267c04b7c;
+                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::96230f81-acf9-4876-9bdc-4ac5be23d363;
+                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
             }
         }
 
@@ -12259,7 +12253,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -12331,31 +12325,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::2071f336-e1da-4d9f-b936-c6ea520079b2;
+                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::5649fca4-17c1-4f91-ac29-dd70fbb28c2c;
+                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::fd4403f0-7214-453e-80dc-40ae79035354;
+                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
             }
         }
 
@@ -12399,31 +12393,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::b359635b-0a2a-4b75-a3fc-c383d9d98494;
+                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::da94cbc3-d0ff-42df-ae90-afa7f22b176e;
+                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::5659abb2-1daf-444a-94d1-fb9b997f5df7;
+                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
             }
         }
 
@@ -12457,13 +12451,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
     }
@@ -12526,13 +12520,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
 
@@ -12562,13 +12556,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
             }
         }
 
@@ -12580,13 +12574,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -12627,7 +12621,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
         }
 
@@ -12639,7 +12633,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
         }
 
@@ -12651,7 +12645,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -12722,31 +12716,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::2071f336-e1da-4d9f-b936-c6ea520079b2;
+                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::5649fca4-17c1-4f91-ac29-dd70fbb28c2c;
+                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::fd4403f0-7214-453e-80dc-40ae79035354;
+                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
             }
         }
 
@@ -12789,31 +12783,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::b359635b-0a2a-4b75-a3fc-c383d9d98494;
+                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::da94cbc3-d0ff-42df-ae90-afa7f22b176e;
+                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::5659abb2-1daf-444a-94d1-fb9b997f5df7;
+                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
             }
         }
 
@@ -12846,13 +12840,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -12896,25 +12890,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::ca5350fd-9050-4777-998d-5c38458899a8;
+                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::f84ed724-5b64-4076-ae3d-740f784c61fe;
+                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::e9f1fd0a-4234-4e3f-8aae-391361b77ffe;
+                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
             }
         }
 
@@ -12958,25 +12952,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::5a5a4c15-1fe1-437a-a5f5-2e2dde8d584e;
+                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::4888ecc2-651b-4cfd-9348-021267c04b7c;
+                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::96230f81-acf9-4876-9bdc-4ac5be23d363;
+                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
             }
         }
 
@@ -13010,7 +13004,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -13081,31 +13075,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::2071f336-e1da-4d9f-b936-c6ea520079b2;
+                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::5649fca4-17c1-4f91-ac29-dd70fbb28c2c;
+                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::fd4403f0-7214-453e-80dc-40ae79035354;
+                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
             }
         }
 
@@ -13148,31 +13142,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::b359635b-0a2a-4b75-a3fc-c383d9d98494;
+                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::da94cbc3-d0ff-42df-ae90-afa7f22b176e;
+                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::5659abb2-1daf-444a-94d1-fb9b997f5df7;
+                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
             }
         }
 
@@ -13215,13 +13209,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -13265,25 +13259,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::ca5350fd-9050-4777-998d-5c38458899a8;
+                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::f84ed724-5b64-4076-ae3d-740f784c61fe;
+                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::e9f1fd0a-4234-4e3f-8aae-391361b77ffe;
+                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
             }
         }
 
@@ -13327,25 +13321,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::5a5a4c15-1fe1-437a-a5f5-2e2dde8d584e;
+                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::4888ecc2-651b-4cfd-9348-021267c04b7c;
+                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::96230f81-acf9-4876-9bdc-4ac5be23d363;
+                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
             }
         }
 
@@ -13379,7 +13373,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -13442,13 +13436,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
     }
@@ -13512,13 +13506,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
     }
@@ -13581,31 +13575,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
-            }
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
-            }
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
 
@@ -13617,13 +13593,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -13664,7 +13658,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
         }
 
@@ -13676,7 +13670,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
         }
 
@@ -13688,7 +13682,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -13751,31 +13745,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
-            }
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
-            }
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
 
@@ -13787,13 +13763,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -13834,7 +13828,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
         }
 
@@ -13846,7 +13840,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
         }
 
@@ -13858,7 +13852,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -13921,31 +13915,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
-            }
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::c099077b-b014-471b-a81a-a22aed86b99c;
-            }
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::a438f7fa-d9e0-494d-8804-6aa915b20159;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
 
@@ -13957,13 +13933,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::6a89a45f-2138-4669-875f-33e698dca270;
+                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::e99d0651-4c0d-4a9c-ac99-efca0ca3d0cc;
+                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
             }
         }
 
@@ -14004,7 +13998,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::9861f5cc-3fb9-4567-be13-745b579216e7;
+                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
             }
         }
 
@@ -14016,7 +14010,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9186135-db53-4ccf-b36f-5d96ac4b32c1;
+                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
             }
         }
 
@@ -14028,7 +14022,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::c9fc06da-5b4b-4cc7-9cc4-224b488f521b;
+                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
             }
         }
     }
@@ -14193,13 +14187,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
     }
@@ -14323,13 +14317,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -14401,13 +14395,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -14479,13 +14473,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::41740982-cb4f-4cef-983c-e1f56fad76f9;
+                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::fd50ab81-d21a-4bd3-ae37-dcb0cf86d2a6;
+                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
             }
         }
     }
@@ -15226,13 +15220,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::e838cdd0-8605-4b6f-9880-e2894afe05e9;
+                RPC Curve Name = 1::e9b04d04-faa0-4570-b3eb-8c316228d8d2;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::b2b2a8d0-36f5-44a3-b0c1-e949205494b7;
+                RPC Curve Name = 1::69ba32ca-28a5-4ce2-aa76-d106a0c51625;
             }
         }
     }
@@ -17256,6 +17250,14 @@ Sound Bank
             Variation Table Type = 1;
             New Variation on Loop = 0;
         }
+
+        Sound Entry
+        {
+            Name = PlanetOn;
+            Index = 96;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
     }
 
     Cue
@@ -18342,13 +18344,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::c1c0c42a-de7a-4365-bbb1-318d3ec5ddec;
+                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::ec76da58-a4d4-4448-b950-8187ab8deee9;
+                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
             }
         }
     }
