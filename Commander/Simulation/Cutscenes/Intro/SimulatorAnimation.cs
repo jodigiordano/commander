@@ -27,7 +27,7 @@
 
             TimeBeforeIn = IntroCutscene.Timing["SimulatorIn"];
 
-            Simulator = new Simulator(scene, Main.LevelsFactory.CutsceneDescriptors[1])
+            Simulator = new Simulator(scene, Main.WorldsFactory.CutsceneDescriptors[1])
             {
                 DemoMode = true,
                 CutsceneMode = true,

@@ -73,7 +73,8 @@
         LoadWorld = 2,
         HighScores = 3,
         NewPlayer = 4,
-        Login = 5
+        Login = 5,
+        LoadFile = 6
     }
 
 

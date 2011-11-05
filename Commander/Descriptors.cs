@@ -31,6 +31,9 @@
         [ContentSerializer(Optional = true)]
         public string SfxEnd;
 
+        [ContentSerializer(Optional = true)]
+        public string LastModification;
+
 
         public WorldDescriptor()
         {
@@ -41,6 +44,7 @@
             Music = "";
             MusicEnd = "";
             SfxEnd = "";
+            LastModification = Main.GetCurrentTimestamp();
         }
 
 

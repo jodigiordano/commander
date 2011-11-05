@@ -100,7 +100,7 @@
                 return;
             }
 
-            var answer = Main.Multiverse.GetServerAnswer(e.Result);
+            var answer = Main.MultiverseController.GetServerAnswer(e.Result);
 
             switch (answer.Type)
             {

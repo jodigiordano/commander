@@ -258,13 +258,13 @@
             ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
 
             if (ActualSelection.CelestialBody != null &&
-                LevelsFactory.IsCampaignCB(ActualSelection.CelestialBody) &&
+                WorldsFactory.IsCampaignCB(ActualSelection.CelestialBody) &&
                 ActualSelection.NewGameChoice == -1)
             {
                 NextNewGameChoice();
             }
 
-            else if (ActualSelection.CelestialBody == null || !LevelsFactory.IsCampaignCB(ActualSelection.CelestialBody))
+            else if (ActualSelection.CelestialBody == null || !WorldsFactory.IsCampaignCB(ActualSelection.CelestialBody))
                 ActualSelection.NewGameChoice = -1;
         }
 
@@ -620,7 +620,7 @@
 
             int index = 2;
 
-            foreach (var w in Main.LevelsFactory.CampaignWorlds.Values)
+            foreach (var w in Main.WorldsFactory.CampaignWorlds.Values)
                 if (w.Unlocked)
                     ActualSelection.AvailableNewGameChoices.Add(index++, true);
         }

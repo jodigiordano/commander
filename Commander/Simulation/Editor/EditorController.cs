@@ -339,7 +339,7 @@
 
             else if (command.Name == "NewLevel")
             {
-                //Simulator.LevelDescriptor = Main.LevelsFactory.GetEmptyLevelDescriptor();
+                //Simulator.LevelDescriptor = Main.WorldsFactory.GetEmptyLevelDescriptor();
                 //Simulator.Initialize();
                 //Simulator.SyncPlayers();
             }
@@ -350,15 +350,15 @@
 
             //    var descriptor = Simulator.LevelDescriptor;
 
-            //    if (!Main.LevelsFactory.UserDescriptors.ContainsKey(descriptor.Infos.Id))
+            //    if (!Main.WorldsFactory.UserDescriptors.ContainsKey(descriptor.Infos.Id))
             //    {
-            //        Main.LevelsFactory.UserDescriptors.Add(descriptor.Infos.Id, descriptor);
+            //        Main.WorldsFactory.UserDescriptors.Add(descriptor.Infos.Id, descriptor);
 
             //        ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
             //        ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
             //    }
 
-            //    Main.LevelsFactory.SaveUserDescriptorOnDisk(descriptor.Infos.Id);
+            //    Main.WorldsFactory.SaveUserDescriptorOnDisk(descriptor.Infos.Id);
             //}
 
 

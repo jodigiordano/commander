@@ -29,13 +29,15 @@ namespace EphemereGames.Commander
         public static GameScene CurrentGame;
         public static WorldScene CurrentWorld;
         public static WorldAnnunciationScene CurrentWorldAnnounciation;
-        public static MultiverseScene Multiverse;
-        public static LevelsFactory LevelsFactory;
+        public static WorldsFactory WorldsFactory;
         public static XACTMusicController MusicController;
         public static NewsController NewsController;
         public static PlayersController PlayersController;
         public static CheatsController CheatsController;
         public static InputsFactory InputsFactory;
+        public static MultiverseController MultiverseController;
+        public static MultiverseScene Multiverse;
+
 
         private GraphicsDeviceManager Graphics;
         private BootSequence Boot;
@@ -67,12 +69,13 @@ namespace EphemereGames.Commander
 
             Instance = this;
 
-            LevelsFactory = new LevelsFactory();
+            WorldsFactory = new WorldsFactory();
             InputsFactory = new InputsFactory();
             MusicController = new XACTMusicController();
             NewsController = new NewsController();
             PlayersController = new PlayersController();
             CheatsController = new CheatsController();
+            MultiverseController = new MultiverseController();
 
             Boot = BootSequence.Initial;
 
@@ -83,7 +86,7 @@ namespace EphemereGames.Commander
 
         public static void SetCurrentWorld(int id, bool initNow)
         {
-            SetCurrentWorld(LevelsFactory.GetWorld(id), initNow);
+            SetCurrentWorld(WorldsFactory.GetWorld(id), initNow);
         }
 
 
@@ -104,6 +107,12 @@ namespace EphemereGames.Commander
             CurrentWorldAnnounciation.World = world;
             CurrentWorldAnnounciation.InitWorld = !initNow;
             CurrentWorldAnnounciation.Initialize();
+        }
+
+
+        public static String GetCurrentTimestamp()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmssffff");
         }
 
 
@@ -196,7 +205,7 @@ namespace EphemereGames.Commander
                             new AnimationTransitionAlienMothership(750, VisualPriorities.Foreground.Transition)
                         };
 
-                        LevelsFactory.Initialize();
+                        WorldsFactory.Initialize();
 
                         Visuals.AddScene(new LoadingScene());
 

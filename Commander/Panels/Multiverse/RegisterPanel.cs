@@ -108,7 +108,7 @@
                 return;
             }
 
-            var answer = Main.Multiverse.GetServerAnswer(e.Result);
+            var answer = Main.MultiverseController.GetServerAnswer(e.Result);
 
             switch (answer.Type)
             {
@@ -125,7 +125,7 @@
 
                     var id = Main.PlayersController.MultiverseData.WorldId;
 
-                    Main.LevelsFactory.AddMultiverseWorld(Main.LevelsFactory.GetEmptyWorld(id));
+                    Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.GetEmptyWorld(id));
                     break;
             }
         }

@@ -152,6 +152,8 @@
     <Compile Include="Panels\Multiverse\LoginPanel.cs" />
     <Compile Include="Panels\Multiverse\RegisterPanel.cs" />
     <Compile Include="Player\MultiverseData.cs" />
+    <Compile Include="Scenes\Multiverse\DownloadWorldProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\MultiverseController.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseMessage.cs" />
     <Compile Include="MusicController.cs" />
     <Compile Include="News\News.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Scenes\Menu\EphemereGamesLogo.cs" />
     <Compile Include="Scenes\Menu\CBBigLabels.cs" />
     <Compile Include="Scenes\MultiverseScene.cs" />
+    <Compile Include="Scenes\Multiverse\WorldDownloadingScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Scenes\World\LevelStates.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />
@@ -226,7 +229,6 @@
     <Compile Include="Simulation\GUI\PlayerLivesLiteral.cs" />
     <Compile Include="Simulation\GUI\PlayerLivesMoons.cs" />
     <Compile Include="Simulation\GUI\ScoreCalculation.cs" />
-    <Compile Include="Simulation\Levels\World.cs" />
     <Compile Include="Simulation\Pause\GUIPausePlayer.cs" />
     <Compile Include="Player\HighScores.cs" />
     <Compile Include="Scenes\GameScene.cs" />
@@ -299,15 +301,6 @@
     <Compile Include="Simulation\GUI\Menus\TurretMenu.cs" />
     <Compile Include="Simulation\GUI\Menus\WorldMenu.cs" />
     <Compile Include="Simulation\GUI\ScoreStars.cs" />
-    <Compile Include="Simulation\Levels\Level.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Simulation\Levels\LevelsController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Simulation\Levels\LevelsFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Simulation\MessagesController.cs" />
     <Compile Include="Simulation\Minerals\Mineral.cs" />
     <Compile Include="Simulation\Minerals\MineralDefinition.cs" />
@@ -407,6 +400,10 @@
     <Compile Include="Main.cs" />
     <Compile Include="Simulation\Turrets\TurretsFactory.cs" />
     <Compile Include="Simulation\TweakingController.cs" />
+    <Compile Include="Simulation\Worlds\Level.cs" />
+    <Compile Include="Simulation\Worlds\LevelsController.cs" />
+    <Compile Include="Simulation\Worlds\World.cs" />
+    <Compile Include="Simulation\Worlds\WorldsFactory.cs" />
     <Compile Include="VisualPriorities.cs" />
     <Compile Include="XACTMusicController.cs" />
   </ItemGroup>

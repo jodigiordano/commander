@@ -197,7 +197,7 @@
             }
 
             if (!Simulator.EditorWorldMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
-                Add(Main.LevelsFactory.GetEndOfWorldAnimation(World.Id, this));
+                Add(Main.WorldsFactory.GetEndOfWorldAnimation(World.Id, this));
             else if (!Simulator.EditorWorldMode)
             {
                 Main.MusicController.PlayOrResume(World.Descriptor.Music);
@@ -404,13 +404,15 @@
             {
                 if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
                 {
-                    World.SetLevelDescriptor(level.Infos.Id, Main.LevelsFactory.GetEmptyLevelDescriptor(level.Infos.Id));
-                    Main.LevelsFactory.SaveWorldOnDisk(World.Id);
+                    World.SetLevelDescriptor(level.Infos.Id, Main.WorldsFactory.GetEmptyLevelDescriptor(level.Infos.Id));
+                    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
+                    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
                 }
 
                 else if (Simulator.EditorWorldChoice == EditorWorldChoice.Save)
                 {
-                    Main.LevelsFactory.SaveWorldOnDisk(World.Id);
+                    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
+                    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
                 }
 
                 else
@@ -461,7 +463,7 @@
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
             return (c != null && c is PinkHole) ?
-                Main.LevelsFactory.Worlds[CBtoWarp[c]] : null;
+                Main.WorldsFactory.Worlds[CBtoWarp[c]] : null;
         }
 
 
@@ -491,7 +493,7 @@
             foreach (var w in CBtoWarp)
             {
                 var pinkHole = (PinkHole) w.Key;
-                var unlocked = Main.LevelsFactory.Worlds[w.Value].Unlocked;
+                var unlocked = Main.WorldsFactory.Worlds[w.Value].Unlocked;
 
                 pinkHole.BlendType = unlocked ? BlendType.Add : BlendType.Substract;
                 pinkHole.Color = unlocked ? new Color(255, 0, 255) : new Color(0, 0, 0);

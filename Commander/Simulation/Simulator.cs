@@ -1099,7 +1099,7 @@ namespace EphemereGames.Commander.Simulation
                 if (button == player.GamepadConfiguration.Tweaking)
                 {
                     TweakingController.Sync();
-                    Main.LevelsFactory.Initialize();
+                    Main.WorldsFactory.Initialize();
                 }
             }
 

@@ -75,7 +75,7 @@
 
         public string StringId
         {
-            get { return LevelsFactory.GetWorldStringId(Id); }
+            get { return WorldsFactory.GetWorldStringId(Id); }
         }
 
 
@@ -98,7 +98,7 @@
                 if (Id == 1)
                     return true;
 
-                var other = Main.LevelsFactory.CampaignWorlds[Id - 1];
+                var other = Main.WorldsFactory.CampaignWorlds[Id - 1];
 
                 foreach (var level in other.Descriptor.Levels)
                     if (!other.IsLevelUnlocked(level))

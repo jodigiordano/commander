@@ -142,7 +142,7 @@
 
                         if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                         {
-                            Main.SetCurrentWorld(Main.LevelsFactory.CampaignWorlds[1], true);
+                            Main.SetCurrentWorld(Main.WorldsFactory.CampaignWorlds[1], true);
                             TransiteTo("World");
                         }
                         else
@@ -173,6 +173,7 @@
             ScenesLoaded.Add(new MainMenuScene());
             ScenesLoaded.Add(new WorldScene());
             ScenesLoaded.Add(new WorldAnnunciationScene());
+            ScenesLoaded.Add(new WorldDownloadingScene());
 
             Main.Multiverse = new MultiverseScene();
             ScenesLoaded.Add(Main.Multiverse);

@@ -1,7 +1,5 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System.IO;
-    using System.Xml.Serialization;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.XACTAudio;
@@ -15,14 +13,11 @@
         private Simulator Simulator;
         private CBBigLabels Choices;
 
-        private XmlSerializer MultiverseMessageSerializer;
-
 
         public MultiverseScene() :
             base("Multiverse")
         {
-            Layout = Main.LevelsFactory.Multiverse;
-            MultiverseMessageSerializer = new XmlSerializer(typeof(MultiverseMessage));
+            Layout = Main.WorldsFactory.Multiverse;
         }
 
 
@@ -56,14 +51,7 @@
             Layout.PlanetarySystem[1].Name = "jump to world";
             Layout.PlanetarySystem[2].Name = "";
             Layout.PlanetarySystem[3].Name = "my world";
-            Layout.PlanetarySystem[4].Name = Main.PlayersController.MultiverseData.PlayerIsLoggedIn ? "" : "register";
-        }
-
-
-        public MultiverseMessage GetServerAnswer(string result)
-        {
-            using (var reader = new StringReader(result))
-                return (MultiverseMessage) MultiverseMessageSerializer.Deserialize(reader);
+            Layout.PlanetarySystem[4].Name = Main.PlayersController.MultiverseData.Registered ? "" : "register";
         }
 
 
@@ -227,20 +215,10 @@
 
         private void DoMyWorld(Player player)
         {
-            if (!Main.PlayersController.MultiverseData.PlayerIsLoggedIn)
-            {
+            if (!Main.PlayersController.MultiverseData.Registered)
                 Simulator.ShowPanel(PanelType.Login, player.Position, true);
-            }
-
             else
-            {
-                var world = Main.LevelsFactory.GetWorld(Main.PlayersController.MultiverseData.WorldId);
-
-                world.EditorMode = true;
-                world.EditorState = EditorState.Editing;
-                Main.SetCurrentWorld(world, true);
-                TransiteTo("WorldAnnunciation");
-            }
+                Main.MultiverseController.JumpToWorld(Main.PlayersController.MultiverseData.WorldId, "Multiverse");
         }
 
         #endregion

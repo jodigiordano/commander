@@ -180,7 +180,7 @@
         {
             if (Simulator.AvailableWarpsWorldMode.ContainsKey(CelestialBody))
             {
-                Title.Data = LevelsFactory.GetWorldStringId(Simulator.AvailableWarpsWorldMode[CelestialBody]);
+                Title.Data = WorldsFactory.GetWorldStringId(Simulator.AvailableWarpsWorldMode[CelestialBody]);
             }
 
             else if (Simulator.AvailableLevelsWorldMode.ContainsKey(CelestialBody))

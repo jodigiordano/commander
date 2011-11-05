@@ -203,7 +203,10 @@
     <Compile Include="Scenes\Menu\CBBigLabels.cs" />
     <Compile Include="Scenes\MultiverseScene.cs" />
     <Compile Include="Scenes\EndOfDemoScene.cs" />
+    <Compile Include="Scenes\Multiverse\DownloadWorldProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\MultiverseController.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseMessage.cs" />
+    <Compile Include="Scenes\Multiverse\WorldDownloadingScene.cs" />
     <Compile Include="Scenes\WarningScene.cs" />
     <Compile Include="Simulation\Audio\AudioTurretsController.cs" />
     <Compile Include="Simulation\CameraController.cs" />
@@ -212,7 +215,7 @@
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\CelestialBodyAssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\AssetsPanel.cs" />
     <Compile Include="Simulation\GUI\Editor\Controls\Assets\EnemyCheckBox.cs" />
-    <Compile Include="Simulation\Levels\World.cs" />
+    <Compile Include="Simulation\Worlds\World.cs" />
     <Compile Include="Simulation\Spaceships\Steering\Manual\SpaceshipKeyboardMBehavior.cs" />
     <Compile Include="XACTMusicController.cs" />
     <Compile Include="Simulation\Audio\AudioController.cs" />
@@ -359,7 +362,7 @@
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />
     <Compile Include="Simulation\Bullets\BulletsController.cs" />
-    <Compile Include="Simulation\Levels\LevelsController.cs" />
+    <Compile Include="Simulation\Worlds\LevelsController.cs" />
     <Compile Include="Simulation\PlanetarySystem\PlanetarySystemController.cs" />
     <Compile Include="Simulation\GUI\ScoreCalculation.cs" />
     <Compile Include="Simulation\Spaceships\HumanBattleship.cs" />
@@ -443,12 +446,12 @@
     <Compile Include="Simulation\Spaceships\AlienSpaceship.cs" />
     <Compile Include="Simulation\Minerals\Mineral.cs" />
     <Compile Include="Simulation\Spaceships\SpaceshipCollector.cs" />
-    <Compile Include="Simulation\Levels\LevelsFactory.cs" />
+    <Compile Include="Simulation\Worlds\WorldsFactory.cs" />
     <Compile Include="Simulation\Enemies\EnemiesFactory.cs" />
     <Compile Include="Simulation\Turrets\TurretBoostLevel.cs" />
     <Compile Include="Simulation\Turrets\TurretLevel.cs" />
     <Compile Include="Player\CampaignData.cs" />
-    <Compile Include="Simulation\Levels\Level.cs" />
+    <Compile Include="Simulation\Worlds\Level.cs" />
     <Compile Include="Simulation\Simulator.cs" />
     <Compile Include="GUI\TextTypeWriter.cs" />
     <Compile Include="Simulation\Turrets\LaserTurret.cs" />

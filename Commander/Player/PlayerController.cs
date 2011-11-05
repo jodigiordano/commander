@@ -27,7 +27,7 @@
 
         public void UpdateProgress(int worldId, int levelId, string player, int score)
         {
-            var world = Main.LevelsFactory.Worlds[worldId];
+            var world = Main.WorldsFactory.Worlds[worldId];
 
             world.HighScores.Add(levelId, player, score);
 
@@ -102,7 +102,7 @@
             CampaignData.Version = Preferences.CampaignVersion;
             SaveCampaign();
 
-            foreach (var w in Main.LevelsFactory.CampaignWorlds.Values)
+            foreach (var w in Main.WorldsFactory.CampaignWorlds.Values)
             {
                 w.HighScores.Clear();
                 Persistence.SaveData(w.HighScores);
@@ -162,7 +162,7 @@
 
         public void SetCampaignWorld(int id)
         {
-            if (id != 0 && !Main.LevelsFactory.CampaignWorlds.ContainsKey(id))
+            if (id != 0 && !Main.WorldsFactory.CampaignWorlds.ContainsKey(id))
                 return;
 
             CampaignData.CurrentWorld = id;

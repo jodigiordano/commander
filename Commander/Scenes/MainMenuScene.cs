@@ -31,7 +31,7 @@
             Title = new CommanderTitle(this, new Vector3(0, -10, 0), VisualPriorities.Default.Title);
             Title.Initialize();
 
-            LevelDescriptor levelDescriptor = Main.LevelsFactory.Menu;
+            LevelDescriptor levelDescriptor = Main.WorldsFactory.Menu;
 
             Simulator = new Simulator(this, levelDescriptor)
             {
@@ -235,7 +235,7 @@
                             TransiteTo("WorldAnnunciation");
                             break;
                         default:
-                            Main.SetCurrentWorld(Main.LevelsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2), true);
+                            Main.SetCurrentWorld(Main.WorldsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2), true);
                             TransiteTo("WorldAnnunciation");
                             break;
                     }

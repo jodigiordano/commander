@@ -18,7 +18,18 @@
         }
 
 
-        public bool PlayerIsLoggedIn
+        public string ToUrlArguments
+        {
+            get
+            {
+                return
+                    "username=" + Username +
+                    "&password=" + Password;
+            }
+        }
+
+
+        public bool Registered
         {
             get { return Username != "" && Password != ""; }
         }

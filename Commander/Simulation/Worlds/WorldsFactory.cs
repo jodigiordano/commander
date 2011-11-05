@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class LevelsFactory
+    class WorldsFactory
     {
         public Dictionary<int, World> Worlds;
         public Dictionary<int, World> CampaignWorlds;
@@ -27,7 +27,7 @@
         private string MultiverseHomeWorldDirectory;
 
 
-        public LevelsFactory()
+        public WorldsFactory()
         {
             Worlds = new Dictionary<int, World>();
             CampaignWorlds = new Dictionary<int, World>();
@@ -129,6 +129,33 @@
             Multiverse = LoadLevelDescriptor(MultiverseHomeWorldDirectory + "multiverse.xml");
         }
 
+
+        private string GetWorldMultiverseLocalDirectory(int id)
+        {
+            return MultiverseDirectory + @"worlds\world" + id;
+        }
+
+
+        public static string WorldToURLArgument(int id)
+        {
+            return "world=" + id;
+        }
+
+
+        public static string GetWorldMultiverseRemoteDirectory(int id)
+        {
+            return
+                Preferences.WebsiteURL +
+                Preferences.MultiverseWorldsURL +
+                @"/" + GetWorldMultiverseRemoteRelativeDirectory(id);
+        }
+
+
+        public static string GetWorldMultiverseRemoteRelativeDirectory(int id)
+        {
+            return "world" + id;
+        }
+
         #endregion
 
 
@@ -219,7 +246,7 @@
 
             if (MultiverseWorldExistsOnDisk(id))
             {
-                var directory = GetWorldMultiverseDirectory(id);
+                var directory = GetWorldMultiverseLocalDirectory(id);
                 var w = LoadWorld(directory);
 
                 Worlds.Add(w.Descriptor.Id, w);
@@ -232,9 +259,15 @@
         }
 
 
-        private bool MultiverseWorldExistsOnDisk(int id)
+        public string GetWorldLastModification(int id)
         {
-            var directory = GetWorldMultiverseDirectory(id);
+            return Worlds[id].Descriptor.LastModification;
+        }
+
+
+        public bool MultiverseWorldExistsOnDisk(int id)
+        {
+            var directory = GetWorldMultiverseLocalDirectory(id);
 
             return
                 File.Exists(directory + @"\world.xml") &&
@@ -246,7 +279,7 @@
         {
             World w = Worlds[id];
 
-            var directory = GetWorldMultiverseDirectory(id);
+            var directory = GetWorldMultiverseLocalDirectory(id);
 
             Main.PlayersController.CreateDirectory(directory);
             Main.PlayersController.ClearDirectory(directory);
@@ -287,16 +320,17 @@
         }
 
 
-        private string GetWorldMultiverseDirectory(int id)
-        {
-            return MultiverseDirectory + @"worlds\world" + id;
-        }
-
-
         private WorldDescriptor LoadWorldDescriptor(string path)
         {
             using (StreamReader reader = new StreamReader(path))
-                return (WorldDescriptor) WorldSerializer.Deserialize(reader.BaseStream);
+                return (WorldDescriptor) WorldSerializer.Deserialize(reader);
+        }
+
+
+        private WorldDescriptor LoadWorldDescriptorFromString(string txt)
+        {
+            using (StringReader reader = new StringReader(txt))
+                return (WorldDescriptor) WorldSerializer.Deserialize(reader);
         }
 
 
@@ -320,6 +354,29 @@
             {
                 var descriptor = LoadLevelDescriptor(l);
                 w.LevelsDescriptors.Add(descriptor.Infos.Id, descriptor);
+            }
+
+            w.Initialize();
+
+            return w;
+        }
+
+
+        public World LoadWorldFromStrings(List<KeyValuePair<string, string>> strings)
+        {
+            World w = new World();
+
+            foreach (var f in strings)
+            {
+                if (f.Key == "world.xml")
+                    w.Descriptor = LoadWorldDescriptorFromString(f.Value);
+                else if (f.Key == "layout")
+                    w.Layout = LoadLevelDescriptorFromString(f.Value);
+                else
+                {
+                    var level = LoadLevelDescriptorFromString(f.Value);
+                    w.LevelsDescriptors.Add(level.Infos.Id, level);
+                }
             }
 
             w.Initialize();
@@ -354,7 +411,14 @@
         private LevelDescriptor LoadLevelDescriptor(string path)
         {
             using (StreamReader reader = new StreamReader(path))
-                return (LevelDescriptor) LevelSerializer.Deserialize(reader.BaseStream);
+                return (LevelDescriptor) LevelSerializer.Deserialize(reader);
+        }
+
+
+        private LevelDescriptor LoadLevelDescriptorFromString(string txt)
+        {
+            using (StringReader reader = new StringReader(txt))
+                return (LevelDescriptor) LevelSerializer.Deserialize(reader);
         }
 
 

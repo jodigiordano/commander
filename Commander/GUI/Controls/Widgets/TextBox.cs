@@ -110,7 +110,7 @@
 
         public string Value
         {
-            get { return Data.Data; }
+            get { return Data.Data.ToLowerInvariant(); }
             set
             {
                 Data.Data = value;
