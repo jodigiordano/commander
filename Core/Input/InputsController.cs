@@ -13,9 +13,11 @@
         private Dictionary<Player, InputSource> Sources;
         private List<InputListener> Listeners;
 
+        // "All Keys One Listener" Mode
         private InputSource AllKeysSource;
         private bool AllKeysOneListenerMode;
         private InputListener AllKeysListener;
+        private bool ProduceCleanState;
 
 
         public InputsController(Vector2 mouseBasePosition)
@@ -27,6 +29,8 @@
             Listeners = new List<InputListener>();
 
             SetAllKeysMode(false, null, null);
+
+            ProduceCleanState = false;
         }
 
 
@@ -131,6 +135,37 @@
             }
 
             // Receive raw input
+            ReceiveRawInput();
+
+            if (ProduceCleanState)
+            {
+                ReceiveRawInput();
+                ProduceCleanState = false;
+            }
+
+            // Spread the word
+            TellListeners();
+
+            // Clear mouse state
+            Mouse.SetPosition((int)MouseBasePosition.X, (int)MouseBasePosition.Y);
+        }
+
+
+        private void TellListeners()
+        {
+            for (int i = 0; i < Listeners.Count; i++)
+            {
+                if (!Listeners[i].EnableInputs)
+                    continue;
+
+                foreach (var source in Sources.Values)
+                    source.TellListener(Listeners[i]);
+            }
+        }
+
+
+        private void ReceiveRawInput()
+        {
             foreach (var source in Sources)
             {
                 var player = source.Key;
@@ -159,24 +194,18 @@
                     state.DoGamePadInput();
                 }
             }
-
-            // Spread the word
-            for (int i = 0; i < Listeners.Count; i++)
-            {
-                if (!Listeners[i].EnableInputs)
-                    continue;
-
-                foreach (var source in Sources.Values)
-                    source.TellListener(Listeners[i]);
-            }
-
-            Mouse.SetPosition((int)MouseBasePosition.X, (int)MouseBasePosition.Y);
         }
 
 
         private void UpdateAllKeysOneListenerMode()
         {
             AllKeysSource.DoKeyboardInput();
+
+            if (ProduceCleanState)
+            {
+                AllKeysSource.DoKeyboardInput();
+                ProduceCleanState = false;
+            }
 
             if (!AllKeysListener.EnableInputs)
                 return;
@@ -189,6 +218,8 @@
         {
             AllKeysOneListenerMode = active;
 
+            ProduceCleanState = true;
+
             if (!AllKeysOneListenerMode)
             {
                 AllKeysSource = null;
@@ -200,7 +231,7 @@
 
             AllKeysSource.MapKeys(AllKeys);
 
-            AllKeysListener = listener;
+            AllKeysListener = listener;  
         }
 
 

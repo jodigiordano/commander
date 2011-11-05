@@ -13,7 +13,6 @@
         private bool DeleteMode;
         private bool ShiftMode;
         private bool ShiftModeCooldown;
-        private bool ActiveThisTick;
         private double DeleteSpeed;
         private double DeleteCounter;
 
@@ -34,11 +33,6 @@
                 ShiftModeCooldown = false;
                 DeleteMode = false;
                 DeleteCounter = DeleteSpeed;
-
-                if (value)
-                {
-                    ActiveThisTick = true;
-                }
             }
         }
 
@@ -79,10 +73,9 @@
 
         void InputListener.DoKeyPressedOnce(Core.Input.Player player, Keys key)
         {
-            // todo: hold backspace button => delete mode.
             // todo: moving cursor around
 
-            if (!ActiveThisTick && key == Keys.Enter)
+            if (key == Keys.Enter || key == Keys.Escape)
             {
                 Inputs.SetAllKeysOneListenerMode(false, Inputs.MasterPlayer, this);
                 TextBoxGroup.SwitchTo(null);
@@ -212,8 +205,6 @@
 
                 TextBoxGroup.Focus.Value += value;
             }
-
-            ActiveThisTick = false;
         }
 
 

@@ -21,6 +21,12 @@
         }
 
 
+        public bool Visible
+        {
+            get { return Cursor.Visible; }
+        }
+
+
         public void Sync()
         {
             InnerPlayer.PausePlayer.Position = InnerPlayer.Position;

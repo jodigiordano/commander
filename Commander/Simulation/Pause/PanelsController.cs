@@ -205,13 +205,15 @@
             if (!IsPanelVisible)
                 return;
 
-            foreach (var player in Players.Keys)
+            foreach (var pl in Players)
             {
+                var player = pl.Key;
+
                 // More friction on a celestial body and a turret
                 if (player.SpaceshipMove.SteeringBehavior.NextMovement == Vector3.Zero)
                 {
                     foreach (var p in Panels.Values)
-                        if (p.Visible && p.DoHover(player.Circle) && p.LastHoverWidget.Sticky)
+                        if (p.Visible && pl.Value.Visible && p.DoHover(player.Circle) && p.LastHoverWidget.Sticky)
                         {
                             player.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
                             break;

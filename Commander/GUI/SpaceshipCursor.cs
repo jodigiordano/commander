@@ -73,6 +73,12 @@
         }
 
 
+        public bool Visible
+        {
+            get { return Alpha != 0; }
+        }
+
+
         public void SetImage(string imageName)
         {
             SetFrontImage(imageName, 4, Color.White);
