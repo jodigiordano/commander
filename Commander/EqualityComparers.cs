@@ -353,4 +353,31 @@
             return (int) obj;
         }
     }
+
+
+    class MultiverseMessageTypeComparer : IEqualityComparer<MultiverseMessageType>
+    {
+        private static MultiverseMessageTypeComparer instance;
+        public static MultiverseMessageTypeComparer Default
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new MultiverseMessageTypeComparer();
+                return instance;
+            }
+        }
+
+
+        public bool Equals(MultiverseMessageType x, MultiverseMessageType y)
+        {
+            return x == y;
+        }
+
+
+        public int GetHashCode(MultiverseMessageType obj)
+        {
+            return (int) obj;
+        }
+    }
 }

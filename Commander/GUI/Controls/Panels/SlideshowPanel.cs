@@ -121,6 +121,8 @@
 
         protected override void ComputePositions()
         {
+            base.ComputePositions();
+
             Slider.Position = base.GetUpperLeftUsableSpace() + new Vector3(Dimension.X / 2 - Slider.Dimension.X / 2, 0, 0);
 
             Vector3 upperLeft = base.GetUpperLeftUsableSpace() + new Vector3(0, Slider.Dimension.Y + 30, 0);

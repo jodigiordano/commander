@@ -178,7 +178,7 @@
                 MovingCue.PlayOrResume();
             }
 
-            // Modify the cue's attribute depending on the speed of the spaceship
+            // Modify the cue'input attribute depending on the speed of the spaceship
             if (ShipSpeedChanged)
                 MovingCue.SetVariable("ShipSpeed", ShipSpeed / SimPlayer.MaximumSpeed);
         }

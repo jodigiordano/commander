@@ -401,7 +401,7 @@
         {
             var player = Players[p];
 
-            // turret's options
+            // turret'input options
             if (player.ActualSelection.Turret != null)
             {
                 if (delta > 0)

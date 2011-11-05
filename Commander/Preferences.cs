@@ -58,10 +58,15 @@
         public const float PrioriteGUIPointsVieJoueur = PrioriteGUIPanneauGeneral + 0.01f;
 
 
-        public const string WebsiteURL = "http://commander.ephemeregames.com";
-        public const string GeneralNewsURL = "/feeds/news.rss";
-        public const string UpdatesNewsURL = "/feeds/updates.rss";
-        public const string DLCNewsURL = "/feeds/dlc.rss";
+        public const string Salt = "YourMom";
+
+        public const string WebsiteURL = @"http://commander.ephemeregames.com";
+        public const string GeneralNewsURL = @"/feeds/news.rss";
+        public const string UpdatesNewsURL = @"/feeds/updates.rss";
+        public const string DLCNewsURL = @"/feeds/dlc.rss";
+        public const string MultiverseScriptsURL = @"/multiverse/scripts";
+        public const string NewUserScript = @"/new_user.php";
+        public const string LoginScript = @"/login.php";
 
         public const int CampaignVersion = 1;
     }

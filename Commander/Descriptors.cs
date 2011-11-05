@@ -21,12 +21,14 @@
 
         [XmlArrayItem("World")]
         public List<int> Warps;
-        
-        public int Layout;
-        public int UnlockedCondition;
-        public string WarpBlockedMessage;
+
+        [ContentSerializer(Optional = true)]
         public string Music;
+
+        [ContentSerializer(Optional = true)]
         public string MusicEnd;
+
+        [ContentSerializer(Optional = true)]
         public string SfxEnd;
 
 
@@ -36,9 +38,6 @@
             Name = "";
             Levels = new List<int>();
             Warps = new List<int>();
-            Layout = -1;
-            UnlockedCondition = -1;
-            WarpBlockedMessage = "";
             Music = "";
             MusicEnd = "";
             SfxEnd = "";

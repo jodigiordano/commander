@@ -17,6 +17,7 @@
         public BlendType Blend          { get; set; }
         public double VisualPriority    { get; set; }
         public int Id                   { get; private set; }
+        public string FontName;
 
         private SpriteFont Font;
         private bool TextSizeComputed;
@@ -26,7 +27,6 @@
         private string data;
         private Vector3 position;
         private Color color;
-        private string FontName;
 
 
         public Text(string data, string fontName, Color color, Vector3 position)

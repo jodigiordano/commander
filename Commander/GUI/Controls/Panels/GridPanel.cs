@@ -20,6 +20,8 @@
 
         protected override void ComputePositions()
         {
+            base.ComputePositions();
+
             Vector3 upperLeft = base.GetUpperLeftUsableSpace();
             float initialX = upperLeft.X;
             float distanceColumn = Dimension.X / NbColumns;

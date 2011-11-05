@@ -90,7 +90,7 @@
 
         public override Vector3 Dimension
         {
-            get { return new Vector3(Box.AbsoluteSize.X + Label.Data.Length == 0 ? 0 : SpaceForLabel, Box.AbsoluteSize.Y, 0); }
+            get { return new Vector3(Box.AbsoluteSize.X + (Label.Data.Length == 0 ? 0 : SpaceForLabel), Box.AbsoluteSize.Y, 0); }
             set { }
         }
 

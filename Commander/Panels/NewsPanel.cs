@@ -53,7 +53,7 @@
             if (type != this.Type)
                 return;
 
-            LoadingInfos.SetData("Loading news, please wait.");
+            LoadingInfos.Value = "Loading news, please wait.";
             RemoveWidget("LoadingInfos");
             AddWidget("LoadingInfos", LoadingInfos);
         }
@@ -89,7 +89,7 @@
             if (type != this.Type)
                 return;
 
-            LoadingInfos.SetData("Loading error. Please retry.");
+            LoadingInfos.Value = "Loading error. Please retry.";
             RemoveWidget("Sync");
             AddWidget("Sync", Sync);
         }

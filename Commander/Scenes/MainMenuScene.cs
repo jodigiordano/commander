@@ -21,7 +21,7 @@
         }
 
         private State SceneState;
-        private MainMenuChoices Choices;
+        private CBBigLabels Choices;
         private CommanderTitle Title;
 
 
@@ -44,7 +44,7 @@
 
             SceneState = State.Transition;
 
-            Choices = new MainMenuChoices(Simulator, VisualPriorities.Default.MenuChoices);
+            Choices = new CBBigLabels(Simulator, VisualPriorities.Default.MenuChoices);
 
             Main.PlayersController.VerifyCampaign();
         }
@@ -220,11 +220,6 @@
             if (c == null)
                 return;
 
-#if !DEBUG
-            if (c.Name == "editor")
-                return;
-#endif
-
             switch (c.Name)
             {
                 case "campaign":
@@ -250,8 +245,9 @@
                 case "options": Simulator.ShowPanel(PanelType.Options, true); break;
                 case "multiverse": if (Preferences.Debug)
                 {
-                    Main.SetCurrentWorld(999, true);
-                    TransiteTo("WorldAnnunciation");
+                    //Main.SetCurrentWorld(999, true);
+                    Core.Visual.Visuals.GetScene("Multiverse").Initialize();
+                    TransiteTo("Multiverse");
                 } break;
                 case "credits": Simulator.ShowPanel(PanelType.Credits, true); break;
                 case "quit": Main.Instance.Exit(); break;

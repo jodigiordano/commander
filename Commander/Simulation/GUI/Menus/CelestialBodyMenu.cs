@@ -97,7 +97,7 @@
 
         public List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage(TurretType turretToBuy)
         {
-            ((Label) TurretDescription.Value).SetData(Simulator.TurretsFactory.All[turretToBuy].Description);
+            ((Label) TurretDescription.Value).Value = Simulator.TurretsFactory.All[turretToBuy].Description;
 
             return AvailableTurrets.Count > 1 ? HBMessageManyTurrets : HBMessageOneTurret;
         }

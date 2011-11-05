@@ -44,7 +44,7 @@
             Players.Clear();
             Panels.Clear();
 
-            // Player's panel
+            // Player'input panel
             var playerPanel = new PlayerPanel(Simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White) { Visible = false };
             Panels.Add(EditorPanel.Player, playerPanel);
 

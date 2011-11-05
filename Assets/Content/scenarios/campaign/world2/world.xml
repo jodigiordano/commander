@@ -24,13 +24,6 @@
     <World>1</World>
     <World>3</World>
   </Warps>
-  <Layout>1002</Layout>
-  <UnlockedCondition>1</UnlockedCondition>
-  <WarpBlockedMessage>
-    <![CDATA[Finish all the levels
-  
-to access this world!]]>
-  </WarpBlockedMessage>
   <Music>Galaxy1Music</Music>
   <MusicEnd>Galaxy1EndMusic</MusicEnd>
   <SfxEnd>Galaxy1EndSfx</SfxEnd>

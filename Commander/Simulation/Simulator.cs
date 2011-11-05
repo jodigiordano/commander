@@ -18,6 +18,7 @@ namespace EphemereGames.Commander.Simulation
         public bool DemoMode;
         public bool CutsceneMode;
         public bool EditorWorldMode;
+        public bool MultiverseMode;
         public bool CanSelectCelestialBodies;
         public bool AsteroidBeltOverride;
         
@@ -153,6 +154,7 @@ namespace EphemereGames.Commander.Simulation
             EditorMode = false;
             EditorWorldMode = false;
             AsteroidBeltOverride = false;
+            MultiverseMode = false;
             CanSelectCelestialBodies = true;
             EditorState = EditorState.Editing;
             DebugMode = Preferences.Debug;
@@ -585,10 +587,16 @@ namespace EphemereGames.Commander.Simulation
 
         public void ShowPanel(PanelType type, bool sync)
         {
+            ShowPanel(type, Vector3.Zero, sync);
+        }
+
+
+        public void ShowPanel(PanelType type, Vector3 position, bool sync)
+        {
             if (sync)
                 SimPlayersController.SyncPausePlayers();
 
-            PanelsController.ShowPanel(type);
+            PanelsController.ShowPanel(type, position);
         }
 
 

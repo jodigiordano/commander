@@ -2479,15 +2479,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\universe\layout.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>layout</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="GUI\Buttons\Arcade\a.png">
       <Name>a</Name>
       <Importer>TextureImporter</Importer>
@@ -2519,14 +2510,6 @@
       <Name>stick</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\universe\level901.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level901</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2604,14 +2587,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="scenarios\campaign\world2\world.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>world</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\universe\world.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>world</Name>
       <Importer>XmlImporter</Importer>
@@ -2749,6 +2724,14 @@
       <Name>keyEscape</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenarios\multiverse.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>multiverse</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

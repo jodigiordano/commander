@@ -11,7 +11,10 @@
         public LevelDescriptor Layout;
         public Dictionary<int, LevelDescriptor> LevelsDescriptors;
         public HighScores HighScores;
+
         public bool EditorMode;
+        public bool CampaignMode;
+        public bool MultiverseMode;
 
 
         public World()
@@ -20,7 +23,9 @@
             Layout = null;
             LevelsDescriptors = new Dictionary<int, LevelDescriptor>();
             HighScores = new HighScores();
+
             EditorMode = false;
+            CampaignMode = false;
         }
 
 
@@ -30,7 +35,7 @@
             Layout.Player.Lives = 1;
             Layout.Player.Money = 100;
 
-            // generate the asteroid belt's enemies
+            // generate the asteroid belt'input enemies
             var asteroidBelt = LevelDescriptor.GetAsteroidBelt(Layout.PlanetarySystem);
 
             if (asteroidBelt != null)
@@ -82,16 +87,16 @@
         {
             get
             {
-                if (Id == 999 && !Preferences.Debug)
-                    return false;
-
-                if (Descriptor.UnlockedCondition == -1)
+                if (!CampaignMode)
                     return true;
 
                 if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                     return false;
 
-                var other = Main.LevelsFactory.Worlds[Descriptor.UnlockedCondition];
+                if (Id == 1)
+                    return true;
+
+                var other = Main.LevelsFactory.CampaignWorlds[Id - 1];
 
                 foreach (var level in other.Descriptor.Levels)
                     if (!other.IsLevelUnlocked(level))

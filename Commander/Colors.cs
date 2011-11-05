@@ -28,4 +28,14 @@
         public static readonly Color CannotDo = new Color(81, 20, 20);
         public static readonly Color Selected = new Color(50, 137, 0);
     }
+
+
+    class Panel
+    {
+        public static readonly Color Cancel = new Color(255, 0, 0);
+        public static readonly Color Submit = new Color(0, 255, 0);
+        public static readonly Color Waiting = new Color(255, 255, 255);
+        public static readonly Color Error = new Color(255, 0, 0);
+        public static readonly Color Ok = new Color(0, 255, 0);
+    }
 }

@@ -19,6 +19,8 @@
 
         protected override void ComputePositions()
         {
+            base.ComputePositions();
+
             Vector3 upperLeft = base.GetUpperLeftUsableSpace();
 
             foreach (var w in Widgets)

@@ -1,6 +1,8 @@
 ﻿namespace EphemereGames.Commander
 {
+    using System;
     using System.IO;
+    using System.Security.Cryptography;
     using EphemereGames.Core.SimplePersistence;
 
 
@@ -8,15 +10,18 @@
     {
         public OptionsData OptionsData;
         public CampaignData CampaignData;
+        public MultiverseData MultiverseData;
 
 
         public PlayersController()
         {
             OptionsData = new OptionsData();
             CampaignData = new CampaignData();
+            MultiverseData = new MultiverseData();
 
             CreateDirectory(OptionsData.Directory);
             CreateDirectory(CampaignData.Directory);
+            CreateDirectory(MultiverseData.Directory);
         }
 
 
@@ -37,6 +42,12 @@
         }
 
 
+        public void LoadMultiverse()
+        {
+            Persistence.LoadData(MultiverseData);
+        }
+
+
         public void LoadCampaign()
         {
             Persistence.LoadData(CampaignData);
@@ -49,6 +60,12 @@
         }
 
 
+        public void SaveMultiverse()
+        {
+            Persistence.SaveData(MultiverseData);
+        }
+
+
         public void SaveCampaign()
         {
             Persistence.SaveData(CampaignData);
@@ -58,6 +75,12 @@
         public void SaveOptions()
         {
             Persistence.SaveData(OptionsData);
+        }
+
+
+        public bool IsMultiverseLoaded
+        {
+            get { return MultiverseData.Loaded; }
         }
 
 
@@ -127,6 +150,16 @@
         }
 
 
+        public void ClearDirectory(string directory)
+        {
+            if (!Directory.Exists(directory))
+                return;
+
+            foreach (var f in Directory.GetFiles(directory))
+                File.Delete(f);
+        }
+
+
         public void SetCampaignWorld(int id)
         {
             if (id != 0 && !Main.LevelsFactory.CampaignWorlds.ContainsKey(id))
@@ -134,6 +167,24 @@
 
             CampaignData.CurrentWorld = id;
             SaveCampaign();
+        }
+
+
+        public static string GetSHA256Hash(string input)
+        {
+            Byte[] data = System.Text.Encoding.UTF8.GetBytes(input);
+            Byte[] hash = new SHA256CryptoServiceProvider().ComputeHash(data);
+
+            return Convert.ToBase64String(hash);
+        }
+
+        
+        public void UpdateMultiverse(string username, string password, string world)
+        {
+            MultiverseData.Username = username;
+            MultiverseData.Password = password;
+            MultiverseData.WorldId = Int32.Parse(world);
+            SaveMultiverse();
         }
     }
 }

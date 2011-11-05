@@ -15,6 +15,7 @@
         public Dictionary<int, LevelDescriptor> CutsceneDescriptors;
 
         public LevelDescriptor Menu;
+        public LevelDescriptor Multiverse;
 
         private XmlSerializer LevelSerializer;
         private XmlSerializer WorldSerializer;
@@ -22,9 +23,8 @@
 
         private string CampaignDirectory;
         private string MenuDirectory;
-        private string EditorDirectory;
-
-        private XmlSerializer Serializer;
+        private string MultiverseDirectory;
+        private string MultiverseHomeWorldDirectory;
 
 
         public LevelsFactory()
@@ -40,7 +40,8 @@
 
             CampaignDirectory = @".\Content\scenarios\campaign\";
             MenuDirectory = @".\Content\scenarios\";
-            EditorDirectory = @".\Content\scenarios\universe\";
+            MultiverseHomeWorldDirectory = @".\Content\scenarios\";
+            MultiverseDirectory = @".\UserData\Multiverse\";
         }
 
 
@@ -51,89 +52,11 @@
 
             LoadCampaign();
             LoadMenu();
-            LoadEditor();
+            LoadMultiverse();
         }
 
 
-        public static string GetWorldStringId(int id)
-        {
-            return "World " + id;
-        }
-
-
-        public static bool IsCampaignCB(CelestialBody cb)
-        {
-            return cb.Name == "campaign";
-        }
-
-
-        //public static string GetWorldAnnounciationStringId(int id)
-        //{
-        //    return GetWorldStringId(id) + "Annunciation";
-        //}
-
-
-        public int GetUnlockedWorldIdByIndex(int index)
-        {
-            var current = 0;
-
-            foreach (var w in CampaignWorlds)
-            {
-                if (!w.Value.Unlocked)
-                    continue;
-
-                if (current == index)
-                    return w.Key;
-
-                current++;
-            }
-
-            return -1;
-        }
-
-
-        public void SaveWorldOnDisk(int id)
-        {
-            World w = MultiverseWorlds[id];
-            
-            //using (StreamWriter writer = new StreamWriter(DescriptorsDirectory + @"\level" + id + ".xml"))
-            //    LevelSerializer.Serialize(writer.BaseStream, Descriptors[id]);
-        }
-
-
-        public EndOfWorldAnimation GetEndOfWorldAnimation(int id, WorldScene scene)
-        {
-            EndOfWorldAnimation result = null;
-
-            switch (id)
-            {
-                case 1:
-                    result = new EndOfWorld1Animation(scene);
-                    break;
-            }
-
-            return result;
-        }
-
-
-        private void LoadCampaign()
-        {
-            LoadCutscenes();
-            
-            var directories = Directory.GetDirectories(CampaignDirectory, "world*");
-
-            foreach (var d in directories)
-            {
-                var world = LoadWorld(d);
-                world.LoadHighscores(Main.PlayersController.CampaignData.Directory + @"\world" + world.Id);
-
-                Worlds.Add(world.Descriptor.Id, world);
-                CampaignWorlds.Add(world.Descriptor.Id, world);
-
-                Core.Visual.Visuals.AddScene(new StoryScene("Cutscene" + world.Id, world.Id, new IntroCutscene()));
-            }
-        }
-
+        #region Menu
 
         private void LoadMenu()
         {
@@ -187,15 +110,200 @@
             Menu.InfiniteWaves = v;
         }
 
+        #endregion
 
-        private void LoadEditor()
+
+        #region Multiverse
+
+        public void AddMultiverseWorld(World w)
         {
-            var w = LoadWorld(EditorDirectory);
+            Worlds.Add(w.Id, w);
+            MultiverseWorlds.Add(w.Id, w);
 
-            w.EditorMode = true;
+            SaveWorldOnDisk(w.Id);
+        }
 
-            Worlds.Add(w.Descriptor.Id, w);
-            MultiverseWorlds.Add(w.Descriptor.Id, w);
+
+        private void LoadMultiverse()
+        {
+            Multiverse = LoadLevelDescriptor(MultiverseHomeWorldDirectory + "multiverse.xml");
+        }
+
+        #endregion
+
+
+        #region Campaign
+
+        private void LoadCampaign()
+        {
+            LoadCutscenes();
+
+            var directories = Directory.GetDirectories(CampaignDirectory, "world*");
+
+            foreach (var d in directories)
+            {
+                var world = LoadWorld(d);
+                world.CampaignMode = true;
+                world.LoadHighscores(Main.PlayersController.CampaignData.Directory + @"\world" + world.Id);
+
+                Worlds.Add(world.Descriptor.Id, world);
+                CampaignWorlds.Add(world.Descriptor.Id, world);
+
+                Core.Visual.Visuals.AddScene(new StoryScene("Cutscene" + world.Id, world.Id, new IntroCutscene()));
+            }
+        }
+
+
+        private void LoadCutscenes()
+        {
+            CutsceneDescriptors.Clear();
+
+            var files = Directory.GetFiles(CampaignDirectory + @"cutscenes\", "cutscene*.xml");
+
+            foreach (var f in files)
+            {
+                var descriptor = LoadLevelDescriptor(f);
+                CutsceneDescriptors.Add(descriptor.Infos.Id, descriptor);
+            }
+        }
+
+
+        public EndOfWorldAnimation GetEndOfWorldAnimation(int id, WorldScene scene)
+        {
+            EndOfWorldAnimation result = null;
+
+            switch (id)
+            {
+                case 1:
+                    result = new EndOfWorld1Animation(scene);
+                    break;
+            }
+
+            return result;
+        }
+
+
+        public static bool IsCampaignCB(CelestialBody cb)
+        {
+            return cb.Name == "campaign";
+        }
+
+
+        public int GetUnlockedWorldIdByIndex(int index)
+        {
+            var current = 0;
+
+            foreach (var w in CampaignWorlds)
+            {
+                if (!w.Value.Unlocked)
+                    continue;
+
+                if (current == index)
+                    return w.Key;
+
+                current++;
+            }
+
+            return -1;
+        }
+
+        #endregion
+
+
+        #region Worlds
+
+        public World GetWorld(int id)
+        {
+            if (Worlds.ContainsKey(id))
+                return Worlds[id];
+
+            if (MultiverseWorldExistsOnDisk(id))
+            {
+                var directory = GetWorldMultiverseDirectory(id);
+                var w = LoadWorld(directory);
+
+                Worlds.Add(w.Descriptor.Id, w);
+                MultiverseWorlds.Add(w.Descriptor.Id, w);
+
+                return w;
+            }
+
+            return null;
+        }
+
+
+        private bool MultiverseWorldExistsOnDisk(int id)
+        {
+            var directory = GetWorldMultiverseDirectory(id);
+
+            return
+                File.Exists(directory + @"\world.xml") &&
+                File.Exists(directory + @"\layout.xml");
+        }
+
+
+        public void SaveWorldOnDisk(int id)
+        {
+            World w = Worlds[id];
+
+            var directory = GetWorldMultiverseDirectory(id);
+
+            Main.PlayersController.CreateDirectory(directory);
+            Main.PlayersController.ClearDirectory(directory);
+
+            SaveWorldDescriptor(w.Descriptor, directory + @"\world.xml");
+            SaveLevelDescriptor(w.Layout, directory + @"\layout.xml");
+
+            foreach (var l in w.LevelsDescriptors)
+                SaveLevelDescriptor(l.Value, directory + @"\level" + l.Key + ".xml");
+        }
+
+
+        public static string GetWorldStringId(int id)
+        {
+            return "World " + id;
+        }
+
+
+        public World GetEmptyWorld(int id)
+        {
+            return new World()
+            {
+                Descriptor = GetEmptyWorldDescriptor(id),
+                Layout = GetEmptyLevelDescriptor(id)
+            };
+        }
+
+
+        public WorldDescriptor GetEmptyWorldDescriptor(int id)
+        {
+            var w = new WorldDescriptor()
+            {
+                Id = id,
+                Name = "My World"
+            };
+
+            return w;
+        }
+
+
+        private string GetWorldMultiverseDirectory(int id)
+        {
+            return MultiverseDirectory + @"worlds\world" + id;
+        }
+
+
+        private WorldDescriptor LoadWorldDescriptor(string path)
+        {
+            using (StreamReader reader = new StreamReader(path))
+                return (WorldDescriptor) WorldSerializer.Deserialize(reader.BaseStream);
+        }
+
+
+        private void SaveWorldDescriptor(WorldDescriptor descriptor, string path)
+        {
+            using (StreamWriter writer = new StreamWriter(path))
+                WorldSerializer.Serialize(writer.BaseStream, descriptor);
         }
 
 
@@ -220,153 +328,14 @@
         }
 
 
-        private void LoadCutscenes()
-        {
-            CutsceneDescriptors.Clear();
-
-            var files = Directory.GetFiles(CampaignDirectory + @"cutscenes\", "cutscene*.xml");
-
-            foreach (var f in files)
-            {
-                var descriptor = LoadLevelDescriptor(f);
-                CutsceneDescriptors.Add(descriptor.Infos.Id, descriptor);
-            }
-        }
+        #endregion
 
 
-        private LevelDescriptor LoadLevelDescriptor(string path)
-        {
-            using (StreamReader reader = new StreamReader(path))
-                return (LevelDescriptor) LevelSerializer.Deserialize(reader.BaseStream);
-        }
-
-
-        private WorldDescriptor LoadWorldDescriptor(string path)
-        {
-            using (StreamReader reader = new StreamReader(path))
-                return (WorldDescriptor) WorldSerializer.Deserialize(reader.BaseStream);
-        }
-
-
-        //public void DeleteUserDescriptorFromDisk(int id)
-        //{
-        //    if (File.Exists(UserDescriptorsDirectory + @"\level" + id + ".xml"))
-        //        File.Delete(UserDescriptorsDirectory + @"\level" + id + ".xml");
-        //}
-
+        #region Levels
 
         public LevelDescriptor GetNextLevel(int worldId, int currentLevelId)
         {
             return CampaignWorlds[worldId].GetNextLevel(currentLevelId);
-        }
-
-
-        public static LevelDescriptor GetPerformanceTestDescriptor()
-        {
-            LevelDescriptor d = new LevelDescriptor();
-
-            CelestialBodyDescriptor c;
-            WaveDescriptor v;
-
-            d.Player.Lives = 1;
-            d.Player.Money = 100;
-
-            d.Infos.Background = "background14";
-
-            for (int i = 0; i < 6; i++)
-            {
-                c = new CelestialBodyDescriptor();
-                c.Name = i.ToString();
-                c.Path = new Vector3(150, 100, 0);
-                c.StartingPosition = (int) (i * 14f);
-                c.Size = Size.Small;
-                c.Speed = 120000;
-                c.Image = "stationSpatiale1";
-                c.PathPriority = 30 - i;
-                c.Invincible = true;
-
-                c.AddTurret(TurretType.Gravitational, 1, new Vector3(-6, 0, 0));
-                c.AddTurret(TurretType.Basic, 10, new Vector3(0, 6, 0));
-                c.AddTurret(TurretType.Basic, 10, new Vector3(0, -6, 0));
-
-                d.PlanetarySystem.Add(c);
-            }
-
-            d.Objective.CelestialBodyToProtect = d.PlanetarySystem[0].PathPriority;
-
-            for (int i = 0; i < 8; i++)
-            {
-                c = new CelestialBodyDescriptor();
-                c.Name = (i+8).ToString();
-                c.Path = new Vector3(300, 200, 0);
-                c.StartingPosition = (int)(i * 11f);
-                c.Size = Size.Small;
-                c.Speed = 120000;
-                c.Image = "stationSpatiale2";
-                c.PathPriority = 24 - i;
-                c.Invincible = true;
-
-                c.AddTurret(TurretType.Gravitational, 1, new Vector3(-6, 0, 0));
-                c.AddTurret(TurretType.MultipleLasers, 10, new Vector3(0, 6, 0));
-                c.AddTurret(TurretType.MultipleLasers, 10, new Vector3(0, -6, 0));
-
-                d.PlanetarySystem.Add(c);
-            }
-
-            for (int i = 0; i < 16; i++)
-            {
-                c = new CelestialBodyDescriptor();
-                c.Name = (i+16).ToString();
-                c.Path = new Vector3(450, 300, 0);
-                c.StartingPosition = (int)(i * 5f);
-                c.Size = Size.Small;
-                c.Speed = 120000;
-                c.Image = "stationSpatiale1";
-                c.PathPriority = 16 - i;
-                c.Invincible = true;
-
-                c.AddTurret(TurretType.Gravitational, 1, new Vector3(-6, 0, 0));
-                c.AddTurret(TurretType.Basic, 10, new Vector3(0, 6, 0));
-                c.AddTurret(TurretType.Basic, 10, new Vector3(0, -6, 0));
-
-                d.PlanetarySystem.Add(c);
-            }
-
-
-            c = new CelestialBodyDescriptor();
-            c.Name = "1111";
-            c.Path = new Vector3(700, -400, 0);
-            c.Speed = 320000;
-            c.Size = Size.Small;
-            c.Images.Add("Asteroid");
-            c.Images.Add("Plutoid");
-            c.Images.Add("Comet");
-            c.Images.Add("Centaur");
-            c.Images.Add("Trojan");
-            c.Images.Add("Meteoroid");
-            c.PathPriority = 0;
-            c.CanSelect = true;
-
-            d.PlanetarySystem.Add(c);
-
-            v = new WaveDescriptor();
-            v.Enemies = new List<EnemyType>() { EnemyType.Plutoid };
-            v.LivesLevel = 150;
-            d.Waves.Add(v);
-
-            v = new WaveDescriptor();
-            v.Enemies = new List<EnemyType>() { EnemyType.Comet };
-            v.LivesLevel = 150;
-            v.Quantity = 100;
-            d.Waves.Add(v);
-
-            v = new WaveDescriptor();
-            v.Enemies = new List<EnemyType>() { EnemyType.Meteoroid };
-            v.LivesLevel = 150;
-            v.Quantity = 100;
-            d.Waves.Add(v);
-
-            return d;
         }
 
 
@@ -380,5 +349,21 @@
 
             return l;
         }
+
+
+        private LevelDescriptor LoadLevelDescriptor(string path)
+        {
+            using (StreamReader reader = new StreamReader(path))
+                return (LevelDescriptor) LevelSerializer.Deserialize(reader.BaseStream);
+        }
+
+
+        private void SaveLevelDescriptor(LevelDescriptor descriptor, string path)
+        {
+            using (StreamWriter writer = new StreamWriter(path))
+                LevelSerializer.Serialize(writer.BaseStream, descriptor);
+        }
+
+        #endregion
     }
 }

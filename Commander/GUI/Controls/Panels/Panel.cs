@@ -9,6 +9,7 @@
 
     class Panel : PanelWidget
     {
+        public PanelType Type;
         public virtual bool Visible { get; set; }
         public bool ShowFrame;
         public bool ShowBackground;
@@ -38,6 +39,7 @@
 
         public Panel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
         {
+            Type = PanelType.None;
             Position = position - new Vector3(size / 2f, 0);
             VisualPriority = visualPriority;
             this.size = size;
@@ -292,6 +294,7 @@
 
         public PanelWidgetHandler CloseButtonHandler
         {
+            protected get { return CloseButton.ClickHandler; }
             set { CloseButton.ClickHandler = value; }
         }
 
@@ -332,7 +335,7 @@
         }
 
 
-        public void SetTitle(string title)
+        public virtual void SetTitle(string title)
         {
             bool adjustDimension = Title == null;
 
@@ -442,8 +445,8 @@
 
             if (Title != null)
             {
-                Title.Position = new Vector3(Position.X, Position.Y + 5, 0);
-                TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.AbsoluteSize.Y + 5, 0);
+                //Title.Position = new Vector3(Position.X, Position.Y + 5, 0);
+                //TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.AbsoluteSize.Y + 5, 0);
 
                 Scene.Add(TitleSeparator);
                 Scene.Add(Title);
@@ -539,7 +542,14 @@
 
         protected virtual void ComputePositions()
         {
+            if (Title != null)
+            {
+                Title.Position = new Vector3(Position.X, Position.Y + 5, 0);
+                TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.AbsoluteSize.Y + 5, 0);
+            }
 
+            if (CloseButton != null)
+                CloseButton.Position = new Vector3(Position.X + Dimension.X - 20, Position.Y + 15, 0);
         }
 
 

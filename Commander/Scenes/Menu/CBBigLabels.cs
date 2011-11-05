@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class MainMenuChoices
+    class CBBigLabels
     {
         private Dictionary<Text, CelestialBody> Texts;
         private Simulator Simulator;
@@ -15,7 +15,7 @@
         private List<int> VisualEffectsIds;
 
 
-        public MainMenuChoices(Simulator simulator, double visualPriority)
+        public CBBigLabels(Simulator simulator, double visualPriority)
         {
             Simulator = simulator;
 

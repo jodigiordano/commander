@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Infos>
+    <Id>1</Id>
+    <Background>background16</Background>
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>-7</CelestialBodyToProtect>
+  </Objective>
+  <PlanetarySystem>
+    <CelestialBody>
+      <Name>Asteroid belt</Name>
+      <Images />
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Small</Size>
+      <Speed>2560000</Speed>
+      <PathPriority>-2147483647</PathPriority>
+      <Path>
+        <X>700</X>
+        <Y>-400</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>0</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>false</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete1508144689</Name>
+      <ParticleEffect>trouRose</ParticleEffect>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Big</Size>
+      <Speed>360000</Speed>
+      <PathPriority>-9</PathPriority>
+      <Path>
+        <X>-54.6729431</X>
+        <Y>53.6440277</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>-24.8519363</X>
+        <Y>118.317932</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>229</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete1659819423</Name>
+      <ParticleEffect>trouRose</ParticleEffect>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Normal</Size>
+      <Speed>480000</Speed>
+      <PathPriority>-11</PathPriority>
+      <Path>
+        <X>-3.048235</X>
+        <Y>-12.0318356</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>-397.9912</X>
+        <Y>-154.0669</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>-268</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete1834692204</Name>
+      <Images />
+      <Image>planete3</Image>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Normal</Size>
+      <Speed>240000</Speed>
+      <PathPriority>-8</PathPriority>
+      <Path>
+        <X>-25</X>
+        <Y>28</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>372.847015</X>
+        <Y>135.995</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>240</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+    <CelestialBody>
+      <Name>Planete1694538142</Name>
+      <Images />
+      <Image>vaisseauAlien1</Image>
+      <HasGravitationalTurret>true</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Big</Size>
+      <Speed>480000</Speed>
+      <PathPriority>-12</PathPriority>
+      <Path>
+        <X>-39.4869041</X>
+        <Y>-32.8181038</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>-481.6061</X>
+        <Y>170.621735</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>112</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>0</StartingPosition>
+    </CelestialBody>
+  </PlanetarySystem>
+  <Waves />
+  <Player>
+    <Money>100</Money>
+    <Lives>1</Lives>
+    <StartingPosition>
+      <X>175</X>
+      <Y>-150</Y>
+      <Z>0</Z>
+    </StartingPosition>
+  </Player>
+  <AvailableTurrets />
+  <AvailablePowerUps />
+  <Minerals>
+    <Cash>0</Cash>
+    <LifePacks>0</LifePacks>
+  </Minerals>
+  <HelpTexts />
+</Level>

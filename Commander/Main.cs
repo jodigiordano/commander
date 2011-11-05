@@ -29,6 +29,7 @@ namespace EphemereGames.Commander
         public static GameScene CurrentGame;
         public static WorldScene CurrentWorld;
         public static WorldAnnunciationScene CurrentWorldAnnounciation;
+        public static MultiverseScene Multiverse;
         public static LevelsFactory LevelsFactory;
         public static XACTMusicController MusicController;
         public static NewsController NewsController;
@@ -82,7 +83,7 @@ namespace EphemereGames.Commander
 
         public static void SetCurrentWorld(int id, bool initNow)
         {
-            SetCurrentWorld(LevelsFactory.Worlds[id], initNow);
+            SetCurrentWorld(LevelsFactory.GetWorld(id), initNow);
         }
 
 
@@ -127,11 +128,12 @@ namespace EphemereGames.Commander
                 case BootSequence.Initial:
                     PlayersController.LoadOptions();
                     PlayersController.LoadCampaign();
+                    PlayersController.LoadMultiverse();
                     Boot = BootSequence.LoadingSharedSaveGame;
                     break;
 
                 case BootSequence.LoadingSharedSaveGame:
-                    if (PlayersController.IsOptionsLoaded && PlayersController.IsCampaignLoaded)
+                    if (PlayersController.IsOptionsLoaded && PlayersController.IsCampaignLoaded && PlayersController.IsMultiverseLoaded)
                     {
                         Options.ShowHelpBar = PlayersController.OptionsData.ShowHelpBar;
                         Options.FullScreen = PlayersController.OptionsData.FullScreen;

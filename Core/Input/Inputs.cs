@@ -73,6 +73,12 @@
         }
 
 
+        public static void SetAllKeysOneListenerMode(bool active, Player p, InputListener listener)
+        {
+            InputsController.SetAllKeysMode(active, p, listener);
+        }
+
+
         public static void ConnectPlayer(Player player)
         {
             PlayerConnection.Connect(player);

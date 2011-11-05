@@ -16,9 +16,16 @@
         }
 
 
-        public void SetData(string data)
+        public string Value
         {
-            Text.Data = data;
+            get { return Text.Data; }
+            set { Text.Data = value; }
+        }
+
+
+        public Color Color
+        {
+            set { Text.Color = value; }
         }
 
 

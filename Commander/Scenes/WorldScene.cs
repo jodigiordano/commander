@@ -83,6 +83,7 @@
             LevelStates.Show();
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
+
             Main.MusicController.AddMusic(World.Descriptor.Music);
             Main.MusicController.AddMusic(World.Descriptor.MusicEnd);
 
@@ -469,7 +470,7 @@
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 
-            Simulator.MessagesController.ShowMessage(c, World.Descriptor.WarpBlockedMessage, 5000, -1);
+            Simulator.MessagesController.ShowMessage(c, "Finish all the levels\n\nto access this world!", 5000, -1);
         }
 
 

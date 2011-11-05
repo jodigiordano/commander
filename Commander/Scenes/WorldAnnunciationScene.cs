@@ -66,7 +66,7 @@
                     Main.CurrentWorld.Initialize();
                     InitWorld = false;
                 }
-                TransiteTo(World.Id > 1 && World.Id != 999 ? "EndOfDemo" : "World"); //tmp
+                TransiteTo("World");
                 TransitionInProgress = true;
             }
 

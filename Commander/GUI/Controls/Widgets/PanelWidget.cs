@@ -56,27 +56,27 @@
         public virtual void Initialize() { }
 
 
-        public Rectangle VisiblePart
+        Rectangle IVisual.VisiblePart
         {
             set { throw new System.NotImplementedException(); }
         }
 
 
-        public Vector2 Origin
-        {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-
-        public Vector2 Size
+        Vector2 IVisual.Origin
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
         }
 
 
-        public Color Color
+        Vector2 IVisual.Size
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+        Color IVisual.Color
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }

@@ -28,11 +28,6 @@
   <Warps>
     <World>2</World>
   </Warps>
-  <Layout>1001</Layout>
-  <UnlockedCondition>-1</UnlockedCondition>
-  <WarpBlockedMessage><![CDATA[Finish all the levels
-  
-to access this world!]]></WarpBlockedMessage>
   <Music>Galaxy1Music</Music>
   <MusicEnd>Galaxy1EndMusic</MusicEnd>
   <SfxEnd>Galaxy1EndSfx</SfxEnd>

@@ -59,6 +59,9 @@
             set
             {
                 Button.Position = value;
+
+                if (ButtonCircle != null)
+                    ButtonCircle.Position = value;
             }
         }
 

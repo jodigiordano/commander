@@ -18,13 +18,6 @@
     <World>2</World>
     <World>4</World>
   </Warps>
-  <Layout>1003</Layout>
-  <UnlockedCondition>2</UnlockedCondition>
-  <WarpBlockedMessage>
-    <![CDATA[Finish all the levels
-  
-to access this world!]]>
-  </WarpBlockedMessage>
   <Music>Galaxy1Music</Music>
   <MusicEnd>Galaxy1EndMusic</MusicEnd>
   <SfxEnd>Galaxy1EndSfx</SfxEnd>

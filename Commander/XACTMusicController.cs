@@ -68,6 +68,9 @@
         {
             PauseCurrentMusic();
 
+            if (!Musics.ContainsKey(musicName))
+                return;
+
             Cue music = Musics[musicName];
 
             if (music != null)
@@ -84,6 +87,9 @@
         public void PlayOrResume(string musicName, string bankName)
         {
             PauseCurrentMusic();
+
+            if (!Musics.ContainsKey(musicName))
+                return;
 
             Cue music = Musics[musicName];
 
@@ -167,6 +173,9 @@
 
         public void AddMusic(string musicName)
         {
+            if (musicName == "")
+                return;
+
             if (Musics.ContainsKey(musicName))
                 return;
 

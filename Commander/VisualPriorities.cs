@@ -43,13 +43,7 @@
 
         public const double PlayerPanelCursor = 0.3;
 
-        public const double PausePanel = 0.35;
-        public const double CreditsPanel = 0.35;
-        public const double OptionsPanel = 0.36;
-        public const double HelpPanel = 0.36;
-        public const double ControlsPanel = 0.36;
-        public const double NewsPanel = 0.36;
-        public const double DLCPanel = 0.36;
+        public const double Panel = 0.35;
 
         public const double TurretMenu = 0.38;
         public const double CelestialBodyMenu = 0.39;

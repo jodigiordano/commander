@@ -174,6 +174,9 @@
             ScenesLoaded.Add(new WorldScene());
             ScenesLoaded.Add(new WorldAnnunciationScene());
 
+            Main.Multiverse = new MultiverseScene();
+            ScenesLoaded.Add(Main.Multiverse);
+
             ScenesAreLoaded = true;
         }
 

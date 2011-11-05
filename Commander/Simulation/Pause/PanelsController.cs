@@ -31,21 +31,28 @@
             Players.Clear();
             Panels.Clear();
 
-            Panels.Add(PanelType.Credits, new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 550), VisualPriorities.Default.CreditsPanel, Color.White) { Visible = false });
-            Panels.Add(PanelType.GeneralNews, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.NewsPanel, Color.White, NewsType.General, "What's up at Ephemere Games") { Visible = false });
-            Panels.Add(PanelType.UpdatesNews, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.NewsPanel, Color.White, NewsType.Updates, "You've just been updated!") { Visible = false });
-            Panels.Add(PanelType.Options, new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 400), VisualPriorities.Default.OptionsPanel, Color.White) { Visible = false });
-            Panels.Add(PanelType.Pause, new PausePanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.PausePanel, Color.White) { Visible = false });
-            Panels.Add(PanelType.Help, new HelpPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 600), VisualPriorities.Default.HelpPanel, Color.White) { Visible = false });
-            Panels.Add(PanelType.Controls, new ControlsPanel(Simulator.Scene, Vector3.Zero, new Vector2(600, 700), VisualPriorities.Default.ControlsPanel, Color.White) { Visible = false });
+            Panels.Add(PanelType.Credits, new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 550), VisualPriorities.Default.Panel, Color.White));
+            Panels.Add(PanelType.GeneralNews, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.Panel, Color.White, NewsType.General, "What's up at Ephemere Games"));
+            Panels.Add(PanelType.UpdatesNews, new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.Panel, Color.White, NewsType.Updates, "You've just been updated!"));
+            Panels.Add(PanelType.Options, new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 400), VisualPriorities.Default.Panel, Color.White));
+            Panels.Add(PanelType.Pause, new PausePanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.Panel, Color.White));
+            Panels.Add(PanelType.Controls, new ControlsPanel(Simulator.Scene, Vector3.Zero, new Vector2(600, 700), VisualPriorities.Default.Panel, Color.White));
+            Panels.Add(PanelType.Help, new HelpPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 600), VisualPriorities.Default.Panel, Color.White));
+            
+            Panels.Add(PanelType.Login, new LoginPanel(Simulator.Scene, Vector3.Zero));
+            Panels.Add(PanelType.Register, new RegisterPanel(Simulator.Scene, Vector3.Zero));
+            Panels.Add(PanelType.VirtualKeyboard, new VirtualKeyboardPanel(Simulator.Scene, Vector3.Zero));
 
             foreach (var p in Panels.Values)
             {
+                p.Visible = false;
                 p.Initialize();
                 p.CloseButtonHandler = DoPanelClosed;
             }
 
             Panels[PanelType.Pause].SetClickHandler(DoPausePanelClicked);
+            ((RegisterPanel) Panels[PanelType.Register]).VirtualKeyboardAsked += new PanelTextBoxStringHandler(DoVirtualKeyboardAsked);
+            ((LoginPanel) Panels[PanelType.Login]).VirtualKeyboardAsked += new PanelTextBoxStringHandler(DoVirtualKeyboardAsked); 
         }
 
 
@@ -89,13 +96,14 @@
         }
 
 
-        public void ShowPanel(PanelType type)
+        public void ShowPanel(PanelType type, Vector3 position)
         {
             ShowPausePlayers();
             CloseOthersPanels(type);
 
             var p = Panels[type];
 
+            p.Position = position;
             p.Fade(p.Alpha, 255, 500);
 
             Simulator.CanSelectCelestialBodies = false;
@@ -236,6 +244,16 @@
                 ((OptionsPanel) Panels[PanelType.Options]).SaveOnDisk();
             }
 
+            if (Panels[PanelType.VirtualKeyboard].Visible)
+            {
+                var p = (VirtualKeyboardPanel) Panels[PanelType.VirtualKeyboard];
+
+                p.TextBox.Value = p.Value;
+                ShowPanel(p.PanelToReopenOnClose);
+
+                return;
+            }
+
             if (!Simulator.DemoMode && !Panels[PanelType.Pause].Visible)
             {
                 ShowPanel(PanelType.Pause);
@@ -246,6 +264,18 @@
                 Simulator.TriggerNewGameState(GameState.Running);
                 Simulator.CanSelectCelestialBodies = true;
             }
+        }
+
+
+        private void DoVirtualKeyboardAsked(Panel panel, TextBox textbox, string title)
+        {
+            var vk = (VirtualKeyboardPanel) Panels[PanelType.VirtualKeyboard];
+
+            vk.TextBox = textbox;
+            vk.PanelToReopenOnClose = panel.Type;
+            vk.SetTitle(title);
+
+            ShowPanel(PanelType.VirtualKeyboard);
         }
 
 
@@ -282,6 +312,14 @@
                 Simulator.TriggerNewGameState(GameState.Running);
                 Simulator.CanSelectCelestialBodies = true;
             }
+        }
+
+
+        private void ShowPanel(PanelType type)
+        {
+            var p = Panels[type];
+
+            ShowPanel(type, p.Position);
         }
 
 

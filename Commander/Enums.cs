@@ -57,8 +57,23 @@
         Help = 4,
         Controls = 5,
         GeneralNews = 6,
-        UpdatesNews = 7
+        UpdatesNews = 7,
+        Login = 8,
+        Register = 9,
+        VirtualKeyboard = 10
     };
+
+
+    public enum MultiverseMessageType
+    {
+        None = -1,
+        Ok = 0,
+        Error = 1,
+        LoadWorld = 2,
+        HighScores = 3,
+        NewPlayer = 4,
+        Login = 5
+    }
 
 
     public enum NewsType
