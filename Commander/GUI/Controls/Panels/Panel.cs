@@ -9,6 +9,10 @@
 
     class Panel : PanelWidget
     {
+        public event PanelTextBoxStringHandler VirtualKeyboardAsked;
+        public event NoneHandler KeyboardAsked;
+        public event NoneHandler KeyboardClosed;
+
         public PanelType Type;
         public virtual bool Visible { get; set; }
         public bool ShowFrame;
@@ -35,6 +39,8 @@
         private Vector2 size;
 
         protected bool RecomputePositions;
+
+        protected KeyboardInput KeyboardInput;
 
 
         public Panel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
@@ -92,6 +98,11 @@
             Alpha = 255;
 
             Scene = scene; //after created CloseButton
+
+            KeyboardInput = new KeyboardInput()
+            {
+                DesactivatedCallback = KeyboardInputDesactivatedCallback
+            };
         }
 
 
@@ -388,6 +399,8 @@
             if (!Visible)
                 return;
 
+            KeyboardInput.Update();
+
             if (RecomputePositions)
             {
                 ComputePositions();
@@ -551,6 +564,48 @@
             if (CloseButton != null)
                 CloseButton.Position = new Vector3(Position.X + Dimension.X - 20, Position.Y + 15, 0);
         }
+
+
+        #region Input
+
+        protected void ActivateKeyboardInput(TextBoxGroup group, bool virtualKeyboard)
+        {
+            if (virtualKeyboard && VirtualKeyboardAsked != null)
+            {
+                VirtualKeyboardAsked(this, group.Focus, group.Focus.Name);
+
+                return;
+            }
+
+            KeyboardInput.TextBoxGroup = group;
+            KeyboardInput.Active = true;
+
+            if (KeyboardClosed != null)
+                KeyboardAsked();
+        }
+
+
+        private void KeyboardInputDesactivatedCallback()
+        {
+            if (KeyboardClosed != null)
+                KeyboardClosed();
+        }
+
+
+        protected void DisableInput()
+        {
+            foreach (var w in Widgets)
+                w.Value.EnableInput = false;
+        }
+
+
+        public void EnableInput()
+        {
+            foreach (var w in Widgets)
+                w.Value.EnableInput = true;
+        }
+
+        #endregion
 
 
         private void ComputeTitleBarPositions()

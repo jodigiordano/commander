@@ -17,7 +17,6 @@ namespace EphemereGames.Commander.Simulation
         public bool WorldMode;
         public bool DemoMode;
         public bool CutsceneMode;
-        public bool EditorWorldMode;
         public bool MultiverseMode;
         public bool CanSelectCelestialBodies;
         public bool AsteroidBeltOverride;
@@ -152,7 +151,6 @@ namespace EphemereGames.Commander.Simulation
             DemoMode = false;
             CutsceneMode = false;
             EditorMode = false;
-            EditorWorldMode = false;
             AsteroidBeltOverride = false;
             MultiverseMode = false;
             CanSelectCelestialBodies = true;
@@ -410,6 +408,12 @@ namespace EphemereGames.Commander.Simulation
             Main.CheatsController.CheatActivated -= DoCheatActivated;
             Main.Options.ShowHelpBarChanged -= DoShowHelpBarChanged;
             Inputs.RemoveListener(this);
+        }
+
+
+        public bool EditorWorldMode
+        {
+            get { return WorldMode && EditorMode; }
         }
 
 

@@ -41,6 +41,7 @@
             
             Panels.Add(PanelType.Login, new LoginPanel(Simulator.Scene, Vector3.Zero));
             Panels.Add(PanelType.Register, new RegisterPanel(Simulator.Scene, Vector3.Zero));
+            Panels.Add(PanelType.JumpToWorld, new JumpToWorldPanel(Simulator.Scene, Vector3.Zero));
             Panels.Add(PanelType.VirtualKeyboard, new VirtualKeyboardPanel(Simulator.Scene, Vector3.Zero));
 
             foreach (var p in Panels.Values)
@@ -48,11 +49,12 @@
                 p.Visible = false;
                 p.Initialize();
                 p.CloseButtonHandler = DoPanelClosed;
+                p.VirtualKeyboardAsked += new PanelTextBoxStringHandler(DoVirtualKeyboardAsked);
+                p.KeyboardAsked += new NoneHandler(DoKeyboardAsked);
+                p.KeyboardClosed += new NoneHandler(DoKeyboardClosed);
             }
 
             Panels[PanelType.Pause].SetClickHandler(DoPausePanelClicked);
-            ((RegisterPanel) Panels[PanelType.Register]).VirtualKeyboardAsked += new PanelTextBoxStringHandler(DoVirtualKeyboardAsked);
-            ((LoginPanel) Panels[PanelType.Login]).VirtualKeyboardAsked += new PanelTextBoxStringHandler(DoVirtualKeyboardAsked); 
         }
 
 
@@ -267,6 +269,8 @@
         }
 
 
+        #region Input
+
         private void DoVirtualKeyboardAsked(Panel panel, TextBox textbox, string title)
         {
             var vk = (VirtualKeyboardPanel) Panels[PanelType.VirtualKeyboard];
@@ -277,6 +281,22 @@
 
             ShowPanel(PanelType.VirtualKeyboard);
         }
+
+
+        private void DoKeyboardAsked()
+        {
+            foreach (var p in Players.Values)
+                p.Cursor.FadeOut();
+        }
+
+
+        private void DoKeyboardClosed()
+        {
+            foreach (var p in Players.Values)
+                p.Cursor.FadeIn();
+        }
+
+        #endregion
 
 
         private void DoPausePanelClicked(PanelWidget widget)

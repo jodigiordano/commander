@@ -53,7 +53,7 @@
 
         private void InitializeCBStates()
         {
-            Layout.PlanetarySystem[1].Name = "go to world...";
+            Layout.PlanetarySystem[1].Name = "jump to world";
             Layout.PlanetarySystem[2].Name = "";
             Layout.PlanetarySystem[3].Name = "my world";
             Layout.PlanetarySystem[4].Name = Main.PlayersController.MultiverseData.PlayerIsLoggedIn ? "" : "register";
@@ -206,9 +206,16 @@
             switch (c.Name)
             {
                 case "register": DoRegister(player); break;
+                case "jump to world": DoJumpToWorld(player); break;
                 case "my world": DoMyWorld(player);
                     break;
             }
+        }
+
+
+        private void DoJumpToWorld(Player player)
+        {
+            Simulator.ShowPanel(PanelType.JumpToWorld, player.Position, true);
         }
 
 
@@ -227,7 +234,11 @@
 
             else
             {
-                Main.SetCurrentWorld(Main.PlayersController.MultiverseData.WorldId, true);
+                var world = Main.LevelsFactory.GetWorld(Main.PlayersController.MultiverseData.WorldId);
+
+                world.EditorMode = true;
+                world.EditorState = EditorState.Editing;
+                Main.SetCurrentWorld(world, true);
                 TransiteTo("WorldAnnunciation");
             }
         }

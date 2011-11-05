@@ -58,9 +58,8 @@
             {
                 DemoMode = true,
                 WorldMode = true,
-                EditorWorldMode = World.EditorMode,
-                //EditorMode = EditorMode,
-                //EditorState = EditorState.Editing,
+                EditorMode = World.EditorMode,
+                EditorState = World.EditorState,
                 AvailableLevelsWorldMode = CBtoLevel,
                 AvailableWarpsWorldMode = CBtoWarp,
                 EnableInputs = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale

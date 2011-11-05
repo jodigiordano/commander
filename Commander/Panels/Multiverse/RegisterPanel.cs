@@ -2,14 +2,13 @@
 {
     using System;
     using System.Net;
+    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class RegisterPanel : VerticalPanel
     {
-        public event PanelTextBoxStringHandler VirtualKeyboardAsked;
-
         private WebClient Client;
 
         private TextBox Username;
@@ -20,7 +19,7 @@
         private Label Message;
 
         private string HashedPassword;
-        private KeyboardInput KeyboardInput;
+        private TextBoxGroup TBGroup;
 
 
         public RegisterPanel(Scene scene, Vector3 position)
@@ -31,11 +30,11 @@
 
             Alpha = 0;
 
-            Username = new TextBox(new Text("username", "Pixelite") { SizeX = 2 }, 300, 400);
-            Password1 = new TextBox(new Text("password", "Pixelite") { SizeX = 2 }, 300, 400);
-            Password2 = new TextBox(new Text("password (again)", "Pixelite") { SizeX = 2 }, 300, 400);
-            Email = new TextBox(new Text("email", "Pixelite") { SizeX = 2 }, 300, 400);
-            Submit = new PushButton(new Text("register", "Pixelite") { SizeX = 2 }, 300);
+            Username = new TextBox(new Text("username", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
+            Password1 = new TextBox(new Text("password", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
+            Password2 = new TextBox(new Text("password (again)", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
+            Email = new TextBox(new Text("email", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
+            Submit = new PushButton(new Text("register", "Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoSubmit };
             Message = new Label(new Text("Pixelite") { SizeX = 2 });
 
             AddWidget("username", Username);
@@ -50,24 +49,20 @@
 
             EnableInput();
 
-            KeyboardInput = new KeyboardInput()
-            {
-                DesactivatedCallback = KeyboardInputDesactivatedCallback
-            };
+            TBGroup = new TextBoxGroup();
+            TBGroup.Add(Username);
+            TBGroup.Add(Password1);
+            TBGroup.Add(Password2);
+            TBGroup.Add(Email);
         }
 
 
         private void DoTextInput(PanelWidget p)
         {
-            //if (VirtualKeyboardAsked != null)
-            //    VirtualKeyboardAsked(this, (TextBox) p, p.Name);
+            var tb = (TextBox) p;
 
-            var textbox = (TextBox) p;
-
-            ToggleTextBoxFocus(textbox);
-
-            KeyboardInput.TextBoxFocus = textbox;
-            KeyboardInput.Active = true;
+            TBGroup.SwitchTo(tb);
+            ActivateKeyboardInput(TBGroup, Inputs.MasterPlayer.InputType == InputType.Gamepad);
         }
 
 
@@ -191,52 +186,6 @@
             }
 
             return true;
-        }
-
-
-        private void DisableInput()
-        {
-            Username.ClickHandler = null;
-            Password1.ClickHandler = null;
-            Password2.ClickHandler = null;
-            Email.ClickHandler = null;
-            Submit.ClickHandler = null;
-        }
-
-
-        public void EnableInput()
-        {
-            Username.ClickHandler = DoTextInput;
-            Password1.ClickHandler = DoTextInput;
-            Password2.ClickHandler = DoTextInput;
-            Email.ClickHandler = DoTextInput;
-            Submit.ClickHandler = DoSubmit;
-        }
-
-
-        private void ToggleTextBoxFocus(TextBox box)
-        {
-            Username.Focus = false;
-            Password1.Focus = false;
-            Password2.Focus = false;
-            Email.Focus = false;
-
-            if (box != null)
-                box.Focus = true;
-        }
-
-
-        private void KeyboardInputDesactivatedCallback()
-        {
-            ToggleTextBoxFocus(null);
-        }
-
-
-        public override void Draw()
-        {
-            base.Draw();
-
-            KeyboardInput.Update();
         }
     }
 }

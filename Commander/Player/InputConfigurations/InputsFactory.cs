@@ -206,6 +206,7 @@
                     Cheat1 = Keys.P,
                     ZoomIn = Keys.R,
                     ZoomOut = Keys.F,
+                    Select = Keys.Enter,
                     ToImage = new Dictionary<Keys, string>(KeysComparer.Default)
                     {
                         { Keys.W, "KeyW" },

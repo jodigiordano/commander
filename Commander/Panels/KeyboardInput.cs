@@ -8,17 +8,20 @@
     class KeyboardInput : InputListener
     {
         public NoneHandler DesactivatedCallback;
-        public TextBox TextBoxFocus;
+        public TextBoxGroup TextBoxGroup;
 
-
+        private bool DeleteMode;
         private bool ShiftMode;
         private bool ShiftModeCooldown;
+        private bool ActiveThisTick;
+        private double DeleteSpeed;
+        private double DeleteCounter;
 
 
         public KeyboardInput()
         {
-            TextBoxFocus = null;
-            ShiftMode = false;
+            TextBoxGroup = null;
+            DeleteSpeed = 200; //ms
         }
 
 
@@ -29,6 +32,13 @@
                 Inputs.SetAllKeysOneListenerMode(value, Inputs.MasterPlayer, this);
                 ShiftMode = false;
                 ShiftModeCooldown = false;
+                DeleteMode = false;
+                DeleteCounter = DeleteSpeed;
+
+                if (value)
+                {
+                    ActiveThisTick = true;
+                }
             }
         }
 
@@ -36,6 +46,17 @@
         public void Update()
         {
             ShiftModeCooldown = false;
+
+            if (DeleteMode)
+            {
+                DeleteCounter -= Preferences.TargetElapsedTimeMs;
+
+                if (DeleteCounter <= 0 && TextBoxGroup != null && TextBoxGroup.Focus != null)
+                {
+                    TextBoxGroup.Focus.DoBackspace();
+                    DeleteCounter = DeleteSpeed;
+                }
+            }
         }
 
 
@@ -51,15 +72,20 @@
 
             if (ShiftMode)
                 ShiftModeCooldown = true;
+
+            DeleteMode = key == Keys.Back;
         }
 
 
         void InputListener.DoKeyPressedOnce(Core.Input.Player player, Keys key)
         {
-            if (key == Keys.Enter)
+            // todo: hold backspace button => delete mode.
+            // todo: moving cursor around
+
+            if (!ActiveThisTick && key == Keys.Enter)
             {
                 Inputs.SetAllKeysOneListenerMode(false, Inputs.MasterPlayer, this);
-                TextBoxFocus = null;
+                TextBoxGroup.SwitchTo(null);
 
                 if (DesactivatedCallback != null)
                     DesactivatedCallback();
@@ -67,16 +93,17 @@
 
             else if (key == Keys.Back)
             {
-                TextBoxFocus.DoBackspace();
+                TextBoxGroup.Focus.DoBackspace();
+                DeleteMode = true;
             }
 
             else if (key == Keys.Delete)
             {
-                TextBoxFocus.Value = "";
+                TextBoxGroup.Focus.Value = "";
             }
 
             else if (key == Keys.Escape || key == Keys.Down || key == Keys.Left || key == Keys.Up || key == Keys.Right ||
-                     key == Keys.PageUp || key == Keys.PageDown || key == Keys.Home || key == Keys.End)
+                     key == Keys.PageUp || key == Keys.PageDown || key == Keys.Home || key == Keys.End || key == Keys.Enter)
             {
                 // ignore
             }
@@ -120,7 +147,12 @@
                 else if (key == Keys.OemPeriod)
                     value = ">";
 
-                TextBoxFocus.Value += value;
+                TextBoxGroup.Focus.Value += value;
+            }
+
+            else if (key == Keys.Tab)
+            {
+                TextBoxGroup.Toggle();
             }
 
             else
@@ -173,19 +205,27 @@
                     value = ";";
                 else if (key == Keys.OemTilde)
                     value = "~";
+                else if (key == Keys.Space)
+                    value = " ";
                 else
                     value = key.ToString();
 
-                TextBoxFocus.Value += value;
+                TextBoxGroup.Focus.Value += value;
             }
 
-            // todo: tabulation
+            ActiveThisTick = false;
         }
 
 
         void InputListener.DoKeyReleased(Core.Input.Player player, Keys key)
         {
             ShiftMode = !(key == Keys.LeftShift || key == Keys.RightShift);
+
+            if (key == Keys.Back)
+            {
+                DeleteMode = false;
+                DeleteCounter = DeleteSpeed;
+            }
         }
 
 

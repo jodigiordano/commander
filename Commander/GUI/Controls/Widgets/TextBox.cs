@@ -19,7 +19,7 @@
         private Particle Selection;
         private Vector3 position;
 
-        public bool Focus;
+        private bool focus;
         private double FocusTimer;
 
 
@@ -40,8 +40,19 @@
             Box = new Image("PixelBlanc") { Size = new Vector2(100, Label.AbsoluteSize.Y + 10), Origin = Vector2.Zero };
             Data = new Text("Pixelite") { SizeX = 2 };
             BlinkingCursor = new Image("PixelBlanc") { Size = new Vector2(10, Label.AbsoluteSize.Y), Origin = Vector2.Zero, Color = Color.Black };
-            Focus = false;
+            focus = false;
             FocusTimer = 0;
+        }
+
+
+        public bool Focus
+        {
+            get { return focus; }
+            set
+            {
+                focus = value;
+                FocusTimer = 0;
+            }
         }
 
 
@@ -162,7 +173,7 @@
 
             if (Focus)
             {
-                if (FocusTimer++ % 60 < 30)
+                if (FocusTimer++ % 30 < 15)
                     Scene.Add(BlinkingCursor);
             }
         }

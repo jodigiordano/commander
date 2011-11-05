@@ -60,7 +60,8 @@
         UpdatesNews = 7,
         Login = 8,
         Register = 9,
-        VirtualKeyboard = 10
+        VirtualKeyboard = 10,
+        JumpToWorld = 11
     };
 
 

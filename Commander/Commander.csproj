@@ -187,10 +187,12 @@
     <Compile Include="GUI\Controls\Widgets\ColoredLabel.cs" />
     <Compile Include="GUI\Controls\Widgets\TextBox.cs" />
     <Compile Include="GUI\Controls\Widgets\RectangleEmitter.cs" />
+    <Compile Include="GUI\Controls\Widgets\TextBoxGroup.cs" />
     <Compile Include="Panels\KeyboardInput.cs" />
+    <Compile Include="Panels\Multiverse\JumpToWorldPanel.cs" />
     <Compile Include="Panels\VirtualKeyboardPanel.cs" />
-    <Compile Include="Panels\RegisterPanel.cs" />
-    <Compile Include="Panels\LoginPanel.cs" />
+    <Compile Include="Panels\Multiverse\RegisterPanel.cs" />
+    <Compile Include="Panels\Multiverse\LoginPanel.cs" />
     <Compile Include="Player\MultiverseData.cs" />
     <Compile Include="Player\InputConfigurations\InputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\GamepadInputConfiguration.cs" />

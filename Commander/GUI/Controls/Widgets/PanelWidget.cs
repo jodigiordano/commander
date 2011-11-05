@@ -17,10 +17,22 @@
         public virtual Scene Scene              { get; set; }
         public bool Sticky                      { get; set; }
         public string Name                      { get; set; }
+        public bool EnableInput                 { get; set; }
+
+
+        public PanelWidget()
+        {
+            Sticky = false;
+            Name = "";
+            EnableInput = true;
+        }
 
 
         public bool DoClick(Circle circle)
         {
+            if (!EnableInput)
+                return false;
+
             if (Click(circle))
             {
                 if (ClickHandler != null)
@@ -35,6 +47,9 @@
 
         public bool DoHover(Circle circle)
         {
+            if (!EnableInput)
+                return false;
+
             if (Hover(circle))
             {
                 if (HoverHandler != null)

@@ -198,29 +198,33 @@
 
             AllKeysSource = new InputSource(player, MouseBasePosition);
 
-            AllKeysSource.MapKeys(new List<Keys>()
-                {
-                    // letters
-                    Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F, Keys.G, Keys.H, Keys.I, Keys.J, Keys.K,
-                    Keys.L, Keys.M, Keys.N, Keys.O, Keys.P, Keys.Q, Keys.R, Keys.S, Keys.T, Keys.U, Keys.V,
-                    Keys.W, Keys.X, Keys.Y, Keys.Z,
-                    
-                    // numbers
-                    Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9,
-                    Keys.NumPad0, Keys.NumPad1, Keys.NumPad2, Keys.NumPad3, Keys.NumPad4, Keys.NumPad5,
-                    Keys.NumPad6, Keys.NumPad7, Keys.NumPad8, Keys.NumPad9,
-
-                    // controls
-                    Keys.Escape, Keys.Back, Keys.Delete, Keys.Space, Keys.Enter, Keys.Up, Keys.Down, Keys.Left,
-                    Keys.Right, Keys.PageUp, Keys.PageDown, Keys.Home, Keys.End, Keys.LeftShift, Keys.RightShift,
-
-                    // special characters
-                    Keys.Add, Keys.Decimal, Keys.Divide, Keys.Multiply, Keys.OemBackslash, Keys.OemComma,
-                    Keys.OemMinus, Keys.OemPeriod, Keys.OemPlus, Keys.OemQuestion, Keys.OemQuotes, Keys.OemSemicolon,
-                    Keys.OemTilde,
-                });
+            AllKeysSource.MapKeys(AllKeys);
 
             AllKeysListener = listener;
         }
+
+
+        private static List<Keys> AllKeys = new List<Keys>()
+        {
+            // letters
+            Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F, Keys.G, Keys.H, Keys.I, Keys.J, Keys.K,
+            Keys.L, Keys.M, Keys.N, Keys.O, Keys.P, Keys.Q, Keys.R, Keys.S, Keys.T, Keys.U, Keys.V,
+            Keys.W, Keys.X, Keys.Y, Keys.Z,
+                    
+            // numbers
+            Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9,
+            Keys.NumPad0, Keys.NumPad1, Keys.NumPad2, Keys.NumPad3, Keys.NumPad4, Keys.NumPad5,
+            Keys.NumPad6, Keys.NumPad7, Keys.NumPad8, Keys.NumPad9,
+
+            // controls
+            Keys.Escape, Keys.Back, Keys.Delete, Keys.Space, Keys.Enter, Keys.Up, Keys.Down, Keys.Left,
+            Keys.Right, Keys.PageUp, Keys.PageDown, Keys.Home, Keys.End, Keys.LeftShift, Keys.RightShift,
+            Keys.Tab,
+
+            // special characters
+            Keys.Add, Keys.Decimal, Keys.Divide, Keys.Multiply, Keys.OemBackslash, Keys.OemComma,
+            Keys.OemMinus, Keys.OemPeriod, Keys.OemPlus, Keys.OemQuestion, Keys.OemQuotes, Keys.OemSemicolon,
+            Keys.OemTilde,
+        };
     }
 }

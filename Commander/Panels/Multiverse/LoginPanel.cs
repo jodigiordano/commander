@@ -2,14 +2,13 @@
 {
     using System;
     using System.Net;
+    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class LoginPanel : VerticalPanel
     {
-        public event PanelTextBoxStringHandler VirtualKeyboardAsked;
-
         private WebClient Client;
 
         private TextBox Username;
@@ -18,6 +17,8 @@
         private Label Message;
 
         private string HashedPassword;
+
+        private TextBoxGroup TBGroup;
 
 
         public LoginPanel(Scene scene, Vector3 position)
@@ -28,9 +29,9 @@
 
             Alpha = 0;
 
-            Username = new TextBox(new Text("username", "Pixelite") { SizeX = 2 }, 200, 200);
-            Password = new TextBox(new Text("password", "Pixelite") { SizeX = 2 }, 200, 200);
-            Submit = new PushButton(new Text("log in", "Pixelite") { SizeX = 2 }, 200);
+            Username = new TextBox(new Text("username", "Pixelite") { SizeX = 2 }, 200, 200) { ClickHandler = DoTextInput };
+            Password = new TextBox(new Text("password", "Pixelite") { SizeX = 2 }, 200, 200) { ClickHandler = DoTextInput };
+            Submit = new PushButton(new Text("log in", "Pixelite") { SizeX = 2 }, 200) { ClickHandler = DoSubmit };
             Message = new Label(new Text("Pixelite") { SizeX = 2 });
 
             AddWidget("username", Username);
@@ -42,13 +43,19 @@
             Client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(LoginCompleted);
 
             EnableInput();
+
+            TBGroup = new TextBoxGroup();
+            TBGroup.Add(Username);
+            TBGroup.Add(Password);
         }
 
 
         private void DoTextInput(PanelWidget p)
         {
-            if (VirtualKeyboardAsked != null)
-                VirtualKeyboardAsked(this, (TextBox) p, p.Name);
+            var tb = (TextBox) p;
+
+            TBGroup.SwitchTo(tb);
+            ActivateKeyboardInput(TBGroup, Inputs.MasterPlayer.InputType == InputType.Gamepad);
         }
 
 
@@ -137,22 +144,6 @@
             }
 
             return true;
-        }
-
-
-        private void DisableInput()
-        {
-            Username.ClickHandler = null;
-            Password.ClickHandler = null;
-            Submit.ClickHandler = null;
-        }
-
-
-        public void EnableInput()
-        {
-            Username.ClickHandler = DoTextInput;
-            Password.ClickHandler = DoTextInput;
-            Submit.ClickHandler = DoSubmit;
         }
     }
 }
