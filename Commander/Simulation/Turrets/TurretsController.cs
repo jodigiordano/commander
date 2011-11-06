@@ -6,7 +6,6 @@
 
     class TurretsController
     {
-        public List<Turret> StartingTurrets;
         public PlanetarySystemController PlanetarySystemController;
 
         public List<Turret> Turrets;
@@ -39,8 +38,8 @@
             AssociationsThisTick.Clear();
             BoostedTurretsThisTick.Clear();
 
-            for (int i = 0; i < StartingTurrets.Count; i++)
-                Turrets.Add(StartingTurrets[i]);
+            foreach (var t in Simulator.Data.Level.Turrets)
+                Turrets.Add(t);
 
             if (Simulator.DemoMode)
                 foreach (var turret in Turrets)

@@ -10,19 +10,11 @@
 
     class GUIController
     {
-        public List<CelestialBody> CelestialBodies;
         public List<Turret> Turrets;
-        public Level Level;
-        public List<Enemy> Enemies;
-        public InfiniteWave InfiniteWaves;
-        public LinkedList<Wave> Waves;
-        public Path Path;
-        public Path PathPreview;
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
         public PowerUpsBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
         public HelpBarPanel HelpBar;
-        public CommonStash CommonStash;
         public List<Wave> ActiveWaves;
         public EnemiesData EnemiesData;
 
@@ -52,6 +44,9 @@
 
         private int lastEnemiesToReleaseCount;
         private Particle LoveEffect;
+
+        private InfiniteWave InfiniteWaves { get { return Simulator.Data.Level.InfiniteWaves; } }
+        private LinkedList<Wave> Waves { get { return Simulator.Data.Level.Waves; } }
         
 
         public GUIController(Simulator simulator)
@@ -97,9 +92,9 @@
             };
             GamePausedResistance.Initialize();
             
-            LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator, Path, Level);
+            LevelEndedAnnunciation = new LevelEndedAnnunciation(Simulator);
 
-            PathPreviewing = new PathPreview(PathPreview, Path);
+            PathPreviewing = new PathPreview(Simulator.Data.PathPreview, Simulator.Data.Path);
 
             MenuPowerUps.Turrets = Turrets;
             MenuPowerUps.AvailablePowerUps = AvailablePowerUps;
@@ -112,12 +107,7 @@
 
 
             if (!Simulator.DemoMode)
-            {
                 AdvancedView = new AdvancedView(Simulator);
-                AdvancedView.Enemies = Enemies;
-                AdvancedView.CelestialBodies = CelestialBodies;
-                AdvancedView.Initialize();
-            }
 
             GamePausedMenuPlayerCheckedIn = null;
             AdvancedViewCheckedIn = null;
@@ -127,13 +117,13 @@
 
             CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator)
             {
-                CelestialBody = Level.CelestialBodyToProtect,
+                CelestialBody = Simulator.Data.Level.CelestialBodyToProtect,
                 EnemiesData = EnemiesData
             };
 
             AlienNextWaveAnimation = new AlienNextWaveAnimation(Simulator)
             {
-                CelestialBody = Path.FirstCelestialBody,
+                CelestialBody = Simulator.Data.Path.FirstCelestialBody,
                 TimeNextWave = StartingPathMenu.TimeNextWave
             };
 
@@ -388,8 +378,8 @@
             NextWavePreview.RemainingWaves--;
             GameBarPanel.RemainingWaves--;
 
-            if (InfiniteWaves == null && Path.LastCelestialBody != null)
-                Simulator.Scene.Add(new AlienNextWaveStartedAnimation(Simulator, Path.FirstCelestialBody));
+            if (InfiniteWaves == null && Simulator.Data.Path.LastCelestialBody != null)
+                Simulator.Scene.Add(new AlienNextWaveStartedAnimation(Simulator, Simulator.Data.Path.FirstCelestialBody));
 
             if (InfiniteWaves != null || NextWavePreview.RemainingWaves <= 0)
             {
@@ -664,7 +654,7 @@
             foreach (var player in Players.Values)
                 player.Draw();
 
-            Path.Draw();
+            Simulator.Data.Path.Draw();
 
             if (!Simulator.CutsceneMode)
                 HelpBar.Draw();
@@ -675,16 +665,12 @@
             if (!(Simulator.EditorMode && Simulator.EditorState == EditorState.Editing))
                 StartingPathMenu.Draw();
 
-            //LevelStartedAnnunciation.Draw();
             LevelEndedAnnunciation.Draw();
             AdvancedView.Draw();
-            //PlayerLives.Draw();
             MenuPowerUps.Draw();
-            PathPreview.Draw();
+            Simulator.Data.PathPreview.Draw();
             CelestialBodyNearHit.Draw();
             AlienNextWaveAnimation.Draw();
-            //GameMenu.Draw();
-            //NextWavePreview.Draw();
             GameBarPanel.Draw();
         }
 
@@ -760,7 +746,7 @@
             StartingPathMenu.ActiveWaves = ActiveWaves.Count;
 
             // Sync next wave preview
-            NextWavePreview.CelestialBody = Path.FirstCelestialBody;
+            NextWavePreview.CelestialBody = Simulator.Data.Path.FirstCelestialBody;
             NextWavePreview.TimeNextWave = StartingPathMenu.TimeNextWave;
 
             // Game bar panel

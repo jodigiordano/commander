@@ -9,9 +9,7 @@
     class AudioController
     {
         public EnemiesData EnemiesData;
-        public CommonStash CommonStash;
         public CameraData CameraData;
-        public CelestialBody CelestialBodyToProtect;
 
         private Simulator Simulator;
         private Dictionary<SimPlayer, AudioPlayer> Players;
@@ -71,7 +69,7 @@
 
             if (celestialBody != null)
             {
-                if (celestialBody == CelestialBodyToProtect)
+                if (celestialBody == Simulator.Data.Level.CelestialBodyToProtect)
                     XACTAudio.PlayCue("PlanetToProtectHit", "Sound Bank");
                 else
                     XACTAudio.PlayCue("SilentCue" /*"PlanetHit"*/, "Sound Bank");
@@ -114,7 +112,7 @@
                 if (celestialBody.SilentDeath)
                     return;
 
-                if (celestialBody == CelestialBodyToProtect)
+                if (celestialBody == Simulator.Data.Level.CelestialBodyToProtect)
                     XACTAudio.PlayCue("PlanetToProtectDestroyed", "Sound Bank");
                 else
                     XACTAudio.PlayCue("PlanetDestroyed", "Sound Bank");
@@ -505,8 +503,8 @@
 
         private void ComputeCurrentLives()
         {
-            float current = MathHelper.Clamp(CommonStash.Lives, 0, Simulator.LevelDescriptor.Player.Lives);
-            float normalized = current / Simulator.LevelDescriptor.Player.Lives;
+            float current = MathHelper.Clamp(Simulator.Data.Level.CommonStash.Lives, 0, Simulator.Data.Level.Descriptor.Player.Lives);
+            float normalized = current / Simulator.Data.Level.Descriptor.Player.Lives;
 
             float delta = normalized - CurrentLivesNormalized;
             delta = MathHelper.Clamp(delta, -0.01f, 0.01f);

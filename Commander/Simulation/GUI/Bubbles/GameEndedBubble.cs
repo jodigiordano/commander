@@ -87,16 +87,16 @@
                 {
                     SetLayout(PreviousLayoutId);
 
-                    tooFarRight = Dimension.X + Dimension.Width + 50 > Simulator.Battlefield.Right;
-                    tooFarBottom = Dimension.Y + Dimension.Height > Simulator.Battlefield.Bottom;
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > Simulator.Data.Battlefield.Right;
+                    tooFarBottom = Dimension.Y + Dimension.Height > Simulator.Data.Battlefield.Bottom;
                 }
 
                 if (tooFarRight || tooFarBottom)
                 {
                     base.Position = value;
 
-                    tooFarRight = Dimension.X + Dimension.Width + 50 > Simulator.Battlefield.Right;
-                    tooFarBottom = Dimension.Y + Dimension.Height > Simulator.Battlefield.Bottom;
+                    tooFarRight = Dimension.X + Dimension.Width + 50 > Simulator.Data.Battlefield.Right;
+                    tooFarBottom = Dimension.Y + Dimension.Height > Simulator.Data.Battlefield.Bottom;
 
                     if (tooFarRight && tooFarBottom)
                         SetLayout(0);

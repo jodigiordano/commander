@@ -8,9 +8,6 @@
 
     class SimPlayersController
     {
-        public CelestialBody CelestialBodyToProtect;
-        public List<CelestialBody> CelestialBodies;
-        public CommonStash CommonStash;
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
         public StartingPathMenu StartingPathMenu;
         public List<SimPlayer> PlayersList;
@@ -46,6 +43,10 @@
         private SimPlayer PlayerInAdvancedView;
 
         private bool UpdateSelection;
+
+        private CelestialBody CelestialBodyToProtect { get { return Simulator.Data.Level.CelestialBodyToProtect; } }
+        private List<CelestialBody> CelestialBodies { get { return Simulator.Data.Level.PlanetarySystem; } }
+        private CommonStash CommonStash { get { return Simulator.Data.Level.CommonStash; } }
 
 
         public SimPlayersController(Simulator simulator)
@@ -91,7 +92,7 @@
                 Color = player.Color,
                 ImageName = player.ImageName,
                 UpdateSelectionz = true,
-                BulletAttackPoints = (float) Simulator.Level.BulletDamage,
+                BulletAttackPoints = (float) Simulator.Data.Level.BulletDamage,
                 PausePlayer = new PausePlayer(Simulator),
                 BouncedHandler = DoPlayerBounced,
                 RotatedHandler = DoPlayerRotated
@@ -460,7 +461,7 @@
 
                 else
                 {
-                    PowerUp p = Simulator.PowerUpsFactory.Availables[player.ActualSelection.PowerUpToBuy];
+                    PowerUp p = Simulator.Data.Level.AvailablePowerUps[player.ActualSelection.PowerUpToBuy];
 
                     NotifyActivatePowerUpAsked(player.ActualSelection.PowerUpToBuy, player);
 
@@ -668,10 +669,10 @@
             AvailablePowerUps.Clear();
             AvailableTurrets.Clear();
 
-            foreach (var turret in Simulator.TurretsFactory.Availables.Keys)
+            foreach (var turret in Simulator.Data.Level.AvailableTurrets.Keys)
                 AvailableTurrets.Add(turret, false);
 
-            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
+            foreach (var powerUp in Simulator.Data.Level.AvailablePowerUps.Keys)
                 AvailablePowerUps.Add(powerUp, false);
         }
 
@@ -681,7 +682,7 @@
             if (player.PowerUpInUse == PowerUpType.None)
                 return;
 
-            PowerUp p = Simulator.PowerUpsFactory.Availables[player.PowerUpInUse];
+            PowerUp p = Simulator.Data.Level.AvailablePowerUps[player.PowerUpInUse];
 
             if (!p.PayOnUse)
                 return;
@@ -696,7 +697,7 @@
 
         private void CheckAvailablePowerUps()
         {
-            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Values)
+            foreach (var powerUp in Simulator.Data.Level.AvailablePowerUps.Values)
                 AvailablePowerUps[powerUp.Type] =
                     powerUp.BuyPrice <= CommonStash.Cash &&
                     powerUp.UsePrice <= CommonStash.Cash &&
@@ -706,7 +707,7 @@
 
         private void CheckAvailableTurrets()
         {
-            foreach (var turret in Simulator.TurretsFactory.Availables.Values)
+            foreach (var turret in Simulator.Data.Level.AvailableTurrets.Values)
                 AvailableTurrets[turret.Type] = turret.BuyPrice <= CommonStash.Cash;
         }
 

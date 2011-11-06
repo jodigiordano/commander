@@ -10,17 +10,19 @@
         public List<KeyValuePair<Enemy, Bullet>> Output;
 
         public GridWorld EnemiesGrid;
-        public List<Bullet> Bullets;
-        public List<Enemy> Enemies;
 
         private IntegerHandler Handler;
         private Bullet CurrentBullet;
         private PhysicalRectangle CurrentBulletRectangle;
         private Circle CurrentBulletDeflectRange;
+
+        private Simulator Simulator;
         
-        
-        public BulletsDeflected()
+
+        public BulletsDeflected(Simulator simulator)
         {
+            Simulator = simulator;
+
             Output = new List<KeyValuePair<Enemy, Bullet>>();
             Handler = new IntegerHandler(CheckBulletIsDeflected);
             CurrentBullet = null;
@@ -33,9 +35,9 @@
         {
             Output.Clear();
 
-            for (int i = 0; i < Bullets.Count; i++)
+            for (int i = 0; i < Simulator.Data.Bullets.Count; i++)
             {
-                CurrentBullet = Bullets[i];
+                CurrentBullet = Simulator.Data.Bullets[i];
 
                 if (!CurrentBullet.Deflectable)
                     continue;
@@ -49,7 +51,7 @@
 
         private bool CheckBulletIsDeflected(int index)
         {
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
 
             if (e.Type != EnemyType.Vulcanoid)
                 return true;

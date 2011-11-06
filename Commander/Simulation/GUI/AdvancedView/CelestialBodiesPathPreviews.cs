@@ -8,8 +8,6 @@
 
     class CelestialBodiesPathPreviews
     {
-        public List<CelestialBody> CelestialBodies;
-
         private Dictionary<CelestialBody, double> Highlights;
 
         private List<Image> NormalLines;
@@ -68,7 +66,7 @@
         {
             Highlights.Clear();
 
-            foreach (var c in CelestialBodies)
+            foreach (var c in Simulator.Data.Level.PlanetarySystem)
                 Highlights.Add(c, c.ActualRotationTime);
         }
 
@@ -80,7 +78,7 @@
                 if (!value)
                     return;
 
-                foreach (var c in CelestialBodies)
+                foreach (var c in Simulator.Data.Level.PlanetarySystem)
                     Highlights[c] = c.ActualRotationTime;
             }
         }
@@ -91,7 +89,7 @@
             NextNormalLine = 0;
             NextHighlightLine = 0;
 
-            foreach (var c in CelestialBodies)
+            foreach (var c in Simulator.Data.Level.PlanetarySystem)
             {
                 if (!c.ShowPath)
                     continue;

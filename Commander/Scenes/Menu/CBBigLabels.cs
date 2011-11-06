@@ -21,7 +21,7 @@
 
             Texts = new Dictionary<Text, CelestialBody>();
 
-            foreach (var c in Simulator.PlanetarySystemController.CelestialBodies)
+            foreach (var c in Simulator.Data.Level.PlanetarySystem)
             {
                 if (c is AsteroidBelt)
                     continue;

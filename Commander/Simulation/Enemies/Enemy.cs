@@ -23,14 +23,12 @@ namespace EphemereGames.Commander.Simulation
         public int PointsValue;
         public float Resistance;
         public bool Alive                                           { get { return LifePoints > 0 && !EndOfPathReached; } }
-        public bool EndPathPreview                                  { get { return Displacement > PathPreview.Length; } }
+        public bool EndPathPreview                                  { get { return Displacement > Simulator.Data.PathPreview.Length; } }
         public Image Image;
         public Particle ExplodingEffect;
         public Particle MovingEffect;
         public bool FollowPath;
         public float RotationSpeed;
-        public Path Path;
-        public Path PathPreview;
         public double Displacement;
         public Simulator Simulator;
         public string Name;
@@ -123,7 +121,7 @@ namespace EphemereGames.Commander.Simulation
 
             Resistance = 0;
 
-            Path.Position(Displacement, ref position);
+            Simulator.Data.Path.Position(Displacement, ref position);
 
             Rectangle.Width = Rectangle.Height = Simulator.TweakingController.EnemiesFactory.GetSize(Type);
             Circle.Radius = Rectangle.Width / 2;
@@ -182,10 +180,10 @@ namespace EphemereGames.Commander.Simulation
             //Displacement += Path.LengthDelta;
             Displacement += Math.Max(Speed - Resistance, 0);
 
-            Path.Position(Displacement, ref position);
+            Simulator.Data.Path.Position(Displacement, ref position);
             Vector3.Add(ref position, ref Translation, out position);
 
-            if (Displacement > Path.Length)
+            if (Displacement > Simulator.Data.Path.Length)
             {
                 EndOfPathReached = true;
                 return;
@@ -199,7 +197,7 @@ namespace EphemereGames.Commander.Simulation
             if (!FollowPath)
                 Image.Rotation += RotationSpeed;
             else
-                Image.Rotation = MathHelper.PiOver2 + Path.GetRotation(Displacement);
+                Image.Rotation = MathHelper.PiOver2 + Simulator.Data.Path.GetRotation(Displacement);
 
             if (NanobotsInfectionTime > 0 && LifePoints > 0)
             {
@@ -216,7 +214,7 @@ namespace EphemereGames.Commander.Simulation
             if (!Alive)
                 return;
 
-            float pourcPath = Path.GetPercentage(Displacement);
+            float pourcPath = Simulator.Data.Path.GetPercentage(Displacement);
 
             VisualPriority = Simulator.TweakingController.EnemiesFactory.GetVisualPriority(Type, pourcPath);
 

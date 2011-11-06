@@ -6,7 +6,6 @@
 
     class SpaceshipsController
     {
-        public List<Enemy> Enemies;
         public List<Mineral> Minerals;
         public PowerUpsBattleship PowerUpsBattleship;
         public event PhysicalObjectHandler ObjectCreated;

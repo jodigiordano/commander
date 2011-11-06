@@ -29,7 +29,7 @@
                 return;
 
             BlowUpZoneVisual.Position = CelestialBody.Position;
-            BlowUpZoneVisual.SizeX = (((PowerUpLastSolution) Simulator.PowerUpsFactory.Availables[PowerUpType.FinalSolution]).ZoneImpactDestruction / 100) * 2;
+            BlowUpZoneVisual.SizeX = (((PowerUpLastSolution) Simulator.Data.Level.AvailablePowerUps[PowerUpType.FinalSolution]).ZoneImpactDestruction / 100) * 2;
             Simulator.Scene.Add(BlowUpZoneVisual);
         }
     }

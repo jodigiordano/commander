@@ -8,7 +8,6 @@
 
     class EnemiesLives
     {
-        public List<Enemy> Enemies;
         public bool ShowAll;
 
         private List<List<Image>> Lives;
@@ -57,9 +56,9 @@
             if (imagesIndex >= MaxImages)
                 return;
 
-            for (int i = 0; i < Enemies.Count; i++)
+            for (int i = 0; i < Simulator.Data.Enemies.Count; i++)
             {
-                Enemy enemy = Enemies[i];
+                Enemy enemy = Simulator.Data.Enemies[i];
 
                 if (enemy.BeingHit)
                     ShowLife(enemy, imagesIndex, true);
@@ -77,9 +76,9 @@
             if (imagesIndex >= MaxImages)
                 return;
 
-            for (int i = 0; i < Enemies.Count; i++)
+            for (int i = 0; i < Simulator.Data.Enemies.Count; i++)
             {
-                Enemy enemy = Enemies[i];
+                Enemy enemy = Simulator.Data.Enemies[i];
 
                 ShowLife(enemy, imagesIndex, false);
 

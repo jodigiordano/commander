@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using EphemereGames.Core.Physics;
-    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using ParallelTasks;
@@ -12,12 +11,6 @@
 
     class PlanetarySystemController
     {
-        public List<CelestialBody> CelestialBodies;
-
-        public List<ShootingStar> ShootingStars;
-        public Path Path;
-        public Path PathPreview;
-
         public event PhysicalObjectHandler ObjectHit;
         public event PhysicalObjectHandler ObjectDestroyed;
 
@@ -32,15 +25,16 @@
         private Core.Utilities.Pool<ShootingStar> ShootingStarsFactory;
         private bool DeadlyShootingStars;
 
+        private List<CelestialBody> CelestialBodies { get { return Simulator.Data.Level.PlanetarySystem; } }
+        private Path Path { get { return Simulator.Data.Path; } }
+        private Path PathPreview { get { return Simulator.Data.PathPreview; } }
+        private List<ShootingStar> ShootingStars { get { return Simulator.Data.ShootingStars; } }
+
 
         public PlanetarySystemController(Simulator simulator)
         {
             Simulator = simulator;
-            ShootingStars = new List<ShootingStar>();
             ShootingStarsFactory = new Core.Utilities.Pool<ShootingStar>();
-
-            Path = new Path(Simulator, new ColorInterpolator(Color.White, Color.Red), 100, BlendType.Add);
-            PathPreview = new Path(Simulator, new ColorInterpolator(Color.White, Color.Green), 0, BlendType.Add) { TakeIntoAccountFakeGravTurret = true, TakeIntoAccountFakeGravTurretLv2 = true };
 
             SyncUpdateShootingStars = new Action(UpdateShootingStars);
             SyncPathPreview = new Action(PathPreview.Update);
@@ -49,28 +43,18 @@
 
         public void Initialize()
         {
-            ShootingStars.Clear();
-
             if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)
-            {
                 foreach (var c in CelestialBodies)
                     c.CanSelectOverride = true;
-            }
-
-            Path.CelestialBodies = CelestialBodies;
-            Path.Initialize();
-
-            PathPreview.CelestialBodies = CelestialBodies;
-            PathPreview.Initialize();
 
             Stars = Simulator.Scene.Particles.Get(@"etoilesScintillantes");
 
             var emitter = (RectEmitter) Stars.Model[0];
 
-            emitter.TriggerOffset = new Vector2(Simulator.Battlefield.Center.X, Simulator.Battlefield.Center.Y);
-            emitter.Width = Simulator.Battlefield.Width;
-            emitter.Height = Simulator.Battlefield.Height;
-            emitter.ReleaseQuantity = (int) Math.Ceiling((Math.Max(Simulator.Battlefield.Width, Simulator.Battlefield.Height) / Math.Max(Preferences.BackBuffer.X, Preferences.BackBuffer.Y)));
+            emitter.TriggerOffset = new Vector2(Simulator.Data.Battlefield.Center.X, Simulator.Data.Battlefield.Center.Y);
+            emitter.Width = Simulator.Data.Battlefield.Width;
+            emitter.Height = Simulator.Data.Battlefield.Height;
+            emitter.ReleaseQuantity = (int) Math.Ceiling((Math.Max(Simulator.Data.Battlefield.Width, Simulator.Data.Battlefield.Height) / Math.Max(Preferences.BackBuffer.X, Preferences.BackBuffer.Y)));
 
             Stars.VisualPriority = VisualPriorities.Default.Stars;
             StarsEmitter = 0;
@@ -469,7 +453,7 @@
             {
                 ShootingStar ss = ShootingStarsFactory.Get();
                 ss.Scene = Simulator.Scene;
-                ss.Battlefield = Simulator.OuterBattlefield;
+                ss.Battlefield = Simulator.Data.OuterBattlefield;
                 ss.LoadContent();
                 ss.Initialize();
 

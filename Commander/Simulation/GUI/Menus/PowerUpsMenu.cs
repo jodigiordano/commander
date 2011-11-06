@@ -76,8 +76,6 @@
 
         public void Initialize()
         {
-            Dictionary<PowerUpType, PowerUp> availablePowerUps = Simulator.PowerUpsFactory.Availables;
-
             ImagesPowerUpsBuy.Clear();
             ImagesPlaceHolders.Clear();
             ImagesTurretsPowerUps.Clear();
@@ -87,7 +85,7 @@
             HumanBattleship.Initialize();
 
             var index = 0;
-            foreach (var p in availablePowerUps.Values)
+            foreach (var p in Simulator.Data.Level.AvailablePowerUps.Values)
             {
                 if (p.Category == PowerUpCategory.Turret)
                     InitializeTurretsPowerUps(p);
@@ -139,7 +137,7 @@
             // draw the power-ups
             foreach (var kvp in AvailablePowerUps)
             {
-                PowerUp p = Simulator.PowerUpsFactory.Availables[kvp.Key];
+                PowerUp p = Simulator.Data.Level.AvailablePowerUps[kvp.Key];
              
                 if (p.Category == PowerUpCategory.Turret)
                     ImagesTurretsPowerUps[p.Type].Draw();
@@ -156,7 +154,7 @@
             // draw the description / price of the power-up
             if (HumanBattleshipHasArrived && PowerUpToBuy != PowerUpType.None)
             {
-                PowerUp p = Simulator.PowerUpsFactory.Availables[PowerUpToBuy];
+                PowerUp p = Simulator.Data.Level.AvailablePowerUps[PowerUpToBuy];
 
                 Vector3 position = (p.Category == PowerUpCategory.Turret) ?
                     ImagesTurretsPowerUps[p.Type].Position :

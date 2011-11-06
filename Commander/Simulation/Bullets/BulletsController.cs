@@ -10,7 +10,6 @@ namespace EphemereGames.Commander.Simulation
     {
         public event PhysicalObjectHandler ObjectDestroyed;
         public event BulletHandler BulletDeflected;
-        public List<Bullet> Bullets { get; private set; }
 
         private Simulator Simulator;
         private Matrix RotationMatrix;
@@ -20,15 +19,7 @@ namespace EphemereGames.Commander.Simulation
         {
             Simulator = simulator;
 
-            Bullets = new List<Bullet>();
-
             RotationMatrix = new Matrix();
-        }
-
-
-        public void Initialize()
-        {
-            Bullets.Clear();
         }
 
 
@@ -107,6 +98,12 @@ namespace EphemereGames.Commander.Simulation
                 return;
 
             b.OutOfBounds = true;
+        }
+
+
+        private List<Bullet> Bullets
+        {
+            get { return Simulator.Data.Bullets; }
         }
 
 

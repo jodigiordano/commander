@@ -8,16 +8,17 @@
     {
         public Dictionary<Enemy, CelestialBody> Output;
 
-        public List<CelestialBody> CelestialBodies;
         public GridWorld EnemiesGrid;
-        public List<Enemy> Enemies;
 
         private CelestialBody CurrentCelestialBody;
         private IntegerHandler Handler;
+
+        private Simulator Simulator;
         
         
-        public HiddenEnemies()
+        public HiddenEnemies(Simulator simulator)
         {
+            Simulator = simulator;
             Output = new Dictionary<Enemy, CelestialBody>();
             Handler = new IntegerHandler(CheckEnemyIsHidden);
             CurrentCelestialBody = null;
@@ -28,9 +29,9 @@
         {
             Output.Clear();
 
-            for (int i = 0; i < CelestialBodies.Count; i++)
+            for (int i = 0; i < Simulator.Data.Level.PlanetarySystem.Count; i++)
             {
-                CurrentCelestialBody = CelestialBodies[i];
+                CurrentCelestialBody = Simulator.Data.Level.PlanetarySystem[i];
 
                 EnemiesGrid.GetItems(CurrentCelestialBody.Circle.Rectangle, Handler);
             }
@@ -39,7 +40,7 @@
 
         private bool CheckEnemyIsHidden(int index)
         {
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
 
             if (!Output.ContainsKey(e) &&
                 CurrentCelestialBody.VisualPriority < e.VisualPriority &&

@@ -114,8 +114,8 @@
 
             if (Simulator.EditorMode &&
                 Simulator.EditorState == EditorState.Editing &&
-                Player.Position.X > Simulator.Battlefield.Right - 100 &&
-                Player.Position.Y < Simulator.Battlefield.Top + 100)
+                Player.Position.X > Simulator.Data.Battlefield.Right - 100 &&
+                Player.Position.Y < Simulator.Data.Battlefield.Top + 100)
             {
                 if (PreviousCelestialBody != null)
                     PreviousCelestialBody.PlayerCheckedIn = null;

@@ -193,6 +193,7 @@
     <Compile Include="Simulation\Collisions\ShieldsCollisions.cs" />
     <Compile Include="Simulation\Collisions\StartingPathCollisions.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\ResistanceAnimation.cs" />
+    <Compile Include="Simulation\Data.cs" />
     <Compile Include="Simulation\Enemies\EnemiesData.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\NextWavePreview.cs" />
     <Compile Include="Simulation\GUI\AdvancedView\PathPreview\PathPreview.cs" />

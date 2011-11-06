@@ -107,7 +107,7 @@
                 c != null &&
                 !CBtoWarp.ContainsKey(c) &&
                 GamePausedToWorld &&
-                Main.CurrentGame.Simulator.Level.Id == CBtoLevel[c];
+                Main.CurrentGame.Simulator.Data.Level.Id == CBtoLevel[c];
         }
 
 
@@ -178,8 +178,8 @@
                 // sync the level descriptor so it can be saved.
                 if (Main.CurrentGame != null && Main.CurrentGame.Simulator.EditorState != EditorState.Playtest)
                 {
-                    Main.CurrentGame.Simulator.SyncLevel();
-                    World.SetLevelDescriptor(Main.CurrentGame.Simulator.LevelDescriptor.Infos.Id, Main.CurrentGame.Simulator.LevelDescriptor);
+                    Main.CurrentGame.Simulator.Data.Level.SyncDescriptor();
+                    World.SetLevelDescriptor(Main.CurrentGame.Simulator.Data.Level.Descriptor.Infos.Id, Main.CurrentGame.Simulator.Data.Level.Descriptor);
                 }
             }
 
@@ -358,7 +358,7 @@
 
                 // Resume Game
                 if (GamePausedToWorld &&
-                    currentGame.Simulator.LevelDescriptor.Infos.Id == level.Infos.Id &&
+                    currentGame.Simulator.Data.Level.Descriptor.Infos.Id == level.Infos.Id &&
                     Simulator.PausedGameChoice == PausedGameChoice.Resume)
                 {
                     currentGame.Simulator.TriggerNewGameState(GameState.Running);
@@ -511,12 +511,12 @@
             int levelIndex = 0;
             int warpIndex = 0;
 
-            Simulator.PlanetarySystemController.CelestialBodies.Sort(delegate(CelestialBody cb1, CelestialBody cb2)
+            Simulator.Data.Level.PlanetarySystem.Sort(delegate(CelestialBody cb1, CelestialBody cb2)
             {
                 return cb1.PathPriority > cb2.PathPriority ? 1 : cb1.PathPriority < cb2.PathPriority ? -1 : 0;
             });
 
-            foreach (var c in Simulator.PlanetarySystemController.CelestialBodies)
+            foreach (var c in Simulator.Data.Level.PlanetarySystem)
             {
                 if (c is AsteroidBelt || c.FirstOnPath)
                     continue;

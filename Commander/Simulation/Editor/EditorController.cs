@@ -10,7 +10,6 @@
         public EditorGeneralMenu GeneralMenu;
         public Dictionary<EditorPanel, Panel> Panels;
         public Dictionary<EditorPlayer, EditorGUIPlayer> EditorGUIPlayers;
-        public List<CelestialBody> CelestialBodies;
 
         public event EditorPlayerHandler PlayerConnected;
         public event EditorPlayerHandler PlayerDisconnected;
@@ -306,7 +305,7 @@
             if (command.Name == "PlaytestState")
             {
                 Simulator.EditorState = EditorState.Playtest;
-                Simulator.SyncLevel();
+                Simulator.Data.Level.SyncDescriptor();
                 Simulator.Initialize();
                 Simulator.SyncPlayers();
             }
@@ -490,9 +489,9 @@
             var checkbox = (TurretCheckBox) ((GridPanel) widget).LastClickedWidget;
 
             if (checkbox.Value)
-                Simulator.TurretsFactory.Availables.Add(checkbox.Turret.Type, checkbox.Turret);
+                Simulator.Data.Level.AvailableTurrets.Add(checkbox.Turret.Type, checkbox.Turret);
             else
-                Simulator.TurretsFactory.Availables.Remove(checkbox.Turret.Type);
+                Simulator.Data.Level.AvailableTurrets.Remove(checkbox.Turret.Type);
         }
 
 
@@ -501,9 +500,9 @@
             var checkbox = (PowerUpCheckBox) widget;
 
             if (checkbox.Value)
-                Simulator.PowerUpsFactory.Availables.Add(checkbox.PowerUp, Simulator.PowerUpsFactory.Create(checkbox.PowerUp));
+                Simulator.Data.Level.AvailablePowerUps.Add(checkbox.PowerUp, Simulator.PowerUpsFactory.Create(checkbox.PowerUp));
             else
-                Simulator.PowerUpsFactory.Availables.Remove(checkbox.PowerUp);
+                Simulator.Data.Level.AvailablePowerUps.Remove(checkbox.PowerUp);
 
             NotifyEditorCommandExecuted(new EditorCommand("AddOrRemovePowerUp"));
         }
@@ -513,7 +512,7 @@
         {
             var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
 
-            Simulator.Level.Background = new Image(img.Image.TextureName) { VisualPriority = Preferences.PrioriteFondEcran };
+            Simulator.Data.Level.Background = new Image(img.Image.TextureName) { VisualPriority = Preferences.PrioriteFondEcran };
         }
 
 
@@ -540,8 +539,8 @@
             {
                 var enemiesAssets = (EnemiesAssetsPanel) Panels[EditorPanel.Enemies];
 
-                if (waveId < Simulator.LevelDescriptor.Waves.Count)
-                    enemiesAssets.Enemies = Simulator.LevelDescriptor.Waves[waveId].Enemies;
+                if (waveId < Simulator.Data.Level.Descriptor.Waves.Count)
+                    enemiesAssets.Enemies = Simulator.Data.Level.Descriptor.Waves[waveId].Enemies;
                 else
                     enemiesAssets.Enemies = new List<EnemyType>();
 
@@ -567,10 +566,10 @@
                     descriptors.Add(subPanel.GenerateDescriptor());
             }
 
-            Simulator.Level.Waves.Clear();
+            Simulator.Data.Level.Waves.Clear();
 
             foreach (var wd in descriptors)
-                Simulator.Level.Waves.AddLast(new Wave(Simulator, wd));
+                Simulator.Data.Level.Waves.AddLast(new Wave(Simulator, wd));
         }
 
 

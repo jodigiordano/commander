@@ -8,12 +8,12 @@
     {
         public List<Bullet> Output;
 
-        public List<Bullet> Bullets;
-        public PhysicalRectangle Battlefield;
+        private Simulator Simulator;
 
 
-        public OutOfBounds()
+        public OutOfBounds(Simulator simulator)
         {
+            Simulator = simulator;
             Output = new List<Bullet>();
         }
 
@@ -22,14 +22,14 @@
         {
             Output.Clear();
 
-            for (int i = Bullets.Count - 1; i > -1; i--)
+            for (int i = Simulator.Data.Bullets.Count - 1; i > -1; i--)
             {
-                Bullet bullet = Bullets[i];
+                Bullet bullet = Simulator.Data.Bullets[i];
 
                 if (bullet.Shape == Shape.Line || bullet.Shape == Shape.Circle)
                     continue;
 
-                if (!Physics.RectangleRectangleCollision(bullet.Rectangle, this.Battlefield))
+                if (!Physics.RectangleRectangleCollision(bullet.Rectangle, Simulator.Data.Battlefield))
                     Output.Add(bullet);
             }
         }

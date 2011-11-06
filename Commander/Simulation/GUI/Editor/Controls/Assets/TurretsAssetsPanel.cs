@@ -21,7 +21,7 @@
             {
                 var widget = (TurretCheckBox) GetWidgetByName(turret.Key.ToString());
 
-                widget.Value = Simulator.TurretsFactory.Availables.ContainsKey(turret.Key);
+                widget.Value = Simulator.Data.Level.AvailableTurrets.ContainsKey(turret.Key);
             }
         }
 

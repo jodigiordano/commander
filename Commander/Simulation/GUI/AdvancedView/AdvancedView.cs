@@ -1,13 +1,9 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System.Collections.Generic;
 
 
     class AdvancedView
     {
-        public List<Enemy> Enemies;
-        public List<CelestialBody> CelestialBodies;
-
         private bool visible;
         private Simulator Simulator;
         private EnemiesLives EnemiesLives;
@@ -24,13 +20,6 @@
         }
 
 
-        public void Initialize()
-        {
-            CelestialBodiesPaths.CelestialBodies = CelestialBodies;
-            EnemiesLives.Enemies = Enemies;
-        }
-
-
         public bool Visible
         {
             get { return visible; }
@@ -38,7 +27,7 @@
             {
                 visible = value;
 
-                foreach (var celestialBody in CelestialBodies)
+                foreach (var celestialBody in Simulator.Data.Level.PlanetarySystem)
                 {
                     foreach (var turret in celestialBody.Turrets)
                     {

@@ -120,8 +120,8 @@
         {
             position = new Vector3
             (
-                MathHelper.Clamp(Position.X, Simulator.Battlefield.Left + Circle.Radius, Simulator.Battlefield.Right - Circle.Radius),
-                MathHelper.Clamp(Position.Y, Simulator.Battlefield.Top + Circle.Radius, Simulator.Battlefield.Bottom - Circle.Radius),
+                MathHelper.Clamp(Position.X, Simulator.Data.Battlefield.Left + Circle.Radius, Simulator.Data.Battlefield.Right - Circle.Radius),
+                MathHelper.Clamp(Position.Y, Simulator.Data.Battlefield.Top + Circle.Radius, Simulator.Data.Battlefield.Bottom - Circle.Radius),
                 0
             );
         }

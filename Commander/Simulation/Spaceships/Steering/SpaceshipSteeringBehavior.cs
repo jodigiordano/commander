@@ -130,7 +130,7 @@
         {
             Direction d = Direction.None;
 
-            if (Spaceship.Position.X > Spaceship.Simulator.Battlefield.Right - Spaceship.Circle.Radius)
+            if (Spaceship.Position.X > Spaceship.Simulator.Data.Battlefield.Right - Spaceship.Circle.Radius)
             {
                 Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Acceleration.X) * Spaceship.Speed * 2f;
                 Bouncing.Y = Bouncing.Y + Acceleration.Y * Spaceship.Speed * 2f;
@@ -141,7 +141,7 @@
                 d = Direction.Right;
             }
 
-            if (Spaceship.Position.X < Spaceship.Simulator.Battlefield.Left + Spaceship.Circle.Radius)
+            if (Spaceship.Position.X < Spaceship.Simulator.Data.Battlefield.Left + Spaceship.Circle.Radius)
             {
                 Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Acceleration.X) * Spaceship.Speed * 2f;
                 Bouncing.Y = Bouncing.Y + Acceleration.Y * Spaceship.Speed * 2f;
@@ -152,7 +152,7 @@
                 d = Direction.Left;
             }
 
-            if (Spaceship.Position.Y > Spaceship.Simulator.Battlefield.Bottom - Spaceship.Circle.Radius)
+            if (Spaceship.Position.Y > Spaceship.Simulator.Data.Battlefield.Bottom - Spaceship.Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Acceleration.X * Spaceship.Speed * 2f;
                 Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Acceleration.Y) * Spaceship.Speed * 2f;
@@ -163,7 +163,7 @@
                 d = Direction.Down;
             }
 
-            if (Spaceship.Position.Y < Spaceship.Simulator.Battlefield.Top + Spaceship.Circle.Radius)
+            if (Spaceship.Position.Y < Spaceship.Simulator.Data.Battlefield.Top + Spaceship.Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Acceleration.X * Spaceship.Speed * 2f;
                 Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Acceleration.Y) * Spaceship.Speed * 2f;

@@ -45,8 +45,8 @@
         {
             return (Minerals.Count == 0) ?
                 new Vector3(
-                    Main.Random.Next(Simulator.Battlefield.Left + 50, Simulator.Battlefield.Right - 50),
-                    Main.Random.Next(Simulator.Battlefield.Top + 50, Simulator.Battlefield.Bottom - 50),
+                    Main.Random.Next(Simulator.Data.Battlefield.Left + 50, Simulator.Data.Battlefield.Right - 50),
+                    Main.Random.Next(Simulator.Data.Battlefield.Top + 50, Simulator.Data.Battlefield.Bottom - 50),
                     0) :
                 Minerals[0].Position;
         }

@@ -11,7 +11,6 @@
 
         public GridWorld EnemiesGrid;
         public List<Turret> Turrets;
-        public List<Enemy> Enemies;
         public HiddenEnemies HiddenEnemies;
 
         private IntegerHandler Handler;
@@ -20,9 +19,13 @@
         private Circle CurrentTurretRange;
         private Enemy NearestEnemy;
 
+        private Simulator Simulator;
 
-        public EnemyInRange()
+
+        public EnemyInRange(Simulator simulator)
         {
+            Simulator = simulator;
+
             Output = new List<KeyValuePair<Turret, Enemy>>();
             Handler = new IntegerHandler(CheckEnemyIsInRange);
             CurrentTurret = null;
@@ -56,7 +59,7 @@
 
         private bool CheckEnemyIsInRange(int index)
         {
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
 
             if (HiddenEnemies.Output.ContainsKey(e))
                 return true;

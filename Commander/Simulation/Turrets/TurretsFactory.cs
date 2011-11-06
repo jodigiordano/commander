@@ -8,7 +8,6 @@
 
     class TurretsFactory
     {
-        public Dictionary<TurretType, Turret> Availables;
         public Dictionary<TurretType, Turret> All;
         public Dictionary<int, TurretBoostLevel> BoostLevels;
         public Dictionary<TurretType, LinkedListWithInit<TurretLevel>> TurretsLevels;
@@ -20,7 +19,6 @@
         {
             Simulator = simulator;
 
-            Availables = new Dictionary<TurretType, Turret>(TurretTypeComparer.Default);
             All = new Dictionary<TurretType, Turret>(TurretTypeComparer.Default);
 
             BoostLevels = new Dictionary<int, TurretBoostLevel>();

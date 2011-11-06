@@ -14,7 +14,6 @@
         private const int MaxCurvePoints = 400;
         private const int CelestialBodyDistance = 70;
 
-        public List<CelestialBody> CelestialBodies;
         public double Length;
         public bool Active;
         public bool TakeIntoAccountFakeGravTurret;
@@ -26,7 +25,7 @@
         private OrderedBag<CelestialBody> CelestialBodiesPath;
         private int DistanceTwoPoints = 45;
         private Image[] Lines;
-        private Scene Scene;
+        private Simulator Simulator;
         private int PointsCount;
         private double LengthBefore;
         private ColorInterpolator ColorInterpolator;
@@ -34,7 +33,7 @@
 
         public Path(Simulator simulator, ColorInterpolator color, byte alpha, BlendType blend)
         {
-            Scene = simulator.Scene;
+            Simulator = simulator;
             ColorInterpolator = color;
             
             InnerPath = new Path3D();
@@ -73,7 +72,7 @@
         {
             CelestialBodiesPath = new OrderedBag<CelestialBody>();
 
-            foreach (var c in CelestialBodies)
+            foreach (var c in Simulator.Data.Level.PlanetarySystem)
                 if (c.HasGravitationalTurret || (TakeIntoAccountFakeGravTurret && c.FakeHasGravitationalTurret))
                     AddCelestialBody(c, false);
 
@@ -239,7 +238,7 @@
                 line.Rotation = InnerPath.GetRotation(j * DistanceTwoPoints);
                 ColorInterpolator.GetPerc((j + 1f) / linesCount, ref line.color);
                 line.VisualPriority = VisualPriorities.Default.Path - InnerPath.GetPercentage(j * DistanceTwoPoints) / 100;
-                Scene.Add(line);
+                Simulator.Scene.Add(line);
             }
         }
 

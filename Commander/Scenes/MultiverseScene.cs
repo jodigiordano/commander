@@ -49,10 +49,10 @@
 
         private void InitializeCBStates()
         {
-            Simulator.PlanetarySystemController.CelestialBodies[1].Name = "jump to world";
-            Simulator.PlanetarySystemController.CelestialBodies[2].Name = Main.PlayersController.MultiverseData.LoggedIn ? "log out" : "log in";
-            Simulator.PlanetarySystemController.CelestialBodies[3].Name = "my world";
-            Simulator.PlanetarySystemController.CelestialBodies[4].Name = Main.PlayersController.MultiverseData.LoggedIn ? "" : "register";
+            Simulator.Data.Level.PlanetarySystem[1].Name = "jump to world";
+            Simulator.Data.Level.PlanetarySystem[2].Name = Main.PlayersController.MultiverseData.LoggedIn ? "log out" : "log in";
+            Simulator.Data.Level.PlanetarySystem[3].Name = "my world";
+            Simulator.Data.Level.PlanetarySystem[4].Name = Main.PlayersController.MultiverseData.LoggedIn ? "" : "register";
 
             Choices = new CBBigLabels(Simulator, VisualPriorities.Default.MenuChoices);
             Choices.Show();

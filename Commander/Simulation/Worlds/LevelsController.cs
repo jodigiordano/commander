@@ -1,30 +1,21 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
-    using System.Collections.Generic;
     using EphemereGames.Core.Physics;
 
 
     class LevelsController
     {
         public GameState State;
-        public Level Level;
 
         public event NewGameStateHandler NewGameState;
         public event CommonStashHandler CommonStashChanged;
 
-        public List<CelestialBody> CelestialBodies                   { get { return Level.PlanetarySystem; } }
-        public InfiniteWave InfiniteWaves                            { get { return Level.InfiniteWaves; } }
-        public LinkedList<Wave> Waves                                { get { return Level.Waves; } }
-        public CommonStash CommonStash                               { get { return Level.CommonStash; } }
-        public List<Turret> StartingTurrets                          { get { return Level.Turrets; } }
-        public CelestialBody CelestialBodyToProtect                  { get { return Level.CelestialBodyToProtect; } }
-        public Dictionary<TurretType, Turret> AvailableTurrets       { get { return Level.AvailableTurrets; } }
-        public Dictionary<PowerUpType, PowerUp> AvailablePowerUps    { get { return Level.AvailablePowerUps; } }
-
         private Simulator Simulator;
         private int WavesCounter;
         private double ElapsedTime;
+
+        private Level Level { get { return Simulator.Data.Level; } }
 
 
         public LevelsController(Simulator simulator)
@@ -69,9 +60,9 @@
         {
             WavesCounter++;
 
-            if (WavesCounter == Waves.Count && State == GameState.Running && !Simulator.DemoMode && !Simulator.EditorMode)
+            if (WavesCounter == Level.Waves.Count && State == GameState.Running && !Simulator.DemoMode && !Simulator.EditorMode)
             {
-                State = CelestialBodyToProtect.Alive ? GameState.Won : GameState.Lost;
+                State = Level.CelestialBodyToProtect.Alive ? GameState.Won : GameState.Lost;
 
                 ComputeFinalScore();
 
@@ -87,14 +78,14 @@
             if (celestialBody == null)
                 return;
 
-            if (Simulator.EditorMode && celestialBody == CelestialBodyToProtect)
-                celestialBody.LifePoints = CommonStash.Lives;
+            if (Simulator.EditorMode && celestialBody == Level.CelestialBodyToProtect)
+                celestialBody.LifePoints = Level.CommonStash.Lives;
 
             if (Simulator.EditorMode || Simulator.DemoMode)
                 return;
 
-            if (celestialBody == CelestialBodyToProtect)
-                CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints;
+            if (celestialBody == Level.CelestialBodyToProtect)
+                Level.CommonStash.Lives = (int) Level.CelestialBodyToProtect.LifePoints;
         }
         
 
@@ -106,11 +97,11 @@
             CelestialBody celestialBody = obj as CelestialBody;
 
             if (celestialBody == null || Simulator.DemoMode ||
-                Simulator.EditorMode  || celestialBody != CelestialBodyToProtect)
+                Simulator.EditorMode || celestialBody != Level.CelestialBodyToProtect)
                 return;
 
             State = GameState.Lost;
-            CommonStash.Lives = (int) CelestialBodyToProtect.LifePoints;
+            Level.CommonStash.Lives = (int) Level.CelestialBodyToProtect.LifePoints;
 
             ComputeFinalScore();
 
@@ -122,8 +113,8 @@
         {
             if (powerUp.Type == PowerUpType.Shield)
             {
-                ((PowerUpShield) powerUp).ToProtect = CelestialBodyToProtect;
-                ((PowerUpShield) powerUp).Bullet.Position = CelestialBodyToProtect.Position;
+                ((PowerUpShield) powerUp).ToProtect = Level.CelestialBodyToProtect;
+                ((PowerUpShield) powerUp).Bullet.Position = Level.CelestialBodyToProtect.Position;
             }
         }
 
@@ -155,37 +146,37 @@
                 if (Level.CelestialBodyToProtect == null)
                 {
                     Level.CelestialBodyToProtect = command.CelestialBody;
-                    Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+                    Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
                 }
             }
 
             else if (command.Name == "PushFirst")
             {
-                Level.CelestialBodyToProtect = PlanetarySystemController.GetCelestialBodyWithHighestPathPriority(CelestialBodies);
+                Level.CelestialBodyToProtect = PlanetarySystemController.GetCelestialBodyWithHighestPathPriority(Level.PlanetarySystem);
 
                 if (Level.CelestialBodyToProtect == null)
-                    Level.CelestialBodyToProtect = PlanetarySystemController.GetAsteroidBelt(CelestialBodies);
-                
-                Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+                    Level.CelestialBodyToProtect = PlanetarySystemController.GetAsteroidBelt(Level.PlanetarySystem);
+
+                Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
             }
 
 
             else if (command.Name == "PushLast")
             {
                 Level.CelestialBodyToProtect = command.CelestialBody;
-                Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+                Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
             }
 
 
             else if (command.Name == "Remove")
             {
-                Level.CelestialBodyToProtect = PlanetarySystemController.GetAliveCelestialBodyWithHighestPathPriority(CelestialBodies);
+                Level.CelestialBodyToProtect = PlanetarySystemController.GetAliveCelestialBodyWithHighestPathPriority(Level.PlanetarySystem);
 
                 if (Level.CelestialBodyToProtect == null)
-                    Level.CelestialBodyToProtect = PlanetarySystemController.GetAsteroidBelt(CelestialBodies);
+                    Level.CelestialBodyToProtect = PlanetarySystemController.GetAsteroidBelt(Level.PlanetarySystem);
 
                 if (Level.CelestialBodyToProtect != null)
-                    Level.CelestialBodyToProtect.LifePoints = CommonStash.Lives;
+                    Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
             }
         }
 
@@ -194,15 +185,15 @@
         {
             if (command.Name == "AddOrRemoveLives")
             {
-                CommonStash.Lives = command.LifePoints;
+                Level.CommonStash.Lives = command.LifePoints;
 
-                if (CelestialBodyToProtect != null)
-                    CelestialBodyToProtect.LifePoints = command.LifePoints;
+                if (Level.CelestialBodyToProtect != null)
+                    Level.CelestialBodyToProtect.LifePoints = command.LifePoints;
             }
 
             else if (command.Name == "AddOrRemoveCash")
             {
-                CommonStash.Cash = command.Cash;
+                Level.CommonStash.Cash = command.Cash;
             }
 
             else if (command.Name == "AddOrRemoveMinerals")

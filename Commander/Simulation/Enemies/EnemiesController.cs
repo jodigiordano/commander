@@ -9,16 +9,9 @@
 
     class EnemiesController
     {
-        public LinkedList<Wave> Waves;
-        public InfiniteWave InfiniteWaves;
-        public Path Path;
-        public Path PathPreview;
-        public int MineralsCash;
-        public int LifePacksGiven;
         public List<Wave> ActiveWaves;
         public EnemiesData EnemiesData;
         
-        public List<Enemy> Enemies;
         public List<Mineral> Minerals;
         public bool SpawnEnemies;
 
@@ -45,12 +38,13 @@
 
         private double MinTimeWaveNearToStart;
 
+        private List<Enemy> Enemies { get { return Simulator.Data.Enemies; } }
+
 
         public EnemiesController(Simulator simulator)
         {
             Simulator = simulator;
 
-            Enemies = new List<Enemy>();
             ActiveWaves = new List<Wave>();
             Minerals = new List<Mineral>();
             MineralsDistribution = new List<KeyValuePair<int, MineralType>>();
@@ -61,10 +55,7 @@
             SyncUpdateEnemies = new Action(UpdateEnemies);
             SyncUpdateMinerals = new Action(UpdateMinerals);
 
-            EnemiesData = new EnemiesData()
-            {
-                Enemies = Enemies
-            };
+            EnemiesData = new EnemiesData(Simulator);
 
             MinTimeWaveNearToStart = 10000;
         }
@@ -72,10 +63,9 @@
 
         public void Initialize()
         {
-            Enemies.Clear();
             Minerals.Clear();
             MineralsDistribution.Clear();
-            NextWave = Waves.First;
+            NextWave = Simulator.Data.Level.Waves.First;
             ActiveWaves.Clear();
 
             TimeElapsedLastWave = 0;
@@ -85,18 +75,17 @@
 
             SpawnEnemies = true;
 
-            if (InfiniteWaves != null)
+            if (Simulator.Data.Level.InfiniteWaves != null)
                 return;
 
             int enemiesCnt = 0;
 
-            foreach (var wave in Waves)
+            foreach (var wave in Simulator.Data.Level.Waves)
             {
                 wave.Initialize();
                 enemiesCnt += wave.EnemiesCount;
             }
 
-            EnemiesData.Path = Path;
             EnemiesData.MaxEnemiesForCountPerc = 20;
 
             // Minerals Distribution
@@ -104,7 +93,7 @@
                 Simulator.MineralsFactory.GetValue(MineralType.Cash10),
                 Simulator.MineralsFactory.GetValue(MineralType.Cash25),
                 Simulator.MineralsFactory.GetValue(MineralType.Cash150));
-            Vector3 valuePerType = new Vector3(0.6f, 0.3f, 0.1f) * MineralsCash; //atention: float
+            Vector3 valuePerType = new Vector3(0.6f, 0.3f, 0.1f) * Simulator.Data.Level.Minerals; //atention: float
             Vector3 qtyPerType = valuePerType / unitValue;
 
 
@@ -117,7 +106,7 @@
             for (int i = 0; i < qtyPerType.Z; i++)
                 MineralsDistribution.Add(new KeyValuePair<int, MineralType>(Main.Random.Next(0, enemiesCnt), MineralType.Cash150));
 
-            for (int i = 0; i < LifePacksGiven; i++)
+            for (int i = 0; i < Simulator.Data.Level.LifePacks; i++)
                 MineralsDistribution.Add(new KeyValuePair<int, MineralType>(Main.Random.Next(0, enemiesCnt), MineralType.Life1));
 
             MineralsDistribution.Sort(delegate(KeyValuePair<int, MineralType> m1, KeyValuePair<int, MineralType> m2)
@@ -272,7 +261,7 @@
                     Simulator.EnemiesFactory.Return(e);
 
                     if (e.EndOfPathReached)
-                        NotifyEnemyReachedEndOfPath(e, Path.LastCelestialBody);
+                        NotifyEnemyReachedEndOfPath(e, Simulator.Data.Path.LastCelestialBody);
 
                     NotifyObjectDestroyed(e);
 
@@ -327,10 +316,10 @@
 
             ActiveWaves.Add(NextWave.Value);
 
-            if (InfiniteWaves == null)
+            if (Simulator.Data.Level.InfiniteWaves == null)
                 NextWave = NextWave.Next;
             else
-                NextWave.Value = InfiniteWaves.GetNextWave();
+                NextWave.Value = Simulator.Data.Level.InfiniteWaves.GetNextWave();
 
             NotifyNextWaveCompositionChanged();
 
@@ -340,8 +329,6 @@
 
         private void AddEnemy(Enemy e, Wave w)
         {
-            e.Path = this.Path;
-            e.PathPreview = this.PathPreview;
             e.Translation.Y = Main.Random.Next(-20, 20);
             e.WaveId = w.GetHashCode();
 
@@ -394,7 +381,7 @@
 
                 Vector3 direction;
 
-                Path.Direction(enemy.Displacement, out direction);
+                Simulator.Data.Path.Direction(enemy.Displacement, out direction);
 
                 m.Direction = direction;
 
@@ -405,7 +392,7 @@
 
         private void RemoveFromWave(Enemy enemy)
         {
-            foreach (var w in Waves)
+            foreach (var w in Simulator.Data.Level.Waves)
                 if (w.GetHashCode() == enemy.WaveId)
                 {
                     w.DoEnemyDestroyed();

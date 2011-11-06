@@ -59,7 +59,7 @@
         {
             Choices = new List<ContextualMenuChoice>();
 
-            Dictionary<TurretType, Turret> availableTurrets = Simulator.TurretsFactory.Availables;
+            Dictionary<TurretType, Turret> availableTurrets = Simulator.Data.Level.AvailableTurrets;
 
             foreach (var t in availableTurrets.Values)
             {
@@ -128,7 +128,7 @@
                 var turret = (LogoTextContextualMenuChoice) Choices[slotCounter];
 
                 bool canBuy = kvp.Value;
-                bool selected = TurretToBuy == Simulator.TurretsFactory.Availables[kvp.Key].Type;
+                bool selected = TurretToBuy == Simulator.Data.Level.AvailableTurrets[kvp.Key].Type;
 
                 if (!canBuy && AlternateSelectedCannotDo && selected)
                     turret.SetColor(Colors.Spaceship.CannotDo);

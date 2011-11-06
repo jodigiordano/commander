@@ -8,15 +8,16 @@
     {
         public List<KeyValuePair<CelestialBody, Bullet>> Output;
 
-        public List<Bullet> Bullets;
-        public Path Path;
-
         private Circle StartingPathObjectCircle;
         private CelestialBody StartingPathObject;
 
+        private Simulator Simulator;
 
-        public StartingPathCollisions()
+
+        public StartingPathCollisions(Simulator simulator)
         {
+            Simulator = simulator;
+
             Output = new List<KeyValuePair<CelestialBody, Bullet>>();
             StartingPathObjectCircle = new Circle();
         }
@@ -26,7 +27,7 @@
         {
             Output.Clear();
 
-            StartingPathObject = Path.FirstCelestialBody;
+            StartingPathObject = Simulator.Data.Path.FirstCelestialBody;
 
             if (StartingPathObject == null)
                 return;
@@ -34,7 +35,7 @@
             StartingPathObjectCircle.Radius = StartingPathObject.Circle.Radius + 30;
             StartingPathObjectCircle.Position = StartingPathObject.Position;
 
-            foreach (var b in Bullets)
+            foreach (var b in Simulator.Data.Bullets)
             {
                 if (!(b is BasicBullet))
                     continue;

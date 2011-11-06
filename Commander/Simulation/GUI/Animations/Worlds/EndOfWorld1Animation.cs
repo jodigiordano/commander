@@ -9,7 +9,6 @@
 
     class EndOfWorld1Animation : EndOfWorldAnimation
     {
-        private Path Path;
         private List<CelestialBody> CelestialBodiesToDestroy;
         private MothershipAnimation MothershipAnimation;
         private Text TmpEndOfAlpha;
@@ -18,13 +17,11 @@
         public EndOfWorld1Animation(WorldScene worldScene)
             : base(worldScene, 30000)
         {
-            Path = Simulator.PlanetarySystemController.Path;
-
             // Prepare celestial bodies to destroy
             CelestialBodiesToDestroy = new List<CelestialBody>();
 
-            foreach (var cb in Path.CelestialBodies)
-                if (cb != Path.FirstCelestialBody && cb != Path.LastCelestialBody)
+            foreach (var cb in worldScene.Simulator.Data.Level.PlanetarySystem)
+                if (!cb.FirstOnPath && !cb.LastOnPath)
                     CelestialBodiesToDestroy.Add(cb);
 
             MothershipAnimation = new MothershipAnimation(Simulator)
@@ -42,14 +39,14 @@
             };
 
             MothershipAnimation.StartingPosition = new Vector3(
-                worldScene.Simulator.Battlefield.Center.X,
-                worldScene.Simulator.Battlefield.Top - MothershipAnimation.Mothership.Size.Y / 2 - 360, 0);
+                worldScene.Simulator.Data.Battlefield.Center.X,
+                worldScene.Simulator.Data.Battlefield.Top - MothershipAnimation.Mothership.Size.Y / 2 - 360, 0);
             MothershipAnimation.ArrivingPosition = new Vector3(
-                Simulator.Battlefield.Center.X,
-                Simulator.Battlefield.Top - MothershipAnimation.Mothership.Size.Y * 0.2f, 0);
+                Simulator.Data.Battlefield.Center.X,
+                Simulator.Data.Battlefield.Top - MothershipAnimation.Mothership.Size.Y * 0.2f, 0);
             MothershipAnimation.DeparturePosition = new Vector3(
-                Simulator.Battlefield.Center.X,
-                Simulator.Battlefield.Bottom + MothershipAnimation.Mothership.Size.Y, 0);
+                Simulator.Data.Battlefield.Center.X,
+                Simulator.Data.Battlefield.Bottom + MothershipAnimation.Mothership.Size.Y, 0);
 
             Simulator.CameraController.CameraData.ManualZoom = true;
 

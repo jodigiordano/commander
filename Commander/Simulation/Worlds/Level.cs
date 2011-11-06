@@ -94,13 +94,13 @@
             // Sync turrets
             Descriptor.AvailableTurrets.Clear();
 
-            foreach (var type in Simulator.TurretsFactory.Availables.Keys)
+            foreach (var type in AvailableTurrets.Keys)
                 Descriptor.AvailableTurrets.Add(type);
 
             // Sync power-ups
             Descriptor.AvailablePowerUps.Clear();
 
-            foreach (var type in Simulator.PowerUpsFactory.Availables.Keys)
+            foreach (var type in AvailablePowerUps.Keys)
                 Descriptor.AvailablePowerUps.Add(type);
 
             // Sync info
@@ -213,8 +213,8 @@
                     (
                         Simulator,
                         descriptor.Name,
-                        Simulator.AsteroidBeltOverride ? descriptor.Path : new Vector3(Simulator.Battlefield.Width / 2, Simulator.Battlefield.Height / 2, 0),
-                        new Vector3(Simulator.Battlefield.Center.X, Simulator.Battlefield.Center.Y, 0),
+                        Simulator.AsteroidBeltOverride ? descriptor.Path : new Vector3(Simulator.Data.Battlefield.Width / 2, Simulator.Data.Battlefield.Height / 2, 0),
+                        new Vector3(Simulator.Data.Battlefield.Center.X, Simulator.Data.Battlefield.Center.Y, 0),
                         descriptor.Size,
                         descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                         descriptor.Images,

@@ -89,7 +89,7 @@
 
         private void DoBouncing()
         {
-            if (Position.X > Simulator.Battlefield.Right - 20)
+            if (Position.X > Simulator.Data.Battlefield.Right - 20)
             {
                 Bouncing.X = -Math.Abs(Bouncing.X) + -Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -97,7 +97,7 @@
                 Speed = 0;
             }
 
-            if (Position.X < Simulator.Battlefield.Left + Circle.Radius)
+            if (Position.X < Simulator.Data.Battlefield.Left + Circle.Radius)
             {
                 Bouncing.X = Math.Abs(Bouncing.X) + Math.Abs(Speed);
                 Bouncing.Y = Bouncing.Y + Speed;
@@ -105,7 +105,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y > Simulator.Battlefield.Bottom - Circle.Radius)
+            if (Position.Y > Simulator.Data.Battlefield.Bottom - Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = -Math.Abs(Bouncing.Y) - Math.Abs(Speed);
@@ -113,7 +113,7 @@
                 Speed = 0;
             }
 
-            if (Position.Y < Simulator.Battlefield.Top + Circle.Radius)
+            if (Position.Y < Simulator.Data.Battlefield.Top + Circle.Radius)
             {
                 Bouncing.X = Bouncing.X + Speed;
                 Bouncing.Y = Math.Abs(Bouncing.Y) + Math.Abs(Speed);

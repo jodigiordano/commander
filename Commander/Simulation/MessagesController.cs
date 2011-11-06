@@ -9,7 +9,6 @@
     class MessagesController
     {
         public List<Turret> Turrets;
-        public List<CelestialBody> CelestialBodies;
 
         private Simulator Simulator;
         private Dictionary<ICollidable, TextBubble> TalkingObjects;
@@ -475,7 +474,7 @@
 
             for (int i = 0; i < 20; i++)
             {
-                body = CelestialBodies[Main.Random.Next(0, CelestialBodies.Count)];
+                body = Simulator.Data.Level.PlanetarySystem[Main.Random.Next(0, Simulator.Data.Level.PlanetarySystem.Count)];
 
                 if (body.FirstOnPath || !body.Alive || body is AsteroidBelt)
                     body = null;

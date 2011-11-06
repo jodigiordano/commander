@@ -10,16 +10,11 @@
 
     class CollisionsController
     {
-        public List<Bullet> Bullets;
-        public List<Enemy> Enemies;
         public List<Turret> Turrets;
-        public List<CelestialBody> CelestialBodies;
         public List<Mineral> Minerals;
-        public List<ShootingStar> ShootingStars;
         public List<SimPlayer> Players;
-        public Path Path;
         public bool Debug;
-        public PhysicalRectangle Battlefield;
+        
 
         public event PhysicalObjectHandler ObjectOutOfBounds;
         public event PhysicalObjectPhysicalObjectHandler ObjectHit;
@@ -55,16 +50,16 @@
         {
             Simulator = simulator;
             
-            HiddenEnemies = new HiddenEnemies();
+            HiddenEnemies = new HiddenEnemies(Simulator);
             BoostedTurrets = new BoostedTurrets();
-            BulletsDeflected = new BulletsDeflected();
-            OutOfBounds = new OutOfBounds();
-            EnemyInRange = new EnemyInRange();
-            ObjectsCollisions = new ObjectsCollisions();
+            BulletsDeflected = new BulletsDeflected(Simulator);
+            OutOfBounds = new OutOfBounds(Simulator);
+            EnemyInRange = new EnemyInRange(Simulator);
+            ObjectsCollisions = new ObjectsCollisions(Simulator);
             PlayersCollisions = new PlayersCollisions();
-            CelestialBodyExplosion = new CelestialBodyExplosion();
-            StartingPathCollisions = new StartingPathCollisions();
-            ShieldsCollisions = new SpaceshipShieldsCollisions();
+            CelestialBodyExplosion = new CelestialBodyExplosion(Simulator);
+            StartingPathCollisions = new StartingPathCollisions(Simulator);
+            ShieldsCollisions = new SpaceshipShieldsCollisions(Simulator);
 
             SyncOutOfBounds = new Action(OutOfBounds.Sync);
             SyncEnemyInRange = new Action(EnemyInRange.Sync);
@@ -77,46 +72,22 @@
         {
             Debug = false;
 
-            EnemiesGrid = new GridWorld(Battlefield, 50);
-            TurretsGrid = new GridWorld(Battlefield, 50);
+            EnemiesGrid = new GridWorld(Simulator.Data.Battlefield, 50);
+            TurretsGrid = new GridWorld(Simulator.Data.Battlefield, 50);
 
-            HiddenEnemies.CelestialBodies = CelestialBodies;
-            HiddenEnemies.Enemies = Enemies;
             HiddenEnemies.EnemiesGrid = EnemiesGrid;
-
             BoostedTurrets.Turrets = Turrets;
             BoostedTurrets.TurretsGrid = TurretsGrid;
-
-            BulletsDeflected.Bullets = Bullets;
-            BulletsDeflected.Enemies = Enemies;
             BulletsDeflected.EnemiesGrid = EnemiesGrid;
-
-            OutOfBounds.Battlefield = Battlefield;
-            OutOfBounds.Bullets = Bullets;
-
-            EnemyInRange.Enemies = Enemies;
             EnemyInRange.EnemiesGrid = EnemiesGrid;
             EnemyInRange.HiddenEnemies = HiddenEnemies;
             EnemyInRange.Turrets = Turrets;
-
-            CelestialBodyExplosion.Enemies = Enemies;
             CelestialBodyExplosion.EnemiesGrid = EnemiesGrid;
-
-            ObjectsCollisions.Bullets = Bullets;
-            ObjectsCollisions.Enemies = Enemies;
             ObjectsCollisions.EnemiesGrid = EnemiesGrid;
             ObjectsCollisions.HiddenEnemies = HiddenEnemies;
             ObjectsCollisions.Minerals = Minerals;
-            ObjectsCollisions.ShootingStars = ShootingStars;
-            ObjectsCollisions.Simulator = Simulator;
             ObjectsCollisions.Turrets = Turrets;
-
             PlayersCollisions.Players = Players;
-
-            StartingPathCollisions.Bullets = Bullets;
-            StartingPathCollisions.Path = Path;
-
-            ShieldsCollisions.Bullets = Bullets;
         }
 
 
@@ -184,7 +155,7 @@
 
             Circle c = new Circle(Vector3.Zero, 0);
 
-            foreach (var p in Bullets)
+            foreach (var p in Simulator.Data.Bullets)
             {
                 DrawRectangle(p, Color.Red);
 
@@ -197,10 +168,10 @@
                 }
             }
 
-            foreach (var corpsCeleste in CelestialBodies)
+            foreach (var corpsCeleste in Simulator.Data.Level.PlanetarySystem)
                 DrawRectangle(corpsCeleste, Color.Yellow);
 
-            foreach (var e in Enemies)
+            foreach (var e in Simulator.Data.Enemies)
             {
                 Simulator.Scene.Add(new VisualRectangle(e.Circle.Rectangle, e.Color));
                 DrawRectangle(e, e.Color);
@@ -209,7 +180,7 @@
             foreach (var e in Minerals)
                 DrawRectangle(e, Color.Yellow);
 
-            EnemiesGrid.Draw(Simulator.Scene, Enemies);
+            EnemiesGrid.Draw(Simulator.Scene, Simulator.Data.Enemies);
         }
 
 
@@ -232,8 +203,8 @@
         private void SyncEnemiesGrid()
         {
             EnemiesGrid.Clear();
-            for (int i = 0; i < Enemies.Count; i++)
-                EnemiesGrid.Add(i, Enemies[i]);
+            for (int i = 0; i < Simulator.Data.Enemies.Count; i++)
+                EnemiesGrid.Add(i, Simulator.Data.Enemies[i]);
         }
 
 

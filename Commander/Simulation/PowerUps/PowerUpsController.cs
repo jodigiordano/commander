@@ -30,7 +30,7 @@
         {
             ActivesPowerUps.Clear();
 
-            foreach (var powerUp in Simulator.PowerUpsFactory.Availables.Keys)
+            foreach (var powerUp in Simulator.Data.Level.AvailablePowerUps.Keys)
                 ActivesPowerUps.Add(powerUp, true);
         }
 

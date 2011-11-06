@@ -45,11 +45,11 @@
         {
             base.Initialize();
 
-            Lives.Value = Simulator.LevelDescriptor.Player.Lives;
-            Cash.Value = Simulator.LevelDescriptor.Player.Money;
-            Minerals.Value = Simulator.LevelDescriptor.Minerals.Cash;
-            LifePacks.Value = Simulator.LevelDescriptor.Minerals.LifePacks;
-            BulletDamage.Value = (int) (Simulator.LevelDescriptor.Player.BulletDamage);
+            Lives.Value = Simulator.Data.Level.Descriptor.Player.Lives;
+            Cash.Value = Simulator.Data.Level.Descriptor.Player.Money;
+            Minerals.Value = Simulator.Data.Level.Descriptor.Minerals.Cash;
+            LifePacks.Value = Simulator.Data.Level.Descriptor.Minerals.LifePacks;
+            BulletDamage.Value = (int) (Simulator.Data.Level.Descriptor.Player.BulletDamage);
         }
     }
 }

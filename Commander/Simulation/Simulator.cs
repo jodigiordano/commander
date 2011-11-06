@@ -20,18 +20,15 @@ namespace EphemereGames.Commander.Simulation
         public bool MultiverseMode;
         public bool CanSelectCelestialBodies;
         public bool AsteroidBeltOverride;
-        
         public bool EditorMode;
         internal EditorState EditorState;
-        internal Level Level;
-        internal PhysicalRectangle Battlefield;
-        internal PhysicalRectangle OuterBattlefield;
 
         public PausedGameChoice PausedGameChoice;
         public EditorWorldChoice EditorWorldChoice;
         public int NewGameChoice;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
 
+        internal Data Data;
 
         public PlanetarySystemController PlanetarySystemController;
         public MessagesController MessagesController;
@@ -50,6 +47,7 @@ namespace EphemereGames.Commander.Simulation
         internal CameraController CameraController;
         internal TweakingController TweakingController;
         private AudioController AudioController;
+
         internal TurretsFactory TurretsFactory;
         internal PowerUpsFactory PowerUpsFactory;
         internal EnemiesFactory EnemiesFactory;
@@ -127,7 +125,8 @@ namespace EphemereGames.Commander.Simulation
             MineralsFactory.Initialize();
             BulletsFactory.Initialize();
 
-            Level = new Level(this, descriptor);
+            Data = new Data(this);
+            Data.Level = new Level(this, descriptor);
 
             TweakingController = new TweakingController(this);
             CollisionsController = new CollisionsController(this);
@@ -315,69 +314,29 @@ namespace EphemereGames.Commander.Simulation
             TweakingController.PowerUpsFactory = PowerUpsFactory;
             TweakingController.TurretsFactory = TurretsFactory;
 
-            if (EditorMode && EditorState == EditorState.Editing)
-                Battlefield = new PhysicalRectangle(-5000, -5000, 10000, 10000);
-            else
-                Battlefield = Level.Descriptor.GetBoundaries(new Vector3(6 * (int) Size.Big));
+            Data.Initialize();
 
-            OuterBattlefield = new PhysicalRectangle(Battlefield.X - 200, Battlefield.Y - 200, Battlefield.Width + 400, Battlefield.Height + 400);
-
-            Level.Initialize();
-
-            LevelsController.Level = Level;
-            TurretsFactory.Availables = LevelsController.AvailableTurrets;
-            PowerUpsFactory.Availables = LevelsController.AvailablePowerUps;
             PowerUpsFactory.HumanBattleship = GUIController.HumanBattleship;
-            CollisionsController.Bullets = BulletsController.Bullets;
-            CollisionsController.Enemies = EnemiesController.Enemies;
             CollisionsController.Turrets = TurretsController.Turrets;
-            CollisionsController.CelestialBodies = LevelsController.CelestialBodies;
             CollisionsController.Minerals = EnemiesController.Minerals;
-            CollisionsController.ShootingStars = PlanetarySystemController.ShootingStars;
-            CollisionsController.Battlefield = OuterBattlefield;
-            SimPlayersController.CelestialBodies = LevelsController.CelestialBodies;
-            SimPlayersController.CommonStash = LevelsController.CommonStash;
-            SimPlayersController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
+
             SimPlayersController.StartingPathMenu = GUIController.StartingPathMenu;
             SimPlayersController.ActivesPowerUps = PowerUpsController.ActivesPowerUps;
-            PlanetarySystemController.CelestialBodies = LevelsController.CelestialBodies;
             TurretsController.PlanetarySystemController = PlanetarySystemController;
-            TurretsController.StartingTurrets = LevelsController.StartingTurrets;
-            EnemiesController.InfiniteWaves = LevelsController.InfiniteWaves;
-            EnemiesController.Waves = LevelsController.Waves;
-            EnemiesController.PathPreview = PlanetarySystemController.PathPreview;
-            EnemiesController.Path = PlanetarySystemController.Path;
-            EnemiesController.MineralsCash = LevelsController.Level.Minerals;
-            EnemiesController.LifePacksGiven = LevelsController.Level.LifePacks;
-            GUIController.Path = PlanetarySystemController.Path;
-            GUIController.PathPreview = PlanetarySystemController.PathPreview;
-            GUIController.CelestialBodies = PlanetarySystemController.CelestialBodies;
-            GUIController.Level = LevelsController.Level;
-            GUIController.Enemies = EnemiesController.Enemies;
-            GUIController.InfiniteWaves = LevelsController.InfiniteWaves;
-            GUIController.Waves = LevelsController.Waves;
             GUIController.AvailablePowerUps = SimPlayersController.AvailablePowerUps;
             GUIController.AvailableTurrets = SimPlayersController.AvailableTurrets;
             GUIController.Turrets = TurretsController.Turrets;
-            SpaceshipsController.Enemies = EnemiesController.Enemies;
             SpaceshipsController.PowerUpsBattleship = GUIController.HumanBattleship;
             SpaceshipsController.Minerals = EnemiesController.Minerals;
             MessagesController.Turrets = TurretsController.Turrets;
-            MessagesController.CelestialBodies = PlanetarySystemController.CelestialBodies;
             EditorController.GeneralMenu = EditorGUIController.GeneralMenu;
             EditorController.Panels = EditorGUIController.Panels;
             EditorController.EditorGUIPlayers = EditorGUIController.Players;
-            EditorController.CelestialBodies = LevelsController.CelestialBodies;
-            EditorGUIController.CelestialBodies = LevelsController.CelestialBodies;
-            GUIController.CommonStash = LevelsController.CommonStash;
             GUIController.ActiveWaves = EnemiesController.ActiveWaves;
             SimPlayersController.ActiveWaves = EnemiesController.ActiveWaves;
             CollisionsController.Players = SimPlayersController.PlayersList;
-            CollisionsController.Path = PlanetarySystemController.Path;
             GUIController.EnemiesData = EnemiesController.EnemiesData;
             AudioController.EnemiesData = EnemiesController.EnemiesData;
-            AudioController.CelestialBodyToProtect = LevelsController.CelestialBodyToProtect;
-            AudioController.CommonStash = LevelsController.CommonStash;
             AudioController.CameraData = CameraController.CameraData;
 
             TweakingController.Initialize();
@@ -398,7 +357,6 @@ namespace EphemereGames.Commander.Simulation
                 EditorController.Initialize();
             }
 
-            BulletsController.Initialize();
             PanelsController.Initialize();
         }
 
@@ -446,14 +404,6 @@ namespace EphemereGames.Commander.Simulation
         public bool SpawnEnemies
         {
             set { EnemiesController.SpawnEnemies = value; }
-        }
-
-
-
-        public LevelDescriptor LevelDescriptor
-        {
-            get { return Level.Descriptor; }
-            set { Level.Descriptor = value; }
         }
 
 
@@ -604,10 +554,7 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void SyncLevel()
-        {
-            Level.SyncDescriptor();
-        }
+
 
 
         internal void TriggerNewGameState(GameState state)
@@ -629,7 +576,7 @@ namespace EphemereGames.Commander.Simulation
         {
             if (state == GameState.Won)
             {
-                Main.PlayersController.UpdateProgress(Main.CurrentWorld.World.Id, Level.Id, Inputs.MasterPlayer.Name, Level.CommonStash.TotalScore);
+                Main.PlayersController.UpdateProgress(Main.CurrentWorld.World.Id, Data.Level.Id, Inputs.MasterPlayer.Name, Data.Level.CommonStash.TotalScore);
             }
         }
 

@@ -6,10 +6,8 @@
     class LevelEndedAnnunciation
     {
         private CelestialBody CelestialBody;
-        private Level Level;
 
         private Simulator Simulator;
-        private Path Path;
 
         private GameEndedBubble Bubble;
 
@@ -40,11 +38,9 @@
         };
 
 
-        public LevelEndedAnnunciation(Simulator simulator, Path path, Level level)
+        public LevelEndedAnnunciation(Simulator simulator)
         {
             Simulator = simulator;
-            Path = path;
-            Level = level;
         }
 
 
@@ -58,11 +54,11 @@
                 VisualPriorities.Default.GameEndedAnimation,
                 state == GameState.Won ? WonQuotes[Main.Random.Next(0, WonQuotes.Count)] : LostQuotes[Main.Random.Next(0, LostQuotes.Count)],
                 state == GameState.Won ? Colors.Default.HumansBright : Colors.Default.AlienBright,
-                Level.CommonStash,
-                Level.GetStarsCount(Level.CommonStash.TotalScore)
+                Simulator.Data.Level.CommonStash,
+                Simulator.Data.Level.GetStarsCount(Simulator.Data.Level.CommonStash.TotalScore)
             );
 
-            CelestialBody = state == GameState.Won ? Path.LastCelestialBody : Path.FirstCelestialBody;
+            CelestialBody = state == GameState.Won ? Simulator.Data.Path.LastCelestialBody : Simulator.Data.Path.FirstCelestialBody;
 
             Bubble.Alpha = 0;
             Simulator.Scene.VisualEffects.Add(Bubble, Core.Visual.VisualEffects.FadeInFrom0(255, 500, 1000));

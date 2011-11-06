@@ -217,8 +217,8 @@
 
         protected void ClampPositionInView()
         {
-            Dimension.X = (int) MathHelper.Clamp(Dimension.X, Simulator.Battlefield.Left, Simulator.Battlefield.Right - Dimension.Width / 2);
-            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, Simulator.Battlefield.Top + Dimension.Height / 2, Simulator.Battlefield.Bottom - Dimension.Height / 2);
+            Dimension.X = (int) MathHelper.Clamp(Dimension.X, Simulator.Data.Battlefield.Left, Simulator.Data.Battlefield.Right - Dimension.Width / 2);
+            Dimension.Y = (int) MathHelper.Clamp(Dimension.Y, Simulator.Data.Battlefield.Top + Dimension.Height / 2, Simulator.Data.Battlefield.Bottom - Dimension.Height / 2);
         }
 
 

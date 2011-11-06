@@ -9,16 +9,12 @@
     {
         public List<KeyValuePair<ICollidable, ICollidable>> Output;
 
-        public Simulator Simulator;
         public HiddenEnemies HiddenEnemies;
         public bool DarkSide;
         public bool DeadlyShootingStars;
         public GridWorld EnemiesGrid;
         public List<Turret> Turrets;
-        public List<Bullet> Bullets;
-        public List<Enemy> Enemies;
         public List<Mineral> Minerals;
-        public List<ShootingStar> ShootingStars;
         public Spaceship Collector;
         public Spaceship AutomaticCollector;
 
@@ -32,9 +28,13 @@
         private Circle Circle;
         private Dictionary<int, int> TmpObjects;
 
+        private Simulator Simulator;
 
-        public ObjectsCollisions()
+
+        public ObjectsCollisions(Simulator simulator)
         {
+            Simulator = simulator;
+
             Output = new List<KeyValuePair<ICollidable, ICollidable>>();
             HandlerBulletEnemy = new IntegerHandler(CheckBulletEnemy);
             HandlerBulletExplosion = new IntegerHandler(CheckBulletExplosion);
@@ -63,9 +63,9 @@
             if (!DeadlyShootingStars)
                 return;
 
-            for (int i = 0; i < ShootingStars.Count; i++)
+            for (int i = 0; i < Simulator.Data.ShootingStars.Count; i++)
             {
-                CurrentShootingStar = ShootingStars[i];
+                CurrentShootingStar = Simulator.Data.ShootingStars[i];
 
                 Rectangle.X = (int) (CurrentShootingStar.Position.X - CurrentShootingStar.Circle.Radius);
                 Rectangle.Y = (int) (CurrentShootingStar.Position.Y - CurrentShootingStar.Circle.Radius);
@@ -86,10 +86,10 @@
 
             foreach (var kvp in HiddenEnemies.Output)
             {
-                if (kvp.Value.FirstOnPath || (kvp.Value.LastOnPath && kvp.Key.Path.GetPercentage(kvp.Key.Displacement) > 0.98))
+                if (kvp.Value.FirstOnPath || (kvp.Value.LastOnPath && Simulator.Data.Path.GetPercentage(kvp.Key.Displacement) > 0.98))
                     continue;
 
-                Output.Add(new KeyValuePair<ICollidable, ICollidable>(kvp.Key, ((PowerUpDarkSide) Simulator.PowerUpsFactory.Availables[PowerUpType.DarkSide]).CorpsCeleste));
+                Output.Add(new KeyValuePair<ICollidable, ICollidable>(kvp.Key, ((PowerUpDarkSide) Simulator.Data.Level.AvailablePowerUps[PowerUpType.DarkSide]).CorpsCeleste));
             }
         }
 
@@ -116,9 +116,9 @@
         {
             TmpObjects.Clear();
 
-            for (int i = Bullets.Count - 1; i > -1; i--)
+            for (int i = Simulator.Data.Bullets.Count - 1; i > -1; i--)
             {
-                CurrentBullet = Bullets[i];
+                CurrentBullet = Simulator.Data.Bullets[i];
 
                 if (CurrentBullet.Type == BulletType.LaserMultiple || CurrentBullet.Type == BulletType.LaserSimple)
                     EnemiesGrid.GetItems(CurrentBullet.Line, HandlerBulletEnemy);
@@ -135,7 +135,7 @@
             else
                 TmpObjects.Add(index, 0);
 
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
 
             bool collision = false;
 
@@ -170,7 +170,7 @@
             else
                 TmpObjects.Add(index, 0);
 
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
 
             bool collision = false;
 
@@ -231,7 +231,7 @@
             else
                 TmpObjects.Add(index, 0);
 
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
 
             if (Physics.CircleCicleCollision(Circle, e.Circle))
                 Output.Add(new KeyValuePair<ICollidable, ICollidable>(e, CurrentBullet));
@@ -247,7 +247,7 @@
             else
                 TmpObjects.Add(index, 0);
 
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
 
             if (Physics.CircleCicleCollision(Circle, e.Circle))
                 Output.Add(new KeyValuePair<ICollidable, ICollidable>(e, CurrentShootingStar));

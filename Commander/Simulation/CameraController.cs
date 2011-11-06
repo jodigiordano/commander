@@ -57,8 +57,8 @@
         {
             CameraData.MaxZoomIn = Preferences.BackBufferZoom;
             CameraData.MaxZoomOut = Math.Min(
-                MaxZoomWidth / Simulator.Battlefield.Width,
-                MaxZoomHeight / Simulator.Battlefield.Height);
+                MaxZoomWidth / Simulator.Data.Battlefield.Width,
+                MaxZoomHeight / Simulator.Data.Battlefield.Height);
             CameraData.MaxDelta = Math.Abs(CameraData.MaxZoomIn - CameraData.MaxZoomOut);
 
             Players.Clear();

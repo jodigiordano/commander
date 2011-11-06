@@ -6,8 +6,6 @@
 
     class EditorGUIController
     {
-        public List<CelestialBody> CelestialBodies;
-
         public EditorGeneralMenu GeneralMenu;
         public Dictionary<EditorPanel, Panel> Panels;
         public Dictionary<EditorPlayer, EditorGUIPlayer> Players;
@@ -86,7 +84,6 @@
 
             GeneralMenu.Initialize();
 
-            CelestialBodiesPathPreviews.CelestialBodies = CelestialBodies;
             CelestialBodiesPathPreviews.Initialize();
         }
 

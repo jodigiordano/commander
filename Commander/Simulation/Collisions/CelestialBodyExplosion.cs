@@ -11,15 +11,18 @@
         
         public CelestialBody CurrentCelestialBody;
         public GridWorld EnemiesGrid;
-        public List<Enemy> Enemies;
 
         private IntegerHandler Handler;
         private PhysicalRectangle CelestialBodyRectangle;
         private Circle CelestiablBodyRange;
 
+        private Simulator Simulator;
 
-        public CelestialBodyExplosion()
+
+        public CelestialBodyExplosion(Simulator simulator)
         {
+            Simulator = simulator;
+
             Handler = new IntegerHandler(CheckEnemiesHit);
             Output = new Dictionary<int, Enemy>();
             CelestialBodyRectangle = new PhysicalRectangle();
@@ -39,7 +42,7 @@
 
         private bool CheckEnemiesHit(int index)
         {
-            Enemy e = Enemies[index];
+            Enemy e = Simulator.Data.Enemies[index];
             int hash = e.GetHashCode();
 
             if (Output.ContainsKey(hash))

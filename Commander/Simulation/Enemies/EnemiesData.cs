@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
 
 
@@ -12,15 +11,15 @@
         public double EnemyCountPerc;
         public bool EnemyCountPercChanged;
 
-        public List<Enemy> Enemies;
-        public Path Path;
         public int MaxEnemiesForCountPerc;
 
         private double MaxEnemyNearHitPercDelta;
+        private Simulator Simulator;
 
-
-        public EnemiesData()
+        public EnemiesData(Simulator simulator)
         {
+            Simulator = simulator;
+
             EnemyNearHitPerc = 0;
             EnemyCountPerc = 0;
 
@@ -34,7 +33,7 @@
 
         public void Update()
         {
-            if (Path == null)
+            if (Simulator.Data.Path == null)
                 return;
 
             ComputeNearestEnemyPerc();
@@ -46,11 +45,11 @@
         {
             double currentEnemyNearHitPerc = 0;
 
-            for (int i = 0; i < Enemies.Count; i++)
+            for (int i = 0; i < Simulator.Data.Enemies.Count; i++)
             {
-                Enemy e = Enemies[i];
+                Enemy e = Simulator.Data.Enemies[i];
 
-                double displacementPerc = Path.GetPercentage(e.Displacement);
+                double displacementPerc = Simulator.Data.Path.GetPercentage(e.Displacement);
 
                 if (displacementPerc > currentEnemyNearHitPerc)
                     currentEnemyNearHitPerc = displacementPerc;
@@ -66,7 +65,7 @@
 
         private void ComputeEnemyCountPerc()
         {
-            float newEnemyCountPerc = (float) Enemies.Count / MaxEnemiesForCountPerc;
+            float newEnemyCountPerc = (float) Simulator.Data.Enemies.Count / MaxEnemiesForCountPerc;
 
             newEnemyCountPerc = MathHelper.Clamp(newEnemyCountPerc, 0, 1);
 

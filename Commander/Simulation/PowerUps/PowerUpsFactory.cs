@@ -5,7 +5,6 @@
 
     class PowerUpsFactory
     {
-        public Dictionary<PowerUpType, PowerUp> Availables;
         public Dictionary<PowerUpType, PowerUp> All;
         public PowerUpsBattleship HumanBattleship;
         private Simulator Simulator;
@@ -15,7 +14,6 @@
         {
             Simulator = simulator;
 
-            Availables = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
             All = new Dictionary<PowerUpType, PowerUp>(PowerUpTypeComparer.Default);
         }
 

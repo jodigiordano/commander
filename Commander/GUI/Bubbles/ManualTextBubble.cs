@@ -98,8 +98,8 @@
 
         private void ComputePosition()
         {
-            bool tooMuchRight = Dimension.X + Dimension.Width + 50 > Simulator.Battlefield.Right;
-            bool tooMuchBottom = Dimension.Y + Dimension.Height > Simulator.Battlefield.Bottom;
+            bool tooMuchRight = Dimension.X + Dimension.Width + 50 > Simulator.Data.Battlefield.Right;
+            bool tooMuchBottom = Dimension.Y + Dimension.Height > Simulator.Data.Battlefield.Bottom;
 
             if (tooMuchRight && tooMuchBottom)
             {
