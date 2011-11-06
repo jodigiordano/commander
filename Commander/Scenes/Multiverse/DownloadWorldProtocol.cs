@@ -128,7 +128,7 @@
                 return;
             }
 
-
+            FilesDownloaded.Add(new KeyValuePair<string, string>(CurrentFileToDownload, answer.Message));
             VerifyProtocolEnded();
         }
 

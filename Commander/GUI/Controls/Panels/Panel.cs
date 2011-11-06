@@ -200,6 +200,18 @@
         }
 
 
+        public virtual void Open()
+        {
+            Fade(Alpha, 255, 500);
+        }
+
+
+        public virtual void Close()
+        {
+            Fade(Alpha, 0, 500);
+        }
+
+
         public virtual void AddWidget(string name, PanelWidget widget)
         {
             widget.Name = name;

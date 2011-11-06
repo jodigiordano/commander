@@ -370,7 +370,7 @@
             {
                 if (f.Key == "world.xml")
                     w.Descriptor = LoadWorldDescriptorFromString(f.Value);
-                else if (f.Key == "layout")
+                else if (f.Key == "layout.xml")
                     w.Layout = LoadLevelDescriptorFromString(f.Value);
                 else
                 {

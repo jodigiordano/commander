@@ -18,6 +18,9 @@
             base("Multiverse")
         {
             Layout = Main.WorldsFactory.Multiverse;
+
+            Main.MultiverseController.LoggedIn += new NoneHandler(DoLoggedIn);
+            Main.MultiverseController.LoggedOut += new NoneHandler(DoLoggedOut);
         }
 
 
@@ -26,7 +29,6 @@
             if (Simulator != null)
                 Simulator.CleanUp();
 
-            InitializeCBStates();
 
             // Initialize the simulator
             Simulator = new Simulator(this, Layout)
@@ -41,17 +43,19 @@
             Simulator.EnableInputs = false;
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
 
-            Choices = new CBBigLabels(Simulator, VisualPriorities.Default.MenuChoices);
-            Choices.Show();
+            InitializeCBStates();
         }
 
 
         private void InitializeCBStates()
         {
-            Layout.PlanetarySystem[1].Name = "jump to world";
-            Layout.PlanetarySystem[2].Name = "";
-            Layout.PlanetarySystem[3].Name = "my world";
-            Layout.PlanetarySystem[4].Name = Main.PlayersController.MultiverseData.Registered ? "" : "register";
+            Simulator.PlanetarySystemController.CelestialBodies[1].Name = "jump to world";
+            Simulator.PlanetarySystemController.CelestialBodies[2].Name = Main.PlayersController.MultiverseData.LoggedIn ? "log out" : "log in";
+            Simulator.PlanetarySystemController.CelestialBodies[3].Name = "my world";
+            Simulator.PlanetarySystemController.CelestialBodies[4].Name = Main.PlayersController.MultiverseData.LoggedIn ? "" : "register";
+
+            Choices = new CBBigLabels(Simulator, VisualPriorities.Default.MenuChoices);
+            Choices.Show();
         }
 
 
@@ -193,6 +197,8 @@
 
             switch (c.Name)
             {
+                case "log in": DoLogin(player); break;
+                case "log out": DoLogout(player); break;
                 case "register": DoRegister(player); break;
                 case "jump to world": DoJumpToWorld(player); break;
                 case "my world": DoMyWorld(player);
@@ -203,7 +209,10 @@
 
         private void DoJumpToWorld(Player player)
         {
-            Simulator.ShowPanel(PanelType.JumpToWorld, player.Position, true);
+            if (!Main.PlayersController.MultiverseData.LoggedIn)
+                DoLogin(player);
+            else
+                Simulator.ShowPanel(PanelType.JumpToWorld, player.Position, true);
         }
 
 
@@ -215,11 +224,36 @@
 
         private void DoMyWorld(Player player)
         {
-            if (!Main.PlayersController.MultiverseData.Registered)
-                Simulator.ShowPanel(PanelType.Login, player.Position, true);
+            if (!Main.PlayersController.MultiverseData.LoggedIn)
+                DoLogin(player);
             else
                 Main.MultiverseController.JumpToWorld(Main.PlayersController.MultiverseData.WorldId, "Multiverse");
         }
+
+
+        private void DoLogin(Player player)
+        {
+            Simulator.ShowPanel(PanelType.Login, player.Position, true);
+        }
+
+
+        private void DoLogout(Player player)
+        {
+            Main.MultiverseController.LogOut();
+        }
+
+
+        private void DoLoggedIn()
+        {
+            InitializeCBStates();
+        }
+
+
+        private void DoLoggedOut()
+        {
+            InitializeCBStates();
+        }
+
 
         #endregion
     }

@@ -5,10 +5,14 @@ require("response_builder.php");
 //==================================================
 // Database infos
 //==================================================
-$sql_username      = "epheme5_root";
-$sql_password      = "C0mmand3rJ0d1";
+//$sql_username      = "epheme5_root";
+//$sql_password      = "C0mmand3rJ0d1";
+//$sql_database      = "epheme5_commander";
+$sql_username      = "root";
+$sql_password      = "";
+$sql_database      = "commander";
+
 $sql_hostname      = "localhost";
-$sql_database      = "epheme5_commander";
 $sql_table_players = "players";
 $sql_table_worlds  = "worlds";
 $sql_table_scores  = "scores";
@@ -38,15 +42,15 @@ function get_player($username)
 {
     global $sql_table_players;
 
-    return execute_request("SELECT * FROM $sql_table_players WHERE username='$username'");
+    $result = execute_request("SELECT * FROM $sql_table_players WHERE username='$username'");
+
+    return mysql_num_rows($result) == 0 ? null : mysql_fetch_array($result);
 }
 
 
 function get_player_exists($player)
 {
-    $result = get_player($player);
-    
-    return mysql_num_rows($result) != 0;
+    return get_player($player) != null;
 }
 
 
@@ -66,14 +70,9 @@ function add_player($username, $password, $email)
 
 function verify_player_credentials($username, $password)
 {
-    $results = get_player($username);
+    $player = get_player($username);
     
-    if (mysql_num_rows($results) == 0)
-        return false;
-
-    $player = mysql_fetch_array($results);
-
-    return strcmp($player["password"], $password) == 0;
+    return $player != null && strcmp($player["password"], $password) == 0;
 }
 
 
@@ -81,7 +80,7 @@ function get_world_id_by_username($username)
 {
     $player = get_player($username);
 
-    return $player->id;
+    return $player == null ? -1 : $player["id"];
 }
 
 

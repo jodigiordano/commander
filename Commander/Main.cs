@@ -220,7 +220,7 @@ namespace EphemereGames.Commander
                     Visuals.Update(gameTime);
                     Inputs.Update(gameTime);
                     CheatsController.Update();
-
+                    MultiverseController.Update();
                     MusicController.Update();
                     XACTAudio.Update();
 

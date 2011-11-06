@@ -8,6 +8,9 @@
 
     class MultiverseController
     {
+        public event NoneHandler LoggedIn;
+        public event NoneHandler LoggedOut;
+
         public bool WorldIsReady;
         public int WorldToJumpTo;
 
@@ -95,6 +98,20 @@
         }
 
 
+        public void LogIn(string username, string password, string worldId)
+        {
+            Main.PlayersController.UpdateMultiverse(username, password, worldId);
+            NotifyLoggedIn();
+        }
+
+
+        public void LogOut()
+        {
+            Main.PlayersController.UpdateMultiverse("", "", "0");
+            NotifyLoggedOut();
+        }
+
+
         private bool IsPlayerWorld(int id)
         {
             return id == Main.PlayersController.MultiverseData.WorldId;
@@ -110,6 +127,20 @@
         private bool IsWorldLoadedIntoMemory(int id)
         {
             return Main.WorldsFactory.MultiverseWorlds.ContainsKey(id);
+        }
+
+
+        private void NotifyLoggedIn()
+        {
+            if (LoggedIn != null)
+                LoggedIn();
+        }
+
+
+        private void NotifyLoggedOut()
+        {
+            if (LoggedOut != null)
+                LoggedOut();
         }
     }
 }

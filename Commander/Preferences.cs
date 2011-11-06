@@ -60,6 +60,20 @@
 
         public const string Salt = "YourMom";
 
+
+#if DEBUG
+        public const string WebsiteURL = @"http://localhost/commander";
+        public const string GeneralNewsURL = @"/feeds/news.rss";
+        public const string UpdatesNewsURL = @"/feeds/updates.rss";
+        public const string DLCNewsURL = @"/feeds/dlc.rss";
+        public const string MultiverseWorldsURL = @"/multiverse/worlds";
+        public const string MultiverseScriptsURL = @"/multiverse/scripts";
+        public const string NewUserScript = @"/new_user.php";
+        public const string LoginScript = @"/login.php";
+        public const string LastUpdateScript = @"/last_update.php";
+        public const string LoadWorldScript = @"/load_world.php";
+        public const string DownloadFileScript = @"/download_file.php";
+#else
         public const string WebsiteURL = @"http://commander.ephemeregames.com";
         public const string GeneralNewsURL = @"/feeds/news.rss";
         public const string UpdatesNewsURL = @"/feeds/updates.rss";
@@ -71,6 +85,7 @@
         public const string LastUpdateScript = @"/last_update.php";
         public const string LoadWorldScript = @"/load_world.php";
         public const string DownloadFileScript = @"/download_file.php";
+#endif
 
         public const int CampaignVersion = 1;
     }

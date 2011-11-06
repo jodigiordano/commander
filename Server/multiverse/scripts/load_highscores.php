@@ -1,8 +1,8 @@
 <?php
 
 require("database.php");
+require("input.php");
 
-$world = intval(sanitize($_GET["world"]));
 
 if (!get_world_exists($world))
     exit_with_error("world_not_found");

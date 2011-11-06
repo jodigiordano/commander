@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Infos>
+    <Id>18</Id>
+    <Background>background4</Background>
+  </Infos>
+  <Objective>
+    <CelestialBodyToProtect>-1</CelestialBodyToProtect>
+  </Objective>
+  <PlanetarySystem>
+    <CelestialBody>
+      <Name>Asteroid belt</Name>
+      <Images>
+        <string>Asteroid</string>
+      </Images>
+      <HasGravitationalTurret>false</HasGravitationalTurret>
+      <StartingTurrets />
+      <Size>Small</Size>
+      <Speed>2560000</Speed>
+      <PathPriority>-2147483647</PathPriority>
+      <Path>
+        <X>700</X>
+        <Y>-400</Y>
+        <Z>0</Z>
+      </Path>
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>0</Rotation>
+      <InBackground>false</InBackground>
+      <CanSelect>true</CanSelect>
+      <Invincible>false</Invincible>
+      <StartingPosition>40</StartingPosition>
+      <FollowPath>false</FollowPath>
+      <HasMoons>true</HasMoons>
+      <StraightLine>false</StraightLine>
+    </CelestialBody>
+  </PlanetarySystem>
+  <Waves />
+  <Player>
+    <Money>0</Money>
+    <Lives>0</Lives>
+    <StartingPosition>
+      <X>0</X>
+      <Y>0</Y>
+      <Z>0</Z>
+    </StartingPosition>
+    <BulletDamage>-1</BulletDamage>
+  </Player>
+  <AvailableTurrets />
+  <AvailablePowerUps />
+  <Minerals>
+    <Cash>0</Cash>
+    <LifePacks>0</LifePacks>
+  </Minerals>
+  <HelpText />
+</Level>

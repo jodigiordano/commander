@@ -57,6 +57,19 @@
         }
 
 
+        public override void Open()
+        {
+            base.Open();
+
+            Username.Value = "";
+            Password1.Value = "";
+            Password2.Value = "";
+            Email.Value = "";
+            Message.Value = "";
+            EnableInput();
+        }
+
+
         private void DoTextInput(PanelWidget p)
         {
             var tb = (TextBox) p;
@@ -121,7 +134,7 @@
                 case MultiverseMessageType.NewPlayer:
                     Message.Value = "Alright! Have fun!";
                     Message.Color = Colors.Panel.Ok;
-                    Main.PlayersController.UpdateMultiverse(Username.Value, HashedPassword, answer.Message);
+                    Main.MultiverseController.LogIn(Username.Value, HashedPassword, answer.Message);
 
                     var id = Main.PlayersController.MultiverseData.WorldId;
 

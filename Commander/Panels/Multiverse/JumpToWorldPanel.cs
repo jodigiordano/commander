@@ -41,6 +41,17 @@
         }
 
 
+        public override void Open()
+        {
+            base.Open();
+
+            ByUsername.Value = "";
+            ById.Value = "";
+            Message.Value = "";
+            EnableInput();
+        }
+
+
         private void DoTextInput(PanelWidget p)
         {
             var tb = (TextBox) p;

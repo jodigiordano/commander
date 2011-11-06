@@ -106,7 +106,7 @@
             var p = Panels[type];
 
             p.Position = position;
-            p.Fade(p.Alpha, 255, 500);
+            p.Open();
 
             Simulator.CanSelectCelestialBodies = false;
 
@@ -366,7 +366,7 @@
                 if (p.Key == type || !p.Value.Visible)
                     continue;
 
-                p.Value.Fade(p.Value.Alpha, 0, 500);
+                p.Value.Close();
             }
         }
 

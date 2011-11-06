@@ -29,7 +29,7 @@
         }
 
 
-        public bool Registered
+        public bool LoggedIn
         {
             get { return Username != "" && Password != ""; }
         }

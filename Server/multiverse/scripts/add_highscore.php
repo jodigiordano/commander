@@ -1,37 +1,7 @@
 <?php
 
-//==================================================
-// Connect to database
-//==================================================
 require("database.php");
-
-
-//==================================================
-// Get infos
-//==================================================
-$username = $_GET["username"];
-$password = $_GET["password"];
-$world    = $_GET["world"];
-$level    = $_GET["level"];
-$score    = $_GET["score"];
-
-
-//==================================================
-// Sanitize
-//==================================================
-$username = sanitize($username);
-$password = sanitize($password);
-$world = sanitize($world);
-$level = sanitize($level);
-$score = sanitize($score);
-
-
-//==================================================
-// Transform
-//==================================================
-$world = intval($world);
-$level = intval($level);
-$score = intval($score);
+require("input.php");
 
 
 //==================================================
