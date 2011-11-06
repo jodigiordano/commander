@@ -13,6 +13,7 @@
 
         public bool WorldIsReady;
         public int WorldToJumpTo;
+        private string WorldToJumpToByUsername;
 
         private XmlSerializer MultiverseMessageSerializer;
         private List<DownloadWorldProtocol> SyncingWorlds;
@@ -23,6 +24,7 @@
             MultiverseMessageSerializer = new XmlSerializer(typeof(MultiverseMessage));
             SyncingWorlds = new List<DownloadWorldProtocol>();
             WorldToJumpTo = -1;
+            WorldToJumpToByUsername = "";
             WorldIsReady = false;
         }
 
@@ -44,8 +46,11 @@
 
                 if (sw.Completed)
                 {
-                    if (sw.WorldId == WorldToJumpTo)
+                    if (sw.Success && (sw.CreatedWorld.Id == WorldToJumpTo || sw.CreatedWorld.Author == WorldToJumpToByUsername))
+                    {
+                        WorldToJumpTo = sw.CreatedWorld.Id;
                         WorldIsReady = true;
+                    }
 
                     SyncingWorlds.RemoveAt(i);
                 }
@@ -57,6 +62,30 @@
         {
             using (var reader = new StringReader(result))
                 return (MultiverseMessage) MultiverseMessageSerializer.Deserialize(reader);
+        }
+
+
+        public void JumpToWorld(string username, string fromScene)
+        {
+            WorldToJumpToByUsername = username;
+
+            // world is not the one of the user
+            if (!IsPlayerWorld(username))
+            {
+                SyncingWorlds.Add(new DownloadWorldByUsernameProtocol(username, false));
+                Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
+                return;
+            }
+
+            // world is the one of the user but do not exists on disk
+            else if (!IsWorldExistsLocally(Main.PlayersController.MultiverseData.WorldId))
+            {
+                SyncingWorlds.Add(new DownloadWorldByUsernameProtocol(username, false));
+                Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
+                return;
+            }
+
+            JumpToWorldDirectly(fromScene);
         }
 
 
@@ -115,6 +144,12 @@
         private bool IsPlayerWorld(int id)
         {
             return id == Main.PlayersController.MultiverseData.WorldId;
+        }
+
+
+        private bool IsPlayerWorld(string username)
+        {
+            return username == Main.PlayersController.MultiverseData.Username;
         }
 
 

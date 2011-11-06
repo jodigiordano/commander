@@ -48,9 +48,9 @@ function get_player($username)
 }
 
 
-function get_player_exists($player)
+function get_player_exists($username)
 {
-    return get_player($player) != null;
+    return get_player($username) != null;
 }
 
 
@@ -94,15 +94,25 @@ function get_world($id)
 {
     global $sql_table_worlds;
 
-    return execute_request("SELECT * FROM $sql_table_worlds WHERE id='$id'");
+    $result = execute_request("SELECT * FROM $sql_table_worlds WHERE id='$id'");
+
+    return mysql_num_rows($result) == 0 ? null : mysql_fetch_array($result);
 }
 
 
 function get_world_exists($id)
 {
-    $result = get_world($id);
+    return get_world($id) != null;
+}
+
+
+function get_world_last_update_timestamp($id)
+{
+    global $sql_table_worlds;
+
+    $world = get_world($id);
     
-    return mysql_num_rows($result) != 0;
+    return $world["last_update"];
 }
 
 
@@ -200,7 +210,7 @@ function execute_request($request)
     $result = mysql_query($request, $handle);
 
     if (mysql_errno($handle) != 0)
-        exit_with_error("nice try.");
+        close_database_connection_with_error("nice try.");
 
     return $result;
 }

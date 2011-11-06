@@ -14,6 +14,7 @@
     public class WorldDescriptor
     {
         public int Id;
+        public string Author;
         public string Name;
 
         [XmlArrayItem("Level")]
@@ -38,6 +39,7 @@
         public WorldDescriptor()
         {
             Id = -1;
+            Author = "";
             Name = "";
             Levels = new List<int>();
             Warps = new List<int>();

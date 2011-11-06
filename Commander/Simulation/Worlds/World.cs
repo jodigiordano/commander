@@ -67,6 +67,12 @@
         }
 
 
+        public string Author
+        {
+            get { return Descriptor.Author; }
+        }
+
+
         public string Name
         {
             get { return Descriptor.Name; }

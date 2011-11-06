@@ -137,8 +137,9 @@
                     Main.MultiverseController.LogIn(Username.Value, HashedPassword, answer.Message);
 
                     var id = Main.PlayersController.MultiverseData.WorldId;
+                    var author = Main.PlayersController.MultiverseData.Username;
 
-                    Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.GetEmptyWorld(id));
+                    Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.GetEmptyWorld(id, author));
                     break;
             }
         }

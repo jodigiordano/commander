@@ -152,6 +152,7 @@
     <Compile Include="Panels\Multiverse\LoginPanel.cs" />
     <Compile Include="Panels\Multiverse\RegisterPanel.cs" />
     <Compile Include="Player\MultiverseData.cs" />
+    <Compile Include="Scenes\Multiverse\DownloadWorldByUsernameProtocol.cs" />
     <Compile Include="Scenes\Multiverse\DownloadWorldProtocol.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseController.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseMessage.cs" />

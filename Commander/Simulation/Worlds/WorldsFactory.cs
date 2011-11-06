@@ -117,8 +117,17 @@
 
         public void AddMultiverseWorld(World w)
         {
-            Worlds.Add(w.Id, w);
-            MultiverseWorlds.Add(w.Id, w);
+            if (Worlds.ContainsKey(w.Id))
+            {
+                Worlds[w.Id] = w;
+                MultiverseWorlds[w.Id] = w;
+            }
+
+            else
+            {
+                Worlds.Add(w.Id, w);
+                MultiverseWorlds.Add(w.Id, w);
+            }
 
             SaveWorldOnDisk(w.Id);
         }
@@ -139,6 +148,12 @@
         public static string WorldToURLArgument(int id)
         {
             return "world=" + id;
+        }
+
+
+        public static string WorldUsernameToURLArgument(string username)
+        {
+            return "world_username=" + username;
         }
 
 
@@ -261,7 +276,7 @@
 
         public string GetWorldLastModification(int id)
         {
-            return Worlds[id].Descriptor.LastModification;
+            return GetWorld(id).Descriptor.LastModification;
         }
 
 
@@ -298,21 +313,22 @@
         }
 
 
-        public World GetEmptyWorld(int id)
+        public World GetEmptyWorld(int id, string author)
         {
             return new World()
             {
-                Descriptor = GetEmptyWorldDescriptor(id),
+                Descriptor = GetEmptyWorldDescriptor(id, author),
                 Layout = GetEmptyLevelDescriptor(id)
             };
         }
 
 
-        public WorldDescriptor GetEmptyWorldDescriptor(int id)
+        public WorldDescriptor GetEmptyWorldDescriptor(int id, string author)
         {
             var w = new WorldDescriptor()
             {
                 Id = id,
+                Author = author,
                 Name = "My World"
             };
 

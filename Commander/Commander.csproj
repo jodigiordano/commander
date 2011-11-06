@@ -203,6 +203,7 @@
     <Compile Include="Scenes\Menu\CBBigLabels.cs" />
     <Compile Include="Scenes\MultiverseScene.cs" />
     <Compile Include="Scenes\EndOfDemoScene.cs" />
+    <Compile Include="Scenes\Multiverse\DownloadWorldByUsernameProtocol.cs" />
     <Compile Include="Scenes\Multiverse\DownloadWorldProtocol.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseController.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseMessage.cs" />

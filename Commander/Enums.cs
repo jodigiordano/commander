@@ -74,7 +74,9 @@
         HighScores = 3,
         NewPlayer = 4,
         Login = 5,
-        LoadFile = 6
+        LoadFile = 6,
+        WorldId = 7,
+        LastUpdate = 8
     }
 
 

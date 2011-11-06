@@ -69,18 +69,14 @@
 
         private void Jump()
         {
-            //var scriptUrl = Preferences.WebsiteURL + Preferences.MultiverseScriptsURL + Preferences.LoginScript;
-
             if (!VerifyData())
                 return;
 
-            //HashedPassword = PlayersController.GetSHA256Hash(Password.Value + Preferences.Salt);
-
-            //var data =
-            //    "?username=" + Username.Value +
-            //    "&password=" + HashedPassword;
-
-            //Client.DownloadStringAsync(new Uri(scriptUrl + data));
+            if (ById.Value.Length != 0)
+                Main.MultiverseController.JumpToWorld(int.Parse(ById.Value), "Multiverse");
+            else
+                Main.MultiverseController.JumpToWorld(ByUsername.Value, "Multiverse");
+            
             Message.Value = "Jumping... please wait.";
             Message.Color = Colors.Panel.Waiting;
             DisableInput();
@@ -105,7 +101,7 @@
                 return false;
             }
 
-            else
+            else if (ByUsername.Value.Length == 0)
             {
                 bool numeric = int.TryParse(ById.Value, out byIdValue);
 

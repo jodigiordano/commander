@@ -775,7 +775,7 @@
 
             if (Simulator.WorldMode)
             {
-                // World Menu
+                // CreatedWorld Menu
                 if (selection.CelestialBody != null)
                 {
                     if (selection.PausedGameChoice == PausedGameChoice.None && selection.CelestialBody is PinkHole)

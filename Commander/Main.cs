@@ -112,7 +112,7 @@ namespace EphemereGames.Commander
 
         public static String GetCurrentTimestamp()
         {
-            return DateTime.Now.ToString("yyyyMMddHHmmssffff");
+            return DateTime.Now.ToString("yyyyMMddHHmmss");
         }
 
 

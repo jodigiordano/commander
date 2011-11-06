@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0"?>
 <World xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Id>3</Id>
+  <Author>j0d1</Author>
   <Name>Battle for Earth</Name>
   <Levels>
     <Level>38</Level>

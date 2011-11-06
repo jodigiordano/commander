@@ -3,16 +3,19 @@
     using System;
     using System.Collections.Generic;
     using System.Net;
+    using System.Text;
     using EphemereGames.Commander.Simulation;
 
     
     class DownloadWorldProtocol
     {
-        public int WorldId              { get; private set; }
+        public World CreatedWorld       { get; private set; }
+        public string ErrorMessage      { get; private set; }
 
-        private enum ProtocolState
+        protected enum ProtocolState
         {
             None,
+            AskForWorldId,
             AskForLastUpdate,
             RequestFilesToDownload,
             DownloadingFiles,
@@ -21,23 +24,21 @@
             EndedWithError
         }
 
-        private WebClient Remote;
-        private ProtocolState State;
+        protected WebClient Remote;
+        protected ProtocolState State;
         private bool DownloadOnlyIfNewer;
-
-        private string WorldRemoteDirectory;
 
         private string CurrentFileToDownload;
         private List<string> FilesToDownload;
         private List<KeyValuePair<string, string>> FilesDownloaded;
+
+        protected int WorldId;
 
 
         public DownloadWorldProtocol(int worldId, bool onlyIfNewer)
         {
             WorldId = worldId;
             DownloadOnlyIfNewer = onlyIfNewer;
-
-            WorldRemoteDirectory = WorldsFactory.GetWorldMultiverseRemoteRelativeDirectory(WorldId);
 
             Remote = new WebClient();
             Remote.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DataReceived);
@@ -46,15 +47,27 @@
             FilesDownloaded = new List<KeyValuePair<string, string>>();
             CurrentFileToDownload = "";
 
+            Initialize();
+        }
+
+
+        protected virtual void Initialize()
+        {
+            GetWorldRemotely();
+        }
+
+
+        protected void GetWorldRemotely()
+        {
             if (DownloadOnlyIfNewer)
             {
-                Remote.DownloadStringAsync(new Uri(GetLastUpdateScriptUrl()));
                 State = ProtocolState.AskForLastUpdate;
+                Remote.DownloadStringAsync(new Uri(LastUpdateScriptUrl));
             }
             else
             {
-                Remote.DownloadStringAsync(new Uri(GetLoadWorldScriptUrl()));
                 State = ProtocolState.RequestFilesToDownload;
+                Remote.DownloadStringAsync(new Uri(LoadWorldScriptUrl));
             }
         }
 
@@ -81,6 +94,7 @@
         {
             if (e.Cancelled || e.Error != null)
             {
+                ErrorMessage = "A server error occured. Please try again!";
                 State = ProtocolState.EndedWithError;
 
                 return;
@@ -88,19 +102,31 @@
 
             var answer = Main.MultiverseController.GetServerAnswer(e.Result);
 
-            // todo: possible errors.
+            if (VerifyErrors(answer))
+            {
+                State = ProtocolState.EndedWithError;
 
+                return;
+            }
+
+            NextStep(answer);
+        }
+
+
+        protected virtual void NextStep(MultiverseMessage previous)
+        {
             if (State == ProtocolState.AskForLastUpdate)
             {
-                if (Main.WorldsFactory.GetWorldLastModification(WorldId).CompareTo(answer.Message) < 0)
+                if (NeedUpdate(previous.Message))
                 {
-                    Remote.DownloadStringAsync(new Uri(GetLoadWorldScriptUrl()));
+                    Remote.DownloadStringAsync(new Uri(LoadWorldScriptUrl));
 
                     State = ProtocolState.RequestFilesToDownload;
                 }
 
                 else
                 {
+                    CreatedWorld = Main.WorldsFactory.GetWorld(WorldId);
                     State = ProtocolState.EndedWithSuccess;
                 }
 
@@ -109,7 +135,7 @@
 
             if (State == ProtocolState.RequestFilesToDownload)
             {
-                ParseFilesToDownload(answer);
+                ParseFilesToDownload(previous);
 
                 if (!VerifyProtocolEnded())
                     DownloadNextFile();
@@ -121,15 +147,42 @@
 
             if (State == ProtocolState.DownloadingFiles && FilesToDownload.Count != 0)
             {
-                FilesDownloaded.Add(new KeyValuePair<string, string>(CurrentFileToDownload, answer.Message));
+                FilesDownloaded.Add(new KeyValuePair<string, string>(CurrentFileToDownload, previous.Message));
 
                 DownloadNextFile();
 
                 return;
             }
 
-            FilesDownloaded.Add(new KeyValuePair<string, string>(CurrentFileToDownload, answer.Message));
+            FilesDownloaded.Add(new KeyValuePair<string, string>(CurrentFileToDownload, previous.Message));
             VerifyProtocolEnded();
+        }
+
+
+        private bool NeedUpdate(string toConvert)
+        {
+            var remoteTimestamp = FormatTimestamp(toConvert);
+
+            return Main.WorldsFactory.GetWorldLastModification(WorldId).CompareTo(remoteTimestamp) < 0;
+        }
+
+
+        private string FormatTimestamp(string old)
+        {
+           StringBuilder sb = new StringBuilder();
+
+           foreach (char c in old)
+              if (c != ' ' && c != '-' && c != ':')
+                 sb.Append(c);
+
+           return sb.ToString();
+        }
+
+
+        private bool VerifyErrors(MultiverseMessage answer)
+        {
+            // todo
+            return false;
         }
 
 
@@ -158,7 +211,7 @@
         {
             if (State == ProtocolState.DownloadingFiles && FilesToDownload.Count == 0)
             {
-                CreateWorld();
+                CreatedWorld = CreateWorld();
                 State = ProtocolState.EndedWithSuccess;
             }
 
@@ -166,34 +219,46 @@
         }
 
 
-        private void CreateWorld()
+        private World CreateWorld()
         {
+            World w;
+
             if (FilesDownloaded.Count == 0)
-                Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.GetEmptyWorld(WorldId));
+                w = Main.WorldsFactory.GetEmptyWorld(WorldId, "unknown");
             else
-                Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.LoadWorldFromStrings(FilesDownloaded));
+                w = Main.WorldsFactory.LoadWorldFromStrings(FilesDownloaded);
+
+            Main.WorldsFactory.AddMultiverseWorld(w);
+
+            return w;
         }
 
 
-        private string GetLoadWorldScriptUrl()
+        private string LoadWorldScriptUrl
         {
-            return
-                Preferences.WebsiteURL +
-                Preferences.MultiverseScriptsURL +
-                Preferences.LoadWorldScript + "?" +
-                WorldsFactory.WorldToURLArgument(WorldId) + "&" +
-                Main.PlayersController.MultiverseData.ToUrlArguments;
+            get
+            {
+                return
+                    Preferences.WebsiteURL +
+                    Preferences.MultiverseScriptsURL +
+                    Preferences.LoadWorldScript + "?" +
+                    WorldsFactory.WorldToURLArgument(WorldId) + "&" +
+                    Main.PlayersController.MultiverseData.ToUrlArguments;
+            }
         }
 
 
-        private string GetLastUpdateScriptUrl()
+        private string LastUpdateScriptUrl
         {
-            return
-                Preferences.WebsiteURL +
-                Preferences.MultiverseScriptsURL +
-                Preferences.LastUpdateScript + "?" +
-                WorldsFactory.WorldToURLArgument(WorldId) + "&" +
-                Main.PlayersController.MultiverseData.ToUrlArguments;
+            get
+            {
+                return
+                    Preferences.WebsiteURL +
+                    Preferences.MultiverseScriptsURL +
+                    Preferences.LastUpdateScript + "?" +
+                    WorldsFactory.WorldToURLArgument(WorldId) + "&" +
+                    Main.PlayersController.MultiverseData.ToUrlArguments;
+            }
         }
 
 
@@ -205,6 +270,12 @@
                 Preferences.DownloadFileScript +
                 "?file=" + WorldRemoteDirectory + @"/" + file + "&" +
                 Main.PlayersController.MultiverseData.ToUrlArguments;
+        }
+
+
+        private string WorldRemoteDirectory
+        {
+            get { return WorldsFactory.GetWorldMultiverseRemoteRelativeDirectory(WorldId); }
         }
     }
 }
