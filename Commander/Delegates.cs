@@ -5,6 +5,7 @@
 
     delegate void BooleanHandler(bool b);
     delegate void NoneHandler();
+    delegate void PanelTypeHandler(PanelType p);
     delegate bool IntegerHandler(int i);
     delegate void Integer2Handler(int i);
     delegate void PanelWidgetHandler(PanelWidget p);
@@ -18,7 +19,6 @@
 
 namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Physics;
 
 

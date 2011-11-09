@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
@@ -448,7 +447,7 @@
         }
 
 
-        public void DoPanelOpened()
+        public void DoPanelOpened(PanelType type)
         {
             XACTAudio.PlayCue("PanelOpen", "Sound Bank");
 
@@ -457,7 +456,7 @@
         }
 
 
-        public void DoPanelClosed()
+        public void DoPanelClosed(PanelType type)
         {
             XACTAudio.PlayCue("PanelClose", "Sound Bank");
 

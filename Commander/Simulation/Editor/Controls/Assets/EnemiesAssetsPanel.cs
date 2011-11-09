@@ -10,10 +10,10 @@
         public List<EnemyType> Enemies;
 
 
-        public EnemiesAssetsPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base("Availables enemies", simulator, position, size, visualPriority, color)
+        public EnemiesAssetsPanel(Simulator simulator)
+            : base("Availables enemies", simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White)
         {
-
+            Enemies = new List<EnemyType>();
         }
 
 

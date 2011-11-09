@@ -39,8 +39,6 @@
 
         private SimPlayer PlayerInAdvancedView;
 
-        private bool UpdateSelection;
-
         private CelestialBody CelestialBodyToProtect { get { return Simulator.Data.Level.CelestialBodyToProtect; } }
         private List<CelestialBody> CelestialBodies { get { return Simulator.Data.Level.PlanetarySystem; } }
         private CommonStash CommonStash { get { return Simulator.Data.Level.CommonStash; } }
@@ -64,8 +62,6 @@
 
             PlayerInAdvancedView = null;
 
-            UpdateSelection = true;
-
             NotifyCommonStashChanged(CommonStash);
         }
 
@@ -80,7 +76,6 @@
                 AvailablePowerUps = AvailablePowerUps,
                 Color = player.Color,
                 ImageName = player.ImageName,
-                UpdateSelectionz = true,
                 BulletAttackPoints = (float) Simulator.Data.Level.BulletDamage,
                 BouncedHandler = DoPlayerBounced,
                 RotatedHandler = DoPlayerRotated
@@ -237,54 +232,6 @@
         }
 
 
-        //public void DoPausedGameChoice(Commander.Player p, int delta)
-        //{
-        //    var player = Simulator.Data.Players[p];
-
-        //    if (player.ActualSelection.PausedGameChoice == PauseChoice.None)
-        //        return;
-
-        //    if (delta > 0)
-        //        player.NextPausedGameChoice();
-        //    else
-        //        player.PreviousPausedGameChoice();
-
-        //    return;
-        //}
-
-
-        //public void DoEditorWorldChoice(Commander.Player p, int delta)
-        //{
-        //    var player = Simulator.Data.Players[p];
-
-        //    if (player.ActualSelection.EditorWorldChoice == EditorWorldChoice.None)
-        //        return;
-
-        //    if (delta > 0)
-        //        player.NextEditorWorldChoice();
-        //    else
-        //        player.PreviousEditorWorldChoice();
-
-        //    return;
-        //}
-
-
-        //public void DoNewGameChoice(Commander.Player p, int delta)
-        //{
-        //    var player = Simulator.Data.Players[p];
-
-        //    if (player.ActualSelection.CelestialBody == null)
-        //        return;
-
-        //    if (delta > 0)
-        //        player.NextNewGameChoice();
-        //    else
-        //        player.PreviousNewGameChoice();
-
-        //    return;
-        //}
-
-
         public void DoNewGameState(GameState state)
         {
             if (state == GameState.Won || state == GameState.Lost)
@@ -292,7 +239,6 @@
                 {
                     DoCancelAction(p.Key);
                     p.Value.ActualSelection.Initialize();
-                    p.Value.UpdateSelectionz = false;
                 }
         }
 
@@ -538,35 +484,6 @@
 
                 //foreach (var pl in Simulator.Data.Players.Values)
                 //    pl.Initialize(); todo
-
-                return;
-            }
-
-
-            if (command.Type == EditorCommandType.Panel)
-            {
-                if (((EditorPanelCommand) command).Show)
-                {
-                    foreach (var player in Simulator.Data.Players.Values)
-                    {
-                        player.ActualSelection.CelestialBody = null;
-                        player.ActualSelection.Turret = null;
-                        player.ActualSelection.TurretToPlace = null;
-                    }
-
-                    UpdateSelection = false;
-
-                    foreach (var player in Simulator.Data.Players.Values)
-                        player.UpdateSelectionz = false;
-                }
-
-                else
-                {
-                    UpdateSelection = true;
-
-                    foreach (var player in Simulator.Data.Players.Values)
-                        player.UpdateSelectionz = true;
-                }
 
                 return;
             }

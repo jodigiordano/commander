@@ -10,7 +10,6 @@
     class ContextualMenu
     {
         public Vector3 Position;
-        public virtual bool Visible { get; set; }
         public int Layout;
         public Bubble Bubble { get; private set; }
 
@@ -38,6 +37,8 @@
 
         private List<ContextualMenuLayout> Layouts;
         private List<ContextualMenuLayout> PossibleLayouts;
+
+        private bool visible;
 
 
         public ContextualMenu(Simulator simulator, double visualPriority, Color color, int distanceBetweenTwoChoices)
@@ -98,6 +99,13 @@
             };
 
             PossibleLayouts = new List<ContextualMenuLayout>();
+        }
+
+
+        public virtual bool Visible
+        {
+            get { return visible; }
+            set { visible = value; }
         }
 
 

@@ -8,8 +8,8 @@
     class TurretsAssetsPanel : AssetsPanel
     {
 
-        public TurretsAssetsPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base("Availables Turrets", simulator, position, size, visualPriority, color)
+        public TurretsAssetsPanel(Simulator simulator)
+            : base("Availables Turrets", simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White)
         {
 
         }

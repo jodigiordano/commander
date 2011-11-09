@@ -31,6 +31,7 @@
         private AlienNextWaveAnimation AlienNextWaveAnimation;
         private TheResistance GamePausedResistance;
         private GameBarPanel GameBarPanel;
+        private CelestialBodiesPathPreviews CelestialBodiesPathPreviews;
 
         private ContextualMenusCollisions ContextualMenusCollisions;
 
@@ -67,6 +68,8 @@
             {
                 ShowOnForegroundLayer = true
             };
+
+            CelestialBodiesPathPreviews = new CelestialBodiesPathPreviews(Simulator);
         }
 
 
@@ -505,6 +508,8 @@
 
             if (!Simulator.CutsceneMode)
                 HelpBar.Draw();
+
+            CelestialBodiesPathPreviews.Draw();
 
             if (Simulator.DemoMode)
                 return;

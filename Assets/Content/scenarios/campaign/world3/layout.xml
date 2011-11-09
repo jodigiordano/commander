@@ -88,6 +88,7 @@
       <StartingPosition>0</StartingPosition>
       <FollowPath>false</FollowPath>
       <HasMoons>true</HasMoons>
+      <IsALevel>false</IsALevel>      
     </CelestialBody>
     <CelestialBody>
       <Name>3-3</Name>

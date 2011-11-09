@@ -69,6 +69,7 @@
       <FollowPath>false</FollowPath>
       <HasMoons>true</HasMoons>
       <StraightLine>true</StraightLine>
+      <IsALevel>false</IsALevel>      
     </CelestialBody>
     <CelestialBody>
       <Name>2-1</Name>

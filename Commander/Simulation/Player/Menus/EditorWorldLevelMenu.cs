@@ -1,14 +1,12 @@
 ﻿namespace EphemereGames.Commander.Simulation.Player
 {
-    class EditorWorldMenu : WorldMenu
+    class EditorWorldLevelMenu : WorldMenu
     {
-        public EditorWorldMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+        public EditorWorldLevelMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
-            AddChoice(new EditorTextContextualMenuChoice("EditLayout", "edit layout", 2, new EditorSimpleCommand("Edit")));
-            AddChoice(new EditorTextContextualMenuChoice("ChangeName", "change name", 2, new EditorSimpleCommand("ChangeName")));
-
-            Visible = false;
+            AddChoice(new EditorTextContextualMenuChoice("edit", "edit", 2, new EditorSimpleCommand("EditLevel")));
+            AddChoice(new EditorTextContextualMenuChoice("playtest", "playtest", 2, new EditorSimpleCommand("PlaytestLevel")));
         }
 
 
@@ -20,7 +18,7 @@
 
         public override void UpdateSelection()
         {
-            Owner.ActualSelection.EditorWorldCommand = Visible ? Selection : null;
+            Owner.ActualSelection.EditorWorldLevelCommand = Visible ? Selection : null;
         }
 
 
@@ -32,7 +30,7 @@
                     base.Visible &&
                     Simulator.EditorPlaytestingMode &&
                     Simulator.WorldMode &&
-                    Owner.ActualSelection.CelestialBody == null;
+                    Owner.ActualSelection.CelestialBody != null;
             }
 
             set { base.Visible = value; }

@@ -194,7 +194,15 @@
 
                 // Pink Hole
                 if (descriptor.Image == null && descriptor.ParticleEffect != null && descriptor.ParticleEffect == "trouRose")
-                    c = new PinkHole(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001);
+                {
+                    c = new PinkHole(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001)
+                    {
+                        PathPriority = descriptor.PathPriority,
+                        CanSelect = descriptor.CanSelect,
+                        Invincible = descriptor.Invincible,
+                        IsALevel = false
+                    };
+                }
 
                 // Normal
                 else if (descriptor.Image != null)
@@ -202,7 +210,11 @@
                     c = new CelestialBody(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001)
                     {
                         FollowPath = descriptor.FollowPath,
-                        StraightLine = descriptor.StraightLine
+                        StraightLine = descriptor.StraightLine,
+                        PathPriority = descriptor.PathPriority,
+                        CanSelect = descriptor.CanSelect,
+                        Invincible = descriptor.Invincible,
+                        IsALevel = descriptor.IsALevel
                     };
                 }
 
@@ -219,12 +231,14 @@
                         descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                         descriptor.Images,
                         descriptor.StartingPosition
-                    );
+                    )
+                    {
+                        PathPriority = descriptor.PathPriority,
+                        CanSelect = false,
+                        Invincible = descriptor.Invincible,
+                        IsALevel = false
+                    };
                 }
-
-                c.PathPriority = descriptor.PathPriority;
-                c.CanSelect = descriptor.CanSelect;
-                c.Invincible = descriptor.Invincible;
 
                 if (Simulator.EditorEditingMode)
                     c.AliveOverride = true;

@@ -39,6 +39,8 @@
 
             for (int i = 0; i < Math.Ceiling(assets.Count / (float)AssetsPerPanel); i++)
                 AddWidget("panel" + i, CreateSubPanel(assets, i * AssetsPerPanel, Math.Min(i * AssetsPerPanel + (AssetsPerPanel - 1), assets.Count - 1)));
+
+            Sync();
         }
 
 

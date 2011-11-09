@@ -3,17 +3,15 @@
     using System.Collections.Generic;
 
 
-    class EditorCommand : IEqualityComparer<EditorCommand>
+    abstract class EditorCommand : IEqualityComparer<EditorCommand>
     {
         public string Name;
-        public EditorCommandType Type;
         public SimPlayer Owner;
 
 
         public EditorCommand(string name)
         {
             Name = name;
-            Type = EditorCommandType.Basic;
         }
 
 
@@ -30,18 +28,25 @@
     }
 
 
-    class EditorPanelCommand : EditorCommand
+    class EditorSimpleCommand : EditorCommand
     {
-        public EditorPanel Panel;
-        public bool Show;
-
-
-        public EditorPanelCommand(string name, EditorPanel panel, bool show)
+        public EditorSimpleCommand(string name)
             : base(name)
         {
-            Type = EditorCommandType.Panel;
+
+        }
+    }
+
+
+    class EditorShowPanelCommand : EditorCommand
+    {
+        public PanelType Panel;
+
+
+        public EditorShowPanelCommand(PanelType panel)
+            : base("ShowPanel")
+        {
             Panel = panel;
-            Show = show;
         }
     }
 
@@ -63,7 +68,7 @@
         public EditorCelestialBodyCommand(string name)
             : base(name)
         {
-            Type = EditorCommandType.CelestialBody;
+
         }
     }
 
@@ -80,7 +85,7 @@
         public EditorPlayerCommand(string name)
             : base(name)
         {
-            Type = EditorCommandType.Player;
+
         }
     }
 }

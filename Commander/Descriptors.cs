@@ -58,6 +58,18 @@
 
             return false;
         }
+
+
+        public int GetNextLevelId()
+        {
+            var highest = 0;
+
+            foreach (var l in Levels)
+                if (l > highest)
+                    highest = l;
+
+            return highest + 1;
+        }
     }
 
 
@@ -380,6 +392,10 @@
         [ContentSerializer(Optional = true)]
         public bool StraightLine;
 
+        [ContentSerializer(Optional = true)]
+        public bool IsALevel;
+
+
         private Matrix RotationMatrix;
 
 
@@ -404,6 +420,7 @@
             HasMoons = true;
             StraightLine = false;
             Rotation = 0;
+            IsALevel = true;
             RotationMatrix = new Matrix();
         }
 

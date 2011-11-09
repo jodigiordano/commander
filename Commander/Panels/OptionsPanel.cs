@@ -20,8 +20,8 @@
 
             Music = new NumericHorizontalSlider("Music", 0, 10, 5, 1, 125, 100);
             Sfx = new NumericHorizontalSlider("Sfx", 0, 10, 5, 1, 125, 100);
-            Fullscreen = new CheckBox("Fullscreen") { MinSpaceLabelX = 292 };
-            ShowHelpBar = new CheckBox("Show help bar") { MinSpaceLabelX = 292 };
+            Fullscreen = new CheckBox("Fullscreen") { SpaceForLabel = 292 };
+            ShowHelpBar = new CheckBox("Show help bar") { SpaceForLabel = 292 };
 
             AddWidget("Music", Music);
             AddWidget("Sfx", Sfx);

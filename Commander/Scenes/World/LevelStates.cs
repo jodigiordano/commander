@@ -108,7 +108,7 @@
             {
                 var level = Descriptor.Levels[i];
 
-                bool unlocked = Descriptor.Id < 2 || Descriptor.Id == 999; //tmp Alpha (instead of true)
+                bool unlocked = true;
 
                 if (i != 0 && !AllLevelsUnlockedOverride)
                     unlocked = Scene.World.IsLevelUnlocked(Descriptor.Levels[i - 1]);

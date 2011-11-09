@@ -47,7 +47,7 @@
         //        else if (ActualSelection.CelestialBodyChoice == 1)
         //            InnerPlayer.ActualSelection.EditingState = EditorEditingState.RotatingCB;
         //        else if (ActualSelection.CelestialBodyChoice == 2)
-        //            InnerPlayer.ActualSelection.EditingState = EditorEditingState.ShrinkingCB;
+        //            InnerPlayer.ActualSelection.EditingState = EditorEditingState.TrajectoryCB;
         //        else if (ActualSelection.CelestialBodyChoice == 10)
         //            InnerPlayer.ActualSelection.EditingState = EditorEditingState.StartPosCB;
         //    }

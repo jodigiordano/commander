@@ -13,8 +13,8 @@
         private string AssetsDirectory = @".\Content\";
 
 
-        public CelestialBodyAssetsPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base("Assets", simulator, position, size, visualPriority, color)
+        public CelestialBodyAssetsPanel(Simulator simulator)
+            : base("Assets", simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White)
         {
             AssetsPerPanel = 12;
         }

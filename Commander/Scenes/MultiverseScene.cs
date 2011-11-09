@@ -76,6 +76,7 @@
 
         public override void OnFocus()
         {
+            Main.MusicController.StopCurrentMusic();
             Simulator.OnFocus();
         }
 

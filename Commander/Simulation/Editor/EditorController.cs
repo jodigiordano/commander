@@ -1,19 +1,16 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class EditorController
     {
-        public Dictionary<EditorPanel, Panel> Panels;
-
         public event EditorCommandHandler EditorCommandExecuted;
 
         private Simulator Simulator;
-
-        private EditorPanel OpenedPanel;
 
 
         public EditorController(Simulator simulator)
@@ -24,99 +21,65 @@
 
         public void Initialize()
         {
-            OpenedPanel = EditorPanel.None;
-
-            Panels[EditorPanel.Player].Initialize();
-            Panels[EditorPanel.Waves].Initialize();
-
-            Panels[EditorPanel.Player].SetClickHandler("Lives", DoLives);
-            Panels[EditorPanel.Player].SetClickHandler("Cash", DoCash);
-            Panels[EditorPanel.Player].SetClickHandler("Minerals", DoMinerals);
-            Panels[EditorPanel.Player].SetClickHandler("BulletDamage", DoBulletDamage);
-            Panels[EditorPanel.Player].SetClickHandler("LifePacks", DoLifePacks);
-            Panels[EditorPanel.Turrets].SetClickHandler(DoTurrets);
-            Panels[EditorPanel.PowerUps].SetClickHandler(DoPowerUps);
-            Panels[EditorPanel.Background].SetClickHandler(DoBackgrounds);
-            Panels[EditorPanel.Waves].SetClickHandler(DoWaves);
-            Panels[EditorPanel.CelestialBodyAssets].SetClickHandler(DoCelestialBodyAssets);
-
-            foreach (var panel in Panels.Values)
-                panel.CloseButtonHandler = DoClosePanel;
+            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("Lives", DoLives);
+            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("Cash", DoCash);
+            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("Minerals", DoMinerals);
+            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("BulletDamage", DoBulletDamage);
+            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("LifePacks", DoLifePacks);
+            Simulator.Data.Panels[PanelType.EditorTurrets].SetClickHandler(DoTurrets);
+            Simulator.Data.Panels[PanelType.EditorPowerUps].SetClickHandler(DoPowerUps);
+            Simulator.Data.Panels[PanelType.EditorBackground].SetClickHandler(DoBackgrounds);
+            Simulator.Data.Panels[PanelType.EditorWaves].SetClickHandler(DoWaves);
+            Simulator.Data.Panels[PanelType.EditorCelestialBodyAssets].SetClickHandler(DoCelestialBodyAssets);
         }
 
 
-        public void DoPlayerMoved(SimPlayer p)
+        public void DoPlayerMoved(SimPlayer player)
         {
             if (!Simulator.EditorMode)
                 return;
 
-            //var player = p.EditorPlayer;
+            if (player.ActualSelection.EditingState == EditorEditingState.None)
+                return;
 
-            //if (p.ActualSelection.EditingState == EditorEditingState.MovingCB)
-            //{
-            //    player.ActualSelection.CelestialBody.BasePosition += p.DeltaPosition;
-            //    p.NinjaPosition = player.ActualSelection.CelestialBody.Position;
-            //}
+            if (player.ActualSelection.EditingState == EditorEditingState.MovingCB)
+            {
+                player.ActualSelection.CelestialBody.BasePosition += player.DeltaPosition;
+                player.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+            }
 
-            //else if (p.ActualSelection.EditingState == EditorEditingState.ShrinkingCB)
-            //{
-            //    p.NinjaPosition = player.ActualSelection.CelestialBody.Position;
-            //    player.ActualSelection.CelestialBody.Position = p.Position;
-            //}
+            else if (player.ActualSelection.EditingState == EditorEditingState.TrajectoryCB)
+            {
+                player.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+                player.ActualSelection.CelestialBody.Position = player.Position;
+            }
 
-            //else if (p.ActualSelection.EditingState == EditorEditingState.RotatingCB)
-            //{
-            //    p.NinjaPosition = player.ActualSelection.CelestialBody.Position;
-            //}
-
-            //else if (p.ActualSelection.EditingState == EditorEditingState.StartPosCB)
-            //{
-
-            //}
-
-            //p.Circle.Position = p.Position;
-
-            //if (OpenedPanel != EditorPanel.None)
-            //{
-            //    var hover = Panels[OpenedPanel].DoHover(p.Circle);
-
-            //    // More friction on a celestial body and a turret
-            //    if (hover && p.SpaceshipMove.SteeringBehavior.LastNextMovement == Vector3.Zero)
-            //    {
-            //        var panel = Panels[OpenedPanel];
-
-            //        if (panel.LastHoverWidget.Sticky)
-            //        {
-            //            p.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
-            //        }
-
-            //        else if (OpenedPanel == EditorPanel.Waves && ((Panel) panel.LastHoverWidget).LastHoverWidget.Sticky)
-            //        {
-            //            p.SpaceshipMove.SteeringBehavior.Friction = 0.1f;
-            //        }
-            //    }
-            //}
+            else if (player.ActualSelection.EditingState == EditorEditingState.RotatingCB)
+            {
+                player.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+            }
         }
 
 
-        public void DoPlayerMovedDelta(SimPlayer p, ref Vector3 delta)
+        public void DoPlayerMovedDelta(SimPlayer player, ref Vector3 delta)
         {
             if (!Simulator.EditorMode)
                 return;
 
-            //var player = p.EditorPlayer;
+            if (player.ActualSelection.EditingState == EditorEditingState.None)
+                return;
 
-            //if (p.ActualSelection.EditingState == EditorEditingState.RotatingCB)
-            //{
-            //    float rotation = Core.Physics.Utilities.VectorToAngle(ref delta);
-            //    player.ActualSelection.CelestialBody.SetRotation(rotation);
-            //}
+            if (player.ActualSelection.EditingState == EditorEditingState.RotatingCB)
+            {
+                float rotation = Core.Physics.Utilities.VectorToAngle(ref delta);
+                player.ActualSelection.CelestialBody.SetRotation(rotation);
+            }
 
-            //else if (p.ActualSelection.EditingState == EditorEditingState.ShrinkingCB)
-            //{
-            //    player.ActualSelection.CelestialBody.Path.X += delta.X;
-            //    player.ActualSelection.CelestialBody.Path.Y -= delta.Y;
-            //}
+            else if (player.ActualSelection.EditingState == EditorEditingState.TrajectoryCB)
+            {
+                player.ActualSelection.CelestialBody.Path.X += delta.X;
+                player.ActualSelection.CelestialBody.Path.Y -= delta.Y;
+            }
         }
 
 
@@ -124,6 +87,53 @@
         {
             if (!Simulator.EditorMode)
                 return;
+
+            if (Simulator.WorldMode && Simulator.EditorPlaytestingMode)
+            {
+                // open the world menu
+                if (player.ActualSelection.EditorWorldLevelCommand == null && !(player.ActualSelection.OpenedMenu is EditorWorldMenu))
+                {
+                    player.VisualPlayer.EditorWorldMenu.Visible = true;
+                }
+
+                // the world menu is open => do the action
+                else if (player.ActualSelection.OpenedMenu is EditorWorldMenu)
+                {
+                    ExecuteCommand(player.ActualSelection.EditorWorldCommand);
+                    player.VisualPlayer.EditorWorldMenu.Visible = false;
+                }
+
+                // the world level menu is open => do the action
+                else if (player.ActualSelection.OpenedMenu is EditorWorldLevelMenu)
+                {
+                    ExecuteCommand(player.ActualSelection.EditorWorldLevelCommand);
+                }
+            }
+
+            else if (Simulator.EditorEditingMode)
+            {
+                // the celestial body menu is open => do the action
+                if (player.ActualSelection.OpenedMenu is EditorCelestialBodyMenu)
+                {
+                    ExecuteCommand(player.ActualSelection.EditorCelestialBodyMenuCommand);
+                }
+
+                if (player.ActualSelection.EditingState != EditorEditingState.None)
+                    return;
+
+                // open the build menu
+                else if (player.ActualSelection.EditorCelestialBodyMenuCommand == null && !(player.ActualSelection.OpenedMenu is EditorBuildMenu))
+                {
+                    player.VisualPlayer.EditorBuildMenu.Visible = true;
+                }
+
+                // the build menu is open => do the action
+                else if (player.ActualSelection.OpenedMenu is EditorBuildMenu)
+                {
+                    ExecuteCommand(player.ActualSelection.EditorBuildMenuCommand);
+                    player.VisualPlayer.EditorBuildMenu.Visible = false;
+                }
+            }
 
             //player.DoSelectAction();
 
@@ -171,18 +181,27 @@
         }
 
 
-        public void DoCancelAction(SimPlayer p)
+        public void DoCancelAction(SimPlayer player)
         {
             if (!Simulator.EditorMode)
                 return;
 
-            //var player = p.EditorPlayer;
+            if (player.ActualSelection.EditingState != EditorEditingState.None)
+            {
+                player.ActualSelection.EditingState = EditorEditingState.None;
+                player.ActualSelection.CelestialBody.ShowPath = false;
+                player.VisualPlayer.EditorCelestialBodyMenu.Visible = true;
+            }
 
-            ////tmp
-            //if (p.ActualSelection.CelestialBody != null && p.ActualSelection.EditingState != EditorEditingState.None)
-            //    ExecuteCommand(new EditorCelestialBodyCommand("HidePathPreview") { Owner = player });
+            else if (player.ActualSelection.OpenedMenu is EditorWorldMenu)
+            {
+                player.VisualPlayer.EditorWorldMenu.Visible = false;
+            }
 
-            //player.DoCancelAction();
+            else if (player.ActualSelection.OpenedMenu is EditorBuildMenu)
+            {
+                player.VisualPlayer.EditorBuildMenu.Visible = false;
+            }
         }
 
 
@@ -190,8 +209,8 @@
         {
             if (command is EditorCelestialBodyCommand)
                 DoExecuteEditorCelestialBodyCommand((EditorCelestialBodyCommand) command);
-            else if (command is EditorPanelCommand)
-                DoExecuteEditorPanelCommand((EditorPanelCommand) command);
+            else if (command is EditorShowPanelCommand)
+                DoExecuteEditorPanelCommand((EditorShowPanelCommand) command);
             else
                 DoExecuteEditorCommand(command);
         }
@@ -211,47 +230,72 @@
 
         private void DoExecuteEditorCommand(EditorCommand command)
         {
-            // toggle editor mode command
-            if (command.Name == "PlaytestState")
-            {
-                Simulator.EditMode = false;
-                Simulator.Data.Level.SyncDescriptor();
-                Simulator.Initialize();
-                Simulator.SyncPlayers();
-            }
-
-            else if (command.Name == "EditState")
+            if (command.Name == "Edit")
             {
                 Simulator.EditMode = true;
                 Simulator.Initialize();
                 Simulator.SyncPlayers();
             }
 
-            else if (command.Name == "RestartSimulation")
+            else if (command.Name == "Playtest")
             {
-                //if (Simulator.EditorState == EditorState.Editing)
-                //    Simulator.SyncLevel();
-                
-                //Simulator.Initialize();
-                //Simulator.SyncPlayers();
+                if (Simulator.WorldMode)
+                {
+                    Main.CurrentWorld.World.Editing = false;
+                    Simulator.Data.Level.SyncDescriptor();
+                    Main.CurrentWorld.Initialize();
+                }
+
+                else
+                {
+                    Simulator.EditMode = false;
+                    Simulator.Data.Level.SyncDescriptor();
+                    Simulator.Initialize();
+                    Simulator.SyncPlayers();
+                }
             }
 
-            else if (command.Name == "PauseSimulation")
-            {
-                //Simulator.State = GameState.Paused;
-            }
+            //// toggle editor mode command
+            //else if (command.Name == "PlaytestState")
+            //{
+            //    Simulator.EditMode = false;
+            //    Simulator.Data.Level.SyncDescriptor();
+            //    Simulator.Initialize();
+            //    Simulator.SyncPlayers();
+            //}
 
-            else if (command.Name == "ResumeSimulation")
-            {
-                //Simulator.State = GameState.Running;
-            }
+            //else if (command.Name == "EditState")
+            //{
+            //    Simulator.EditMode = true;
+            //    Simulator.Initialize();
+            //    Simulator.SyncPlayers();
+            //}
 
-            else if (command.Name == "NewLevel")
-            {
-                //Simulator.LevelDescriptor = Main.WorldsFactory.GetEmptyLevelDescriptor();
-                //Simulator.Initialize();
-                //Simulator.SyncPlayers();
-            }
+            //else if (command.Name == "RestartSimulation")
+            //{
+            //    //if (Simulator.EditorState == EditorState.Editing)
+            //    //    Simulator.SyncLevel();
+
+            //    //Simulator.Initialize();
+            //    //Simulator.SyncPlayers();
+            //}
+
+            //else if (command.Name == "PauseSimulation")
+            //{
+            //    //Simulator.State = GameState.Paused;
+            //}
+
+            //else if (command.Name == "ResumeSimulation")
+            //{
+            //    //Simulator.State = GameState.Running;
+            //}
+
+            //else if (command.Name == "NewLevel")
+            //{
+            //    //Simulator.LevelDescriptor = Main.WorldsFactory.GetEmptyLevelDescriptor();
+            //    //Simulator.Initialize();
+            //    //Simulator.SyncPlayers();
+            //}
 
             //else if (command.Name == "SaveLevel")
             //{
@@ -275,50 +319,61 @@
         }
 
 
-        private void DoExecuteEditorPanelCommand(EditorPanelCommand command)
+        private void DoExecuteEditorPanelCommand(EditorShowPanelCommand command)
         {
-            if (command.Panel == EditorPanel.CelestialBodyAssets)
-                ((CelestialBodyAssetsPanel) Panels[command.Panel]).CelestialBody = command.Owner.ActualSelection.CelestialBody;
+            if (command.Panel == PanelType.EditorCelestialBodyAssets)
+                ((CelestialBodyAssetsPanel) Simulator.Data.Panels[command.Panel]).CelestialBody = command.Owner.ActualSelection.CelestialBody;
+            
+            if (command.Panel == PanelType.EditorCelestialBodyAttributes)
+                ((CelestialBodyAttributesPanel) Simulator.Data.Panels[command.Panel]).CelestialBody = command.Owner.ActualSelection.CelestialBody;
 
-            if (command.Panel == EditorPanel.Waves && !command.Show)
+            if (command.Panel == PanelType.EditorWaves)
                 SyncWaves();
 
-            if (OpenedPanel == EditorPanel.None) // open a panel
-            {
-                OpenedPanel = command.Panel;
-                NotifyEditorCommandExecuted(command);
-            }
-
-            else if (OpenedPanel == command.Panel) // open a panel that is already opened => close it
-            {
-                var closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false);
-
-                OpenedPanel = EditorPanel.None;
-                
-                NotifyEditorCommandExecuted(closeCommand);
-            }
-
-            else if (OpenedPanel != command.Panel && command.Show) // open a panel while another is opened
-            {
-                var closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false);
-
-                NotifyEditorCommandExecuted(closeCommand);
-
-                OpenedPanel = command.Panel;
-
-                NotifyEditorCommandExecuted(command);
-            }
+            NotifyEditorCommandExecuted(command);
         }
 
 
         private void DoExecuteEditorCelestialBodyCommand(EditorCelestialBodyCommand command)
         {
             if (command.Name == "AddPlanet")
+            {
                 command.CelestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, VisualPriorities.Default.CelestialBody);
+
+                if (Simulator.WorldMode)
+                    Main.CurrentWorld.World.AddLevel();
+            }
+
             else if (command.Name == "AddPinkHole")
+            {
                 command.CelestialBody = EditorLevelGenerator.GeneratePinkHole(Simulator, VisualPriorities.Default.CelestialBody);
+            }
+
+            else if (command.Name == "Move")
+            {
+                command.Owner.ActualSelection.CelestialBody.ShowPath = true;
+                command.Owner.ActualSelection.EditingState = EditorEditingState.MovingCB;
+                command.Owner.VisualPlayer.EditorCelestialBodyMenu.Visible = false;
+            }
+
+            else if(command.Name == "Rotate")
+            {
+                command.Owner.ActualSelection.CelestialBody.ShowPath = true;
+                command.Owner.ActualSelection.EditingState = EditorEditingState.RotatingCB;
+                command.Owner.VisualPlayer.EditorCelestialBodyMenu.Visible = false;
+            }
+
+            else if(command.Name == "Trajectory")
+            {
+                command.Owner.ActualSelection.CelestialBody.ShowPath = true;
+                command.Owner.ActualSelection.EditingState = EditorEditingState.TrajectoryCB;
+                command.Owner.VisualPlayer.EditorCelestialBodyMenu.Visible = false;
+            }
+
             else
+            {
                 command.CelestialBody = command.Owner.ActualSelection.CelestialBody;
+            }
 
             NotifyEditorCommandExecuted(command);
         }
@@ -409,7 +464,7 @@
             else
                 Simulator.Data.Level.AvailablePowerUps.Remove(checkbox.PowerUp);
 
-            NotifyEditorCommandExecuted(new EditorCommand("AddOrRemovePowerUp"));
+            NotifyEditorCommandExecuted(new EditorSimpleCommand("AddOrRemovePowerUp"));
         }
 
 
@@ -423,7 +478,7 @@
 
         private void DoCelestialBodyAssets(PanelWidget widget)
         {
-            var panel = (CelestialBodyAssetsPanel) Panels[EditorPanel.CelestialBodyAssets];
+            var panel = (CelestialBodyAssetsPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAssets];
             var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
 
             NotifyEditorCommandExecuted(
@@ -442,7 +497,7 @@
 
             if (clickedWidget.Name == "Enemies")
             {
-                var enemiesAssets = (EnemiesAssetsPanel) Panels[EditorPanel.Enemies];
+                var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels[PanelType.EditorEnemies];
 
                 if (waveId < Simulator.Data.Level.Descriptor.Waves.Count)
                     enemiesAssets.Enemies = Simulator.Data.Level.Descriptor.Waves[waveId].Enemies;
@@ -450,9 +505,6 @@
                     enemiesAssets.Enemies = new List<EnemyType>();
 
                 enemiesAssets.Sync();
-
-                ExecuteCommand(new EditorPanelCommand("ShowPanel", EditorPanel.Enemies, true));
-                return;
             }
         }
 
@@ -461,7 +513,7 @@
         {
             List<WaveDescriptor> descriptors = new List<WaveDescriptor>();
 
-            var panel = Panels[EditorPanel.Waves];
+            var panel = Simulator.Data.Panels[PanelType.EditorWaves];
 
             foreach (var w in panel.Widgets)
             {
@@ -478,19 +530,13 @@
         }
 
 
-        private void DoClosePanel(PanelWidget widget)
+        public void DoPanelClosed(PanelType type)
         {
-            EditorPanelCommand closeCommand = new EditorPanelCommand("ClosePanel", OpenedPanel, false);
-
-            if (OpenedPanel == EditorPanel.Enemies)
+            if (type == PanelType.EditorEnemies)
             {
-                var enemiesAssets = (EnemiesAssetsPanel) Panels[EditorPanel.Enemies];
-                ((WavesPanel) Panels[EditorPanel.Waves]).SyncEnemiesCurrentWave(enemiesAssets.Enemies);
-
-                closeCommand = new EditorPanelCommand("OpenPanel", EditorPanel.Waves, true);
+                var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels[PanelType.EditorEnemies];
+                ((WavesPanel) Simulator.Data.Panels[PanelType.EditorWaves]).SyncEnemiesCurrentWave(enemiesAssets.Enemies);
             }
-
-            ExecuteCommand(closeCommand);
         }
 
 

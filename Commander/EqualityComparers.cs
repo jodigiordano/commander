@@ -166,33 +166,6 @@
     }
 
 
-    class EditorPanelComparer : IEqualityComparer<EditorPanel>
-    {
-        private static EditorPanelComparer instance;
-        public static EditorPanelComparer Default
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new EditorPanelComparer();
-                return instance;
-            }
-        }
-
-
-        public bool Equals(EditorPanel x, EditorPanel y)
-        {
-            return x == y;
-        }
-
-
-        public int GetHashCode(EditorPanel obj)
-        {
-            return (int) obj;
-        }
-    }
-
-
     class HelpBarMessageComparer : IEqualityComparer<HelpBarMessageType>
     {
         private static HelpBarMessageComparer instance;

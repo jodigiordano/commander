@@ -61,7 +61,15 @@
         Login = 8,
         Register = 9,
         VirtualKeyboard = 10,
-        JumpToWorld = 11
+        JumpToWorld = 11,
+        EditorPlayer = 12,
+        EditorPowerUps = 13,
+        EditorTurrets = 14,
+        EditorBackground = 15,
+        EditorWaves = 16,
+        EditorCelestialBodyAssets = 17,
+        EditorEnemies = 18,
+        EditorCelestialBodyAttributes = 19
     };
 
 
@@ -205,45 +213,12 @@ namespace EphemereGames.Commander.Simulation
     };
 
 
-    public enum EditorWorldChoice
-    {
-        None = -1,
-        Edit = 0,
-        Playtest = 1,
-        Save = 2,
-        Reset = 3
-    };
-
-
-    enum EditorPanel
-    {
-        None = -1,
-        Player = 0,
-        PowerUps = 1,
-        Turrets = 2,
-        Background = 3,
-        Waves = 4,
-        CelestialBodyAssets = 5,
-        Enemies = 6
-    };
-
-
-    enum EditorCommandType
-    {
-        Basic = 1,
-        Panel = 2,
-        CelestialBody = 3,
-        Player = 4
-    };
-
-
     enum EditorEditingState
     {
         None = -1,
         MovingCB = 0,
         RotatingCB = 1,
-        ShrinkingCB = 2,
-        StartPosCB = 3
+        TrajectoryCB = 2
     };
 
 

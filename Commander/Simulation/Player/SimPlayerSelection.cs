@@ -1,7 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-
-
     class SimPlayerSelection
     {
         protected CelestialBody celestialBody;
@@ -21,10 +19,11 @@
         protected int newGameChoice;
 
         // editor
-        protected EditorWorldChoice editorWorldChoice;
+        protected EditorCommand editorWorldLevelCommand;
+        protected EditorCommand editorWorldCommand;
+        protected EditorCommand editorBuildMenuCommand;
+        protected EditorCommand editorCelestialBodyMenuCommand;
         protected EditorEditingState editingState;
-        protected int editorGeneralMenuChoice;
-        protected int editorCBChoice;
 
         public bool CelestialBodyChanged;
         public bool PowerUpToBuyChanged;
@@ -37,6 +36,10 @@
         public bool NewGameChoiceChanged;
         public bool EditingStateChanged;
         public bool OpenedMenuChanged;
+        public bool EditorWorldLevelCommandChanged;
+        public bool EditorWorldCommandChanged;
+        public bool EditorBuildMenuCommandChanged;
+        public bool EditorCelestialBodyMenuCommandChanged;
 
 
         public SimPlayerSelection()
@@ -54,10 +57,13 @@
             TurretChoice = TurretChoice.None;
             TurretToPlace = null;
             PausedGameChoice = PauseChoice.None;
-            EditorWorldChoice = EditorWorldChoice.None;
             NewGameChoice = -1;
             EditingState = EditorEditingState.None;
             OpenedMenu = null;
+            EditorWorldLevelCommand = null;
+            EditorWorldCommand = null;
+            EditorBuildMenuCommand = null;
+            EditorCelestialBodyMenuCommand = null;
 
             Update();
         }
@@ -76,6 +82,38 @@
             NewGameChoiceChanged = false;
             EditingStateChanged = false;
             OpenedMenuChanged = false;
+            EditorWorldLevelCommandChanged = false;
+            EditorWorldCommandChanged = false;
+            EditorBuildMenuCommandChanged = false;
+            EditorCelestialBodyMenuCommandChanged = false;
+        }
+
+
+        public EditorCommand EditorBuildMenuCommand
+        {
+            get { return editorBuildMenuCommand; }
+            set { EditorBuildMenuCommandChanged = editorBuildMenuCommand != value; editorBuildMenuCommand = value; }
+        }
+
+
+        public EditorCommand EditorCelestialBodyMenuCommand
+        {
+            get { return editorCelestialBodyMenuCommand; }
+            set { EditorCelestialBodyMenuCommandChanged = editorCelestialBodyMenuCommand != value; editorCelestialBodyMenuCommand = value; }
+        }
+
+
+        public EditorCommand EditorWorldLevelCommand
+        {
+            get { return editorWorldLevelCommand; }
+            set { EditorWorldLevelCommandChanged = editorWorldLevelCommand != value; editorWorldLevelCommand = value; }
+        }
+
+
+        public EditorCommand EditorWorldCommand
+        {
+            get { return editorWorldCommand; }
+            set { EditorWorldCommandChanged = editorWorldCommand != value; editorWorldCommand = value; }
         }
 
 
@@ -135,13 +173,6 @@
         }
 
 
-        public EditorWorldChoice EditorWorldChoice
-        {
-            get { return editorWorldChoice; }
-            set { EditorWorldChoiceChanged = editorWorldChoice != value; editorWorldChoice = value; }
-        }
-
-
         public int NewGameChoice
         {
             get { return newGameChoice; }
@@ -165,9 +196,13 @@
             turretToBuy = other.turretToBuy;
             turretToPlace = other.turretToPlace;
             pausedGameChoice = other.pausedGameChoice;
-            editorWorldChoice = other.editorWorldChoice;
             newGameChoice = other.newGameChoice;
             editingState = other.editingState;
+            editorWorldCommand = other.editorWorldCommand;
+            editorWorldLevelCommand = other.editorWorldLevelCommand;
+            editorBuildMenuCommand = other.editorBuildMenuCommand;
+            editorCelestialBodyMenuCommand = other.editorCelestialBodyMenuCommand;
+            openedMenu = other.openedMenu;
         }
     }
 }

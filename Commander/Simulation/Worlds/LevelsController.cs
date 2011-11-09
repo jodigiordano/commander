@@ -121,16 +121,10 @@
 
         public void DoEditorCommandExecuted(EditorCommand c)
         {
-            switch (c.Type)
-            {
-                case EditorCommandType.CelestialBody:
-                    DoEditorCelestialBodyCommand((EditorCelestialBodyCommand) c);
-                    break;
-
-                case EditorCommandType.Player:
-                    DoEditorPlayerCommand((EditorPlayerCommand) c);
-                    break;
-            }
+            if (c is EditorCelestialBodyCommand)
+                DoEditorCelestialBodyCommand((EditorCelestialBodyCommand) c);
+            else if (c is EditorPlayerCommand)
+                DoEditorPlayerCommand((EditorPlayerCommand) c);
         }
 
 

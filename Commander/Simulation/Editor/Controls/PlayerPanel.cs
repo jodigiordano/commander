@@ -14,8 +14,8 @@
         private NumericHorizontalSlider BulletDamage;
 
 
-        public PlayerPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base(simulator.Scene, position, size, visualPriority, color)
+        public PlayerPanel(Simulator simulator)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White)
         {
             Simulator = simulator;
 

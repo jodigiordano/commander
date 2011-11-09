@@ -9,8 +9,8 @@
         private Simulator Simulator;
 
 
-        public WavesPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base(simulator.Scene, position, size, visualPriority, color)
+        public WavesPanel(Simulator simulator)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(1200, 600), VisualPriorities.Default.EditorPanel, Color.White)
         {
             Simulator = simulator;
 

@@ -117,10 +117,12 @@
             // Set the world to the WorldScene
             var world = Main.WorldsFactory.GetWorld(WorldToJumpTo);
 
-            world.EditorMode = true;
+            world.EditorMode = IsPlayerWorld(WorldToJumpTo);
             world.Editing = false;
 
             Main.SetCurrentWorld(world, true);
+
+            Main.CurrentWorld.Simulator.MultiverseMode = true;
 
             Core.Visual.Visuals.Transite(fromScene, "WorldAnnunciation");
         }

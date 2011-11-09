@@ -162,6 +162,9 @@
 
         public bool IsLevelUnlocked(int id)
         {
+            if (!CampaignMode)
+                return true;
+
             // the highscore is only saved if the game is won.
             return HighScores.ContainsHighScores(id);
         }
@@ -179,6 +182,23 @@
             HighScores = new HighScores() { Directory = to };
 
             Persistence.LoadData(HighScores);
+        }
+
+
+        public void AddLevel()
+        {
+            var id = Descriptor.GetNextLevelId();
+            var level = Main.WorldsFactory.GetEmptyLevelDescriptor(id);
+
+            Descriptor.Levels.Add(id);
+            LevelsDescriptors.Add(id, level);
+        }
+
+
+        public void RemoveLevel(int id)
+        {
+            Descriptor.Levels.Remove(id);
+            LevelsDescriptors.Remove(id);
         }
     }
 }

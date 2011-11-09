@@ -10,8 +10,8 @@
         private string BackgroundsDirectory = @".\Content\backgrounds";
 
 
-        public BackgroundsAssetsPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base("Backgrounds", simulator, position, size, visualPriority, color)
+        public BackgroundsAssetsPanel(Simulator simulator)
+            : base("Backgrounds", simulator, Vector3.Zero, new Vector2(500, 500), VisualPriorities.Default.EditorPanel, Color.White)
         {
 
         }

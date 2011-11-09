@@ -250,16 +250,18 @@
 
         public void DoEditorCommandExecuted(EditorCommand c)
         {
-            if (c.Type != EditorCommandType.CelestialBody)
-                return;
+            var command = c as EditorCelestialBodyCommand;
 
-            var command = (EditorCelestialBodyCommand) c;
+            if (command == null)
+                return;
 
             if (command.Name == "AddPlanet" || command.Name == "AddPinkHole")
             {
                 command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
                 command.CelestialBody.AliveOverride = true;
                 command.CelestialBody.CanSelectOverride = true;
+                command.CelestialBody.Position = command.Owner.Position;
+                command.CelestialBody.BasePosition = command.Owner.Position;
                 CelestialBodies.Add(command.CelestialBody);
             }
 

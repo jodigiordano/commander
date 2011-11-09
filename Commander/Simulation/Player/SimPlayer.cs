@@ -24,7 +24,6 @@
         public SimPlayerSelection ActualSelection;
         public SimPlayerSelection LastSelection;
         
-        public bool UpdateSelectionz;
         public PowerUpType PowerUpInUse;
         public Spaceship SpaceshipMove;
         public SimPlayerDirectionHandler BouncedHandler;
@@ -320,8 +319,7 @@
                     }
             }
 
-            if (UpdateSelectionz)
-                UpdateSelection();
+            UpdateSelection();
 
             if (Firing)
             {

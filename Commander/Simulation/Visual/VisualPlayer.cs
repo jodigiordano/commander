@@ -27,6 +27,9 @@
         private LevelInfos LevelInfos;
 
         // Menus
+        public EditorCelestialBodyMenu EditorCelestialBodyMenu;
+        public EditorWorldMenu EditorWorldMenu;
+        public EditorBuildMenu EditorBuildMenu;
         private CelestialBodyMenu CelestialBodyMenu;
         private NewGameMenu NewGameMenu;
         private List<ContextualMenu> Menus;
@@ -59,14 +62,18 @@
             Menus = new List<ContextualMenu>();
 
             // Highest priority
+            EditorCelestialBodyMenu = new EditorCelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
+            EditorWorldMenu = new EditorWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
+            EditorBuildMenu = new EditorBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
             CelestialBodyMenu = new CelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
             NewGameMenu = new NewGameMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
 
-            Menus.Add(new EditorCelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add(EditorCelestialBodyMenu);
             Menus.Add(new PauseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add(NewGameMenu);
-            Menus.Add(new EditorWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add(new EditorGeneralMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add(EditorWorldMenu);
+            Menus.Add(new EditorWorldLevelMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add(EditorBuildMenu);
             Menus.Add(new StartingPathMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add(new TurretMenu(Simulator, VisualPriorities.Default.TurretMenu, Owner));
             Menus.Add(CelestialBodyMenu);
@@ -179,7 +186,7 @@
             if (menu != null)
                 menu.Draw();
 
-            if (Simulator.DemoMode && Simulator.WorldMode)
+            if (Simulator.DemoMode && Simulator.WorldMode && !Simulator.EditorEditingMode)
                 LevelInfos.Draw();
 
             if (Simulator.DemoMode)

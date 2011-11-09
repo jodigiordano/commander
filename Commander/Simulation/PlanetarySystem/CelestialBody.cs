@@ -58,6 +58,7 @@
         public bool FakeHasGravitationalTurretLv2;
         public bool SlowDeath;
         public bool SilentDeath;
+        public bool IsALevel;
 
         protected Simulator Simulator;
         protected double VisualPriorityBackup;
@@ -96,6 +97,7 @@
             LastOnPath = false;
             FirstOnPath = false;
             StraightLine = false;
+            IsALevel = true;
             DarkSide = false;
             VisualPriorityBackup = visualPriority;
             StartingPourc = startingPourc;
@@ -473,7 +475,8 @@
                 HasGravitationalTurret = StartingPathTurret != null,
                 HasMoons = HasMoons,
                 FollowPath = FollowPath,
-                StraightLine = StraightLine
+                StraightLine = StraightLine,
+                IsALevel = IsALevel
             };
         }
 

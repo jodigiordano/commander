@@ -17,7 +17,7 @@
         private Particle Selection;
         private Text Label;
 
-        public int MinSpaceLabelX;
+        public int SpaceForLabel;
 
 
         public CheckBox() : this("") {}
@@ -32,7 +32,7 @@
 
             BoxCircle = new Circle(Vector3.Zero, Box.AbsoluteSize.X / 2);
 
-            MinSpaceLabelX = 50;
+            SpaceForLabel = 50;
         }
 
 
@@ -72,10 +72,7 @@
             {
                 Label.Position = value;
 
-                Box.Position = value;
-                
-                if (Label.AbsoluteSize.X != 0)
-                    Box.Position += new Vector3(MathHelper.Max(MinSpaceLabelX, Label.AbsoluteSize.X), 0, 0);
+                Box.Position = Label.Data.Length == 0 ? value : value + new Vector3(SpaceForLabel, 0, 0);
 
                 CheckedRep.Position = Box.Position;
 
@@ -96,7 +93,7 @@
 
         public override Vector3 Dimension
         {
-            get { return new Vector3((Label.AbsoluteSize.X != 0 ? MathHelper.Max(MinSpaceLabelX, Label.AbsoluteSize.X) : 0) + Box.AbsoluteSize.X, Box.AbsoluteSize.Y, 0); }
+            get { return new Vector3(Label.Data.Length == 0 ? Box.AbsoluteSize.X : SpaceForLabel + Box.AbsoluteSize.X, Box.AbsoluteSize.Y, 0); }
             set { }
         }
 

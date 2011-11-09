@@ -67,7 +67,7 @@
 
             Simulator.Initialize();
             Inputs.AddListener(Simulator);
-            Simulator.EnableInputs = false;
+            Simulator.SyncPlayers();
             Simulator.HelpBar.Fade(Simulator.HelpBar.Alpha, 255, 500);
 
             // Keep track of celestial bodies and pink holes
@@ -87,6 +87,8 @@
             Main.MusicController.AddMusic(World.Descriptor.MusicEnd);
 
             Main.CurrentGame = null;
+
+            InitializeLevelsStates();
         }
 
 
@@ -160,7 +162,8 @@
         {
             Simulator.Draw();
 
-            LevelStates.Draw();
+            if (Simulator.EditorPlaytestingMode)
+                LevelStates.Draw();
 
             if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                 Title.Draw();
@@ -318,7 +321,10 @@
             if (!CanGoBackToMainMenu)
                 return;
 
-            TransiteTo("Menu");
+            if (Simulator.MultiverseMode)
+                TransiteTo("Multiverse");
+            else
+                TransiteTo("Menu");
         }
 
 
@@ -389,6 +395,9 @@
 
         public void DoSelectActionEditor(Player p)
         {
+            if (Simulator.EditorEditingMode)
+                return;
+
             // Select a warp
             var world = GetWorldSelected(p);
 
@@ -402,43 +411,43 @@
 
             if (level != null)
             {
-                if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
-                {
-                    World.SetLevelDescriptor(level.Infos.Id, Main.WorldsFactory.GetEmptyLevelDescriptor(level.Infos.Id));
-                    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
-                    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
-                }
+                //if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
+                //{
+                //    World.SetLevelDescriptor(level.Infos.Id, Main.WorldsFactory.GetEmptyLevelDescriptor(level.Infos.Id));
+                //    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
+                //    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
+                //}
 
-                else if (Simulator.EditorWorldChoice == EditorWorldChoice.Save)
-                {
-                    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
-                    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
-                }
+                //else if (Simulator.EditorWorldChoice == EditorWorldChoice.Save)
+                //{
+                //    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
+                //    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
+                //}
 
-                else
-                {
-                    GameScene currentGame = Main.CurrentGame;
+                //else
+                //{
+                //    GameScene currentGame = Main.CurrentGame;
 
-                    // Start a new game
-                    if (currentGame != null)
-                        currentGame.StopMusic();
+                //    // Start a new game
+                //    if (currentGame != null)
+                //        currentGame.StopMusic();
 
-                    currentGame = new GameScene("Game1", level)
-                    {
-                        EditorMode = World.EditorMode,
-                        Editing = Simulator.EditorWorldChoice == EditorWorldChoice.Edit
-                    };
-                    currentGame.Initialize();
-                    Main.CurrentGame = currentGame;
-                    currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
+                //    currentGame = new GameScene("Game1", level)
+                //    {
+                //        EditorMode = World.EditorMode,
+                //        Editing = Simulator.EditorWorldChoice == EditorWorldChoice.Edit
+                //    };
+                //    currentGame.Initialize();
+                //    Main.CurrentGame = currentGame;
+                //    currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
 
-                    if (Visuals.GetScene(currentGame.Name) == null)
-                        Visuals.AddScene(currentGame);
-                    else
-                        Visuals.UpdateScene(currentGame.Name, currentGame);
+                //    if (Visuals.GetScene(currentGame.Name) == null)
+                //        Visuals.AddScene(currentGame);
+                //    else
+                //        Visuals.UpdateScene(currentGame.Name, currentGame);
 
-                    TransiteTo(currentGame.Name);
-                }
+                //    TransiteTo(currentGame.Name);
+                //}
             }
         }
 
@@ -518,7 +527,10 @@
 
             foreach (var c in Simulator.Data.Level.PlanetarySystem)
             {
-                if (c is AsteroidBelt || c.FirstOnPath)
+                if (c is AsteroidBelt)
+                    continue;
+
+                if (!c.IsALevel)
                     continue;
 
                 if (c is PinkHole)

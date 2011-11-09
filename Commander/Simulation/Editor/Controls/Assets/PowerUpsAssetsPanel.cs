@@ -8,8 +8,8 @@
     class PowerUpsAssetsPanel : AssetsPanel
     {
 
-        public PowerUpsAssetsPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base("Availables Power-Ups", simulator, position, size, visualPriority, color)
+        public PowerUpsAssetsPanel(Simulator simulator)
+            : base("Availables Power-Ups", simulator, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White)
         {
 
         }
