@@ -8,12 +8,17 @@
     {
         public List<KeyValuePair<SimPlayer, SimPlayer>> Output;
 
-        public List<SimPlayer> Players;
+        private Simulator Simulator;
+
+        private List<SimPlayer> PlayersList;
 
 
-        public PlayersCollisions()
+        public PlayersCollisions(Simulator simulator)
         {
+            Simulator = simulator;
+
             Output = new List<KeyValuePair<SimPlayer, SimPlayer>>();
+            PlayersList = new List<SimPlayer>();
         }
 
 
@@ -21,14 +26,20 @@
         {
             Output.Clear();
 
-            for (int i = 0; i < Players.Count; i++)
-                for (int j = 0; j < Players.Count; j++)
+            PlayersList.Clear();
+
+            foreach (var p in Simulator.Data.Players.Values)
+                PlayersList.Add(p);
+
+
+            for (int i = 0; i < PlayersList.Count; i++)
+                for (int j = 0; j < PlayersList.Count; j++)
                 {
                     if (j <= i)
                         continue;
 
-                    var player1 = Players[i];
-                    var player2 = Players[j];
+                    var player1 = PlayersList[i];
+                    var player2 = PlayersList[j];
 
                     if (Physics.CircleCicleCollision(player1.Circle, player2.Circle))
                         Output.Add(new KeyValuePair<SimPlayer, SimPlayer>(player1, player2));

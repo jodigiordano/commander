@@ -213,8 +213,8 @@
                     (
                         Simulator,
                         descriptor.Name,
-                        Simulator.AsteroidBeltOverride ? descriptor.Path : new Vector3(Simulator.Data.Battlefield.Width / 2, Simulator.Data.Battlefield.Height / 2, 0),
-                        new Vector3(Simulator.Data.Battlefield.Center.X, Simulator.Data.Battlefield.Center.Y, 0),
+                        Simulator.AsteroidBeltOverride ? descriptor.Path : new Vector3(Simulator.Data.Battlefield.Inner.Width / 2, Simulator.Data.Battlefield.Inner.Height / 2, 0),
+                        new Vector3(Simulator.Data.Battlefield.Inner.Center.X, Simulator.Data.Battlefield.Inner.Center.Y, 0),
                         descriptor.Size,
                         descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
                         descriptor.Images,
@@ -226,7 +226,7 @@
                 c.CanSelect = descriptor.CanSelect;
                 c.Invincible = descriptor.Invincible;
 
-                if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)
+                if (Simulator.EditorEditingMode)
                     c.AliveOverride = true;
 
                 PlanetarySystem.Add(c);

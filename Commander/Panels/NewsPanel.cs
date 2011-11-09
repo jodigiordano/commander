@@ -14,14 +14,14 @@
         private Label LoadingInfos;
 
         private int MaxNewsDisplayed;
-        private NewsType Type;
+        private NewsType NType;
 
 
         public NewsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color, NewsType type, string title)
             : base(scene, position, size, visualPriority, color)
         {
             SetTitle(title);
-            Type = type;
+            NType = type;
             DistanceBetweenTwoChoices = 30;
 
             Alpha = 0;
@@ -50,7 +50,7 @@
 
         public void DoLoadingStarted(NewsType type)
         {
-            if (type != this.Type)
+            if (type != this.NType)
                 return;
 
             LoadingInfos.Value = "Loading news, please wait.";
@@ -61,7 +61,7 @@
 
         public void DoLoadedSuccessfully(NewsType type, List<News> news)
         {
-            if (type != this.Type)
+            if (type != this.NType)
                 return;
 
             RemoveWidget("LoadingInfos");
@@ -86,7 +86,7 @@
 
         public void DoLoadedError(NewsType type)
         {
-            if (type != this.Type)
+            if (type != this.NType)
                 return;
 
             LoadingInfos.Value = "Loading error. Please retry.";
@@ -112,7 +112,7 @@
 
         private void NotifyReloadAsked()
         {
-            Main.NewsController.LoadNewsAsync(Type);
+            Main.NewsController.LoadNewsAsync(NType);
         }
     }
 }

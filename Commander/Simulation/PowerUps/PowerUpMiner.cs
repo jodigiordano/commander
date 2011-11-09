@@ -78,7 +78,7 @@ namespace EphemereGames.Commander.Simulation
             Miner = new SpaceshipMiner(Simulator)
             {
                 Position = HumanBattleship.Position,
-                VisualPriority = VisualPriorities.Default.PlayerCursor,
+                VisualPriority = VisualPriorities.Default.VisualPlayer,
                 StartingObject = HumanBattleship,
                 Owner = Owner
             };

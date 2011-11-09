@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
-    using EphemereGames.Commander.Simulation;
 
 
     class MultiverseController
@@ -119,7 +118,7 @@
             var world = Main.WorldsFactory.GetWorld(WorldToJumpTo);
 
             world.EditorMode = true;
-            world.EditorState = EditorState.Playtest;
+            world.Editing = false;
 
             Main.SetCurrentWorld(world, true);
 

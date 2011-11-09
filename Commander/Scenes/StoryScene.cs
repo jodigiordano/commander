@@ -183,7 +183,7 @@
             {
                 InputType = p.InputType;
 
-                HelpBar.HideMessage(HelpBarMessage.HoldToSkip);
+                HelpBar.HideCurrentMessage();
                 HelpBar.ShowMessage(p, HelpBarMessage.HoldToSkip);
                 HelpBar.Alpha = 0;
             }

@@ -9,8 +9,6 @@
     class SimPlayersController
     {
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
-        public StartingPathMenu StartingPathMenu;
-        public List<SimPlayer> PlayersList;
         public List<Wave> ActiveWaves;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
@@ -38,7 +36,6 @@
         public event SimPlayerHandler PlayerRotated;
 
         private Simulator Simulator;
-        private Dictionary<Player, SimPlayer> Players;
 
         private SimPlayer PlayerInAdvancedView;
 
@@ -55,9 +52,6 @@
 
             AvailableTurrets = new Dictionary<TurretType, bool>(TurretTypeComparer.Default);
             AvailablePowerUps = new Dictionary<PowerUpType, bool>(PowerUpTypeComparer.Default);
-
-            Players = new Dictionary<Player, SimPlayer>();
-            PlayersList = new List<SimPlayer>();
         }
 
 
@@ -67,9 +61,6 @@
 
             CheckAvailablePowerUps();
             CheckAvailableTurrets();
-            
-            Players.Clear();
-            PlayersList.Clear();
 
             PlayerInAdvancedView = null;
 
@@ -83,8 +74,6 @@
         {
             var simPlayer = new SimPlayer(Simulator, player)
             {
-                CelestialBodies = CelestialBodies,
-                CommonStash = CommonStash,
                 Position = CommonStash.StartingPosition + player.SpawningPosition,
                 Direction = new Vector3(0, -1, 0),
                 AvailableTurrets = AvailableTurrets,
@@ -93,61 +82,36 @@
                 ImageName = player.ImageName,
                 UpdateSelectionz = true,
                 BulletAttackPoints = (float) Simulator.Data.Level.BulletDamage,
-                PausePlayer = new PausePlayer(Simulator),
                 BouncedHandler = DoPlayerBounced,
                 RotatedHandler = DoPlayerRotated
             };
 
             simPlayer.Initialize();
 
-            Players.Add(player, simPlayer);
-            PlayersList.Add(simPlayer);
+            Simulator.Data.Players.Add(player, simPlayer);
 
             NotifyPlayerConnected(simPlayer);
         }
 
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayer(Commander.Player player)
         {
-            var simPlayer = Players[player];
+            var simPlayer = Simulator.Data.Players[player];
 
             DoAdvancedViewAction(player, false);
             DoCancelAction(player);
 
-            Players.Remove(player);
-            PlayersList.Remove(simPlayer);
+            simPlayer.DoDisconnect();
+
+            Simulator.Data.Players.Remove(player);
 
             NotifyPlayerDisconnected(simPlayer);
         }
 
 
-        public bool HasPlayer(Player player)
-        {
-            return Players.ContainsKey(player);
-        }
-
-
-        public SimPlayer GetPlayer(Player player)
-        {
-            SimPlayer simPlayer = null;
-
-            return Players.TryGetValue(player, out simPlayer) ? simPlayer : null;
-        }
-
-
-        public void SyncPausePlayers()
-        {
-            foreach (var p in Players.Values)
-            {
-                p.PausePlayer.NinjaPosition = p.Position;
-                p.PausePlayer.Direction = p.Direction;
-            }
-        }
-
-
         public void MovePlayers(Vector3 basePosition)
         {
-            foreach (var p in Players)
+            foreach (var p in Simulator.Data.Players)
                 p.Value.Position = basePosition + ((Commander.Player) p.Key).SpawningPosition;
         }
 
@@ -195,7 +159,7 @@
                     CommonStash.Lives += mineral.Value;
                     CelestialBodyToProtect.LifePoints += mineral.Value;
                 }
-                else if (!Simulator.EditorMode || Simulator.EditorState == EditorState.Playtest)
+                else if (!Simulator.EditorMode || Simulator.EditorPlaytestingMode)
                 {
                     CommonStash.Cash += mineral.Value;
                     NotifyCommonStashChanged(CommonStash);
@@ -208,17 +172,17 @@
 
         public void DoObjectDestroyed(ICollidable obj)
         {
-            Enemy ennemi = obj as Enemy;
+            Enemy enemy = obj as Enemy;
 
-            if (ennemi != null)
+            if (enemy != null)
             {
-                if ( Simulator.State == GameState.Running && (!Simulator.EditorMode || Simulator.EditorState == EditorState.Playtest))
-                    CommonStash.Cash += ennemi.CashValue;
+                if (Simulator.State == GameState.Running && (!Simulator.EditorMode || Simulator.EditorPlaytestingMode))
+                    CommonStash.Cash += enemy.CashValue;
 
                 if (Simulator.State == GameState.Running)
                 {
-                    CommonStash.Score += ennemi.PointsValue;
-                    CommonStash.TotalScore += ennemi.PointsValue;
+                    CommonStash.Score += enemy.PointsValue;
+                    CommonStash.TotalScore += enemy.PointsValue;
 
                     NotifyCommonStashChanged(CommonStash);
                 }
@@ -231,7 +195,7 @@
 
             if (celestialBody != null)
             {
-                foreach (var player in Players.Values)
+                foreach (var player in Simulator.Data.Players.Values)
                     player.DoCelestialBodyDestroyed();
 
                 return;
@@ -239,9 +203,9 @@
         }
 
 
-        public void DoMoveDelta(Player p, ref Vector3 delta)
+        public void DoMoveDelta(Commander.Player p, ref Vector3 delta)
         {
-            SimPlayer player = Players[p];
+            SimPlayer player = Simulator.Data.Players[p];
 
             player.Move(ref delta, ((Commander.Player) p).MovingSpeed);
 
@@ -249,71 +213,82 @@
                 return;
 
             if (player.ActualSelection.TurretToPlace != null &&
-                player.ActualSelection.CelestialBody.OuterTurretZone.Outside(player.Position))
-                player.Position = player.ActualSelection.CelestialBody.OuterTurretZone.NearestPointToCircumference(player.Position);
+                player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(player.Position))
+                player.Position = player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.NearestPointToCircumference(player.Position);
         }
 
 
-        public void DoDirectionDelta(Player p, ref Vector3 delta)
+        public void DoDirectionDelta(Commander.Player p, ref Vector3 delta)
         {
-            SimPlayer player = Players[p];
+            SimPlayer player = Simulator.Data.Players[p];
 
             player.Rotate(ref delta, ((Commander.Player) p).RotatingSpeed);
         }
 
 
-        public void DoPausedGameChoice(Player p, int delta)
+        public void DoToggleChoice(Commander.Player p, int delta)
         {
-            var player = Players[p];
-
-            if (player.ActualSelection.PausedGameChoice == PausedGameChoice.None)
-                return;
+            var player = Simulator.Data.Players[p];
 
             if (delta > 0)
-                player.NextPausedGameChoice();
+                player.NextContextualMenuSelection();
             else
-                player.PreviousPausedGameChoice();
-
-            return;
+                player.PreviousContextualMenuSelection();
         }
 
 
-        public void DoEditorWorldChoice(Player p, int delta)
-        {
-            var player = Players[p];
+        //public void DoPausedGameChoice(Commander.Player p, int delta)
+        //{
+        //    var player = Simulator.Data.Players[p];
 
-            if (player.ActualSelection.EditorWorldChoice == EditorWorldChoice.None)
-                return;
+        //    if (player.ActualSelection.PausedGameChoice == PauseChoice.None)
+        //        return;
 
-            if (delta > 0)
-                player.NextEditorWorldChoice();
-            else
-                player.PreviousEditorWorldChoice();
+        //    if (delta > 0)
+        //        player.NextPausedGameChoice();
+        //    else
+        //        player.PreviousPausedGameChoice();
 
-            return;
-        }
+        //    return;
+        //}
 
 
-        public void DoNewGameChoice(Player p, int delta)
-        {
-            var player = Players[p];
+        //public void DoEditorWorldChoice(Commander.Player p, int delta)
+        //{
+        //    var player = Simulator.Data.Players[p];
 
-            if (player.ActualSelection.CelestialBody == null)
-                return;
+        //    if (player.ActualSelection.EditorWorldChoice == EditorWorldChoice.None)
+        //        return;
 
-            if (delta > 0)
-                player.NextNewGameChoice();
-            else
-                player.PreviousNewGameChoice();
+        //    if (delta > 0)
+        //        player.NextEditorWorldChoice();
+        //    else
+        //        player.PreviousEditorWorldChoice();
 
-            return;
-        }
+        //    return;
+        //}
+
+
+        //public void DoNewGameChoice(Commander.Player p, int delta)
+        //{
+        //    var player = Simulator.Data.Players[p];
+
+        //    if (player.ActualSelection.CelestialBody == null)
+        //        return;
+
+        //    if (delta > 0)
+        //        player.NextNewGameChoice();
+        //    else
+        //        player.PreviousNewGameChoice();
+
+        //    return;
+        //}
 
 
         public void DoNewGameState(GameState state)
         {
             if (state == GameState.Won || state == GameState.Lost)
-                foreach (var p in Players)
+                foreach (var p in Simulator.Data.Players)
                 {
                     DoCancelAction(p.Key);
                     p.Value.ActualSelection.Initialize();
@@ -349,12 +324,6 @@
         }
 
 
-        public CelestialBody GetSelectedCelestialBody(Player p)
-        {
-            return Players.ContainsKey(p) ? Players[p].ActualSelection.CelestialBody : null;
-        }
-
-
         public void Update()
         {
             if (Simulator.State == GameState.Running)
@@ -364,7 +333,7 @@
             }
 
 
-            foreach (var player in Players.Values)
+            foreach (var player in Simulator.Data.Players.Values)
             {
                 player.Update();
 
@@ -392,64 +361,33 @@
 
         public void Draw()
         {
-            foreach (var player in Players.Values)
+            foreach (var player in Simulator.Data.Players.Values)
                 if (player.ActualSelection.TurretToPlace != null)
                     player.ActualSelection.TurretToPlace.Draw();
         }
 
 
-        public void DoNextOrPreviousAction(Player p, int delta)
+        public void Fire(Commander.Player p)
         {
-            var player = Players[p];
-
-            // turret'input options
-            if (player.ActualSelection.Turret != null)
-            {
-                if (delta > 0)
-                    player.NextTurretOption();
-                else
-                    player.PreviousTurretOption();
-
-                return;
-            }
-
-
-            // shop turrets
-            else if (player.ActualSelection.CelestialBody != null && !player.ActualSelection.CelestialBody.FirstOnPath && player.ActualSelection.Turret == null)
-            {
-                if (delta > 0)
-                    player.NextTurretToBuy();
-                else
-                    player.PreviousTurretToBuy();
-
-                return;
-            }
-        }
-
-
-        public void Fire(Player p)
-        {
-            var player = Players[p];
+            var player = Simulator.Data.Players[p];
 
             if (Simulator.DemoMode)
-                Players[p].Firing = true;
+                Simulator.Data.Players[p].Firing = true;
 
-            else if (/* player.ActualSelection.PowerUpToBuy == PowerUpType.None &&
-                    player.ActualSelection.TurretToBuy == TurretType.None && */
-                    player.ActualSelection.TurretToPlace == null)
-                Players[p].Firing = true;
+            else if (player.ActualSelection.TurretToPlace == null)
+                Simulator.Data.Players[p].Firing = true;
         }
 
 
-        public void StopFire(Player p)
+        public void StopFire(Commander.Player p)
         {
-            Players[p].Firing = false;
+            Simulator.Data.Players[p].Firing = false;
         }
 
 
-        public void DoSelectAction(Player pl)
+        public void DoSelectAction(Commander.Player pl)
         {
-            var player = Players[pl];
+            var player = Simulator.Data.Players[pl];
 
             // activate a power-up
             if (player.ActualSelection.PowerUpToBuy != PowerUpType.None)
@@ -511,6 +449,7 @@
                     player.ActualSelection.TurretToPlace.ToPlaceMode = false;
                     NotifyBuyTurretAsked(player.ActualSelection.TurretToPlace, player);
                     NotifyTurretToPlaceDeselected(player.ActualSelection.TurretToPlace, player);
+                    player.ActualSelection.Turret = player.ActualSelection.TurretToPlace;
                     player.ActualSelection.TurretToPlace = null;
                 }
 
@@ -527,7 +466,7 @@
                         NotifySellTurretAsked(player.ActualSelection.Turret, player);
                         break;
                     case TurretChoice.Update:
-                        if (!player.ActualSelection.AvailableTurretOptions[TurretChoice.Update])
+                        if (!player.AvailableTurretOptions[TurretChoice.Update])
                         {
                             NotifyPlayerActionRefused(player);
                         }
@@ -543,24 +482,24 @@
             }
 
 
-            // call next wave
-            if (player.PowerUpInUse == PowerUpType.None && StartingPathMenu.CheckedIn == player && ActiveWaves.Count < 3)
-            {
-                NotifyNextWaveAsked();
-                return;
-            }
+            // call next wave //todo
+            //if (player.PowerUpInUse == PowerUpType.None && StartingPathMenu.CheckedIn == player && ActiveWaves.Count < 3)
+            //{
+            //    NotifyNextWaveAsked();
+            //    return;
+            //}
         }
 
 
-        public void DoAlternateAction(Player p)
+        public void DoAlternateAction(Commander.Player p)
         {
 
         }
 
 
-        public void DoCancelAction(Player p)
+        public void DoCancelAction(Commander.Player p)
         {
-            var player = Players[p];
+            var player = Simulator.Data.Players[p];
 
             if (player.ActualSelection.TurretToPlace == null)
                 return;
@@ -570,9 +509,9 @@
         }
 
 
-        public void DoAdvancedViewAction(Player p, bool pressed)
+        public void DoAdvancedViewAction(Commander.Player p, bool pressed)
         {
-            var player = Players[p];
+            var player = Simulator.Data.Players[p];
 
             if (PlayerInAdvancedView == null && pressed)
             {
@@ -597,8 +536,8 @@
                 InitializePowerUpsAndTurrets();
                 CheckAvailablePowerUps();
 
-                foreach (var pl in Players.Values)
-                    pl.Initialize();
+                //foreach (var pl in Simulator.Data.Players.Values)
+                //    pl.Initialize(); todo
 
                 return;
             }
@@ -608,7 +547,7 @@
             {
                 if (((EditorPanelCommand) command).Show)
                 {
-                    foreach (var player in Players.Values)
+                    foreach (var player in Simulator.Data.Players.Values)
                     {
                         player.ActualSelection.CelestialBody = null;
                         player.ActualSelection.Turret = null;
@@ -617,7 +556,7 @@
 
                     UpdateSelection = false;
 
-                    foreach (var player in Players.Values)
+                    foreach (var player in Simulator.Data.Players.Values)
                         player.UpdateSelectionz = false;
                 }
 
@@ -625,7 +564,7 @@
                 {
                     UpdateSelection = true;
 
-                    foreach (var player in Players.Values)
+                    foreach (var player in Simulator.Data.Players.Values)
                         player.UpdateSelectionz = true;
                 }
 

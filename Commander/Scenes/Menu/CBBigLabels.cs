@@ -51,7 +51,7 @@
 
             foreach (var player in Inputs.ConnectedPlayers)
             {
-                CelestialBody c = Simulator.GetSelectedCelestialBody(player);
+                CelestialBody c = Simulator.GetSelectedCelestialBody((Commander.Player) player);
 
                 if (c != null)
                 {

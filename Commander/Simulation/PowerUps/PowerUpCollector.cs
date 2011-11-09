@@ -57,7 +57,7 @@ namespace EphemereGames.Commander.Simulation
             Collector = new SpaceshipCollector(Simulator)
             {
                 Position = HumanBattleship.Position,
-                VisualPriority = VisualPriorities.Default.PlayerCursor,
+                VisualPriority = VisualPriorities.Default.VisualPlayer,
                 StartingObject = HumanBattleship
             };
             Collector.SteeringBehavior.ApplySafeBouncing();

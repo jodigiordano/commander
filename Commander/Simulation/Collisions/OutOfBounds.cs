@@ -29,7 +29,7 @@
                 if (bullet.Shape == Shape.Line || bullet.Shape == Shape.Circle)
                     continue;
 
-                if (!Physics.RectangleRectangleCollision(bullet.Rectangle, Simulator.Data.Battlefield))
+                if (!Physics.RectangleRectangleCollision(bullet.Rectangle, Simulator.Data.Battlefield.Outer))
                     Output.Add(bullet);
             }
         }

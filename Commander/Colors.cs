@@ -25,8 +25,10 @@
         public static readonly Color Blue = new Color(95, 71, 255);
         public static readonly Color Green = new Color(128, 255, 63);
 
-        public static readonly Color CannotDo = new Color(81, 20, 20);
-        public static readonly Color Selected = new Color(50, 137, 0);
+        public static readonly Color CMCanDefault = Color.White;
+        public static readonly Color CMCannotDefault = Color.Red;
+        public static readonly Color CMCanAlt = new Color(50, 137, 0);
+        public static readonly Color CMCannotAlt = new Color(81, 20, 20);
     }
 
 

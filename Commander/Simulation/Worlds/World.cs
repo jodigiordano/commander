@@ -13,7 +13,7 @@
         public HighScores HighScores;
 
         public bool EditorMode;
-        public EditorState EditorState;
+        public bool Editing;
         public bool CampaignMode;
         public bool MultiverseMode;
 
@@ -26,8 +26,9 @@
             HighScores = new HighScores();
 
             EditorMode = false;
-            EditorState = EditorState.Editing;
+            Editing = false;
             CampaignMode = false;
+            MultiverseMode = false;
         }
 
 

@@ -41,17 +41,16 @@
 
         public const double Title = 0.2;
 
-        public const double PlayerPanelCursor = 0.3;
+        public const double VisualPanelPlayer = 0.3;
 
         public const double Panel = 0.35;
 
         public const double TurretMenu = 0.38;
         public const double CelestialBodyMenu = 0.39;
-        public const double StartingPathMenu = 0.39;
 
         public const double Teleport = 0.39;
 
-        public const double PlayerCursor = 0.4; //Back == 0.4 - 0.00001; Trail == 0.4 - 0.00002, Trail2 == 0.4 - 0.00003
+        public const double VisualPlayer = 0.4; //Back == 0.4 - 0.00001; Trail == 0.4 - 0.00002, Trail2 == 0.4 - 0.00003
 
         public const double DefaultSpaceship = 0.41;
 

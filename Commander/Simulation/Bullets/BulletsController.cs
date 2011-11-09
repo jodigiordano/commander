@@ -2,6 +2,7 @@ namespace EphemereGames.Commander.Simulation
 {
     using System;
     using System.Collections.Generic;
+    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 

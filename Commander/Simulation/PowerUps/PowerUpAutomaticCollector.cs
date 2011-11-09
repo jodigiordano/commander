@@ -40,7 +40,7 @@ namespace EphemereGames.Commander.Simulation
             {
                 Speed = 8,
                 StartingObject = HumanBattleship,
-                VisualPriority = VisualPriorities.Default.PlayerCursor
+                VisualPriority = VisualPriorities.Default.VisualPlayer
             };
             AutomaticCollector.SteeringBehavior.ApplySafeBouncing();
 

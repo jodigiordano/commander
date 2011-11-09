@@ -27,8 +27,6 @@
         private float MaxCameraZoomSpeed;
         private List<SimPlayer> Players;
 
-        private bool UsePausePlayer;
-
         private int MaxZoomLevel;
         private int ZoomLevel;
 
@@ -57,12 +55,11 @@
         {
             CameraData.MaxZoomIn = Preferences.BackBufferZoom;
             CameraData.MaxZoomOut = Math.Min(
-                MaxZoomWidth / Simulator.Data.Battlefield.Width,
-                MaxZoomHeight / Simulator.Data.Battlefield.Height);
+                MaxZoomWidth / Simulator.Data.Battlefield.Inner.Width,
+                MaxZoomHeight / Simulator.Data.Battlefield.Inner.Height);
             CameraData.MaxDelta = Math.Abs(CameraData.MaxZoomIn - CameraData.MaxZoomOut);
 
             Players.Clear();
-            UsePausePlayer = false;
         }
 
 
@@ -75,18 +72,6 @@
         public void DoPlayerDisconnected(SimPlayer p)
         {
             Players.Remove(p);
-        }
-
-
-        public void DoPanelOpened()
-        {
-            UsePausePlayer = true;
-        }
-
-
-        public void DoPanelClosed()
-        {
-            UsePausePlayer = false;
         }
 
 
@@ -172,7 +157,7 @@
             Vector3 newPosition = new Vector3();
 
             foreach (var p in Players)
-                newPosition += UsePausePlayer ? p.PausePlayer.Position : p.Position;
+                newPosition += p.Position;
 
             Vector3.Divide(ref newPosition, Players.Count, out newPosition);
 
@@ -187,7 +172,7 @@
 
         private void ComputeNewCameraZoom()
         {
-            var boundaries = UsePausePlayer ? GetPausePlayersBoundaries() : GetPlayersBoundaries();
+            var boundaries = GetPlayersBoundaries();
 
             float width = Math.Abs(boundaries.Y - boundaries.X) + 100; //padding
             float height = Math.Abs(boundaries.W - boundaries.Z) + 100; //padding
@@ -228,33 +213,6 @@
 
                 if (p.Position.Y > result.W)
                     result.W = p.Position.Y;
-            }
-
-            return result;
-        }
-
-
-        private Vector4 GetPausePlayersBoundaries()
-        {
-            var result = new Vector4(
-                Players[0].PausePlayer.Position.X,
-                Players[0].PausePlayer.Position.X,
-                Players[0].PausePlayer.Position.Y,
-                Players[0].PausePlayer.Position.Y);
-
-            foreach (var p in Players)
-            {
-                if (p.PausePlayer.Position.X < result.X)
-                    result.X = p.PausePlayer.Position.X;
-
-                if (p.PausePlayer.Position.X > result.Y)
-                    result.Y = p.PausePlayer.Position.X;
-
-                if (p.PausePlayer.Position.Y < result.Z)
-                    result.Z = p.PausePlayer.Position.Y;
-
-                if (p.PausePlayer.Position.Y > result.W)
-                    result.W = p.PausePlayer.Position.Y;
             }
 
             return result;

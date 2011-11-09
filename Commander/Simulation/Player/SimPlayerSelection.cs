@@ -1,23 +1,30 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using System.Collections.Generic;
 
 
     class SimPlayerSelection
     {
-        public Dictionary<TurretChoice, bool> AvailableTurretOptions;
-        public Dictionary<int, bool> AvailableNewGameChoices;
-
         protected CelestialBody celestialBody;
-        protected PowerUpType powerUpToBuy;
         protected Turret turret;
+        protected ContextualMenu openedMenu;
+
+        // in-game
+        protected PowerUpType powerUpToBuy;
         protected TurretChoice turretChoice;
         protected TurretType turretToBuy;
         protected Turret turretToPlace;
-        protected PausedGameChoice pausedGameChoice;
-        protected EditorWorldChoice editorWorldChoice;
+
+        // world
+        protected PauseChoice pausedGameChoice;
+
+        // main menu
         protected int newGameChoice;
+
+        // editor
+        protected EditorWorldChoice editorWorldChoice;
         protected EditorEditingState editingState;
+        protected int editorGeneralMenuChoice;
+        protected int editorCBChoice;
 
         public bool CelestialBodyChanged;
         public bool PowerUpToBuyChanged;
@@ -29,16 +36,11 @@
         public bool EditorWorldChoiceChanged;
         public bool NewGameChoiceChanged;
         public bool EditingStateChanged;
+        public bool OpenedMenuChanged;
 
 
         public SimPlayerSelection()
         {
-            AvailableTurretOptions = new Dictionary<TurretChoice, bool>(TurretActionComparer.Default);
-            AvailableTurretOptions.Add(TurretChoice.Sell, false);
-            AvailableTurretOptions.Add(TurretChoice.Update, false);
-
-            AvailableNewGameChoices = new Dictionary<int,bool>();
-
             Initialize();
         }
 
@@ -51,10 +53,11 @@
             TurretToBuy = TurretType.None;
             TurretChoice = TurretChoice.None;
             TurretToPlace = null;
-            PausedGameChoice = PausedGameChoice.None;
+            PausedGameChoice = PauseChoice.None;
             EditorWorldChoice = EditorWorldChoice.None;
             NewGameChoice = -1;
             EditingState = EditorEditingState.None;
+            OpenedMenu = null;
 
             Update();
         }
@@ -72,6 +75,7 @@
             EditorWorldChoiceChanged = false;
             NewGameChoiceChanged = false;
             EditingStateChanged = false;
+            OpenedMenuChanged = false;
         }
 
 
@@ -86,6 +90,13 @@
         {
             get { return powerUpToBuy; }
             set { PowerUpToBuyChanged = powerUpToBuy != value; powerUpToBuy = value; }
+        }
+
+
+        public ContextualMenu OpenedMenu
+        {
+            get { return openedMenu; }
+            set { OpenedMenuChanged = openedMenu != value; openedMenu = value; }
         }
 
 
@@ -117,7 +128,7 @@
         }
 
 
-        public PausedGameChoice PausedGameChoice
+        public PauseChoice PausedGameChoice
         {
             get { return pausedGameChoice; }
             set { PausedGameChoiceChanged = pausedGameChoice != value; pausedGameChoice = value; }

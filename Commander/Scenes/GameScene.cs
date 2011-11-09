@@ -14,7 +14,7 @@
         public LevelDescriptor Level;
 
         public bool EditorMode;
-        public EditorState EditorState;
+        public bool Editing;
 
         private FutureJobsController FutureJobs;
 
@@ -31,7 +31,7 @@
             MusicName = "BattleMusic";
 
             EditorMode = false;
-            EditorState = EditorState.Editing;
+            Editing = true;
         }
 
 
@@ -40,7 +40,7 @@
             Simulator = new Simulator(this, Level)
             {
                 EditorMode = EditorMode,
-                EditorState = EditorState
+                EditMode = Editing
             };
             Simulator.Initialize();
             Simulator.AddNewGameStateListener(DoNewGameState);
@@ -116,7 +116,7 @@
         {
             if (newState == GameState.Won)
             {
-                Simulator.ShowHelpBarMessage(Inputs.MasterPlayer, HelpBarMessage.GameWon);
+                Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.GameWon);
                 Main.MusicController.StopCurrentMusic();
                 MusicName = "WinMusic";
                 Main.MusicController.PlayOrResume(MusicName);
@@ -128,7 +128,7 @@
 
             else if (newState == GameState.Lost)
             {
-                Simulator.ShowHelpBarMessage(Inputs.MasterPlayer, HelpBarMessage.GameLost);
+                Simulator.ShowHelpBarMessage((Commander.Player) Inputs.MasterPlayer, HelpBarMessage.GameLost);
                 Main.MusicController.StopCurrentMusic();
                 MusicName = "LoseMusic";
                 Main.MusicController.PlayOrResume(MusicName);
@@ -309,7 +309,7 @@
             var newGame = new GameScene(Name == "Game1" ? "Game2" : "Game1", level)
             {
                 EditorMode = EditorMode,
-                EditorState = EditorState
+                Editing = Editing
             };
             newGame.Initialize();
             Main.CurrentGame = newGame;

@@ -12,7 +12,6 @@
     {
         public List<Turret> Turrets;
         public List<Mineral> Minerals;
-        public List<SimPlayer> Players;
         public bool Debug;
         
 
@@ -56,7 +55,7 @@
             OutOfBounds = new OutOfBounds(Simulator);
             EnemyInRange = new EnemyInRange(Simulator);
             ObjectsCollisions = new ObjectsCollisions(Simulator);
-            PlayersCollisions = new PlayersCollisions();
+            PlayersCollisions = new PlayersCollisions(Simulator);
             CelestialBodyExplosion = new CelestialBodyExplosion(Simulator);
             StartingPathCollisions = new StartingPathCollisions(Simulator);
             ShieldsCollisions = new SpaceshipShieldsCollisions(Simulator);
@@ -72,8 +71,8 @@
         {
             Debug = false;
 
-            EnemiesGrid = new GridWorld(Simulator.Data.Battlefield, 50);
-            TurretsGrid = new GridWorld(Simulator.Data.Battlefield, 50);
+            EnemiesGrid = new GridWorld(Simulator.Data.Battlefield.Inner, 50);
+            TurretsGrid = new GridWorld(Simulator.Data.Battlefield.Inner, 50);
 
             HiddenEnemies.EnemiesGrid = EnemiesGrid;
             BoostedTurrets.Turrets = Turrets;
@@ -87,7 +86,6 @@
             ObjectsCollisions.HiddenEnemies = HiddenEnemies;
             ObjectsCollisions.Minerals = Minerals;
             ObjectsCollisions.Turrets = Turrets;
-            PlayersCollisions.Players = Players;
         }
 
 

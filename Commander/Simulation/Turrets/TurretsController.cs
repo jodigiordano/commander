@@ -98,10 +98,10 @@
 
             // Pour l'instant, à chaque tick, les tourelles sont dissociées de leurs ennemis
             // et le système de collision fait en sorte que les ennemis sont réassocié de nouveau
-            // Une tourelle est associé avec le premier ennemi qui entre en collision avec sa zone d'activation
+            // Une tourelle est associé avec le premier enemy qui entre en collision avec sa zone d'activation
             // Une meilleure implémentation serait un événement EntreDansZoneActivation et SortDeZoneActivation
             // lancé par le ControleurCollisions et capturé par ce controleur, qui ensuite associerait/dissocierait
-            // l'ennemi d'une tourelle. Résultat: moins d'événements lancés à chaque tick.
+            // l'enemy d'une tourelle. Résultat: moins d'événements lancés à chaque tick.
             AssociationsThisTick.Clear();
 
             BoostTurrets();

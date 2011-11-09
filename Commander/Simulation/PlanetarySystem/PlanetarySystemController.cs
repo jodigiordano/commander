@@ -43,7 +43,7 @@
 
         public void Initialize()
         {
-            if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)
+            if (Simulator.EditorEditingMode)
                 foreach (var c in CelestialBodies)
                     c.CanSelectOverride = true;
 
@@ -51,10 +51,10 @@
 
             var emitter = (RectEmitter) Stars.Model[0];
 
-            emitter.TriggerOffset = new Vector2(Simulator.Data.Battlefield.Center.X, Simulator.Data.Battlefield.Center.Y);
-            emitter.Width = Simulator.Data.Battlefield.Width;
-            emitter.Height = Simulator.Data.Battlefield.Height;
-            emitter.ReleaseQuantity = (int) Math.Ceiling((Math.Max(Simulator.Data.Battlefield.Width, Simulator.Data.Battlefield.Height) / Math.Max(Preferences.BackBuffer.X, Preferences.BackBuffer.Y)));
+            emitter.TriggerOffset = new Vector2(Simulator.Data.Battlefield.Outer.Center.X, Simulator.Data.Battlefield.Outer.Center.Y);
+            emitter.Width = Simulator.Data.Battlefield.Outer.Width;
+            emitter.Height = Simulator.Data.Battlefield.Outer.Height;
+            emitter.ReleaseQuantity = (int) Math.Ceiling((Math.Max(Simulator.Data.Battlefield.Outer.Width, Simulator.Data.Battlefield.Outer.Height) / Math.Max(Preferences.BackBuffer.X, Preferences.BackBuffer.Y)));
 
             Stars.VisualPriority = VisualPriorities.Default.Stars;
             StarsEmitter = 0;
@@ -453,7 +453,7 @@
             {
                 ShootingStar ss = ShootingStarsFactory.Get();
                 ss.Scene = Simulator.Scene;
-                ss.Battlefield = Simulator.Data.OuterBattlefield;
+                ss.Battlefield = Simulator.Data.Battlefield.Outer;
                 ss.LoadContent();
                 ss.Initialize();
 

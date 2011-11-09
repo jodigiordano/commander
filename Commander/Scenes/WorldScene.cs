@@ -59,7 +59,7 @@
                 DemoMode = true,
                 WorldMode = true,
                 EditorMode = World.EditorMode,
-                EditorState = World.EditorState,
+                EditMode = World.Editing,
                 AvailableLevelsWorldMode = CBtoLevel,
                 AvailableWarpsWorldMode = CBtoWarp,
                 EnableInputs = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale
@@ -176,7 +176,7 @@
             if (Simulator.EditorWorldMode)
             {
                 // sync the level descriptor so it can be saved.
-                if (Main.CurrentGame != null && Main.CurrentGame.Simulator.EditorState != EditorState.Playtest)
+                if (Main.CurrentGame != null && Main.CurrentGame.Simulator.EditorEditingMode)
                 {
                     Main.CurrentGame.Simulator.Data.Level.SyncDescriptor();
                     World.SetLevelDescriptor(Main.CurrentGame.Simulator.Data.Level.Descriptor.Infos.Id, Main.CurrentGame.Simulator.Data.Level.Descriptor);
@@ -359,7 +359,7 @@
                 // Resume Game
                 if (GamePausedToWorld &&
                     currentGame.Simulator.Data.Level.Descriptor.Infos.Id == level.Infos.Id &&
-                    Simulator.PausedGameChoice == PausedGameChoice.Resume)
+                    Simulator.PausedGameChoice == PauseChoice.Resume)
                 {
                     currentGame.Simulator.TriggerNewGameState(GameState.Running);
                     TransiteTo(currentGame.Name);
@@ -426,7 +426,7 @@
                     currentGame = new GameScene("Game1", level)
                     {
                         EditorMode = World.EditorMode,
-                        EditorState = Simulator.EditorWorldChoice == EditorWorldChoice.Edit ? EditorState.Editing : EditorState.Playtest
+                        Editing = Simulator.EditorWorldChoice == EditorWorldChoice.Edit
                     };
                     currentGame.Initialize();
                     Main.CurrentGame = currentGame;

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Commander.Simulation;
+    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -21,8 +22,8 @@
             Teleport
         }
 
-        private SpaceshipCursor Protagonist;
-        private SpaceshipCursor Wife;
+        private VisualSpaceship Protagonist;
+        private VisualSpaceship Wife;
         private Simulator Simulator;
 
         private ProtagonistState State;
@@ -47,8 +48,8 @@
             Simulator = simulator;
             Mothership = mothership;
 
-            Protagonist = new SpaceshipCursor(simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroProtagonist, new Color(95, 71, 255), "Cursor1", true);
-            Wife = new SpaceshipCursor(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroWife, new Color(255, 0, 136), "Cursor2", true);
+            Protagonist = new VisualSpaceship(simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroProtagonist, new Color(95, 71, 255), "Cursor1", true);
+            Wife = new VisualSpaceship(Simulator.Scene, new Vector3(-200, -600, 0), 5, VisualPriorities.Cutscenes.IntroWife, new Color(255, 0, 136), "Cursor2", true);
 
             Protagonist.FadeIn();
             Wife.FadeIn();

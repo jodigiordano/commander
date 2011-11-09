@@ -165,8 +165,8 @@
 
         public void DoMouseInput()
         {
-            if (Player.Index != PlayerIndexAlt.Five)
-                return;
+            //if (Player.Index != PlayerIndexAlt.Five)
+            //    return;
 
             MouseState mouseState = Mouse.GetState();
             int currentMouseWheelValue = MouseWheelValue(mouseState.ScrollWheelValue);

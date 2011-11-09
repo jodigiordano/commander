@@ -166,33 +166,6 @@
     }
 
 
-    class EditorGeneralMenuChoiceComparer : IEqualityComparer<EditorGeneralMenuChoice>
-    {
-        private static EditorGeneralMenuChoiceComparer instance;
-        public static EditorGeneralMenuChoiceComparer Default
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new EditorGeneralMenuChoiceComparer();
-                return instance;
-            }
-        }
-
-
-        public bool Equals(EditorGeneralMenuChoice x, EditorGeneralMenuChoice y)
-        {
-            return x == y;
-        }
-
-
-        public int GetHashCode(EditorGeneralMenuChoice obj)
-        {
-            return (int) obj;
-        }
-    }
-
-
     class EditorPanelComparer : IEqualityComparer<EditorPanel>
     {
         private static EditorPanelComparer instance;

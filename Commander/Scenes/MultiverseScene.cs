@@ -212,13 +212,13 @@
             if (!Main.PlayersController.MultiverseData.LoggedIn)
                 DoLogin(player);
             else
-                Simulator.ShowPanel(PanelType.JumpToWorld, player.Position, true);
+                Simulator.ShowPanel(PanelType.JumpToWorld, player.Position);
         }
 
 
         private void DoRegister(Player player)
         {
-            Simulator.ShowPanel(PanelType.Register, player.Position, true);
+            Simulator.ShowPanel(PanelType.Register, player.Position);
         }
 
 
@@ -233,7 +233,7 @@
 
         private void DoLogin(Player player)
         {
-            Simulator.ShowPanel(PanelType.Login, player.Position, true);
+            Simulator.ShowPanel(PanelType.Login, player.Position);
         }
 
 

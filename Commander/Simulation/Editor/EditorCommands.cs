@@ -7,7 +7,7 @@
     {
         public string Name;
         public EditorCommandType Type;
-        public EditorPlayer Owner;
+        public SimPlayer Owner;
 
 
         public EditorCommand(string name)

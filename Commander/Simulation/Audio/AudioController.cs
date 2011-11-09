@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Physics;
     using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;

@@ -19,6 +19,8 @@
         public string ShipBouncingSound;
         public string ShipShieldHitSound;
         public string ShipTurningSound;
+        public Color CMCannotColor;
+        public Color CMCanColor;
 
 
         public float MovingSpeed;
@@ -143,6 +145,26 @@
         };
 
 
+        private static List<Color> AvailablesCMCanColor = new List<Color>()
+        {
+            Colors.Spaceship.CMCanDefault,
+            Colors.Spaceship.CMCanDefault,
+            Colors.Spaceship.CMCanDefault,
+            Colors.Spaceship.CMCanDefault,
+            Colors.Spaceship.CMCanAlt
+        };
+
+
+        private static List<Color> AvailablesCMCannotColor = new List<Color>()
+        {
+            Colors.Spaceship.CMCannotDefault,
+            Colors.Spaceship.CMCannotDefault,
+            Colors.Spaceship.CMCannotDefault,
+            Colors.Spaceship.CMCannotAlt,
+            Colors.Spaceship.CMCannotDefault
+        };
+
+
         public Player()
             : base()
         {
@@ -186,6 +208,8 @@
             ShipShieldHitSound = AvailablesShipShieldHitSounds[index];
             ShipTurningSound = AvailablesShipTurningSounds[index];
             SpawningPosition = AvailablesSpawingPositions[index];
+            CMCanColor = AvailablesCMCanColor[index];
+            CMCannotColor = AvailablesCMCannotColor[index];
         }
 
 
@@ -203,6 +227,19 @@
         public void Move(ref Vector3 delta, float speed)
         {
             Position += delta * speed;
+        }
+
+
+        public Color GetCMColor(bool can, bool selected)
+        {
+            if (!can && selected)
+                return CMCannotColor;
+            else if (!can)
+                return Colors.Spaceship.CMCannotDefault;
+            else if (can && selected)
+                return CMCanColor;
+            else
+                return Colors.Spaceship.CMCanDefault;
         }
     }
 }

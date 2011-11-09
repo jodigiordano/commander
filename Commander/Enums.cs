@@ -192,12 +192,12 @@ namespace EphemereGames.Commander.Simulation
     enum TurretChoice
     {
         None = -1,
-        Sell = 0,
-        Update = 1
+        Update = 0,
+        Sell = 1
     };
 
 
-    public enum PausedGameChoice
+    public enum PauseChoice
     {
         None = -1,
         Resume = 0,
@@ -215,14 +215,6 @@ namespace EphemereGames.Commander.Simulation
     };
 
 
-    enum EditorGeneralMenuChoice
-    {
-        None = -1,
-        Gameplay = 0,
-        Battlefield = 1
-    };
-
-
     enum EditorPanel
     {
         None = -1,
@@ -233,13 +225,6 @@ namespace EphemereGames.Commander.Simulation
         Waves = 4,
         CelestialBodyAssets = 5,
         Enemies = 6
-    };
-
-
-    enum EditorState
-    {
-        Editing = 1,
-        Playtest = 2
     };
 
 

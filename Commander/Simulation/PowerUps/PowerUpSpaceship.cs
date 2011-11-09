@@ -48,7 +48,7 @@ namespace EphemereGames.Commander.Simulation
             Spaceship = new Spaceship(Simulator)
             {
                 Position = Position,
-                VisualPriority = VisualPriorities.Default.PlayerCursor,
+                VisualPriority = VisualPriorities.Default.VisualPlayer,
                 StartingObject = HumanBattleship
             };
             Spaceship.SteeringBehavior.ApplySafeBouncing();

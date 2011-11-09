@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System;
+    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.XACTAudio;
 
 
@@ -186,7 +187,7 @@
 
         //private void HandleFiringCue()
         //{
-        //    if (InnerPlayer.Firing)
+        //    if (Owner.Firing)
         //        FiringCue.PlayOrResume();
         //    else
         //        FiringCue.Pause();

@@ -1,6 +1,5 @@
-﻿namespace EphemereGames.Commander.Simulation
+﻿namespace EphemereGames.Commander.Simulation.Player
 {
-    using System.Collections.Generic;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
@@ -16,7 +15,6 @@
         private Turret PreviousTurret;
         private CelestialBody PreviousCelestialBody;
 
-        private List<CelestialBody> CelestialBodies;
         private SimPlayer Player;
 
         private Vector3 LastPositionCelestialBody;
@@ -24,10 +22,9 @@
 
         private Simulator Simulator;
 
-        public SelectedCelestialBodyController(Simulator simulator, SimPlayer player, List<CelestialBody> celestialBodies)
+        public SelectedCelestialBodyController(Simulator simulator, SimPlayer player)
         {
             Simulator = simulator;
-            CelestialBodies = celestialBodies;
             Player = player;
 
             Initialize();
@@ -112,15 +109,14 @@
 
             DoCelestialBodySelection();
 
-            if (Simulator.EditorMode &&
-                Simulator.EditorState == EditorState.Editing &&
-                Player.Position.X > Simulator.Data.Battlefield.Right - 100 &&
-                Player.Position.Y < Simulator.Data.Battlefield.Top + 100)
+            if (Simulator.EditorEditingMode &&
+                Player.Position.X > Simulator.Data.Battlefield.Inner.Right - 100 &&
+                Player.Position.Y < Simulator.Data.Battlefield.Inner.Top + 100)
             {
                 if (PreviousCelestialBody != null)
                     PreviousCelestialBody.PlayerCheckedIn = null;
 
-                CelestialBody = PlanetarySystemController.GetAsteroidBelt(CelestialBodies);
+                CelestialBody = PlanetarySystemController.GetAsteroidBelt(Simulator.Data.Level.PlanetarySystem);
 
                 if (CelestialBody != null)
                     LastPositionCelestialBody = CelestialBody.Position;
@@ -134,7 +130,7 @@
             Turret = null;
             PreviousCelestialBody = CelestialBody;
 
-            foreach (var cb in CelestialBodies)
+            foreach (var cb in Simulator.Data.Level.PlanetarySystem)
             {
                 if (!cb.Alive || !cb.CanSelect)
                     continue;
@@ -170,7 +166,7 @@
             PreviousCelestialBody = CelestialBody;
             CelestialBody = null;
 
-            foreach (var cb in CelestialBodies)
+            foreach (var cb in Simulator.Data.Level.PlanetarySystem)
             {
                 if (!cb.Alive || !cb.CanSelect)
                     continue;

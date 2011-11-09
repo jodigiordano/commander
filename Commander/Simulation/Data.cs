@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -9,14 +8,15 @@
     
     class Data
     {
+        public Battlefield Battlefield;
         public Level Level;
-        public PhysicalRectangle Battlefield;
-        public PhysicalRectangle OuterBattlefield;
         public List<Bullet> Bullets;
         public List<ShootingStar> ShootingStars;
         public Path Path;
         public Path PathPreview;
         public List<Enemy> Enemies;
+        public Dictionary<Commander.Player, SimPlayer> Players;
+
 
         private Simulator Simulator;
 
@@ -31,7 +31,11 @@
             Path = new Path(Simulator, new ColorInterpolator(Color.White, Color.Red), 100, BlendType.Add);
             PathPreview = new Path(Simulator, new ColorInterpolator(Color.White, Color.Green), 0, BlendType.Add) { TakeIntoAccountFakeGravTurret = true, TakeIntoAccountFakeGravTurretLv2 = true };
 
-            Enemies = new List<Enemy>();        
+            Enemies = new List<Enemy>();
+
+            Players = new Dictionary<Commander.Player, SimPlayer>();
+
+            Battlefield = new Battlefield(Simulator);
         }
 
 
@@ -40,18 +44,29 @@
             Bullets.Clear();
             ShootingStars.Clear();
 
-            if (Simulator.EditorMode && Simulator.EditorState == EditorState.Editing)
-                Battlefield = new PhysicalRectangle(-5000, -5000, 10000, 10000);
-            else
-                Battlefield = Level.Descriptor.GetBoundaries(new Vector3(6 * (int) Size.Big));
-
-            OuterBattlefield = new PhysicalRectangle(Battlefield.X - 200, Battlefield.Y - 200, Battlefield.Width + 400, Battlefield.Height + 400);
+            Battlefield.Initialize(Level);
 
             Level.Initialize();
             Path.Initialize();
             PathPreview.Initialize();
 
             Enemies.Clear();
+
+            Players.Clear();
+        }
+
+
+        public bool HasPlayer(Commander.Player player)
+        {
+            return Players.ContainsKey(player);
+        }
+
+
+        public SimPlayer GetPlayer(Commander.Player player)
+        {
+            SimPlayer simPlayer = null;
+
+            return Players.TryGetValue(player, out simPlayer) ? simPlayer : null;
         }
     }
 }
