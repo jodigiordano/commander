@@ -1,6 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation.Player
 {
-    class EditorWorldLevelMenu : WorldMenu
+    class EditorWorldLevelMenu : EditorContextualMenu
     {
         public EditorWorldLevelMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
@@ -10,15 +10,9 @@
         }
 
 
-        public EditorCommand Selection
+        protected override EditorCommand Selection
         {
             get { return ((EditorTextContextualMenuChoice) Choices[SelectedIndex]).Command; }
-        }
-
-
-        public override void UpdateSelection()
-        {
-            Owner.ActualSelection.EditorWorldLevelCommand = Visible ? Selection : null;
         }
 
 

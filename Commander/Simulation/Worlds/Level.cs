@@ -207,7 +207,7 @@
                 // Normal
                 else if (descriptor.Image != null)
                 {
-                    c = new CelestialBody(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001)
+                    c = new Planet(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001)
                     {
                         FollowPath = descriptor.FollowPath,
                         StraightLine = descriptor.StraightLine,

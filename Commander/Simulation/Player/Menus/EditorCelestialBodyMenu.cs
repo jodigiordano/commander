@@ -3,16 +3,11 @@
     using System.Collections.Generic;
 
 
-    class EditorCelestialBodyMenu : ContextualMenu
+    abstract class EditorCelestialBodyMenu : EditorContextualMenu
     {
-        SimPlayer Owner;
-
-
         public EditorCelestialBodyMenu(Simulator simulator, double visualPriority, SimPlayer owner)
-            : base(simulator, visualPriority, owner.Color, 5)
+            : base(simulator, visualPriority, owner)
         {
-            Owner = owner;
-
             var choices = new List<ContextualMenuChoice>()
             {
                 new EditorTextContextualMenuChoice("Move", "Move", 2, new EditorCelestialBodyCommand("Move")),
@@ -38,8 +33,9 @@
                     }),
                 new EditorTextContextualMenuChoice("PushFirst", "Push first on path", 2, new EditorCelestialBodyCommand("PushFirst")),
                 new EditorTextContextualMenuChoice("PushLast", "Push last on path", 2, new EditorCelestialBodyCommand("PushLast")),
+                new EditorTextContextualMenuChoice("RemoveFromPath", "Remove from path", 2, new EditorCelestialBodyCommand("RemoveFromPath")),
                 new EditorToggleContextualMenuChoice("Size",
-                    new List<string>() { "Size: small", "Size: medium", "Size: big" },
+                    new List<string>() { "Size: small", "Size: normal", "Size: big" },
                     2,
                     new List<EditorCommand>()
                     {
@@ -47,7 +43,6 @@
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Big },
                         new EditorCelestialBodyCommand("ToggleSize") { Size = Size.Small },
                     }),
-                new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 2, new EditorShowPanelCommand(PanelType.EditorCelestialBodyAssets)),
                 new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, new EditorShowPanelCommand(PanelType.EditorCelestialBodyAttributes))
             };
 
@@ -56,27 +51,38 @@
         }
 
 
-        public EditorCommand Selection
+        public override void OnOpen()
+        {
+            SelectedIndex = 0;
+
+            var speed = (EditorToggleContextualMenuChoice) GetChoiceByName("Speed");
+
+            for (int i = 0; i < EditorLevelGenerator.PossibleRotationTimes.Count; i++)
+                if (Owner.ActualSelection.CelestialBody.Speed == EditorLevelGenerator.PossibleRotationTimes[i])
+                {
+                    speed.SetChoice(i);
+                    break;
+                }
+            
+            var size = (EditorToggleContextualMenuChoice) GetChoiceByName("Size");
+
+            size.SetChoice(
+                Owner.ActualSelection.CelestialBody.Size == Size.Small ? 0 :
+                Owner.ActualSelection.CelestialBody.Size == Size.Normal ? 1 : 2);
+        }
+
+
+        protected override EditorCommand Selection
         {
             get
             {
                 var choice = GetCurrentChoice();
-                EditorCommand command = null;
 
                 if (choice is EditorTextContextualMenuChoice)
-                    command = ((EditorTextContextualMenuChoice) choice).Command;
+                    return ((EditorTextContextualMenuChoice) choice).Command;
                 else
-                    command = ((EditorToggleContextualMenuChoice) choice).Command;
-
-                command.Owner = Owner;
-                return command;
+                    return ((EditorToggleContextualMenuChoice) choice).Command;
             }
-        }
-
-
-        public override void UpdateSelection()
-        {
-            Owner.ActualSelection.EditorCelestialBodyMenuCommand = Visible ? Selection : null;
         }
 
 

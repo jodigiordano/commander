@@ -128,17 +128,23 @@
                 else if (key == Keys.D9)
                     value = "(";
                 else if (key == Keys.OemTilde)
-                    value = "`";
+                    value = "~";
                 else if (key == Keys.OemMinus)
                     value = "_";
                 else if (key == Keys.OemPlus)
-                    value = "=";
+                    value = "+";
                 else if (key == Keys.OemSemicolon)
                     value = ":";
                 else if (key == Keys.OemComma)
                     value = "<";
                 else if (key == Keys.OemPeriod)
                     value = ">";
+                else if (key == Keys.OemQuestion)
+                    value = "?";
+                else if (key == Keys.OemQuotes)
+                    value = "\"";
+                else if (key == Keys.Add)
+                    value = "+";
 
                 TextBoxGroup.Focus.Value += value;
             }
@@ -173,7 +179,7 @@
                 else if (key == Keys.D9)
                     value = "9";
                 else if (key == Keys.Add)
-                    value = "+";
+                    value = "=";
                 else if (key == Keys.Decimal)
                     value = "-";
                 else if (key == Keys.Divide)
@@ -189,15 +195,15 @@
                 else if (key == Keys.OemPeriod)
                     value = ".";
                 else if (key == Keys.OemPlus)
-                    value = "+";
+                    value = "=";
                 else if (key == Keys.OemQuestion)
-                    value = "?";
+                    value = "/";
                 else if (key == Keys.OemQuotes)
-                    value = "\"";
+                    value = "'";
                 else if (key == Keys.OemSemicolon)
                     value = ";";
                 else if (key == Keys.OemTilde)
-                    value = "~";
+                    value = "`";
                 else if (key == Keys.Space)
                     value = " ";
                 else

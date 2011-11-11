@@ -4,15 +4,12 @@
     using EphemereGames.Core.Visual;
 
 
-    class NewGameMenu : ContextualMenu
+    class CampaignMenu : CommanderContextualMenu
     {
-        private SimPlayer Owner;
-
-
-        public NewGameMenu(Simulator simulator, double visualPriority, SimPlayer owner)
-            : base(simulator, visualPriority, owner.Color, new List<ContextualMenuChoice>(), 10)
+        public CampaignMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+            : base(simulator, visualPriority, owner)
         {
-            Owner = owner;
+
         }
 
 
@@ -37,22 +34,6 @@
         public int Selection
         {
             get { return SelectedIndex; }
-        }
-
-
-        public override void NextChoice()
-        {
-            ((TextContextualMenuChoice) Choices[SelectedIndex]).SetColor(Owner.InnerPlayer.GetCMColor(true, false));
-            base.NextChoice();
-            ((TextContextualMenuChoice) Choices[SelectedIndex]).SetColor(Owner.InnerPlayer.GetCMColor(true, true));
-        }
-
-
-        public override void PreviousChoice()
-        {
-            ((TextContextualMenuChoice) Choices[SelectedIndex]).SetColor(Owner.InnerPlayer.GetCMColor(true, false));
-            base.PreviousChoice();
-            ((TextContextualMenuChoice) Choices[SelectedIndex]).SetColor(Owner.InnerPlayer.GetCMColor(true, true));
         }
 
 

@@ -77,6 +77,7 @@
         public string Name
         {
             get { return Descriptor.Name; }
+            set { Descriptor.Name = value; }
         }
 
 
@@ -185,13 +186,15 @@
         }
 
 
-        public void AddLevel()
+        public int AddLevel()
         {
             var id = Descriptor.GetNextLevelId();
             var level = Main.WorldsFactory.GetEmptyLevelDescriptor(id);
 
             Descriptor.Levels.Add(id);
             LevelsDescriptors.Add(id, level);
+
+            return id;
         }
 
 

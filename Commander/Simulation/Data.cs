@@ -17,6 +17,8 @@
         public List<Enemy> Enemies;
         public Dictionary<Commander.Player, SimPlayer> Players;
         public Dictionary<PanelType, Panel> Panels;
+        public List<Wave> ActiveWaves;
+        public int RemainingWaves;
 
 
         private Simulator Simulator;
@@ -39,6 +41,10 @@
             Battlefield = new Battlefield(Simulator);
 
             Panels = new Dictionary<PanelType, Panel>(PanelTypeComparer.Default);
+
+            ActiveWaves = new List<Wave>();
+
+            RemainingWaves = -1;
         }
 
 
@@ -58,6 +64,10 @@
             Players.Clear();
 
             InitializePanels();
+
+            ActiveWaves.Clear();
+
+            RemainingWaves = Level.InfiniteWaves == null ? Level.Waves.Count : -1;
         }
 
 
@@ -98,7 +108,9 @@
             Panels.Add(PanelType.EditorBackground, new BackgroundsAssetsPanel(Simulator));
             Panels.Add(PanelType.EditorWaves, new WavesPanel(Simulator));
             Panels.Add(PanelType.EditorCelestialBodyAssets, new CelestialBodyAssetsPanel(Simulator));
+            Panels.Add(PanelType.EditorCelestialBodyAttributes, new CelestialBodyAttributesPanel(Simulator));
             Panels.Add(PanelType.EditorEnemies, new EnemiesAssetsPanel(Simulator));
+            Panels.Add(PanelType.EditorWorldName, new WorldNamePanel(Simulator));
         }
     }
 }

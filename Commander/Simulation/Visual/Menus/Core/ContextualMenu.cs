@@ -109,6 +109,15 @@
         }
 
 
+        public void DoCommandExecuted()
+        {
+            var choice = GetCurrentChoice();
+
+            if (choice is ToggleContextualMenuChoice)
+                ((ToggleContextualMenuChoice) choice).Next();
+        }
+
+
         public void AddChoice(ContextualMenuChoice choice)
         {
             choice.Scene = Simulator.Scene;
@@ -287,6 +296,18 @@
 
 
         public virtual void Initialize()
+        {
+
+        }
+
+
+        public virtual void OnOpen()
+        {
+
+        }
+
+
+        public virtual void OnClose()
         {
 
         }

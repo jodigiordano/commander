@@ -9,10 +9,6 @@
 
     class LevelStates : IVisual
     {
-        public Dictionary<int, CelestialBody> CelestialBodies;
-        //public Dictionary<string, int> LevelsDescriptors;
-        public WorldDescriptor Descriptor;
-        
         private Dictionary<int, bool> LevelUnlockedStates;
         private Dictionary<int, Text> LockedTexts;
         private Text GamePausedText;
@@ -53,9 +49,9 @@
             LevelsNumbers.Clear();
 
             // Level numbers
-            foreach (var level in Descriptor.Levels)
+            foreach (var level in Scene.World.Descriptor.Levels)
             {
-                var cb = CelestialBodies[level];
+                var cb = Scene.LeveltoCB[level];
 
                 LevelsNumbers.Add(level, new Text(Scene.World.GetLevelStringId(level), @"Pixelite")
                 {
@@ -66,7 +62,7 @@
             }
 
             // Lock state
-            foreach (var level in Descriptor.Levels)
+            foreach (var level in Scene.World.Descriptor.Levels)
             {
                 LevelUnlockedStates.Add(level, false);
                 LockedTexts.Add(level, new Text("Locked", @"Pixelite")
@@ -104,17 +100,17 @@
 
         public void Sync()
         {
-            for (int i = Descriptor.Levels.Count - 1; i > -1; i--)
+            for (int i = Scene.World.Descriptor.Levels.Count - 1; i > -1; i--)
             {
-                var level = Descriptor.Levels[i];
+                var level = Scene.World.Descriptor.Levels[i];
 
                 bool unlocked = true;
 
                 if (i != 0 && !AllLevelsUnlockedOverride)
-                    unlocked = Scene.World.IsLevelUnlocked(Descriptor.Levels[i - 1]);
+                    unlocked = Scene.World.IsLevelUnlocked(Scene.World.Descriptor.Levels[i - 1]);
 
                 LevelUnlockedStates[level] = unlocked;
-                CelestialBodies[level].CanSelect = unlocked;
+                Scene.LeveltoCB[level].CanSelect = unlocked;
             }
         }
 
@@ -123,7 +119,7 @@
         {
             foreach (var kvp in LevelUnlockedStates)
             {
-                var cb = CelestialBodies[kvp.Key];
+                var cb = Scene.LeveltoCB[kvp.Key];
                 var lockedImg = LockedTexts[kvp.Key];
 
                 if (kvp.Value) //unlocked
@@ -149,7 +145,7 @@
             // Draw level numbers
             foreach (var kvp in LevelsNumbers)
             {
-                var cb = CelestialBodies[kvp.Key];
+                var cb = Scene.LeveltoCB[kvp.Key];
 
                 kvp.Value.Position = cb.Position - new Vector3(0, cb.Circle.Radius + 20, 0);
                 kvp.Value.Alpha = (byte) (GetLevelNumberAlpha(kvp.Key));
@@ -160,7 +156,7 @@
 
         private CelestialBody GetPausedGameCelestialBody()
         {
-            return CelestialBodies[Main.CurrentGame.Level.Infos.Id];
+            return Scene.LeveltoCB[Main.CurrentGame.Level.Infos.Id];
         }
 
 

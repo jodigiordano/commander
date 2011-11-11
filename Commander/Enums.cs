@@ -69,7 +69,8 @@
         EditorWaves = 16,
         EditorCelestialBodyAssets = 17,
         EditorEnemies = 18,
-        EditorCelestialBodyAttributes = 19
+        EditorCelestialBodyAttributes = 19,
+        EditorWorldName = 20
     };
 
 

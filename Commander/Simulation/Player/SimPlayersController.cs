@@ -9,7 +9,6 @@
     class SimPlayersController
     {
         public Dictionary<PowerUpType, bool> ActivesPowerUps;
-        public List<Wave> ActiveWaves;
 
         public Dictionary<PowerUpType, bool> AvailablePowerUps;
         public Dictionary<TurretType, bool> AvailableTurrets;
@@ -429,11 +428,11 @@
 
 
             // call next wave //todo
-            //if (player.PowerUpInUse == PowerUpType.None && StartingPathMenu.CheckedIn == player && ActiveWaves.Count < 3)
-            //{
-            //    NotifyNextWaveAsked();
-            //    return;
-            //}
+            if (player.PowerUpInUse == PowerUpType.None && player.ActualSelection.CallNextWave && Simulator.Data.ActiveWaves.Count < 3)
+            {
+                NotifyNextWaveAsked();
+                return;
+            }
         }
 
 

@@ -5,24 +5,19 @@
     using Microsoft.Xna.Framework;
 
 
-    class StartingPathMenu : ContextualMenu
+    class StartingPathMenu : CommanderContextualMenu
     {
-        public int RemainingWaves { private get; set; }
-
         private TextContextualMenuChoice CallTheNextWave;
         private ColoredTextContextualMenuChoice RemainingEnemiesChoice;
 
-        private SimPlayer Owner;
         private int activeWaves;
 
         private int LastEnemiesToReleaseCount;
 
 
         public StartingPathMenu(Simulator simulator, double visualPriority, SimPlayer owner)
-            : base(simulator, visualPriority, owner.Color, 5)
+            : base(simulator, visualPriority, owner)
         {
-            Owner = owner;
-
             RemainingEnemiesChoice = new ColoredTextContextualMenuChoice("RemainingEnemies", new ColoredText(new List<string>() { "", "" }, new Color[] { Color.White, Color.White }, @"Pixelite", Vector3.Zero) { SizeX = 2 });
             CallTheNextWave = new TextContextualMenuChoice("CallTheNextWave", new Text("I'm ready! Bring it on!", @"Pixelite") { SizeX = 2 });
 
@@ -35,9 +30,15 @@
         }
 
 
-        public override void Initialize()
+        public override void UpdateSelection()
         {
-            RemainingWaves = (Simulator.Data.Level.InfiniteWaves == null) ? Simulator.Data.Level.Waves.Count : -1;
+            Owner.ActualSelection.CallNextWave = Visible;
+        }
+
+
+        protected int RemainingWaves
+        {
+            get { return Simulator.Data.RemainingWaves; }
         }
 
 
@@ -81,7 +82,9 @@
             {
                 return
                     base.Visible &&
-                    (Simulator.GameMode || Simulator.EditorPlaytestingMode) &&
+                    !Simulator.EditorEditingMode &&
+                    !Simulator.DemoMode &&
+                    RemainingWaves > 0 &&
                     Owner.ActualSelection.CelestialBody != null &&
                     Owner.ActualSelection.CelestialBody.FirstOnPath;
             }
@@ -92,19 +95,19 @@
 
         public override void Update()
         {
-            //// Sync enemies to release //todo
-            //int enemiesToReleaseCount = 0;
+            // sync enemies to release
+            int enemiesToReleaseCount = 0;
 
-            //foreach (var w in Simulator.Data.ActiveWaves)
-            //    enemiesToReleaseCount += w.EnemiesToCreateCount;
+            foreach (var w in Simulator.Data.ActiveWaves)
+                enemiesToReleaseCount += w.EnemiesToCreateCount;
 
-            //if (enemiesToReleaseCount != LastEnemiesToReleaseCount)
-            //    RemainingEnemies = enemiesToReleaseCount;
+            if (enemiesToReleaseCount != LastEnemiesToReleaseCount)
+                RemainingEnemies = enemiesToReleaseCount;
 
-            //LastEnemiesToReleaseCount = enemiesToReleaseCount;
+            LastEnemiesToReleaseCount = enemiesToReleaseCount;
 
-            //// Sync remaining time for next wave
-            //ActiveWaves = Simulator.Data.ActiveWaves.Count;
+            // sync remaining time for next wave
+            ActiveWaves = Simulator.Data.ActiveWaves.Count;
         }
     }
 }

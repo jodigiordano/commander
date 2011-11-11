@@ -1,12 +1,12 @@
-﻿namespace EphemereGames.Commander.Simulation.Player
+﻿namespace EphemereGames.Commander.Simulation
 {
-    abstract class WorldMenu : ContextualMenu
+    abstract class CommanderContextualMenu : ContextualMenu
     {
         protected SimPlayer Owner;
 
 
-        public WorldMenu(Simulator simulator, double visualPriority, SimPlayer owner)
-            : base(simulator, visualPriority, owner.Color, 15)
+        public CommanderContextualMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+            : base(simulator, visualPriority, owner.Color, 5)
         {
             Owner = owner;
         }

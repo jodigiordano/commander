@@ -7,7 +7,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class CelestialBodyNearHitAnimation
+    class CBToProtectNearHitAnimation
     {
         public EnemiesData EnemiesData;
 
@@ -23,7 +23,7 @@
         private double Alpha;
 
 
-        public CelestialBodyNearHitAnimation(Simulator simulator)
+        public CBToProtectNearHitAnimation(Simulator simulator)
         {
             Simulator = simulator;
 

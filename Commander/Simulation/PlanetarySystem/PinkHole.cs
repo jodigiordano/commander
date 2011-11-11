@@ -74,19 +74,30 @@
 
             set
             {
-                ((CircleEmitter) Effect.Model[0]).Radius = value;
+                if (Effect != null)
+                    ((CircleEmitter) Effect.Model[0]).Radius = value;
             }
+        }
+
+
+        public override void SetSize(Size s)
+        {
+            base.SetSize(s);
+
+            Radius = (int) Size;
         }
 
 
         public override void Update()
         {
-            LastPosition = Position;
             ((RadialGravityModifier) Effect.Model[0].Modifiers[0]).Position = new Vector2(this.position.X, this.position.Y);
 
-            Vector3 deplacement;
-            Vector3.Subtract(ref this.position, ref this.LastPosition, out deplacement);
-            Effect.Move(ref deplacement);
+            Vector3 displacement;
+            Vector3.Subtract(ref this.position, ref this.LastPosition, out displacement);
+
+            if (displacement != Vector3.Zero)
+                Effect.Move(ref displacement);
+
             Effect.Trigger(ref position);
 
             base.Update();

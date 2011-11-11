@@ -22,26 +22,30 @@
         private bool focus;
         private double FocusTimer;
 
+        private int MaxInputSize;
+
 
         public TextBox(Text label, int spaceForLabel, int spaceForBox)
-            : this()
+            : this(label.AbsoluteSize.Y + 10, spaceForBox)
         {
             Label = label;
-            Box = new Image("PixelBlanc") { Size = new Vector2(spaceForBox, Label.AbsoluteSize.Y + 10), Origin = Vector2.Zero };
-            BlinkingCursor = new Image("PixelBlanc") { Size = new Vector2(10, Label.AbsoluteSize.Y), Origin = Vector2.Zero, Color = Color.Black };
             SpaceForLabel = spaceForLabel;
             Data = new Text(Label.FontName) { SizeX = Label.SizeX, Origin = Vector2.Zero, Color = Color.Black };
+
+            MaxInputSize = GetMaxInputSize();
         }
 
 
-        public TextBox()
+        public TextBox(float boxHeight, int spaceForBox)
         {
             Label = new Text("Pixelite") { SizeX = 2 };
-            Box = new Image("PixelBlanc") { Size = new Vector2(100, Label.AbsoluteSize.Y + 10), Origin = Vector2.Zero };
-            Data = new Text("Pixelite") { SizeX = 2 };
-            BlinkingCursor = new Image("PixelBlanc") { Size = new Vector2(10, Label.AbsoluteSize.Y), Origin = Vector2.Zero, Color = Color.Black };
+            Box = new Image("PixelBlanc") { Size = new Vector2(spaceForBox, boxHeight), Origin = Vector2.Zero };
+            Data = new Text("Pixelite") { SizeX = 2, Origin = Vector2.Zero, Color = Color.Black };
+            BlinkingCursor = new Image("PixelBlanc") { Size = new Vector2(10, boxHeight - 10), Origin = Vector2.Zero, Color = Color.Black };
             focus = false;
             FocusTimer = 0;
+
+            MaxInputSize = GetMaxInputSize();
         }
 
 
@@ -113,7 +117,7 @@
             get { return Data.Data.ToLowerInvariant(); }
             set
             {
-                Data.Data = value;
+                Data.Data = value.Substring(0, Math.Min(value.Length, MaxInputSize));
 
                 BlinkingCursor.Position = new Vector3(Data.Position.X + Data.AbsoluteSize.X + 5, Data.Position.Y, 0);
             }
@@ -135,7 +139,7 @@
 
         public override Vector3 Dimension
         {
-            get { return new Vector3(Box.AbsoluteSize.X + Label.Data.Length == 0 ? 0 : SpaceForLabel, Box.AbsoluteSize.Y, 0); }
+            get { return new Vector3(Box.AbsoluteSize.X + (Label.Data.Length == 0 ? 0 : SpaceForLabel), Box.AbsoluteSize.Y, 0); }
             set { }
         }
 
@@ -192,6 +196,12 @@
             Scene.VisualEffects.Add(Box, effect);
             Scene.VisualEffects.Add(Data, effect);
             Scene.VisualEffects.Add(BlinkingCursor, effect);
+        }
+
+
+        private int GetMaxInputSize()
+        {
+            return (int) Math.Max(0, (Box.AbsoluteSize.X / new Text("A", Data.FontName) { SizeX = Data.SizeX }.AbsoluteSize.X) - 1);
         }
     }
 }

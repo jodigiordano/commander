@@ -117,7 +117,10 @@
 
             GetDirection(time, out v);
 
-            return (MathHelper.PiOver2) + (float)Math.Atan2(v.Y, v.X);
+            if (v == Vector3.Zero)
+                return MathHelper.PiOver2;
+            else
+                return MathHelper.PiOver2 + (float) Math.Atan2(v.Y, v.X);
         }
 
 

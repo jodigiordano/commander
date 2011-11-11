@@ -7,8 +7,6 @@
     {
         public CelestialBody CelestialBody;
 
-        private Simulator Simulator;
-
         private CheckBox HasMoons;
         private CheckBox FollowPath;
         private CheckBox CanSelect;
@@ -16,18 +14,16 @@
         private CheckBox Invincible;
 
 
-        public CelestialBodyAttributesPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base(simulator.Scene, position, size, visualPriority, color)
+        public CelestialBodyAttributesPanel(Simulator simulator)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(600, 600), VisualPriorities.Default.EditorPanel, Color.White)
         {
-            Simulator = simulator;
-
             SetTitle("Celestial body attributes");
 
-            HasMoons = new CheckBox("has moons")            { SpaceForLabel = 200 };
-            FollowPath = new CheckBox("follow the path")    { SpaceForLabel = 200 };
-            CanSelect = new CheckBox("can select")          { SpaceForLabel = 200 };
-            StraightLine = new CheckBox("straight line")    { SpaceForLabel = 200 };
-            Invincible = new CheckBox("invincible")         { SpaceForLabel = 200 };
+            HasMoons = new CheckBox("has moons")            { SpaceForLabel = 350 };
+            FollowPath = new CheckBox("follow the path")    { SpaceForLabel = 350 };
+            CanSelect = new CheckBox("can select")          { SpaceForLabel = 350 };
+            StraightLine = new CheckBox("straight line")    { SpaceForLabel = 350 };
+            Invincible = new CheckBox("invincible")         { SpaceForLabel = 350 };
 
             AddWidget("HasMoons", HasMoons);
             AddWidget("FollowPath", FollowPath);
@@ -35,15 +31,15 @@
             AddWidget("StraightLine", StraightLine);
             AddWidget("Invincible", Invincible);
 
-            Alpha = 0;
+            Padding = new Vector2(30, 50);
 
-            Initialize();
+            Alpha = 0;
         }
 
 
-        public override void Initialize()
+        public override void Open()
         {
-            base.Initialize();
+            base.Open();
 
             HasMoons.Value = CelestialBody.HasMoons;
             FollowPath.Value = CelestialBody.FollowPath;

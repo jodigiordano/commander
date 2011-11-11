@@ -27,12 +27,8 @@
         private LevelInfos LevelInfos;
 
         // Menus
-        public EditorCelestialBodyMenu EditorCelestialBodyMenu;
-        public EditorWorldMenu EditorWorldMenu;
-        public EditorBuildMenu EditorBuildMenu;
-        private CelestialBodyMenu CelestialBodyMenu;
-        private NewGameMenu NewGameMenu;
-        private List<ContextualMenu> Menus;
+        private Dictionary<string, ContextualMenu> Menus;
+        private Dictionary<string, ContextualMenu> CBMenus;
 
         
         public VisualPlayer(Simulator simulator, SimPlayer owner)
@@ -59,24 +55,25 @@
                 VisualPriority = VisualPriorities.Default.PlayerName
             }.CenterIt();
 
-            Menus = new List<ContextualMenu>();
+            Menus = new Dictionary<string, ContextualMenu>();
+            CBMenus = new Dictionary<string, ContextualMenu>();
 
             // Highest priority
-            EditorCelestialBodyMenu = new EditorCelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
-            EditorWorldMenu = new EditorWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
-            EditorBuildMenu = new EditorBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
-            CelestialBodyMenu = new CelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
-            NewGameMenu = new NewGameMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner);
+            CBMenus.Add("EditorPlanetCB", new EditorPlanetCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            CBMenus.Add("EditorPinkHoleCB", new EditorPinkHoleCBMenu(Simulator, VisualPriorities.Default.EditorPanel, Owner));
 
-            Menus.Add(EditorCelestialBodyMenu);
-            Menus.Add(new PauseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add(NewGameMenu);
-            Menus.Add(EditorWorldMenu);
-            Menus.Add(new EditorWorldLevelMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add(EditorBuildMenu);
-            Menus.Add(new StartingPathMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add(new TurretMenu(Simulator, VisualPriorities.Default.TurretMenu, Owner));
-            Menus.Add(CelestialBodyMenu);
+            foreach (var m in CBMenus)
+                Menus.Add(m.Key, m.Value);
+
+            Menus.Add("WorldPause", new PauseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("MainMenuCampaign", new CampaignMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("EditorWorld", new EditorWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("EditorWorldLevel", new EditorWorldLevelMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("EditorBuildLevel", new EditorLevelBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("EditorBuildWorld", new EditorWorldBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("StartingPath", new StartingPathMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("Turret", new TurretMenu(Simulator, VisualPriorities.Default.TurretMenu, Owner));
+            Menus.Add("CB", new CelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             // Lowest priority
 
             LevelInfos = new LevelInfos(Simulator, Owner);
@@ -93,26 +90,41 @@
         {
             set
             {
-                CelestialBodyMenu.AvailableTurrets = value;
+                ((CelestialBodyMenu) Menus["CB"]).AvailableTurrets = value;
             }
         }
 
 
         public void Initialize()
         {
-            foreach (var m in Menus)
+            foreach (var m in Menus.Values)
                 m.Initialize();
         }
 
-        public void SyncNewGameMenu()
+
+        public void SetMenuVisibility(string menu, bool visible)
         {
-            NewGameMenu.Initialize();
+            if (menu == "EditorCB")
+            {
+                foreach (var m in CBMenus.Values)
+                    m.Visible = visible;
+
+                return;
+            }
+
+            Menus[menu].Visible = visible;
+        }
+
+
+        public void SyncCampaignMenu()
+        {
+            Menus["MainMenuCampaign"].Initialize();
         }
 
 
         public ContextualMenu GetOpenedMenu()
         {
-            foreach (var m in Menus)
+            foreach (var m in Menus.Values)
                 if (m.Visible)
                     return m;
 
@@ -122,7 +134,7 @@
 
         public void Update()
         {
-            foreach (var m in Menus)
+            foreach (var m in Menus.Values)
             {
                 m.Position = CurrentVisual.Position;
                 m.Update();

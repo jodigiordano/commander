@@ -28,8 +28,8 @@
         private State SceneState;
         private CommanderTitle Title;
         private Dictionary<CelestialBody, int> CBtoWarp;
-        private Dictionary<int, CelestialBody> LeveltoCB;
-        private Dictionary<CelestialBody, int> CBtoLevel;
+        public Dictionary<int, CelestialBody> LeveltoCB;
+        public Dictionary<CelestialBody, int> CBtoLevel;
 
 
         public WorldScene() :
@@ -76,8 +76,6 @@
             if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                 LevelStates.AllLevelsUnlockedOverride = true;
 
-            LevelStates.CelestialBodies = LeveltoCB;
-            LevelStates.Descriptor = World.Descriptor;
             LevelStates.Initialize();
             LevelStates.Show();
 
@@ -116,6 +114,26 @@
         public bool CanSelectCelestialBodies
         {
             set { Simulator.CanSelectCelestialBodies = value; }
+        }
+
+
+        public void AddLevel(CelestialBody cb)
+        {
+            var id = World.AddLevel();
+
+            CBtoLevel.Add(cb, id);
+            LeveltoCB.Add(id, cb);
+        }
+
+
+        public void RemoveLevel(CelestialBody cb)
+        {
+            var id = CBtoLevel[cb];
+
+            World.RemoveLevel(id);
+
+            CBtoLevel.Remove(cb);
+            LeveltoCB.Remove(id);
         }
 
 
@@ -162,7 +180,7 @@
         {
             Simulator.Draw();
 
-            if (Simulator.EditorPlaytestingMode)
+            if (!Simulator.EditorMode || Simulator.EditorPlaytestingMode)
                 LevelStates.Draw();
 
             if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
@@ -322,19 +340,31 @@
                 return;
 
             if (Simulator.MultiverseMode)
-                TransiteTo("Multiverse");
+            {
+                if (Simulator.EditorEditingMode)
+                {
+                    World.Editing = false;
+                    Simulator.Data.Level.SyncDescriptor();
+                    Initialize();
+                }
+
+                else
+                {
+                    TransiteTo("Multiverse");
+                }
+            }
+
             else
+            {
                 TransiteTo("Menu");
+            }
         }
 
 
         private void DoSelectAction(Player p)
         {
             if (World.EditorMode)
-            {
-                DoSelectActionEditor(p);
                 return;
-            }
 
             // Select a warp
             var world = GetWorldSelected(p);
@@ -411,43 +441,27 @@
 
             if (level != null)
             {
-                //if (Simulator.EditorWorldChoice == EditorWorldChoice.Reset)
-                //{
-                //    World.SetLevelDescriptor(level.Infos.Id, Main.WorldsFactory.GetEmptyLevelDescriptor(level.Infos.Id));
-                //    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
-                //    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
-                //}
+                GameScene currentGame = Main.CurrentGame;
 
-                //else if (Simulator.EditorWorldChoice == EditorWorldChoice.Save)
-                //{
-                //    World.Descriptor.LastModification = Main.GetCurrentTimestamp();
-                //    Main.WorldsFactory.SaveWorldOnDisk(World.Id);
-                //}
+                // Start a new game
+                if (currentGame != null)
+                    currentGame.StopMusic();
 
-                //else
-                //{
-                //    GameScene currentGame = Main.CurrentGame;
+                currentGame = new GameScene("Game1", level)
+                {
+                    EditorMode = World.EditorMode,
+                    Editing = World.Editing
+                };
+                currentGame.Initialize();
+                Main.CurrentGame = currentGame;
+                currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
 
-                //    // Start a new game
-                //    if (currentGame != null)
-                //        currentGame.StopMusic();
+                if (Visuals.GetScene(currentGame.Name) == null)
+                    Visuals.AddScene(currentGame);
+                else
+                    Visuals.UpdateScene(currentGame.Name, currentGame);
 
-                //    currentGame = new GameScene("Game1", level)
-                //    {
-                //        EditorMode = World.EditorMode,
-                //        Editing = Simulator.EditorWorldChoice == EditorWorldChoice.Edit
-                //    };
-                //    currentGame.Initialize();
-                //    Main.CurrentGame = currentGame;
-                //    currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
-
-                //    if (Visuals.GetScene(currentGame.Name) == null)
-                //        Visuals.AddScene(currentGame);
-                //    else
-                //        Visuals.UpdateScene(currentGame.Name, currentGame);
-
-                //    TransiteTo(currentGame.Name);
-                //}
+                TransiteTo(currentGame.Name);
             }
         }
 

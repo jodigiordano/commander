@@ -72,7 +72,7 @@
             }
 
             // The player is moving (or have the intention to)
-            if (!Simulator.DemoMode && Player.MovementInputThisTick)
+            if (!Simulator.DemoMode && !Simulator.EditorEditingMode && Player.MovementInputThisTick)
             {
                 Initialize();
                 return;

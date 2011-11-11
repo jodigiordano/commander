@@ -3,16 +3,11 @@
     using System.Collections.Generic;
 
 
-    class EditorBuildMenu : ContextualMenu
+    class EditorLevelBuildMenu : EditorContextualMenu
     {
-        private SimPlayer Owner;
-
-
-        public EditorBuildMenu(Simulator simulator, double visualPriority, SimPlayer owner)
-            : base(simulator, visualPriority, owner.Color, 5)
+        public EditorLevelBuildMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+            : base(simulator, visualPriority, owner)
         {
-            Owner = owner;
-
             var choices = new List<ContextualMenuChoice>()
             {
                 new EditorTextContextualMenuChoice("AddPlanet", "Add a planet", 2, new EditorCelestialBodyCommand("AddPlanet")),
@@ -32,22 +27,9 @@
         }
 
 
-        public EditorCommand Selection
+        protected override EditorCommand Selection
         {
-            get
-            {
-                var command = ((EditorTextContextualMenuChoice) Choices[SelectedIndex]).Command;
-
-                command.Owner = Owner;
-
-                return command;
-            }
-        }
-
-
-        public override void UpdateSelection()
-        {
-            Owner.ActualSelection.EditorBuildMenuCommand = Visible ? Selection : null;
+            get { return ((EditorTextContextualMenuChoice) Choices[SelectedIndex]).Command; }
         }
 
 
@@ -57,6 +39,7 @@
             {
                 return
                     base.Visible &&
+                    Simulator.GameMode &&
                     Simulator.EditorEditingMode &&
                     Owner.ActualSelection.CelestialBody == null;
             }

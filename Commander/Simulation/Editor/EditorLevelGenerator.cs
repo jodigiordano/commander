@@ -84,13 +84,13 @@
         };
 
 
-        public static CelestialBody GenerateCelestialBody(Simulator simulator, double visualPriority)
+        public static CelestialBody GeneratePlanetCB(Simulator simulator, double visualPriority)
         {
-            return new CelestialBody(simulator, GenerateCelestialBody(), visualPriority);
+            return new Planet(simulator, GenerateCelestialBody(), visualPriority);
         }
 
 
-        public static CelestialBody GeneratePinkHole(Simulator simulator, double visualPriority)
+        public static CelestialBody GeneratePinkHoleCB(Simulator simulator, double visualPriority)
         {
             return new PinkHole(simulator, GeneratePinkHole(), visualPriority);
         }

@@ -3,7 +3,7 @@
     using EphemereGames.Core.Visual;
 
     
-    class PauseWorldMenu : WorldMenu
+    class PauseWorldMenu : CommanderContextualMenu
     {
         public PauseWorldMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)

@@ -325,8 +325,6 @@ namespace EphemereGames.Commander.Simulation
             SpaceshipsController.PowerUpsBattleship = GUIController.HumanBattleship;
             SpaceshipsController.Minerals = EnemiesController.Minerals;
             MessagesController.Turrets = TurretsController.Turrets;
-            GUIController.ActiveWaves = EnemiesController.ActiveWaves;
-            SimPlayersController.ActiveWaves = EnemiesController.ActiveWaves;
             GUIController.EnemiesData = EnemiesController.EnemiesData;
             AudioController.EnemiesData = EnemiesController.EnemiesData;
             AudioController.CameraData = CameraController.CameraData;
@@ -796,7 +794,7 @@ namespace EphemereGames.Commander.Simulation
 
             delta *= player.MovingSpeed * 10;
 
-            if (EditorMode)
+            if (EditorMode && delta != Vector3.Zero)
                 EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
 
             if (simPlayer.PowerUpInUse != PowerUpType.None)

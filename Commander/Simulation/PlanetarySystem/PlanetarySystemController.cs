@@ -340,27 +340,22 @@
             }
 
 
-            else if (command.Name == "AddGravitationalTurret")
-            {
-                AddToStartingPath(command.CelestialBody);
-            }
-
-            else if (command.Name == "RemoveGravitationalTurret")
+            else if (command.Name == "RemoveFromPath")
             {
                 RemoveFromStartingPath(command.CelestialBody);
             }
 
-            else if (command.Name == "Clear")
-            {
-                foreach (var cb in CelestialBodies)
-                {
-                    if (cb is AsteroidBelt)
-                        continue;
+            //else if (command.Name == "Clear")
+            //{
+            //    foreach (var cb in CelestialBodies)
+            //    {
+            //        if (cb is AsteroidBelt)
+            //            continue;
 
-                    cb.LifePoints = 0;
-                    cb.AliveOverride = false;
-                }
-            }
+            //        cb.LifePoints = 0;
+            //        cb.AliveOverride = false;
+            //    }
+            //}
         }
 
 
@@ -388,7 +383,7 @@
             CelestialBody highest = null;
 
             foreach (var c in celestialBodies)
-                if (!(c is AsteroidBelt) && (highest == null || (c.Alive && c.PathPriority > highest.PathPriority)))
+                if (!(c is AsteroidBelt) && c.Alive && (highest == null || c.PathPriority > highest.PathPriority))
                     highest = c;
 
             return highest;

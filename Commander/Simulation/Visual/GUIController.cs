@@ -14,7 +14,6 @@
         public Dictionary<TurretType, bool> AvailableTurrets;
         public PowerUpsBattleship HumanBattleship { get { return MenuPowerUps.HumanBattleship; } }
         public HelpBarPanel HelpBar;
-        public List<Wave> ActiveWaves;
         public EnemiesData EnemiesData;
 
         private Simulator Simulator;
@@ -27,7 +26,7 @@
         //not player-related
         private GameMenu GameMenu;
         private LevelEndedAnnunciation LevelEndedAnnunciation;
-        private CelestialBodyNearHitAnimation CelestialBodyNearHit;
+        private CBToProtectNearHitAnimation CelestialBodyNearHit;
         private AlienNextWaveAnimation AlienNextWaveAnimation;
         private TheResistance GamePausedResistance;
         private GameBarPanel GameBarPanel;
@@ -101,7 +100,7 @@
             HelpBar.ActiveOptions = Main.Options.ShowHelpBar;
             HelpBar.Initialize();
 
-            CelestialBodyNearHit = new CelestialBodyNearHitAnimation(Simulator)
+            CelestialBodyNearHit = new CBToProtectNearHitAnimation(Simulator)
             {
                 CelestialBody = Simulator.Data.Level.CelestialBodyToProtect,
                 EnemiesData = EnemiesData
@@ -117,6 +116,8 @@
             GameBarPanel.TimeNextWave = (Simulator.Data.Level.InfiniteWaves == null && Waves.Count != 0) ? Waves.First.Value.StartingTime : 0;
 
             LoveEffect = Simulator.Scene.Particles.Get("love");
+
+            CelestialBodiesPathPreviews.Initialize();
         }
 
 
@@ -158,7 +159,7 @@
                     break;
             }
 
-            Simulator.Scene.Add(new CelestialBodyShieldHitAnimation("BorderField", position, rotation, p.Color, VisualPriorities.Default.BattlefieldBorder, 255));
+            Simulator.Scene.Add(new ShieldHitAnimation("BorderField", position, position, p.Color, 6, VisualPriorities.Default.BattlefieldBorder, 0, 255) { Rotation = rotation });
         }
 
 
@@ -177,7 +178,7 @@
         public void SyncNewGameMenu()
         {
             foreach (var p in Simulator.Data.Players.Values)
-                p.VisualPlayer.SyncNewGameMenu();
+                p.VisualPlayer.SyncCampaignMenu();
         }
 
 
@@ -189,17 +190,12 @@
 
         public void DoStartingPathCollision(Bullet b, CelestialBody cb)
         {
-            Vector3 direction = b.Position - cb.Position;
-            float lengthSquared = direction.LengthSquared();
-            float cbLengthSquared = ((int) cb.Size + 15) * ((int) cb.Size + 15);
-            direction.Normalize();
-            float rotation = Core.Physics.Utilities.VectorToAngle(direction);
-            Vector3 position = b.Position - direction * 30;
+            if (!ShieldHitAnimation.IsHitFarEnough(cb.Position, b.Position, (int) cb.Size + 15))
+                return;
 
-            if (lengthSquared >= cbLengthSquared)
-                Simulator.Scene.Add(new CelestialBodyShieldHitAnimation(
-                    cb.Size == Size.Small ? "CBMask31" : cb.Size == Size.Normal ? "CBMask32" : "CBMask33",
-                    position, rotation, Colors.Default.AlienBright, VisualPriorities.Default.CelestialBodyShield, 200));
+            Simulator.Scene.Add(new ShieldHitAnimation(
+                cb.Size == Size.Small ? "CBMask31" : cb.Size == Size.Normal ? "CBMask32" : "CBMask33",
+                cb, b.Position, Colors.Default.AlienBright, 6, VisualPriorities.Default.CelestialBodyShield, (int) cb.Size + 15, 200));
         }
 
 
@@ -305,7 +301,7 @@
 
         public void DoWaveStarted()
         {
-            GameBarPanel.RemainingWaves--;
+            GameBarPanel.RemainingWaves = Simulator.Data.RemainingWaves;
 
             if (InfiniteWaves == null && Simulator.Data.Path.LastCelestialBody != null)
                 Simulator.Scene.Add(new AlienNextWaveStartedAnimation(Simulator, Simulator.Data.Path.FirstCelestialBody));
@@ -543,12 +539,12 @@
                 //PlayerLives.CelestialBody = null;
             }
 
-            else if (command.Name == "AddPlanet" || command.Name == "PushFirst" || command.Name == "PushLast")
+            else if (command.Name == "AddPlanet" || command.Name == "Remove")
             {
-                //PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
+                CelestialBodiesPathPreviews.Sync();
             }
 
-            else if (command.Name == "Remove")
+            else if (command.Name == "PushFirst" || command.Name == "PushLast")
             {
                 //PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
             }
@@ -585,12 +581,14 @@
                 HelpBar.HideCurrentMessage();
             }
 
-            else if (p.ActualSelection.OpenedMenu != null)
+            if (p.ActualSelection.OpenedMenu != null)
             {
                 var msg = menu.GetHelpBarMessage();
 
                 if (msg.Count != 0)
                     HelpBar.ShowMessage(msg);
+
+                return;
             }
 
             var selection = p.ActualSelection;
@@ -617,44 +615,16 @@
                 }
             }
 
-            //else if (Simulator.DemoMode)
-            //{
-            //    // Main menu
-            //    if (selection.CelestialBody != null && WorldsFactory.IsCampaignCB(selection.CelestialBody))
-            //        HelpBar.ShowMessage(p.InnerPlayer, player.GetHelpBarMessage());
-            //    else
-            //    {
-            //        HelpBar.HideMessage(player.GetHelpBarMessage());
-
-            //        if (selection.CelestialBody != null)
-            //            HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.Select);
-            //        else
-            //            HelpBar.HideMessage(HelpBarMessage.Select);
-            //    }
-            //}
-
-            //else if (!Simulator.EditorMode || (Simulator.EditorMode && Simulator.EditorState != EditorState.Editing))
-            //{
-            //    // Turret Menu
-            //    if (selection.Turret != null && !selection.Turret.Disabled)
-            //        HelpBar.ShowMessage(HelpBarMessage.TurretMenu, player.GetHelpBarMessage());
-            //    else
-            //        HelpBar.HideMessage(HelpBarMessage.TurretMenu);
-
-            //    // Celestial Body Menu
-            //    if (selection.Turret == null && selection.TurretToPlace == null)
-            //    {
-            //        if (selection.CelestialBody != null && selection.CelestialBody.FirstOnPath)
-            //            HelpBar.ShowMessage(HelpBarMessage.CallNextWave, StartingPathMenu.GetHelpBarMessage(p.InnerPlayer));
-            //        else if (selection.CelestialBody != null && selection.TurretToBuy != TurretType.None)
-            //            HelpBar.ShowMessage(HelpBarMessage.CelestialBodyMenu, player.GetHelpBarMessage());
-            //        else
-            //        {
-            //            HelpBar.HideMessage(HelpBarMessage.CallNextWave);
-            //            HelpBar.HideMessage(HelpBarMessage.CelestialBodyMenu);
-            //        }
-            //    }
-            //}
+            else if (Simulator.DemoMode)
+            {
+                // Main menu
+                if (selection.CelestialBody != null && WorldsFactory.IsCampaignCB(selection.CelestialBody))
+                    HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.StartNewCampaign);
+                else if (selection.CelestialBody != null)
+                    HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.Select);
+                else
+                    HelpBar.HideCurrentMessage();
+            }
         }
 
 

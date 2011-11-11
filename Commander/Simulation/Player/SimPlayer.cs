@@ -344,6 +344,12 @@
 
         private void UpdateSelection()
         {
+            if (Simulator.State == GameState.Lost || Simulator.State == GameState.Won)
+            {
+                ActualSelection.Initialize();
+                return;
+            }
+
             LastSelection.Sync(ActualSelection);
 
             SelectedCelestialBodyController.Update();
@@ -353,8 +359,8 @@
 
             ActualSelection.OpenedMenu = VisualPlayer.GetOpenedMenu();
 
-            if (LastSelection.OpenedMenu != null && ActualSelection.OpenedMenuChanged)
-                LastSelection.OpenedMenu.UpdateSelection();
+            if (ActualSelection.OpenedMenu != null && ActualSelection.OpenedMenuChanged)
+                ActualSelection.OpenedMenu.OnOpen();
 
             if (ActualSelection.OpenedMenu != null)
                 ActualSelection.OpenedMenu.UpdateSelection();

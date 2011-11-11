@@ -30,6 +30,14 @@
                 if (celestialBody == null && value != null)
                     PositionLastEmission = value.Position;
 
+                if (Simulator.EditorEditingMode)
+                {
+                    if (celestialBody != null && value == null)
+                        celestialBody.ShowPath = false;
+                    else if (celestialBody == null && value != null)
+                        value.ShowPath = true;
+                }
+
                 celestialBody = value;
 
                 if (celestialBody == null)
@@ -46,11 +54,11 @@
             if (CelestialBody == null || !CelestialBody.Alive)
                 return;
 
-            Vector3 deplacement;
-            Vector3.Subtract(ref CelestialBody.position, ref PositionLastEmission, out deplacement);
+            Vector3 displacement;
+            Vector3.Subtract(ref CelestialBody.position, ref PositionLastEmission, out displacement);
 
-            if (deplacement.X != 0 && deplacement.Y != 0)
-                Selection.Move(ref deplacement);
+            if (displacement != Vector3.Zero)
+                Selection.Move(ref displacement);
 
             Selection.Trigger(ref CelestialBody.position);
             PositionLastEmission = CelestialBody.position;

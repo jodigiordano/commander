@@ -29,7 +29,7 @@
                 w.Value.Position = upperLeft;
 
                 if (CenterWidgets)
-                    w.Value.Position += new Vector3(Dimension.X / 2, 0, 0);
+                    w.Value.Position += new Vector3(Dimension.X / 2 - w.Value.Dimension.X / 2, 0, 0);
 
                 upperLeft.Y += w.Value.Dimension.Y + DistanceBetweenTwoChoices;
             }

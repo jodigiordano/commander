@@ -11,6 +11,7 @@
         protected TurretChoice turretChoice;
         protected TurretType turretToBuy;
         protected Turret turretToPlace;
+        protected bool callNextWave;
 
         // world
         protected PauseChoice pausedGameChoice;
@@ -19,10 +20,7 @@
         protected int newGameChoice;
 
         // editor
-        protected EditorCommand editorWorldLevelCommand;
-        protected EditorCommand editorWorldCommand;
-        protected EditorCommand editorBuildMenuCommand;
-        protected EditorCommand editorCelestialBodyMenuCommand;
+        protected EditorCommand editorCommand;
         protected EditorEditingState editingState;
 
         public bool CelestialBodyChanged;
@@ -36,10 +34,8 @@
         public bool NewGameChoiceChanged;
         public bool EditingStateChanged;
         public bool OpenedMenuChanged;
-        public bool EditorWorldLevelCommandChanged;
-        public bool EditorWorldCommandChanged;
-        public bool EditorBuildMenuCommandChanged;
-        public bool EditorCelestialBodyMenuCommandChanged;
+        public bool EditorCommandChanged;
+        public bool CallNextWaveChanged;
 
 
         public SimPlayerSelection()
@@ -60,10 +56,8 @@
             NewGameChoice = -1;
             EditingState = EditorEditingState.None;
             OpenedMenu = null;
-            EditorWorldLevelCommand = null;
-            EditorWorldCommand = null;
-            EditorBuildMenuCommand = null;
-            EditorCelestialBodyMenuCommand = null;
+            EditorCommand = null;
+            CallNextWave = false;
 
             Update();
         }
@@ -82,38 +76,22 @@
             NewGameChoiceChanged = false;
             EditingStateChanged = false;
             OpenedMenuChanged = false;
-            EditorWorldLevelCommandChanged = false;
-            EditorWorldCommandChanged = false;
-            EditorBuildMenuCommandChanged = false;
-            EditorCelestialBodyMenuCommandChanged = false;
+            EditorCommandChanged = false;
+            CallNextWaveChanged = false;
         }
 
 
-        public EditorCommand EditorBuildMenuCommand
+        public bool CallNextWave
         {
-            get { return editorBuildMenuCommand; }
-            set { EditorBuildMenuCommandChanged = editorBuildMenuCommand != value; editorBuildMenuCommand = value; }
+            get { return callNextWave; }
+            set { CallNextWaveChanged = callNextWave != value; callNextWave = value; }
         }
 
 
-        public EditorCommand EditorCelestialBodyMenuCommand
+        public EditorCommand EditorCommand
         {
-            get { return editorCelestialBodyMenuCommand; }
-            set { EditorCelestialBodyMenuCommandChanged = editorCelestialBodyMenuCommand != value; editorCelestialBodyMenuCommand = value; }
-        }
-
-
-        public EditorCommand EditorWorldLevelCommand
-        {
-            get { return editorWorldLevelCommand; }
-            set { EditorWorldLevelCommandChanged = editorWorldLevelCommand != value; editorWorldLevelCommand = value; }
-        }
-
-
-        public EditorCommand EditorWorldCommand
-        {
-            get { return editorWorldCommand; }
-            set { EditorWorldCommandChanged = editorWorldCommand != value; editorWorldCommand = value; }
+            get { return editorCommand; }
+            set { EditorCommandChanged = editorCommand != value; editorCommand = value; }
         }
 
 
@@ -198,11 +176,9 @@
             pausedGameChoice = other.pausedGameChoice;
             newGameChoice = other.newGameChoice;
             editingState = other.editingState;
-            editorWorldCommand = other.editorWorldCommand;
-            editorWorldLevelCommand = other.editorWorldLevelCommand;
-            editorBuildMenuCommand = other.editorBuildMenuCommand;
-            editorCelestialBodyMenuCommand = other.editorCelestialBodyMenuCommand;
+            editorCommand = other.editorCommand;
             openedMenu = other.openedMenu;
+            callNextWave = other.callNextWave;
         }
     }
 }

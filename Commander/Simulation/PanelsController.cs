@@ -178,7 +178,7 @@
             if (command == null)
                 return;
 
-            ShowPanel(command.Panel);
+            ShowPanel(command.Panel, command.Owner.Position);
         }
 
 
@@ -199,7 +199,7 @@
                 return;
             }
 
-            if (!Simulator.DemoMode && !Simulator.Data.Panels[PanelType.Pause].Visible)
+            if (!Simulator.DemoMode && !Simulator.EditorMode && !Simulator.Data.Panels[PanelType.Pause].Visible)
             {
                 ShowPanel(PanelType.Pause);
             }

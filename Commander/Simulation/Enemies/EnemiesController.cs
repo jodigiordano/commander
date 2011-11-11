@@ -9,7 +9,6 @@
 
     class EnemiesController
     {
-        public List<Wave> ActiveWaves;
         public EnemiesData EnemiesData;
         
         public List<Mineral> Minerals;
@@ -45,7 +44,6 @@
         {
             Simulator = simulator;
 
-            ActiveWaves = new List<Wave>();
             Minerals = new List<Mineral>();
             MineralsDistribution = new List<KeyValuePair<int, MineralType>>();
 
@@ -66,7 +64,6 @@
             Minerals.Clear();
             MineralsDistribution.Clear();
             NextWave = Simulator.Data.Level.Waves.First;
-            ActiveWaves.Clear();
 
             TimeElapsedLastWave = 0;
             EnemiesCreatedCounter = 0;
@@ -211,7 +208,7 @@
             if (!SpawnEnemies)
                 return;
 
-            foreach (var w in ActiveWaves)
+            foreach (var w in Simulator.Data.ActiveWaves)
                 foreach (var e in w.NewEnemies)
                     AddEnemy(e, w);
         }
@@ -219,11 +216,11 @@
 
         private void RemoveWaves()
         {
-            for (int i = ActiveWaves.Count - 1; i > -1; i--)
+            for (int i = Simulator.Data.ActiveWaves.Count - 1; i > -1; i--)
             {
-                if (ActiveWaves[i].IsFinished)
+                if (Simulator.Data.ActiveWaves[i].IsFinished)
                 {
-                    ActiveWaves.RemoveAt(i);
+                    Simulator.Data.ActiveWaves.RemoveAt(i);
                     NotifyWaveEnded();
                 }
             }
@@ -273,7 +270,7 @@
 
         private void UpdateWaves()
         {
-            foreach (var w in ActiveWaves)
+            foreach (var w in Simulator.Data.ActiveWaves)
                 w.Update();
         }
 
@@ -314,7 +311,7 @@
 
             TimeElapsedLastWave = 0;
 
-            ActiveWaves.Add(NextWave.Value);
+            Simulator.Data.ActiveWaves.Add(NextWave.Value);
 
             if (Simulator.Data.Level.InfiniteWaves == null)
                 NextWave = NextWave.Next;
@@ -322,6 +319,8 @@
                 NextWave.Value = Simulator.Data.Level.InfiniteWaves.GetNextWave();
 
             NotifyNextWaveCompositionChanged();
+
+            Simulator.Data.RemainingWaves--;
 
             NotifyWaveStarted();
         }
@@ -368,7 +367,7 @@
                 e.SpeedLevel = enemy.Level;
                 e.StartingPosition = enemy.Displacement;
 
-                ActiveWaves[0].AddEnemy(e);
+                Simulator.Data.ActiveWaves[0].AddEnemy(e);
             }
         }
 

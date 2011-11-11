@@ -144,7 +144,7 @@
         }
 
 
-        public Vector2 pointPlusProcheCirconference(ref Vector2 point)
+        public Vector2 NearestPointToCircumference(ref Vector2 point)
         {
             Vector2 centreToPoint = new Vector2(point.X - Position.X, point.Y - Position.Y);
             float longueur = centreToPoint.Length();

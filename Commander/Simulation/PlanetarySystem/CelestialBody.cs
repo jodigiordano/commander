@@ -8,7 +8,7 @@
     using ProjectMercury.Emitters;
 
 
-    class CelestialBody : ILivingObject, IDestroyable, IComparable<CelestialBody>
+    abstract class CelestialBody : ILivingObject, IDestroyable, IComparable<CelestialBody>
     {
         public string Name;
         public List<Turret> Turrets = new List<Turret>();
@@ -183,7 +183,7 @@
         }
 
 
-        public void SetSize(Size s)
+        public virtual void SetSize(Size s)
         {
             Size = s;
 
@@ -230,6 +230,12 @@
             ActualRotationTime = Speed * actualPourc;
 
             Move();
+        }
+
+
+        public float GetRotation()
+        {
+            return PathRotation;
         }
 
 

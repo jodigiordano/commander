@@ -26,6 +26,13 @@
             Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("Minerals", DoMinerals);
             Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("BulletDamage", DoBulletDamage);
             Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("LifePacks", DoLifePacks);
+
+            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("HasMoons", DoHasMoons);
+            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("FollowPath", DoFollowPath);
+            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("CanSelect", DoCanSelect);
+            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("StraightLine", DoStraightLine);
+            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("Invincible", DoInvincible);
+
             Simulator.Data.Panels[PanelType.EditorTurrets].SetClickHandler(DoTurrets);
             Simulator.Data.Panels[PanelType.EditorPowerUps].SetClickHandler(DoPowerUps);
             Simulator.Data.Panels[PanelType.EditorBackground].SetClickHandler(DoBackgrounds);
@@ -42,21 +49,23 @@
             if (player.ActualSelection.EditingState == EditorEditingState.None)
                 return;
 
+            var cb = ((EditorCelestialBodyCommand) player.ActualSelection.EditorCommand).CelestialBody;
+
             if (player.ActualSelection.EditingState == EditorEditingState.MovingCB)
             {
-                player.ActualSelection.CelestialBody.BasePosition += player.DeltaPosition;
-                player.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+                cb.BasePosition += player.DeltaPosition;
+                player.NinjaPosition = cb.Position;
             }
 
             else if (player.ActualSelection.EditingState == EditorEditingState.TrajectoryCB)
             {
-                player.NinjaPosition = player.ActualSelection.CelestialBody.Position;
-                player.ActualSelection.CelestialBody.Position = player.Position;
+                player.NinjaPosition = cb.Position;
+                cb.Position = player.Position;
             }
 
             else if (player.ActualSelection.EditingState == EditorEditingState.RotatingCB)
             {
-                player.NinjaPosition = player.ActualSelection.CelestialBody.Position;
+                player.NinjaPosition = cb.Position;
             }
         }
 
@@ -69,16 +78,32 @@
             if (player.ActualSelection.EditingState == EditorEditingState.None)
                 return;
 
+            var cb = ((EditorCelestialBodyCommand) player.ActualSelection.EditorCommand).CelestialBody;
+
             if (player.ActualSelection.EditingState == EditorEditingState.RotatingCB)
             {
-                float rotation = Core.Physics.Utilities.VectorToAngle(ref delta);
-                player.ActualSelection.CelestialBody.SetRotation(rotation);
+                var current = cb.GetRotation();
+
+                float to = 0;
+
+                if (delta.X > 0 || delta.Y > 0)
+                    to = current += 0.05f;
+                else
+                    to = current -= 0.05f;
+
+                if (to < -MathHelper.TwoPi)
+                    to += MathHelper.TwoPi;
+
+                if (to > MathHelper.TwoPi)
+                    to -= MathHelper.TwoPi;
+
+                cb.SetRotation(to);
             }
 
             else if (player.ActualSelection.EditingState == EditorEditingState.TrajectoryCB)
             {
-                player.ActualSelection.CelestialBody.Path.X += delta.X;
-                player.ActualSelection.CelestialBody.Path.Y -= delta.Y;
+                cb.Path.X += delta.X;
+                cb.Path.Y -= delta.Y;
             }
         }
 
@@ -90,94 +115,82 @@
 
             if (Simulator.WorldMode && Simulator.EditorPlaytestingMode)
             {
-                // open the world menu
-                if (player.ActualSelection.EditorWorldLevelCommand == null && !(player.ActualSelection.OpenedMenu is EditorWorldMenu))
+                // the world level menu is open => do the action
+                if (player.ActualSelection.OpenedMenu is EditorWorldLevelMenu)
                 {
-                    player.VisualPlayer.EditorWorldMenu.Visible = true;
+                    ExecuteCommand(player.ActualSelection.EditorCommand);
+                    player.ActualSelection.OpenedMenu.DoCommandExecuted();
+                }
+
+                // open the world menu
+                else if (!(player.ActualSelection.OpenedMenu is EditorWorldMenu))
+                {
+                    player.VisualPlayer.SetMenuVisibility("EditorWorld", true);
                 }
 
                 // the world menu is open => do the action
                 else if (player.ActualSelection.OpenedMenu is EditorWorldMenu)
                 {
-                    ExecuteCommand(player.ActualSelection.EditorWorldCommand);
-                    player.VisualPlayer.EditorWorldMenu.Visible = false;
-                }
-
-                // the world level menu is open => do the action
-                else if (player.ActualSelection.OpenedMenu is EditorWorldLevelMenu)
-                {
-                    ExecuteCommand(player.ActualSelection.EditorWorldLevelCommand);
+                    ExecuteCommand(player.ActualSelection.EditorCommand);
+                    player.ActualSelection.OpenedMenu.DoCommandExecuted();
+                    player.VisualPlayer.SetMenuVisibility("EditorWorld", false);
                 }
             }
 
-            else if (Simulator.EditorEditingMode)
+            else if (Simulator.WorldMode && Simulator.EditorEditingMode)
             {
                 // the celestial body menu is open => do the action
                 if (player.ActualSelection.OpenedMenu is EditorCelestialBodyMenu)
                 {
-                    ExecuteCommand(player.ActualSelection.EditorCelestialBodyMenuCommand);
+                    ExecuteCommand(player.ActualSelection.EditorCommand);
+                    player.ActualSelection.OpenedMenu.DoCommandExecuted();
+                    return;
                 }
 
                 if (player.ActualSelection.EditingState != EditorEditingState.None)
                     return;
 
                 // open the build menu
-                else if (player.ActualSelection.EditorCelestialBodyMenuCommand == null && !(player.ActualSelection.OpenedMenu is EditorBuildMenu))
+                else if (!(player.ActualSelection.OpenedMenu is EditorWorldBuildMenu))
                 {
-                    player.VisualPlayer.EditorBuildMenu.Visible = true;
+                    player.VisualPlayer.SetMenuVisibility("EditorBuildWorld", true);
                 }
 
                 // the build menu is open => do the action
-                else if (player.ActualSelection.OpenedMenu is EditorBuildMenu)
+                else if (player.ActualSelection.OpenedMenu is EditorWorldBuildMenu)
                 {
-                    ExecuteCommand(player.ActualSelection.EditorBuildMenuCommand);
-                    player.VisualPlayer.EditorBuildMenu.Visible = false;
+                    ExecuteCommand(player.ActualSelection.EditorCommand);
+                    player.ActualSelection.OpenedMenu.DoCommandExecuted();
+                    player.VisualPlayer.SetMenuVisibility("EditorBuildWorld", false);
                 }
             }
 
-            //player.DoSelectAction();
+            else if (Simulator.GameMode && Simulator.EditorEditingMode)
+            {
+                // the celestial body menu is open => do the action
+                if (player.ActualSelection.OpenedMenu is EditorCelestialBodyMenu)
+                {
+                    ExecuteCommand(player.ActualSelection.EditorCommand);
+                    player.ActualSelection.OpenedMenu.DoCommandExecuted();
+                }
 
-            //if (player.ActualSelection.GeneralMenuChoice != EditorGeneralMenuChoice.None)
-            //{
-            //    var menu = player.GeneralMenu.SubMenus[player.ActualSelection.GeneralMenuChoice];
-            //    var choice = menu.GetChoice(player.ActualSelection.GeneralMenuSubMenuIndex);
+                if (player.ActualSelection.EditingState != EditorEditingState.None)
+                    return;
 
-            //    EditorCommand command = GetCommand(choice);
+                // open the build menu
+                if (!(player.ActualSelection.OpenedMenu is EditorLevelBuildMenu))
+                {
+                    player.VisualPlayer.SetMenuVisibility("EditorBuildLevel", true);
+                }
 
-            //    command.Owner = player;
-
-            //    ExecuteCommand(command);
-
-            //    return;
-            //}
-
-
-            //if (OpenedPanel != EditorPanel.None)
-            //{
-            //    var panel = Panels[OpenedPanel];
-
-            //    panel.DoClick(p.Circle);
-
-            //    return;
-            //}
-
-            //if (Simulator.EditorState == EditorState.Playtest)
-            //    return;
-
-            //if (p.ActualSelection.CelestialBody != null)
-            //{
-            //    var choice = player.GUIPlayer.CelestialBodyMenu.Menu.GetCurrentChoice();
-            //    var command = GetCommand(choice);
-
-            //    command.Owner = player;
-
-            //    if (p.ActualSelection.EditingState != EditorEditingState.None)
-            //        ExecuteCommand(new EditorCelestialBodyCommand("ShowPathPreview") { Owner = player });
-
-            //    ExecuteCommand(command);
-
-            //    return;
-            //}
+                // the build menu is open => do the action
+                else if (player.ActualSelection.OpenedMenu is EditorLevelBuildMenu)
+                {
+                    ExecuteCommand(player.ActualSelection.EditorCommand);
+                    player.ActualSelection.OpenedMenu.DoCommandExecuted();
+                    player.VisualPlayer.SetMenuVisibility("EditorBuildLevel", false);
+                }
+            }
         }
 
 
@@ -189,18 +202,14 @@
             if (player.ActualSelection.EditingState != EditorEditingState.None)
             {
                 player.ActualSelection.EditingState = EditorEditingState.None;
-                player.ActualSelection.CelestialBody.ShowPath = false;
-                player.VisualPlayer.EditorCelestialBodyMenu.Visible = true;
+                player.VisualPlayer.SetMenuVisibility("EditorCB", true);
             }
 
-            else if (player.ActualSelection.OpenedMenu is EditorWorldMenu)
+            else if (player.ActualSelection.OpenedMenu is EditorWorldMenu ||
+                     player.ActualSelection.OpenedMenu is EditorLevelBuildMenu ||
+                     player.ActualSelection.OpenedMenu is EditorWorldBuildMenu)
             {
-                player.VisualPlayer.EditorWorldMenu.Visible = false;
-            }
-
-            else if (player.ActualSelection.OpenedMenu is EditorBuildMenu)
-            {
-                player.VisualPlayer.EditorBuildMenu.Visible = false;
+                player.ActualSelection.OpenedMenu.Visible = false;
             }
         }
 
@@ -253,6 +262,20 @@
                     Simulator.Initialize();
                     Simulator.SyncPlayers();
                 }
+            }
+
+            else if (command.Name == "EditLevel")
+            {
+                Main.CurrentWorld.World.EditorMode = true;
+                Main.CurrentWorld.World.Editing = true;
+                Main.CurrentWorld.DoSelectActionEditor(command.Owner.InnerPlayer);
+            }
+
+            else if (command.Name == "PlaytestLevel")
+            {
+                Main.CurrentWorld.World.EditorMode = true;
+                Main.CurrentWorld.World.Editing = false;
+                Main.CurrentWorld.DoSelectActionEditor(command.Owner.InnerPlayer);
             }
 
             //// toggle editor mode command
@@ -338,36 +361,55 @@
         {
             if (command.Name == "AddPlanet")
             {
-                command.CelestialBody = EditorLevelGenerator.GenerateCelestialBody(Simulator, VisualPriorities.Default.CelestialBody);
+                command.CelestialBody = EditorLevelGenerator.GeneratePlanetCB(Simulator, VisualPriorities.Default.CelestialBody);
 
                 if (Simulator.WorldMode)
-                    Main.CurrentWorld.World.AddLevel();
+                    Main.CurrentWorld.AddLevel(command.CelestialBody);
             }
 
             else if (command.Name == "AddPinkHole")
             {
-                command.CelestialBody = EditorLevelGenerator.GeneratePinkHole(Simulator, VisualPriorities.Default.CelestialBody);
+                command.CelestialBody = EditorLevelGenerator.GeneratePinkHoleCB(Simulator, VisualPriorities.Default.CelestialBody);
+            }
+
+
+            else if (command.Name == "Remove")
+            {
+                command.CelestialBody = command.Owner.ActualSelection.CelestialBody;
+
+                if (Simulator.WorldMode)
+                {
+                    if (command.CelestialBody is PinkHole)
+                    {
+
+                    }
+
+                    else
+                    {
+                        Main.CurrentWorld.RemoveLevel(command.CelestialBody);
+                    }
+                }
             }
 
             else if (command.Name == "Move")
             {
-                command.Owner.ActualSelection.CelestialBody.ShowPath = true;
+                command.CelestialBody = command.Owner.ActualSelection.CelestialBody;
                 command.Owner.ActualSelection.EditingState = EditorEditingState.MovingCB;
-                command.Owner.VisualPlayer.EditorCelestialBodyMenu.Visible = false;
+                command.Owner.VisualPlayer.SetMenuVisibility("EditorCB", false);
             }
 
-            else if(command.Name == "Rotate")
+            else if (command.Name == "Rotate")
             {
-                command.Owner.ActualSelection.CelestialBody.ShowPath = true;
+                command.CelestialBody = command.Owner.ActualSelection.CelestialBody;
                 command.Owner.ActualSelection.EditingState = EditorEditingState.RotatingCB;
-                command.Owner.VisualPlayer.EditorCelestialBodyMenu.Visible = false;
+                command.Owner.VisualPlayer.SetMenuVisibility("EditorCB", false);
             }
 
-            else if(command.Name == "Trajectory")
+            else if (command.Name == "Trajectory")
             {
-                command.Owner.ActualSelection.CelestialBody.ShowPath = true;
+                command.CelestialBody = command.Owner.ActualSelection.CelestialBody;
                 command.Owner.ActualSelection.EditingState = EditorEditingState.TrajectoryCB;
-                command.Owner.VisualPlayer.EditorCelestialBodyMenu.Visible = false;
+                command.Owner.VisualPlayer.SetMenuVisibility("EditorCB", false);
             }
 
             else
@@ -376,6 +418,66 @@
             }
 
             NotifyEditorCommandExecuted(command);
+        }
+
+
+        private void DoHasMoons(PanelWidget widget)
+        {
+            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
+
+            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("HasMoons")
+            {
+                HasMoons = ((CheckBox) widget).Value,
+                CelestialBody = panel.CelestialBody
+            });
+        }
+
+
+        private void DoFollowPath(PanelWidget widget)
+        {
+            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
+
+            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("FollowPath")
+            {
+                FollowPath = ((CheckBox) widget).Value,
+                CelestialBody = panel.CelestialBody
+            });
+        }
+
+
+        private void DoCanSelect(PanelWidget widget)
+        {
+            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
+
+            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("CanSelect")
+            {
+                CanSelect = ((CheckBox) widget).Value,
+                CelestialBody = panel.CelestialBody
+            });
+        }
+
+
+        private void DoStraightLine(PanelWidget widget)
+        {
+            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
+
+            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("StraightLine")
+            {
+                StraightLine = ((CheckBox) widget).Value,
+                CelestialBody = panel.CelestialBody
+            });
+        }
+
+
+        private void DoInvincible(PanelWidget widget)
+        {
+            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
+
+            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("Invincible")
+            {
+                Invincible = ((CheckBox) widget).Value,
+                CelestialBody = panel.CelestialBody
+            });
         }
 
 
@@ -505,6 +607,7 @@
                     enemiesAssets.Enemies = new List<EnemyType>();
 
                 enemiesAssets.Sync();
+                DoExecuteEditorPanelCommand(new EditorShowPanelCommand(PanelType.EditorEnemies));
             }
         }
 

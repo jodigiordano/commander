@@ -101,6 +101,7 @@
                     base.Visible &&
                     (Simulator.GameMode || Simulator.EditorPlaytestingMode) &&
                     Owner.ActualSelection.CelestialBody != null &&
+                    !Owner.ActualSelection.CelestialBody.FirstOnPath &&
                     AvailableTurretsList.Count != 0 &&
                     Owner.ActualSelection.Turret == null &&
                     Owner.ActualSelection.TurretToPlace == null;
