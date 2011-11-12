@@ -395,7 +395,7 @@
                 // Resume Game
                 if (GamePausedToWorld &&
                     currentGame.Simulator.Data.Level.Descriptor.Infos.Id == level.Infos.Id &&
-                    Simulator.PausedGameChoice == PauseChoice.Resume)
+                    Simulator.Data.Players[p].ActualSelection.PausedGameChoice == PauseChoice.Resume)
                 {
                     currentGame.Simulator.TriggerNewGameState(GameState.Running);
                     TransiteTo(currentGame.Name);

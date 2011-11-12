@@ -69,7 +69,7 @@
             QuantityWidget = new NumericHorizontalSlider("Quantity", 0, 500, 0, 5, 250, 150);
             Level = new NumericHorizontalSlider("Level", 1, 100, 1, 1, 250, 150);
             CashValue = new NumericHorizontalSlider("Cash", 0, 100, 0, 5, 250, 150);
-            EnemiesButton = new PushButton(new Text("Enemies", "Pixelite") { SizeX = 2 }, 250);
+            EnemiesButton = new PushButton(new Text("Enemies", "Pixelite") { SizeX = 2 }, 250) { ClickHandler = DoEnemiesPanel };
 
             SideA.AddWidget("WaveEmitterLabel", WaveEmitterLabel);
             SideA.AddWidget("StartingTime", StartingTime);
@@ -159,6 +159,20 @@
         {
             get { return SwitchEveryWidget.Value; }
             set { SwitchEveryWidget.Value = value; }
+        }
+
+
+        private void DoEnemiesPanel(PanelWidget widget)
+        {
+            var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
+            enemiesAssets.PanelToOpenOnClose = "EditorWaves";
+
+            if (Id < Simulator.Data.Level.Descriptor.Waves.Count)
+                enemiesAssets.Enemies = Simulator.Data.Level.Descriptor.Waves[Id].Enemies;
+            else
+                enemiesAssets.Enemies = new List<EnemyType>();
+
+            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorShowPanelCommand("EditorEnemies"));
         }
     }
 }

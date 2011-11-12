@@ -192,6 +192,7 @@
     <Compile Include="Simulation\Enemies\EnemyDescriptor.cs" />
     <Compile Include="Simulation\PlanetarySystem\CelestialBodySteeringBehavior.cs" />
     <Compile Include="Simulation\PlanetarySystem\CelestialBodyTurretsController.cs" />
+    <Compile Include="Simulation\Player\TurretInfos.cs" />
     <Compile Include="Simulation\Waves\WaveDescriptor.cs" />
     <Compile Include="Simulation\Waves\InfiniteWaveDescriptor.cs" />
     <Compile Include="Simulation\Minerals\MineralDescriptor.cs" />

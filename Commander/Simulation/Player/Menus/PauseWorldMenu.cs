@@ -19,6 +19,12 @@
         }
 
 
+        public override void UpdateSelection()
+        {
+            Owner.ActualSelection.PausedGameChoice = Visible ? Selection : PauseChoice.None;
+        }
+
+
         public override bool Visible
         {
             get

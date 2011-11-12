@@ -17,6 +17,14 @@
         }
 
 
+        public override void Open()
+        {
+            base.Open();
+
+            Sync();
+        }
+
+
         public override void Sync()
         {
             foreach (var e in Simulator.EnemiesFactory.All)
@@ -65,6 +73,12 @@
             EnemyType e = (EnemyType) Enum.Parse(typeof(EnemyType), assetName);
 
             return new EnemyCheckBox(EnemiesFactory.ImagesEnemies[e], e, 4);
+        }
+
+
+        protected override void DoClick(PanelWidget widget)
+        {
+
         }
     }
 }

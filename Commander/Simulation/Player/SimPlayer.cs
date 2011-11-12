@@ -150,6 +150,7 @@
             SelectionBackup.Sync(ActualSelection);
             PositionBackup = Position;
             DirectionBackup = Direction;
+            ActualSelection.Initialize();
             VisualPlayer.SwitchToPanelVisual();
         }
 
@@ -352,7 +353,9 @@
 
             LastSelection.Sync(ActualSelection);
 
-            SelectedCelestialBodyController.Update();
+            if (ActualSelection.TurretToPlace == null)
+                SelectedCelestialBodyController.Update();
+
             ActualSelection.CelestialBody = SelectedCelestialBodyController.CelestialBody;
             ActualSelection.Turret = SelectedCelestialBodyController.Turret;
             CheckAvailableTurretOptions();
@@ -360,7 +363,14 @@
             ActualSelection.OpenedMenu = VisualPlayer.GetOpenedMenu();
 
             if (ActualSelection.OpenedMenu != null && ActualSelection.OpenedMenuChanged)
+            {
                 ActualSelection.OpenedMenu.OnOpen();
+            }
+
+            else if (ActualSelection.OpenedMenu != LastSelection.OpenedMenu && LastSelection.OpenedMenu != null)
+            {
+                LastSelection.OpenedMenu.OnClose();
+            }
 
             if (ActualSelection.OpenedMenu != null)
                 ActualSelection.OpenedMenu.UpdateSelection();

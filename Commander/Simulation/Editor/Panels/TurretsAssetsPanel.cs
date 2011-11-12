@@ -41,5 +41,16 @@
         {
             return new TurretCheckBox(Simulator.TurretsFactory.Create((TurretType) Enum.Parse(typeof(TurretType), assetName)));
         }
+
+
+        protected override void DoClick(PanelWidget widget)
+        {
+            var checkbox = (TurretCheckBox) ((GridPanel) widget).LastClickedWidget;
+
+            if (checkbox.Value)
+                Simulator.Data.Level.AvailableTurrets.Add(checkbox.Turret.Type, checkbox.Turret);
+            else
+                Simulator.Data.Level.AvailableTurrets.Remove(checkbox.Turret.Type);
+        }
     }
 }

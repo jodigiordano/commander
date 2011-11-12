@@ -115,5 +115,7 @@
         public const double MenuChoices = 0.99;
 
         public const double Stars = 0.995;
+
+        public const double Background = 1.0;
     }
 }

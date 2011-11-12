@@ -13,7 +13,6 @@
         public event NoneHandler KeyboardAsked;
         public event NoneHandler KeyboardClosed;
 
-        public string Name;
         public virtual bool Visible { get; set; }
         public bool ShowFrame;
         public bool ShowBackground;
@@ -22,6 +21,8 @@
         public override double VisualPriority { get; set; }
         public PanelWidget LastClickedWidget;
         public PanelWidget LastHoverWidget;
+
+        public string PanelToOpenOnClose;
 
         public List<KeyValuePair<string, PanelWidget>> Widgets { get; private set; }
 
@@ -102,6 +103,8 @@
             {
                 DesactivatedCallback = KeyboardInputDesactivatedCallback
             };
+
+            PanelToOpenOnClose = "";
         }
 
 
@@ -123,7 +126,7 @@
         }
 
 
-        public new Vector2 Size
+        public Vector2 Size
         {
             get { return size; }
             set { }

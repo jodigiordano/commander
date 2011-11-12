@@ -197,6 +197,8 @@
                     else
                         m = new MoonPath(this, 50);
 
+                    m.Simulator = Simulator;
+
                     Moons.Add(m);
                 }
             }

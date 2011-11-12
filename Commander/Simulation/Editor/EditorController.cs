@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -20,15 +19,6 @@
 
         public void Initialize()
         {
-            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("Lives", DoLives);
-            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("Cash", DoCash);
-            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("Minerals", DoMinerals);
-            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("BulletDamage", DoBulletDamage);
-            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("LifePacks", DoLifePacks);
-
-            Simulator.Data.Panels["EditorTurrets"].SetClickHandler(DoTurrets);
-            Simulator.Data.Panels["EditorPowerUps"].SetClickHandler(DoPowerUps);
-            Simulator.Data.Panels["EditorBackground"].SetClickHandler(DoBackgrounds);
             Simulator.Data.Panels["EditorWaves"].SetClickHandler(DoWaves);
         }
 
@@ -355,103 +345,6 @@
             }
 
             NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoLives(PanelWidget widget)
-        {
-            var slider = (NumericHorizontalSlider) widget;
-
-            var command = new EditorPlayerCommand("AddOrRemoveLives")
-            {
-                LifePoints = slider.Value
-            };
-
-            NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoCash(PanelWidget widget)
-        {
-            var slider = (NumericHorizontalSlider) widget;
-
-            var command = new EditorPlayerCommand("AddOrRemoveCash")
-            {
-                Cash = slider.Value
-            };
-
-            NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoMinerals(PanelWidget widget)
-        {
-            var slider = (NumericHorizontalSlider) widget;
-
-            var command = new EditorPlayerCommand("AddOrRemoveMinerals")
-            {
-                Minerals = slider.Value
-            };
-
-            NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoBulletDamage(PanelWidget widget)
-        {
-            var slider = (NumericHorizontalSlider) widget;
-
-            var command = new EditorPlayerCommand("AddOrRemoveBulletDamage")
-            {
-                BulletDamage = slider.Value
-            };
-
-            NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoLifePacks(PanelWidget widget)
-        {
-            var slider = (NumericHorizontalSlider) widget;
-
-            var command = new EditorPlayerCommand("AddOrRemoveLifePacks")
-            {
-                LifePacks = slider.Value
-            };
-
-            NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoTurrets(PanelWidget widget)
-        {
-            var checkbox = (TurretCheckBox) ((GridPanel) widget).LastClickedWidget;
-
-            if (checkbox.Value)
-                Simulator.Data.Level.AvailableTurrets.Add(checkbox.Turret.Type, checkbox.Turret);
-            else
-                Simulator.Data.Level.AvailableTurrets.Remove(checkbox.Turret.Type);
-        }
-
-
-        private void DoPowerUps(PanelWidget widget)
-        {
-            var checkbox = (PowerUpCheckBox) widget;
-
-            if (checkbox.Value)
-                Simulator.Data.Level.AvailablePowerUps.Add(checkbox.PowerUp, Simulator.PowerUpsFactory.Create(checkbox.PowerUp));
-            else
-                Simulator.Data.Level.AvailablePowerUps.Remove(checkbox.PowerUp);
-
-            NotifyEditorCommandExecuted(new EditorSimpleCommand("AddOrRemovePowerUp"));
-        }
-
-
-        private void DoBackgrounds(PanelWidget widget)
-        {
-            var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
-
-            Simulator.Data.Level.Background = new Image(img.Image.TextureName) { VisualPriority = Preferences.PrioriteFondEcran };
         }
 
 

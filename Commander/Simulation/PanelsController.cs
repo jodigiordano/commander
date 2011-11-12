@@ -28,8 +28,6 @@
                 p.KeyboardAsked += new NoneHandler(DoKeyboardAsked);
                 p.KeyboardClosed += new NoneHandler(DoKeyboardClosed);
             }
-
-            Simulator.Data.Panels["Pause"].SetClickHandler(DoPausePanelClicked);
         }
 
 
@@ -90,10 +88,11 @@
 
             var p = Simulator.Data.Panels[type];
 
-            p.Position = position - new Vector3(p.Size / 2, 0);
+            Simulator.Data.Battlefield.Clamp(ref position, p.Size.X / 2, p.Size.Y / 2);
+            position -= new Vector3(p.Size / 2, 0);
+            
+            p.Position = position;
             p.Open();
-
-            Simulator.CanSelectCelestialBodies = false;
 
             NotifyPanelOpened(type);
         }
@@ -101,9 +100,10 @@
 
         public void DoPanelAction(SimPlayer player)
         {
-            foreach (var p in Simulator.Data.Panels.Values)
-                if (p.Visible)
-                    p.DoClick(player.Circle);
+            if (!IsPanelVisible)
+                return;
+
+            Simulator.Data.Panels[OpenedPanel].DoClick(player.Circle);
         }
 
 
@@ -119,26 +119,6 @@
             if (Simulator.Data.Players.Count == 0 && IsPanelVisible)
             {
                 CloseOthersPanels("");
-                Simulator.CanSelectCelestialBodies = true;
-            }
-        }
-
-
-        public void DoGameStateChanged(GameState newGameState)
-        {
-            switch (newGameState)
-            {
-                case GameState.Paused:
-                    ShowPanel("Pause");
-
-                    break;
-                
-                case GameState.Running:
-                case GameState.Restart:
-                case GameState.PausedToWorld:
-                    HidePanels();
-
-                    break;
             }
         }
 
@@ -148,17 +128,18 @@
             if (!IsPanelVisible)
                 return;
 
+            var openedPanel = Simulator.Data.Panels[OpenedPanel];
+
             foreach (var player in Simulator.Data.Players.Values)
             {
                 // More friction on a panel choice
                 if (player.SpaceshipMove.SteeringBehavior.NextMovement == Vector3.Zero)
                 {
-                    foreach (var p in Simulator.Data.Panels.Values)
-                        if (p.Visible && player.VisualPlayer.Visible && p.DoHover(player.Circle) && p.LastHoverWidget.Sticky)
-                        {
-                            player.SpaceshipMove.SteeringBehavior.Friction = 0.01f;
-                            break;
-                        }
+                    if (player.VisualPlayer.Visible && openedPanel.DoHover(player.Circle) && openedPanel.LastHoverWidget.Sticky)
+                    {
+                        player.SpaceshipMove.SteeringBehavior.Friction = 0.01f;
+                        break;
+                    }
                 }
             }
         }
@@ -184,30 +165,20 @@
 
         private void DoPanelClosed(PanelWidget widget)
         {
-            if (Simulator.Data.Panels["Options"].Visible)
+            var panel = Simulator.Data.Panels[OpenedPanel];
+
+            if (panel.PanelToOpenOnClose != "")
             {
-                ((OptionsPanel) Simulator.Data.Panels["Options"]).SaveOnDisk();
-            }
-
-            if (Simulator.Data.Panels["VirtualKeyboard"].Visible)
-            {
-                var p = (VirtualKeyboardPanel) Simulator.Data.Panels["VirtualKeyboard"];
-
-                p.TextBox.Value = p.Value;
-                ShowPanel(p.PanelToReopenOnClose);
-
-                return;
-            }
-
-            if (!Simulator.DemoMode && !Simulator.EditorMode && !Simulator.Data.Panels["Pause"].Visible)
-            {
-                ShowPanel("Pause");
+                ShowPanel(panel.PanelToOpenOnClose, panel.Position + new Vector3(panel.Size / 2, 0));
+                panel.PanelToOpenOnClose = "";
             }
 
             else
             {
-                Simulator.TriggerNewGameState(GameState.Running);
-                Simulator.CanSelectCelestialBodies = true;
+                panel.Close();
+
+                foreach (var p in Simulator.Data.Players.Values)
+                    p.SwitchToNormalMode();
             }
         }
 
@@ -219,10 +190,10 @@
             var vk = (VirtualKeyboardPanel) Simulator.Data.Panels["VirtualKeyboard"];
 
             vk.TextBox = textbox;
-            vk.PanelToReopenOnClose = panel.Name;
+            vk.PanelToOpenOnClose = panel.Name;
             vk.SetTitle(title);
 
-            ShowPanel("VirtualKeyboard");
+            ShowPanel("VirtualKeyboard", panel.Position);
         }
 
 
@@ -240,50 +211,6 @@
         }
 
         #endregion
-
-
-        private void DoPausePanelClicked(PanelWidget widget)
-        {
-            if (widget.Name == "Help")
-            {
-                ShowPanel("Help");
-            }
-
-            else if (widget.Name == "Controls")
-            {
-                ShowPanel("Controls");
-            }
-
-            else if (widget.Name == "Restart")
-            {
-                Simulator.TriggerNewGameState(GameState.Restart);
-            }
-
-            else if (widget.Name == "Options")
-            {
-                ShowPanel("Options");
-            }
-
-            else if (widget.Name == "GoBackToWorld")
-            {
-                Simulator.TriggerNewGameState(GameState.PausedToWorld);
-                Simulator.CanSelectCelestialBodies = true;
-            }
-
-            else if (widget.Name == "Resume")
-            {
-                Simulator.TriggerNewGameState(GameState.Running);
-                Simulator.CanSelectCelestialBodies = true;
-            }
-        }
-
-
-        private void ShowPanel(string type)
-        {
-            var p = Simulator.Data.Panels[type];
-
-            ShowPanel(type, p.Position);
-        }
 
 
         private void ShowPanelPlayers()

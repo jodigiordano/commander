@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Physics;
-    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -12,11 +12,15 @@
         private CheckBox Fullscreen;
         private CheckBox ShowHelpBar;
 
+        private Simulator Simulator;
 
-        public OptionsPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base(scene, position, size, visualPriority, color)
+
+        public OptionsPanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
+            : base(simulator.Scene, position, size, visualPriority, color)
         {
             SetTitle("Options");
+
+            Simulator = simulator;
 
             Music = new NumericHorizontalSlider("Music", 0, 10, 5, 1, 125, 100);
             Sfx = new NumericHorizontalSlider("Sfx", 0, 10, 5, 1, 125, 100);
@@ -43,6 +47,14 @@
         }
 
 
+        public override void Close()
+        {
+            base.Close();
+
+            SaveOnDisk();
+        }
+
+
         protected override bool Click(Circle circle)
         {
             bool click = base.Click(circle);
@@ -60,7 +72,7 @@
         }
 
 
-        public void SaveOnDisk()
+        private void SaveOnDisk()
         {
             Main.PlayersController.SaveOptions();
         }

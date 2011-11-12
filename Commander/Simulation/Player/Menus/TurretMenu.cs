@@ -62,20 +62,12 @@
                 SelectedIndex = 0;
 
             Owner.ActualSelection.TurretChoice = Visible ? Selection : TurretChoice.None;
+        }
 
-            if (SelectedTurret != null && SelectedTurret != Owner.ActualSelection.Turret)
-            {
-                SelectedTurret.ShowRange = false;
-                SelectedTurret.ShowRangePreview = false;
-            }
 
-            SelectedTurret = Owner.ActualSelection.Turret;
-
-            if (SelectedTurret != null)
-            {
-                SelectedTurret.ShowRange = true;
-                SelectedTurret.ShowRangePreview = Selection == TurretChoice.Update;
-            }
+        public override void OnClose()
+        {
+            UpdateSelection();
         }
 
 

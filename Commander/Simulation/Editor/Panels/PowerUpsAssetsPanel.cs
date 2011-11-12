@@ -46,5 +46,18 @@
                 Simulator.TurretsFactory.All[p.AssociatedTurret].BaseImage.TextureName :
                 p.BuyImage, pType, 3);
         }
+
+
+        protected override void DoClick(PanelWidget widget)
+        {
+            var checkbox = (PowerUpCheckBox) widget;
+
+            if (checkbox.Value)
+                Simulator.Data.Level.AvailablePowerUps.Add(checkbox.PowerUp, Simulator.PowerUpsFactory.Create(checkbox.PowerUp));
+            else
+                Simulator.Data.Level.AvailablePowerUps.Remove(checkbox.PowerUp);
+
+            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorSimpleCommand("AddOrRemovePowerUp"));
+        }
     }
 }

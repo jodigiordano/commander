@@ -92,8 +92,8 @@
             Panels.Add("Credits", new CreditsPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 550), VisualPriorities.Default.Panel, Color.White));
             Panels.Add("GeneralNews", new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.Panel, Color.White, NewsType.General, "What's up at Ephemere Games"));
             Panels.Add("UpdatesNews", new NewsPanel(Simulator.Scene, Vector3.Zero, new Vector2(1100, 600), VisualPriorities.Default.Panel, Color.White, NewsType.Updates, "You've just been updated!"));
-            Panels.Add("Options", new OptionsPanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 400), VisualPriorities.Default.Panel, Color.White));
-            Panels.Add("Pause", new PausePanel(Simulator.Scene, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.Panel, Color.White));
+            Panels.Add("Options", new OptionsPanel(Simulator, Vector3.Zero, new Vector2(400, 400), VisualPriorities.Default.Panel, Color.White));
+            Panels.Add("Pause", new PausePanel(Simulator, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.Panel, Color.White));
             Panels.Add("Controls", new ControlsPanel(Simulator.Scene, Vector3.Zero, new Vector2(600, 700), VisualPriorities.Default.Panel, Color.White));
             Panels.Add("Help", new HelpPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 600), VisualPriorities.Default.Panel, Color.White));
 

@@ -25,6 +25,7 @@
         private VisualSpaceship Visual;
         private VisualSpaceship PanelVisual;
         private LevelInfos LevelInfos;
+        private TurretInfos TurretInfos;
 
         // Menus
         private Dictionary<string, ContextualMenu> Menus;
@@ -77,6 +78,7 @@
             // Lowest priority
 
             LevelInfos = new LevelInfos(Simulator, Owner);
+            TurretInfos = new TurretInfos((TurretMenu) Menus["Turret"]);
         }
 
 
@@ -139,6 +141,8 @@
                 m.Position = CurrentVisual.Position;
                 m.Update();
             }
+
+            TurretInfos.SelectedTurret = Owner.ActualSelection.Turret;
         }
 
 

@@ -116,6 +116,12 @@
         }
 
 
+        public override void OnClose()
+        {
+            Owner.ActualSelection.TurretToBuy = TurretType.None;
+        }
+
+
         public override void Draw()
         {
             if (!Visible)

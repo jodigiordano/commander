@@ -6,7 +6,7 @@
             : base(simulator, visualPriority, owner)
         {
             AddChoice(new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 2, new EditorShowCBPanelCommand("EditorPlanetCBAssets")));
-            AddChoice(new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, new EditorShowCBPanelCommand("PlanetCBAttributesPanel")));
+            AddChoice(new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, new EditorShowCBPanelCommand("EditorPlanetCBAttributes")));
         }
 
 

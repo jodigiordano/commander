@@ -7,8 +7,6 @@
 
     class VirtualKeyboardPanel : VerticalPanel
     {
-        public string PanelToReopenOnClose;
-
         public bool SaveInput { get; private set; }
 
         private TextBox textBox;
@@ -38,6 +36,14 @@
  	        base.Initialize();
 
             SaveInput = false;
+        }
+
+
+        public override void Close()
+        {
+            base.Close();
+
+            TextBox.Value = Value;
         }
 
 

@@ -24,7 +24,7 @@
 
             Enemies = new List<EnemyType>();
 
-            Enable = new CheckBox("Enable");
+            Enable = new CheckBox("Enable") { SpaceForLabel = 250 };
             EnemiesButton = new PushButton(new Text("Enemies", "Pixelite") { SizeX = 2 }, 250);
 
             AddWidget("Enable", Enable);

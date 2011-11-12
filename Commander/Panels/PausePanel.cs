@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -13,18 +14,23 @@
         private PushButton Resume;
         private PushButton GoBackToWorld;
 
+        private Simulator Simulator;
+        private bool ChangeStateOnClose;
 
-        public PausePanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
-            : base(scene, position, size, visualPriority, color)
+
+        public PausePanel(Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
+            : base(simulator.Scene, position, size, visualPriority, color)
         {
             SetTitle("Game Paused");
 
-            Resume = new PushButton(new Text("Resume", @"Pixelite") { SizeX = 2 }, 300);
-            Restart = new PushButton(new Text("Restart", @"Pixelite") { SizeX = 2 }, 300);
-            GoBackToWorld = new PushButton(new Text("Go to galaxy", @"Pixelite") { SizeX = 2 }, 300);
-            Options = new PushButton(new Text("Options", @"Pixelite") { SizeX = 2 }, 300);
-            Help = new PushButton(new Text("How to play", @"Pixelite") { SizeX = 2 }, 300);
-            Controls = new PushButton(new Text("Controls", @"Pixelite") { SizeX = 2 }, 300);
+            Simulator = simulator;
+
+            Resume = new PushButton(new Text("Resume", @"Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoResume };
+            Restart = new PushButton(new Text("Restart", @"Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoRestart };
+            GoBackToWorld = new PushButton(new Text("Go to galaxy", @"Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoGoBackToWorld };
+            Options = new PushButton(new Text("Options", @"Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoOptions };
+            Help = new PushButton(new Text("How to play", @"Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoHelp };
+            Controls = new PushButton(new Text("Controls", @"Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoControls };
 
             AddWidget("Resume", Resume);
             AddWidget("Options", Options);
@@ -34,6 +40,74 @@
             AddWidget("GoBackToWorld", GoBackToWorld);
 
             Alpha = 0;
+        }
+
+
+        public override void Open()
+        {
+            base.Open();
+
+            ChangeStateOnClose = true;
+        }
+
+
+        public override void Close()
+        {
+            base.Close();
+
+            if (ChangeStateOnClose)
+                Simulator.TriggerNewGameState(GameState.Running);
+        }
+
+
+        private void DoOptions(PanelWidget widget)
+        {
+            Simulator.Data.Panels["Options"].PanelToOpenOnClose = "Pause";
+            PanelToOpenOnClose = "Options";
+            ChangeStateOnClose = false;
+            CloseButtonHandler(this);
+        }
+
+
+        private void DoHelp(PanelWidget widget)
+        {
+            Simulator.Data.Panels["Help"].PanelToOpenOnClose = "Pause";
+            PanelToOpenOnClose = "Help";
+            ChangeStateOnClose = false;
+            CloseButtonHandler(this);
+        }
+
+
+        private void DoControls(PanelWidget widget)
+        {
+            Simulator.Data.Panels["Controls"].PanelToOpenOnClose = "Pause";
+            PanelToOpenOnClose = "Controls";
+            ChangeStateOnClose = false;
+            CloseButtonHandler(this);
+        }
+
+
+        private void DoRestart(PanelWidget widget)
+        {
+            Simulator.TriggerNewGameState(GameState.Restart);
+            ChangeStateOnClose = false;
+            CloseButtonHandler(this);
+        }
+
+
+        private void DoGoBackToWorld(PanelWidget widget)
+        {
+            Simulator.TriggerNewGameState(GameState.PausedToWorld);
+            ChangeStateOnClose = false;
+            CloseButtonHandler(this);
+        }
+
+
+        private void DoResume(PanelWidget widget)
+        {
+            Simulator.TriggerNewGameState(GameState.Running);
+            ChangeStateOnClose = false;
+            CloseButtonHandler(this);
         }
     }
 }

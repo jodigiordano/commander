@@ -223,7 +223,7 @@
             switch (c.Name)
             {
                 case "campaign":
-                    switch (Simulator.NewGameChoice)
+                    switch (Simulator.Data.Players[player].ActualSelection.NewGameChoice)
                     {
                         case -1:
                         case 1: //new game
@@ -235,7 +235,7 @@
                             TransiteTo("WorldAnnunciation");
                             break;
                         default:
-                            Main.SetCurrentWorld(Main.WorldsFactory.GetUnlockedWorldIdByIndex(Simulator.NewGameChoice - 2), true);
+                            Main.SetCurrentWorld(Main.WorldsFactory.GetUnlockedWorldIdByIndex(Simulator.Data.Players[player].ActualSelection.NewGameChoice - 2), true);
                             TransiteTo("WorldAnnunciation");
                             break;
                     }

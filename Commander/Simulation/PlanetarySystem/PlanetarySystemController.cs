@@ -261,6 +261,7 @@
                 command.CelestialBody.CanSelectOverride = true;
                 command.CelestialBody.Position = command.Owner.Position;
                 command.CelestialBody.SteeringBehavior.BasePosition = command.Owner.Position;
+                command.CelestialBody.Initialize();
                 CelestialBodies.Add(command.CelestialBody);
             }
 
@@ -304,8 +305,7 @@
 
             else if (command.Name == "ToggleSize")
             {
-                ((Planet) command.CelestialBody).Size = command.Size;
-                ((Planet) command.CelestialBody).ImageName = command.AssetName;
+                command.CelestialBody.Size = command.Size;
             }
 
 

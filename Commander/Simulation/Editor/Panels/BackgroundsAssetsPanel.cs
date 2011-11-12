@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
@@ -35,6 +36,14 @@
         protected override PanelWidget GetWidget(string assetName)
         {
             return new ImageWidget(assetName, 0.09f);
+        }
+
+
+        protected override void DoClick(PanelWidget widget)
+        {
+            var img = (ImageWidget) widget;
+
+            Simulator.Data.Level.Background = new Image(img.Image.TextureName) { VisualPriority = VisualPriorities.Default.Background };
         }
     }
 }

@@ -9,8 +9,8 @@
     {
         protected int ColumnsCount;
         protected int AssetsPerPanel;
-       
-        protected Simulator Simulator;
+
+        public Simulator Simulator { get; set; }
 
 
         public AssetsPanel(string name, Simulator simulator, Vector3 position, Vector2 size, double visualPriority, Color color)
@@ -71,6 +71,7 @@
                 var name = assets[i];
                 var widget = GetWidget(name);
                 widget.Sticky = true;
+                widget.ClickHandler = DoClick;
                 panel.AddWidget(name, widget);
             }
 
@@ -80,5 +81,6 @@
 
         protected abstract List<string> GetAssets();
         protected abstract PanelWidget GetWidget(string assetName);
+        protected abstract void DoClick(PanelWidget widget);
     }
 }

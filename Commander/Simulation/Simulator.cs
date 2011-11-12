@@ -28,12 +28,11 @@ namespace EphemereGames.Commander.Simulation
         public bool EditorWorldMode         { get { return WorldMode && EditorMode; } }
 
 
-        public bool CanSelectCelestialBodies;
+        private bool canSelectCelestialBodies;
+        public bool CanSelectCelestialBodies { get { return canSelectCelestialBodies && !PanelsController.IsPanelVisible; } set { canSelectCelestialBodies = value; } }
         public bool AsteroidBeltOverride;
 
 
-        public PauseChoice PausedGameChoice;
-        public int NewGameChoice;
         public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
 
         internal Data Data;
@@ -162,8 +161,6 @@ namespace EphemereGames.Commander.Simulation
 
             AsteroidBeltOverride = false;
             CanSelectCelestialBodies = true;
-            PausedGameChoice = PauseChoice.None;
-            NewGameChoice = -1;
 
 
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(EnemiesController.DoObjectHit);
@@ -199,7 +196,6 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
             LevelsController.NewGameState += new NewGameStateHandler(GUIController.DoGameStateChanged);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.DoPlayerSelectionChanged);
-            SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(this.DoPlayerSelectionChanged);
             TurretsController.TurretReactivated += new TurretHandler(SimPlayersController.DoTurretReactivated);
             LevelsController.NewGameState += new NewGameStateHandler(this.DoNewGameState); //must come after GUIController.DoGameStateChanged
             LevelsController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
@@ -248,7 +244,6 @@ namespace EphemereGames.Commander.Simulation
             EditorController.EditorCommandExecuted += new EditorCommandHandler(GUIController.DoEditorCommandExecuted);
             EditorController.EditorCommandExecuted += new EditorCommandHandler(PanelsController.DoEditorCommandExecuted);
             SimPlayersController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
-            LevelsController.NewGameState += new NewGameStateHandler(PanelsController.DoGameStateChanged);
             PanelsController.PanelOpened += new StringHandler(AudioController.DoPanelOpened);
             PanelsController.PanelClosed += new StringHandler(AudioController.DoPanelClosed);
             PanelsController.PanelClosed += new StringHandler(EditorController.DoPanelClosed);
@@ -497,12 +492,6 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void ShowPanel(string type)
-        {
-            ShowPanel(type, Vector3.Zero);
-        }
-
-
         public void ShowPanel(string type, Vector3 position)
         {
             PanelsController.ShowPanel(type, position);
@@ -513,13 +502,6 @@ namespace EphemereGames.Commander.Simulation
         {
             State = state;
             LevelsController.TriggerNewGameState(state);
-        }
-
-
-        private void DoPlayerSelectionChanged(SimPlayer player)
-        {
-            PausedGameChoice = player.ActualSelection.PausedGameChoice;
-            NewGameChoice = player.ActualSelection.NewGameChoice;
         }
 
 
@@ -682,68 +664,23 @@ namespace EphemereGames.Commander.Simulation
             {
                 if (key == player.KeyboardConfiguration.Select)
                     EditorController.DoSelectAction(simPlayer);
-                //else if (key == player.KeyboardConfiguration.QuickToggle)
-                //    EditorController.DoNextOrPreviousAction(simPlayer, 1);
-                //else if (key == player.KeyboardConfiguration.SelectionNext)
-                //    EditorController.DoNextOrPreviousAction(simPlayer, 1);
-                //else if (key == player.KeyboardConfiguration.SelectionPrevious)
-                //    EditorController.DoNextOrPreviousAction(simPlayer, -1);
                 else if (key == player.KeyboardConfiguration.Cancel)
                     EditorController.DoCancelAction(simPlayer);
             }
 
-            //if (WorldMode)
-            //{
-            //    if (EditorWorldMode)
-            //    {
-            //        if (key == player.KeyboardConfiguration.QuickToggle)
-            //            SimPlayersController.DoEditorWorldChoice(player, 1);
-            //        else if (key == player.KeyboardConfiguration.SelectionNext)
-            //            SimPlayersController.DoEditorWorldChoice(player, 1);
-            //        else if (key == player.KeyboardConfiguration.SelectionPrevious)
-            //            SimPlayersController.DoEditorWorldChoice(player, -1);
-            //    }
+            if (key == player.KeyboardConfiguration.Back)
+            {
+                TriggerNewGameState(GameState.Paused);
+                PanelsController.ShowPanel("Pause", player.Position);
+            }
 
-            //    else
-            //    {
-            //        if (key == player.KeyboardConfiguration.QuickToggle)
-            //            SimPlayersController.DoPausedGameChoice(player, 1);
-            //        else if (key == player.KeyboardConfiguration.SelectionNext)
-            //            SimPlayersController.DoPausedGameChoice(player, 1);
-            //        else if (key == player.KeyboardConfiguration.SelectionPrevious)
-            //            SimPlayersController.DoPausedGameChoice(player, -1);
-            //    }
-            //}
+            if (EditorMode && DemoMode)
+                return;
 
-            //else if (DemoMode)
-            //{
-            //    if (key == player.KeyboardConfiguration.QuickToggle)
-            //        SimPlayersController.DoNewGameChoice(player, 1);
-            //    else if (key == player.KeyboardConfiguration.SelectionNext)
-            //        SimPlayersController.DoNewGameChoice(player, 1);
-            //    else if (key == player.KeyboardConfiguration.SelectionPrevious)
-            //        SimPlayersController.DoNewGameChoice(player, -1);
-            //}
-
-            //else
-            //{
-                if (key == player.KeyboardConfiguration.Back)
-                    TriggerNewGameState(GameState.Paused);
-
-                if (EditorMode && DemoMode)
-                    return;
-
-                if (key == player.KeyboardConfiguration.Select)
-                    SimPlayersController.DoSelectAction(player);                
-                //else if (key == player.KeyboardConfiguration.QuickToggle)
-                //    SimPlayersController.DoNextOrPreviousAction(player, 1);
-                //else if (key == player.KeyboardConfiguration.SelectionNext)
-                //    SimPlayersController.DoNextOrPreviousAction(player, 1);
-                //else if (key == player.KeyboardConfiguration.SelectionPrevious)
-                //    SimPlayersController.DoNextOrPreviousAction(player, -1);
-                else if (key == player.KeyboardConfiguration.Cancel)
-                    SimPlayersController.DoCancelAction(player);
-            //}
+            if (key == player.KeyboardConfiguration.Select)
+                SimPlayersController.DoSelectAction(player);                
+            else if (key == player.KeyboardConfiguration.Cancel)
+                SimPlayersController.DoCancelAction(player);
         }
 
 
@@ -940,24 +877,6 @@ namespace EphemereGames.Commander.Simulation
                 return;
 
             SimPlayersController.DoToggleChoice(player, delta);
-
-            //if (EditorMode)
-            //    EditorController.DoNextOrPreviousAction(simPlayer, delta);
-
-            //if (EditorMode && EditorState == EditorState.Editing)
-            //    return;
-
-            //if (WorldMode)
-            //{
-            //    if (EditorWorldMode)
-            //        SimPlayersController.DoEditorWorldChoice(player, delta);
-            //    else
-            //        SimPlayersController.DoPausedGameChoice(player, delta);
-            //}
-            //else if (DemoMode)
-            //    SimPlayersController.DoNewGameChoice(player, delta);
-            //else
-            //    SimPlayersController.DoNextOrPreviousAction(player, delta);
         }
 
 
@@ -971,9 +890,6 @@ namespace EphemereGames.Commander.Simulation
 
             simPlayer.LastMouseDirection = delta;
 
-            //if (PanelsController.IsPanelVisible)
-            //    PanelsController.DoDirectionDelta(simPlayer, ref delta);
-            //else
             SimPlayersController.DoDirectionDelta(player, ref delta);
         }
 
@@ -1030,12 +946,6 @@ namespace EphemereGames.Commander.Simulation
             {
                 if (button == player.GamepadConfiguration.Select)
                     EditorController.DoSelectAction(simPlayer);
-
-                //else if (button == player.GamepadConfiguration.SelectionNext || button == player.GamepadConfiguration.AlternateSelectionNext)
-                //    EditorController.DoNextOrPreviousAction(simPlayer, 1);
-
-                //else if (button == player.GamepadConfiguration.SelectionPrevious || button == player.GamepadConfiguration.AlternateSelectionPrevious)
-                //    EditorController.DoNextOrPreviousAction(simPlayer, -1);
             }
 
             if (EditorEditingMode)
@@ -1049,57 +959,23 @@ namespace EphemereGames.Commander.Simulation
                     PowerUpsController.DoInputPressed(simPlayer);
             }
 
+            if (button == player.GamepadConfiguration.Select)
+                SimPlayersController.DoSelectAction(player);
 
-            //if (WorldMode)
-            //{
-            //    if (EditorWorldMode)
-            //    {
-            //        if (button == player.GamepadConfiguration.SelectionNext || button == player.GamepadConfiguration.AlternateSelectionNext)
-            //            SimPlayersController.DoEditorWorldChoice(player, 1);
-            //        else if (button == player.GamepadConfiguration.SelectionPrevious || button == player.GamepadConfiguration.AlternateSelectionPrevious)
-            //            SimPlayersController.DoEditorWorldChoice(player, -1);
-            //    }
+            else if (button == player.GamepadConfiguration.AlternateSelect)
+                SimPlayersController.DoAlternateAction(player);
 
-            //    else
-            //    {
-            //        if (button == player.GamepadConfiguration.SelectionNext || button == player.GamepadConfiguration.AlternateSelectionNext)
-            //            SimPlayersController.DoPausedGameChoice(player, 1);
-            //        else if (button == player.GamepadConfiguration.SelectionPrevious || button == player.GamepadConfiguration.AlternateSelectionPrevious)
-            //            SimPlayersController.DoPausedGameChoice(player, -1);
-            //    }
-            //}
+            else if (button == player.GamepadConfiguration.Cancel)
+                SimPlayersController.DoCancelAction(player);
 
-            //else if (DemoMode)
-            //{
-            //    if (button == player.GamepadConfiguration.SelectionNext || button == player.GamepadConfiguration.AlternateSelectionNext)
-            //        SimPlayersController.DoNewGameChoice(player, 1);
-            //    else if (button == player.GamepadConfiguration.SelectionPrevious || button == player.GamepadConfiguration.AlternateSelectionPrevious)
-            //        SimPlayersController.DoNewGameChoice(player, -1);
-            //}
+            else if (button == player.GamepadConfiguration.Back)
+            {
+                TriggerNewGameState(GameState.Paused);
+                PanelsController.ShowPanel("Pause", player.Position);
+            }
 
-            //else
-            //{
-                if (button == player.GamepadConfiguration.Select)
-                    SimPlayersController.DoSelectAction(player);
-
-                else if (button == player.GamepadConfiguration.AlternateSelect)
-                    SimPlayersController.DoAlternateAction(player);
-
-                else if (button == player.GamepadConfiguration.Cancel)
-                    SimPlayersController.DoCancelAction(player);
-
-                //else if (button == player.GamepadConfiguration.SelectionNext || button == player.GamepadConfiguration.AlternateSelectionNext)
-                //    SimPlayersController.DoNextOrPreviousAction(player, 1);
-
-                //else if (button == player.GamepadConfiguration.SelectionPrevious || button == player.GamepadConfiguration.AlternateSelectionPrevious)
-                //    SimPlayersController.DoNextOrPreviousAction(player, -1);
-
-                else if (button == player.GamepadConfiguration.Back)
-                    TriggerNewGameState(GameState.Paused);
-
-                else if (button == player.GamepadConfiguration.AdvancedView)
-                    SimPlayersController.DoAdvancedViewAction(player, true);
-            //}
+            else if (button == player.GamepadConfiguration.AdvancedView)
+                SimPlayersController.DoAdvancedViewAction(player, true);
         }
 
 

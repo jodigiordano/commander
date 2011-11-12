@@ -539,7 +539,7 @@
                 //PlayerLives.Planet = null;
             }
 
-            else if (command.Name == "AddPlanet" || command.Name == "Remove")
+            else if (command.Name == "AddPlanet" || command.Name == "AddPinkHole" || command.Name == "Remove")
             {
                 CelestialBodiesPathPreviews.Sync();
             }

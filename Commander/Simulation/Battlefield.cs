@@ -43,5 +43,12 @@
                 MathHelper.Clamp(position.Y, Inner.Top + radius, Inner.Bottom - radius),
                 0);
         }
+
+
+        public void Clamp(ref Vector3 position, float radiusX, float radiusY)
+        {
+            position.X = MathHelper.Clamp(position.X, Inner.Left + radiusX, Inner.Right - radiusX);
+            position.Y = MathHelper.Clamp(position.Y, Inner.Top + radiusY, Inner.Bottom - radiusY);
+        }
     }
 }

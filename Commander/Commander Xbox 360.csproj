@@ -252,6 +252,7 @@
     <Compile Include="Simulation\Player\Menus\TurretMenu.cs" />
     <Compile Include="Simulation\Player\PlayerDescriptor.cs" />
     <Compile Include="Simulation\Player\SimPlayerSelection.cs" />
+    <Compile Include="Simulation\Player\TurretInfos.cs" />
     <Compile Include="Simulation\Player\VisualPlayer.cs" />
     <Compile Include="Simulation\PowerUps\PowerUpsController.cs" />
     <Compile Include="Simulation\Player\SimPlayersController.cs" />

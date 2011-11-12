@@ -9,7 +9,6 @@
     class PlanetCBAssetsPanel : AssetsPanel, IEditorCBPanel
     {
         public CelestialBody CelestialBody  { get; set; }
-        public Simulator Simulator          { get; set; }
 
         private string AssetsDirectory = @".\Content\";
 
@@ -19,8 +18,6 @@
         {
             Simulator = simulator;
             AssetsPerPanel = 12;
-
-            SetClickHandler(DoClick);
         }
 
 
@@ -53,9 +50,9 @@
         }
 
 
-        private void DoClick(PanelWidget widget)
+        protected override void DoClick(PanelWidget widget)
         {
-            var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
+            var img = (ImageWidget) widget;
 
             Simulator.EditorController.NotifyEditorCommandExecuted(
                 new EditorCelestialBodyCommand("ChangeAsset")
