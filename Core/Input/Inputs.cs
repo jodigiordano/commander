@@ -167,5 +167,42 @@
         public static Player MasterPlayer { get { return PlayersController.MasterPlayer; } }
 
         public static List<Player> ConnectedPlayers { get { return PlayersController.ConnectedPlayers; } }
+
+
+
+        public static void ConsumeKey(Keys key)
+        {
+            InputsController.ConsumeKey(key);
+        }
+
+
+        public static void ConsumeMouseButton(MouseButton button)
+        {
+            InputsController.ConsumeMouseButton(button);
+        }
+
+
+        public static void MouseScrolledConsumed()
+        {
+            InputsController.MouseScrolledConsumed();
+        }
+
+
+        public static void MouseMovedConsumed()
+        {
+            InputsController.MouseMovedConsumed();
+        }
+
+
+        public static void ConsumeGamePadButton(Buttons button)
+        {
+            InputsController.ConsumeGamePadButton(button);
+        }
+
+
+        public static void ConsumeGamePadJoyStickMoved(Buttons button)
+        {
+            InputsController.ConsumeGamePadJoyStickMoved(button);
+        }
     }
 }

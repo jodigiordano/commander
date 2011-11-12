@@ -12,6 +12,14 @@
         public List<MouseButton> MappedMouseButtons;
         public List<Buttons> MappedGamePadButtons;
 
+        public Keys ConsumedKeyboardKey;
+        public MouseButton ConsumedMouseButton;
+        public bool MouseScrolledConsumed;
+        public bool MouseMovedConsumed;
+        public Buttons ConsumedGamePadButton;
+        public bool GamePadLeftJoystickConsumed;
+        public bool GamePadRightJoystickConsumed;
+
         private Player Player;
         private Vector2 MouseBasePosition;
         private int PreviousMouseWheelValue;
@@ -56,6 +64,20 @@
             GamePadButtonsPressedOnce = new Dictionary<Buttons, bool>(ButtonsComparer.Default);
             GamePadButtonsReleased = new Dictionary<Buttons, bool>(ButtonsComparer.Default);
             GamePadJoystickMoved = new Dictionary<Buttons, Vector3>(ButtonsComparer.Default);
+
+            InitializeConsummed();
+        }
+
+
+        public void InitializeConsummed()
+        {
+            ConsumedKeyboardKey = Keys.None;
+            ConsumedMouseButton = MouseButton.None;
+            MouseScrolledConsumed = false;
+            MouseMovedConsumed = false;
+            ConsumedGamePadButton = Buttons.BigButton;
+            GamePadLeftJoystickConsumed = false;
+            GamePadRightJoystickConsumed = false;
         }
 
 
@@ -244,6 +266,9 @@
         {
             foreach (var keyboardkey in MappedKeys)
             {
+                if (keyboardkey == ConsumedKeyboardKey)
+                    continue;
+
                 if (KeysPressed[keyboardkey])
                     listener.DoKeyPressed(Player, keyboardkey);
 
@@ -260,6 +285,9 @@
         {
             foreach (var button in MappedMouseButtons)
             {
+                if (button == ConsumedMouseButton)
+                    continue;
+
                 if (MouseButtonsPressed[button])
                     listener.DoMouseButtonPressed(Player, button);
 
@@ -271,11 +299,11 @@
             }
 
 
-            if (MouseScrolled != 0)
+            if (!MouseScrolledConsumed && MouseScrolled != 0)
                 listener.DoMouseScrolled(Player, MouseScrolled);
 
 
-            if (MouseMoved != Vector3.Zero)
+            if (!MouseMovedConsumed && MouseMoved != Vector3.Zero)
                 listener.DoMouseMoved(Player, MouseMoved);
 
 
@@ -287,6 +315,9 @@
         {
             foreach (var button in MappedGamePadButtons)
             {
+                if (button == ConsumedGamePadButton)
+                    continue;
+
                 if (GamePadButtonsPressedOnce[button])
                     listener.DoGamePadButtonPressedOnce(Player, button);
 
@@ -295,11 +326,11 @@
             }
 
 
-            if (GamePadJoystickMoved[Buttons.LeftStick] != Vector3.Zero)
+            if (!GamePadLeftJoystickConsumed && GamePadJoystickMoved[Buttons.LeftStick] != Vector3.Zero)
                 listener.DoGamePadJoystickMoved(Player, Buttons.LeftStick, GamePadJoystickMoved[Buttons.LeftStick]);
 
 
-            if (GamePadJoystickMoved[Buttons.RightStick] != Vector3.Zero)
+            if (!GamePadRightJoystickConsumed && GamePadJoystickMoved[Buttons.RightStick] != Vector3.Zero)
                 listener.DoGamePadJoystickMoved(Player, Buttons.RightStick, GamePadJoystickMoved[Buttons.RightStick]);
         }
 

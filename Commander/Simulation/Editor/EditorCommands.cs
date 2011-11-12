@@ -38,12 +38,22 @@
     }
 
 
+    class EditorShowCBPanelCommand : EditorShowPanelCommand
+    {
+        public EditorShowCBPanelCommand(string panel)
+            : base(panel)
+        {
+            Panel = panel;
+        }
+    }
+
+
     class EditorShowPanelCommand : EditorCommand
     {
-        public PanelType Panel;
+        public string Panel;
 
 
-        public EditorShowPanelCommand(PanelType panel)
+        public EditorShowPanelCommand(string panel)
             : base("ShowPanel")
         {
             Panel = panel;

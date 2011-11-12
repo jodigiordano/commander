@@ -13,7 +13,7 @@
         public event NoneHandler KeyboardAsked;
         public event NoneHandler KeyboardClosed;
 
-        public PanelType Type;
+        public string Name;
         public virtual bool Visible { get; set; }
         public bool ShowFrame;
         public bool ShowBackground;
@@ -45,7 +45,6 @@
 
         public Panel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)
         {
-            Type = PanelType.None;
             Position = position - new Vector3(size / 2f, 0);
             VisualPriority = visualPriority;
             this.size = size;

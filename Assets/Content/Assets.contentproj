@@ -1635,6 +1635,7 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1712,14 +1713,6 @@
       <Name>planet93</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\layout.xml">
-      <Name>layout</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1822,168 +1815,6 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level30.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level30</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level22.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level22</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level23.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level23</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level24.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level24</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level25.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level25</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level26.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level26</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level27.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level27</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level28.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level28</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level29.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level29</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\layout.xml">
-      <Name>layout</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level31.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level31</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level39.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level39</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level32.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level32</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level33.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level33</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level34.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level34</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level35.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level35</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level36.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level36</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\level37.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level37</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level38.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level38</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level40.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level40</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2513,84 +2344,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\campaign\world3\level47.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level47</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level46.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level46</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level45.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level45</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level44.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level44</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level43.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level43</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level42.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level42</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\level41.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level41</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="scenarios\campaign\world1\world.xml">
       <Name>world</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world3\world.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>world</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world2\world.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>world</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
     </None>
   </ItemGroup>
   <ItemGroup>

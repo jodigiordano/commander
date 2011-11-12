@@ -96,7 +96,9 @@
             var player = (Commander.Player) p;
 
             if (button == player.MouseConfiguration.Select)
+            {
                 DoSelectAction(player);
+            }
         }
 
 
@@ -105,7 +107,9 @@
             var player = (Commander.Player) p;
 
             if (key == player.KeyboardConfiguration.Select)
+            {
                 DoSelectAction(player);
+            }
 
             else if (key == player.KeyboardConfiguration.Back)
                 DoBackAction();
@@ -129,7 +133,9 @@
                 Main.MusicController.ToggleCurrentMusic();
 
             else if (button == player.GamepadConfiguration.Select)
+            {
                 DoSelectAction(player);
+            }
         }
 
 
@@ -213,13 +219,13 @@
             if (!Main.PlayersController.MultiverseData.LoggedIn)
                 DoLogin(player);
             else
-                Simulator.ShowPanel(PanelType.JumpToWorld, player.Position);
+                Simulator.ShowPanel("JumpToWorld", player.Position);
         }
 
 
         private void DoRegister(Player player)
         {
-            Simulator.ShowPanel(PanelType.Register, player.Position);
+            Simulator.ShowPanel("Register", player.Position);
         }
 
 
@@ -234,7 +240,7 @@
 
         private void DoLogin(Player player)
         {
-            Simulator.ShowPanel(PanelType.Login, player.Position);
+            Simulator.ShowPanel("Login", player.Position);
         }
 
 

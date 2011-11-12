@@ -67,7 +67,7 @@
             Highlights.Clear();
 
             foreach (var c in Simulator.Data.Level.PlanetarySystem)
-                Highlights.Add(c, c.ActualRotationTime);
+                Highlights.Add(c, c.SteeringBehavior.ActualRotationTime);
         }
 
 
@@ -79,7 +79,7 @@
                     return;
 
                 foreach (var c in Simulator.Data.Level.PlanetarySystem)
-                    Highlights[c] = c.ActualRotationTime;
+                    Highlights[c] = c.SteeringBehavior.ActualRotationTime;
             }
         }
 
@@ -99,7 +99,7 @@
 
                 PathPositions.Clear();
 
-                var maxXY = Math.Max(Math.Abs(c.Path.X), Math.Abs(c.Path.Y));
+                var maxXY = Math.Max(Math.Abs(c.SteeringBehavior.Path.X), Math.Abs(c.SteeringBehavior.Path.Y));
 
                 int nbLines = (int) (maxXY / (LineSizeX / 10));
 
@@ -109,7 +109,7 @@
                 for (int i = 0; i < nbLines + 1; i++)
                 {
                     float perc = i * (1f / nbLines);
-                    PathPositions.Add(new KeyValuePair<Vector3, float>(c.GetPositionAtPerc(perc), perc)); //todo: can be removed
+                    PathPositions.Add(new KeyValuePair<Vector3, float>(c.SteeringBehavior.GetPositionAtPerc(perc), perc)); //todo: can be removed
                 }
 
                 for (int i = 0; i < nbLines; i++)

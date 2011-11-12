@@ -111,6 +111,52 @@
         }
 
 
+        public void ConsumeKey(Keys key)
+        {
+            foreach (var i in Sources.Values)
+                i.ConsumedKeyboardKey = key;
+        }
+
+
+        public void ConsumeMouseButton(MouseButton button)
+        {
+            foreach (var i in Sources.Values)
+                i.ConsumedMouseButton = button;
+        }
+
+
+        public void MouseScrolledConsumed()
+        {
+            foreach (var i in Sources.Values)
+                i.MouseScrolledConsumed = true;
+        }
+
+
+        public void MouseMovedConsumed()
+        {
+            foreach (var i in Sources.Values)
+                i.MouseMovedConsumed = true;
+        }
+
+
+        public void ConsumeGamePadButton(Buttons button)
+        {
+            foreach (var i in Sources.Values)
+                i.ConsumedGamePadButton = button;
+        }
+
+
+        public void ConsumeGamePadJoyStickMoved(Buttons button)
+        {
+            if (button == Buttons.LeftStick)
+                foreach (var i in Sources.Values)
+                    i.GamePadLeftJoystickConsumed = true;
+            else if (button == Buttons.RightStick)
+                foreach (var i in Sources.Values)
+                    i.GamePadRightJoystickConsumed = true;
+        }
+
+
         private void DoTransitionStarted()
         {
             this.Active = false;
@@ -148,6 +194,10 @@
 
             // Clear mouse state
             Mouse.SetPosition((int)MouseBasePosition.X, (int)MouseBasePosition.Y);
+
+            // Clear consumed keys
+            foreach (var i in Sources.Values)
+                i.InitializeConsummed();
         }
 
 

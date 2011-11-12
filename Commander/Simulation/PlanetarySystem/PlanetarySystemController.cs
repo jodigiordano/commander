@@ -119,10 +119,8 @@
         {
             foreach (var c in CelestialBodies)
             {
-                if (c.FirstOnPath && !c.LastOnPath && c.Image != null)
-                {
-                    c.Image.Rotation = Path.GetRotation(0) + MathHelper.PiOver2;
-                }
+                if (c.FirstOnPath && !c.LastOnPath)
+                    c.Rotation = Path.GetRotation(0) + MathHelper.PiOver2;
 
                 c.Draw();
             }
@@ -133,7 +131,7 @@
         {
             CelestialBody celestialBody = turret.CelestialBody;
 
-            celestialBody.Turrets.Add(turret);
+            celestialBody.TurretsController.Turrets.Add(turret);
 
             if (turret.Type == TurretType.Gravitational &&
                 celestialBody.PathPriority != int.MinValue &&
@@ -153,7 +151,7 @@
 
             int nbGravTurrets = 0;
 
-            foreach (var turret2 in celestialBody.Turrets)
+            foreach (var turret2 in celestialBody.TurretsController.Turrets)
                 if (turret2.Type == TurretType.Gravitational)
                     nbGravTurrets++;
 
@@ -163,7 +161,7 @@
                 PathPreview.RemoveCelestialBody(celestialBody);
             }
 
-            celestialBody.Turrets.Remove(turret);
+            celestialBody.TurretsController.Turrets.Remove(turret);
 
             return true;
         }
@@ -192,7 +190,8 @@
 
             if (powerUp.Type == PowerUpType.DarkSide)
                 foreach (var c in CelestialBodies)
-                    c.DarkSide = true;
+                    if (c is Planet)
+                        ((Planet) c).DarkSide = true;
 
             if (powerUp.Type == PowerUpType.DeadlyShootingStars)
             {
@@ -261,7 +260,7 @@
                 command.CelestialBody.AliveOverride = true;
                 command.CelestialBody.CanSelectOverride = true;
                 command.CelestialBody.Position = command.Owner.Position;
-                command.CelestialBody.BasePosition = command.Owner.Position;
+                command.CelestialBody.SteeringBehavior.BasePosition = command.Owner.Position;
                 CelestialBodies.Add(command.CelestialBody);
             }
 
@@ -273,12 +272,12 @@
 
             else if (command.Name == "ToggleSpeed")
             {
-                command.CelestialBody.SetSpeed(command.Speed);
+                command.CelestialBody.Speed = command.Speed;
             }
 
             else if (command.Name == "ChangeAsset")
             {
-                command.CelestialBody.SetImage(command.AssetName);
+                ((Planet) command.CelestialBody).ImageName = command.AssetName;
             }
 
             else if (command.Name == "PushFirst")
@@ -305,14 +304,14 @@
 
             else if (command.Name == "ToggleSize")
             {
-                command.CelestialBody.SetSize(command.Size);
-                command.CelestialBody.SetImage(command.CelestialBody.PartialImageName);
+                ((Planet) command.CelestialBody).Size = command.Size;
+                ((Planet) command.CelestialBody).ImageName = command.AssetName;
             }
 
 
             else if (command.Name == "HasMoons")
             {
-                command.CelestialBody.SetHasMoons(command.HasMoons);
+                ((Planet) command.CelestialBody).HasMoons = command.HasMoons;
             }
 
 
@@ -474,7 +473,7 @@
 
         private void RemoveFromStartingPath(CelestialBody celestialBody)
         {
-            celestialBody.RemoveFromStartingPath();
+            celestialBody.TurretsController.RemoveFromStartingPath();
             Path.RemoveCelestialBody(celestialBody);
             PathPreview.RemoveCelestialBody(celestialBody);
         }
@@ -482,7 +481,7 @@
 
         private void AddToStartingPath(CelestialBody celestialBody)
         {
-            celestialBody.AddToStartingPath(false);
+            celestialBody.TurretsController.AddToStartingPath(false);
 
             if (celestialBody.PathPriority == int.MinValue)
                 celestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;

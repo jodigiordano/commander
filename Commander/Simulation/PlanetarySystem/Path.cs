@@ -73,7 +73,7 @@
             CelestialBodiesPath = new OrderedBag<CelestialBody>();
 
             foreach (var c in Simulator.Data.Level.PlanetarySystem)
-                if (c.HasGravitationalTurret || (TakeIntoAccountFakeGravTurret && c.FakeHasGravitationalTurret))
+                if (c.TurretsController.HasGravitationalTurret || (TakeIntoAccountFakeGravTurret && c.TurretsController.FakeHasGravitationalTurret))
                     AddCelestialBody(c, false);
 
             Active = true;
@@ -156,7 +156,7 @@
             if (celestialBody.PathPriority == int.MinValue)
                 return;
 
-            if (!celestialBody.HasGravitationalTurret && (TakeIntoAccountFakeGravTurret && !celestialBody.FakeHasGravitationalTurret))
+            if (!celestialBody.TurretsController.HasGravitationalTurret && (TakeIntoAccountFakeGravTurret && !celestialBody.TurretsController.FakeHasGravitationalTurret))
                 return;
 
             if (LastCelestialBody != null)
@@ -301,7 +301,7 @@
 
                 // Radius of CB. Depends on the distance of the CB from the line.
                 // As the CB approach the line, the radius diminish
-                float radius = MathHelper.Min(_v1.Length(), celestialBody.OuterTurretZone.Radius + CelestialBodyDistance);
+                float radius = MathHelper.Min(_v1.Length(), celestialBody.TurretsController.OuterTurretZone.Radius + CelestialBodyDistance);
 
                 // Entry point
                 var entryVec = celestialBody.position - CelestialBodiesPath[i - 1].position;
@@ -337,7 +337,7 @@
 
                 Points[PointsCount++] = exitVec;
 
-                if ((TakeIntoAccountFakeGravTurretLv2 && celestialBody.FakeHasGravitationalTurretLv2) || celestialBody.HasLevel2GravitationalTurret)
+                if ((TakeIntoAccountFakeGravTurretLv2 && celestialBody.TurretsController.FakeHasGravitationalTurretLv2) || celestialBody.TurretsController.HasLevel2GravitationalTurret)
                 {
                     step = MathHelper.TwoPi / 8;
 

@@ -214,14 +214,14 @@
                 switch (state)
                 {
                     case PathState.ObjectAdded:
-                        cb.FakeHasGravitationalTurret = true;
+                        cb.TurretsController.FakeHasGravitationalTurret = true;
                         newPath.AddCelestialBody(cb, true);
                         break;
                     case PathState.ObjectRemoved:
                         newPath.RemoveCelestialBody(cb);
                         break;
                     case PathState.ObjectUpgraded:
-                        cb.FakeHasGravitationalTurretLv2 = true;
+                        cb.TurretsController.FakeHasGravitationalTurretLv2 = true;
                         break;
                 }
             }
@@ -242,13 +242,13 @@
                 {
                     case PathState.ObjectAdded:
                         newPath.RemoveCelestialBody(CelestialBody);
-                        CelestialBody.FakeHasGravitationalTurret = false;
+                        CelestialBody.TurretsController.FakeHasGravitationalTurret = false;
                         break;
                     case PathState.ObjectRemoved:
                         newPath.AddCelestialBody(CelestialBody, false);
                         break;
                     case PathState.ObjectUpgraded:
-                        CelestialBody.FakeHasGravitationalTurretLv2 = false;
+                        CelestialBody.TurretsController.FakeHasGravitationalTurretLv2 = false;
                         break;
                 }
 
@@ -260,8 +260,8 @@
 
             public void Commit(Path newPath)
             {
-                CelestialBody.FakeHasGravitationalTurret = false;
-                CelestialBody.FakeHasGravitationalTurretLv2 = false;
+                CelestialBody.TurretsController.FakeHasGravitationalTurret = false;
+                CelestialBody.TurretsController.FakeHasGravitationalTurretLv2 = false;
                 CelestialBody = null;
                 PathState = PathState.None;
             }

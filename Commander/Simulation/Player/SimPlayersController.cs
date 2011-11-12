@@ -207,8 +207,8 @@
                 return;
 
             if (player.ActualSelection.TurretToPlace != null &&
-                player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.Outside(player.Position))
-                player.Position = player.ActualSelection.TurretToPlace.CelestialBody.OuterTurretZone.NearestPointToCircumference(player.Position);
+                player.ActualSelection.TurretToPlace.CelestialBody.TurretsController.OuterTurretZone.Outside(player.Position))
+                player.Position = player.ActualSelection.TurretToPlace.CelestialBody.TurretsController.OuterTurretZone.NearestPointToCircumference(player.Position);
         }
 
 

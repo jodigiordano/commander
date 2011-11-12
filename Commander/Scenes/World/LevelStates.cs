@@ -124,12 +124,12 @@
 
                 if (kvp.Value) //unlocked
                 {
-                    cb.Image.Alpha = (byte) 255;
+                    cb.Alpha = (byte) 255;
                 }
 
                 else
                 {
-                    cb.Image.Alpha = (byte) 100;
+                    cb.Alpha = (byte) 100;
                     lockedImg.Position = cb.Position - new Vector3(0, cb.Circle.Radius + 20, 0);
                     Scene.Add(lockedImg);
                 }

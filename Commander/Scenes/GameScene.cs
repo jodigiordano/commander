@@ -2,6 +2,7 @@
 {
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
+    using EphemereGames.Core.Utilities;
     using EphemereGames.Core.Visual;
     using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
@@ -26,7 +27,7 @@
         {
             Level = level;
 
-            FutureJobs = new FutureJobsController();
+            FutureJobs = new FutureJobsController(Preferences.TargetElapsedTimeMs);
 
             MusicName = "BattleMusic";
 

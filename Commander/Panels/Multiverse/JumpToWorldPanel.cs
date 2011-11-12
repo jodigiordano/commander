@@ -19,7 +19,6 @@
             : base(scene, position, new Vector2(500, 250), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Jump to world");
-            Type = PanelType.JumpToWorld;
 
             Alpha = 0;
 

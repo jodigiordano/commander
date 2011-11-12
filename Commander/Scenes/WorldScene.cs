@@ -107,7 +107,7 @@
                 c != null &&
                 !CBtoWarp.ContainsKey(c) &&
                 GamePausedToWorld &&
-                Main.CurrentGame.Simulator.Data.Level.Id == CBtoLevel[c];
+                Main.CurrentGame.Simulator.Data.Level.Descriptor.Infos.Id == CBtoLevel[c];
         }
 
 
@@ -516,7 +516,7 @@
             foreach (var w in CBtoWarp)
             {
                 var pinkHole = (PinkHole) w.Key;
-                var unlocked = Main.WorldsFactory.Worlds[w.Value].Unlocked;
+                var unlocked = Main.WorldsFactory.GetWorldUnlocked(w.Value);
 
                 pinkHole.BlendType = unlocked ? BlendType.Add : BlendType.Substract;
                 pinkHole.Color = unlocked ? new Color(255, 0, 255) : new Color(0, 0, 0);
@@ -544,7 +544,7 @@
                 if (c is AsteroidBelt)
                     continue;
 
-                if (!c.IsALevel)
+                if (c is Planet && !((Planet) c).IsALevel)
                     continue;
 
                 if (c is PinkHole)

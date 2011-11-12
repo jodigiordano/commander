@@ -177,7 +177,7 @@
             if (celestialBody != null)
             {
 
-                foreach (var turret in celestialBody.Turrets)
+                foreach (var turret in celestialBody.TurretsController.Turrets)
                     Turrets.Remove(turret);
 
                 return;

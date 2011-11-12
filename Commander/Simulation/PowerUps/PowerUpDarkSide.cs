@@ -20,18 +20,7 @@ namespace EphemereGames.Commander.Simulation
             NeedInput = false;
             Position = Vector3.Zero;
 
-            CorpsCeleste = new Planet(
-                    Simulator,
-                    "",
-                    Vector3.Zero,
-                    Vector3.Zero,
-                    0,
-                    Size.Small,
-                    float.MaxValue,
-                    null,
-                    0,
-                    0,
-                    false);
+            CorpsCeleste = new Planet("", "planete1", 0);
             CorpsCeleste.AttackPoints = 0.5f;
 
             SfxIn = "sfxDarkSide";

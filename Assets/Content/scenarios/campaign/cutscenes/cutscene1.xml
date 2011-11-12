@@ -8,36 +8,10 @@
     <CelestialBodyToProtect>-1</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
-    <CelestialBody>
-      <Name>Asteroid belt</Name>
-      <Images />
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Small</Size>
-      <Speed>2560000</Speed>
-      <PathPriority>-2147483647</PathPriority>
-      <Path>
-        <X>700</X>
-        <Y>-400</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-    </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1029154169</Name>
-      <Images />
+    <CelestialBody xsi:type="AsteroidBeltCBDescriptor" />
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Image>planete7</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
       <Size>Big</Size>
       <Speed>360000</Speed>
       <PathPriority>-1</PathPriority>
@@ -52,17 +26,12 @@
         <Z>0</Z>
       </Position>
       <Rotation>69</Rotation>
-      <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
-      <Name>Planete203394438</Name>
-      <Images />
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Image>planete4</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
       <Size>Big</Size>
       <Speed>240000</Speed>
       <PathPriority>-2</PathPriority>
@@ -77,17 +46,12 @@
         <Z>0</Z>
       </Position>
       <Rotation>-104</Rotation>
-      <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1552541406</Name>
-      <Images />
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Image>planete3</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
       <Size>Small</Size>
       <Speed>360000</Speed>
       <PathPriority>-3</PathPriority>
@@ -102,17 +66,13 @@
         <Z>0</Z>
       </Position>
       <Rotation>-30</Rotation>
-      <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1894663957</Name>
-      <Images />
       <Image>planete6</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
       <Size>Small</Size>
       <Speed>240000</Speed>
       <PathPriority>-4</PathPriority>
@@ -127,17 +87,12 @@
         <Z>0</Z>
       </Position>
       <Rotation>356</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
-      <Name>Planete589828541</Name>
-      <Images />
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Image>planete1</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
       <Size>Small</Size>
       <Speed>240000</Speed>
       <PathPriority>-5</PathPriority>
@@ -152,17 +107,12 @@
         <Z>0</Z>
       </Position>
       <Rotation>30</Rotation>
-      <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1726861962</Name>
-      <Images />
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Image>planete4</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
       <Size>Small</Size>
       <Speed>60000</Speed>
       <PathPriority>-6</PathPriority>
@@ -177,17 +127,12 @@
         <Z>0</Z>
       </Position>
       <Rotation>-269</Rotation>
-      <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
-      <Name>Planete1158360598</Name>
-      <Images />
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Image>planete3</Image>
       <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
       <Size>Normal</Size>
       <Speed>10000</Speed>
       <PathPriority>-7</PathPriority>
@@ -202,22 +147,12 @@
         <Z>0</Z>
       </Position>
       <Rotation>222</Rotation>
-      <InBackground>false</InBackground>
       <CanSelect>true</CanSelect>
       <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
   </PlanetarySystem>
-  <Waves />
   <Player>
     <Money>100</Money>
     <Lives>1</Lives>
   </Player>
-  <AvailableTurrets />
-  <AvailablePowerUps />
-  <Minerals>
-    <Cash>0</Cash>
-    <LifePacks>0</LifePacks>
-  </Minerals>
-  <HelpTexts />
 </Level>

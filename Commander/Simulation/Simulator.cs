@@ -21,11 +21,11 @@ namespace EphemereGames.Commander.Simulation
         public bool MultiverseMode;
         public bool EditorMode;
         public bool EditMode;
-        public bool EditorEditingMode { get { return EditorMode && EditMode; } }
-        public bool EditorPlaytestingMode { get { return EditorMode && !EditMode; } }
-        public bool GameMode { get { return !DemoMode; } }
-        public bool MainMenuMode { get { return DemoMode && !WorldMode && !CutsceneMode && !MultiverseMode && !EditorMode; } }
-        public bool EditorWorldMode { get { return WorldMode && EditorMode; } }
+        public bool EditorEditingMode       { get { return EditorMode && EditMode; } }
+        public bool EditorPlaytestingMode   { get { return EditorMode && !EditMode; } }
+        public bool GameMode                { get { return !DemoMode; } }
+        public bool MainMenuMode            { get { return DemoMode && !WorldMode && !CutsceneMode && !MultiverseMode && !EditorMode; } }
+        public bool EditorWorldMode         { get { return WorldMode && EditorMode; } }
 
 
         public bool CanSelectCelestialBodies;
@@ -40,7 +40,7 @@ namespace EphemereGames.Commander.Simulation
 
         public PlanetarySystemController PlanetarySystemController;
         public MessagesController MessagesController;
-        private LevelsController LevelsController;
+        private ObjectivesController LevelsController;
         private EnemiesController EnemiesController;
         private BulletsController BulletsController;
         private CollisionsController CollisionsController;
@@ -49,7 +49,7 @@ namespace EphemereGames.Commander.Simulation
         private SpaceshipsController SpaceshipsController;   
         private GUIController GUIController;
         private PowerUpsController PowerUpsController;
-        private EditorController EditorController;
+        internal EditorController EditorController;
         private PanelsController PanelsController;
         internal CameraController CameraController;
         internal TweakingController TweakingController;
@@ -146,7 +146,7 @@ namespace EphemereGames.Commander.Simulation
             MessagesController = new MessagesController(this);
             GUIController = new GUIController(this);
             PowerUpsController = new PowerUpsController(this);
-            LevelsController = new LevelsController(this);
+            LevelsController = new ObjectivesController(this);
             EditorController = new EditorController(this);
             PanelsController = new PanelsController(this);
             AudioController = new AudioController(this);
@@ -249,9 +249,9 @@ namespace EphemereGames.Commander.Simulation
             EditorController.EditorCommandExecuted += new EditorCommandHandler(PanelsController.DoEditorCommandExecuted);
             SimPlayersController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             LevelsController.NewGameState += new NewGameStateHandler(PanelsController.DoGameStateChanged);
-            PanelsController.PanelOpened += new PanelTypeHandler(AudioController.DoPanelOpened);
-            PanelsController.PanelClosed += new PanelTypeHandler(AudioController.DoPanelClosed);
-            PanelsController.PanelClosed += new PanelTypeHandler(EditorController.DoPanelClosed);
+            PanelsController.PanelOpened += new StringHandler(AudioController.DoPanelOpened);
+            PanelsController.PanelClosed += new StringHandler(AudioController.DoPanelClosed);
+            PanelsController.PanelClosed += new StringHandler(EditorController.DoPanelClosed);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(GUIController.DoObjectDestroyed);
             EnemiesController.NextWaveCompositionChanged += new NextWaveHandler(GUIController.DoNextWaveCompositionChanged);
             LevelsController.NewGameState += new NewGameStateHandler(SimPlayersController.DoNewGameState);
@@ -497,13 +497,13 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        public void ShowPanel(PanelType type)
+        public void ShowPanel(string type)
         {
             ShowPanel(type, Vector3.Zero);
         }
 
 
-        public void ShowPanel(PanelType type, Vector3 position)
+        public void ShowPanel(string type, Vector3 position)
         {
             PanelsController.ShowPanel(type, position);
         }
@@ -527,7 +527,10 @@ namespace EphemereGames.Commander.Simulation
         {
             if (state == GameState.Won)
             {
-                Main.PlayersController.UpdateProgress(Main.CurrentWorld.World.Id, Data.Level.Id, Inputs.MasterPlayer.Name, Data.Level.CommonStash.TotalScore);
+                Main.PlayersController.UpdateProgress(
+                    Main.CurrentWorld.World.Id,
+                    Data.Level.Descriptor.Infos.Id,
+                    Inputs.MasterPlayer.Name, Data.Level.CommonStash.TotalScore);
             }
         }
 

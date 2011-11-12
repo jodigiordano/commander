@@ -301,14 +301,14 @@
                 CelestialBody celestialBody = ActualSelection.TurretToPlace.CelestialBody;
                 turretToPlace.Position = Position;
 
-                if (celestialBody.OuterTurretZone.Outside(Position))
-                    Position = celestialBody.OuterTurretZone.NearestPointToCircumference(Position);
+                if (celestialBody.TurretsController.OuterTurretZone.Outside(Position))
+                    Position = celestialBody.TurretsController.OuterTurretZone.NearestPointToCircumference(Position);
 
-                turretToPlace.CanPlace = celestialBody.InnerTurretZone.Outside(turretToPlace.Position);
+                turretToPlace.CanPlace = celestialBody.TurretsController.InnerTurretZone.Outside(turretToPlace.Position);
                 turretToPlace.CanPlace = turretToPlace.CanPlace && turretToPlace.BuyPrice <= Simulator.Data.Level.CommonStash.Cash; //multiplayer failsafe.
 
                 if (turretToPlace.CanPlace)
-                    foreach (var turret in celestialBody.Turrets)
+                    foreach (var turret in celestialBody.TurretsController.Turrets)
                     {
                         turretToPlace.CanPlace =
                             !turret.Visible ||

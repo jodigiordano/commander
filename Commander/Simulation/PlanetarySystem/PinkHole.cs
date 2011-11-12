@@ -6,27 +6,24 @@
     using ProjectMercury.Modifiers;
 
 
-    class PinkHole : CelestialBody
+    public class PinkHole : CelestialBody
     {
         private Particle Effect;
 
 
-        public PinkHole(Simulator simulator, CelestialBodyDescriptor celestialBodyDescriptor, double visualPriority)
-            : base(
-            simulator, 
-            celestialBodyDescriptor.Name,
-            celestialBodyDescriptor.Path,
-            celestialBodyDescriptor.Position,
-            celestialBodyDescriptor.Rotation,
-            celestialBodyDescriptor.Size,
-            celestialBodyDescriptor.Speed,
-            celestialBodyDescriptor.Image,
-            celestialBodyDescriptor.StartingPosition,
-            visualPriority,
-            celestialBodyDescriptor.HasMoons)
+        public PinkHole(string name, double visualPriority)
+            : base(name, visualPriority)
         {
-            Effect = simulator.Scene.Particles.Get(celestialBodyDescriptor.ParticleEffect);
-            Effect.VisualPriority = visualPriority;
+
+        }
+
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Effect = Simulator.Scene.Particles.Get("trouRose");
+            Effect.VisualPriority = VisualPriority;
             Radius = (int) Size;
         }
 
@@ -51,14 +48,11 @@
 
         public override double VisualPriority
         {
-            get
-            {
-                return base.VisualPriority;
-            }
+            get { return base.VisualPriority; }
 
             set
             {
-                VisualPriorityBackup = Effect.VisualPriority;
+                base.VisualPriority = value;
 
                 Effect.VisualPriority = value;
             }
@@ -80,11 +74,15 @@
         }
 
 
-        public override void SetSize(Size s)
+        public override Size Size
         {
-            base.SetSize(s);
+            get { return base.Size; }
+            set
+            {
+                base.Size = value;
 
-            Radius = (int) Size;
+                Radius = (int) Size;
+            }
         }
 
 
@@ -112,12 +110,25 @@
 
         public override CelestialBodyDescriptor GenerateDescriptor()
         {
-            var d = base.GenerateDescriptor();
+            var descriptor = new PinkHoleCBDescriptor()
+            {
+                CanSelect = canSelect,
+                Invincible = Invincible,
+                Name = Name,
+                PathPriority = PathPriority,
+                Speed = (int) Speed,
+                Size = Size,
+                FollowPath = FollowPath,
+                StraightLine = StraightLine,
+            };
 
-            d.ParticleEffect = Effect.Name;
-            d.HasMoons = false;
 
-            return d;
+            descriptor.Position = SteeringBehavior.BasePosition;
+            descriptor.Path = SteeringBehavior.Path;
+            descriptor.Rotation = SteeringBehavior.PathRotation;
+            descriptor.HasGravitationalTurret = TurretsController.StartingPathTurret != null;
+
+            return descriptor;
         }
     }
 }

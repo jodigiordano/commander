@@ -8,38 +8,15 @@
     <CelestialBodyToProtect>3</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
-    <CelestialBody>
+    <CelestialBody xsi:type="AsteroidBeltCBDescriptor">
       <Name>Asteroid belt</Name>
       <Images>
         <string>Comet</string>
         <string>Comet</string>
         <string>Trojan</string>
       </Images>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Small</Size>
-      <Speed>2560000</Speed>
-      <PathPriority>-2147483647</PathPriority>
-      <Path>
-        <X>700</X>
-        <Y>-400</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-      <FollowPath>false</FollowPath>
-      <HasMoons>true</HasMoons>
-      <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete176341991</Name>
       <Images />
       <Image>planete10</Image>
@@ -67,7 +44,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1937346142</Name>
       <Images />
       <Image>planete9</Image>
@@ -95,7 +72,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete2033336518</Name>
       <Images />
       <Image>planete7</Image>
@@ -123,7 +100,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1365473767</Name>
       <Images />
       <Image>vaisseauAlien1</Image>

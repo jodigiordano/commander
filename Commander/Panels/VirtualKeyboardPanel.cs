@@ -7,7 +7,7 @@
 
     class VirtualKeyboardPanel : VerticalPanel
     {
-        public PanelType PanelToReopenOnClose;
+        public string PanelToReopenOnClose;
 
         public bool SaveInput { get; private set; }
 

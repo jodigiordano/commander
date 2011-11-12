@@ -447,7 +447,7 @@
         }
 
 
-        public void DoPanelOpened(PanelType type)
+        public void DoPanelOpened(string type)
         {
             XACTAudio.PlayCue("PanelOpen", "Sound Bank");
 
@@ -456,7 +456,7 @@
         }
 
 
-        public void DoPanelClosed(PanelType type)
+        public void DoPanelClosed(string type)
         {
             XACTAudio.PlayCue("PanelClose", "Sound Bank");
 

@@ -108,7 +108,7 @@
 
             AlienNextWaveAnimation = new AlienNextWaveAnimation(Simulator)
             {
-                CelestialBody = Simulator.Data.Path.FirstCelestialBody,
+                Planet = Simulator.Data.Path.FirstCelestialBody,
                 TimeNextWave = (Simulator.Data.Level.InfiniteWaves == null && Waves.Count != 0) ? Waves.First.Value.StartingTime : 0
             };
 
@@ -327,11 +327,11 @@
             var player = p.VisualPlayer;
 
             player.CurrentVisual.FadeOut();
-            turret.CelestialBody.ShowTurretsZone = true;
+            turret.CelestialBody.TurretsController.ShowTurretsZone = true;
             turret.ShowRange = true;
             turret.ShowForm = true;
 
-            foreach (var turret2 in turret.CelestialBody.Turrets)
+            foreach (var turret2 in turret.CelestialBody.TurretsController.Turrets)
                 turret2.ShowForm = true;
 
             HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.InstallTurret);
@@ -343,7 +343,7 @@
             var player = p.VisualPlayer;
 
             player.CurrentVisual.FadeIn();
-            turret.CelestialBody.ShowTurretsZone = false;
+            turret.CelestialBody.TurretsController.ShowTurretsZone = false;
             turret.ShowRange = false;
 
             HelpBar.HideCurrentMessage();
@@ -428,7 +428,7 @@
                 else if (PathPreviewing != null && //preview: final solution
                     selection.CelestialBody != null &&
                     player.PowerUpFinalSolution &&
-                    selection.CelestialBody.HasGravitationalTurret)
+                    selection.CelestialBody.TurretsController.HasGravitationalTurret)
                     PathPreviewing.RemoveCelestialObject(p, selection.CelestialBody);
                 else if (PathPreviewing != null && //preview: buy grav. turret
                     selection.TurretToBuy == TurretType.Gravitational)
@@ -536,7 +536,7 @@
 
             else if (command.Name == "Clear")
             {
-                //PlayerLives.CelestialBody = null;
+                //PlayerLives.Planet = null;
             }
 
             else if (command.Name == "AddPlanet" || command.Name == "Remove")
@@ -546,17 +546,17 @@
 
             else if (command.Name == "PushFirst" || command.Name == "PushLast")
             {
-                //PlayerLives.CelestialBody = Level.CelestialBodyToProtect;
+                //PlayerLives.Planet = Level.CelestialBodyToProtect;
             }
 
             else if (command.Name == "ToggleSize")
             {
                 var c = (EditorCelestialBodyCommand) command;
 
-                //if (c.CelestialBody == PlayerLives.CelestialBody)
+                //if (c.Planet == PlayerLives.Planet)
                 //{
-                //    PlayerLives.CelestialBody = null;
-                //    PlayerLives.CelestialBody = c.CelestialBody;
+                //    PlayerLives.Planet = null;
+                //    PlayerLives.Planet = c.Planet;
                 //}
             }
 

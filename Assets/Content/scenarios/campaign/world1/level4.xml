@@ -8,35 +8,14 @@
     <CelestialBodyToProtect>0</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
-    <CelestialBody>
-      <Name>Asteroid belt</Name>
+    <CelestialBody xsi:type="AsteroidBeltCBDescriptor">
       <Images>
         <string>Comet</string>
         <string>Comet</string>
         <string>Comet</string>
       </Images>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Small</Size>
-      <Speed>2560000</Speed>
-      <PathPriority>-2147483647</PathPriority>
-      <Path>
-        <X>700</X>
-        <Y>-400</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete896758999</Name>
       <Images />
       <Image>planete2</Image>
@@ -61,7 +40,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1523381052</Name>
       <Images />
       <Image>vaisseauAlien1</Image>
@@ -86,7 +65,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1562753184</Name>
       <Images />
       <Image>planete7</Image>
@@ -111,7 +90,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1459262368</Name>
       <Images />
       <Image>planete3</Image>
@@ -136,7 +115,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete192413078</Name>
       <Images />
       <Image>planete5</Image>

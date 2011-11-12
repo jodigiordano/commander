@@ -5,12 +5,12 @@
 
     class MoonMatrix : Moon
     {
-        public MoonMatrix(Simulator simulator, CelestialBody celestialBody, int alpha)
-            : this(simulator, celestialBody, alpha, "lune" + Main.Random.Next(1, 5), Main.Random.Next(2, 4)) { }
+        public MoonMatrix(CelestialBody celestialBody, int alpha)
+            : this(celestialBody, alpha, "lune" + Main.Random.Next(1, 5), Main.Random.Next(2, 4)) { }
 
 
-        public MoonMatrix(Simulator simulator, CelestialBody celestialBody, int alpha, string imageName, int size)
-            : base(simulator, celestialBody, alpha, imageName, size)
+        public MoonMatrix(CelestialBody celestialBody, int alpha, string imageName, int size)
+            : base(celestialBody, alpha, imageName, size)
         {
             relativePosition = new Vector3(celestialBody.Circle.Radius + Main.Random.Next(10, 30), 0, 0);
 

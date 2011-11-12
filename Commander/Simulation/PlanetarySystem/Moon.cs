@@ -8,8 +8,8 @@
     {
         public CelestialBody CelestialBody;
         public Image Representation;
+        public Simulator Simulator;
 
-        protected Simulator Simulation;
         protected Matrix RotationMatrix;
         protected Vector3 Position;
         protected Vector3 relativePosition;
@@ -18,9 +18,8 @@
         protected bool Inversed;
 
 
-        public Moon(Simulator simulator, CelestialBody celestialBody, int alpha, string imageName, int size)
+        public Moon(CelestialBody celestialBody, int alpha, string imageName, int size)
         {
-            Simulation = simulator;
             CelestialBody = celestialBody;
 
             Representation = new Image(imageName)
@@ -58,7 +57,7 @@
         public void Draw()
         {
             Representation.Position = Position;
-            Simulation.Scene.Add(Representation);
+            Simulator.Scene.Add(Representation);
         }
     }
 }

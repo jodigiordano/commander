@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
-    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -21,23 +20,16 @@
 
         public void Initialize()
         {
-            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("Lives", DoLives);
-            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("Cash", DoCash);
-            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("Minerals", DoMinerals);
-            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("BulletDamage", DoBulletDamage);
-            Simulator.Data.Panels[PanelType.EditorPlayer].SetClickHandler("LifePacks", DoLifePacks);
+            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("Lives", DoLives);
+            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("Cash", DoCash);
+            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("Minerals", DoMinerals);
+            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("BulletDamage", DoBulletDamage);
+            Simulator.Data.Panels["EditorPlayer"].SetClickHandler("LifePacks", DoLifePacks);
 
-            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("HasMoons", DoHasMoons);
-            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("FollowPath", DoFollowPath);
-            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("CanSelect", DoCanSelect);
-            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("StraightLine", DoStraightLine);
-            Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes].SetClickHandler("Invincible", DoInvincible);
-
-            Simulator.Data.Panels[PanelType.EditorTurrets].SetClickHandler(DoTurrets);
-            Simulator.Data.Panels[PanelType.EditorPowerUps].SetClickHandler(DoPowerUps);
-            Simulator.Data.Panels[PanelType.EditorBackground].SetClickHandler(DoBackgrounds);
-            Simulator.Data.Panels[PanelType.EditorWaves].SetClickHandler(DoWaves);
-            Simulator.Data.Panels[PanelType.EditorCelestialBodyAssets].SetClickHandler(DoCelestialBodyAssets);
+            Simulator.Data.Panels["EditorTurrets"].SetClickHandler(DoTurrets);
+            Simulator.Data.Panels["EditorPowerUps"].SetClickHandler(DoPowerUps);
+            Simulator.Data.Panels["EditorBackground"].SetClickHandler(DoBackgrounds);
+            Simulator.Data.Panels["EditorWaves"].SetClickHandler(DoWaves);
         }
 
 
@@ -53,7 +45,7 @@
 
             if (player.ActualSelection.EditingState == EditorEditingState.MovingCB)
             {
-                cb.BasePosition += player.DeltaPosition;
+                cb.SteeringBehavior.BasePosition += player.DeltaPosition;
                 player.NinjaPosition = cb.Position;
             }
 
@@ -82,7 +74,7 @@
 
             if (player.ActualSelection.EditingState == EditorEditingState.RotatingCB)
             {
-                var current = cb.GetRotation();
+                var current = cb.SteeringBehavior.PathRotation;
 
                 float to = 0;
 
@@ -97,13 +89,12 @@
                 if (to > MathHelper.TwoPi)
                     to -= MathHelper.TwoPi;
 
-                cb.SetRotation(to);
+                cb.SteeringBehavior.PathRotation = to;
             }
 
             else if (player.ActualSelection.EditingState == EditorEditingState.TrajectoryCB)
             {
-                cb.Path.X += delta.X;
-                cb.Path.Y -= delta.Y;
+                cb.SteeringBehavior.Path = new Vector3(cb.SteeringBehavior.Path.X + delta.X, cb.SteeringBehavior.Path.Y - delta.Y, 0);
             }
         }
 
@@ -218,6 +209,8 @@
         {
             if (command is EditorCelestialBodyCommand)
                 DoExecuteEditorCelestialBodyCommand((EditorCelestialBodyCommand) command);
+            else if (command is EditorShowCBPanelCommand)
+                DoExecuteEditorCBPanelCommand((EditorShowCBPanelCommand) command);
             else if (command is EditorShowPanelCommand)
                 DoExecuteEditorPanelCommand((EditorShowPanelCommand) command);
             else
@@ -278,65 +271,15 @@
                 Main.CurrentWorld.DoSelectActionEditor(command.Owner.InnerPlayer);
             }
 
-            //// toggle editor mode command
-            //else if (command.Name == "PlaytestState")
-            //{
-            //    Simulator.EditMode = false;
-            //    Simulator.Data.Level.SyncDescriptor();
-            //    Simulator.Initialize();
-            //    Simulator.SyncPlayers();
-            //}
+            NotifyEditorCommandExecuted(command);
+        }
 
-            //else if (command.Name == "EditState")
-            //{
-            //    Simulator.EditMode = true;
-            //    Simulator.Initialize();
-            //    Simulator.SyncPlayers();
-            //}
 
-            //else if (command.Name == "RestartSimulation")
-            //{
-            //    //if (Simulator.EditorState == EditorState.Editing)
-            //    //    Simulator.SyncLevel();
+        private void DoExecuteEditorCBPanelCommand(EditorShowCBPanelCommand command)
+        {
+            var panel = (IEditorCBPanel) Simulator.Data.Panels[command.Panel];
 
-            //    //Simulator.Initialize();
-            //    //Simulator.SyncPlayers();
-            //}
-
-            //else if (command.Name == "PauseSimulation")
-            //{
-            //    //Simulator.State = GameState.Paused;
-            //}
-
-            //else if (command.Name == "ResumeSimulation")
-            //{
-            //    //Simulator.State = GameState.Running;
-            //}
-
-            //else if (command.Name == "NewLevel")
-            //{
-            //    //Simulator.LevelDescriptor = Main.WorldsFactory.GetEmptyLevelDescriptor();
-            //    //Simulator.Initialize();
-            //    //Simulator.SyncPlayers();
-            //}
-
-            //else if (command.Name == "SaveLevel")
-            //{
-            //    Simulator.SyncLevel();
-
-            //    var descriptor = Simulator.LevelDescriptor;
-
-            //    if (!Main.WorldsFactory.UserDescriptors.ContainsKey(descriptor.Infos.Id))
-            //    {
-            //        Main.WorldsFactory.UserDescriptors.Add(descriptor.Infos.Id, descriptor);
-
-            //        ((LevelsPanel) Panels[EditorPanel.Load]).Initialize();
-            //        ((LevelsPanel) Panels[EditorPanel.Delete]).Initialize();
-            //    }
-
-            //    Main.WorldsFactory.SaveUserDescriptorOnDisk(descriptor.Infos.Id);
-            //}
-
+            panel.CelestialBody = command.Owner.ActualSelection.CelestialBody;
 
             NotifyEditorCommandExecuted(command);
         }
@@ -344,13 +287,7 @@
 
         private void DoExecuteEditorPanelCommand(EditorShowPanelCommand command)
         {
-            if (command.Panel == PanelType.EditorCelestialBodyAssets)
-                ((CelestialBodyAssetsPanel) Simulator.Data.Panels[command.Panel]).CelestialBody = command.Owner.ActualSelection.CelestialBody;
-            
-            if (command.Panel == PanelType.EditorCelestialBodyAttributes)
-                ((CelestialBodyAttributesPanel) Simulator.Data.Panels[command.Panel]).CelestialBody = command.Owner.ActualSelection.CelestialBody;
-
-            if (command.Panel == PanelType.EditorWaves)
+            if (command.Panel == "EditorWaves")
                 SyncWaves();
 
             NotifyEditorCommandExecuted(command);
@@ -418,66 +355,6 @@
             }
 
             NotifyEditorCommandExecuted(command);
-        }
-
-
-        private void DoHasMoons(PanelWidget widget)
-        {
-            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
-
-            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("HasMoons")
-            {
-                HasMoons = ((CheckBox) widget).Value,
-                CelestialBody = panel.CelestialBody
-            });
-        }
-
-
-        private void DoFollowPath(PanelWidget widget)
-        {
-            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
-
-            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("FollowPath")
-            {
-                FollowPath = ((CheckBox) widget).Value,
-                CelestialBody = panel.CelestialBody
-            });
-        }
-
-
-        private void DoCanSelect(PanelWidget widget)
-        {
-            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
-
-            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("CanSelect")
-            {
-                CanSelect = ((CheckBox) widget).Value,
-                CelestialBody = panel.CelestialBody
-            });
-        }
-
-
-        private void DoStraightLine(PanelWidget widget)
-        {
-            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
-
-            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("StraightLine")
-            {
-                StraightLine = ((CheckBox) widget).Value,
-                CelestialBody = panel.CelestialBody
-            });
-        }
-
-
-        private void DoInvincible(PanelWidget widget)
-        {
-            var panel = (CelestialBodyAttributesPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAttributes];
-
-            NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("Invincible")
-            {
-                Invincible = ((CheckBox) widget).Value,
-                CelestialBody = panel.CelestialBody
-            });
         }
 
 
@@ -578,20 +455,6 @@
         }
 
 
-        private void DoCelestialBodyAssets(PanelWidget widget)
-        {
-            var panel = (CelestialBodyAssetsPanel) Simulator.Data.Panels[PanelType.EditorCelestialBodyAssets];
-            var img = (ImageWidget) ((GridPanel) widget).LastClickedWidget;
-
-            NotifyEditorCommandExecuted(
-                new EditorCelestialBodyCommand("ChangeAsset")
-                {
-                    CelestialBody = panel.CelestialBody,
-                    AssetName = img.Image.TextureName.Substring(0, img.Image.TextureName.Length - 1)
-                });
-        }
-
-
         private void DoWaves(PanelWidget widget)
         {
             var clickedWidget = ((Panel) ((Panel) widget).LastClickedWidget).LastClickedWidget;
@@ -599,7 +462,7 @@
 
             if (clickedWidget.Name == "Enemies")
             {
-                var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels[PanelType.EditorEnemies];
+                var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
 
                 if (waveId < Simulator.Data.Level.Descriptor.Waves.Count)
                     enemiesAssets.Enemies = Simulator.Data.Level.Descriptor.Waves[waveId].Enemies;
@@ -607,7 +470,7 @@
                     enemiesAssets.Enemies = new List<EnemyType>();
 
                 enemiesAssets.Sync();
-                DoExecuteEditorPanelCommand(new EditorShowPanelCommand(PanelType.EditorEnemies));
+                DoExecuteEditorPanelCommand(new EditorShowPanelCommand("EditorEnemies"));
             }
         }
 
@@ -616,7 +479,7 @@
         {
             List<WaveDescriptor> descriptors = new List<WaveDescriptor>();
 
-            var panel = Simulator.Data.Panels[PanelType.EditorWaves];
+            var panel = Simulator.Data.Panels["EditorWaves"];
 
             foreach (var w in panel.Widgets)
             {
@@ -633,17 +496,17 @@
         }
 
 
-        public void DoPanelClosed(PanelType type)
+        public void DoPanelClosed(string type)
         {
-            if (type == PanelType.EditorEnemies)
+            if (type == "EditorEnemies")
             {
-                var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels[PanelType.EditorEnemies];
-                ((WavesPanel) Simulator.Data.Panels[PanelType.EditorWaves]).SyncEnemiesCurrentWave(enemiesAssets.Enemies);
+                var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
+                ((WavesPanel) Simulator.Data.Panels["EditorWaves"]).SyncEnemiesCurrentWave(enemiesAssets.Enemies);
             }
         }
 
 
-        private void NotifyEditorCommandExecuted(EditorCommand command)
+        public void NotifyEditorCommandExecuted(EditorCommand command)
         {
             if (EditorCommandExecuted != null)
                 EditorCommandExecuted(command);

@@ -8,53 +8,21 @@
     <CelestialBodyToProtect>2</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
-    <CelestialBody>
+    <CelestialBody xsi:type="AsteroidBeltCBDescriptor">
       <Name>Asteroid belt</Name>
       <Images>
         <string>Comet</string>
-        <string>Comet</string>
         <string>Damacloid</string>
         <string>Centaur</string>
-        <string>Centaur</string>
-        <string>Trojan</string>
         <string>Trojan</string>
         <string>Vulcanoid</string>
-        <string>Vulcanoid</string>
-        <string>Swarm</string>
         <string>Swarm</string>
         <string>Asteroid</string>
-        <string>Asteroid</string>
         <string>Meteoroid</string>
-        <string>Meteoroid</string>
-        <string>Plutoid</string>
-        <string>Plutoid</string>
         <string>Plutoid</string>
       </Images>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Small</Size>
-      <Speed>2560000</Speed>
-      <PathPriority>-2147483647</PathPriority>
-      <Path>
-        <X>700</X>
-        <Y>-400</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
-      <FollowPath>false</FollowPath>
-      <HasMoons>true</HasMoons>
-      <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete119305149</Name>
       <Images />
       <Image>planete7</Image>
@@ -82,7 +50,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete2051553037</Name>
       <Images />
       <Image>planete5</Image>
@@ -110,7 +78,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete568265096</Name>
       <Images />
       <Image>vaisseauAlien3</Image>
@@ -138,7 +106,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1445635485</Name>
       <Images />
       <Image>planete3</Image>
@@ -166,7 +134,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete128956365</Name>
       <Images />
       <Image>planete11</Image>
@@ -194,7 +162,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1268100489</Name>
       <Images />
       <Image>planete6</Image>
@@ -222,7 +190,7 @@
       <HasMoons>true</HasMoons>
       <StraightLine>false</StraightLine>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete271911717</Name>
       <Images />
       <Image>stationSpatiale2</Image>

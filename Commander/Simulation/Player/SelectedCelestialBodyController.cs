@@ -135,7 +135,7 @@
                 if (!cb.Alive || !cb.CanSelect)
                     continue;
 
-                foreach (var t in cb.Turrets)
+                foreach (var t in cb.TurretsController.Turrets)
                 {
                     if (t.Visible && t.CanSelect && t.PlayerCheckedIn == null && t.Alive && Physics.CircleCicleCollision(Player.Circle, t.Circle))
                     {

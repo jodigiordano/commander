@@ -11,7 +11,7 @@
     {
         public double TimeNextWave;
 
-        private CelestialBody celestialBody;
+        private Planet planet;
         private Simulator Simulator;
 
         private Dictionary<string, Image> NearHitMasks;
@@ -42,25 +42,25 @@
         }
 
 
-        public CelestialBody CelestialBody
+        public CelestialBody Planet
         {
-            get { return celestialBody; }
+            get { return planet; }
             set
             {
-                celestialBody = value;
+                planet = value as Planet;
 
-                if (celestialBody == null)
+                if (planet == null)
                     return;
 
-                if (celestialBody.PartialImageName == null || celestialBody.PartialImageName == "" ||
-                    !NearHitMasks.ContainsKey(celestialBody.PartialImageName))
+                if (planet.ImageName == null || planet.ImageName == "" ||
+                    !NearHitMasks.ContainsKey(planet.ImageName))
                 {
-                    celestialBody = null;
+                    planet = null;
                     return;
                 }
 
-                SelectedMask = NearHitMasks[celestialBody.PartialImageName];
-                SelectedMask.VisualPriority = celestialBody.VisualPriority - 0.000001;
+                SelectedMask = NearHitMasks[planet.ImageName];
+                SelectedMask.VisualPriority = planet.VisualPriority - 0.000001;
             }
         }
 
@@ -73,7 +73,7 @@
 
         public void Draw()
         {
-            if (celestialBody == null || !celestialBody.Alive)
+            if (planet == null || !planet.Alive)
                 return;
 
             if (!Visible)
@@ -101,8 +101,8 @@
             }
 
             SelectedMask.Alpha = (byte) (Alpha * 255);
-            SelectedMask.Position = CelestialBody.Position;
-            SelectedMask.Rotation = CelestialBody.Image.Rotation;
+            SelectedMask.Position = planet.Position;
+            SelectedMask.Rotation = planet.Image.Rotation;
 
             Simulator.Scene.Add(SelectedMask);
         }

@@ -8,8 +8,7 @@
     <CelestialBodyToProtect>0</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
-    <CelestialBody>
-      <Name>Asteroid belt</Name>
+    <CelestialBody xsi:type="AsteroidBeltCBDescriptor">
       <Images>
         <string>Comet</string>
         <string>Asteroid</string>
@@ -18,28 +17,8 @@
         <string>Centaur</string>
         <string>Centaur</string>
       </Images>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Small</Size>
-      <Speed>2560000</Speed>
-      <PathPriority>-2147483647</PathPriority>
-      <Path>
-        <X>700</X>
-        <Y>-400</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1447520627</Name>
       <Images />
       <Image>vaisseauAlien1</Image>
@@ -64,7 +43,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete2087047860</Name>
       <Images />
       <Image>planete2</Image>
@@ -89,7 +68,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete541633110</Name>
       <Images />
       <Image>planete6</Image>
@@ -114,7 +93,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1030705952</Name>
       <Images />
       <Image>planete3</Image>
@@ -139,7 +118,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete70433217</Name>
       <Images />
       <Image>planete7</Image>
@@ -164,7 +143,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1321075187</Name>
       <Images />
       <Image>planete1</Image>
@@ -189,7 +168,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete969830744</Name>
       <Images />
       <Image>planete5</Image>

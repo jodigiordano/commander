@@ -1,6 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    interface ILivingObject
+    public interface ILivingObject
     {
         float LifePoints    { get; set; }
         float AttackPoints  { get; set; }

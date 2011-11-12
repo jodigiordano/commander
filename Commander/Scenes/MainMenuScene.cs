@@ -241,15 +241,15 @@
                     }
                     break;
 
-                case "how to play": Simulator.ShowPanel(PanelType.Help); break;
-                case "options": Simulator.ShowPanel(PanelType.Options); break;
+                case "how to play": Simulator.ShowPanel("Help", player.Position); break;
+                case "options": Simulator.ShowPanel("Options", player.Position); break;
                 case "multiverse": if (Preferences.Debug)
                 {
                     //Main.SetCurrentWorld(999, true);
                     Core.Visual.Visuals.GetScene("Multiverse").Initialize();
                     TransiteTo("Multiverse");
                 } break;
-                case "credits": Simulator.ShowPanel(PanelType.Credits); break;
+                case "credits": Simulator.ShowPanel("Credits", player.Position); break;
                 case "quit": Main.Instance.Exit(); break;
             }
         }

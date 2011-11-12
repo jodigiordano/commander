@@ -8,34 +8,13 @@
     <CelestialBodyToProtect>0</CelestialBodyToProtect>
   </Objective>
   <PlanetarySystem>
-    <CelestialBody>
-      <Name>Asteroid belt</Name>
+    <CelestialBody xsi:type="AsteroidBeltCBDescriptor">
       <Images>
         <string>Plutoid</string>
         <string>Asteroid</string>
       </Images>
-      <HasGravitationalTurret>false</HasGravitationalTurret>
-      <StartingTurrets />
-      <Size>Small</Size>
-      <Speed>2560000</Speed>
-      <PathPriority>-2147483647</PathPriority>
-      <Path>
-        <X>700</X>
-        <Y>-400</Y>
-        <Z>0</Z>
-      </Path>
-      <Position>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Position>
-      <Rotation>0</Rotation>
-      <InBackground>false</InBackground>
-      <CanSelect>true</CanSelect>
-      <Invincible>false</Invincible>
-      <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete1078802989</Name>
       <Images />
       <Image>planete7</Image>
@@ -60,7 +39,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete215085480</Name>
       <Images />
       <Image>planete5</Image>
@@ -85,7 +64,7 @@
       <Invincible>false</Invincible>
       <StartingPosition>0</StartingPosition>
     </CelestialBody>
-    <CelestialBody>
+    <CelestialBody xsi:type="PlanetCBDescriptor">
       <Name>Planete931056583</Name>
       <Images />
       <Image>vaisseauAlien1</Image>

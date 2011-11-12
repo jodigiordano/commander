@@ -25,7 +25,6 @@
             : base(scene, position, new Vector2(500, 250), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Login");
-            Type = PanelType.Login;
 
             Alpha = 0;
 

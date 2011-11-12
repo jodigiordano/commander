@@ -26,7 +26,6 @@
             : base(scene, position, new Vector2(800, 400), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Register");
-            Type = PanelType.Register;
 
             Alpha = 0;
 

@@ -12,8 +12,6 @@
         public LevelDescriptor Descriptor;
 
         // infos
-        public int Id;
-        public double ParTime;
         public Image Background;
 
         // objective
@@ -49,9 +47,6 @@
 
         public void Initialize()
         {
-            Id = Descriptor.Infos.Id;
-            ParTime = Descriptor.ParTime;
-
             Background = new Image(Descriptor.Infos.Background, Vector3.Zero);
             Background.VisualPriority = Preferences.PrioriteFondEcran;
 
@@ -190,58 +185,25 @@
 
             foreach (var descriptor in Descriptor.PlanetarySystem)
             {
-                CelestialBody c;
-
-                // Pink Hole
-                if (descriptor.Image == null && descriptor.ParticleEffect != null && descriptor.ParticleEffect == "trouRose")
-                {
-                    c = new PinkHole(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001)
-                    {
-                        PathPriority = descriptor.PathPriority,
-                        CanSelect = descriptor.CanSelect,
-                        Invincible = descriptor.Invincible,
-                        IsALevel = false
-                    };
-                }
-
-                // Normal
-                else if (descriptor.Image != null)
-                {
-                    c = new Planet(Simulator, descriptor, NextCelestialBodyVisualPriority -= 0.001)
-                    {
-                        FollowPath = descriptor.FollowPath,
-                        StraightLine = descriptor.StraightLine,
-                        PathPriority = descriptor.PathPriority,
-                        CanSelect = descriptor.CanSelect,
-                        Invincible = descriptor.Invincible,
-                        IsALevel = descriptor.IsALevel
-                    };
-                }
-
-                // Asteroids belt
-                else
-                {
-                    c = new AsteroidBelt
-                    (
-                        Simulator,
-                        descriptor.Name,
-                        Simulator.AsteroidBeltOverride ? descriptor.Path : new Vector3(Simulator.Data.Battlefield.Inner.Width / 2, Simulator.Data.Battlefield.Inner.Height / 2, 0),
-                        new Vector3(Simulator.Data.Battlefield.Inner.Center.X, Simulator.Data.Battlefield.Inner.Center.Y, 0),
-                        descriptor.Size,
-                        descriptor.Speed == 0 ? float.MaxValue : descriptor.Speed,
-                        descriptor.Images,
-                        descriptor.StartingPosition
-                    )
-                    {
-                        PathPriority = descriptor.PathPriority,
-                        CanSelect = false,
-                        Invincible = descriptor.Invincible,
-                        IsALevel = false
-                    };
-                }
+                var c = descriptor.GenerateSimulatorObject(NextCelestialBodyVisualPriority -= 0.001);
 
                 if (Simulator.EditorEditingMode)
                     c.AliveOverride = true;
+
+                c.Simulator = Simulator;
+                c.Descriptor = descriptor;
+
+                if (c is AsteroidBelt)
+                {
+                    var ab = (AsteroidBelt) c;
+                    var boundaries = Simulator.Data.Battlefield.Inner;
+
+                    ab.SteeringBehavior.BasePosition = new Vector3(boundaries.Center.X, boundaries.Center.Y, 0);
+                    ab.SteeringBehavior.Path = new Vector3(boundaries.Width / 2, boundaries.Height / 2, 0);
+                    ab.SteeringBehavior.Speed = EditorLevelGenerator.PossibleRotationTimes[Main.Random.Next(2, 7)];
+                }
+
+                c.Initialize();
 
                 PlanetarySystem.Add(c);
             }
@@ -252,28 +214,24 @@
         {
             Turrets = new List<Turret>();
 
-            foreach (var descriptor in Descriptor.PlanetarySystem)
+            foreach (var celestialBody in PlanetarySystem)
             {
-                CelestialBody celestialBody = null;
-                Turret t = null;
+                if (!(celestialBody.Descriptor is CustomizableBodyDescriptor))
+                    continue;
 
-                for (int i = 0; i < PlanetarySystem.Count; i++)
-                    if (PlanetarySystem[i].PathPriority == descriptor.PathPriority)
-                    {
-                        celestialBody = PlanetarySystem[i];
-                        break;
-                    }
-
-                if (descriptor.HasGravitationalTurret)
+                if (((CustomizableBodyDescriptor) celestialBody.Descriptor).HasGravitationalTurret)
                 {
-                    celestialBody.AddToStartingPath(false);
+                    celestialBody.TurretsController.AddToStartingPath(false);
 
-                    Turrets.Add(celestialBody.StartingPathTurret);
+                    Turrets.Add(celestialBody.TurretsController.StartingPathTurret);
                 }
 
-                foreach (var turretDesc in descriptor.StartingTurrets)
+                if (!(celestialBody.Descriptor is PlanetCBDescriptor))
+                    continue;
+
+                foreach (var turretDesc in ((PlanetCBDescriptor) celestialBody.Descriptor).StartingTurrets)
                 {
-                    t = Simulator.TurretsFactory.Create(turretDesc.Type);
+                    var t = Simulator.TurretsFactory.Create(turretDesc.Type);
 
                     t.CanSell = turretDesc.CanSell;
                     t.CanUpdate = turretDesc.CanUpgrade;
@@ -285,7 +243,7 @@
                     t.Position = celestialBody.Position;
                     t.CanSelect = turretDesc.CanSelect;
 
-                    celestialBody.Turrets.Add(t);
+                    celestialBody.TurretsController.Turrets.Add(t);
                     Turrets.Add(t);
                 }
             }
@@ -351,21 +309,6 @@
 
             foreach (var type in Descriptor.AvailablePowerUps)
                 AvailablePowerUps.Add(type, Simulator.PowerUpsFactory.Create(type));
-        }
-
-
-        private CelestialBodyDescriptor GetCelestialBodyWithLowestPathPriority(List<CelestialBodyDescriptor> celestialBodies)
-        {
-            if (celestialBodies.Count == 0)
-                return null;
-
-            CelestialBodyDescriptor lowest = celestialBodies[0];
-
-            foreach (var c in celestialBodies)
-                if (lowest.PathPriority == int.MinValue || c.PathPriority < lowest.PathPriority)
-                    lowest = c;
-
-            return lowest;
         }
     }
 }

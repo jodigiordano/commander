@@ -44,7 +44,7 @@
 
             DrawInfos();
 
-            if (CelestialBody is PinkHole)
+            if (!(CelestialBody is Planet))
                 return;
 
             DrawHighScore();

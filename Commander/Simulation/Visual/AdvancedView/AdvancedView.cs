@@ -29,7 +29,7 @@
 
                 foreach (var celestialBody in Simulator.Data.Level.PlanetarySystem)
                 {
-                    foreach (var turret in celestialBody.Turrets)
+                    foreach (var turret in celestialBody.TurretsController.Turrets)
                     {
                         if (turret.RangeEffect != -1)
                             Simulator.Scene.VisualEffects.CancelCallback(turret.RangeEffect);

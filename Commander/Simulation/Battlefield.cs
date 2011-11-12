@@ -21,7 +21,7 @@
         public void Initialize(Level level)
         {
             if (Simulator.EditorEditingMode)
-                Inner = new PhysicalRectangle(-5000, -5000, 10000, 10000);
+                Inner = new PhysicalRectangle(-2500, -2500, 5000, 5000);
             else
                 Inner = level.Descriptor.GetBoundaries(new Vector3(6 * (int) Size.Big));
 

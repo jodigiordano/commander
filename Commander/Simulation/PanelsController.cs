@@ -5,8 +5,8 @@
 
     class PanelsController
     {
-        public event PanelTypeHandler PanelOpened;
-        public event PanelTypeHandler PanelClosed;
+        public event StringHandler PanelOpened;
+        public event StringHandler PanelClosed;
 
         private Simulator Simulator;
 
@@ -29,11 +29,11 @@
                 p.KeyboardClosed += new NoneHandler(DoKeyboardClosed);
             }
 
-            Simulator.Data.Panels[PanelType.Pause].SetClickHandler(DoPausePanelClicked);
+            Simulator.Data.Panels["Pause"].SetClickHandler(DoPausePanelClicked);
         }
 
 
-        private PanelType OpenedPanel
+        private string OpenedPanel
         {
             get
             {
@@ -41,7 +41,7 @@
                     if (p.Value.Visible)
                         return p.Key;
 
-                return PanelType.None;
+                return "";
             }
         }
 
@@ -50,17 +50,17 @@
         {
             get
             {
-                return OpenedPanel != PanelType.None;
+                return OpenedPanel != "";
             }
         }
 
 
         public void HidePanels()
         {
-            PanelType type = OpenedPanel;
-            bool panelOpened = type != PanelType.None;
+            string type = OpenedPanel;
+            bool panelOpened = type != "";
 
-            CloseOthersPanels(PanelType.None);
+            CloseOthersPanels("");
 
             foreach (var p in Simulator.Data.Players.Values)
                 p.SwitchToNormalMode();
@@ -83,14 +83,14 @@
         }
 
 
-        public void ShowPanel(PanelType type, Vector3 position)
+        public void ShowPanel(string type, Vector3 position)
         {
             ShowPanelPlayers();
             CloseOthersPanels(type);
 
             var p = Simulator.Data.Panels[type];
 
-            p.Position = position;
+            p.Position = position - new Vector3(p.Size / 2, 0);
             p.Open();
 
             Simulator.CanSelectCelestialBodies = false;
@@ -118,7 +118,7 @@
         {
             if (Simulator.Data.Players.Count == 0 && IsPanelVisible)
             {
-                CloseOthersPanels(PanelType.None);
+                CloseOthersPanels("");
                 Simulator.CanSelectCelestialBodies = true;
             }
         }
@@ -129,7 +129,7 @@
             switch (newGameState)
             {
                 case GameState.Paused:
-                    ShowPanel(PanelType.Pause);
+                    ShowPanel("Pause");
 
                     break;
                 
@@ -184,14 +184,14 @@
 
         private void DoPanelClosed(PanelWidget widget)
         {
-            if (Simulator.Data.Panels[PanelType.Options].Visible)
+            if (Simulator.Data.Panels["Options"].Visible)
             {
-                ((OptionsPanel) Simulator.Data.Panels[PanelType.Options]).SaveOnDisk();
+                ((OptionsPanel) Simulator.Data.Panels["Options"]).SaveOnDisk();
             }
 
-            if (Simulator.Data.Panels[PanelType.VirtualKeyboard].Visible)
+            if (Simulator.Data.Panels["VirtualKeyboard"].Visible)
             {
-                var p = (VirtualKeyboardPanel) Simulator.Data.Panels[PanelType.VirtualKeyboard];
+                var p = (VirtualKeyboardPanel) Simulator.Data.Panels["VirtualKeyboard"];
 
                 p.TextBox.Value = p.Value;
                 ShowPanel(p.PanelToReopenOnClose);
@@ -199,9 +199,9 @@
                 return;
             }
 
-            if (!Simulator.DemoMode && !Simulator.EditorMode && !Simulator.Data.Panels[PanelType.Pause].Visible)
+            if (!Simulator.DemoMode && !Simulator.EditorMode && !Simulator.Data.Panels["Pause"].Visible)
             {
-                ShowPanel(PanelType.Pause);
+                ShowPanel("Pause");
             }
 
             else
@@ -216,13 +216,13 @@
 
         private void DoVirtualKeyboardAsked(Panel panel, TextBox textbox, string title)
         {
-            var vk = (VirtualKeyboardPanel) Simulator.Data.Panels[PanelType.VirtualKeyboard];
+            var vk = (VirtualKeyboardPanel) Simulator.Data.Panels["VirtualKeyboard"];
 
             vk.TextBox = textbox;
-            vk.PanelToReopenOnClose = panel.Type;
+            vk.PanelToReopenOnClose = panel.Name;
             vk.SetTitle(title);
 
-            ShowPanel(PanelType.VirtualKeyboard);
+            ShowPanel("VirtualKeyboard");
         }
 
 
@@ -246,12 +246,12 @@
         {
             if (widget.Name == "Help")
             {
-                ShowPanel(PanelType.Help);
+                ShowPanel("Help");
             }
 
             else if (widget.Name == "Controls")
             {
-                ShowPanel(PanelType.Controls);
+                ShowPanel("Controls");
             }
 
             else if (widget.Name == "Restart")
@@ -261,7 +261,7 @@
 
             else if (widget.Name == "Options")
             {
-                ShowPanel(PanelType.Options);
+                ShowPanel("Options");
             }
 
             else if (widget.Name == "GoBackToWorld")
@@ -278,7 +278,7 @@
         }
 
 
-        private void ShowPanel(PanelType type)
+        private void ShowPanel(string type)
         {
             var p = Simulator.Data.Panels[type];
 
@@ -299,7 +299,7 @@
         }
 
 
-        private void CloseOthersPanels(PanelType type)
+        private void CloseOthersPanels(string type)
         {
             foreach (var p in Simulator.Data.Panels)
             {
@@ -311,14 +311,14 @@
         }
 
 
-        private void NotifyPanelOpened(PanelType panel)
+        private void NotifyPanelOpened(string panel)
         {
             if (PanelOpened != null)
                 PanelOpened(panel);
         }
 
 
-        private void NotifyPanelClosed(PanelType panel)
+        private void NotifyPanelClosed(string panel)
         {
             if (PanelClosed != null)
                 PanelClosed(panel);

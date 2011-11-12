@@ -6,7 +6,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class AsteroidBelt : CelestialBody
+    public class AsteroidBelt : CelestialBody
     {
         private class Asteroid
         {
@@ -26,48 +26,46 @@
         private const int NbAsteroids = 150;
         private List<Asteroid> Asteroids;
 
+        private List<string> ImagesNames;
+        private List<Image> Images;
 
-        public AsteroidBelt(
-            Simulator simulator,
-            string name,
-            Vector3 path,
-            Vector3 basePosition,
-            Size size,
-            float speed,
-            List<string> images,
-            int startingPourcentage)
-            : base(
-                simulator,
-                name,
-                path,
-                basePosition,
-                0,
-                size,
-                speed,
-                null,
-                startingPourcentage,
-                Preferences.PrioriteSimulationCeintureAsteroides,
-                false)
+
+        public AsteroidBelt(string name, List<string> imagesNames, double visualPriority)
+            : base(name, visualPriority)
         {
-            List<Image> representations = new List<Image>();
+            ImagesNames = imagesNames;
 
-            foreach (var image in images)
-                representations.Add(new Image(image));
+            Images = new List<Image>();
 
-            if (representations.Count == 0)
-                representations.Add(new Image("Asteroid"));
+            foreach (var image in imagesNames)
+                Images.Add(new Image(image));
+
+            if (Images.Count == 0)
+                Images.Add(new Image("Asteroid"));
 
             Asteroids = new List<Asteroid>(NbAsteroids);
 
-            var sizeMultiplier = Math.Max(path.X, path.Y) / Math.Min(Preferences.BackBuffer.X, Preferences.BackBuffer.Y);
+            CanSelect = false;
+        }
+
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Asteroids.Clear();
+
+            var sizeMultiplier =
+                Math.Max(SteeringBehavior.Path.X, SteeringBehavior.Path.Y) /
+                Math.Min(Preferences.BackBuffer.X, Preferences.BackBuffer.Y);
 
             for (int i = 0; i < NbAsteroids; i++)
             {
                 Asteroid asteroid = new Asteroid()
                 {
-                    Image = representations[Main.Random.Next(0, representations.Count)].Clone(),
-                    TimeOffset = Main.Random.Next((int)(-speed/2), (int)(speed/2)),
-                    Offset = basePosition + new Vector3(Main.Random.Next(-50,50),Main.Random.Next(-50,50 ),0),
+                    Image = Images[Main.Random.Next(0, Images.Count)].Clone(),
+                    TimeOffset = Main.Random.Next((int) (-SteeringBehavior.Speed / 2), (int) (SteeringBehavior.Speed / 2)),
+                    Offset = SteeringBehavior.BasePosition + new Vector3(Main.Random.Next(-50, 50), Main.Random.Next(-50, 50), 0),
                     RotationSpeed = Main.Random.Next(-100, 100) / 10000.0f,
                     MovingSpeed = Main.Random.Next(1, 10)
                 };
@@ -76,7 +74,8 @@
                 asteroid.Image.Alpha = 60;
                 asteroid.Image.SizeX = (Main.Random.Next(20, 70) / 30.0f) * 3 * sizeMultiplier;
 
-                CelestialBody.Move(Speed, (ActualRotationTime + asteroid.TimeOffset) % Speed, ref Path, ref asteroid.Offset, ref RotationMatrix, ref asteroid.Image.position);
+                MoveAsteroid(asteroid);
+                //Planet.Move(Speed, (ActualRotationTime + asteroid.TimeOffset) % Speed, ref Path, ref asteroid.Offset, ref RotationMatrix, ref asteroid.Image.position);
 
                 Asteroids.Add(asteroid);
             }
@@ -88,10 +87,7 @@
             base.Update();
 
             foreach (var a in Asteroids)
-            {
-                CelestialBody.Move(Speed, (ActualRotationTime + a.TimeOffset) % Speed, ref Path, ref a.Offset, ref RotationMatrix, ref a.Image.position);
-                a.Image.Rotation += a.RotationSpeed;
-            }
+                MoveAsteroid(a);
         }
 
 
@@ -99,6 +95,24 @@
         {
             foreach (var a in Asteroids)
                 Simulator.Scene.Add(a.Image);
+        }
+
+
+        public override CelestialBodyDescriptor GenerateDescriptor()
+        {
+            return new AsteroidBeltCBDescriptor()
+            {
+                Name = Name,
+                Images = ImagesNames
+            };
+        }
+
+
+        private void MoveAsteroid(Asteroid asteroid)
+        {
+            SteeringBehavior.Move(Speed, asteroid.TimeOffset, ref asteroid.Offset, ref asteroid.Image.position);
+
+            asteroid.Image.Rotation += asteroid.RotationSpeed;
         }
     }
 }

@@ -158,6 +158,7 @@
     <Compile Include="SimplePersistence\Persistence.cs" />
     <Compile Include="SimplePersistence\SimpleData\SimpleData.cs" />
     <Compile Include="SimplePersistence\SimpleData\SimpleDataController.cs" />
+    <Compile Include="Utilities\FutureJobsController.cs" />
     <Compile Include="Utilities\SilentErrorHandling.cs" />
     <Compile Include="Utilities\PathEffect.cs" />
     <Compile Include="Utilities\StringBuilderExtensions.cs" />

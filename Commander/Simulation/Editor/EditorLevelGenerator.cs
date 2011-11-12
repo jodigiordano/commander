@@ -86,29 +86,51 @@
 
         public static CelestialBody GeneratePlanetCB(Simulator simulator, double visualPriority)
         {
-            return new Planet(simulator, GenerateCelestialBody(), visualPriority);
+            var cb = GeneratePlanetCBDescriptor().GenerateSimulatorObject(visualPriority);
+            cb.Simulator = simulator;
+
+            return cb;
         }
 
 
         public static CelestialBody GeneratePinkHoleCB(Simulator simulator, double visualPriority)
         {
-            return new PinkHole(simulator, GeneratePinkHole(), visualPriority);
+            var cb = GeneratePinkHoleCBDescriptor().GenerateSimulatorObject(visualPriority);
+
+            cb.Simulator = simulator;
+
+            return cb;
         }
 
 
-        private static CelestialBodyDescriptor GenerateCelestialBody()
+        public static InfiniteWave GenerateInfiniteWave(Simulator simulator, List<EnemyType> enemies)
         {
-            CelestialBodyDescriptor d = new CelestialBodyDescriptor()
+            return new InfiniteWave(simulator, new InfiniteWavesDescriptor()
             {
-                Name = "Planete" + Main.Random.Next(0, int.MaxValue),
+                StartingDifficulty = 10,
+                DifficultyIncrement = 0,
+                MineralsPerWave = 0,
+                MinMaxEnemiesPerWave = new Vector2(10, 30),
+                Enemies = new List<EnemyType>(enemies),
+                FirstOneStartNow = true,
+                Upfront = true,
+                NbWaves = 10
+            });
+        }
+
+
+        private static CelestialBodyDescriptor GeneratePlanetCBDescriptor()
+        {
+            var d = new PlanetCBDescriptor()
+            {
+                Name = "CB" + Main.Random.Next(0, int.MaxValue),
                 Invincible = false,
-                InBackground = false,
                 CanSelect = true,
                 PathPriority = -1,
                 Image = "planete" + Main.Random.Next(1, 13).ToString()
             };
 
-            PhysicalRectangle rp = Limits[d.Size];
+            var rp = Limits[d.Size];
 
             int size = Main.Random.Next(0, 3);
             d.Size = (size == 0) ? Size.Small : (size == 1) ? Size.Normal : Size.Big;
@@ -116,27 +138,23 @@
             d.Path = Vector3.Zero;
             d.Position = Vector3.Zero;
             d.Rotation = 0;
-            d.StartingPosition = 0;
 
             return d;
         }
 
 
-        private static CelestialBodyDescriptor GeneratePinkHole()
+        private static CelestialBodyDescriptor GeneratePinkHoleCBDescriptor()
         {
-            return new CelestialBodyDescriptor()
+            return new PinkHoleCBDescriptor()
             {
                 Name = "Planete" + Main.Random.Next(0, int.MaxValue),
                 Invincible = false,
-                InBackground = false,
                 CanSelect = true,
                 PathPriority = -1,
-                ParticleEffect = "trouRose",
                 Speed = float.MaxValue,
                 Path = Vector3.Zero,
                 Position = Vector3.Zero,
                 Rotation = 0,
-                StartingPosition = 0,
                 Size = Size.Normal
             };
         }

@@ -2,9 +2,8 @@
 {
     using System.Collections.Generic;
     using EphemereGames.Core.SimplePersistence;
-    using Microsoft.Xna.Framework;
 
-    
+
     class World
     {
         public WorldDescriptor Descriptor;
@@ -39,26 +38,26 @@
             Layout.Player.Money = 100;
 
             // generate the asteroid belt'input enemies
-            var asteroidBelt = LevelDescriptor.GetAsteroidBelt(Layout.PlanetarySystem);
+            //var asteroidBelt = LevelDescriptor.GetAsteroidBelt(Layout.PlanetarySystem);
 
-            if (asteroidBelt != null)
-            {
-                var enemies = EnemiesFactory.ToEnemyTypeList(asteroidBelt.Images);
+            //if (asteroidBelt != null)
+            //{
+            //    var enemies = EnemiesFactory.ToEnemyTypeList(asteroidBelt.Images);
 
-                DescriptorInfiniteWaves v = new DescriptorInfiniteWaves()
-                {
-                    StartingDifficulty = 10,
-                    DifficultyIncrement = 0,
-                    MineralsPerWave = 0,
-                    MinMaxEnemiesPerWave = new Vector2(10, 30),
-                    Enemies = enemies,
-                    FirstOneStartNow = true,
-                    Upfront = true,
-                    NbWaves = 10
-                };
+            //    InfiniteWavesDescriptor v = new InfiniteWavesDescriptor()
+            //    {
+            //        StartingDifficulty = 10,
+            //        DifficultyIncrement = 0,
+            //        MineralsPerWave = 0,
+            //        MinMaxEnemiesPerWave = new Vector2(10, 30),
+            //        Enemies = enemies,
+            //        FirstOneStartNow = true,
+            //        Upfront = true,
+            //        NbWaves = 10
+            //    };
 
-                Layout.InfiniteWaves = v;
-            }
+            //    Layout.InfiniteWaves = v;
+            //}
         }
 
 
