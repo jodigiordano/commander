@@ -516,6 +516,10 @@
             Simulator.Data.PathPreview.Draw();
             CelestialBodyNearHit.Draw();
             AlienNextWaveAnimation.Draw();
+
+            if (Simulator.EditorEditingMode)
+                return;
+
             GameBarPanel.Draw();
         }
 
