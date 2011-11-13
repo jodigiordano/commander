@@ -35,7 +35,7 @@
         }
 
 
-        private void DoVisitWebsiteClicked(PanelWidget widget)
+        private void DoVisitWebsiteClicked(PanelWidget widget, Commander.Player player)
         {
 #if WINDOWS
             System.Diagnostics.Process.Start(Preferences.WebsiteURL);

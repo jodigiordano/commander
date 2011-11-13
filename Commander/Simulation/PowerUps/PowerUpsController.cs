@@ -188,8 +188,8 @@
 
         public void DoEditorCommandExecuted(EditorCommand command)
         {
-            if (command.Name == "AddOrRemovePowerUp")
-                Initialize();
+            //if (command.Name == "AddOrRemovePowerUp")
+            //    Initialize();
         }
 
 

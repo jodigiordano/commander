@@ -53,48 +53,38 @@
         }
 
 
-        private void DoLives(PanelWidget widget)
+        private void DoLives(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorPlayerCommand("AddOrRemoveLives")
-            {
-                LifePoints = Lives.Value
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorPlayerLifePointsCommand(Simulator.Data.Players[player], Lives.Value));
         }
 
 
-        private void DoCash(PanelWidget widget)
+        private void DoCash(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorPlayerCommand("AddOrRemoveCash")
-            {
-                Cash = Cash.Value
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorPlayerCashCommand(Simulator.Data.Players[player], Cash.Value));
         }
 
 
-        private void DoMinerals(PanelWidget widget)
+        private void DoMinerals(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorPlayerCommand("AddOrRemoveMinerals")
-            {
-                Minerals = Minerals.Value
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorPlayerMineralsCommand(Simulator.Data.Players[player], Minerals.Value));
         }
 
 
-        private void DoBulletDamage(PanelWidget widget)
+        private void DoBulletDamage(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorPlayerCommand("AddOrRemoveBulletDamage")
-            {
-                BulletDamage = BulletDamage.Value
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorPlayerBulletDamageCommand(Simulator.Data.Players[player], BulletDamage.Value));
         }
 
 
-        private void DoLifePacks(PanelWidget widget)
+        private void DoLifePacks(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorPlayerCommand("AddOrRemoveLifePacks")
-            {
-                LifePacks = LifePacks.Value
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorPlayerLifePacksCommand(Simulator.Data.Players[player], LifePacks.Value));
         }
     }
 }

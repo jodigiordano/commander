@@ -68,8 +68,7 @@
 
             Menus.Add("WorldPause", new PauseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("MainMenuCampaign", new CampaignMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add("EditorWorld", new EditorWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add("EditorWorldLevel", new EditorWorldLevelMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("EditorWorldLevel", new EditorLevelCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("EditorBuildLevel", new EditorLevelBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("EditorBuildWorld", new EditorWorldBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("StartingPath", new StartingPathMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
@@ -202,7 +201,7 @@
             if (menu != null)
                 menu.Draw();
 
-            if (Simulator.DemoMode && Simulator.WorldMode && !Simulator.EditorEditingMode)
+            if (Simulator.DemoMode && Simulator.WorldMode)
                 LevelInfos.Draw();
 
             if (Simulator.DemoMode)

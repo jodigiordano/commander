@@ -184,6 +184,10 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="Simulation\Editor\Commands\EditorCelestialBodyCommands.cs" />
+    <Compile Include="Simulation\Editor\Commands\EditorPanelCommands.cs" />
+    <Compile Include="Simulation\Editor\Commands\EditorPlayerCommands.cs" />
+    <Compile Include="Simulation\Editor\Menus\CB\EditorLevelCBMenu.cs" />
     <Compile Include="Simulation\Editor\Panels\CB\CelestialBodyAttributesPanel.cs" />
     <Compile Include="Simulation\Editor\Panels\CB\PinkHoleCBAttributesPanel.cs" />
     <Compile Include="Simulation\Editor\Panels\IEditorCBPanel.cs" />
@@ -202,8 +206,6 @@
     <Compile Include="Simulation\Editor\Menus\CB\EditorPlanetCBMenu.cs" />
     <Compile Include="Simulation\Editor\Menus\EditorContextualMenu.cs" />
     <Compile Include="Simulation\Editor\Menus\EditorWorldBuildMenu.cs" />
-    <Compile Include="Simulation\Editor\Menus\EditorWorldMenu.cs" />
-    <Compile Include="Simulation\Editor\Menus\EditorWorldLevelMenu.cs" />
     <Compile Include="Simulation\Player\LevelInfos.cs" />
     <Compile Include="Simulation\Player\Menus\PauseWorldMenu.cs" />
     <Compile Include="Simulation\Editor\Panels\CB\PlanetCBAttributesPanel.cs" />
@@ -325,7 +327,7 @@
     <Compile Include="Simulation\Cutscenes\Intro\IntroCutscene.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\LogoAnimation.cs" />
     <Compile Include="Simulation\Cutscenes\Intro\SimulatorAnimation.cs" />
-    <Compile Include="Simulation\Editor\EditorCommands.cs" />
+    <Compile Include="Simulation\Editor\Commands\EditorCommands.cs" />
     <Compile Include="Simulation\Editor\EditorController.cs" />
     <Compile Include="Simulation\Enemies\EnemiesData.cs" />
     <Compile Include="Simulation\Waves\UpfrontInfiniteWave.cs" />

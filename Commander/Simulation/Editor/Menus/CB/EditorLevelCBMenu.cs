@@ -1,10 +1,13 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    class EditorPlanetCBMenu : EditorCelestialBodyMenu
+    class EditorLevelCBMenu : EditorCelestialBodyMenu
     {
-        public EditorPlanetCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+        public EditorLevelCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
+            AddChoiceFirst(new EditorTextContextualMenuChoice("playtest", "playtest level", 2, DoPlaytestLevel));
+            AddChoiceFirst(new EditorTextContextualMenuChoice("edit", "edit level", 2, DoEditLevel));
+
             AddChoice(new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 2, DoCelestialBodyAssets));
             AddChoice(new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, DoAttributes));
         }
@@ -16,11 +19,31 @@
             {
                 return
                     base.Visible &&
-                    Simulator.GameMode &&
+                    Simulator.WorldMode &&
                     Owner.ActualSelection.CelestialBody is Planet;
             }
 
             set { base.Visible = value; }
+        }
+
+
+        private void DoEditLevel()
+        {
+            Simulator.EditorController.ExecuteCommand(new EditorEditLevelCommand(Owner));
+
+            Main.CurrentWorld.World.EditorMode = true;
+            Main.CurrentWorld.World.Editing = true;
+            Main.CurrentWorld.DoSelectActionEditor(Owner.InnerPlayer);
+        }
+
+
+        private void DoPlaytestLevel()
+        {
+            Simulator.EditorController.ExecuteCommand(new EditorPlaytestLevelCommand(Owner));
+
+            Main.CurrentWorld.World.EditorMode = true;
+            Main.CurrentWorld.World.Editing = false;
+            Main.CurrentWorld.DoSelectActionEditor(Owner.InnerPlayer);
         }
 
 

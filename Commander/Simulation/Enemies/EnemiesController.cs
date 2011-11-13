@@ -296,7 +296,9 @@
 
             TimeElapsedLastWave += Preferences.TargetElapsedTimeMs;
 
-            if (NextWave == null)
+            if (NextWave == null && Simulator.Data.Level.InfiniteWaves != null)
+                NextWave = new LinkedListNode<Wave>(Simulator.Data.Level.InfiniteWaves.GetNextWave());
+            else if (NextWave == null)
                 return;
 
             if (NextWave.Value.StartingTime != 0 && !NextWave.Value.AnnouncedNearToStart &&

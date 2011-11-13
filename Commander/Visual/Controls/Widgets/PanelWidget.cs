@@ -1,14 +1,14 @@
 ﻿namespace EphemereGames.Commander
 {
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     abstract class PanelWidget : IVisual
     {
-        public PanelWidgetHandler ClickHandler;
-        public PanelWidgetHandler HoverHandler;
+        public PanelWidgetPlayerHandler ClickHandler;
+        public PanelWidgetPlayerHandler HoverHandler;
 
         public abstract double VisualPriority   { get; set; }
         public abstract Vector3 Position        { get; set; }
@@ -28,15 +28,15 @@
         }
 
 
-        public bool DoClick(Circle circle)
+        public bool DoClick(Commander.Player player)
         {
             if (!EnableInput)
                 return false;
 
-            if (Click(circle))
+            if (Click(player))
             {
                 if (ClickHandler != null)
-                    ClickHandler(this);
+                    ClickHandler(this, player);
 
                 return true;
             }
@@ -45,15 +45,15 @@
         }
 
 
-        public bool DoHover(Circle circle)
+        public bool DoHover(Commander.Player player)
         {
             if (!EnableInput)
                 return false;
 
-            if (Hover(circle))
+            if (Hover(player))
             {
                 if (HoverHandler != null)
-                    HoverHandler(this);
+                    HoverHandler(this, player);
 
                 return true;
             }
@@ -62,8 +62,8 @@
         }
 
 
-        protected abstract bool Click(Circle circle);
-        protected abstract bool Hover(Circle circle);
+        protected abstract bool Click(Commander.Player player);
+        protected abstract bool Hover(Commander.Player player);
         public abstract void Draw();
         public abstract void Fade(int from, int to, double length);
 

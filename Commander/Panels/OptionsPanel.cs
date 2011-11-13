@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
     using EphemereGames.Commander.Simulation;
-    using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
 
 
@@ -55,9 +54,9 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            bool click = base.Click(circle);
+            bool click = base.Click(player);
 
             if (click)
             {

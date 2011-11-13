@@ -51,7 +51,7 @@
         }
 
 
-        private void DoTextInput(PanelWidget p)
+        private void DoTextInput(PanelWidget p, Commander.Player player)
         {
             var tb = (TextBox) p;
 
@@ -60,7 +60,7 @@
         }
 
 
-        private void DoSubmit(PanelWidget p)
+        private void DoSubmit(PanelWidget p, Commander.Player player)
         {
             Jump();
         }

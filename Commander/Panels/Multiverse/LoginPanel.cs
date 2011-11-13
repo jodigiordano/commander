@@ -19,6 +19,7 @@
         private string HashedPassword;
 
         private TextBoxGroup TBGroup;
+        private Commander.Player LoginPlayer;
 
 
         public LoginPanel(Scene scene, Vector3 position)
@@ -60,7 +61,7 @@
         }
 
 
-        private void DoTextInput(PanelWidget p)
+        private void DoTextInput(PanelWidget p, Commander.Player player)
         {
             var tb = (TextBox) p;
 
@@ -69,8 +70,9 @@
         }
 
 
-        private void DoSubmit(PanelWidget p)
+        private void DoSubmit(PanelWidget p, Commander.Player player)
         {
+            LoginPlayer = player;
             Login();
         }
 
@@ -124,7 +126,7 @@
                     Message.Value = "Alright! Have fun!";
                     Message.Color = Colors.Panel.Ok;
                     Main.MultiverseController.LogIn(Username.Value, HashedPassword, answer.Message);
-                    CloseButtonHandler(this);
+                    CloseButtonHandler(this, LoginPlayer);
                     break;
             }
         }

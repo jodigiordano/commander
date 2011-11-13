@@ -121,30 +121,20 @@
 
         public void DoEditorCommandExecuted(EditorCommand c)
         {
-            if (c is EditorCelestialBodyCommand)
-                DoEditorCelestialBodyCommand((EditorCelestialBodyCommand) c);
-            else if (c is EditorPlayerCommand)
-                DoEditorPlayerCommand((EditorPlayerCommand) c);
-        }
-
-
-        private void DoEditorCelestialBodyCommand(EditorCelestialBodyCommand command)
-        {
-            if (command.Name == "Clear")
+            if (c is EditorCelestialBodyAddCommand)
             {
-                Level.CelestialBodyToProtect = null;
-            }
+                var command = (EditorCelestialBodyAddCommand) c;
 
-            else if (command.Name == "AddPlanet")
-            {
                 if (Level.CelestialBodyToProtect == null)
                 {
                     Level.CelestialBodyToProtect = command.CelestialBody;
                     Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
                 }
+
+                return;
             }
 
-            else if (command.Name == "PushFirst")
+            if (c is EditorCelestialBodyPushFirstCommand)
             {
                 Level.CelestialBodyToProtect = PlanetarySystemController.GetCelestialBodyWithHighestPathPriority(Level.PlanetarySystem);
 
@@ -152,17 +142,23 @@
                     Level.CelestialBodyToProtect = PlanetarySystemController.GetAsteroidBelt(Level.PlanetarySystem);
 
                 Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
+
+                return;
             }
 
 
-            else if (command.Name == "PushLast")
+            if (c is EditorCelestialBodyPushLastCommand)
             {
+                var command = (EditorCelestialBodyPushLastCommand) c;
+                
                 Level.CelestialBodyToProtect = command.CelestialBody;
                 Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
+
+                return;
             }
 
 
-            else if (command.Name == "Remove")
+            if (c is EditorCelestialBodyRemoveCommand)
             {
                 Level.CelestialBodyToProtect = PlanetarySystemController.GetAliveCelestialBodyWithHighestPathPriority(Level.PlanetarySystem);
 
@@ -171,38 +167,61 @@
 
                 if (Level.CelestialBodyToProtect != null)
                     Level.CelestialBodyToProtect.LifePoints = Level.CommonStash.Lives;
+
+                return;
             }
-        }
 
 
-        private void DoEditorPlayerCommand(EditorPlayerCommand command)
-        {
-            if (command.Name == "AddOrRemoveLives")
+            if (c is EditorPlayerLifePointsCommand)
             {
+                var command = (EditorPlayerLifePointsCommand) c;
+
                 Level.CommonStash.Lives = command.LifePoints;
 
                 if (Level.CelestialBodyToProtect != null)
                     Level.CelestialBodyToProtect.LifePoints = command.LifePoints;
+
+                return;
             }
 
-            else if (command.Name == "AddOrRemoveCash")
+
+            if (c is EditorPlayerCashCommand)
             {
+                var command = (EditorPlayerCashCommand) c;
+
                 Level.CommonStash.Cash = command.Cash;
+
+                return;
             }
 
-            else if (command.Name == "AddOrRemoveMinerals")
+            
+            if (c is EditorPlayerMineralsCommand)
             {
+                var command = (EditorPlayerMineralsCommand) c;
+
                 Level.Minerals = command.Minerals;
+
+                return;
             }
 
-            else if (command.Name == "AddOrRemoveLifePacks")
+            
+            if (c is EditorPlayerLifePacksCommand)
             {
+                var command = (EditorPlayerLifePacksCommand) c;
+
                 Level.LifePacks = command.LifePacks;
+
+                return;
             }
 
-            else if (command.Name == "AddOrRemoveBulletDamage")
+            
+            if (c is EditorPlayerBulletDamageCommand)
             {
+                var command = (EditorPlayerBulletDamageCommand) c;
+
                 Level.BulletDamage = command.BulletDamage;
+
+                return;
             }
         }
 

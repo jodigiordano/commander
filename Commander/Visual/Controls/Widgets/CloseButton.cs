@@ -92,15 +92,15 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            return Physics.CircleCicleCollision(circle, ButtonCircle);
+            return Physics.CircleCicleCollision(player.Circle, ButtonCircle);
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, ButtonCircle))
+            if (Physics.CircleCicleCollision(player.Circle, ButtonCircle))
             {
                 Selection.Trigger(ref Button.position);
                 return true;

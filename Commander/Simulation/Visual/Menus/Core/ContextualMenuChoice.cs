@@ -8,6 +8,7 @@
     {
         public Scene Scene;
         public string Name { get; private set; }
+        public NoneHandler DoClick;
 
         public event NoneHandler DataChanged;
         public event NoneHandler AvailabilityChanged;
@@ -19,6 +20,7 @@
         {
             active = true;
             Name = name;
+            DoClick = null;
         }
 
 

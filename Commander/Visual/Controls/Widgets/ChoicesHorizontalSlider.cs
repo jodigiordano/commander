@@ -169,15 +169,15 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, DecrementCircle) && ChoiceIndex > 0)
+            if (Physics.CircleCicleCollision(player.Circle, DecrementCircle) && ChoiceIndex > 0)
             {
                 ValueText.Data = Choices[--ChoiceIndex];
                 return true;
             }
 
-            if (Physics.CircleCicleCollision(circle, IncrementCircle) && ChoiceIndex < Choices.Count - 1)
+            if (Physics.CircleCicleCollision(player.Circle, IncrementCircle) && ChoiceIndex < Choices.Count - 1)
             {
                 ValueText.Data = Choices[++ChoiceIndex];
                 return true;
@@ -187,9 +187,9 @@
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, DecrementCircle))
+            if (Physics.CircleCicleCollision(player.Circle, DecrementCircle))
             {
                 Selection.Trigger(ref DecrementCircle.Position);
 
@@ -198,7 +198,7 @@
             }
 
 
-            if (Physics.CircleCicleCollision(circle, IncrementCircle))
+            if (Physics.CircleCicleCollision(player.Circle, IncrementCircle))
             {
                 Selection.Trigger(ref IncrementCircle.Position);
 

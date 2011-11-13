@@ -153,17 +153,17 @@
         }
 
 
-        protected override bool Click(Core.Physics.Circle circle)
+        protected override bool Click(Commander.Player player)
         {
             return false;
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
             SyncRectangle();
 
-            return Physics.CircleRectangleCollision(circle, Rectangle);
+            return Physics.CircleRectangleCollision(player.Circle, Rectangle);
         }
 
 

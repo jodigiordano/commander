@@ -98,9 +98,9 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, BoxCircle))
+            if (Physics.CircleCicleCollision(player.Circle, BoxCircle))
             {
                 Value = !Value;
                 return true;
@@ -110,9 +110,9 @@
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, BoxCircle))
+            if (Physics.CircleCicleCollision(player.Circle, BoxCircle))
             {
                 Selection.Trigger(ref BoxCircle.Position);
 

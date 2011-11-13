@@ -7,7 +7,7 @@
     class ToggleContextualMenuChoice : TextContextualMenuChoice
     {
         private List<string> Names;
-        protected int CurrentIndex;
+        public int CurrentIndex;
 
 
         public ToggleContextualMenuChoice(string name, List<string> names, Text label)

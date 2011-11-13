@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -57,16 +56,16 @@
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
-            if (ShowCloseButton && CloseButton.DoHover(circle))
+            if (ShowCloseButton && CloseButton.DoHover(player))
             {
                 LastHoverWidget = CloseButton;
                 return true;
             }
 
 
-            if (Slider.DoHover(circle))
+            if (Slider.DoHover(player))
             {
                 LastHoverWidget = Slider;
 
@@ -75,7 +74,7 @@
             }
 
 
-            if (Panels[Slider.Value].DoHover(circle))
+            if (Panels[Slider.Value].DoHover(player))
             {
                 //By default, a panel do not care about hover
                 LastHoverWidget = Panels[Slider.Value].LastHoverWidget;
@@ -98,12 +97,12 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            if (Slider.DoClick(circle))
+            if (Slider.DoClick(player))
                 return true;
 
-            return base.Click(circle);
+            return base.Click(player);
         }
 
 
@@ -113,9 +112,9 @@
         }
 
 
-        protected override bool ClickWidgets(Circle circle)
+        protected override bool ClickWidgets(Commander.Player player)
         {
-            return Panels[Slider.Value].DoClick(circle);
+            return Panels[Slider.Value].DoClick(player);
         }
 
 

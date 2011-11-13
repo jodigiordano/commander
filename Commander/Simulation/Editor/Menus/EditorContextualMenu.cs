@@ -7,20 +7,5 @@
         {
 
         }
-
-
-        protected abstract EditorCommand Selection { get; }
-
-
-        public override void UpdateSelection()
-        {
-            if (Visible)
-            {
-                var selection = Selection;
-                selection.Owner = Owner;
-
-                Owner.ActualSelection.EditorCommand = Selection;
-            }
-        }
     }
 }

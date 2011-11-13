@@ -367,13 +367,10 @@
                 ActualSelection.OpenedMenu.OnOpen();
             }
 
-            else if (ActualSelection.OpenedMenu != LastSelection.OpenedMenu && LastSelection.OpenedMenu != null)
+            if (ActualSelection.OpenedMenu != LastSelection.OpenedMenu && LastSelection.OpenedMenu != null)
             {
                 LastSelection.OpenedMenu.OnClose();
             }
-
-            if (ActualSelection.OpenedMenu != null)
-                ActualSelection.OpenedMenu.UpdateSelection();
         }
 
 

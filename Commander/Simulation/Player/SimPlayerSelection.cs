@@ -20,7 +20,6 @@
         protected int newGameChoice;
 
         // editor
-        protected EditorCommand editorCommand;
         protected EditorEditingState editingState;
 
         public bool CelestialBodyChanged;
@@ -34,7 +33,6 @@
         public bool NewGameChoiceChanged;
         public bool EditingStateChanged;
         public bool OpenedMenuChanged;
-        public bool EditorCommandChanged;
         public bool CallNextWaveChanged;
 
 
@@ -56,7 +54,6 @@
             NewGameChoice = -1;
             EditingState = EditorEditingState.None;
             OpenedMenu = null;
-            EditorCommand = null;
             CallNextWave = false;
 
             Update();
@@ -76,7 +73,6 @@
             NewGameChoiceChanged = false;
             EditingStateChanged = false;
             OpenedMenuChanged = false;
-            EditorCommandChanged = false;
             CallNextWaveChanged = false;
         }
 
@@ -85,13 +81,6 @@
         {
             get { return callNextWave; }
             set { CallNextWaveChanged = callNextWave != value; callNextWave = value; }
-        }
-
-
-        public EditorCommand EditorCommand
-        {
-            get { return editorCommand; }
-            set { EditorCommandChanged = editorCommand != value; editorCommand = value; }
         }
 
 
@@ -176,7 +165,6 @@
             pausedGameChoice = other.pausedGameChoice;
             newGameChoice = other.newGameChoice;
             editingState = other.editingState;
-            editorCommand = other.editorCommand;
             openedMenu = other.openedMenu;
             callNextWave = other.callNextWave;
         }

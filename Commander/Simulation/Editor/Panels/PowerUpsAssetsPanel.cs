@@ -48,7 +48,7 @@
         }
 
 
-        protected override void DoClick(PanelWidget widget)
+        protected override void DoClick(PanelWidget widget, Commander.Player player)
         {
             var checkbox = (PowerUpCheckBox) widget;
 
@@ -57,7 +57,8 @@
             else
                 Simulator.Data.Level.AvailablePowerUps.Remove(checkbox.PowerUp);
 
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorSimpleCommand("AddOrRemovePowerUp"));
+            //Simulator.EditorController.ExecuteCommand(
+            //    new EditorSimpleCommand("AddOrRemovePowerUp"));
         }
     }
 }

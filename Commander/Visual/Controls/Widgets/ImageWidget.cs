@@ -81,18 +81,18 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, ImageCircle))
+            if (Physics.CircleCicleCollision(player.Circle, ImageCircle))
                 return true;
 
             return false;
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, ImageCircle))
+            if (Physics.CircleCicleCollision(player.Circle, ImageCircle))
             {
                 Selection.Trigger(ref Image.position);
                 return true;

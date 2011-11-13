@@ -480,7 +480,7 @@
 
             foreach (var p in Simulator.Data.Players.Values)
             {
-                if (GameBarPanel.DoHover(p.Circle))
+                if (GameBarPanel.DoHover(p.InnerPlayer))
                 {
                     HelpBar.ShowMessage(GameBarPanel.GetHelpBarMessage());
                     show = true;
@@ -526,48 +526,17 @@
         }
 
 
-        public void DoEditorCommandExecuted(EditorCommand command)
+        public void DoEditorCommandExecuted(EditorCommand c)
         {
-            if (command.Name == "AddOrRemovePowerUp")
-            {
-                MenuPowerUps.Position = new Vector3(-550, 200, 0);
-                MenuPowerUps.Initialize();
-            }
+            //if (command.Name == "AddOrRemovePowerUp")
+            //{
+            //    MenuPowerUps.Position = new Vector3(-550, 200, 0);
+            //    MenuPowerUps.Initialize();
+            //}
 
-            else if (command.Name == "Clear")
-            {
-                //PlayerLives.Planet = null;
-            }
-
-            else if (command.Name == "AddPlanet" || command.Name == "AddPinkHole" || command.Name == "Remove")
+            if (c is EditorCelestialBodyAddCommand || c is EditorCelestialBodyRemoveCommand)
             {
                 CelestialBodiesPathPreviews.Sync();
-            }
-
-            else if (command.Name == "PushFirst" || command.Name == "PushLast")
-            {
-                //PlayerLives.Planet = Level.CelestialBodyToProtect;
-            }
-
-            else if (command.Name == "ToggleSize")
-            {
-                var c = (EditorCelestialBodyCommand) command;
-
-                //if (c.Planet == PlayerLives.Planet)
-                //{
-                //    PlayerLives.Planet = null;
-                //    PlayerLives.Planet = c.Planet;
-                //}
-            }
-
-            else if (command.Name == "ShowCelestialBodiesPaths")
-            {
-                AdvancedView.Visible = true;
-            }
-
-            else if (command.Name == "HideCelestialBodiesPaths")
-            {
-                AdvancedView.Visible = false;
             }
         }
 

@@ -144,18 +144,18 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player p)
         {
-            if (Physics.CircleRectangleCollision(circle, Box.GetRectangle()))
+            if (Physics.CircleRectangleCollision(p.Circle, Box.GetRectangle()))
                 return true;
 
             return false;
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player p)
         {
-            if (Physics.CircleRectangleCollision(circle, Box.GetRectangle()))
+            if (Physics.CircleRectangleCollision(p.Circle, Box.GetRectangle()))
             {
                 Selection.Trigger(ref Box.position);
 

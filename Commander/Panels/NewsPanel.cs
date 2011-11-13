@@ -96,7 +96,7 @@
 
 
 
-        private void DoVisitWebsiteClicked(PanelWidget widget)
+        private void DoVisitWebsiteClicked(PanelWidget widget, Commander.Player player)
         {
 #if WINDOWS
             System.Diagnostics.Process.Start(Preferences.WebsiteURL);
@@ -104,7 +104,7 @@
         }
 
 
-        private void DoReloadClicked(PanelWidget widget)
+        private void DoReloadClicked(PanelWidget widget, Commander.Player player)
         {
             NotifyReloadAsked();
         }

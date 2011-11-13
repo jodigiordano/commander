@@ -70,51 +70,51 @@
         }
 
 
-        private void DoEnterText(PanelWidget widget)
+        private void DoEnterText(PanelWidget widget, Commander.Player player)
         {
             Input.Value += widget.Name;
         }
 
 
-        private void DoArobas(PanelWidget widget)
+        private void DoArobas(PanelWidget widget, Commander.Player player)
         {
             Input.Value += "@";
         }
 
 
-        private void DoDotCom(PanelWidget widget)
+        private void DoDotCom(PanelWidget widget, Commander.Player player)
         {
             Input.Value += ".com";
         }
 
 
-        private void DoBackSpace(PanelWidget widget)
+        private void DoBackSpace(PanelWidget widget, Commander.Player player)
         {
             Input.Value = Input.Value.Substring(0, Math.Max(0, Input.Value.Length - 1));
         }
 
 
-        private void DoClear(PanelWidget widget)
+        private void DoClear(PanelWidget widget, Commander.Player player)
         {
             Input.Value = "";
         }
 
 
-        private void DoCancel(PanelWidget widget)
+        private void DoCancel(PanelWidget widget, Commander.Player player)
         {
             SaveInput = false;
             
             if (CloseButtonHandler != null)
-                CloseButtonHandler(widget);
+                CloseButtonHandler(widget, player);
         }
 
 
-        private void DoSubmit(PanelWidget widget)
+        private void DoSubmit(PanelWidget widget, Commander.Player player)
         {
             SaveInput = true;
 
             if (CloseButtonHandler != null)
-                CloseButtonHandler(widget);
+                CloseButtonHandler(widget, player);
         }
 
 

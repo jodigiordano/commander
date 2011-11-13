@@ -118,7 +118,7 @@
             var world = Main.WorldsFactory.GetWorld(WorldToJumpTo);
 
             world.EditorMode = IsPlayerWorld(WorldToJumpTo);
-            world.Editing = false;
+            world.Editing = IsPlayerWorld(WorldToJumpTo);
 
             Main.SetCurrentWorld(world, true);
 

@@ -36,9 +36,9 @@
         }
 
 
-        protected override bool Click(Core.Physics.Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            var clicked = base.Click(circle);
+            var clicked = base.Click(player);
 
             if (clicked)
             {
@@ -76,7 +76,7 @@
         }
 
 
-        protected override void DoClick(PanelWidget widget)
+        protected override void DoClick(PanelWidget widget, Commander.Player player)
         {
 
         }

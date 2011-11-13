@@ -43,9 +43,9 @@
         }
 
 
-        protected override void DoClick(PanelWidget widget)
+        protected override void DoClick(PanelWidget widget, Commander.Player player)
         {
-            var checkbox = (TurretCheckBox) ((GridPanel) widget).LastClickedWidget;
+            var checkbox = (TurretCheckBox) widget;
 
             if (checkbox.Value)
                 Simulator.Data.Level.AvailableTurrets.Add(checkbox.Turret.Type, checkbox.Turret);

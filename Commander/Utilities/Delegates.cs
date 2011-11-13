@@ -7,7 +7,6 @@
     delegate void NoneHandler();
     delegate bool IntegerHandler(int i);
     delegate void Integer2Handler(int i);
-    delegate void PanelWidgetHandler(PanelWidget p);
     delegate void PanelTextBoxStringHandler(Panel p, TextBox t, string s);
     delegate void NewsTypeHandler(NewsType t);
     delegate void NewsTypeNewsHandler(NewsType t, List<News> n);
@@ -44,4 +43,5 @@ namespace EphemereGames.Commander.Simulation
     delegate void CollidableBulletHandler(ICollidable i, Bullet b);
     delegate void DestroyableHandler(IDestroyable i);
     delegate void BulletHandler(Bullet b);
+    delegate void PanelWidgetPlayerHandler(PanelWidget p, Commander.Player pl);
 }

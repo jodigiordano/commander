@@ -76,6 +76,9 @@
         {
             LevelDescriptor descriptor = CurrentLevelDescriptor;
 
+            if (descriptor == null)
+                return;
+
             var highscore = Main.CurrentWorld.World.HighScores.GetHighScore(descriptor.Infos.Id);
             int score = highscore == null ? 0 : highscore.Score;
 
@@ -97,6 +100,9 @@
         {
             get
             {
+                if (!Simulator.AvailableLevelsWorldMode.ContainsKey(CelestialBody))
+                    return null;
+
                 return Main.CurrentWorld.World.GetLevelDescriptor(Simulator.AvailableLevelsWorldMode[CelestialBody]);
             }
         }

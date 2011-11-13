@@ -77,7 +77,7 @@
                     panel = p;
 
             if (panel != null)
-                DoPanelClosed(panel);
+                DoPanelClosed(panel, null);
         }
 
 
@@ -103,7 +103,7 @@
             if (!IsPanelVisible)
                 return;
 
-            Simulator.Data.Panels[OpenedPanel].DoClick(player.Circle);
+            Simulator.Data.Panels[OpenedPanel].DoClick(player.InnerPlayer);
         }
 
 
@@ -135,7 +135,7 @@
                 // More friction on a panel choice
                 if (player.SpaceshipMove.SteeringBehavior.NextMovement == Vector3.Zero)
                 {
-                    if (player.VisualPlayer.Visible && openedPanel.DoHover(player.Circle) && openedPanel.LastHoverWidget.Sticky)
+                    if (player.VisualPlayer.Visible && openedPanel.DoHover(player.InnerPlayer) && openedPanel.LastHoverWidget.Sticky)
                     {
                         player.SpaceshipMove.SteeringBehavior.Friction = 0.01f;
                         break;
@@ -154,16 +154,16 @@
 
         public void DoEditorCommandExecuted(EditorCommand c)
         {
-            var command = c as EditorShowPanelCommand;
+            var command = c as EditorPanelShowCommand;
 
             if (command == null)
                 return;
 
-            ShowPanel(command.Panel, command.Owner.Position);
+            ShowPanel(command.Panel, command.UsePosition ? command.Position : command.Owner.Position);
         }
 
 
-        private void DoPanelClosed(PanelWidget widget)
+        private void DoPanelClosed(PanelWidget widget, Commander.Player player) //player may be null
         {
             var panel = Simulator.Data.Panels[OpenedPanel];
 

@@ -118,14 +118,26 @@
         }
 
 
+        public void AddChoiceFirst(ContextualMenuChoice choice)
+        {
+            AddChoice(choice, 0);
+        }
+
+
         public void AddChoice(ContextualMenuChoice choice)
+        {
+            AddChoice(choice, Choices.Count);
+        }
+
+
+        private void AddChoice(ContextualMenuChoice choice, int index)
         {
             choice.Scene = Simulator.Scene;
             choice.VisualPriority = VisualPriority;
             choice.DataChanged += new NoneHandler(DoChoiceDataChanged);
             choice.AvailabilityChanged += new NoneHandler(DoChoiceAvailabilityChanged);
-            
-            Choices.Add(choice);
+
+            Choices.Insert(index, choice);
 
             if (Choices.Count == 1)
                 SelectedIndex = 0;
@@ -189,6 +201,15 @@
                 return null;
 
             return Choices[SelectedIndex];
+        }
+
+
+        public void DoClick()
+        {
+            if (SelectedIndex < 0)
+                return;
+
+            Choices[SelectedIndex].DoClick();
         }
 
 

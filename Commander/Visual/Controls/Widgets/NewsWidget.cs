@@ -1,7 +1,6 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
-    using EphemereGames.Core.Physics;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -71,13 +70,13 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
             return false;
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
             return false;
         }

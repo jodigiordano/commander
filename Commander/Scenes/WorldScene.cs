@@ -77,6 +77,9 @@
                 LevelStates.AllLevelsUnlockedOverride = true;
 
             LevelStates.Initialize();
+
+            SyncLevelsStates();
+
             LevelStates.Show();
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
@@ -85,8 +88,6 @@
             Main.MusicController.AddMusic(World.Descriptor.MusicEnd);
 
             Main.CurrentGame = null;
-
-            InitializeLevelsStates();
         }
 
 
@@ -123,6 +124,9 @@
 
             CBtoLevel.Add(cb, id);
             LeveltoCB.Add(id, cb);
+
+            LevelStates.Initialize();
+            SyncLevelsStates();
         }
 
 
@@ -134,6 +138,9 @@
 
             CBtoLevel.Remove(cb);
             LeveltoCB.Remove(id);
+
+            LevelStates.Initialize();
+            SyncLevelsStates();
         }
 
 
@@ -180,8 +187,7 @@
         {
             Simulator.Draw();
 
-            if (!Simulator.EditorMode || Simulator.EditorPlaytestingMode)
-                LevelStates.Draw();
+            LevelStates.Draw();
 
             if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                 Title.Draw();
@@ -190,7 +196,7 @@
 
         public override void OnFocus()
         {
-            InitializeLevelsStates();
+            SyncLevelsStates();
 
             Main.CurrentWorld = this;
 
@@ -425,9 +431,6 @@
 
         public void DoSelectActionEditor(Player p)
         {
-            if (Simulator.EditorEditingMode)
-                return;
-
             // Select a warp
             var world = GetWorldSelected(p);
 
@@ -468,7 +471,7 @@
 
         public void DoNewGameState(GameState gameState)
         {
-            InitializeLevelsStates();
+            SyncLevelsStates();
         }
 
 
@@ -510,7 +513,7 @@
         }
 
 
-        private void InitializeLevelsStates()
+        private void SyncLevelsStates()
         {
             // Warps
             foreach (var w in CBtoWarp)
@@ -571,7 +574,7 @@
                 World.UnlockAllLevels();
 
                 LevelStates.AllLevelsUnlockedOverride = true;
-                InitializeLevelsStates();
+                SyncLevelsStates();
 
                 Main.PlayersController.SaveAll();
             }

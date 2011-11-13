@@ -60,54 +60,54 @@
         }
 
 
-        private void DoOptions(PanelWidget widget)
+        private void DoOptions(PanelWidget widget, Commander.Player player)
         {
             Simulator.Data.Panels["Options"].PanelToOpenOnClose = "Pause";
             PanelToOpenOnClose = "Options";
             ChangeStateOnClose = false;
-            CloseButtonHandler(this);
+            CloseButtonHandler(this, player);
         }
 
 
-        private void DoHelp(PanelWidget widget)
+        private void DoHelp(PanelWidget widget, Commander.Player player)
         {
             Simulator.Data.Panels["Help"].PanelToOpenOnClose = "Pause";
             PanelToOpenOnClose = "Help";
             ChangeStateOnClose = false;
-            CloseButtonHandler(this);
+            CloseButtonHandler(this, player);
         }
 
 
-        private void DoControls(PanelWidget widget)
+        private void DoControls(PanelWidget widget, Commander.Player player)
         {
             Simulator.Data.Panels["Controls"].PanelToOpenOnClose = "Pause";
             PanelToOpenOnClose = "Controls";
             ChangeStateOnClose = false;
-            CloseButtonHandler(this);
+            CloseButtonHandler(this, player);
         }
 
 
-        private void DoRestart(PanelWidget widget)
+        private void DoRestart(PanelWidget widget, Commander.Player player)
         {
             Simulator.TriggerNewGameState(GameState.Restart);
             ChangeStateOnClose = false;
-            CloseButtonHandler(this);
+            CloseButtonHandler(this, player);
         }
 
 
-        private void DoGoBackToWorld(PanelWidget widget)
+        private void DoGoBackToWorld(PanelWidget widget, Commander.Player player)
         {
             Simulator.TriggerNewGameState(GameState.PausedToWorld);
             ChangeStateOnClose = false;
-            CloseButtonHandler(this);
+            CloseButtonHandler(this, player);
         }
 
 
-        private void DoResume(PanelWidget widget)
+        private void DoResume(PanelWidget widget, Commander.Player player)
         {
             Simulator.TriggerNewGameState(GameState.Running);
             ChangeStateOnClose = false;
-            CloseButtonHandler(this);
+            CloseButtonHandler(this, player);
         }
     }
 }

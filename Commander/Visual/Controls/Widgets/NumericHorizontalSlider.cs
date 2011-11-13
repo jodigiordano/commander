@@ -167,16 +167,16 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, DecrementCircle) && Value > Min)
+            if (Physics.CircleCicleCollision(player.Circle, DecrementCircle) && Value > Min)
             {
                 Value = Math.Max(Min, Value - Increment);
                 Position = Position;
                 return true;
             }
 
-            if (Physics.CircleCicleCollision(circle, IncrementCircle) && Value < Max)
+            if (Physics.CircleCicleCollision(player.Circle, IncrementCircle) && Value < Max)
             {
                 Value = Math.Min(Max, Value + Increment);
                 Position = Position;
@@ -187,9 +187,9 @@
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
-            if (Physics.CircleCicleCollision(circle, DecrementCircle))
+            if (Physics.CircleCicleCollision(player.Circle, DecrementCircle))
             {
                 Selection.Trigger(ref DecrementCircle.Position);
 
@@ -198,7 +198,7 @@
             }
 
 
-            if (Physics.CircleCicleCollision(circle, IncrementCircle))
+            if (Physics.CircleCicleCollision(player.Circle, IncrementCircle))
             {
                 Selection.Trigger(ref IncrementCircle.Position);
 

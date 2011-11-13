@@ -81,6 +81,6 @@
 
         protected abstract List<string> GetAssets();
         protected abstract PanelWidget GetWidget(string assetName);
-        protected abstract void DoClick(PanelWidget widget);
+        protected abstract void DoClick(PanelWidget widget, Commander.Player player);
     }
 }

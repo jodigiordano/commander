@@ -5,13 +5,10 @@
 
     class EditorTextContextualMenuChoice : TextContextualMenuChoice
     {
-        public EditorCommand Command;
-
-
-        public EditorTextContextualMenuChoice(string name, string label, float textSize, EditorCommand command)
+        public EditorTextContextualMenuChoice(string name, string label, float textSize, NoneHandler handler)
             : base(name, new Text(label, @"Pixelite") { SizeX = textSize })
         {
-            Command = command;
+            DoClick = handler;
         }
     }
 }

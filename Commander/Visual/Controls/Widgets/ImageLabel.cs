@@ -122,20 +122,20 @@
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player player)
         {
             return false;
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player player)
         {
             if (!CanHover)
                 return false;
 
             SyncRectangle();
 
-            return Physics.CircleRectangleCollision(circle, Rectangle);
+            return Physics.CircleRectangleCollision(player.Circle, Rectangle);
         }
 
 

@@ -7,7 +7,7 @@
 
     class InfiniteWavePanel : VerticalPanel
     {
-        public List<EnemyType> Enemies;
+        private List<EnemyType> Enemies;
 
         private Simulator Simulator;
 
@@ -16,7 +16,7 @@
 
 
         public InfiniteWavePanel(Simulator simulator)
-            : base(simulator.Scene, Vector3.Zero, new Vector2(700, 500), VisualPriorities.Default.EditorPanel, Color.White)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(400, 300), VisualPriorities.Default.EditorPanel, Color.White)
         {
             Simulator = simulator;
 
@@ -25,10 +25,12 @@
             Enemies = new List<EnemyType>();
 
             Enable = new CheckBox("Enable") { SpaceForLabel = 250 };
-            EnemiesButton = new PushButton(new Text("Enemies", "Pixelite") { SizeX = 2 }, 250);
+            EnemiesButton = new PushButton(new Text("Enemies", "Pixelite") { SizeX = 2 }, 250) { ClickHandler = DoEnemiesPanel };
 
             AddWidget("Enable", Enable);
             AddWidget("Enemies", EnemiesButton);
+
+            Padding = new Vector2(20, 40);
 
             Alpha = 0;
         }
@@ -58,6 +60,22 @@
                 Simulator.Data.Level.InfiniteWaves = EditorLevelGenerator.GenerateInfiniteWave(Simulator, Enemies);
             else
                 Simulator.Data.Level.InfiniteWaves = null;
+        }
+
+
+        private void DoEnemiesPanel(PanelWidget widget, Commander.Player player)
+        {
+            var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
+            enemiesAssets.PanelToOpenOnClose = Name;
+
+            enemiesAssets.Enemies = Enemies;
+
+            Simulator.EditorController.ExecuteCommand(
+                new EditorPanelShowCommand(Simulator.Data.Players[player], "EditorEnemies")
+                {
+                    UsePosition = true,
+                    Position = Position + new Vector3(Size, 0)
+                });
         }
     }
 }

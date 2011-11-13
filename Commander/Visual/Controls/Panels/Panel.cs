@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Physics;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -281,7 +281,7 @@
         }
 
 
-        public virtual void SetClickHandler(string widgetName, PanelWidgetHandler handler)
+        public virtual void SetClickHandler(string widgetName, PanelWidgetPlayerHandler handler)
         {
             foreach (var w in Widgets)
                 if (w.Key == widgetName)
@@ -292,14 +292,14 @@
         }
 
 
-        public virtual void SetClickHandler(PanelWidgetHandler handler)
+        public virtual void SetClickHandler(PanelWidgetPlayerHandler handler)
         {
             foreach (var w in Widgets)
                 w.Value.ClickHandler = handler;
         }
 
 
-        public void SetHoverHandler(string widgetName, PanelWidgetHandler handler)
+        public void SetHoverHandler(string widgetName, PanelWidgetPlayerHandler handler)
         {
             foreach (var w in Widgets)
                 if (w.Key == widgetName)
@@ -310,50 +310,50 @@
         }
 
 
-        public void SetHoverHandler(PanelWidgetHandler handler)
+        public void SetHoverHandler(PanelWidgetPlayerHandler handler)
         {
             foreach (var w in Widgets)
                 w.Value.HoverHandler = handler;
         }
 
 
-        public PanelWidgetHandler CloseButtonHandler
+        public PanelWidgetPlayerHandler CloseButtonHandler
         {
             protected get { return CloseButton.ClickHandler; }
             set { CloseButton.ClickHandler = value; }
         }
 
 
-        protected override bool Click(Circle circle)
+        protected override bool Click(Commander.Player p)
         {
-            if (ShowCloseButton && CloseButton.DoClick(circle))
+            if (ShowCloseButton && CloseButton.DoClick(p))
             {
                 LastClickedWidget = CloseButton;
                 return true;
             }
 
-            if (ClickTitleWidgets(circle))
+            if (ClickTitleWidgets(p))
                 return true;
 
-            if (ClickWidgets(circle))
+            if (ClickWidgets(p))
                 return true;
 
             return false;
         }
 
 
-        protected override bool Hover(Circle circle)
+        protected override bool Hover(Commander.Player p)
         {
-            if (ShowCloseButton && CloseButton.DoHover(circle))
+            if (ShowCloseButton && CloseButton.DoHover(p))
             {
                 LastHoverWidget = CloseButton;
                 return true;
             }
 
-            if (HoverTitleWidgets(circle))
+            if (HoverTitleWidgets(p))
                 return true;
 
-            if (HoverWidgets(circle))
+            if (HoverWidgets(p))
                 return true;
 
             return false;
@@ -506,10 +506,10 @@
         }
 
 
-        protected virtual bool ClickWidgets(Circle circle)
+        protected virtual bool ClickWidgets(Commander.Player p)
         {
             foreach (var w in Widgets)
-                if (w.Value.DoClick(circle))
+                if (w.Value.DoClick(p))
                 {
                     LastClickedWidget = w.Value;
                     return true;
@@ -519,10 +519,10 @@
         }
 
 
-        protected virtual bool HoverWidgets(Circle circle)
+        protected virtual bool HoverWidgets(Commander.Player p)
         {
             foreach (var w in Widgets)
-                if (w.Value.DoHover(circle))
+                if (w.Value.DoHover(p))
                 {
                     LastHoverWidget = w.Value;
                     return true;
@@ -532,10 +532,10 @@
         }
 
 
-        private bool ClickTitleWidgets(Circle circle)
+        private bool ClickTitleWidgets(Commander.Player p)
         {
             foreach (var w in TitleBarWidgets)
-                if (w.DoClick(circle))
+                if (w.DoClick(p))
                 {
                     LastClickedWidget = w;
                     return true;
@@ -545,10 +545,10 @@
         }
 
 
-        private bool HoverTitleWidgets(Circle circle)
+        private bool HoverTitleWidgets(Commander.Player p)
         {
             foreach (var w in TitleBarWidgets)
-                if (w.DoHover(circle))
+                if (w.DoHover(p))
                 {
                     LastHoverWidget = w;
                     return true;

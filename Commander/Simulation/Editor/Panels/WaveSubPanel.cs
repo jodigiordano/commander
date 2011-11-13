@@ -162,17 +162,22 @@
         }
 
 
-        private void DoEnemiesPanel(PanelWidget widget)
+        private void DoEnemiesPanel(PanelWidget widget, Commander.Player player)
         {
             var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
-            enemiesAssets.PanelToOpenOnClose = "EditorWaves";
+            enemiesAssets.PanelToOpenOnClose = Name;
 
             if (Id < Simulator.Data.Level.Descriptor.Waves.Count)
                 enemiesAssets.Enemies = Simulator.Data.Level.Descriptor.Waves[Id].Enemies;
             else
                 enemiesAssets.Enemies = new List<EnemyType>();
 
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorShowPanelCommand("EditorEnemies"));
+            Simulator.EditorController.ExecuteCommand(
+                new EditorPanelShowCommand(Simulator.Data.Players[player], "EditorEnemies")
+                {
+                    UsePosition = true,
+                    Position = Position + new Vector3(Size, 0) 
+                });
         }
     }
 }

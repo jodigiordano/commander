@@ -25,13 +25,10 @@
         }
 
 
-        private void DoHasMoons(PanelWidget widget)
+        private void DoHasMoons(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("HasMoons")
-            {
-                HasMoons = HasMoons.Value,
-                CelestialBody = CelestialBody
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorCelestialBodyHasMoonsCommand(Simulator.Data.Players[player], CelestialBody, HasMoons.Value));
         }
     }
 }

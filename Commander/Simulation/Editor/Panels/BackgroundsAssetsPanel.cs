@@ -39,7 +39,7 @@
         }
 
 
-        protected override void DoClick(PanelWidget widget)
+        protected override void DoClick(PanelWidget widget, Commander.Player player)
         {
             var img = (ImageWidget) widget;
 

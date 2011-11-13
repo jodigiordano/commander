@@ -48,43 +48,31 @@
         }
 
 
-        private void DoFollowPath(PanelWidget widget)
+        private void DoFollowPath(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("FollowPath")
-            {
-                FollowPath = FollowPath.Value,
-                CelestialBody = CelestialBody
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorCelestialBodyFollowPathCommand(Simulator.Data.Players[player], CelestialBody, FollowPath.Value));
         }
 
 
-        private void DoCanSelect(PanelWidget widget)
+        private void DoCanSelect(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("CanSelect")
-            {
-                CanSelect = CanSelect.Value,
-                CelestialBody = CelestialBody
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorCelestialBodyCanSelectCommand(Simulator.Data.Players[player], CelestialBody, CanSelect.Value));
         }
 
 
-        private void DoStraightLine(PanelWidget widget)
+        private void DoStraightLine(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("StraightLine")
-            {
-                StraightLine = StraightLine.Value,
-                CelestialBody = CelestialBody
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorCelestialBodyStraightLineCommand(Simulator.Data.Players[player], CelestialBody, StraightLine.Value));
         }
 
 
-        private void DoInvincible(PanelWidget widget)
+        private void DoInvincible(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.NotifyEditorCommandExecuted(new EditorCelestialBodyCommand("Invincible")
-            {
-                Invincible = Invincible.Value,
-                CelestialBody = CelestialBody
-            });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorCelestialBodyInvincibleCommand(Simulator.Data.Players[player], CelestialBody, Invincible.Value));
         }
     }
 }

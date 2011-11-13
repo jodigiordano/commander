@@ -476,16 +476,16 @@
 
         public void DoEditorCommandExecuted(EditorCommand command)
         {
-            if (command.Name == "AddOrRemovePowerUp")
-            {
-                InitializePowerUpsAndTurrets();
-                CheckAvailablePowerUps();
+            //if (command.Name == "AddOrRemovePowerUp")
+            //{
+            //    InitializePowerUpsAndTurrets();
+            //    CheckAvailablePowerUps();
 
                 //foreach (var pl in Simulator.Data.Players.Values)
                 //    pl.Initialize(); todo
 
-                return;
-            }
+            //    return;
+            //}
         }
 
 

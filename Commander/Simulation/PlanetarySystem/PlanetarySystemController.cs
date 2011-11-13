@@ -249,13 +249,10 @@
 
         public void DoEditorCommandExecuted(EditorCommand c)
         {
-            var command = c as EditorCelestialBodyCommand;
-
-            if (command == null)
-                return;
-
-            if (command.Name == "AddPlanet" || command.Name == "AddPinkHole")
+            if (c is EditorCelestialBodyAddCommand)
             {
+                var command = (EditorCelestialBodyAddCommand) c;
+
                 command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
                 command.CelestialBody.AliveOverride = true;
                 command.CelestialBody.CanSelectOverride = true;
@@ -263,98 +260,142 @@
                 command.CelestialBody.SteeringBehavior.BasePosition = command.Owner.Position;
                 command.CelestialBody.Initialize();
                 CelestialBodies.Add(command.CelestialBody);
+
+                return;
             }
 
-            else if (command.Name == "Remove")
+
+            if (c is EditorCelestialBodyRemoveCommand)
             {
+                var command = (EditorCelestialBodyRemoveCommand) c;
+
                 command.CelestialBody.LifePoints = 0;
                 command.CelestialBody.AliveOverride = false;
+
+                RemoveFromStartingPath(command.CelestialBody);
+
+                return;
             }
 
-            else if (command.Name == "ToggleSpeed")
+
+            if (c is EditorCelestialBodySpeedCommand)
             {
+                var command = (EditorCelestialBodySpeedCommand) c;
+
                 command.CelestialBody.Speed = command.Speed;
+
+                return;
             }
 
-            else if (command.Name == "ChangeAsset")
+
+            if (c is EditorCelestialBodyChangeAssetCommand)
             {
+                var command = (EditorCelestialBodyChangeAssetCommand) c;
+
                 ((Planet) command.CelestialBody).ImageName = command.AssetName;
+
+                return;
             }
 
-            else if (command.Name == "PushFirst")
+
+            if (c is EditorCelestialBodyPushFirstCommand)
             {
+                var command = (EditorCelestialBodyPushFirstCommand) c;
+
                 if (!Path.ContainsCelestialBody(command.CelestialBody))
                     AddToStartingPath(command.CelestialBody);
 
                 Path.RemoveCelestialBody(command.CelestialBody);
                 command.CelestialBody.PathPriority = GetLowestPathPriority(CelestialBodies) - 1;
                 Path.AddCelestialBody(command.CelestialBody, false);
+
+                return;
             }
 
 
-            else if (command.Name == "PushLast")
+            if (c is EditorCelestialBodyPushLastCommand)
             {
+                var command = (EditorCelestialBodyPushLastCommand) c;
+
                 if (!Path.ContainsCelestialBody(command.CelestialBody))
                     AddToStartingPath(command.CelestialBody);
 
                 Path.RemoveCelestialBody(command.CelestialBody);
                 command.CelestialBody.PathPriority = GetHighestPathPriority(CelestialBodies) + 1;
                 Path.AddCelestialBody(command.CelestialBody, false);
+
+                return;
             }
 
 
-            else if (command.Name == "ToggleSize")
+            if (c is EditorCelestialBodySizeCommand)
             {
+                var command = (EditorCelestialBodySizeCommand) c;
+
                 command.CelestialBody.Size = command.Size;
+
+                return;
             }
 
 
-            else if (command.Name == "HasMoons")
+            if (c is EditorCelestialBodyHasMoonsCommand)
             {
+                var command = (EditorCelestialBodyHasMoonsCommand) c;
+
                 ((Planet) command.CelestialBody).HasMoons = command.HasMoons;
+
+                return;
             }
 
 
-            else if (command.Name == "FollowPath")
+            if (c is EditorCelestialBodyFollowPathCommand)
             {
+                var command = (EditorCelestialBodyFollowPathCommand) c;
+
                 command.CelestialBody.FollowPath = command.FollowPath;
+
+                return;
             }
 
 
-            else if (command.Name == "CanSelect")
+            if (c is EditorCelestialBodyCanSelectCommand)
             {
+                var command = (EditorCelestialBodyCanSelectCommand) c;
+
                 command.CelestialBody.CanSelect = command.CanSelect;
+
+                return;
             }
 
 
-            else if (command.Name == "StraightLine")
+            if (c is EditorCelestialBodyStraightLineCommand)
             {
+                var command = (EditorCelestialBodyStraightLineCommand) c;
+
                 command.CelestialBody.StraightLine = command.StraightLine;
+
+                return;
             }
 
 
-            else if (command.Name == "Invincible")
+            if (c is EditorCelestialBodyInvincibleCommand)
             {
+                var command = (EditorCelestialBodyInvincibleCommand) c;
+
                 command.CelestialBody.Invincible = command.Invincible;
+
+                return;
             }
 
 
-            else if (command.Name == "RemoveFromPath")
+            if (c is EditorCelestialBodyRemoveFromPathCommand)
             {
+                var command = (EditorCelestialBodyRemoveFromPathCommand) c;
+
                 RemoveFromStartingPath(command.CelestialBody);
+
+                return;
             }
-
-            //else if (command.Name == "Clear")
-            //{
-            //    foreach (var cb in CelestialBodies)
-            //    {
-            //        if (cb is AsteroidBelt)
-            //            continue;
-
-            //        cb.LifePoints = 0;
-            //        cb.AliveOverride = false;
-            //    }
-            //}
         }
 
 

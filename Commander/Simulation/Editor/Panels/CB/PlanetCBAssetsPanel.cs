@@ -50,16 +50,15 @@
         }
 
 
-        protected override void DoClick(PanelWidget widget)
+        protected override void DoClick(PanelWidget widget, Commander.Player player)
         {
             var img = (ImageWidget) widget;
 
-            Simulator.EditorController.NotifyEditorCommandExecuted(
-                new EditorCelestialBodyCommand("ChangeAsset")
-                {
-                    CelestialBody = CelestialBody,
-                    AssetName = img.Image.TextureName.Substring(0, img.Image.TextureName.Length - 1)
-                });
+            Simulator.EditorController.ExecuteCommand(
+                new EditorCelestialBodyChangeAssetCommand(
+                    Simulator.Data.Players[player],
+                    CelestialBody,
+                    img.Image.TextureName.Substring(0, img.Image.TextureName.Length - 1)));
         }
     }
 }
