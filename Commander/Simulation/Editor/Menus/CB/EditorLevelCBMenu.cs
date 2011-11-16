@@ -9,7 +9,6 @@
             AddChoiceFirst(new EditorTextContextualMenuChoice("edit", "edit level", 2, DoEditLevel));
 
             AddChoice(new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 2, DoCelestialBodyAssets));
-            AddChoice(new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, DoAttributes));
         }
 
 
@@ -54,10 +53,18 @@
         }
 
 
-        private void DoAttributes()
+        protected override void DoAttributes()
         {
             Simulator.EditorController.ExecuteCommand(
                 new EditorPanelCBShowCommand(Owner, "EditorPlanetCBAttributes", Owner.ActualSelection.CelestialBody, Simulator));
+        }
+
+
+        protected override void DoRemove()
+        {
+            base.DoRemove();
+
+            Main.CurrentWorld.RemoveLevel(Owner.ActualSelection.CelestialBody);
         }
     }
 }

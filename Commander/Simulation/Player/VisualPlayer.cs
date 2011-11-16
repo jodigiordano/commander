@@ -62,13 +62,14 @@
             // Highest priority
             CBMenus.Add("EditorPlanetCB", new EditorPlanetCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             CBMenus.Add("EditorPinkHoleCB", new EditorPinkHoleCBMenu(Simulator, VisualPriorities.Default.EditorPanel, Owner));
-
+            CBMenus.Add("EditorWorldWarp", new EditorWarpCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            CBMenus.Add("EditorWorldLevel", new EditorLevelCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            
             foreach (var m in CBMenus)
                 Menus.Add(m.Key, m.Value);
 
             Menus.Add("WorldPause", new PauseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("MainMenuCampaign", new CampaignMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add("EditorWorldLevel", new EditorLevelCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("EditorBuildLevel", new EditorLevelBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("EditorBuildWorld", new EditorWorldBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("StartingPath", new StartingPathMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));

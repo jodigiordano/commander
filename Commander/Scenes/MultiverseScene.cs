@@ -217,9 +217,14 @@
         private void DoJumpToWorld(Player player)
         {
             if (!Main.PlayersController.MultiverseData.LoggedIn)
+            {
                 DoLogin(player);
+            }
+
             else
+            {
                 Simulator.ShowPanel("JumpToWorld", player.Position);
+            }
         }
 
 
@@ -232,9 +237,14 @@
         private void DoMyWorld(Player player)
         {
             if (!Main.PlayersController.MultiverseData.LoggedIn)
+            {
                 DoLogin(player);
+            }
+
             else
+            {
                 Main.MultiverseController.JumpToWorld(Main.PlayersController.MultiverseData.WorldId, "Multiverse");
+            }
         }
 
 

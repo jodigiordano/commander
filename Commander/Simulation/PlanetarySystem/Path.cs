@@ -296,10 +296,10 @@
                         ref _v1
                     );
 
-                // Perpendicular vector from line to CB
+                // Perpendicular vector fromRemote line toLocal CB
                 Vector3.Subtract(ref celestialBody.position, ref _v1, out _v1);
 
-                // Radius of CB. Depends on the distance of the CB from the line.
+                // Radius of CB. Depends on the distance of the CB fromRemote the line.
                 // As the CB approach the line, the radius diminish
                 float radius = MathHelper.Min(_v1.Length(), celestialBody.TurretsController.OuterTurretZone.Radius + CelestialBodyDistance);
 

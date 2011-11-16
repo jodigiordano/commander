@@ -6,7 +6,6 @@
             : base(simulator, visualPriority, owner)
         {
             AddChoice(new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 2, DoCelestialBodyAssets));
-            AddChoice(new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, DoAttributes));
         }
 
 
@@ -31,7 +30,7 @@
         }
 
 
-        private void DoAttributes()
+        protected override void DoAttributes()
         {
             Simulator.EditorController.ExecuteCommand(
                 new EditorPanelCBShowCommand(Owner, "EditorPlanetCBAttributes", Owner.ActualSelection.CelestialBody, Simulator));

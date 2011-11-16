@@ -150,6 +150,9 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\Libraries\X86\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
@@ -184,14 +187,21 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\LoginProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\RegisterProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\SaveWorldProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\ServerProtocol.cs" />
     <Compile Include="Simulation\Editor\Commands\EditorCelestialBodyCommands.cs" />
     <Compile Include="Simulation\Editor\Commands\EditorPanelCommands.cs" />
     <Compile Include="Simulation\Editor\Commands\EditorPlayerCommands.cs" />
+    <Compile Include="Simulation\Editor\Menus\CB\EditorWarpCBMenu.cs" />
     <Compile Include="Simulation\Editor\Menus\CB\EditorLevelCBMenu.cs" />
     <Compile Include="Simulation\Editor\Panels\CB\CelestialBodyAttributesPanel.cs" />
+    <Compile Include="Simulation\Editor\Panels\CB\EditWarpPanel.cs" />
     <Compile Include="Simulation\Editor\Panels\CB\PinkHoleCBAttributesPanel.cs" />
     <Compile Include="Simulation\Editor\Panels\IEditorCBPanel.cs" />
     <Compile Include="Simulation\Editor\Panels\InfiniteWavePanel.cs" />
+    <Compile Include="Simulation\Editor\Panels\SavePanel.cs" />
     <Compile Include="Simulation\Editor\Panels\WorldNamePanel.cs" />
     <Compile Include="Simulation\Enemies\EnemyDescriptor.cs" />
     <Compile Include="Simulation\PlanetarySystem\CelestialBodySteeringBehavior.cs" />
@@ -219,10 +229,10 @@
     <Compile Include="Visual\Controls\Widgets\RectangleEmitter.cs" />
     <Compile Include="Visual\Controls\Widgets\TextBoxGroup.cs" />
     <Compile Include="Panels\KeyboardInput.cs" />
-    <Compile Include="Panels\Multiverse\JumpToWorldPanel.cs" />
+    <Compile Include="Simulation\Editor\Panels\Multiverse\JumpToWorldPanel.cs" />
     <Compile Include="Panels\VirtualKeyboardPanel.cs" />
-    <Compile Include="Panels\Multiverse\RegisterPanel.cs" />
-    <Compile Include="Panels\Multiverse\LoginPanel.cs" />
+    <Compile Include="Simulation\Editor\Panels\Multiverse\RegisterPanel.cs" />
+    <Compile Include="Simulation\Editor\Panels\Multiverse\LoginPanel.cs" />
     <Compile Include="Player\MultiverseData.cs" />
     <Compile Include="Player\InputConfigurations\InputConfiguration.cs" />
     <Compile Include="Player\InputConfigurations\GamepadInputConfiguration.cs" />
@@ -233,8 +243,8 @@
     <Compile Include="Scenes\Menu\CBBigLabels.cs" />
     <Compile Include="Scenes\MultiverseScene.cs" />
     <Compile Include="Scenes\EndOfDemoScene.cs" />
-    <Compile Include="Scenes\Multiverse\DownloadWorldByUsernameProtocol.cs" />
-    <Compile Include="Scenes\Multiverse\DownloadWorldProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\DownloadWorldByUsernameProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\DownloadWorldProtocol.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseController.cs" />
     <Compile Include="Scenes\Multiverse\MultiverseMessage.cs" />
     <Compile Include="Scenes\Multiverse\WorldDownloadingScene.cs" />

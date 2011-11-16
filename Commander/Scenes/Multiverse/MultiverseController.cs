@@ -10,50 +10,47 @@
         public event NoneHandler LoggedIn;
         public event NoneHandler LoggedOut;
 
-        public bool WorldIsReady;
-        public int WorldToJumpTo;
-        private string WorldToJumpToByUsername;
-
         private XmlSerializer MultiverseMessageSerializer;
-        private List<DownloadWorldProtocol> SyncingWorlds;
+        private List<ServerProtocol> RunningProtocols;
 
 
         public MultiverseController()
         {
             MultiverseMessageSerializer = new XmlSerializer(typeof(MultiverseMessage));
-            SyncingWorlds = new List<DownloadWorldProtocol>();
-            WorldToJumpTo = -1;
-            WorldToJumpToByUsername = "";
-            WorldIsReady = false;
+            RunningProtocols = new List<ServerProtocol>();
         }
 
 
         public void Initialize()
         {
-            foreach (var s in SyncingWorlds)
+            foreach (var s in RunningProtocols)
                 s.Cancel();
 
-            SyncingWorlds.Clear();
+            RunningProtocols.Clear();
         }
 
 
         public void Update()
         {
-            for (int i = SyncingWorlds.Count - 1; i > -1; i--)
+            for (int i = RunningProtocols.Count - 1; i > -1; i--)
             {
-                var sw = SyncingWorlds[i];
+                var protocol = RunningProtocols[i];
 
-                if (sw.Completed)
-                {
-                    if (sw.Success && (sw.CreatedWorld.Id == WorldToJumpTo || sw.CreatedWorld.Author == WorldToJumpToByUsername))
-                    {
-                        WorldToJumpTo = sw.CreatedWorld.Id;
-                        WorldIsReady = true;
-                    }
+                protocol.Update();
 
-                    SyncingWorlds.RemoveAt(i);
-                }
+                if (protocol.Completed)
+                    RunningProtocols.RemoveAt(i);
             }
+        }
+
+
+        public void SaveWorld(ServerProtocolHandler callback)
+        {
+            var protocol = new SaveWorldProtocol(Main.PlayersController.MultiverseData.WorldId);
+            protocol.Terminated += new ServerProtocolHandler(callback);
+            protocol.Start();
+
+            RunningProtocols.Add(protocol);
         }
 
 
@@ -64,61 +61,67 @@
         }
 
 
-        public void JumpToWorld(string username, string fromScene)
-        {
-            WorldToJumpToByUsername = username;
+        //public void JumpToWorld(string username, string fromScene)
+        //{
+        //    WorldToJumpToByUsername = username;
 
-            // world is not the one of the user
-            if (!IsPlayerWorld(username))
-            {
-                SyncingWorlds.Add(new DownloadWorldByUsernameProtocol(username, false));
-                Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
-                return;
-            }
+        //    // world is not the one of the user
+        //    if (!IsPlayerWorld(username))
+        //    {
+        //        SyncingWorlds.Add(new DownloadWorldByUsernameProtocol(username, false));
+        //        Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
+        //        return;
+        //    }
 
-            // world is the one of the user but do not exists on disk
-            else if (!IsWorldExistsLocally(Main.PlayersController.MultiverseData.WorldId))
-            {
-                SyncingWorlds.Add(new DownloadWorldByUsernameProtocol(username, false));
-                Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
-                return;
-            }
+        //    // world is the one of the user but do not exists on disk
+        //    else if (!IsWorldExistsLocally(Main.PlayersController.MultiverseData.WorldId))
+        //    {
+        //        SyncingWorlds.Add(new DownloadWorldByUsernameProtocol(username, false));
+        //        Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
+        //        return;
+        //    }
 
-            JumpToWorldDirectly(fromScene);
-        }
+        //    JumpToWorldDirectly(fromScene);
+        //}
 
 
         public void JumpToWorld(int id, string fromScene)
         {
-            WorldToJumpTo = id;
-
             // world doesn't exist on disk => download
             if (!IsWorldExistsLocally(id))
             {
-                SyncingWorlds.Add(new DownloadWorldProtocol(id, false));
+                var protocol = new DownloadWorldProtocol(id, false);
+                protocol.Terminated += new ServerProtocolHandler(((WorldDownloadingScene) Core.Visual.Visuals.GetScene("WorldDownloading")).DoDownloadTerminated);
+                protocol.Start();
+                RunningProtocols.Add(protocol);
                 Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
+
                 return;
             }
 
             // world exists on disk but may be outdated => check & download
             if (!IsPlayerWorld(id))
             {
-                SyncingWorlds.Add(new DownloadWorldProtocol(id, true));
+                var protocol = new DownloadWorldProtocol(id, true);
+                protocol.Terminated += new ServerProtocolHandler(((WorldDownloadingScene) Core.Visual.Visuals.GetScene("WorldDownloading")).DoDownloadTerminated);
+                protocol.Start();
+                RunningProtocols.Add(protocol);
                 Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
+
                 return;
             }
 
-            JumpToWorldDirectly(fromScene);
+            JumpToWorldDirectly(id, fromScene);
         }
 
 
-        public void JumpToWorldDirectly(string fromScene)
+        public void JumpToWorldDirectly(int id, string fromScene)
         {
-            // Set the world to the WorldScene
-            var world = Main.WorldsFactory.GetWorld(WorldToJumpTo);
+            // Set the world toLocal the WorldScene
+            var world = Main.WorldsFactory.GetWorld(id);
 
-            world.EditorMode = IsPlayerWorld(WorldToJumpTo);
-            world.Editing = IsPlayerWorld(WorldToJumpTo);
+            world.EditorMode = IsPlayerWorld(id);
+            world.Editing = IsPlayerWorld(id);
 
             Main.SetCurrentWorld(world, true);
 
@@ -128,16 +131,30 @@
         }
 
 
-        public void LogIn(string username, string password, string worldId)
+        public void Login(string username, string password, ServerProtocolHandler handler)
         {
-            Main.PlayersController.UpdateMultiverse(username, password, worldId);
-            NotifyLoggedIn();
+            var protocol = new LoginProtocol(username, password);
+            protocol.Terminated += new ServerProtocolHandler(handler);
+            protocol.Terminated += new ServerProtocolHandler(NotifyLoggedIn);
+            protocol.Start();
+
+            RunningProtocols.Add(protocol);
+        }
+
+
+        public void Register(string username, string password, string email, ServerProtocolHandler handler)
+        {
+            var protocol = new RegisterProtocol(username, password, email);
+            protocol.Terminated += new ServerProtocolHandler(handler);
+            protocol.Start();
+
+            RunningProtocols.Add(protocol);
         }
 
 
         public void LogOut()
         {
-            Main.PlayersController.UpdateMultiverse("", "", "0");
+            Main.PlayersController.UpdateMultiverse("", "", -1);
             NotifyLoggedOut();
         }
 
@@ -166,8 +183,11 @@
         }
 
 
-        private void NotifyLoggedIn()
+        private void NotifyLoggedIn(ServerProtocol protocol)
         {
+            if (protocol.State != ServerProtocol.ProtocolState.EndedWithSuccess)
+                return;
+
             if (LoggedIn != null)
                 LoggedIn();
         }

@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander
 {
-    using System;
     using EphemereGames.Commander.Simulation;
 
 
@@ -13,21 +12,19 @@
             : base(-1, onlyIfNewer)
         {
             Username = username;
-
-            State = ProtocolState.AskForWorldId;
-            Remote.DownloadStringAsync(new Uri(UsernameToWorldIdScriptUrl));
         }
 
 
-        protected override void Initialize()
+        public override void Start()
         {
-
+            SpecificState = SpecificProtocolState.AskForWorldId;
+            AddQuery(UsernameToWorldIdScriptUrl);
         }
 
-
-        protected override void NextStep(MultiverseMessage previous)
+        
+        protected override void DoNextStep(MultiverseMessage previous)
         {
-            if (State == ProtocolState.AskForWorldId)
+            if (SpecificState == SpecificProtocolState.AskForWorldId)
             {
                 WorldId = int.Parse(previous.Message);
 
@@ -35,7 +32,7 @@
                 return;
             }
 
-            base.NextStep(previous);
+            base.DoNextStep(previous);
         }
 
 

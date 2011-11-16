@@ -22,7 +22,8 @@
                 new EditorTextContextualMenuChoice("RemoveFromPath", "Remove from path", 2, DoRemoveFromPath),
                 new EditorToggleContextualMenuChoice("Size",
                     new List<string>() { "Size: small", "Size: normal", "Size: big" },
-                    2, DoSize)
+                    2, DoSize),
+                new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, DoAttributes)
             };
 
             foreach (var c in choices)
@@ -102,14 +103,11 @@
         }
 
 
-        private void DoRemove()
+        protected virtual void DoRemove()
         {
             var command = new EditorCelestialBodyRemoveCommand(Owner);
 
             Simulator.EditorController.ExecuteCommand(command);
-
-            if (Simulator.WorldMode && command.CelestialBody is Planet)
-                Main.CurrentWorld.RemoveLevel(command.CelestialBody);
         }
 
 
@@ -142,6 +140,12 @@
                 
             Simulator.EditorController.ExecuteCommand(
                 new EditorCelestialBodySizeCommand(Owner, size));
+        }
+
+
+        protected virtual void DoAttributes()
+        {
+
         }
     }
 }

@@ -38,10 +38,10 @@
             Vector3 targetedDirection = TargetPosition - Spaceship.Position;
             Vector3 direction = Spaceship.Direction;
 
-            // Find angle to align to
+            // Find angle toLocal align toLocal
             float angle = Core.Physics.Utilities.SignedAngle(ref targetedDirection, ref direction);
 
-            // Find rotation needed to get aligned
+            // Find rotation needed toLocal get aligned
             float rotation = MathHelper.Clamp(MaxRotationPerUpdateRad, 0, Math.Abs(angle));
 
             if (angle > 0)

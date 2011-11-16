@@ -176,7 +176,7 @@ namespace EphemereGames.Commander
                         InputsFactory.Initialize();
                         Inputs.Initialize(new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2));
 
-                        //todo: pass the Player Class to Inputs so it can spawn players on the fly
+                        //todo: pass the Player Class toLocal Inputs so it can spawn players on the fly
                         //for mouse: a fifth player is needed
                         if (Preferences.Target == Core.Utilities.Setting.ArcadeRoyale)
                         {

@@ -179,11 +179,11 @@
         }
 
         
-        public void UpdateMultiverse(string username, string password, string world)
+        public void UpdateMultiverse(string username, string password, int worldId)
         {
             MultiverseData.Username = username;
             MultiverseData.Password = password;
-            MultiverseData.WorldId = Int32.Parse(world);
+            MultiverseData.WorldId = worldId;
             SaveMultiverse();
         }
     }

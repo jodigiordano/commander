@@ -48,9 +48,9 @@
       <Invincible>false</Invincible>
     </CelestialBody>
     <CelestialBody xsi:type="PlanetCBDescriptor">
-      <Image>planete3</Image>
+      <Image>planete7</Image>
       <HasGravitationalTurret>true</HasGravitationalTurret>
-      <Size>Normal</Size>
+      <Size>Big</Size>
       <Speed>240000</Speed>
       <PathPriority>-8</PathPriority>
       <Path>

@@ -58,7 +58,9 @@
         Login = 5,
         LoadFile = 6,
         WorldId = 7,
-        LastUpdate = 8
+        LastUpdate = 8,
+        FileUploaded = 9,
+        FileDownloaded = 10
     }
 
 

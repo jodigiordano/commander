@@ -15,6 +15,7 @@
         private Text Data;
 
         public int SpaceForLabel;
+        public bool CapInputToSize;
 
         private Particle Selection;
         private Vector3 position;
@@ -44,6 +45,7 @@
             BlinkingCursor = new Image("PixelBlanc") { Size = new Vector2(10, boxHeight - 10), Origin = Vector2.Zero, Color = Color.Black };
             focus = false;
             FocusTimer = 0;
+            CapInputToSize = true;
 
             MaxInputSize = GetMaxInputSize();
         }
@@ -117,7 +119,10 @@
             get { return Data.Data.ToLowerInvariant(); }
             set
             {
-                Data.Data = value.Substring(0, Math.Min(value.Length, MaxInputSize));
+                if (CapInputToSize)
+                    Data.Data = value.Substring(0, Math.Min(value.Length, MaxInputSize));
+                else
+                    Data.Data = value;
 
                 BlinkingCursor.Position = new Vector3(Data.Position.X + Data.AbsoluteSize.X + 5, Data.Position.Y, 0);
             }

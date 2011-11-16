@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using System.Xml.Serialization;
     using EphemereGames.Commander.Cutscenes;
+    using ICSharpCode.SharpZipLib.Zip;
     using Microsoft.Xna.Framework;
 
 
@@ -21,10 +23,10 @@
         private XmlSerializer WorldSerializer;
         private XmlSerializer HighscoresSerializer;
 
-        private string CampaignDirectory;
-        private string MenuDirectory;
-        private string MultiverseDirectory;
-        private string MultiverseHomeWorldDirectory;
+        private static string CampaignDirectory = @".\Content\scenarios\campaign\";
+        private static string MenuDirectory = @".\Content\scenarios\";
+        private static string MultiverseDirectory = @".\UserData\Multiverse\";
+        private static string MultiverseHomeWorldDirectory = @".\Content\scenarios\";
 
 
         public WorldsFactory()
@@ -37,11 +39,6 @@
             LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
             WorldSerializer = new XmlSerializer(typeof(WorldDescriptor));
             HighscoresSerializer = new XmlSerializer(typeof(HighScores));
-
-            CampaignDirectory = @".\Content\scenarios\campaign\";
-            MenuDirectory = @".\Content\scenarios\";
-            MultiverseHomeWorldDirectory = @".\Content\scenarios\";
-            MultiverseDirectory = @".\UserData\Multiverse\";
         }
 
 
@@ -139,12 +136,6 @@
         }
 
 
-        private string GetWorldMultiverseLocalDirectory(int id)
-        {
-            return MultiverseDirectory + @"worlds\world" + id;
-        }
-
-
         public static string WorldToURLArgument(int id)
         {
             return "world=" + id;
@@ -154,6 +145,12 @@
         public static string WorldUsernameToURLArgument(string username)
         {
             return "world_username=" + username;
+        }
+
+
+        public static string GetWorldZipFileName(int id)
+        {
+            return "world" + id + ".zip";
         }
 
 
@@ -171,6 +168,25 @@
             return "world" + id;
         }
 
+
+        public static string GetWorldMultiverseLocalDirectory(int id)
+        {
+            return MultiverseDirectory + @"worlds\world" + id;
+        }
+
+
+        public static string GetWorldMultiverseRemoteZipFile(int id)
+        {
+            return GetWorldMultiverseRemoteDirectory(id) + @"/" + GetWorldZipFileName(id);
+        }
+
+
+        public static string GetWorldMultiverseLocalZipFile(int id)
+        {
+            return GetWorldMultiverseLocalDirectory(id) + @"/" + GetWorldZipFileName(id);
+        }
+
+
         #endregion
 
 
@@ -184,7 +200,8 @@
 
             foreach (var d in directories)
             {
-                var world = LoadWorld(d);
+                var infos = new DirectoryInfo(d);
+                var world = LoadWorldFromDisk(d + @"\" + infos.Name + ".zip");
                 world.CampaignMode = true;
                 world.LoadHighscores(Main.PlayersController.CampaignData.Directory + @"\world" + world.Id);
 
@@ -254,6 +271,15 @@
 
         #region Worlds
 
+        public void EmptyWorldDirectory(int id)
+        {
+            var directory = GetWorldMultiverseLocalDirectory(id);
+
+            Main.PlayersController.CreateDirectory(directory);
+            Main.PlayersController.ClearDirectory(directory);
+        }
+
+
         public World GetWorld(int id)
         {
             if (Worlds.ContainsKey(id))
@@ -261,8 +287,7 @@
 
             if (MultiverseWorldExistsOnDisk(id))
             {
-                var directory = GetWorldMultiverseLocalDirectory(id);
-                var w = LoadWorld(directory);
+                var w = LoadWorldFromDisk(GetWorldMultiverseLocalZipFile(id));
 
                 Worlds.Add(w.Descriptor.Id, w);
                 MultiverseWorlds.Add(w.Descriptor.Id, w);
@@ -282,11 +307,7 @@
 
         public bool MultiverseWorldExistsOnDisk(int id)
         {
-            var directory = GetWorldMultiverseLocalDirectory(id);
-
-            return
-                File.Exists(directory + @"\world.xml") &&
-                File.Exists(directory + @"\layout.xml");
+            return File.Exists(GetWorldMultiverseLocalZipFile(id));
         }
 
 
@@ -299,11 +320,94 @@
             Main.PlayersController.CreateDirectory(directory);
             Main.PlayersController.ClearDirectory(directory);
 
-            SaveWorldDescriptor(w.Descriptor, directory + @"\world.xml");
-            SaveLevelDescriptor(w.Layout, directory + @"\layout.xml");
+            FileStream zipFile = File.Create(GetWorldMultiverseLocalZipFile(id));
 
-            foreach (var l in w.LevelsDescriptors)
-                SaveLevelDescriptor(l.Value, directory + @"\level" + l.Key + ".xml");
+            using (ZipOutputStream output = new ZipOutputStream(zipFile))
+            {
+                ZipEntry entry;
+                byte[] data;
+                var encoding = new UTF8Encoding();
+
+                entry = new ZipEntry("world.xml");
+                data = encoding.GetBytes(w.Descriptor.ToXML());
+                output.PutNextEntry(entry);
+                output.Write(data, 0, data.Length);
+
+                entry = new ZipEntry("layout.xml");
+                data = encoding.GetBytes(w.Layout.ToXML());
+                output.PutNextEntry(entry);
+                output.Write(data, 0, data.Length);
+
+                foreach (var l in w.LevelsDescriptors)
+                {
+                    entry = new ZipEntry("level" + l.Key + ".xml");
+                    data = encoding.GetBytes(l.Value.ToXML());
+                    output.PutNextEntry(entry);
+                    output.Write(data, 0, data.Length);
+                }
+            }
+        }
+
+
+        public World LoadWorldFromDisk(string file)
+        {
+            World w = null;
+
+            FileStream zipFile = new FileStream(file, FileMode.Open, FileAccess.Read);
+
+            var files = new List<KeyValuePair<string, byte[]>>();
+            var encoding = new UTF8Encoding();
+
+            using (ZipInputStream input = new ZipInputStream(zipFile))
+            {
+                ZipEntry entry = input.GetNextEntry();
+
+                while (entry != null)
+                {
+                    byte[] buffer = new byte[input.Length];
+                    input.Read(buffer, 0, (int) input.Length);
+
+                    files.Add(new KeyValuePair<string, byte[]>(entry.Name, buffer));
+
+                    entry = input.GetNextEntry();
+                }
+            }
+
+            w = LoadWorldFromStream(files);
+
+            return w;
+        }
+
+
+        private World LoadWorldFromStream(List<KeyValuePair<string, byte[]>> bytes)
+        {
+            World w = new World();
+
+            foreach (var b in bytes)
+            {
+                if (b.Key == "world.xml")
+                    w.Descriptor = LoadWorldDescriptorFromStream(b.Value);
+                else if (b.Key == "layout.xml")
+                    w.Layout = LoadLevelDescriptorFromStream(b.Value);
+                else
+                {
+                    var level = LoadLevelDescriptorFromStream(b.Value);
+                    w.LevelsDescriptors.Add(level.Infos.Id, level);
+                }
+            }
+
+            w.Initialize();
+
+            return w;
+        }
+
+
+        private WorldDescriptor LoadWorldDescriptorFromStream(byte[] txt)
+        {
+            MemoryStream ms = new MemoryStream(txt);
+
+            using (StreamReader reader = new StreamReader(ms, true))
+                return (WorldDescriptor) WorldSerializer.Deserialize(reader);
         }
 
 
@@ -336,77 +440,14 @@
         }
 
 
-        private WorldDescriptor LoadWorldDescriptor(string path)
-        {
-            using (StreamReader reader = new StreamReader(path))
-                return (WorldDescriptor) WorldSerializer.Deserialize(reader);
-        }
-
-
-        private WorldDescriptor LoadWorldDescriptorFromString(string txt)
-        {
-            using (StringReader reader = new StringReader(txt))
-                return (WorldDescriptor) WorldSerializer.Deserialize(reader);
-        }
-
-
-        private void SaveWorldDescriptor(WorldDescriptor descriptor, string path)
-        {
-            using (StreamWriter writer = new StreamWriter(path))
-                WorldSerializer.Serialize(writer.BaseStream, descriptor);
-        }
-
-
-        private World LoadWorld(string directory)
-        {
-            World w = new World();
-
-            w.Descriptor = LoadWorldDescriptor(directory + @"\world.xml");
-            w.Layout = LoadLevelDescriptor(directory + @"\layout.xml");
-
-            var levels = Directory.GetFiles(directory, @"level*.xml");
-
-            foreach (var l in levels)
-            {
-                var descriptor = LoadLevelDescriptor(l);
-                w.LevelsDescriptors.Add(descriptor.Infos.Id, descriptor);
-            }
-
-            w.Initialize();
-
-            return w;
-        }
-
-
-        public World LoadWorldFromStrings(List<KeyValuePair<string, string>> strings)
-        {
-            World w = new World();
-
-            foreach (var f in strings)
-            {
-                if (f.Key == "world.xml")
-                    w.Descriptor = LoadWorldDescriptorFromString(f.Value);
-                else if (f.Key == "layout.xml")
-                    w.Layout = LoadLevelDescriptorFromString(f.Value);
-                else
-                {
-                    var level = LoadLevelDescriptorFromString(f.Value);
-                    w.LevelsDescriptors.Add(level.Infos.Id, level);
-                }
-            }
-
-            w.Initialize();
-
-            return w;
-        }
-
-
         public bool GetWorldUnlocked(int id)
         {
-            if (!Worlds.ContainsKey(id))
-                return false;
+            // Campaign
+            if (CampaignWorlds.ContainsKey(id))
+                return CampaignWorlds[id].Unlocked;
 
-            return Worlds[id].Unlocked;
+            // Multiverse
+            return id > 0;
         }
 
 
@@ -440,17 +481,12 @@
         }
 
 
-        private LevelDescriptor LoadLevelDescriptorFromString(string txt)
+        private LevelDescriptor LoadLevelDescriptorFromStream(byte[] bytes)
         {
-            using (StringReader reader = new StringReader(txt))
+            MemoryStream ms = new MemoryStream(bytes);
+
+            using (StreamReader reader = new StreamReader(ms, true))
                 return (LevelDescriptor) LevelSerializer.Deserialize(reader);
-        }
-
-
-        private void SaveLevelDescriptor(LevelDescriptor descriptor, string path)
-        {
-            using (StreamWriter writer = new StreamWriter(path))
-                LevelSerializer.Serialize(writer.BaseStream, descriptor);
         }
 
         #endregion

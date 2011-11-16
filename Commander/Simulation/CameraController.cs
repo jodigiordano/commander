@@ -179,7 +179,7 @@
 
             float newZoom = MathHelper.Clamp(Math.Min(MaxZoomWidth / width, MaxZoomHeight / height), CameraData.MaxZoomOut, CameraData.MaxZoomIn);
 
-            // no need to zoom the camera
+            // no need toLocal zoom the camera
             // reduce events
             if (newZoom == Simulator.Scene.Camera.Zoom)
                 return;

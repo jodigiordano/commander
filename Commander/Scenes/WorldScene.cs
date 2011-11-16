@@ -27,7 +27,7 @@
 
         private State SceneState;
         private CommanderTitle Title;
-        private Dictionary<CelestialBody, int> CBtoWarp;
+        public Dictionary<CelestialBody, int> CBtoWarp;
         public Dictionary<int, CelestialBody> LeveltoCB;
         public Dictionary<CelestialBody, int> CBtoLevel;
 
@@ -144,6 +144,41 @@
         }
 
 
+        public void AddWarp(CelestialBody cb)
+        {
+            var id = World.AddWarp();
+
+            CBtoWarp.Add(cb, id);
+
+            LevelStates.Initialize();
+            SyncLevelsStates();
+        }
+
+
+        public void ModifyWarp(CelestialBody cb, int newId)
+        {
+            World.ModifyWarp(CBtoWarp[cb], newId);
+
+            CBtoWarp[cb] = newId;
+
+            LevelStates.Initialize();
+            SyncLevelsStates();
+        }
+
+
+        public void RemoveWarp(CelestialBody cb)
+        {
+            var id = CBtoWarp[cb];
+
+            World.RemoveWarp(id);
+
+            CBtoWarp.Remove(cb);
+
+            LevelStates.Initialize();
+            SyncLevelsStates();
+        }
+
+
         protected override void UpdateLogic(GameTime gameTime)
         {
             Simulator.Update();
@@ -230,7 +265,7 @@
                 Main.MusicController.PlayOrResume(World.Descriptor.Music);
             }
 
-            if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
+            if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() toLocal set back no input
                 InitConnectFirstPlayer();
         }
 
@@ -347,17 +382,7 @@
 
             if (Simulator.MultiverseMode)
             {
-                if (Simulator.EditorEditingMode)
-                {
-                    World.Editing = false;
-                    Simulator.Data.Level.SyncDescriptor();
-                    Initialize();
-                }
-
-                else
-                {
-                    TransiteTo("Multiverse");
-                }
+                TransiteTo("Multiverse");
             }
 
             else
@@ -436,7 +461,7 @@
 
             if (world != null)
             {
-                return; //todo: go to another world?
+                return; //todo: go toLocal another world?
             }
 
             // Select a level

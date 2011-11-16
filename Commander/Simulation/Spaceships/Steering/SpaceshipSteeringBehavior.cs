@@ -94,10 +94,10 @@
             // Current direction
             Vector3 direction = Spaceship.Direction;
 
-            // Delta, Converted to angle
+            // Delta, Converted toLocal angle
             float angle = Core.Physics.Utilities.SignedAngle(ref currentDirection, ref direction);
 
-            // Clamp to maximum allowed by the ship
+            // Clamp toLocal maximum allowed by the ship
             float rotation = MathHelper.Clamp(MaxRotationPerUpdateRad, 0, Math.Abs(angle));
 
             if (angle > 0)

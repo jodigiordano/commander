@@ -250,10 +250,12 @@
         private void UpdateAllKeysOneListenerMode()
         {
             AllKeysSource.DoKeyboardInput();
+            AllKeysSource.DoMouseInput();
 
             if (ProduceCleanState)
             {
                 AllKeysSource.DoKeyboardInput();
+                AllKeysSource.DoMouseInput();
                 ProduceCleanState = false;
             }
 
@@ -280,6 +282,7 @@
             AllKeysSource = new InputSource(player, MouseBasePosition);
 
             AllKeysSource.MapKeys(AllKeys);
+            AllKeysSource.MapMouseButtons(AllMouseButtons);
 
             AllKeysListener = listener;  
         }
@@ -306,6 +309,16 @@
             Keys.Add, Keys.Decimal, Keys.Divide, Keys.Multiply, Keys.OemBackslash, Keys.OemComma,
             Keys.OemMinus, Keys.OemPeriod, Keys.OemPlus, Keys.OemQuestion, Keys.OemQuotes, Keys.OemSemicolon,
             Keys.OemTilde,
+        };
+
+
+        private static List<MouseButton> AllMouseButtons = new List<MouseButton>()
+        {
+            MouseButton.Left,
+            MouseButton.Middle,
+            MouseButton.MiddleDown,
+            MouseButton.MiddleUp,
+            MouseButton.Right
         };
     }
 }

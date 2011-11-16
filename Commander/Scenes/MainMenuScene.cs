@@ -101,7 +101,7 @@
 
             Simulator.OnFocus();
 
-            if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() to set back no input
+            if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() toLocal set back no input
                 InitConnectFirstPlayer();
         }
 

@@ -26,12 +26,12 @@ $sql_table_ratings = "ratings";
 $handle = mysql_connect($sql_hostname, $sql_username, $sql_password);
 
 if ($handle == FALSE)
-    exit_with_error("server down.");
+    exit_with_error("server down");
 
 mysql_select_db($sql_database, $handle);
 
 if (mysql_errno($handle) != 0)
-    exit_with_error("server down.");
+    exit_with_error("server down");
 
 
 //==================================================

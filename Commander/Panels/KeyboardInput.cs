@@ -234,7 +234,14 @@
 
         void InputListener.DoMouseButtonPressedOnce(Core.Input.Player player, MouseButton button)
         {
+            if (button == MouseButton.Right)
+            {
+                Inputs.SetAllKeysOneListenerMode(false, Inputs.MasterPlayer, this);
+                TextBoxGroup.SwitchTo(null);
 
+                if (DesactivatedCallback != null)
+                    DesactivatedCallback();
+            }
         }
 
 

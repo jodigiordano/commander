@@ -14,8 +14,8 @@
                 new EditorTextContextualMenuChoice("AddPinkHole", "Add warp", 2, DoAddWarp),
                 new EditorTextContextualMenuChoice("Background", "Background", 2, DoBackground),
                 new EditorTextContextualMenuChoice("Waves", "Waves", 2, DoWaves),
-                new EditorTextContextualMenuChoice("ChangeName", "change name", 2, DoChangeName)
-                //new EditorTextContextualMenuChoice("Playtest", "Playtest", 2, DoPlaytest),
+                new EditorTextContextualMenuChoice("ChangeName", "change name", 2, DoChangeName),
+                new EditorTextContextualMenuChoice("Save", "save", 2, DoSave)
             };
 
             foreach (var c in choices)
@@ -66,6 +66,8 @@
                 EditorLevelGenerator.GeneratePinkHoleCB(Simulator, VisualPriorities.Default.CelestialBody));
 
             Simulator.EditorController.ExecuteCommand(command);
+
+            Main.CurrentWorld.AddWarp(command.CelestialBody);
             Visible = false;
         }
 
@@ -84,20 +86,16 @@
         }
 
 
-        //private void DoPlaytest()
-        //{
-        //    Simulator.EditorController.ExecuteCommand(new EditorPlaytestCommand(Owner));
-
-        //    Main.CurrentWorld.World.Editing = false;
-        //    Simulator.Data.Level.SyncDescriptor();
-        //    Main.CurrentWorld.Initialize();
-        //    Visible = false;
-        //}
-
-
         private void DoChangeName()
         {
             Simulator.EditorController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorWorldName"));
+            Visible = false;
+        }
+
+
+        private void DoSave()
+        {
+            Simulator.EditorController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorSaveWorld"));
             Visible = false;
         }
     }

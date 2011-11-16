@@ -5,7 +5,7 @@
         public EditorPinkHoleCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
-            AddChoice(new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, DoAttributes));
+
         }
 
 
@@ -23,7 +23,7 @@
         }
 
 
-        private void DoAttributes()
+        protected override void DoAttributes()
         {
             Simulator.EditorController.ExecuteCommand(
                 new EditorPanelCBShowCommand(Owner, "EditorPinkHoleCBAttributes", Owner.ActualSelection.CelestialBody, Simulator));

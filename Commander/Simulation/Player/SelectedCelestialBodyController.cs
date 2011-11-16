@@ -71,7 +71,7 @@
                 return;
             }
 
-            // The player is moving (or have the intention to)
+            // The player is moving (or have the intention toLocal)
             if (!Simulator.DemoMode && !Simulator.EditorEditingMode && Player.MovementInputThisTick)
             {
                 Initialize();

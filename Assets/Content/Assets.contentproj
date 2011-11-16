@@ -777,6 +777,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="scenarios\campaign\world1\world1.zip">
+      <Name>world1</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="tourelles\barreInactivite.png">
       <Name>barreInactivite</Name>
       <Importer>TextureImporter</Importer>
@@ -1440,53 +1444,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\campaign\world1\level2.xml">
-      <Name>level2</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level3.xml">
-      <Name>level3</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level4.xml">
-      <Name>level4</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level5.xml">
-      <Name>level5</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level6.xml">
-      <Name>level6</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level7.xml">
-      <Name>level7</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level8.xml">
-      <Name>level8</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="GUI\Buttons\Xbox\back.png">
       <Name>back</Name>
       <Importer>TextureImporter</Importer>
@@ -1716,52 +1673,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scenarios\campaign\world1\level12.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level12</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level13.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level13</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level14.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level14</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level15.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level15</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level10.xml">
-      <Name>level10</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level9.xml">
-      <Name>level9</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="tourelles\tourelleLaserMultipleBase2.png">
       <Name>tourelleLaserMultipleBase2</Name>
       <Importer>TextureImporter</Importer>
@@ -1807,14 +1718,6 @@
       <Name>tourelleNanobotsBase3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\layout.xml">
-      <Name>layout</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1884,14 +1787,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level11.xml">
-      <Name>level11</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="tourelles\tourelleGravitationnelleAntenne2.png">
@@ -2341,64 +2236,6 @@
       <Name>stick</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\world.xml">
-      <Name>world</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level48.xml">
-      <Name>level48</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level49.xml">
-      <Name>level49</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level50.xml">
-      <Name>level50</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level51.xml">
-      <Name>level51</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="scenarios\campaign\world1\level52.xml">
-      <Name>level52</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level53.xml">
-      <Name>level53</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scenarios\campaign\world1\level54.xml">
-      <Name>level54</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

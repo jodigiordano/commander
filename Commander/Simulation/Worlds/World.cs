@@ -36,28 +36,6 @@
             // set lives so the planet won't explode...!
             Layout.Player.Lives = 1;
             Layout.Player.Money = 100;
-
-            // generate the asteroid belt'input enemies
-            //var asteroidBelt = LevelDescriptor.GetAsteroidBelt(Layout.PlanetarySystem);
-
-            //if (asteroidBelt != null)
-            //{
-            //    var enemies = EnemiesFactory.ToEnemyTypeList(asteroidBelt.Images);
-
-            //    InfiniteWavesDescriptor v = new InfiniteWavesDescriptor()
-            //    {
-            //        StartingDifficulty = 10,
-            //        DifficultyIncrement = 0,
-            //        MineralsPerWave = 0,
-            //        MinMaxEnemiesPerWave = new Vector2(10, 30),
-            //        Enemies = enemies,
-            //        FirstOneStartNow = true,
-            //        Upfront = true,
-            //        NbWaves = 10
-            //    };
-
-            //    Layout.InfiniteWaves = v;
-            //}
         }
 
 
@@ -201,6 +179,31 @@
         {
             Descriptor.Levels.Remove(id);
             LevelsDescriptors.Remove(id);
+        }
+
+
+        public int AddWarp()
+        {
+            var id = Descriptor.GetNextNoWarpId();
+
+            Descriptor.Warps.Add(id);
+
+            return id;
+        }
+
+
+        public void ModifyWarp(int oldId, int newId)
+        {
+            var index = Descriptor.Warps.IndexOf(oldId);
+
+            Descriptor.Warps.Insert(index, newId);
+            Descriptor.Warps.Remove(oldId);
+        }
+
+
+        public void RemoveWarp(int id)
+        {
+            Descriptor.Warps.Remove(id);
         }
     }
 }

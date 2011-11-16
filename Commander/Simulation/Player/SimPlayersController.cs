@@ -282,6 +282,9 @@
             {
                 player.Update();
 
+                if (player.InnerPlayer.State != PlayerState.Connected)
+                    continue;
+
                 if (player.Firing)
                 {
                     var bullets = player.SpaceshipMove.Fire();

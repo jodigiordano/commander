@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Xml.Serialization;
 
 
@@ -22,6 +23,8 @@
         public string SfxEnd;
         public string LastModification;
 
+        private XmlSerializer Serializer;
+
 
         public WorldDescriptor()
         {
@@ -34,6 +37,8 @@
             MusicEnd = "";
             SfxEnd = "";
             LastModification = Main.GetCurrentTimestamp();
+
+            Serializer = new XmlSerializer(this.GetType());
         }
 
 
@@ -56,6 +61,29 @@
                     highest = l;
 
             return highest + 1;
+        }
+
+
+        public int GetNextNoWarpId()
+        {
+            var lowest = 0;
+
+            foreach (var w in Warps)
+                if (w < lowest)
+                    lowest = w;
+
+            return lowest - 1;
+        }
+
+
+        public string ToXML()
+        {
+            using (StringWriter writer = new StringWriter())
+            {
+                Serializer.Serialize(writer, this);
+
+                return writer.ToString();
+            }
         }
     }
 }

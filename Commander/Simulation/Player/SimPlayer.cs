@@ -295,7 +295,7 @@
 
             Position += SelectedCelestialBodyController.DoGlueMode();
 
-            // Manage turret to place (to always have a valid position)
+            // Manage turret toLocal place (toLocal always have a valid position)
             if (ActualSelection.TurretToPlace != null)
             {
                 Turret turretToPlace = ActualSelection.TurretToPlace;

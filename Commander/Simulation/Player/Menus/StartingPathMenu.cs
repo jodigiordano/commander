@@ -95,7 +95,7 @@
 
         public override void Update()
         {
-            // sync enemies to release
+            // sync enemies toLocal release
             int enemiesToReleaseCount = 0;
 
             foreach (var w in Simulator.Data.ActiveWaves)

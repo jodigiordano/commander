@@ -23,7 +23,7 @@
             if (Menus.Count == 0)
                 return;
 
-            PossibleLayouts = new List<List<ContextualMenuLayout>>(); //to delete
+            PossibleLayouts = new List<List<ContextualMenuLayout>>(); //toLocal delete
             PossibleLayouts.Clear();
 
             // Find the possible layouts for a menu (always 4)

@@ -194,7 +194,7 @@
                 if (!e.Alive)
                 {
                     if (e.Type == EnemyType.Damacloid && !e.EndOfPathReached)
-                        ExtractSwarm(e); //Add a descriptor to a Wave.ToCreate
+                        ExtractSwarm(e); //Add a descriptor toLocal a Wave.ToCreate
 
                     RemoveFromWave(e); //Cycle in Waves; Wave.Alives--
                     ExtractMinerals(e); //Add minerals

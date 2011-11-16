@@ -9,7 +9,7 @@ require("input.php");
 //==================================================
 if (!verify_player_credentials($username, $password))
 {
-    print close_database_connection_with_error("wrong login or password.");
+    print close_database_connection_with_error("credentials");
     return;
 }
 

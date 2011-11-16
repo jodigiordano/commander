@@ -75,9 +75,8 @@
         public const string NewUserScript = @"/new_user.php";
         public const string LoginScript = @"/login.php";
         public const string LastUpdateScript = @"/last_update.php";
-        public const string LoadWorldScript = @"/load_world.php";
-        public const string DownloadFileScript = @"/download_file.php";
         public const string UsernameToWorldIdScript = @"/get_world_id.php";
+        public const string SaveWorldScript = @"/save_world.php";
 
         public const int CampaignVersion = 1;
     }

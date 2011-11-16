@@ -9,19 +9,19 @@ require("input.php");
 //==================================================
 if(!filter_var($email, FILTER_VALIDATE_EMAIL))
 {
-    print close_database_connection_with_error("email is not valid");
+    print close_database_connection_with_error("email not valid");
     return;
 }
 
 if(strlen($username) < 4 || strlen($username) > 200)
 {
-    print close_database_connection_with_error("username must be between 4 and 40.");
+    print close_database_connection_with_error("username length");
     return;
 }
 
 if(strlen($password) < 4 || strlen($password) > 200)
 {
-    print close_database_connection_with_error("password must be between 4 and 40.");
+    print close_database_connection_with_error("password length");
     return;
 }
 
@@ -31,7 +31,7 @@ if(strlen($password) < 4 || strlen($password) > 200)
 //==================================================
 if (get_player_exists($username))
 {
-    print close_database_connection_with_error("username already taken.");
+    print close_database_connection_with_error("username already taken");
     return;
 }
 

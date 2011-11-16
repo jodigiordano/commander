@@ -42,7 +42,7 @@
             base.Open();
 
             FollowPath.Value = CelestialBody.FollowPath;
-            CanSelect.Value = CelestialBody.CanSelect;
+            CanSelect.Value = CelestialBody.canSelect;
             StraightLine.Value = CelestialBody.StraightLine;
             Invincible.Value = CelestialBody.Invincible;
         }

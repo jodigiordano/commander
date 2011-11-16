@@ -11,6 +11,9 @@
 
         private bool TransitionInProgress;
 
+        private bool ReadyToJump;
+        private int WorldId;
+
 
         public WorldDownloadingScene() :
             base("WorldDownloading")
@@ -40,9 +43,9 @@
             if (TransitionInProgress)
                 return;
 
-            if (Main.MultiverseController.WorldIsReady)
+            if (ReadyToJump)
             {
-                Main.MultiverseController.JumpToWorldDirectly("WorldDownloading");
+                Main.MultiverseController.JumpToWorldDirectly(WorldId, "WorldDownloading");
                 TransitionInProgress = true;
             }
         }
@@ -58,6 +61,13 @@
         public override void OnFocus()
         {
             Initialize();
+        }
+
+
+        public void DoDownloadTerminated(ServerProtocol protocol)
+        {
+            ReadyToJump = true;
+            WorldId = ((DownloadWorldProtocol) protocol).WorldId;
         }
     }
 }

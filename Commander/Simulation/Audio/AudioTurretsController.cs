@@ -93,7 +93,7 @@
                     continue;
                 }
                 
-                // diff enough to modify the sound
+                // diff enough toLocal modify the sound
                 else if (currentValue - lastValue > 0.05f && cue.IsReady)
                 {
                     cue.SetVariable("TurretUpgrade", currentValue);

@@ -333,7 +333,7 @@
 
         public void TeleportPlayers(bool teleportOut)
         {
-            // for now only one sound effect, could be nice to have a sfx for multiple ships
+            // for now only one sound effect, could be nice toLocal have a sfx for multiple ships
             XACTAudio.PlayCue(teleportOut ? "ShipTeleportOut" : "ShipTeleportIn", "Sound Bank");
         }
 

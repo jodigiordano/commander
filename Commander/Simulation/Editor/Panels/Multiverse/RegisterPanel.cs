@@ -1,7 +1,5 @@
-﻿namespace EphemereGames.Commander
+﻿namespace EphemereGames.Commander.Simulation
 {
-    using System;
-    using System.Net;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
@@ -9,8 +7,6 @@
 
     class RegisterPanel : VerticalPanel
     {
-        private WebClient Client;
-
         private TextBox Username;
         private TextBox Password1;
         private TextBox Password2;
@@ -18,12 +14,13 @@
         private PushButton Submit;
         private Label Message;
 
-        private string HashedPassword;
         private TextBoxGroup TBGroup;
+
+        private Commander.Player RegisterPlayer;
 
 
         public RegisterPanel(Scene scene, Vector3 position)
-            : base(scene, position, new Vector2(800, 400), VisualPriorities.Default.Panel, Color.White)
+            : base(scene, position, new Vector2(800, 450), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Register");
 
@@ -32,7 +29,7 @@
             Username = new TextBox(new Text("username", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
             Password1 = new TextBox(new Text("password", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
             Password2 = new TextBox(new Text("password (again)", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
-            Email = new TextBox(new Text("email", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput };
+            Email = new TextBox(new Text("email", "Pixelite") { SizeX = 2 }, 300, 400) { ClickHandler = DoTextInput, CapInputToSize = false };
             Submit = new PushButton(new Text("register", "Pixelite") { SizeX = 2 }, 300) { ClickHandler = DoSubmit };
             Message = new Label(new Text("Pixelite") { SizeX = 2 });
 
@@ -42,9 +39,6 @@
             AddWidget("email", Email);
             AddWidget("submit", Submit);
             AddWidget("message", Message);
-
-            Client = new WebClient();
-            Client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(RegistrationCompleted);
 
             EnableInput();
 
@@ -80,67 +74,48 @@
 
         private void DoSubmit(PanelWidget p, Commander.Player player)
         {
+            RegisterPlayer = player;
             Register();
         }
 
 
         private void Register()
         {
-            var scriptUrl = Preferences.WebsiteURL + Preferences.MultiverseScriptsURL + Preferences.NewUserScript;
-
             if (!VerifyData())
                 return;
 
-            HashedPassword = PlayersController.GetSHA256Hash(Password1.Value + Preferences.Salt);
-
-            var data =
-                "?username=" + Username.Value +
-                "&password=" + HashedPassword +
-                "&email=" + Email.Value;
-            
-            Client.DownloadStringAsync(new Uri(scriptUrl + data));
+            Main.MultiverseController.Register(Username.Value, Password1.Value, Email.Value, RegistrationCompleted);
             Message.Value = "Registering... please wait.";
             Message.Color = Colors.Panel.Waiting;
             DisableInput();
         }
 
 
-        private void RegistrationCompleted(object sender, DownloadStringCompletedEventArgs e)
+        private void RegistrationCompleted(ServerProtocol protocol)
         {
-            if (e.Error != null || e.Result == "")
+            if (protocol.State == ServerProtocol.ProtocolState.EndedWithError)
             {
-                if (e.Error != null)
-                    Message.Value = "Error: " + e.Error.Message;
-                else
-                    Message.Value = "Error: something went wrong!";
-
+                Message.Value = "error: ";
                 Message.Color = Colors.Panel.Error;
                 EnableInput();
+
+                switch (protocol.ErrorState)
+                {
+                    case ServerProtocol.ProtocolErrorState.EmailNotValid: Message.Value += "email not valid."; break;
+                    case ServerProtocol.ProtocolErrorState.PasswordLength: Message.Value += "password length must be between 4 and 40."; break;
+                    case ServerProtocol.ProtocolErrorState.UsernameLength: Message.Value += "username length must be between 4 and 40."; break;
+                    case ServerProtocol.ProtocolErrorState.UsernameAlreadyTaken: Message.Value += "username already taken."; break;
+                    case ServerProtocol.ProtocolErrorState.FileNotUploaded: Message.Value += "registered with errors."; break;
+                    default: Message.Value += "something went wrong!"; break;
+                }
 
                 return;
             }
 
-            var answer = Main.MultiverseController.GetServerAnswer(e.Result);
+            Message.Value = "Alright! Have fun!";
+            Message.Color = Colors.Panel.Ok;
 
-            switch (answer.Type)
-            {
-                case MultiverseMessageType.Error:
-                    Message.Value = "Error: " + answer.Message;
-                    Message.Color = Colors.Panel.Error;
-                    EnableInput();
-                    break;
-
-                case MultiverseMessageType.NewPlayer:
-                    Message.Value = "Alright! Have fun!";
-                    Message.Color = Colors.Panel.Ok;
-                    Main.MultiverseController.LogIn(Username.Value, HashedPassword, answer.Message);
-
-                    var id = Main.PlayersController.MultiverseData.WorldId;
-                    var author = Main.PlayersController.MultiverseData.Username;
-
-                    Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.GetEmptyWorld(id, author));
-                    break;
-            }
+            CloseButtonHandler(this, RegisterPlayer);
         }
 
 
@@ -149,14 +124,14 @@
             if (Username.Value.Length == 0 || Password1.Value.Length == 0 ||
                 Password2.Value.Length == 0 || Email.Value.Length == 0)
             {
-                Message.Value = "you must fill all fields.";
+                Message.Value = "you must fill all the fields.";
                 Message.Color = Colors.Panel.Error;
                 return false;
             }
 
             if (Username.Value.Length < 4 || Username.Value.Length > 40)
             {
-                Message.Value = "username must be between 4 and 40.";
+                Message.Value = "username length must be between 4 and 40.";
                 Message.Color = Colors.Panel.Error;
                 return false;
             }
@@ -165,7 +140,7 @@
             if (Password1.Value.Length < 4 || Password2.Value.Length < 4 ||
                 Password1.Value.Length > 40 || Password2.Value.Length > 40)
             {
-                Message.Value = "password must be between 4 and 40.";
+                Message.Value = "password length must be between 4 and 40.";
                 Message.Color = Colors.Panel.Error;
                 return false;
             }
@@ -173,7 +148,7 @@
 
             if (Password1.Value != Password2.Value)
             {
-                Message.Value = "password mismatch.";
+                Message.Value = "passwords mismatch.";
                 Message.Color = Colors.Panel.Error;
                 return false;
             }
@@ -181,7 +156,7 @@
 
             if (Email.Value.Length > 200)
             {
-                Message.Value = "email invalid.";
+                Message.Value = "invalid email.";
                 Message.Color = Colors.Panel.Error;
                 return false;
             }
@@ -193,7 +168,7 @@
 
             catch
             {
-                Message.Value = "email invalid.";
+                Message.Value = "invalid email.";
                 Message.Color = Colors.Panel.Error;
                 return false;
             }

@@ -108,7 +108,7 @@
             Descriptor.Minerals.LifePacks = LifePacks;
             Descriptor.Player.StartingPosition = CommonStash.StartingPosition;
 
-            // Sync planet to protect
+            // Sync planet toLocal protect
             if (CelestialBodyToProtect != null)
                 Descriptor.Objective.CelestialBodyToProtect = CelestialBodyToProtect.PathPriority;
 

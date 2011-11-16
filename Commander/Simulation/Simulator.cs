@@ -396,7 +396,7 @@ namespace EphemereGames.Commander.Simulation
         public void Update()
         {
             LevelsController.Update();
-            PanelsController.Update(); // must be done before SimPlayersController to check if the player want to move or not next tick
+            PanelsController.Update(); // must be done before SimPlayersController toLocal check if the player want toLocal move or not next tick
 
             foreach (var p in Inputs.ConnectedPlayers)
             {

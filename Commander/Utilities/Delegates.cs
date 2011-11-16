@@ -12,6 +12,7 @@
     delegate void NewsTypeNewsHandler(NewsType t, List<News> n);
     delegate void StringHandler(string s);
     delegate void DirectionHandler(Direction d);
+    delegate void ServerProtocolHandler(ServerProtocol p);
 }
 
 

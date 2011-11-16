@@ -113,6 +113,8 @@
             Panels.Add("EditorEnemies", new EnemiesAssetsPanel(Simulator));
             Panels.Add("EditorWorldName", new WorldNamePanel(Simulator));
             Panels.Add("EditorInfiniteWaves", new InfiniteWavePanel(Simulator));
+            Panels.Add("EditorEditWarp", new EditWarpPanel(Simulator));
+            Panels.Add("EditorSaveWorld", new SavePanel(Simulator));
 
             foreach (var p in Panels)
                 p.Value.Name = p.Key;

@@ -25,14 +25,6 @@
 
         public static WaveDescriptor Generate(int difficulty, int qty, List<EnemyType> enemies)
         {
-            //StartingTime = 0;
-            //Enemies = new List<EnemyType>();
-            //CashValue = 1;
-            //Distance = Distance.Joined;
-            //Delay = 0;
-            //ApplyDelayEvery = -1;
-            //SwitchEvery = -1;
-
             var result = new WaveDescriptor()
             {
                 LivesLevel = difficulty,
@@ -40,6 +32,9 @@
                 Quantity = qty,
                 Enemies = enemies
             };
+
+            if (enemies.Count == 0)
+                return result;
 
             switch (Main.Random.Next(0, 3))
             {

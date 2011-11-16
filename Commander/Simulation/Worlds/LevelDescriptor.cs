@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Xml.Serialization;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
@@ -27,6 +28,8 @@
         public MineralsDescriptor Minerals;
         public string HelpText;
 
+        private XmlSerializer Serializer;
+
 
         public LevelDescriptor()
         {
@@ -44,6 +47,8 @@
             Minerals = new MineralsDescriptor();
 
             HelpText = "";
+
+            Serializer = new XmlSerializer(this.GetType());
         }
 
 
@@ -205,6 +210,17 @@
             boundaries.Height += (int) padding.Y;
 
             return boundaries;
+        }
+
+
+        public string ToXML()
+        {
+            using (StringWriter writer = new StringWriter())
+            {
+                Serializer.Serialize(writer, this);
+
+                return writer.ToString();
+            }
         }
     }
 

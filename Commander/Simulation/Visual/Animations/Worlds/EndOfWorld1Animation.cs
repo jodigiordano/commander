@@ -17,7 +17,7 @@
         public EndOfWorld1Animation(WorldScene worldScene)
             : base(worldScene, 30000)
         {
-            // Prepare celestial bodies to destroy
+            // Prepare celestial bodies toLocal destroy
             CelestialBodiesToDestroy = new List<CelestialBody>();
 
             foreach (var cb in worldScene.Simulator.Data.Level.PlanetarySystem)
