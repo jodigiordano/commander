@@ -14,8 +14,8 @@
         public Simulator Simulator;
         public LevelDescriptor Level;
 
-        public bool EditorMode;
-        public bool Editing;
+        public bool EditingMode;
+        public bool MultiverseMode;
 
         private FutureJobsController FutureJobs;
 
@@ -31,8 +31,8 @@
 
             MusicName = "BattleMusic";
 
-            EditorMode = false;
-            Editing = true;
+            EditingMode = false;
+            MultiverseMode = false;
         }
 
 
@@ -40,8 +40,9 @@
         {
             Simulator = new Simulator(this, Level)
             {
-                EditorMode = EditorMode,
-                EditMode = Editing
+                GameMode = true,
+                EditingMode = EditingMode,
+                MultiverseMode = MultiverseMode
             };
             Simulator.Initialize();
             Simulator.AddNewGameStateListener(DoNewGameState);
@@ -93,7 +94,7 @@
 
             EnableUpdate = true;
 
-            if (!EditorMode)
+            if (!EditingMode)
                 Main.MusicController.PlayOrResume(MusicName);
 
             Simulator.OnFocus();
@@ -205,6 +206,9 @@
                 else if (key == player.KeyboardConfiguration.GoBackToWorld)
                     TransiteToWorld();
             }
+
+            else if (MultiverseMode && key == player.KeyboardConfiguration.Back)
+                TransiteToWorld();
         }
 
 
@@ -230,6 +234,9 @@
                 else if (button == player.GamepadConfiguration.Cancel)
                     TransiteToWorld();
             }
+
+            else if (MultiverseMode && button == player.GamepadConfiguration.Back)
+                TransiteToWorld();
         }
 
 
@@ -309,8 +316,8 @@
 
             var newGame = new GameScene(Name == "Game1" ? "Game2" : "Game1", level)
             {
-                EditorMode = EditorMode,
-                Editing = Editing
+                EditingMode = EditingMode,
+                MultiverseMode = MultiverseMode
             };
             newGame.Initialize();
             Main.CurrentGame = newGame;

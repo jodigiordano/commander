@@ -3,9 +3,9 @@
     using System.Collections.Generic;
 
 
-    abstract class EditorCelestialBodyMenu : EditorContextualMenu
+    abstract class MultiverseCelestialBodyMenu : MultiverseContextualMenu
     {
-        public EditorCelestialBodyMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+        public MultiverseCelestialBodyMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
             var choices = new List<ContextualMenuChoice>()
@@ -33,12 +33,12 @@
 
         public override void OnOpen()
         {
-            SelectedIndex = 0;
+            //SelectedIndex = 0;
 
             var speed = (EditorToggleContextualMenuChoice) GetChoiceByName("Speed");
 
-            for (int i = 0; i < EditorLevelGenerator.PossibleRotationTimes.Count; i++)
-                if (Owner.ActualSelection.CelestialBody.Speed == EditorLevelGenerator.PossibleRotationTimes[i])
+            for (int i = 0; i < MultiverseLevelGenerator.PossibleRotationTimes.Count; i++)
+                if (Owner.ActualSelection.CelestialBody.Speed == MultiverseLevelGenerator.PossibleRotationTimes[i])
                 {
                     speed.SetChoice(i);
                     break;
@@ -58,7 +58,8 @@
             {
                 return
                     base.Visible &&
-                    Simulator.EditorEditingMode &&
+                    Simulator.MultiverseMode &&
+                    Simulator.EditingMode &&
                     Owner.ActualSelection.CelestialBody != null;
             }
             set { base.Visible = value; }
@@ -67,7 +68,7 @@
 
         private void DoMove()
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodyMoveCommand(Owner));
 
             Visible = false;
@@ -77,10 +78,10 @@
         private void DoSpeed()
         {
             var widget = (EditorToggleContextualMenuChoice) GetChoiceByName("Speed");
-            var speed = EditorLevelGenerator.PossibleRotationTimes
-                [(widget.CurrentIndex + 1) % EditorLevelGenerator.PossibleRotationTimes.Count];
+            var speed = MultiverseLevelGenerator.PossibleRotationTimes
+                [(widget.CurrentIndex + 1) % MultiverseLevelGenerator.PossibleRotationTimes.Count];
 
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodySpeedCommand(Owner, speed));
 
             widget.Next();
@@ -89,7 +90,7 @@
 
         private void DoRotate()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorCelestialBodyRotateCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorCelestialBodyRotateCommand(Owner));
 
             Visible = false;
         }
@@ -97,7 +98,7 @@
 
         private void DoTrajectory()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorCelestialBodyTrajectoryCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorCelestialBodyTrajectoryCommand(Owner));
 
             Visible = false;
         }
@@ -107,25 +108,25 @@
         {
             var command = new EditorCelestialBodyRemoveCommand(Owner);
 
-            Simulator.EditorController.ExecuteCommand(command);
+            Simulator.MultiverseController.ExecuteCommand(command);
         }
 
 
         private void DoPushFirst()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorCelestialBodyPushFirstCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorCelestialBodyPushFirstCommand(Owner));
         }
 
 
         private void DoPushLast()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorCelestialBodyPushLastCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorCelestialBodyPushLastCommand(Owner));
         }
 
 
         private void DoRemoveFromPath()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorCelestialBodyRemoveFromPathCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorCelestialBodyRemoveFromPathCommand(Owner));
         }
 
 
@@ -138,7 +139,7 @@
             var sizeIndex = widget.CurrentIndex % 3;
             var size = sizeIndex == 0 ? Size.Small : sizeIndex == 1 ? Size.Normal : Size.Big;
                 
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodySizeCommand(Owner, size));
         }
 

@@ -68,7 +68,7 @@
             var tb = (TextBox) p;
 
             TBGroup.SwitchTo(tb);
-            ActivateKeyboardInput(TBGroup, Inputs.MasterPlayer.InputType == InputType.Gamepad);
+            ActivateKeyboardInput(TBGroup, false);
         }
 
 

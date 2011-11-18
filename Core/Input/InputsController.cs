@@ -18,6 +18,7 @@
         private bool AllKeysOneListenerMode;
         private InputListener AllKeysListener;
         private bool ProduceCleanState;
+        private InputType AllKeysInputTypeBackup;
 
 
         public InputsController(Vector2 mouseBasePosition)
@@ -274,13 +275,17 @@
 
             if (!AllKeysOneListenerMode)
             {
+                if (AllKeysSource != null)
+                    AllKeysSource.Player.InputType = AllKeysInputTypeBackup;
+
                 AllKeysSource = null;
                 AllKeysListener = null;
                 return;
             }
 
+            AllKeysInputTypeBackup = player.InputType;
+            player.InputType = InputType.MouseAndKeyboard;
             AllKeysSource = new InputSource(player, MouseBasePosition);
-
             AllKeysSource.MapKeys(AllKeys);
             AllKeysSource.MapMouseButtons(AllMouseButtons);
 

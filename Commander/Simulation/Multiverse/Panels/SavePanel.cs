@@ -44,6 +44,7 @@
 
         private void Save()
         {
+            Main.WorldsFactory.SaveWorldOnDisk(Main.PlayersController.MultiverseData.WorldId);
             Main.MultiverseController.SaveWorld(CompletedCallback);
 
             Message.Value = "Saving... please wait.";
@@ -56,7 +57,7 @@
         {
             if (protocol.State == ServerProtocol.ProtocolState.EndedWithError)
             {
-                Message.Value = "Save fail. Please retry.";
+                Message.Value = "Remote save failed.\n\nPlease retry.";
                 Message.Color = Colors.Panel.Error;
                 EnableInput();
 

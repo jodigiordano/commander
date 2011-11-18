@@ -91,7 +91,7 @@
         {
             Simulator.TriggerNewGameState(GameState.Restart);
             ChangeStateOnClose = false;
-            CloseButtonHandler(this, player);
+            //CloseButtonHandler(this, player);
         }
 
 
@@ -99,7 +99,7 @@
         {
             Simulator.TriggerNewGameState(GameState.PausedToWorld);
             ChangeStateOnClose = false;
-            CloseButtonHandler(this, player);
+            //CloseButtonHandler(this, player);
         }
 
 

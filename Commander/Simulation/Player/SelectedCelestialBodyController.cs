@@ -71,15 +71,15 @@
                 return;
             }
 
-            // The player is moving (or have the intention toLocal)
-            if (!Simulator.DemoMode && !Simulator.EditorEditingMode && Player.MovementInputThisTick)
+            // The player is moving (or have the intention to)
+            if (Simulator.GameMode && !Simulator.EditingMode && Player.MovementInputThisTick)
             {
                 Initialize();
                 return;
             }
 
             // The player is firing
-            if (!Simulator.DemoMode && Player.Firing)
+            if (Simulator.GameMode && Player.Firing)
             {
                 Initialize();
                 return;
@@ -109,7 +109,7 @@
 
             DoCelestialBodySelection();
 
-            if (Simulator.EditorEditingMode &&
+            if (Simulator.EditingMode &&
                 Player.Position.X > Simulator.Data.Battlefield.Inner.Right - 100 &&
                 Player.Position.Y < Simulator.Data.Battlefield.Inner.Top + 100)
             {
@@ -190,7 +190,7 @@
 
         public Vector3 DoGlueMode()
         {
-            if (Simulator.EditorMode && CelestialBody != null && CelestialBody is AsteroidBelt)
+            if (Simulator.EditingMode && CelestialBody != null && CelestialBody is AsteroidBelt)
                 return Vector3.Zero;
 
             if (Turret != null)

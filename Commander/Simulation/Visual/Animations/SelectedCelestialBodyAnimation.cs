@@ -30,7 +30,7 @@
                 if (celestialBody == null && value != null)
                     PositionLastEmission = value.Position;
 
-                if (Simulator.EditorEditingMode)
+                if (Simulator.EditingMode)
                 {
                     if (celestialBody != null && value == null)
                         celestialBody.ShowPath = false;

@@ -509,7 +509,7 @@
 
         private void DoQuoteTurret()
         {
-            if (!Simulator.DemoMode)
+            if (Simulator.GameMode)
                 return;
 
             if (Turrets.Count <= 0)

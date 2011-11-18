@@ -3,14 +3,14 @@
     using Microsoft.Xna.Framework;
 
 
-    class EditorController
+    class MultiverseController
     {
         public event EditorCommandHandler EditorCommandExecuted;
 
         private Simulator Simulator;
 
 
-        public EditorController(Simulator simulator)
+        public MultiverseController(Simulator simulator)
         {
             Simulator = simulator;
         }
@@ -18,19 +18,22 @@
 
         public void Initialize()
         {
-            //Simulator.Data.Panels["EditorWaves"].SetClickHandler(DoWaves);
+
         }
 
 
         public void DoPlayerMoved(SimPlayer player)
         {
-            if (!Simulator.EditorMode)
+            if (!Simulator.EditingMode)
                 return;
 
             if (player.ActualSelection.EditingState == EditorEditingState.None)
                 return;
 
             var cb = player.ActualSelection.CelestialBody;
+
+            if (cb == null)
+                return;
 
             if (player.ActualSelection.EditingState == EditorEditingState.MovingCB)
             {
@@ -53,13 +56,16 @@
 
         public void DoPlayerMovedDelta(SimPlayer player, ref Vector3 delta)
         {
-            if (!Simulator.EditorMode)
+            if (!Simulator.EditingMode)
                 return;
 
             if (player.ActualSelection.EditingState == EditorEditingState.None)
                 return;
 
             var cb = player.ActualSelection.CelestialBody;
+
+            if (cb == null)
+                return;
 
             if (player.ActualSelection.EditingState == EditorEditingState.RotatingCB)
             {
@@ -90,25 +96,27 @@
 
         public void DoSelectAction(SimPlayer player)
         {
-            if (!Simulator.EditorMode)
-                return;
-
             var menu = player.ActualSelection.OpenedMenu; // here because can become null.
 
-            if (menu != null && menu is EditorContextualMenu)
+            if (menu != null && menu is MultiverseContextualMenu)
             {
-                ((EditorContextualMenu) menu).DoClick();
+                ((MultiverseContextualMenu) menu).DoClick();
             }
 
-            else if (menu == null && Simulator.WorldMode && Simulator.EditorMode)
+            else if (menu == null && Simulator.WorldMode && Simulator.EditingMode)
             {
                 player.VisualPlayer.SetMenuVisibility("EditorBuildWorld", true);
+            }
+
+            else if (menu == null && !Simulator.GameMode)
+            {
+                player.VisualPlayer.SetMenuVisibility("MultiverseWorld", true);
             }
 
             else if (
                 menu == null &&
                 Simulator.GameMode &&
-                Simulator.EditorEditingMode &&
+                Simulator.EditingMode &&
                 player.ActualSelection.EditingState == EditorEditingState.None)
             {
                 player.VisualPlayer.SetMenuVisibility("EditorBuildLevel", true);
@@ -118,17 +126,15 @@
 
         public void DoCancelAction(SimPlayer player)
         {
-            if (!Simulator.EditorMode)
-                return;
-
             if (player.ActualSelection.EditingState != EditorEditingState.None)
             {
                 player.ActualSelection.EditingState = EditorEditingState.None;
                 player.VisualPlayer.SetMenuVisibility("EditorCB", true);
             }
 
-            else if (player.ActualSelection.OpenedMenu is EditorLevelBuildMenu ||
-                     player.ActualSelection.OpenedMenu is EditorWorldBuildMenu)
+            else if (player.ActualSelection.OpenedMenu is MultiverseLevelBuildMenu ||
+                     player.ActualSelection.OpenedMenu is MultiverseWorldBuildMenu ||
+                     player.ActualSelection.OpenedMenu is MultiverseWorldMenu)
             {
                 player.ActualSelection.OpenedMenu.Visible = false;
             }
@@ -139,66 +145,6 @@
         {
             NotifyEditorCommandExecuted(command);
         }
-
-
-        //private void DoExecuteEditorPanelCommand(EditorPanelShowCommand command)
-        //{
-        //    if (command.Panel == "EditorWaves")
-        //        SyncWaves();
-
-        //    NotifyEditorCommandExecuted(command);
-        //}
-
-
-        private void DoWaves(PanelWidget widget, Commander.Player player)
-        {
-            //var clickedWidget = ((Panel) ((Panel) widget).LastClickedWidget).LastClickedWidget;
-            //var waveId = ((WaveSubPanel) widget).Id;
-
-            //if (clickedWidget.Name == "Enemies")
-            //{
-            //    var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
-
-            //    if (waveId < Simulator.Data.Level.Descriptor.Waves.Count)
-            //        enemiesAssets.Enemies = Simulator.Data.Level.Descriptor.Waves[waveId].Enemies;
-            //    else
-            //        enemiesAssets.Enemies = new List<EnemyType>();
-
-            //    enemiesAssets.Sync();
-            //    DoExecuteEditorPanelCommand(new EditorPanelShowCommand("EditorEnemies"));
-            //}
-        }
-
-
-        //private void SyncWaves()
-        //{
-        //    List<WaveDescriptor> descriptors = new List<WaveDescriptor>();
-
-        //    var panel = Simulator.Data.Panels["EditorWaves"];
-
-        //    foreach (var w in panel.Widgets)
-        //    {
-        //        var subPanel = (WaveSubPanel) w.Value;
-
-        //        if (subPanel.EnemiesCount != 0 && subPanel.Quantity != 0)
-        //            descriptors.Add(subPanel.GenerateDescriptor());
-        //    }
-
-        //    Simulator.Data.Level.Waves.Clear();
-
-        //    foreach (var wd in descriptors)
-        //        Simulator.Data.Level.Waves.AddLast(new Wave(Simulator, wd));
-        //}
-
-
-        //public void DoPanelClosed(string type)
-        //{
-        //    if (type == "EditorEnemies")
-        //    {
-        //        var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
-        //        ((WavesPanel) Simulator.Data.Panels["EditorWaves"]).SyncEnemiesCurrentWave(enemiesAssets.Enemies);
-        //    }
-        //}
 
 
         private void NotifyEditorCommandExecuted(EditorCommand command)

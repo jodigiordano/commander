@@ -41,7 +41,7 @@
             foreach (var t in Simulator.Data.Level.Turrets)
                 Turrets.Add(t);
 
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 foreach (var turret in Turrets)
                     turret.ShowForm = false;
         }

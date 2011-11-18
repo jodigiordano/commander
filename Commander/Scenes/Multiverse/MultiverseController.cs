@@ -91,7 +91,10 @@
             if (!IsWorldExistsLocally(id))
             {
                 var protocol = new DownloadWorldProtocol(id, false);
-                protocol.Terminated += new ServerProtocolHandler(((WorldDownloadingScene) Core.Visual.Visuals.GetScene("WorldDownloading")).DoDownloadTerminated);
+                var scene = (WorldDownloadingScene) Core.Visual.Visuals.GetScene("WorldDownloading");
+                scene.From = fromScene;
+                scene.Initialize();
+                protocol.Terminated += new ServerProtocolHandler(scene.DoDownloadTerminated);
                 protocol.Start();
                 RunningProtocols.Add(protocol);
                 Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
@@ -103,7 +106,10 @@
             if (!IsPlayerWorld(id))
             {
                 var protocol = new DownloadWorldProtocol(id, true);
-                protocol.Terminated += new ServerProtocolHandler(((WorldDownloadingScene) Core.Visual.Visuals.GetScene("WorldDownloading")).DoDownloadTerminated);
+                var scene = (WorldDownloadingScene) Core.Visual.Visuals.GetScene("WorldDownloading");
+                scene.From = fromScene;
+                scene.Initialize();
+                protocol.Terminated += new ServerProtocolHandler(scene.DoDownloadTerminated);
                 protocol.Start();
                 RunningProtocols.Add(protocol);
                 Core.Visual.Visuals.Transite(fromScene, "WorldDownloading");
@@ -120,12 +126,13 @@
             // Set the world toLocal the WorldScene
             var world = Main.WorldsFactory.GetWorld(id);
 
-            world.EditorMode = IsPlayerWorld(id);
-            world.Editing = IsPlayerWorld(id);
+            world.MultiverseMode = true;
+            world.EditingMode = IsPlayerWorld(id);
 
-            Main.SetCurrentWorld(world, true);
+            if (Main.CurrentWorld != null)
+                Main.CurrentWorld.Simulator.OnWorldChange();
 
-            Main.CurrentWorld.Simulator.MultiverseMode = true;
+            Main.SetCurrentWorld(world, false);
 
             Core.Visual.Visuals.Transite(fromScene, "WorldAnnunciation");
         }
@@ -173,7 +180,7 @@
 
         private bool IsWorldExistsLocally(int id)
         {
-            return Main.WorldsFactory.MultiverseWorldExistsOnDisk(id);
+            return Main.WorldsFactory.MultiverseWorldExistsOnDisk(id) && Main.WorldsFactory.MultiverseWorldIsValidOnDisk(id);
         }
 
 

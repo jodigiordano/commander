@@ -37,9 +37,9 @@
             get { return speed; }
             set
             {
-                speed = value;
-
                 double actualPourc = (speed == float.MaxValue) ? 0 : ActualRotationTime / speed;
+
+                speed = value;
 
                 ActualRotationTime = speed * actualPourc;
 

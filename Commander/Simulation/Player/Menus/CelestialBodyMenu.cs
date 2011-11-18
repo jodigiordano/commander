@@ -99,7 +99,7 @@
             {
                 return
                     base.Visible &&
-                    (Simulator.GameMode || Simulator.EditorPlaytestingMode) &&
+                    Simulator.GameMode &&
                     Owner.ActualSelection.CelestialBody != null &&
                     !Owner.ActualSelection.CelestialBody.FirstOnPath &&
                     AvailableTurretsList.Count != 0 &&
@@ -110,9 +110,9 @@
         }
 
 
-        public override void UpdateSelection()
+        public override void OnOpen()
         {
-            Owner.ActualSelection.TurretToBuy = Visible ? Selection : TurretType.None;
+            Owner.ActualSelection.TurretToBuy = Selection;
         }
 
 

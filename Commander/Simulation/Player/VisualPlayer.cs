@@ -59,23 +59,22 @@
             Menus = new Dictionary<string, ContextualMenu>();
             CBMenus = new Dictionary<string, ContextualMenu>();
 
-            // Highest priority
-            CBMenus.Add("EditorPlanetCB", new EditorPlanetCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            CBMenus.Add("EditorPinkHoleCB", new EditorPinkHoleCBMenu(Simulator, VisualPriorities.Default.EditorPanel, Owner));
-            CBMenus.Add("EditorWorldWarp", new EditorWarpCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            CBMenus.Add("EditorWorldLevel", new EditorLevelCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            CBMenus.Add("EditorPlanetCB", new MultiversePlanetCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            CBMenus.Add("EditorPinkHoleCB", new MultiversePinkHoleCBMenu(Simulator, VisualPriorities.Default.EditorPanel, Owner));
+            CBMenus.Add("EditorWorldWarp", new MultiverseWarpCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            CBMenus.Add("EditorWorldLevel", new MultiverseLevelCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             
             foreach (var m in CBMenus)
                 Menus.Add(m.Key, m.Value);
 
             Menus.Add("WorldPause", new PauseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("MainMenuCampaign", new CampaignMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add("EditorBuildLevel", new EditorLevelBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            Menus.Add("EditorBuildWorld", new EditorWorldBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("EditorBuildLevel", new MultiverseLevelBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("EditorBuildWorld", new MultiverseWorldBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("StartingPath", new StartingPathMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
+            Menus.Add("MultiverseWorld", new MultiverseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("Turret", new TurretMenu(Simulator, VisualPriorities.Default.TurretMenu, Owner));
             Menus.Add("CB", new CelestialBodyMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            // Lowest priority
 
             LevelInfos = new LevelInfos(Simulator, Owner);
             TurretInfos = new TurretInfos((TurretMenu) Menus["Turret"]);
@@ -202,13 +201,11 @@
             if (menu != null)
                 menu.Draw();
 
-            if (Simulator.DemoMode && Simulator.WorldMode)
+            if (Simulator.WorldMode)
                 LevelInfos.Draw();
 
-            if (Simulator.DemoMode)
-                return;
-
-            FinalSolutionPreview.Draw();
+            if (Simulator.GameMode)
+                FinalSolutionPreview.Draw();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
 
 
     class LevelEndedAnnunciation
@@ -70,7 +71,7 @@
             if (Bubble == null)
                 return;
 
-            Bubble.Position = CelestialBody.Position;
+            Bubble.Position = CelestialBody == null ? Vector3.Zero : CelestialBody.Position;
             Bubble.Update();
         }
 

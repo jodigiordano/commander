@@ -54,7 +54,7 @@
         {
             var img = (ImageWidget) widget;
 
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodyChangeAssetCommand(
                     Simulator.Data.Players[player],
                     CelestialBody,

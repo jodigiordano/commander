@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    class EditorPinkHoleCBMenu : EditorCelestialBodyMenu
+    class MultiversePinkHoleCBMenu : MultiverseCelestialBodyMenu
     {
-        public EditorPinkHoleCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+        public MultiversePinkHoleCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
 
@@ -25,7 +25,7 @@
 
         protected override void DoAttributes()
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPanelCBShowCommand(Owner, "EditorPinkHoleCBAttributes", Owner.ActualSelection.CelestialBody, Simulator));
         }
     }

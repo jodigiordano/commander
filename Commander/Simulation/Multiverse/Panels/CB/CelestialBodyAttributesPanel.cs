@@ -50,28 +50,28 @@
 
         private void DoFollowPath(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodyFollowPathCommand(Simulator.Data.Players[player], CelestialBody, FollowPath.Value));
         }
 
 
         private void DoCanSelect(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodyCanSelectCommand(Simulator.Data.Players[player], CelestialBody, CanSelect.Value));
         }
 
 
         private void DoStraightLine(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodyStraightLineCommand(Simulator.Data.Players[player], CelestialBody, StraightLine.Value));
         }
 
 
         private void DoInvincible(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodyInvincibleCommand(Simulator.Data.Players[player], CelestialBody, Invincible.Value));
         }
     }

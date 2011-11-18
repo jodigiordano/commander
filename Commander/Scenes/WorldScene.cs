@@ -56,10 +56,9 @@
             // Initialize the simulator
             Simulator = new Simulator(this, World.Layout)
             {
-                DemoMode = true,
                 WorldMode = true,
-                EditorMode = World.EditorMode,
-                EditMode = World.Editing,
+                MultiverseMode = World.MultiverseMode,
+                EditingMode = World.EditingMode,
                 AvailableLevelsWorldMode = CBtoLevel,
                 AvailableWarpsWorldMode = CBtoWarp,
                 EnableInputs = Preferences.Target != Core.Utilities.Setting.ArcadeRoyale
@@ -95,7 +94,10 @@
         {
             get
             {
-                return !World.EditorMode && Main.CurrentGame != null && Main.CurrentGame.State == GameState.PausedToWorld;
+                return
+                    !Simulator.EditingMode &&
+                    Main.CurrentGame != null &&
+                    Main.CurrentGame.State == GameState.PausedToWorld;
             }
         }
 
@@ -235,10 +237,10 @@
 
             Main.CurrentWorld = this;
 
-            if (Simulator.EditorWorldMode)
+            if (Simulator.MultiverseMode)
             {
                 // sync the level descriptor so it can be saved.
-                if (Main.CurrentGame != null && Main.CurrentGame.Simulator.EditorEditingMode)
+                if (Main.CurrentGame != null && Main.CurrentGame.Simulator.EditingMode)
                 {
                     Main.CurrentGame.Simulator.Data.Level.SyncDescriptor();
                     World.SetLevelDescriptor(Main.CurrentGame.Simulator.Data.Level.Descriptor.Infos.Id, Main.CurrentGame.Simulator.Data.Level.Descriptor);
@@ -258,11 +260,19 @@
                 Simulator.MovePlayers(cb.Position + new Vector3(0, cb.Circle.Radius + 30, 0));
             }
 
-            if (!Simulator.EditorWorldMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
+            if (!Simulator.MultiverseMode && Preferences.Target != Core.Utilities.Setting.ArcadeRoyale && LastLevelWon)
+            {
                 Add(Main.WorldsFactory.GetEndOfWorldAnimation(World.Id, this));
-            else if (!Simulator.EditorWorldMode)
+            }
+
+            else if (!Simulator.MultiverseMode)
             {
                 Main.MusicController.PlayOrResume(World.Descriptor.Music);
+            }
+
+            else if (Simulator.MultiverseMode)
+            {
+                Main.MusicController.StopCurrentMusic();
             }
 
             if (Inputs.ConnectedPlayers.Count == 0) //must be done after Simulator.OnFocus() toLocal set back no input
@@ -394,7 +404,7 @@
 
         private void DoSelectAction(Player p)
         {
-            if (World.EditorMode)
+            if (Simulator.EditingMode)
                 return;
 
             // Select a warp
@@ -404,6 +414,7 @@
             {
                 if (world.Unlocked)
                 {
+                    Simulator.OnWorldChange();
                     Main.SetCurrentWorld(world, false);
                     TransiteTo("WorldAnnunciation");
                 }
@@ -437,7 +448,11 @@
                 if (currentGame != null)
                     currentGame.StopMusic();
 
-                currentGame = new GameScene("Game1", level);
+                currentGame = new GameScene("Game1", level)
+                {
+                    MultiverseMode = World.MultiverseMode,
+                    EditingMode = World.EditingMode
+                };
                 currentGame.Initialize();
                 Main.CurrentGame = currentGame;
                 currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
@@ -477,8 +492,8 @@
 
                 currentGame = new GameScene("Game1", level)
                 {
-                    EditorMode = World.EditorMode,
-                    Editing = World.Editing
+                    EditingMode = World.EditingMode,
+                    MultiverseMode = World.MultiverseMode
                 };
                 currentGame.Initialize();
                 Main.CurrentGame = currentGame;

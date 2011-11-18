@@ -55,35 +55,35 @@
 
         private void DoLives(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPlayerLifePointsCommand(Simulator.Data.Players[player], Lives.Value));
         }
 
 
         private void DoCash(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPlayerCashCommand(Simulator.Data.Players[player], Cash.Value));
         }
 
 
         private void DoMinerals(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPlayerMineralsCommand(Simulator.Data.Players[player], Minerals.Value));
         }
 
 
         private void DoBulletDamage(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPlayerBulletDamageCommand(Simulator.Data.Players[player], BulletDamage.Value));
         }
 
 
         private void DoLifePacks(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPlayerLifePacksCommand(Simulator.Data.Players[player], LifePacks.Value));
         }
     }

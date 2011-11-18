@@ -15,8 +15,8 @@
 
         public PlayerDescriptor()
         {
-            Money = 0;
-            Lives = 0;
+            Money = 500;
+            Lives = 5;
             StartingPosition = Vector3.Zero;
             BulletDamage = -1;
         }

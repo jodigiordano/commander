@@ -311,6 +311,22 @@
         }
 
 
+        public bool MultiverseWorldIsValidOnDisk(int id)
+        {
+            try
+            {
+                LoadWorldFromDisk(GetWorldMultiverseLocalZipFile(id));
+
+                return true;
+            }
+
+            catch
+            {
+                return false;
+            }
+        }
+
+
         public void SaveWorldOnDisk(int id)
         {
             World w = Worlds[id];

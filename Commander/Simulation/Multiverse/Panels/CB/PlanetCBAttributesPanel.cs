@@ -27,7 +27,7 @@
 
         private void DoHasMoons(PanelWidget widget, Commander.Player player)
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorCelestialBodyHasMoonsCommand(Simulator.Data.Players[player], CelestialBody, HasMoons.Value));
         }
     }

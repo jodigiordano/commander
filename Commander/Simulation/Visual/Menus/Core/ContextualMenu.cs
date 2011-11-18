@@ -334,10 +334,10 @@
         }
 
 
-        public virtual void UpdateSelection()
-        {
+        //public virtual void UpdateSelection()
+        //{
         
-        }
+        //}
 
 
         public virtual void Update()

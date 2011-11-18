@@ -31,7 +31,8 @@
             UsernameLength,
             PasswordLength,
             UsernameAlreadyTaken,
-            FileNotUploaded
+            FileNotUploaded,
+            FileNotFound
         }
 
         private WebClient Remote;
@@ -121,7 +122,12 @@
             if (e.Cancelled || e.Error != null)
             {
                 State = ProtocolState.EndedWithError;
-                ErrorState = ProtocolErrorState.ServerError;
+
+                if (e.Error.Message.Contains("404"))
+                    ErrorState = ProtocolErrorState.FileNotFound;
+                else
+                    ErrorState = ProtocolErrorState.ServerError;
+
                 NotifyProtocolTerminated();
 
                 return;
@@ -177,12 +183,14 @@
 
         private bool VerifyErrors(MultiverseMessage answer)
         {
-            var error = answer.Type == MultiverseMessageType.Error;
+            if (answer.Type != MultiverseMessageType.Error)
+                return false;
 
             switch (answer.Message)
             {
                 case "credentials": ErrorState = ProtocolErrorState.IncorrectCredentials; break;
                 case "world not found": ErrorState = ProtocolErrorState.WorldNotFound; break;
+                case "world_not_found": ErrorState = ProtocolErrorState.WorldNotFound; break;
                 case "server down.": ErrorState = ProtocolErrorState.ServerError; break;
                 case "email not valid": ErrorState = ProtocolErrorState.EmailNotValid; break;
                 case "username length": ErrorState = ProtocolErrorState.UsernameLength; break;
@@ -191,7 +199,7 @@
                 case "file not uploaded": ErrorState = ProtocolErrorState.FileNotUploaded; break;
             }
 
-            return error;
+            return true;
         }
 
 

@@ -33,7 +33,6 @@
             // Initialize the simulator
             Simulator = new Simulator(this, Layout)
             {
-                DemoMode = true,
                 MultiverseMode = true,
                 EnableInputs = true
             };
@@ -49,10 +48,10 @@
 
         private void InitializeCBStates()
         {
-            Simulator.Data.Level.PlanetarySystem[1].Name = "jump to world";
+            Simulator.Data.Level.PlanetarySystem[1].Name = Main.PlayersController.MultiverseData.LoggedIn ? "" : "register";
             Simulator.Data.Level.PlanetarySystem[2].Name = Main.PlayersController.MultiverseData.LoggedIn ? "log out" : "log in";
-            Simulator.Data.Level.PlanetarySystem[3].Name = "my world";
-            Simulator.Data.Level.PlanetarySystem[4].Name = Main.PlayersController.MultiverseData.LoggedIn ? "" : "register";
+            Simulator.Data.Level.PlanetarySystem[3].Name = "jump to world";
+            Simulator.Data.Level.PlanetarySystem[4].Name = "my world";
 
             Choices = new CBBigLabels(Simulator, VisualPriorities.Default.MenuChoices);
             Choices.Show();
@@ -182,9 +181,6 @@
                 TransiteTo("Menu");
         }
 
-
-
-
         #endregion
 
         #region Input Handling
@@ -223,6 +219,7 @@
 
             else
             {
+                ((JumpToWorldPanel) Simulator.Data.Panels["JumpToWorld"]).From = "Multiverse";
                 Simulator.ShowPanel("JumpToWorld", player.Position);
             }
         }

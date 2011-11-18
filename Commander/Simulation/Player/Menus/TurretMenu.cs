@@ -45,7 +45,7 @@
             {
                 return
                     base.Visible &&
-                    (Simulator.GameMode || Simulator.EditorPlaytestingMode) &&
+                    Simulator.GameMode &&
                     Owner.ActualSelection.Turret != null &&
                     !Owner.ActualSelection.Turret.Disabled &&
                     (Owner.ActualSelection.Turret.CanSell || Owner.ActualSelection.Turret.CanUpdate) &&
@@ -56,18 +56,34 @@
         }
 
 
-        public override void UpdateSelection()
+        public override void OnOpen()
         {
             if (SelectedTurret != Owner.ActualSelection.Turret)
                 SelectedIndex = 0;
 
-            Owner.ActualSelection.TurretChoice = Visible ? Selection : TurretChoice.None;
+            Owner.ActualSelection.TurretChoice = Selection;
         }
 
 
         public override void OnClose()
         {
-            UpdateSelection();
+            Owner.ActualSelection.TurretChoice = TurretChoice.None;
+        }
+
+
+        public override void NextChoice()
+        {
+            base.NextChoice();
+
+            Owner.ActualSelection.TurretChoice = Selection;
+        }
+
+
+        public override void PreviousChoice()
+        {
+            base.PreviousChoice();
+
+            Owner.ActualSelection.TurretChoice = Selection;
         }
 
 

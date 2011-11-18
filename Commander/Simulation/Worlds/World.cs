@@ -11,10 +11,9 @@
         public Dictionary<int, LevelDescriptor> LevelsDescriptors;
         public HighScores HighScores;
 
-        public bool EditorMode;
-        public bool Editing;
         public bool CampaignMode;
         public bool MultiverseMode;
+        public bool EditingMode;
 
 
         public World()
@@ -24,10 +23,9 @@
             LevelsDescriptors = new Dictionary<int, LevelDescriptor>();
             HighScores = new HighScores();
 
-            EditorMode = false;
-            Editing = false;
             CampaignMode = false;
             MultiverseMode = false;
+            EditingMode = false;
         }
 
 

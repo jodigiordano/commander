@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    class EditorWarpCBMenu : EditorCelestialBodyMenu
+    class MultiverseWarpCBMenu : MultiverseCelestialBodyMenu
     {
-        public EditorWarpCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+        public MultiverseWarpCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
             AddChoiceFirst(new EditorTextContextualMenuChoice("editWarp", "edit warp", 2, DoEditWarp));
@@ -28,7 +28,7 @@
 
         private void DoEditWarp()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPanelCBShowCommand(Owner, "EditorEditWarp", Owner.ActualSelection.CelestialBody, Simulator));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPanelCBShowCommand(Owner, "EditorEditWarp", Owner.ActualSelection.CelestialBody, Simulator));
         }
 
 
@@ -41,7 +41,7 @@
 
         protected override void DoAttributes()
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPanelCBShowCommand(Owner, "EditorPinkHoleCBAttributes", Owner.ActualSelection.CelestialBody, Simulator));
         }
 

@@ -92,7 +92,7 @@
             GameBarPanel.RemainingWaves = (InfiniteWaves == null) ? Waves.Count : -1;
 
 
-            if (!Simulator.DemoMode)
+            if (Simulator.GameMode)
                 AdvancedView = new AdvancedView(Simulator);
 
             AdvancedViewCheckedIn = null;
@@ -228,7 +228,7 @@
 
         public void DoShowAdvancedViewAsked(SimPlayer p)
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             if (AdvancedViewCheckedIn == null)
@@ -241,7 +241,7 @@
 
         public void DoHideAdvancedViewAsked(SimPlayer p)
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             if (AdvancedViewCheckedIn == p)
@@ -405,7 +405,7 @@
 
             player.SelectedCelestialBodyAnimation.CelestialBody = selection.CelestialBody;
 
-            if (!Simulator.EditorMode || Simulator.EditorPlaytestingMode)
+            if (!Simulator.EditingMode)
             {
                 if (PathPreviewing != null && // preview: sell turret
                     selection.Turret != null &&
@@ -467,7 +467,7 @@
 
         private void ShowGameBarHBMessage()
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             if (!HelpBar.Active)
@@ -507,7 +507,7 @@
 
             CelestialBodiesPathPreviews.Draw();
 
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             LevelEndedAnnunciation.Draw();
@@ -517,7 +517,7 @@
             CelestialBodyNearHit.Draw();
             AlienNextWaveAnimation.Draw();
 
-            if (Simulator.EditorEditingMode)
+            if (Simulator.EditingMode)
                 return;
 
             GameBarPanel.Draw();
@@ -588,7 +588,7 @@
                 }
             }
 
-            else if (Simulator.DemoMode)
+            else if (Simulator.MainMenuMode)
             {
                 // Main menu
                 if (selection.CelestialBody != null && WorldsFactory.IsCampaignCB(selection.CelestialBody))

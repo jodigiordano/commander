@@ -35,7 +35,7 @@
 
             Simulator = new Simulator(this, levelDescriptor)
             {
-                DemoMode = true,
+                MainMenuMode = true,
                 EnableInputs = false
             };
             Simulator.Initialize();

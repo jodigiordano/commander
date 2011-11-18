@@ -230,7 +230,7 @@
             if (Type != TurretType.SlowMotion && Type != TurretType.Gravitational)
                 DoWanderRotation();
 
-            if (DisabledAnnounciationCounter < 0 && !Simulator.DemoMode)
+            if (DisabledAnnounciationCounter < 0 && Simulator.GameMode)
             {
                 DisabledAnnounciationCounter = float.NaN;
                 BackActiveThisTick = true;
@@ -481,7 +481,7 @@
                 CanonImage.Rotation = Rotation;
 
 
-            if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && !Simulator.DemoMode && !ToPlaceMode)
+            if ((Disabled || PlayerControlled && TimeLastBullet != Double.MaxValue && TimeLastBullet > 0) && Simulator.GameMode && !ToPlaceMode)
             {
                 DisableBar.Position = Position;
                 DisableBar.PercentageDone = DisabledPercentage;
@@ -573,7 +573,7 @@
             BaseImage.SizeX = 3;
             CanonImage.Origin = new Vector2(6, 8);
 
-            if (!Simulator.DemoMode && !Simulator.WorldMode && ActualLevel.Value.Level != 1)
+            if (Simulator.GameMode && !Simulator.WorldMode && ActualLevel.Value.Level != 1)
             {
                 RangeEffect = Simulator.Scene.VisualEffects.Add(RangeImage, VisualEffects.Fade(220, RangeAlpha, 0, 500), UpgradeFadeCompleted);
                 ShowRange = true;

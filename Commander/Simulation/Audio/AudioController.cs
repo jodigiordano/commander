@@ -125,7 +125,7 @@
 
             if (enemy != null)
             {
-                if (Simulator.State != GameState.Running)
+                if (Simulator.State != GameState.Running || Simulator.WorldMode)
                     return;
 
                 XACTAudio.PlayCue(enemy.SfxDie, "Sound Bank");
@@ -147,7 +147,7 @@
 
         public void DoWaveNearToStart()
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             WaveNearToStartCue = XACTAudio.GetCue("NewWaveComing", "Sound Bank");
@@ -157,7 +157,7 @@
 
         public void DoWaveStarted()
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             if (WaveNearToStartCue != null)
@@ -184,7 +184,7 @@
 
         public void DoTurretBoughtStarted(Turret turret, SimPlayer player)
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             AudioTurretsController.AddTurretBought(turret);
@@ -193,7 +193,7 @@
 
         public void DoTurretUpgradingStarted(Turret turret, SimPlayer player)
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             AudioTurretsController.AddTurretUpgraded(turret);
@@ -202,7 +202,7 @@
 
         public void DoTurretSold(Turret turret, SimPlayer player)
         {
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             XACTAudio.PlayCue("TurretSold", "Sound Bank");
@@ -340,6 +340,9 @@
 
         public void DoWaveEnded()
         {
+            if (!Simulator.GameMode)
+                return;
+
             if (Simulator.State == GameState.Running || Simulator.State == GameState.Won)
                 XACTAudio.PlayCue("WaveDestroyed", "Sound Bank");
         }
@@ -362,6 +365,12 @@
                     ResumeLoopingCues();
                     break;
             }
+        }
+
+
+        public void DoWorldChange()
+        {
+            StopLoopingCues();
         }
 
 
@@ -402,7 +411,7 @@
             }
 
 
-            if (Simulator.DemoMode)
+            if (Simulator.MainMenuMode)
             {
                 if (p.ActualSelection.NewGameChoiceChanged)
                     XACTAudio.PlayCue("ContextualMenuSelectionChange", "Sound Bank");
@@ -414,7 +423,7 @@
                 }
             }
 
-            else if (Simulator.EditorMode)
+            else if (Simulator.MultiverseMode)
             {
             
             }
@@ -451,7 +460,7 @@
         {
             XACTAudio.PlayCue("PanelOpen", "Sound Bank");
 
-            if (!Simulator.DemoMode)
+            if (Simulator.GameMode)
                 Main.MusicController.FadeOutCurrentMusic(false, 0.8f);
         }
 
@@ -460,7 +469,7 @@
         {
             XACTAudio.PlayCue("PanelClose", "Sound Bank");
 
-            if (!Simulator.DemoMode)
+            if (Simulator.GameMode)
                 Main.MusicController.FadeInCurrentMusic(false, 1f);
         }
 

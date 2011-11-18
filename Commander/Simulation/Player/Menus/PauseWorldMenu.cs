@@ -19,9 +19,31 @@
         }
 
 
-        public override void UpdateSelection()
+        public override void OnOpen()
         {
-            Owner.ActualSelection.PausedGameChoice = Visible ? Selection : PauseChoice.None;
+            Owner.ActualSelection.PausedGameChoice = Selection;
+        }
+
+
+        public override void OnClose()
+        {
+            Owner.ActualSelection.PausedGameChoice = PauseChoice.None;
+        }
+
+
+        public override void NextChoice()
+        {
+            base.NextChoice();
+
+            Owner.ActualSelection.PausedGameChoice = Selection;
+        }
+
+
+        public override void PreviousChoice()
+        {
+            base.PreviousChoice();
+
+            Owner.ActualSelection.PausedGameChoice = Selection;
         }
 
 
@@ -31,8 +53,8 @@
             {
                 return
                     base.Visible &&
-                    Simulator.Scene is WorldScene &&
-                    !Simulator.EditorMode &&
+                    Simulator.WorldMode &&
+                    !Simulator.EditingMode &&
                     ((WorldScene) Simulator.Scene).GetGamePausedSelected(Owner.InnerPlayer);
             }
 

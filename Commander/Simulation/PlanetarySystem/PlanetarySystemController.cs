@@ -43,7 +43,7 @@
 
         public void Initialize()
         {
-            if (Simulator.EditorEditingMode)
+            if (Simulator.EditingMode)
                 foreach (var c in CelestialBodies)
                     c.CanSelectOverride = true;
 
@@ -178,7 +178,7 @@
             if (!(celestialBody is AsteroidBelt))
                 celestialBody.DoHit(enemy);
 
-            if (!Simulator.DemoMode && celestialBody.Alive)
+            if (Simulator.GameMode && celestialBody.Alive)
                 NotifyObjectHit(celestialBody);
         }
 

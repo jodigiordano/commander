@@ -37,9 +37,31 @@
         }
 
 
-        public override void UpdateSelection()
+        public override void OnOpen()
         {
-             Owner.ActualSelection.NewGameChoice = Visible ? Selection : -1;
+            Owner.ActualSelection.NewGameChoice = Selection;
+        }
+
+
+        public override void OnClose()
+        {
+            Owner.ActualSelection.NewGameChoice = -1;
+        }
+
+
+        public override void NextChoice()
+        {
+            base.NextChoice();
+
+            Owner.ActualSelection.NewGameChoice = Selection;
+        }
+
+
+        public override void PreviousChoice()
+        {
+            base.PreviousChoice();
+
+            Owner.ActualSelection.NewGameChoice = Selection;
         }
 
 

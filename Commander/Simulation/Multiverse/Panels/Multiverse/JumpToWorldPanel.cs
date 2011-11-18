@@ -1,18 +1,20 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
 
     class JumpToWorldPanel : VerticalPanel
     {
+        public string From;
+
         private TextBox ById;
         private TextBox ByUsername;
         private PushButton Submit;
         private Label Message;
 
         private TextBoxGroup TBGroup;
+        private Commander.Player Player;
 
 
         public JumpToWorldPanel(Scene scene, Vector3 position)
@@ -56,12 +58,13 @@
             var tb = (TextBox) p;
 
             TBGroup.SwitchTo(tb);
-            ActivateKeyboardInput(TBGroup, Inputs.MasterPlayer.InputType == InputType.Gamepad);
+            ActivateKeyboardInput(TBGroup, false);
         }
 
 
         private void DoSubmit(PanelWidget p, Commander.Player player)
         {
+            Player = player;
             Jump();
         }
 
@@ -72,13 +75,14 @@
                 return;
 
             if (ById.Value.Length != 0)
-                Main.MultiverseController.JumpToWorld(int.Parse(ById.Value), "Multiverse");
+                Main.MultiverseController.JumpToWorld(int.Parse(ById.Value), From);
             //else
-            //    Main.MultiverseController.JumpToWorld(ByUsername.Value, "Multiverse");
+            //    Main.MultiverseController.JumpToWorld(ByUsername.Value, From);
             
             Message.Value = "Jumping... please wait.";
             Message.Color = Colors.Panel.Waiting;
             DisableInput();
+            CloseButtonHandler(this, Player);
         }
 
 

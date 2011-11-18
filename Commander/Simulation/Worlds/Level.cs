@@ -108,23 +108,31 @@
             Descriptor.Minerals.LifePacks = LifePacks;
             Descriptor.Player.StartingPosition = CommonStash.StartingPosition;
 
-            // Sync planet toLocal protect
+            // Sync planet to protect
             if (CelestialBodyToProtect != null)
                 Descriptor.Objective.CelestialBodyToProtect = CelestialBodyToProtect.PathPriority;
 
             // Sync Waves
             Descriptor.Waves.Clear();
 
-            foreach (var w in Waves)
-                Descriptor.Waves.Add(w.Descriptor);
+            if (InfiniteWaves != null)
+                Descriptor.InfiniteWaves = InfiniteWaves.GenerateDescriptor();
+            else
+                foreach (var w in Waves)
+                    Descriptor.Waves.Add(w.Descriptor);
 
             // Sync Asteroid Belt
             var asteroidBelt = LevelDescriptor.GetAsteroidBelt(Descriptor.PlanetarySystem);
 
+            // Sync asteroid belt
             Bag<EnemyType> enemies = new Bag<EnemyType>();
 
             foreach (var w in Descriptor.Waves)
                 foreach (var e in w.Enemies)
+                    enemies.Add(e);
+
+            if (InfiniteWaves != null)
+                foreach (var e in Descriptor.InfiniteWaves.Enemies)
                     enemies.Add(e);
 
             if (asteroidBelt == null)
@@ -139,7 +147,7 @@
                 asteroidBelt.Images.Add(e.ToString("g"));
 
             // Bullet damage
-            Descriptor.Player.BulletDamage = BulletDamage;
+            //Descriptor.Player.BulletDamage = BulletDamage;
         }
 
 
@@ -187,7 +195,7 @@
             {
                 var c = descriptor.GenerateSimulatorObject(NextCelestialBodyVisualPriority -= 0.001);
 
-                if (Simulator.EditorEditingMode)
+                if (Simulator.EditingMode)
                     c.AliveOverride = true;
 
                 c.Simulator = Simulator;
@@ -200,7 +208,7 @@
 
                     ab.SteeringBehavior.BasePosition = new Vector3(boundaries.Center.X, boundaries.Center.Y, 0);
                     ab.SteeringBehavior.Path = new Vector3(boundaries.Width / 2, boundaries.Height / 2, 0);
-                    ab.SteeringBehavior.Speed = EditorLevelGenerator.PossibleRotationTimes[Main.Random.Next(2, 7)];
+                    ab.SteeringBehavior.Speed = MultiverseLevelGenerator.PossibleRotationTimes[Main.Random.Next(2, 7)];
                 }
 
                 c.Initialize();
@@ -260,9 +268,16 @@
                 Waves.AddLast(InfiniteWaves.GetNextWave());
             }
 
+            else if (Descriptor.Waves.Count == 0)
+            {
+                Waves.AddLast(new Wave(Simulator, new WaveDescriptor()));
+            }
+
             else
+            {
                 for (int i = 0; i < Descriptor.Waves.Count; i++)
                     Waves.AddLast(new Wave(Simulator, Descriptor.Waves[i]));
+            }
         }
 
 

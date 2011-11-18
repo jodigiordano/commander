@@ -1,8 +1,8 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    class EditorLevelCBMenu : EditorCelestialBodyMenu
+    class MultiverseLevelCBMenu : MultiverseCelestialBodyMenu
     {
-        public EditorLevelCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+        public MultiverseLevelCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
             AddChoiceFirst(new EditorTextContextualMenuChoice("playtest", "playtest level", 2, DoPlaytestLevel));
@@ -19,7 +19,8 @@
                 return
                     base.Visible &&
                     Simulator.WorldMode &&
-                    Owner.ActualSelection.CelestialBody is Planet;
+                    Owner.ActualSelection.CelestialBody is Planet &&
+                    ((Planet) Owner.ActualSelection.CelestialBody).IsALevel;
             }
 
             set { base.Visible = value; }
@@ -28,34 +29,34 @@
 
         private void DoEditLevel()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorEditLevelCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorEditLevelCommand(Owner));
 
-            Main.CurrentWorld.World.EditorMode = true;
-            Main.CurrentWorld.World.Editing = true;
+            Main.CurrentWorld.World.EditingMode = true;
+            Main.CurrentWorld.World.MultiverseMode = true;
             Main.CurrentWorld.DoSelectActionEditor(Owner.InnerPlayer);
         }
 
 
         private void DoPlaytestLevel()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPlaytestLevelCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPlaytestLevelCommand(Owner));
 
-            Main.CurrentWorld.World.EditorMode = true;
-            Main.CurrentWorld.World.Editing = false;
+            Main.CurrentWorld.World.EditingMode = false;
+            Main.CurrentWorld.World.MultiverseMode = true;
             Main.CurrentWorld.DoSelectActionEditor(Owner.InnerPlayer);
         }
 
 
         private void DoCelestialBodyAssets()
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPanelCBShowCommand(Owner, "EditorPlanetCBAssets", Owner.ActualSelection.CelestialBody, Simulator));
         }
 
 
         protected override void DoAttributes()
         {
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPanelCBShowCommand(Owner, "EditorPlanetCBAttributes", Owner.ActualSelection.CelestialBody, Simulator));
         }
 

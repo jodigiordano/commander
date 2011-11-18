@@ -329,7 +329,7 @@ namespace EphemereGames.Commander.Simulation
             Simulator.Scene.Particles.Return(NanobotsInfectionEffect);
 
 
-            if (!Simulator.DemoMode && Simulator.State == GameState.Running && CashValue > 0)
+            if (Simulator.GameMode && Simulator.State == GameState.Running && CashValue > 0)
                 Simulator.Scene.Animations.Add(new CashTakenAnimation(CashValue, Position, VisualPriorities.Default.EnemyCashAnimation));
 
             LastHitBy = null;

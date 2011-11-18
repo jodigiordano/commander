@@ -42,6 +42,9 @@
             if (CelestialBody == null)
                 return;
 
+            if (CelestialBody is Planet && !((Planet) CelestialBody).IsALevel)
+                return;
+
             DrawInfos();
 
             if (!(CelestialBody is Planet))

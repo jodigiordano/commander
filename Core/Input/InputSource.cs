@@ -8,6 +8,7 @@
 
     class InputSource
     {
+        public Player Player;
         public List<Keys> MappedKeys;
         public List<MouseButton> MappedMouseButtons;
         public List<Buttons> MappedGamePadButtons;
@@ -20,7 +21,6 @@
         public bool GamePadLeftJoystickConsumed;
         public bool GamePadRightJoystickConsumed;
 
-        private Player Player;
         private Vector2 MouseBasePosition;
         private int PreviousMouseWheelValue;
 
@@ -325,6 +325,8 @@
                     listener.DoGamePadButtonReleased(Player, button);
             }
 
+            if (GamePadJoystickMoved.Count == 0)
+                return;
 
             if (!GamePadLeftJoystickConsumed && GamePadJoystickMoved[Buttons.LeftStick] != Vector3.Zero)
                 listener.DoGamePadJoystickMoved(Player, Buttons.LeftStick, GamePadJoystickMoved[Buttons.LeftStick]);

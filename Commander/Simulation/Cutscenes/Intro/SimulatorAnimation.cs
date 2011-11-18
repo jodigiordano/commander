@@ -29,15 +29,12 @@
 
             Simulator = new Simulator(scene, Main.WorldsFactory.CutsceneDescriptors[1])
             {
-                DemoMode = true,
                 CutsceneMode = true,
                 AsteroidBeltOverride = true
             };
             Simulator.Initialize();
 
             Scene.VisualEffects.Add(Background, VisualEffects.Fade(Background.Alpha, 0, 0, 4000));
-            //Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.ChangeColor(Color.Transparent, 0, 2000));
-            //Scene.VisualEffects.Add(Background, Core.Visual.VisualEffects.FadeOutTo0(255, TimeBeforeIn, 5000));
         }
 
 

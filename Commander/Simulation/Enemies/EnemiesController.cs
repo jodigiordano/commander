@@ -63,10 +63,14 @@
         {
             Minerals.Clear();
             MineralsDistribution.Clear();
-            NextWave = Simulator.Data.Level.Waves.First;
 
             TimeElapsedLastWave = 0;
             EnemiesCreatedCounter = 0;
+
+            if (Simulator.EditingMode)
+                return;
+
+            NextWave = Simulator.Data.Level.Waves.First;
 
             NotifyNextWaveCompositionChanged();
 
@@ -292,6 +296,9 @@
         private void AddWave()
         {
             if (!SpawnEnemies)
+                return;
+
+            if (Simulator.EditingMode)
                 return;
 
             TimeElapsedLastWave += Preferences.TargetElapsedTimeMs;

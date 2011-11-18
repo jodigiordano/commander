@@ -8,8 +8,8 @@
 
     class WaveSubPanel : HorizontalPanel
     {
-        public int Id;
-        public List<EnemyType> Enemies;
+        private int Id;
+        private List<EnemyType> Enemies;
 
         private Label WaveEmitterLabel;
         private NumericHorizontalSlider StartingTime;
@@ -165,19 +165,11 @@
         private void DoEnemiesPanel(PanelWidget widget, Commander.Player player)
         {
             var enemiesAssets = (EnemiesAssetsPanel) Simulator.Data.Panels["EditorEnemies"];
-            enemiesAssets.PanelToOpenOnClose = Name;
+            enemiesAssets.PanelToOpenOnClose = "EditorWaves";
+            enemiesAssets.Enemies = Enemies;
 
-            if (Id < Simulator.Data.Level.Descriptor.Waves.Count)
-                enemiesAssets.Enemies = Simulator.Data.Level.Descriptor.Waves[Id].Enemies;
-            else
-                enemiesAssets.Enemies = new List<EnemyType>();
-
-            Simulator.EditorController.ExecuteCommand(
-                new EditorPanelShowCommand(Simulator.Data.Players[player], "EditorEnemies")
-                {
-                    UsePosition = true,
-                    Position = Position + new Vector3(Size, 0) 
-                });
+            Simulator.MultiverseController.ExecuteCommand(
+                new EditorPanelShowCommand(Simulator.Data.Players[player], "EditorEnemies"));
         }
     }
 }

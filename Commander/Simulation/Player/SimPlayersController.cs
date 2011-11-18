@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
     using System.Collections.Generic;
+    using EphemereGames.Commander.Simulation.Player;
     using EphemereGames.Core.Input;
     using EphemereGames.Core.Physics;
     using Microsoft.Xna.Framework;
@@ -153,7 +154,7 @@
                     CommonStash.Lives += mineral.Value;
                     CelestialBodyToProtect.LifePoints += mineral.Value;
                 }
-                else if (!Simulator.EditorMode || Simulator.EditorPlaytestingMode)
+                else if (!Simulator.EditingMode)
                 {
                     CommonStash.Cash += mineral.Value;
                     NotifyCommonStashChanged(CommonStash);
@@ -170,7 +171,7 @@
 
             if (enemy != null)
             {
-                if (Simulator.State == GameState.Running && (!Simulator.EditorMode || Simulator.EditorPlaytestingMode))
+                if (Simulator.State == GameState.Running && !Simulator.EditingMode)
                     CommonStash.Cash += enemy.CashValue;
 
                 if (Simulator.State == GameState.Running)
@@ -203,7 +204,7 @@
 
             player.Move(ref delta, ((Commander.Player) p).MovingSpeed);
 
-            if (Simulator.DemoMode)
+            if (!Simulator.GameMode)
                 return;
 
             if (player.ActualSelection.TurretToPlace != null &&
@@ -319,7 +320,12 @@
         {
             var player = Simulator.Data.Players[p];
 
-            if (Simulator.DemoMode)
+            if (player.ActualSelection.OpenedMenu != null ||
+                player.ActualSelection.EditingState != EditorEditingState.None ||
+                player.ActualSelection.TurretToPlace != null)
+                return;
+
+            if (!Simulator.GameMode)
                 Simulator.Data.Players[p].Firing = true;
 
             else if (player.ActualSelection.TurretToPlace == null)
@@ -338,32 +344,34 @@
             var player = Simulator.Data.Players[pl];
 
             // activate a power-up
-            if (player.ActualSelection.PowerUpToBuy != PowerUpType.None)
-            {
-                if (!AvailablePowerUps[player.ActualSelection.PowerUpToBuy])
-                {
-                    NotifyPlayerActionRefused(player);
-                }
+            //if (player.ActualSelection.PowerUpToBuy != PowerUpType.None)
+            //{
+            //    if (!AvailablePowerUps[player.ActualSelection.PowerUpToBuy])
+            //    {
+            //        NotifyPlayerActionRefused(player);
+            //    }
 
-                else
-                {
-                    PowerUp p = Simulator.Data.Level.AvailablePowerUps[player.ActualSelection.PowerUpToBuy];
+            //    else
+            //    {
+            //        PowerUp p = Simulator.Data.Level.AvailablePowerUps[player.ActualSelection.PowerUpToBuy];
 
-                    NotifyActivatePowerUpAsked(player.ActualSelection.PowerUpToBuy, player);
+            //        NotifyActivatePowerUpAsked(player.ActualSelection.PowerUpToBuy, player);
 
-                    if (p.PayOnActivation)
-                    {
-                        CommonStash.Cash -= p.BuyPrice;
-                        NotifyCommonStashChanged(CommonStash);
-                    }
-                }
+            //        if (p.PayOnActivation)
+            //        {
+            //            CommonStash.Cash -= p.BuyPrice;
+            //            NotifyCommonStashChanged(CommonStash);
+            //        }
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
+
+            var menu = player.ActualSelection.OpenedMenu; // here because can become null.
 
 
             // buy a turret
-            if (player.ActualSelection.TurretToBuy != TurretType.None)
+            if (menu is CelestialBodyMenu)
             {
                 if (!AvailableTurrets[player.ActualSelection.TurretToBuy])
                 {
@@ -406,7 +414,7 @@
 
 
             // upgrade a turret
-            if (player.ActualSelection.Turret != null && !player.ActualSelection.Turret.Disabled)
+            if (menu is TurretMenu)
             {
                 switch (player.ActualSelection.TurretChoice)
                 {
@@ -430,8 +438,8 @@
             }
 
 
-            // call next wave //todo
-            if (player.PowerUpInUse == PowerUpType.None && player.ActualSelection.CallNextWave && Simulator.Data.ActiveWaves.Count < 3)
+            // call next wave
+            if (menu is StartingPathMenu && Simulator.Data.ActiveWaves.Count < 3)
             {
                 NotifyNextWaveAsked();
                 return;

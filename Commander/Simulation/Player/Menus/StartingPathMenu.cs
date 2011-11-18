@@ -30,9 +30,31 @@
         }
 
 
-        public override void UpdateSelection()
+        public override void OnOpen()
         {
-            Owner.ActualSelection.CallNextWave = Visible;
+            Owner.ActualSelection.CallNextWave = true;
+        }
+
+
+        public override void OnClose()
+        {
+            Owner.ActualSelection.CallNextWave = false;
+        }
+
+
+        public override void NextChoice()
+        {
+            base.NextChoice();
+
+            Owner.ActualSelection.CallNextWave = true;
+        }
+
+
+        public override void PreviousChoice()
+        {
+            base.PreviousChoice();
+
+            Owner.ActualSelection.CallNextWave = true;
         }
 
 
@@ -82,8 +104,8 @@
             {
                 return
                     base.Visible &&
-                    !Simulator.EditorEditingMode &&
-                    !Simulator.DemoMode &&
+                    !Simulator.EditingMode &&
+                    Simulator.GameMode &&
                     RemainingWaves > 0 &&
                     Owner.ActualSelection.CelestialBody != null &&
                     Owner.ActualSelection.CelestialBody.FirstOnPath;

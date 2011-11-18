@@ -57,7 +57,7 @@
             base.Close();
 
             if (Enable.Value)
-                Simulator.Data.Level.InfiniteWaves = EditorLevelGenerator.GenerateInfiniteWave(Simulator, Enemies);
+                Simulator.Data.Level.InfiniteWaves = MultiverseLevelGenerator.GenerateInfiniteWave(Simulator, Enemies);
             else
                 Simulator.Data.Level.InfiniteWaves = null;
         }
@@ -70,7 +70,7 @@
 
             enemiesAssets.Enemies = Enemies;
 
-            Simulator.EditorController.ExecuteCommand(
+            Simulator.MultiverseController.ExecuteCommand(
                 new EditorPanelShowCommand(Simulator.Data.Players[player], "EditorEnemies")
                 {
                     UsePosition = true,

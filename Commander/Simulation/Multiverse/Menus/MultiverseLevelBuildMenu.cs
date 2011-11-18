@@ -3,15 +3,15 @@
     using System.Collections.Generic;
 
 
-    class EditorLevelBuildMenu : EditorContextualMenu
+    class MultiverseLevelBuildMenu : MultiverseContextualMenu
     {
-        public EditorLevelBuildMenu(Simulator simulator, double visualPriority, SimPlayer owner)
+        public MultiverseLevelBuildMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
             var choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("AddPlanet", "Add a planet", 2, DoAddPlanet),
-                new EditorTextContextualMenuChoice("AddPinkHole", "Add a pink hole", 2, DoAddPinkHole),
+                new EditorTextContextualMenuChoice("AddPlanet", "Add planet", 2, DoAddPlanet),
+                new EditorTextContextualMenuChoice("AddPinkHole", "Add pink hole", 2, DoAddPinkHole),
                 new EditorTextContextualMenuChoice("Background", "Background", 2, DoBackground),
                 new EditorTextContextualMenuChoice("Turrets", "Turrets", 2, DoTurrets),
                 new EditorTextContextualMenuChoice("Player", "Player", 2, DoPlayer),
@@ -33,7 +33,7 @@
                 return
                     base.Visible &&
                     Simulator.GameMode &&
-                    Simulator.EditorEditingMode &&
+                    Simulator.EditingMode &&
                     Owner.ActualSelection.CelestialBody == null;
             }
 
@@ -52,9 +52,11 @@
         private void DoAddPlanet()
         {
             var command = new EditorCelestialBodyAddCommand(Owner,
-                EditorLevelGenerator.GeneratePlanetCB(Simulator, VisualPriorities.Default.CelestialBody));
+                MultiverseLevelGenerator.GeneratePlanetCB(Simulator, VisualPriorities.Default.CelestialBody));
 
-            Simulator.EditorController.ExecuteCommand(command);
+            ((Planet) command.CelestialBody).IsALevel = false;
+
+            Simulator.MultiverseController.ExecuteCommand(command);
 
             Visible = false;
         }
@@ -63,9 +65,9 @@
         private void DoAddPinkHole()
         {
             var command = new EditorCelestialBodyAddCommand(Owner,
-                EditorLevelGenerator.GeneratePinkHoleCB(Simulator, VisualPriorities.Default.CelestialBody));
+                MultiverseLevelGenerator.GeneratePinkHoleCB(Simulator, VisualPriorities.Default.CelestialBody));
 
-            Simulator.EditorController.ExecuteCommand(command);
+            Simulator.MultiverseController.ExecuteCommand(command);
 
             Visible = false;
         }
@@ -73,7 +75,7 @@
 
         private void DoBackground()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorBackground"));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorBackground"));
 
             Visible = false;
         }
@@ -81,7 +83,7 @@
 
         private void DoWaves()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorWaves"));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorWaves"));
 
             Visible = false;
         }
@@ -89,9 +91,9 @@
 
         private void DoPlaytest()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPlaytestCommand(Owner));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPlaytestCommand(Owner));
 
-            Simulator.EditMode = false;
+            Simulator.EditingMode = false;
             Simulator.Data.Level.SyncDescriptor();
             Simulator.Initialize();
             Simulator.SyncPlayers();
@@ -102,7 +104,7 @@
 
         private void DoTurrets()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorTurrets"));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorTurrets"));
 
             Visible = false;
         }
@@ -110,7 +112,7 @@
 
         private void DoPowerUps()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorPowerUps"));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorPowerUps"));
 
             Visible = false;
         }
@@ -118,7 +120,7 @@
 
         private void DoPlayer()
         {
-            Simulator.EditorController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorPlayer"));
+            Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "EditorPlayer"));
 
             Visible = false;
         }

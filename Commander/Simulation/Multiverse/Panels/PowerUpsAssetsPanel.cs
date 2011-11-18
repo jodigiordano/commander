@@ -57,7 +57,7 @@
             else
                 Simulator.Data.Level.AvailablePowerUps.Remove(checkbox.PowerUp);
 
-            //Simulator.EditorController.ExecuteCommand(
+            //Simulator.MultiverseController.ExecuteCommand(
             //    new EditorSimpleCommand("AddOrRemovePowerUp"));
         }
     }

@@ -14,18 +14,16 @@ namespace EphemereGames.Commander.Simulation
         public Dictionary<CelestialBody, int> AvailableLevelsWorldMode;
         public Dictionary<CelestialBody, int> AvailableWarpsWorldMode;
 
-        public bool DebugMode;
+        // exclusive modes
         public bool WorldMode;
-        public bool DemoMode;
         public bool CutsceneMode;
+        public bool GameMode;
+        public bool MainMenuMode;
+
+        // combined modes
+        public bool DebugMode;
         public bool MultiverseMode;
-        public bool EditorMode;
-        public bool EditMode;
-        public bool EditorEditingMode       { get { return EditorMode && EditMode; } }
-        public bool EditorPlaytestingMode   { get { return EditorMode && !EditMode; } }
-        public bool GameMode                { get { return !DemoMode; } }
-        public bool MainMenuMode            { get { return DemoMode && !WorldMode && !CutsceneMode && !MultiverseMode && !EditorMode; } }
-        public bool EditorWorldMode         { get { return WorldMode && EditorMode; } }
+        public bool EditingMode;
 
 
         private bool canSelectCelestialBodies;
@@ -33,13 +31,13 @@ namespace EphemereGames.Commander.Simulation
         public bool AsteroidBeltOverride;
 
 
-        public GameState State { get { return LevelsController.State; } set { LevelsController.State = value; } }
+        public GameState State { get { return ObjectivesController.State; } set { ObjectivesController.State = value; } }
 
         internal Data Data;
 
         public PlanetarySystemController PlanetarySystemController;
         public MessagesController MessagesController;
-        private ObjectivesController LevelsController;
+        private ObjectivesController ObjectivesController;
         private EnemiesController EnemiesController;
         private BulletsController BulletsController;
         private CollisionsController CollisionsController;
@@ -48,7 +46,7 @@ namespace EphemereGames.Commander.Simulation
         private SpaceshipsController SpaceshipsController;   
         private GUIController GUIController;
         private PowerUpsController PowerUpsController;
-        internal EditorController EditorController;
+        internal MultiverseController MultiverseController;
         private PanelsController PanelsController;
         internal CameraController CameraController;
         internal TweakingController TweakingController;
@@ -145,19 +143,19 @@ namespace EphemereGames.Commander.Simulation
             MessagesController = new MessagesController(this);
             GUIController = new GUIController(this);
             PowerUpsController = new PowerUpsController(this);
-            LevelsController = new ObjectivesController(this);
-            EditorController = new EditorController(this);
+            ObjectivesController = new ObjectivesController(this);
+            MultiverseController = new MultiverseController(this);
             PanelsController = new PanelsController(this);
             AudioController = new AudioController(this);
             CameraController = new Simulation.CameraController(this);
 
             DebugMode = Preferences.Debug;
             WorldMode = false;
-            DemoMode = false;
             CutsceneMode = false;
-            EditorMode = false;
-            EditMode = false;
             MultiverseMode = false;
+            EditingMode = false;
+            GameMode = false;
+            MainMenuMode = false;
 
             AsteroidBeltOverride = false;
             CanSelectCelestialBodies = true;
@@ -167,7 +165,7 @@ namespace EphemereGames.Commander.Simulation
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(BulletsController.DoObjectHit);
             CollisionsController.ObjectOutOfBounds += new PhysicalObjectHandler(BulletsController.DoObjectOutOfBounds);
             SimPlayersController.BuyTurretAsked += new TurretSimPlayerHandler(TurretsController.DoBuyTurret);
-            EnemiesController.WaveEnded += new NoneHandler(LevelsController.DoWaveEnded);
+            EnemiesController.WaveEnded += new NoneHandler(ObjectivesController.DoWaveEnded);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(SimPlayersController.DoObjectDestroyed);
             CollisionsController.InTurretRange += new TurretPhysicalObjectHandler(TurretsController.DoInRangeTurret);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
@@ -189,16 +187,16 @@ namespace EphemereGames.Commander.Simulation
             SpaceshipsController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(CollisionsController.DoObjectDestroyed);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(CollisionsController.DoObjectCreated);
-            PlanetarySystemController.ObjectHit += new PhysicalObjectHandler(LevelsController.DoObjectHit);
-            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(LevelsController.DoObjectDestroyed);
+            PlanetarySystemController.ObjectHit += new PhysicalObjectHandler(ObjectivesController.DoObjectHit);
+            PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(ObjectivesController.DoObjectDestroyed);
             EnemiesController.EnemyReachedEndOfPath += new EnemyCelestialBodyHandler(this.DoEnemyReachedEndOfPath);
             PlanetarySystemController.ObjectDestroyed += new PhysicalObjectHandler(this.DoCelestialBodyDestroyed);
             SimPlayersController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
-            LevelsController.NewGameState += new NewGameStateHandler(GUIController.DoGameStateChanged);
+            ObjectivesController.NewGameState += new NewGameStateHandler(GUIController.DoGameStateChanged);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.DoPlayerSelectionChanged);
             TurretsController.TurretReactivated += new TurretHandler(SimPlayersController.DoTurretReactivated);
-            LevelsController.NewGameState += new NewGameStateHandler(this.DoNewGameState); //must come after GUIController.DoGameStateChanged
-            LevelsController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
+            ObjectivesController.NewGameState += new NewGameStateHandler(this.DoNewGameState); //must come after GUIController.DoGameStateChanged
+            ObjectivesController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
             SimPlayersController.TurretToPlaceSelected += new TurretSimPlayerHandler(GUIController.DoTurretToPlaceSelected);
             SimPlayersController.TurretToPlaceDeselected += new TurretSimPlayerHandler(GUIController.DoTurretToPlaceDeselected);
             SimPlayersController.BuyTurretAsked += new TurretSimPlayerHandler(GUIController.DoTurretBought);
@@ -215,10 +213,10 @@ namespace EphemereGames.Commander.Simulation
             PowerUpsController.PowerUpStopped += new PowerUpSimPlayerHandler(BulletsController.DoPowerUpStopped);
             PowerUpsController.PowerUpStarted += new PowerUpSimPlayerHandler(PlanetarySystemController.DoPowerUpStarted);
             PowerUpsController.PowerUpStopped += new PowerUpSimPlayerHandler(PlanetarySystemController.DoPowerUpStopped);
-            PowerUpsController.PowerUpStarted += new PowerUpSimPlayerHandler(LevelsController.DoPowerUpStarted);
+            PowerUpsController.PowerUpStarted += new PowerUpSimPlayerHandler(ObjectivesController.DoPowerUpStarted);
             CollisionsController.TurretBoosted += new TurretTurretHandler(TurretsController.DoTurretBoosted);
             SimPlayersController.PlayerMoved += new SimPlayerHandler(PowerUpsController.DoPlayerMoved);
-            LevelsController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
+            ObjectivesController.NewGameState += new NewGameStateHandler(PowerUpsController.DoNewGameState);
             TurretsController.ObjectCreated += new PhysicalObjectHandler(SimPlayersController.DoObjectCreated);
             CollisionsController.BulletDeflected += new EnemyBulletHandler(BulletsController.DoBulletDeflected);
             BulletsController.ObjectDestroyed += new PhysicalObjectHandler(TurretsController.DoObjectDestroyed);
@@ -236,19 +234,19 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.ShowAdvancedViewAsked += new SimPlayerHandler(GUIController.DoShowAdvancedViewAsked);
             SimPlayersController.HideAdvancedViewAsked += new SimPlayerHandler(GUIController.DoHideAdvancedViewAsked);
             CollisionsController.ObjectHit += new PhysicalObjectPhysicalObjectHandler(SimPlayersController.DoObjectHit);
-            SimPlayersController.PlayerMoved += new SimPlayerHandler(EditorController.DoPlayerMoved);
-            EditorController.EditorCommandExecuted += new EditorCommandHandler(PlanetarySystemController.DoEditorCommandExecuted); //must be executed before sync of gui
-            EditorController.EditorCommandExecuted += new EditorCommandHandler(PowerUpsController.DoEditorCommandExecuted); //must be done before the Players Controller
-            EditorController.EditorCommandExecuted += new EditorCommandHandler(SimPlayersController.DoEditorCommandExecuted); //must be done before the GUI
-            EditorController.EditorCommandExecuted += new EditorCommandHandler(LevelsController.DoEditorCommandExecuted); // must be donne before the GUI
-            EditorController.EditorCommandExecuted += new EditorCommandHandler(GUIController.DoEditorCommandExecuted);
-            EditorController.EditorCommandExecuted += new EditorCommandHandler(PanelsController.DoEditorCommandExecuted);
+            SimPlayersController.PlayerMoved += new SimPlayerHandler(MultiverseController.DoPlayerMoved);
+            MultiverseController.EditorCommandExecuted += new EditorCommandHandler(PlanetarySystemController.DoEditorCommandExecuted); //must be executed before sync of gui
+            MultiverseController.EditorCommandExecuted += new EditorCommandHandler(PowerUpsController.DoEditorCommandExecuted); //must be done before the Players Controller
+            MultiverseController.EditorCommandExecuted += new EditorCommandHandler(SimPlayersController.DoEditorCommandExecuted); //must be done before the GUI
+            MultiverseController.EditorCommandExecuted += new EditorCommandHandler(ObjectivesController.DoEditorCommandExecuted); // must be donne before the GUI
+            MultiverseController.EditorCommandExecuted += new EditorCommandHandler(GUIController.DoEditorCommandExecuted);
+            MultiverseController.EditorCommandExecuted += new EditorCommandHandler(PanelsController.DoEditorCommandExecuted);
             SimPlayersController.ObjectCreated += new PhysicalObjectHandler(BulletsController.DoObjectCreated);
             PanelsController.PanelOpened += new StringHandler(AudioController.DoPanelOpened);
             PanelsController.PanelClosed += new StringHandler(AudioController.DoPanelClosed);
             EnemiesController.ObjectDestroyed += new PhysicalObjectHandler(GUIController.DoObjectDestroyed);
             EnemiesController.NextWaveCompositionChanged += new NextWaveHandler(GUIController.DoNextWaveCompositionChanged);
-            LevelsController.NewGameState += new NewGameStateHandler(SimPlayersController.DoNewGameState);
+            ObjectivesController.NewGameState += new NewGameStateHandler(SimPlayersController.DoNewGameState);
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(SimPlayersController.DoPlayersCollided);
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(AudioController.DoPlayersCollided);
             CollisionsController.PlayersCollided += new SimPlayerSimPlayerHandler(GUIController.DoPlayersCollided);
@@ -285,7 +283,7 @@ namespace EphemereGames.Commander.Simulation
             SimPlayersController.PlayerFired += new SimPlayerHandler(AudioController.DoPlayerFired);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(AudioController.DoPlayerSelectionChanged);
             SimPlayersController.PlayerActionRefused += new SimPlayerHandler(AudioController.DoPlayerActionRefused);
-            LevelsController.NewGameState += new NewGameStateHandler(AudioController.DoNewGameState);
+            ObjectivesController.NewGameState += new NewGameStateHandler(AudioController.DoNewGameState);
             EnemiesController.ObjectCreated += new PhysicalObjectHandler(AudioController.DoObjectCreated);
 
             Main.CheatsController.CheatActivated += new StringHandler(DoCheatActivated);
@@ -324,7 +322,6 @@ namespace EphemereGames.Commander.Simulation
             AudioController.CameraData = CameraController.CameraData;
 
             TweakingController.Initialize();
-            LevelsController.Initialize();
             EnemiesController.Initialize();
             TurretsController.Initialize();
             PlanetarySystemController.Initialize();
@@ -336,8 +333,10 @@ namespace EphemereGames.Commander.Simulation
             CameraController.Initialize();
             PanelsController.Initialize();
 
-            if (EditorMode)
-                EditorController.Initialize(); // Must be done after PanelsController
+            if (MultiverseMode)
+                MultiverseController.Initialize(); // Must be done after PanelsController
+
+            ObjectivesController.Initialize(); 
         }
 
 
@@ -372,6 +371,15 @@ namespace EphemereGames.Commander.Simulation
 
             if (Inputs.ConnectedPlayers.Count > 0)
                 AudioController.TeleportPlayers(true);
+
+            if (EditingMode)
+                Data.Level.SyncDescriptor();
+        }
+
+
+        public void OnWorldChange()
+        {
+            AudioController.DoWorldChange();
         }
 
 
@@ -395,7 +403,7 @@ namespace EphemereGames.Commander.Simulation
 
         public void Update()
         {
-            LevelsController.Update();
+            ObjectivesController.Update();
             PanelsController.Update(); // must be done before SimPlayersController toLocal check if the player want toLocal move or not next tick
 
             foreach (var p in Inputs.ConnectedPlayers)
@@ -444,13 +452,13 @@ namespace EphemereGames.Commander.Simulation
             GUIController.Draw();
             PanelsController.Draw();
             SimPlayersController.Draw();
-            LevelsController.Draw();
+            ObjectivesController.Draw();
         }
 
 
         public void AddNewGameStateListener(NewGameStateHandler handler)
         {
-            LevelsController.NewGameState += handler;
+            ObjectivesController.NewGameState += handler;
         }
 
 
@@ -472,7 +480,7 @@ namespace EphemereGames.Commander.Simulation
                     DoPlayerDisconnected(player);
             }
 
-            if (DemoMode)
+            if (MainMenuMode)
             {
                 GUIController.SyncNewGameMenu();
             }
@@ -500,7 +508,10 @@ namespace EphemereGames.Commander.Simulation
         internal void TriggerNewGameState(GameState state)
         {
             State = state;
-            LevelsController.TriggerNewGameState(state);
+            ObjectivesController.TriggerNewGameState(state);
+
+            if (state == GameState.Running)
+                PanelsController.CloseCurrentPanel();
         }
 
 
@@ -521,7 +532,7 @@ namespace EphemereGames.Commander.Simulation
             if (State == GameState.Won)
                 return;
 
-            if (!DemoMode && State != GameState.Lost)
+            if (GameMode && State != GameState.Lost)
             {
                 foreach (var player in Inputs.Players)
                 {
@@ -544,7 +555,7 @@ namespace EphemereGames.Commander.Simulation
 
         private void DoCheatActivated(string name)
         {
-            if (DemoMode || EditorMode || WorldMode)
+            if (MainMenuMode || WorldMode || EditingMode)
                 return;
 
             if (State != GameState.Running)
@@ -553,8 +564,8 @@ namespace EphemereGames.Commander.Simulation
             if (name == "LevelWon")
             {
                 State = GameState.Won;
-                LevelsController.ComputeFinalScore();
-                LevelsController.TriggerNewGameState(State);
+                ObjectivesController.ComputeFinalScore();
+                ObjectivesController.TriggerNewGameState(State);
             }
         }
 
@@ -659,27 +670,30 @@ namespace EphemereGames.Commander.Simulation
             else if (key == player.KeyboardConfiguration.SelectionPrevious)
                 SimPlayersController.DoToggleChoice(player, -1);
 
-            if (EditorMode)
+            if (MultiverseMode)
             {
                 if (key == player.KeyboardConfiguration.Select)
-                    EditorController.DoSelectAction(simPlayer);
+                    MultiverseController.DoSelectAction(simPlayer);
                 else if (key == player.KeyboardConfiguration.Cancel)
-                    EditorController.DoCancelAction(simPlayer);
+                    MultiverseController.DoCancelAction(simPlayer);
             }
 
-            if (key == player.KeyboardConfiguration.Back)
-            {
-                TriggerNewGameState(GameState.Paused);
-                PanelsController.ShowPanel("Pause", player.Position);
-            }
-
-            if (EditorMode && DemoMode)
+            if (MultiverseMode && WorldMode)
                 return;
 
             if (key == player.KeyboardConfiguration.Select)
                 SimPlayersController.DoSelectAction(player);                
             else if (key == player.KeyboardConfiguration.Cancel)
                 SimPlayersController.DoCancelAction(player);
+
+            if (MultiverseMode)
+                return;
+
+            if (key == player.KeyboardConfiguration.Back && State == GameState.Running)
+            {
+                TriggerNewGameState(GameState.Paused);
+                PanelsController.ShowPanel("Pause", player.Position);
+            }
         }
 
 
@@ -733,8 +747,8 @@ namespace EphemereGames.Commander.Simulation
 
             delta *= player.MovingSpeed * 10;
 
-            if (EditorMode && delta != Vector3.Zero)
-                EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
+            if (MultiverseMode && delta != Vector3.Zero)
+                MultiverseController.DoPlayerMovedDelta(simPlayer, ref delta);
 
             if (simPlayer.PowerUpInUse != PowerUpType.None)
                 PowerUpsController.DoPlayerMovedDelta(simPlayer, delta);
@@ -773,7 +787,7 @@ namespace EphemereGames.Commander.Simulation
             if (key == player.KeyboardConfiguration.MoveDown)
                 simPlayer.MovingDown = false;
 
-            if (!DemoMode && key == player.KeyboardConfiguration.AdvancedView)
+            if (GameMode && key == player.KeyboardConfiguration.AdvancedView)
                 SimPlayersController.DoAdvancedViewAction(player, false);
 
             if (simPlayer.Firing && key == player.KeyboardConfiguration.Fire)
@@ -806,16 +820,13 @@ namespace EphemereGames.Commander.Simulation
                     PowerUpsController.DoInputPressed(simPlayer);
             }
 
-            if (EditorMode)
+            if (MultiverseMode)
             {
                 if (button == player.MouseConfiguration.Select)
-                    EditorController.DoSelectAction(simPlayer);
+                    MultiverseController.DoSelectAction(simPlayer);
             }
 
-            if (EditorEditingMode)
-                return;
-
-            if (!DemoMode)
+            if (GameMode)
             {
                 if (button == player.MouseConfiguration.Select)
                     SimPlayersController.DoSelectAction(player);
@@ -850,16 +861,16 @@ namespace EphemereGames.Commander.Simulation
             if (simPlayer == null) // disconnected
                 return;
 
-            if (EditorMode)
+            if (MultiverseMode)
             {
                 if (button == player.MouseConfiguration.Cancel)
-                    EditorController.DoCancelAction(simPlayer);
+                    MultiverseController.DoCancelAction(simPlayer);
             }
 
             if (simPlayer.Firing)
                 SimPlayersController.StopFire(player);
 
-            if (EditorEditingMode)
+            if (EditingMode)
                 return;
 
             if (simPlayer.PowerUpInUse != PowerUpType.None && button == player.MouseConfiguration.Select)
@@ -941,13 +952,13 @@ namespace EphemereGames.Commander.Simulation
             else if (button == player.GamepadConfiguration.SelectionPrevious || button == player.GamepadConfiguration.AlternateSelectionPrevious)
                 SimPlayersController.DoToggleChoice(player, -1);
 
-            if (EditorMode)
+            if (MultiverseMode)
             {
                 if (button == player.GamepadConfiguration.Select)
-                    EditorController.DoSelectAction(simPlayer);
+                    MultiverseController.DoSelectAction(simPlayer);
             }
 
-            if (EditorEditingMode)
+            if (EditingMode)
                 return;
 
             if (simPlayer.PowerUpInUse != PowerUpType.None)
@@ -967,14 +978,17 @@ namespace EphemereGames.Commander.Simulation
             else if (button == player.GamepadConfiguration.Cancel)
                 SimPlayersController.DoCancelAction(player);
 
-            else if (button == player.GamepadConfiguration.Back)
+            else if (button == player.GamepadConfiguration.AdvancedView)
+                SimPlayersController.DoAdvancedViewAction(player, true);
+
+            if (MultiverseMode)
+                return;
+
+            if (button == player.GamepadConfiguration.Back && State == GameState.Running)
             {
                 TriggerNewGameState(GameState.Paused);
                 PanelsController.ShowPanel("Pause", player.Position);
             }
-
-            else if (button == player.GamepadConfiguration.AdvancedView)
-                SimPlayersController.DoAdvancedViewAction(player, true);
         }
 
 
@@ -991,16 +1005,16 @@ namespace EphemereGames.Commander.Simulation
                 return;
 
 
-            if (EditorMode)
+            if (MultiverseMode)
             {
                 if (button == player.GamepadConfiguration.Cancel)
-                    EditorController.DoCancelAction(simPlayer);
+                    MultiverseController.DoCancelAction(simPlayer);
             }
 
-            if (EditorEditingMode)
+            if (EditingMode)
                 return;
 
-            if (button == player.GamepadConfiguration.AdvancedView && !DemoMode)
+            if (GameMode && button == player.GamepadConfiguration.AdvancedView)
                 SimPlayersController.DoAdvancedViewAction(player, false);
 
             if (simPlayer.PowerUpInUse != PowerUpType.None &&
@@ -1022,8 +1036,8 @@ namespace EphemereGames.Commander.Simulation
             {
                 delta *= player.MovingSpeed * 10;
 
-                if (EditorMode)
-                    EditorController.DoPlayerMovedDelta(simPlayer, ref delta);
+                if (MultiverseMode)
+                    MultiverseController.DoPlayerMovedDelta(simPlayer, ref delta);
 
                 if (simPlayer.PowerUpInUse != PowerUpType.None)
                     PowerUpsController.DoPlayerMovedDelta(simPlayer, delta);

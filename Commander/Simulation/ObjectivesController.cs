@@ -29,7 +29,7 @@
             WavesCounter = 0;
             ElapsedTime = 0;
 
-            if (!Simulator.DemoMode && !Simulator.WorldMode && !Simulator.EditorMode && Level.HelpText != "")
+            if (Simulator.GameMode && !Simulator.EditingMode && Level.HelpText != "")
             {
                 Simulator.Scene.Add(new HelpAnimation(Level.HelpText, VisualPriorities.Foreground.HelpMessage));
             }
@@ -60,14 +60,24 @@
         {
             WavesCounter++;
 
-            if (WavesCounter == Level.Waves.Count && State == GameState.Running && !Simulator.DemoMode && !Simulator.EditorMode)
-            {
-                State = Level.CelestialBodyToProtect.Alive ? GameState.Won : GameState.Lost;
+            if (IsGameOver)
+                DoGameEnded();
+        }
 
-                ComputeFinalScore();
 
-                NotifyNewGameState(State);
-            }
+        private bool IsGameOver
+        {
+            get { return Simulator.GameMode && !Simulator.EditingMode && WavesCounter == Level.Waves.Count && State == GameState.Running; }
+        }
+
+
+        private void DoGameEnded()
+        {
+            State = Level.CelestialBodyToProtect != null && Level.CelestialBodyToProtect.Alive ? GameState.Won : GameState.Lost;
+
+            ComputeFinalScore();
+
+            NotifyNewGameState(State);
         }
 
 
@@ -78,10 +88,10 @@
             if (celestialBody == null)
                 return;
 
-            if (Simulator.EditorMode && celestialBody == Level.CelestialBodyToProtect)
+            if (Simulator.EditingMode && celestialBody == Level.CelestialBodyToProtect)
                 celestialBody.LifePoints = Level.CommonStash.Lives;
 
-            if (Simulator.EditorMode || Simulator.DemoMode)
+            if (Simulator.EditingMode || !Simulator.GameMode)
                 return;
 
             if (celestialBody == Level.CelestialBodyToProtect)
@@ -96,8 +106,8 @@
 
             CelestialBody celestialBody = obj as CelestialBody;
 
-            if (celestialBody == null || Simulator.DemoMode ||
-                Simulator.EditorMode || celestialBody != Level.CelestialBodyToProtect)
+            if (celestialBody == null || !Simulator.GameMode ||
+                Simulator.EditingMode || celestialBody != Level.CelestialBodyToProtect)
                 return;
 
             State = GameState.Lost;
@@ -219,7 +229,7 @@
             {
                 var command = (EditorPlayerBulletDamageCommand) c;
 
-                Level.BulletDamage = command.BulletDamage;
+                Level.Descriptor.Player.BulletDamage = command.BulletDamage;
 
                 return;
             }

@@ -55,6 +55,8 @@
                 t.Stop();
 
             DisabledTurrets.Clear();
+            Turrets.Clear();
+            DisabledTurretsLastValues.Clear();
         }
 
 

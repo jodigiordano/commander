@@ -132,6 +132,7 @@
             LastPosition = position;
 
             SteeringBehavior.Move();
+            Simulator.Data.Battlefield.Clamp(ref position, ((int) Size) / 2);
 
             Circle.Position = Position;
 

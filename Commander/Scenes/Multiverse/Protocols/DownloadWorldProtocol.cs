@@ -63,14 +63,9 @@
                     DownloadFile(
                         WorldsFactory.GetWorldMultiverseRemoteZipFile(WorldId),
                         WorldsFactory.GetWorldMultiverseLocalZipFile(WorldId));
-                }
 
-                else
-                {
-                    State = ProtocolState.EndedWithSuccess;
+                    return;
                 }
-
-                return;
             }
 
             base.DoNextStep(previous);

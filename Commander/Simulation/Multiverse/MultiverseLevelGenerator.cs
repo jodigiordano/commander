@@ -6,7 +6,7 @@
     using Microsoft.Xna.Framework;
 
 
-    class EditorLevelGenerator
+    class MultiverseLevelGenerator
     {
         public static List<Size> PossibleSizes = new List<Size>()
         {
