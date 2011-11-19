@@ -1,0 +1,1 @@
+ftp -v -i -s:upload_scripts.txt

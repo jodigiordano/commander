@@ -5,6 +5,7 @@
         public MultiverseLevelCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
+            AddChoiceFirst(new EditorTextContextualMenuChoice("Highscores", "Highscores", 2, DoHighscores));
             AddChoiceFirst(new EditorTextContextualMenuChoice("playtest", "playtest level", 2, DoPlaytestLevel));
             AddChoiceFirst(new EditorTextContextualMenuChoice("edit", "edit level", 2, DoEditLevel));
 
@@ -66,6 +67,16 @@
             base.DoRemove();
 
             Main.CurrentWorld.RemoveLevel(Owner.ActualSelection.CelestialBody);
+        }
+
+
+        private void DoHighscores()
+        {
+            var panel = (HighscoresPanel) Simulator.Data.Panels["Highscores"];
+            panel.WorldId = Main.CurrentWorld.World.Id;
+            panel.LevelId = Main.CurrentWorld.World.GetLevelVisualId(Main.CurrentWorld.GetSelectedLevel(Owner.InnerPlayer).Infos.Id);
+
+            Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "Highscores"));
         }
     }
 }

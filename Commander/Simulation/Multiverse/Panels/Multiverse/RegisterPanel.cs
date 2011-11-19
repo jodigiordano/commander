@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -19,8 +18,8 @@
         private Commander.Player RegisterPlayer;
 
 
-        public RegisterPanel(Scene scene, Vector3 position)
-            : base(scene, position, new Vector2(800, 450), VisualPriorities.Default.Panel, Color.White)
+        public RegisterPanel(Simulator simulator)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(800, 450), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Register");
 

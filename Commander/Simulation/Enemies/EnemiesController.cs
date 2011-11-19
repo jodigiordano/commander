@@ -67,14 +67,14 @@
             TimeElapsedLastWave = 0;
             EnemiesCreatedCounter = 0;
 
+            SpawnEnemies = true;
+
             if (Simulator.EditingMode)
                 return;
 
             NextWave = Simulator.Data.Level.Waves.First;
 
             NotifyNextWaveCompositionChanged();
-
-            SpawnEnemies = true;
 
             if (Simulator.Data.Level.InfiniteWaves != null)
                 return;
@@ -298,7 +298,7 @@
             if (!SpawnEnemies)
                 return;
 
-            if (Simulator.EditingMode)
+            if (Simulator.GameMode && Simulator.EditingMode)
                 return;
 
             TimeElapsedLastWave += Preferences.TargetElapsedTimeMs;

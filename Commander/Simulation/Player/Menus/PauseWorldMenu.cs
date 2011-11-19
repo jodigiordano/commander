@@ -8,42 +8,14 @@
         public PauseWorldMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
-            AddChoice(new TextContextualMenuChoice("resume", new Text("resume game", @"Pixelite") { SizeX = 2 }));
-            AddChoice(new TextContextualMenuChoice("new", new Text("new game", @"Pixelite") { SizeX = 2 }));
-        }
-
-
-        public PauseChoice Selection
-        {
-            get { return (PauseChoice) SelectedIndex; }
+            AddChoice(new TextContextualMenuChoice("resume", new Text("resume game", @"Pixelite") { SizeX = 2 }) { DoClick = DoResume });
+            AddChoice(new TextContextualMenuChoice("new", new Text("new game", @"Pixelite") { SizeX = 2 }) { DoClick = DoNewGame });
         }
 
 
         public override void OnOpen()
         {
-            Owner.ActualSelection.PausedGameChoice = Selection;
-        }
-
-
-        public override void OnClose()
-        {
-            Owner.ActualSelection.PausedGameChoice = PauseChoice.None;
-        }
-
-
-        public override void NextChoice()
-        {
-            base.NextChoice();
-
-            Owner.ActualSelection.PausedGameChoice = Selection;
-        }
-
-
-        public override void PreviousChoice()
-        {
-            base.PreviousChoice();
-
-            Owner.ActualSelection.PausedGameChoice = Selection;
+            SelectedIndex = 0;
         }
 
 
@@ -53,8 +25,8 @@
             {
                 return
                     base.Visible &&
+                    !Simulator.MultiverseMode &&
                     Simulator.WorldMode &&
-                    !Simulator.EditingMode &&
                     ((WorldScene) Simulator.Scene).GetGamePausedSelected(Owner.InnerPlayer);
             }
 
@@ -62,6 +34,27 @@
             {
                 base.Visible = value;
             }
+        }
+
+
+        private void DoNewGame()
+        {
+            Main.CurrentWorld.StartNewGame(Owner.InnerPlayer);
+        }
+
+
+        private void DoResume()
+        {
+            Main.CurrentWorld.ResumeGame(Owner.InnerPlayer);
+        }
+
+
+        public override System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, PanelWidget>> GetHelpBarMessage()
+        {
+            if (SelectedIndex == 0)
+                return Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.WorldToggleResume);
+            else
+                return Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.WorldToggleNewGame);
         }
     }
 }

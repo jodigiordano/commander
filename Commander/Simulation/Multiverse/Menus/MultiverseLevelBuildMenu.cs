@@ -16,7 +16,7 @@
                 new EditorTextContextualMenuChoice("Turrets", "Turrets", 2, DoTurrets),
                 new EditorTextContextualMenuChoice("Player", "Player", 2, DoPlayer),
                 new EditorTextContextualMenuChoice("Waves", "Waves", 2, DoWaves),
-                new EditorTextContextualMenuChoice("Playtest", "Playtest", 2, DoPlaytest),
+                new EditorTextContextualMenuChoice("Playtest", "Playtest", 2, DoPlaytest)
             };
 
             foreach (var c in choices)

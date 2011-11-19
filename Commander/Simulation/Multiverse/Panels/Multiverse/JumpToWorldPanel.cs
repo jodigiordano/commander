@@ -17,8 +17,8 @@
         private Commander.Player Player;
 
 
-        public JumpToWorldPanel(Scene scene, Vector3 position)
-            : base(scene, position, new Vector2(400, 250), VisualPriorities.Default.Panel, Color.White)
+        public JumpToWorldPanel(Simulator simulator)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(400, 250), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Jump to world");
 

@@ -50,7 +50,7 @@
             State = ProtocolState.None;
             ErrorState = ProtocolErrorState.None;
 
-            Timeout = 10000;
+            Timeout = 20000;
             TimeoutCounter = 0;
         }
 
@@ -172,12 +172,9 @@
         {
             TimeoutCounter = 0;
 
-            if (ProtocolEnded)
-            {
-                State = ProtocolState.EndedWithSuccess;
-                DoProtocolEndedWithSuccess();
-                NotifyProtocolTerminated();
-            }
+            State = ProtocolState.EndedWithSuccess;
+            DoProtocolEndedWithSuccess();
+            NotifyProtocolTerminated();
         }
 
 
@@ -192,6 +189,7 @@
                 case "world not found": ErrorState = ProtocolErrorState.WorldNotFound; break;
                 case "world_not_found": ErrorState = ProtocolErrorState.WorldNotFound; break;
                 case "server down.": ErrorState = ProtocolErrorState.ServerError; break;
+                case "server down": ErrorState = ProtocolErrorState.ServerError; break;
                 case "email not valid": ErrorState = ProtocolErrorState.EmailNotValid; break;
                 case "username length": ErrorState = ProtocolErrorState.UsernameLength; break;
                 case "password length": ErrorState = ProtocolErrorState.PasswordLength; break;
@@ -203,8 +201,6 @@
         }
 
 
-        protected abstract bool ProtocolEnded { get; }
-        
         protected virtual void DoProtocolEndedWithSuccess() { }
 
 

@@ -187,6 +187,8 @@
     <Compile Include="Animations\AnimationTransitionAlienBattleship.cs" />
     <Compile Include="Animations\AnimationTransitionAlienMothership.cs" />
     <Compile Include="Animations\AnimationTransitionAsteroids.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\ResetHighscoresProtocol.cs" />
+    <Compile Include="Scenes\Multiverse\Protocols\SendHighscoreProtocol.cs" />
     <Compile Include="Scenes\Multiverse\Protocols\LoginProtocol.cs" />
     <Compile Include="Scenes\Multiverse\Protocols\RegisterProtocol.cs" />
     <Compile Include="Scenes\Multiverse\Protocols\SaveWorldProtocol.cs" />
@@ -194,8 +196,11 @@
     <Compile Include="Simulation\Multiverse\Commands\EditorCelestialBodyCommands.cs" />
     <Compile Include="Simulation\Multiverse\Commands\EditorPanelCommands.cs" />
     <Compile Include="Simulation\Multiverse\Commands\EditorPlayerCommands.cs" />
+    <Compile Include="Simulation\Multiverse\HighscoresPanel.cs" />
     <Compile Include="Simulation\Multiverse\Menus\CB\MultiverseWarpCBMenu.cs" />
     <Compile Include="Simulation\Multiverse\Menus\CB\MultiverseLevelCBMenu.cs" />
+    <Compile Include="Simulation\Multiverse\Menus\MultiverseLevelMenu.cs" />
+    <Compile Include="Simulation\Multiverse\Menus\MultiverseLevelPausedMenu.cs" />
     <Compile Include="Simulation\Multiverse\Panels\CB\CelestialBodyAttributesPanel.cs" />
     <Compile Include="Simulation\Multiverse\Panels\CB\EditWarpPanel.cs" />
     <Compile Include="Simulation\Multiverse\Panels\CB\PinkHoleCBAttributesPanel.cs" />

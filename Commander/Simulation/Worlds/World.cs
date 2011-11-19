@@ -126,13 +126,21 @@
         }
 
 
-        public string GetLevelStringId(int id)
+        public int GetLevelVisualId(int id)
         {
             for (int i = 0; i < Descriptor.Levels.Count; i++)
                 if (Descriptor.Levels[i] == id)
-                    return Id + "-" + (i + 1);
+                    return i + 1;
 
-            return "";
+            return -1;
+        }
+
+
+        public string GetLevelStringId(int id)
+        {
+            var visualId = GetLevelVisualId(id);
+
+            return visualId == -1 ? "" : Id + "-" + visualId;
         }
 
 
@@ -153,7 +161,7 @@
         }
 
 
-        public void LoadHighscores(string to)
+        public void LoadHighscoresFromDisk(string to)
         {
             HighScores = new HighScores() { Directory = to };
 

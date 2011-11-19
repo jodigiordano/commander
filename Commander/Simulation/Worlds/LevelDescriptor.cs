@@ -235,7 +235,7 @@
         public InfosDescriptor()
         {
             Id = -1;
-            Background = "background4";
+            Background = "world2";
         }
     }
 

@@ -7,11 +7,17 @@ require("input.php");
 //==================================================
 // Verifications
 //==================================================
-if (!verify_player_credentials($username, $password))
-    return close_database_connection_with_error("credentials");
+if(!verify_player_credentials($username, $password))
+{
+    print close_database_connection_with_error("credentials");
+    return;
+}
 
-if (!get_world_exists($world))
-    return close_database_connection_with_error("world_not_found");
+if(!get_world_exists($world))
+{
+    print close_database_connection_with_error("world not found");
+    return;
+}
 
 //todo: verify that the level exists in the world folder
 
@@ -23,13 +29,9 @@ add_highscore($world, $level, $username, $score);
 
 
 //==================================================
-// Close the connection
+// Close the connection and send result
 //==================================================
 close_database_connection();
 
-
-//==================================================
-// Return answer
-//==================================================
-return get_ok_message();
+print get_ok_message();
 ?>

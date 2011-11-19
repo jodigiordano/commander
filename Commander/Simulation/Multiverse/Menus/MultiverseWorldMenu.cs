@@ -20,6 +20,7 @@
                     Simulator.MultiverseMode &&
                     !Simulator.GameMode &&
                     !Simulator.EditingMode &&
+                    Main.PlayersController.MultiverseData.IsLoggedIn &&
                     Owner.ActualSelection.CelestialBody == null;
             }
 

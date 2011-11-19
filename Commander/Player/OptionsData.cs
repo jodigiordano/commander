@@ -13,7 +13,6 @@
 
         public OptionsData()
         {
-            Name = "Options";
             Directory = "UserData";
             File = "Options.xml";
         }

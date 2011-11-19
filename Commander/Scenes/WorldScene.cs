@@ -402,12 +402,8 @@
         }
 
 
-        private void DoSelectAction(Player p)
+        private bool JumpToWorld(Player p)
         {
-            if (Simulator.EditingMode)
-                return;
-
-            // Select a warp
             var world = GetWorldSelected(p);
 
             if (world != null)
@@ -423,49 +419,92 @@
                     ShowWarpBlockedMessage(p);
                 }
 
-                return;
+                return true;
             }
 
-            // Select a level
+            return false;
+        }
+
+
+        public bool StartNewGame(Player p)
+        {
             var level = GetSelectedLevel(p);
 
-            if (level != null)
+            if (level == null)
+                return false;
+
+            GameScene currentGame = Main.CurrentGame;
+
+            if (currentGame != null)
+                currentGame.StopMusic();
+
+            currentGame = new GameScene("Game1", level)
             {
+                MultiverseMode = World.MultiverseMode,
+                EditingMode = World.EditingMode
+            };
+            currentGame.Initialize();
+            Main.CurrentGame = currentGame;
+            currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
 
-                GameScene currentGame = Main.CurrentGame;
+            if (Visuals.GetScene(currentGame.Name) == null)
+                Visuals.AddScene(currentGame);
+            else
+                Visuals.UpdateScene(currentGame.Name, currentGame);
 
-                // Resume Game
-                if (GamePausedToWorld &&
-                    currentGame.Simulator.Data.Level.Descriptor.Infos.Id == level.Infos.Id &&
-                    Simulator.Data.Players[p].ActualSelection.PausedGameChoice == PauseChoice.Resume)
-                {
-                    currentGame.Simulator.TriggerNewGameState(GameState.Running);
-                    TransiteTo(currentGame.Name);
-                    return;
-                }
+            TransiteTo(currentGame.Name);
 
-                // Start a new game
-                if (currentGame != null)
-                    currentGame.StopMusic();
+            return true;
+        }
 
-                currentGame = new GameScene("Game1", level)
-                {
-                    MultiverseMode = World.MultiverseMode,
-                    EditingMode = World.EditingMode
-                };
-                currentGame.Initialize();
-                Main.CurrentGame = currentGame;
-                currentGame.Simulator.AddNewGameStateListener(DoNewGameState);
 
-                if (Visuals.GetScene(currentGame.Name) == null)
-                    Visuals.AddScene(currentGame);
-                else
-                    Visuals.UpdateScene(currentGame.Name, currentGame);
+        public bool ResumeGame(Player p)
+        {
+            var level = GetSelectedLevel(p);
 
+            if (level == null)
+                return false;
+
+            GameScene currentGame = Main.CurrentGame;
+
+            // Resume Game
+            if (GamePausedToWorld && currentGame.Simulator.Data.Level.Descriptor.Infos.Id == level.Infos.Id)
+            {
+                currentGame.Simulator.TriggerNewGameState(GameState.Running);
                 TransiteTo(currentGame.Name);
-
-                return;
+                return true;
             }
+
+            return false;
+        }
+
+
+        //private bool DoLevel(Player p)
+        //{
+        //    if (ResumeGame(p))
+        //        return true;
+
+        //    if (StartNewGame(p))
+        //        return true;
+
+        //    return false;
+        //}
+
+
+        private void DoSelectAction(Player p)
+        {
+            if (Simulator.MultiverseMode)
+                return;
+
+            if (Simulator.Data.Players[p].ActualSelection.OpenedMenu != null)
+                return;
+
+            // Select a warp
+            if (JumpToWorld(p))
+                return;
+
+            // Select a level
+            StartNewGame(p);
         }
 
 
@@ -515,7 +554,7 @@
         }
 
 
-        private LevelDescriptor GetSelectedLevel(Player p)
+        public LevelDescriptor GetSelectedLevel(Player p)
         {
             CelestialBody c = Simulator.GetSelectedCelestialBody(p);
 

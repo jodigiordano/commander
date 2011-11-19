@@ -7,7 +7,7 @@
     class GridPanel : Panel
     {
         public int NbColumns;
-        private float DistanceBetweenTwoChoices;
+        public float DistanceBetweenTwoChoices;
 
 
         public GridPanel(Scene scene, Vector3 position, Vector2 size, double visualPriority, Color color)

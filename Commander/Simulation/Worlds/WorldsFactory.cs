@@ -21,7 +21,6 @@
 
         private XmlSerializer LevelSerializer;
         private XmlSerializer WorldSerializer;
-        private XmlSerializer HighscoresSerializer;
 
         private static string CampaignDirectory = @".\Content\scenarios\campaign\";
         private static string MenuDirectory = @".\Content\scenarios\";
@@ -38,7 +37,6 @@
 
             LevelSerializer = new XmlSerializer(typeof(LevelDescriptor));
             WorldSerializer = new XmlSerializer(typeof(WorldDescriptor));
-            HighscoresSerializer = new XmlSerializer(typeof(HighScores));
         }
 
 
@@ -187,6 +185,17 @@
         }
 
 
+        public static void CreateWorldHighscoresFromString(int id, string data)
+        {
+            var hs = new HighScores()
+            {
+                Directory = GetWorldMultiverseLocalDirectory(id)
+            };
+
+            Core.SimplePersistence.Persistence.SaveDataFromString(hs, data);
+        }
+
+
         #endregion
 
 
@@ -203,7 +212,7 @@
                 var infos = new DirectoryInfo(d);
                 var world = LoadWorldFromDisk(d + @"\" + infos.Name + ".zip");
                 world.CampaignMode = true;
-                world.LoadHighscores(Main.PlayersController.CampaignData.Directory + @"\world" + world.Id);
+                world.LoadHighscoresFromDisk(Main.PlayersController.CampaignData.Directory + @"\world" + world.Id);
 
                 Worlds.Add(world.Descriptor.Id, world);
                 CampaignWorlds.Add(world.Descriptor.Id, world);
@@ -288,6 +297,8 @@
             if (MultiverseWorldExistsOnDisk(id))
             {
                 var w = LoadWorldFromDisk(GetWorldMultiverseLocalZipFile(id));
+                
+                w.LoadHighscoresFromDisk(GetWorldMultiverseLocalDirectory(id));
 
                 Worlds.Add(w.Descriptor.Id, w);
                 MultiverseWorlds.Add(w.Descriptor.Id, w);

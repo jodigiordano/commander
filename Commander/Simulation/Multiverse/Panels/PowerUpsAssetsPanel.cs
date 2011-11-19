@@ -42,9 +42,10 @@
             var pType = (PowerUpType) Enum.Parse(typeof(PowerUpType), assetName);
             var p = Simulator.PowerUpsFactory.All[pType];
 
-            return new PowerUpCheckBox(p.Category == PowerUpCategory.Turret ?
-                Simulator.TurretsFactory.All[p.AssociatedTurret].BaseImage.TextureName :
-                p.BuyImage, pType, 3);
+            //return new PowerUpCheckBox(p.Category == PowerUpCategory.Turret ?
+            //    Simulator.TurretsFactory.All[p.AssociatedTurret].BaseImage.TextureName :
+            //    p.BuyImage, pType, 3);
+            return new PowerUpCheckBox("PixelBlanc", p.Type, 3);
         }
 
 

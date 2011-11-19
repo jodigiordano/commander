@@ -41,7 +41,7 @@
             MaxZoomWidth = Preferences.BattlefieldBoundaries.X * Preferences.BackBufferZoom;
             MaxZoomHeight = Preferences.BattlefieldBoundaries.Y * Preferences.BackBufferZoom;
             MaxCameraMovingSpeed = 10;
-            MaxCameraZoomSpeed = 0.001f;
+            MaxCameraZoomSpeed = 0.005f;
 
             Players = new List<SimPlayer>();
             CameraData = new CameraData();
@@ -159,7 +159,10 @@
             foreach (var p in Players)
                 newPosition += p.Position;
 
-            Vector3.Divide(ref newPosition, Players.Count, out newPosition);
+            if (Simulator.PanelsController.IsPanelVisible)
+                newPosition += Simulator.PanelsController.GetOpenedPanel().Position;
+
+            Vector3.Divide(ref newPosition, Players.Count + (Simulator.PanelsController.IsPanelVisible ? 1 : 0), out newPosition);
 
             var delta = newPosition - Simulator.Scene.Camera.Position;
 
@@ -214,6 +217,24 @@
                 if (p.Position.Y > result.W)
                     result.W = p.Position.Y;
             }
+
+            if (Simulator.PanelsController.IsPanelVisible)
+            {
+                var panel = Simulator.PanelsController.GetOpenedPanel();
+
+                if (panel.Position.X < result.X)
+                    result.X = panel.Position.X;
+
+                if (panel.Position.X + panel.Dimension.X > result.Y)
+                    result.Y = panel.Position.X + panel.Dimension.X;
+
+                if (panel.Position.Y < result.Z)
+                    result.Z = panel.Position.Y;
+
+                if (panel.Position.Y + panel.Dimension.Y > result.W)
+                    result.W = panel.Position.Y + panel.Dimension.Y;
+            }
+
 
             return result;
         }

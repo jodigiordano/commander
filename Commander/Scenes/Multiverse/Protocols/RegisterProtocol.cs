@@ -15,6 +15,7 @@
         private string Username;
         private string Password;
         private string Email;
+        private int WorldId;
 
 
         public RegisterProtocol(string username, string password, string email)
@@ -36,15 +37,15 @@
         {
             if (SpecificState == SpecificProtocolState.Registering)
             {
-                var worldId = int.Parse(previous.Message);
+                WorldId = int.Parse(previous.Message);
 
-                Main.PlayersController.UpdateMultiverse(Username, Password, worldId);
-                Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.GetEmptyWorld(worldId, Username));
+                Main.PlayersController.UpdateMultiverse(Username, Password, WorldId);
+                Main.WorldsFactory.AddMultiverseWorld(Main.WorldsFactory.GetEmptyWorld(WorldId, Username));
 
                 SpecificState = SpecificProtocolState.SavingWorld;
                 UploadFile(
-                    SaveWorldProtocol.GetSaveWorldScriptUrl(worldId),
-                    WorldsFactory.GetWorldMultiverseLocalZipFile(worldId));
+                    SaveWorldProtocol.GetSaveWorldScriptUrl(WorldId),
+                    WorldsFactory.GetWorldMultiverseLocalZipFile(WorldId));
 
                 return;
             }
@@ -53,9 +54,9 @@
         }
 
 
-        protected override bool ProtocolEnded
+        protected override void DoProtocolEndedWithSuccess()
         {
-            get { return true; }
+            Main.PlayersController.UpdateMultiverse(Username, Password, WorldId);
         }
 
 

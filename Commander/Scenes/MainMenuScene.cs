@@ -243,7 +243,7 @@
 
                 case "how to play": Simulator.ShowPanel("Help", player.Position); break;
                 case "options": Simulator.ShowPanel("Options", player.Position); break;
-                case "multiverse": if (Preferences.Debug)
+                case "multiverse": //if (Preferences.Debug)
                 {
                     //Main.SetCurrentWorld(999, true);
                     Core.Visual.Visuals.GetScene("Multiverse").Initialize();

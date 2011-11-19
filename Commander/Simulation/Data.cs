@@ -96,11 +96,12 @@
             Panels.Add("Pause", new PausePanel(Simulator, Vector3.Zero, new Vector2(400, 600), VisualPriorities.Default.Panel, Color.White));
             Panels.Add("Controls", new ControlsPanel(Simulator.Scene, Vector3.Zero, new Vector2(600, 700), VisualPriorities.Default.Panel, Color.White));
             Panels.Add("Help", new HelpPanel(Simulator.Scene, Vector3.Zero, new Vector2(900, 600), VisualPriorities.Default.Panel, Color.White));
+            Panels.Add("Highscores", new HighscoresPanel(Simulator));
 
-            Panels.Add("Login", new LoginPanel(Simulator.Scene, Vector3.Zero));
-            Panels.Add("Register", new RegisterPanel(Simulator.Scene, Vector3.Zero));
-            Panels.Add("JumpToWorld", new JumpToWorldPanel(Simulator.Scene, Vector3.Zero));
-            Panels.Add("VirtualKeyboard", new VirtualKeyboardPanel(Simulator.Scene, Vector3.Zero));
+            Panels.Add("Login", new LoginPanel(Simulator));
+            Panels.Add("Register", new RegisterPanel(Simulator));
+            Panels.Add("JumpToWorld", new JumpToWorldPanel(Simulator));
+            Panels.Add("VirtualKeyboard", new VirtualKeyboardPanel(Simulator));
 
             Panels.Add("EditorPlayer", new PlayerPanel(Simulator));
             Panels.Add("EditorTurrets", new TurretsAssetsPanel(Simulator));

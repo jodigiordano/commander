@@ -59,14 +59,16 @@
             Menus = new Dictionary<string, ContextualMenu>();
             CBMenus = new Dictionary<string, ContextualMenu>();
 
+            CBMenus.Add("WorldLevel", new MultiverseLevelMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             CBMenus.Add("EditorPlanetCB", new MultiversePlanetCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             CBMenus.Add("EditorPinkHoleCB", new MultiversePinkHoleCBMenu(Simulator, VisualPriorities.Default.EditorPanel, Owner));
             CBMenus.Add("EditorWorldWarp", new MultiverseWarpCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             CBMenus.Add("EditorWorldLevel", new MultiverseLevelCBMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
-            
+
             foreach (var m in CBMenus)
                 Menus.Add(m.Key, m.Value);
 
+            Menus.Add("MultiverseLevelPaused", new MultiverseLevelPausedMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("WorldPause", new PauseWorldMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("MainMenuCampaign", new CampaignMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));
             Menus.Add("EditorBuildLevel", new MultiverseLevelBuildMenu(Simulator, VisualPriorities.Default.CelestialBodyMenu, Owner));

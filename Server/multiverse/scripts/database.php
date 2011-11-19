@@ -116,20 +116,12 @@ function get_world_last_update_timestamp($id)
 }
 
 
-//function get_highscore($world_id, $level_id, $username)
-//{
-//    global $sql_table_scores;
-//
-//    return execute_request("SELECT * FROM $sql_table_scores WHERE world_id='$world_id' AND level_id='$level_id' AND username='$username'");
-//}
+function reset_highscores($world_id)
+{
+    global $sql_table_scores;
 
-
-//function get_highscore_exists($world_id, $level_id, $username)
-//{
-//    $result = get_highscore($world_id, $level_id, $username);
-//    
-//    return mysql_num_rows($result) != 0;
-//}
+    execute_request("DELETE FROM $sql_table_scores WHERE world_id='$world_id'");
+}
 
 
 function get_world_highscores($world_id)

@@ -156,10 +156,10 @@
             All.Add(Get(EnemyType.Damacloid, 1, 1, 1));
             All.Add(Get(EnemyType.Vulcanoid, 1, 1, 1));
             All.Add(Get(EnemyType.Swarm, 1, 1, 1));
-            All.Add(Get(EnemyType.Alien1, 1, 1, 1));
-            All.Add(Get(EnemyType.Alien2, 1, 1, 1));
-            All.Add(Get(EnemyType.Alien3, 1, 1, 1));
-            All.Add(Get(EnemyType.Alien4, 1, 1, 1));
+            //All.Add(Get(EnemyType.Alien1, 1, 1, 1));
+            //All.Add(Get(EnemyType.Alien2, 1, 1, 1));
+            //All.Add(Get(EnemyType.Alien3, 1, 1, 1));
+            //All.Add(Get(EnemyType.Alien4, 1, 1, 1));
         }
 
 

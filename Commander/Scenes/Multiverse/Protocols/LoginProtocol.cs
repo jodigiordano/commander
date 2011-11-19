@@ -23,12 +23,6 @@
         }
 
 
-        protected override bool ProtocolEnded
-        {
-            get { return true; }
-        }
-
-
         protected override void DoNextStep(MultiverseMessage previous)
         {
             WorldId = int.Parse(previous.Message);

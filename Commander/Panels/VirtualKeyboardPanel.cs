@@ -1,6 +1,7 @@
 ﻿namespace EphemereGames.Commander
 {
     using System;
+    using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -13,8 +14,8 @@
         private Label Input;
 
 
-        public VirtualKeyboardPanel(Scene scene, Vector3 position)
-            : base(scene, position, new Vector2(1000, 700), VisualPriorities.Default.Panel, Color.White)
+        public VirtualKeyboardPanel(Simulator simulator)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(1000, 700), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Input");
 

@@ -13,9 +13,6 @@
         protected Turret turretToPlace;
         protected bool callNextWave;
 
-        // world
-        protected PauseChoice pausedGameChoice;
-
         // main menu
         protected int newGameChoice;
 
@@ -50,7 +47,6 @@
             TurretToBuy = TurretType.None;
             TurretChoice = TurretChoice.None;
             TurretToPlace = null;
-            PausedGameChoice = PauseChoice.None;
             NewGameChoice = -1;
             EditingState = EditorEditingState.None;
             OpenedMenu = null;
@@ -68,7 +64,6 @@
             TurretChoiceChanged = false;
             TurretToBuyChanged = false;
             TurretToPlaceChanged = false;
-            PausedGameChoiceChanged = false;
             EditorWorldChoiceChanged = false;
             NewGameChoiceChanged = false;
             EditingStateChanged = false;
@@ -133,13 +128,6 @@
         }
 
 
-        public PauseChoice PausedGameChoice
-        {
-            get { return pausedGameChoice; }
-            set { PausedGameChoiceChanged = pausedGameChoice != value; pausedGameChoice = value; }
-        }
-
-
         public int NewGameChoice
         {
             get { return newGameChoice; }
@@ -162,7 +150,6 @@
             turretChoice = other.turretChoice;
             turretToBuy = other.turretToBuy;
             turretToPlace = other.turretToPlace;
-            pausedGameChoice = other.pausedGameChoice;
             newGameChoice = other.newGameChoice;
             editingState = other.editingState;
             openedMenu = other.openedMenu;

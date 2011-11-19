@@ -77,6 +77,9 @@
         public const string LastUpdateScript = @"/last_update.php";
         public const string UsernameToWorldIdScript = @"/get_world_id.php";
         public const string SaveWorldScript = @"/save_world.php";
+        public const string HighscoresScript = @"/load_highscores.php";
+        public const string SubmitHighscoreScript = @"/add_highscore.php";
+        public const string ResetHighscoresScript = @"/reset_highscores.php";
 
         public const int CampaignVersion = 1;
     }

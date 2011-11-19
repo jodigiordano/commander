@@ -126,6 +126,16 @@
 
                 FutureJobs.Add(ReactiveInputs, 750);
                 //FutureJobs.Add(StopVibrations, 250);
+
+                var worldId = Main.CurrentWorld.World.Id;
+                var levelId = Level.Infos.Id;
+                var score = Simulator.Data.Level.CommonStash.TotalScore;
+                var username = Simulator.MultiverseMode ? Main.PlayersController.MultiverseData.Username : Inputs.MasterPlayer.Name;
+
+                Main.PlayersController.UpdateProgress(worldId, levelId, username, score);
+
+                if (Simulator.MultiverseMode)
+                    Main.MultiverseController.SubmitHighscore(worldId, levelId, score);
             }
 
             else if (newState == GameState.Lost)

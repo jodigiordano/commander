@@ -1,6 +1,5 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Input;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -18,8 +17,8 @@
         private Commander.Player LoginPlayer;
 
 
-        public LoginPanel(Scene scene, Vector3 position)
-            : base(scene, position, new Vector2(500, 300), VisualPriorities.Default.Panel, Color.White)
+        public LoginPanel(Simulator simulator)
+            : base(simulator.Scene, Vector3.Zero, new Vector2(500, 300), VisualPriorities.Default.Panel, Color.White)
         {
             SetTitle("Login");
 

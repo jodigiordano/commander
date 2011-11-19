@@ -109,11 +109,11 @@
             AlienNextWaveAnimation = new AlienNextWaveAnimation(Simulator)
             {
                 Planet = Simulator.Data.Path.FirstCelestialBody,
-                TimeNextWave = (Simulator.Data.Level.InfiniteWaves == null && Waves.Count != 0) ? Waves.First.Value.StartingTime : 0
+                TimeNextWave = Waves.First.Value.StartingTime
             };
 
             GameBarPanel.Initialize();
-            GameBarPanel.TimeNextWave = (Simulator.Data.Level.InfiniteWaves == null && Waves.Count != 0) ? Waves.First.Value.StartingTime : 0;
+            GameBarPanel.TimeNextWave = Waves.First.Value.StartingTime;
 
             LoveEffect = Simulator.Scene.Particles.Get("love");
 
@@ -303,22 +303,18 @@
         {
             GameBarPanel.RemainingWaves = Simulator.Data.RemainingWaves;
 
-            if (InfiniteWaves == null && Simulator.Data.Path.LastCelestialBody != null)
+            if (Simulator.Data.Path.LastCelestialBody != null)
                 Simulator.Scene.Add(new AlienNextWaveStartedAnimation(Simulator, Simulator.Data.Path.FirstCelestialBody));
 
-            if (InfiniteWaves != null || GameBarPanel.RemainingWaves <= 0)
-            {
-                AlienNextWaveAnimation.TimeNextWave = 0;
-                return;
-            }
-
-            //todo
             LinkedListNode<Wave> nextWave = Waves.First;
 
-            for (int i = 0; i < Waves.Count - GameBarPanel.RemainingWaves; i++)
-                nextWave = nextWave.Next;
+            if (Simulator.Data.Level.InfiniteWaves == null)
+            {
+                for (int i = 0; i < Waves.Count - GameBarPanel.RemainingWaves; i++)
+                    nextWave = nextWave.Next;
+            }
 
-            AlienNextWaveAnimation.TimeNextWave = nextWave.Value.StartingTime;
+            AlienNextWaveAnimation.TimeNextWave = nextWave == null ? 0 : nextWave.Value.StartingTime;
         }
 
 
@@ -506,6 +502,7 @@
                 HelpBar.Draw();
 
             CelestialBodiesPathPreviews.Draw();
+            AlienNextWaveAnimation.Draw();
 
             if (!Simulator.GameMode)
                 return;
@@ -515,7 +512,6 @@
             MenuPowerUps.Draw();
             Simulator.Data.PathPreview.Draw();
             CelestialBodyNearHit.Draw();
-            AlienNextWaveAnimation.Draw();
 
             if (Simulator.EditingMode)
                 return;
@@ -572,14 +568,8 @@
                 // CreatedWorld Menu
                 if (selection.CelestialBody != null)
                 {
-                    if (selection.PausedGameChoice == PauseChoice.None && selection.CelestialBody is PinkHole)
+                    if (selection.CelestialBody is PinkHole)
                         HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldWarp);
-                    else if (selection.PausedGameChoice == PauseChoice.None)
-                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldNewGame);
-                    else if (selection.PausedGameChoice == PauseChoice.New)
-                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldToggleNewGame);
-                    else if (selection.PausedGameChoice == PauseChoice.Resume)
-                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.WorldToggleResume);
                 }
 
                 else

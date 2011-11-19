@@ -18,7 +18,6 @@
             Scores = new List<LevelScores>();
             InternalScores = new Dictionary<int, LevelScores>();
 
-            Name = "Highscores";
             File = "highscores.xml";
         }
 
@@ -50,6 +49,17 @@
                 return null;
 
             return levelScores.GetHighest();
+        }
+
+
+        public LevelScores GetAllHighScores(int level)
+        {
+            LevelScores levelScores;
+
+            if (!InternalScores.TryGetValue(level, out levelScores))
+                return new LevelScores();
+
+            return levelScores;
         }
 
 

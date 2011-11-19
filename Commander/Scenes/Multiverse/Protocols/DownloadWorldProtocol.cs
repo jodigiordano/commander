@@ -12,8 +12,8 @@
         {
             AskForWorldId,
             AskForLastUpdate,
-            DownloadingFile,
-            FileDownloaded
+            DownloadingWorld,
+            DownloadingHighscores
         }
 
         protected SpecificProtocolState SpecificState;
@@ -43,11 +43,7 @@
             }
             else
             {
-                SpecificState = SpecificProtocolState.DownloadingFile;
-                Main.WorldsFactory.EmptyWorldDirectory(WorldId);
-                DownloadFile(
-                    WorldsFactory.GetWorldMultiverseRemoteZipFile(WorldId),
-                    WorldsFactory.GetWorldMultiverseLocalZipFile(WorldId));
+                DownloadWorld();
             }
         }
 
@@ -58,14 +54,29 @@
             {
                 if (NeedUpdate(previous.Message))
                 {
-                    SpecificState = SpecificProtocolState.DownloadingFile;
-                    Main.WorldsFactory.EmptyWorldDirectory(WorldId);
-                    DownloadFile(
-                        WorldsFactory.GetWorldMultiverseRemoteZipFile(WorldId),
-                        WorldsFactory.GetWorldMultiverseLocalZipFile(WorldId));
-
+                    DownloadWorld();
                     return;
                 }
+
+                else
+                {
+                    DownloadHighScores();
+                    return;
+                }
+            }
+
+
+            if (SpecificState == SpecificProtocolState.DownloadingWorld)
+            {
+                DownloadHighScores();
+                return;
+            }
+
+
+            if (SpecificState == SpecificProtocolState.DownloadingHighscores)
+            {
+                WorldsFactory.CreateWorldHighscoresFromString(WorldId, previous.Message);
+                //do not return, just process the answer
             }
 
             base.DoNextStep(previous);
@@ -77,6 +88,23 @@
             var remoteTimestamp = FormatTimestamp(toConvert);
 
             return Main.WorldsFactory.GetWorldLastModification(WorldId).CompareTo(remoteTimestamp) < 0;
+        }
+
+
+        private void DownloadWorld()
+        {
+            SpecificState = SpecificProtocolState.DownloadingWorld;
+            Main.WorldsFactory.EmptyWorldDirectory(WorldId);
+            DownloadFile(
+                WorldsFactory.GetWorldMultiverseRemoteZipFile(WorldId),
+                WorldsFactory.GetWorldMultiverseLocalZipFile(WorldId));
+        }
+
+
+        private void DownloadHighScores()
+        {
+            SpecificState = SpecificProtocolState.DownloadingHighscores;
+            AddQuery(HighScoresScriptUrl);
         }
 
 
@@ -92,12 +120,6 @@
         }
 
 
-        protected override bool ProtocolEnded
-        {
-            get { return true; }
-        }
-
-
         private string LastUpdateScriptUrl
         {
             get
@@ -108,6 +130,19 @@
                     Preferences.LastUpdateScript + "?" +
                     WorldsFactory.WorldToURLArgument(WorldId) + "&" +
                     Main.PlayersController.MultiverseData.ToUrlArguments;
+            }
+        }
+
+
+        private string HighScoresScriptUrl
+        {
+            get
+            {
+                return
+                    Preferences.WebsiteURL +
+                    Preferences.MultiverseScriptsURL +
+                    Preferences.HighscoresScript + "?" +
+                    WorldsFactory.WorldToURLArgument(WorldId);
             }
         }
     }

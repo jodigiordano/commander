@@ -12,7 +12,6 @@
 
         public MultiverseData()
         {
-            Name = "Multiverse";
             Directory = @"UserData\Multiverse";
             File = "Multiverse.xml";
         }
@@ -29,7 +28,7 @@
         }
 
 
-        public bool LoggedIn
+        public bool IsLoggedIn
         {
             get { return Username != "" && Password != ""; }
         }

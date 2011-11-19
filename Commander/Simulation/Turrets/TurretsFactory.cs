@@ -176,10 +176,10 @@
             All.Add(TurretType.Laser, Create(TurretType.Laser));
             All.Add(TurretType.Missile, Create(TurretType.Missile));
             All.Add(TurretType.SlowMotion, Create(TurretType.SlowMotion));
-            All.Add(TurretType.Booster, Create(TurretType.Booster));
-            All.Add(TurretType.Gunner, Create(TurretType.Gunner));
-            All.Add(TurretType.Nanobots, Create(TurretType.Nanobots));
-            All.Add(TurretType.RailGun, Create(TurretType.RailGun));
+            //All.Add(TurretType.Booster, Create(TurretType.Booster));
+            //All.Add(TurretType.Gunner, Create(TurretType.Gunner));
+            //All.Add(TurretType.Nanobots, Create(TurretType.Nanobots));
+            //All.Add(TurretType.RailGun, Create(TurretType.RailGun));
         }
 
 

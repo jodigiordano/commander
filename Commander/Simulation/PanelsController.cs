@@ -31,6 +31,12 @@
         }
 
 
+        public Panel GetOpenedPanel()
+        {
+            return IsPanelVisible ? Simulator.Data.Panels[OpenedPanel] : null;
+        }
+
+
         private string OpenedPanel
         {
             get

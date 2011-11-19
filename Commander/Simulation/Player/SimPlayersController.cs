@@ -370,6 +370,12 @@
             var menu = player.ActualSelection.OpenedMenu; // here because can become null.
 
 
+            if (menu is PauseWorldMenu)
+            {
+                menu.DoClick();
+            }
+
+
             // buy a turret
             if (menu is CelestialBodyMenu)
             {

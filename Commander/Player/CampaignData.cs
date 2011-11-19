@@ -11,7 +11,6 @@
 
         public CampaignData()
         {
-            Name = "Campaign";
             Directory = @"UserData\Campaign";
             File = "Campaign.xml";
         }

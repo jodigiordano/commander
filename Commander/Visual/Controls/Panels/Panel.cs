@@ -368,7 +368,8 @@
             {
                 SizeX = 2,
                 VisualPriority = VisualPriority,
-                Position = new Vector3(Position.X, Position.Y + 5, 0)
+                Position = new Vector3(Position.X, Position.Y + 5, 0),
+                Alpha = Alpha
             };
 
             TitleSeparator.Position = new Vector3(Position.X, Position.Y + Title.AbsoluteSize.Y + 5, 0);

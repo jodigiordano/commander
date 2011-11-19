@@ -54,10 +54,32 @@
         }
 
 
+        public void SubmitHighscore(int worldId, int levelId, int score)
+        {
+            var protocol = new SendHighscoreProtocol(worldId, levelId, score);
+            protocol.Start();
+
+            RunningProtocols.Add(protocol);
+        }
+
+
         public MultiverseMessage GetServerAnswer(string result)
         {
-            using (var reader = new StringReader(result))
-                return (MultiverseMessage) MultiverseMessageSerializer.Deserialize(reader);
+            try
+            {
+                using (var reader = new StringReader(result))
+                    return (MultiverseMessage) MultiverseMessageSerializer.Deserialize(reader);
+            }
+
+            catch
+            {
+                return new MultiverseMessage()
+                {
+                    Type = MultiverseMessageType.Error,
+                    Message = "server down"
+                };
+            }
+
         }
 
 
@@ -103,7 +125,7 @@
             }
 
             // world exists on disk but may be outdated => check & download
-            if (!IsPlayerWorld(id))
+            // if (!IsPlayerWorld(id))
             {
                 var protocol = new DownloadWorldProtocol(id, true);
                 var scene = (WorldDownloadingScene) Core.Visual.Visuals.GetScene("WorldDownloading");
@@ -117,14 +139,15 @@
                 return;
             }
 
-            JumpToWorldDirectly(id, fromScene);
+            //JumpToWorldDirectly(id, fromScene);
         }
 
 
         public void JumpToWorldDirectly(int id, string fromScene)
         {
-            // Set the world toLocal the WorldScene
+            // Set the world to the WorldScene
             var world = Main.WorldsFactory.GetWorld(id);
+            Core.SimplePersistence.Persistence.LoadData(world.HighScores); //always reload highscores.
 
             world.MultiverseMode = true;
             world.EditingMode = IsPlayerWorld(id);
@@ -153,6 +176,7 @@
         {
             var protocol = new RegisterProtocol(username, password, email);
             protocol.Terminated += new ServerProtocolHandler(handler);
+            protocol.Terminated += new ServerProtocolHandler(NotifyLoggedIn);
             protocol.Start();
 
             RunningProtocols.Add(protocol);

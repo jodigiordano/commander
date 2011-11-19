@@ -47,7 +47,7 @@ namespace EphemereGames.Commander.Simulation
         private GUIController GUIController;
         private PowerUpsController PowerUpsController;
         internal MultiverseController MultiverseController;
-        private PanelsController PanelsController;
+        internal PanelsController PanelsController;
         internal CameraController CameraController;
         internal TweakingController TweakingController;
         private AudioController AudioController;
@@ -195,7 +195,6 @@ namespace EphemereGames.Commander.Simulation
             ObjectivesController.NewGameState += new NewGameStateHandler(GUIController.DoGameStateChanged);
             SimPlayersController.PlayerSelectionChanged += new SimPlayerHandler(GUIController.DoPlayerSelectionChanged);
             TurretsController.TurretReactivated += new TurretHandler(SimPlayersController.DoTurretReactivated);
-            ObjectivesController.NewGameState += new NewGameStateHandler(this.DoNewGameState); //must come after GUIController.DoGameStateChanged
             ObjectivesController.CommonStashChanged += new CommonStashHandler(GUIController.DoCommonStashChanged);
             SimPlayersController.TurretToPlaceSelected += new TurretSimPlayerHandler(GUIController.DoTurretToPlaceSelected);
             SimPlayersController.TurretToPlaceDeselected += new TurretSimPlayerHandler(GUIController.DoTurretToPlaceDeselected);
@@ -515,18 +514,6 @@ namespace EphemereGames.Commander.Simulation
         }
 
 
-        private void DoNewGameState(GameState state)
-        {
-            if (state == GameState.Won)
-            {
-                Main.PlayersController.UpdateProgress(
-                    Main.CurrentWorld.World.Id,
-                    Data.Level.Descriptor.Infos.Id,
-                    Inputs.MasterPlayer.Name, Data.Level.CommonStash.TotalScore);
-            }
-        }
-
-
         private void DoEnemyReachedEndOfPath(Enemy enemy, CelestialBody celestialBody)
         {
             if (State == GameState.Won)
@@ -826,17 +813,14 @@ namespace EphemereGames.Commander.Simulation
                     MultiverseController.DoSelectAction(simPlayer);
             }
 
-            if (GameMode)
-            {
-                if (button == player.MouseConfiguration.Select)
-                    SimPlayersController.DoSelectAction(player);
+            if (button == player.MouseConfiguration.Select)
+                SimPlayersController.DoSelectAction(player);
 
-                else if (button == player.MouseConfiguration.AlternateSelect)
-                    SimPlayersController.DoAlternateAction(player);
+            else if (button == player.MouseConfiguration.AlternateSelect)
+                SimPlayersController.DoAlternateAction(player);
 
-                else if (button == player.MouseConfiguration.Cancel)
-                    SimPlayersController.DoCancelAction(player);
-            }
+            else if (button == player.MouseConfiguration.Cancel)
+                SimPlayersController.DoCancelAction(player);
         }
 
 

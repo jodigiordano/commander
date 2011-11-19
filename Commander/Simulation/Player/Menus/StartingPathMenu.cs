@@ -106,7 +106,6 @@
                     base.Visible &&
                     !Simulator.EditingMode &&
                     Simulator.GameMode &&
-                    RemainingWaves > 0 &&
                     Owner.ActualSelection.CelestialBody != null &&
                     Owner.ActualSelection.CelestialBody.FirstOnPath;
             }
