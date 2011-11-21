@@ -124,10 +124,62 @@ Global Settings
 
     Category
     {
+        Name = Destruction;
+        Public = 1;
+        Background Music = 0;
+        Volume = -30;
+
+        Category Entry
+        {
+            Name = Ouch;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 4;
+            Behavior = 2;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 1;
+            }
+        }
+    }
+
+    Category
+    {
+        Name = Explosion;
+        Public = 1;
+        Background Music = 0;
+        Volume = 250;
+
+        Category Entry
+        {
+            Name = Ouch;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 2;
+            Behavior = 4;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 1;
+            }
+        }
+    }
+
+    Category
+    {
         Name = Hits;
         Public = 1;
         Background Music = 0;
-        Volume = 0;
+        Volume = -280;
 
         Category Entry
         {
@@ -136,14 +188,14 @@ Global Settings
 
         Instance Limit
         {
-            Max Instances = 255;
-            Behavior = 0;
+            Max Instances = 6;
+            Behavior = 2;
 
             Crossfade
             {
                 Fade In = 0;
                 Fade Out = 0;
-                Crossfade Type = 0;
+                Crossfade Type = 1;
             }
         }
     }
@@ -179,7 +231,7 @@ Global Settings
         Name = Laser;
         Public = 1;
         Background Music = 0;
-        Volume = -300;
+        Volume = -600;
 
         Category Entry
         {
@@ -189,7 +241,7 @@ Global Settings
         Instance Limit
         {
             Max Instances = 3;
-            Behavior = 2;
+            Behavior = 4;
 
             Crossfade
             {
@@ -205,7 +257,7 @@ Global Settings
         Name = Basic;
         Public = 1;
         Background Music = 0;
-        Volume = -260;
+        Volume = -420;
 
         Category Entry
         {
@@ -215,7 +267,7 @@ Global Settings
         Instance Limit
         {
             Max Instances = 3;
-            Behavior = 2;
+            Behavior = 4;
 
             Crossfade
             {
@@ -231,7 +283,7 @@ Global Settings
         Name = Missile;
         Public = 1;
         Background Music = 0;
-        Volume = -100;
+        Volume = -160;
 
         Category Entry
         {
@@ -241,7 +293,7 @@ Global Settings
         Instance Limit
         {
             Max Instances = 3;
-            Behavior = 2;
+            Behavior = 4;
 
             Crossfade
             {
@@ -257,7 +309,7 @@ Global Settings
         Name = Gravitational;
         Public = 1;
         Background Music = 0;
-        Volume = 0;
+        Volume = -50;
 
         Category Entry
         {
@@ -283,7 +335,7 @@ Global Settings
         Name = SlowMotion;
         Public = 1;
         Background Music = 0;
-        Volume = 0;
+        Volume = -200;
 
         Category Entry
         {
@@ -292,14 +344,14 @@ Global Settings
 
         Instance Limit
         {
-            Max Instances = 255;
-            Behavior = 0;
+            Max Instances = 2;
+            Behavior = 4;
 
             Crossfade
             {
                 Fade In = 0;
                 Fade Out = 0;
-                Crossfade Type = 0;
+                Crossfade Type = 1;
             }
         }
     }
@@ -309,7 +361,7 @@ Global Settings
         Name = MultipleLasers;
         Public = 1;
         Background Music = 0;
-        Volume = 0;
+        Volume = 150;
 
         Category Entry
         {
@@ -318,14 +370,14 @@ Global Settings
 
         Instance Limit
         {
-            Max Instances = 255;
-            Behavior = 0;
+            Max Instances = 3;
+            Behavior = 4;
 
             Crossfade
             {
                 Fade In = 0;
                 Fade Out = 0;
-                Crossfade Type = 0;
+                Crossfade Type = 1;
             }
         }
     }
@@ -335,7 +387,7 @@ Global Settings
         Name = Music;
         Public = 1;
         Background Music = 1;
-        Volume = -100;
+        Volume = 50;
 
         Category Entry
         {
@@ -611,13 +663,30 @@ Global Settings
         Max = 1.000000;
     }
 
+    Variable
+    {
+        Name = ReverbLvl;
+        Public = 1;
+        Global = 1;
+        Internal = 0;
+        External = 0;
+        Monitored = 1;
+        Reserved = 0;
+        Read Only = 0;
+        Time = 0;
+        Value = 0.697044;
+        Initial Value = 0.700000;
+        Min = 0.000000;
+        Max = 1.000000;
+    }
+
     RPC
     {
         Name = MusicInteractivity;
 
         RPC Curve
         {
-            Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
+            Name = 2::10988205-f63a-4429-b51c-6e8f407562ab;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -645,7 +714,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
+            Name = 2::30233eec-f15a-44a6-a856-38fb83fa2c69;
             Property = 3;
             Sound = 0;
             Line Color = 4294934656;
@@ -687,7 +756,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
+            Name = 5::a60d8ce6-b912-41d4-9f93-d980a797f200;
             Property = 0;
             Sound = 0;
             Line Color = 4294901760;
@@ -715,7 +784,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
+            Name = 5::9676e10d-5cef-4acb-8272-e66af6954630;
             Property = 3;
             Sound = 0;
             Line Color = 4294934656;
@@ -757,7 +826,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
+            Name = 1::19e7b305-2941-4580-b186-c69970022389;
             Property = 0;
             Sound = 0;
             Line Color = 4278190335;
@@ -778,7 +847,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
+            Name = 1::4359cb70-3c47-4faa-8785-afcd9b0aca28;
             Property = 3;
             Sound = 0;
             Line Color = 4286611711;
@@ -820,7 +889,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
+            Name = 4::3314dbdf-05f7-4140-ad7d-7b83d7148c14;
             Property = 0;
             Sound = 0;
             Line Color = 4278190335;
@@ -841,7 +910,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
+            Name = 4::b7e1f7c3-9294-4571-bfd1-c54c5b224332;
             Property = 3;
             Sound = 0;
             Line Color = 4286611711;
@@ -883,7 +952,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
+            Name = 1::ee8c8e91-43bb-4626-9b09-98056782e28f;
             Property = 4;
             Sound = 0;
             Line Color = 4294967040;
@@ -925,7 +994,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
+            Name = 2::905cdfda-9a48-4141-861a-792ed7158f3f;
             Property = 4;
             Sound = 0;
             Line Color = 4294967168;
@@ -967,7 +1036,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
+            Name = 4::12f346fa-e875-446d-90f8-14589c3f95a9;
             Property = 4;
             Sound = 0;
             Line Color = 4294967040;
@@ -1009,7 +1078,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
+            Name = 5::f82cf92e-a31e-4b07-8893-a9b24923d79f;
             Property = 4;
             Sound = 0;
             Line Color = 4294967168;
@@ -1056,7 +1125,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::69f5511c-2ef5-4cf7-9543-faf96c61edbb;
+            Name = Sound::bbf06abc-eb83-422e-8f45-9620f88912b3;
             Property = 1;
             Sound = 1;
             Line Color = 4294934528;
@@ -1084,7 +1153,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::9106233b-b8a9-4476-ad74-63bae61d1e63;
+            Name = Sound::aa662b2f-5830-4f9c-ab97-7aa6d09e4218;
             Property = 0;
             Sound = 1;
             Line Color = 4286611711;
@@ -1117,7 +1186,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+            Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             Property = 0;
             Sound = 0;
             Line Color = 4294901888;
@@ -1145,7 +1214,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+            Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             Property = 0;
             Sound = 0;
             Line Color = 4286578943;
@@ -1173,7 +1242,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
+            Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             Property = 0;
             Sound = 0;
             Line Color = 4288398196;
@@ -1201,7 +1270,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+            Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
             Property = 0;
             Sound = 0;
             Line Color = 4292575452;
@@ -1229,7 +1298,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+            Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
             Property = 0;
             Sound = 0;
             Line Color = 4280457368;
@@ -1257,7 +1326,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+            Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             Property = 0;
             Sound = 0;
             Line Color = 4286849205;
@@ -1285,7 +1354,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+            Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             Property = 0;
             Sound = 0;
             Line Color = 4288308548;
@@ -1313,7 +1382,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+            Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             Property = 0;
             Sound = 0;
             Line Color = 4286366965;
@@ -1341,7 +1410,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+            Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             Property = 0;
             Sound = 0;
             Line Color = 4292474686;
@@ -1374,7 +1443,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::3b14376a-4456-47e4-b5f5-62384b667842;
+            Name = Sound::dbd682d2-3a8d-4a55-8fe4-4e31e4b31c97;
             Property = 0;
             Sound = 1;
             Line Color = 4286463624;
@@ -1395,7 +1464,7 @@ Global Settings
             RPC Point
             {
                 X = 0.000000;
-                Y = -4941.176758;
+                Y = -4000.000000;
                 Curve = 1;
             }
 
@@ -1414,7 +1483,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::2f3b62e1-8094-4e80-b497-9f817b2e2922;
+            Name = Sound::4b91ae5e-7750-4259-9a74-e11e12c5699a;
             Property = 0;
             Sound = 1;
             Line Color = 4287324834;
@@ -1447,7 +1516,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+            Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             Property = 0;
             Sound = 0;
             Line Color = 4294901888;
@@ -1475,7 +1544,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+            Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             Property = 0;
             Sound = 0;
             Line Color = 4284687502;
@@ -1508,7 +1577,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::e9b04d04-faa0-4570-b3eb-8c316228d8d2;
+            Name = 1::aa376199-bdd8-4864-a7fa-1b1981c0dbec;
             Property = 0;
             Sound = 0;
             Line Color = 4294901888;
@@ -1536,7 +1605,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::69ba32ca-28a5-4ce2-aa76-d106a0c51625;
+            Name = 1::39ed982b-70b2-4215-a78d-c7844d96a079;
             Property = 0;
             Sound = 0;
             Line Color = 4279399669;
@@ -1569,7 +1638,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::5d628615-892a-47a0-8ba8-1220e5348e32;
+            Name = Sound::313143ad-df5c-4c61-ab9c-57f3b36c27da;
             Property = 0;
             Sound = 1;
             Line Color = 4285242768;
@@ -1593,6 +1662,255 @@ Global Settings
                 Y = 0.000000;
                 Curve = 1;
             }
+        }
+    }
+
+    RPC
+    {
+        Name = Microsoft Reverb;
+
+        RPC Curve
+        {
+            Name = Effect::2d3fc44a-da5f-4bf6-9556-e138912c7527;
+            Property = 5;
+            Sound = 0;
+            Line Color = 4286628722;
+            Viewable = 1;
+
+            Variable Entry
+            {
+                Name = ReverbLvl;
+            }
+
+            Effect Parameter Entry
+            {
+                Effect Name = Microsoft Reverb;
+                Parameter Name = Wet/Dry Mix;
+            }
+
+            RPC Point
+            {
+                X = 0.000000;
+                Y = 0.000000;
+                Curve = 0;
+            }
+
+            RPC Point
+            {
+                X = 1.000000;
+                Y = 100.000000;
+                Curve = 0;
+            }
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+    }
+
+    Effect
+    {
+        Name = Microsoft Reverb;
+        Global = 1;
+        Parameter Preset = Generic;
+
+        Effect Parameter
+        {
+            Name = Reflections Delay;
+            Minimum = 0.000000;
+            Maximum = 300.000000;
+            Value = 7.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Reverb Delay;
+            Minimum = 0.000000;
+            Maximum = 85.000000;
+            Value = 11.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Position Left;
+            Minimum = 0.000000;
+            Maximum = 30.000000;
+            Value = 6.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Position Right;
+            Minimum = 0.000000;
+            Maximum = 30.000000;
+            Value = 6.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Position Left Matrix;
+            Minimum = 0.000000;
+            Maximum = 30.000000;
+            Value = 27.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Position Right Matrix;
+            Minimum = 0.000000;
+            Maximum = 30.000000;
+            Value = 27.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Early Diffusion;
+            Minimum = 0.000000;
+            Maximum = 15.000000;
+            Value = 15.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Late Diffusion;
+            Minimum = 0.000000;
+            Maximum = 15.000000;
+            Value = 15.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Low EQ Gain;
+            Minimum = 0.000000;
+            Maximum = 12.000000;
+            Value = 8.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Low EQ Cutoff;
+            Minimum = 0.000000;
+            Maximum = 9.000000;
+            Value = 4.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = High EQ Gain;
+            Minimum = 0.000000;
+            Maximum = 8.000000;
+            Value = 8.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = High EQ Cutoff;
+            Minimum = 0.000000;
+            Maximum = 14.000000;
+            Value = 6.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Rear Delay;
+            Minimum = 0.000000;
+            Maximum = 5.000000;
+            Value = 5.000000;
+            Type = 1;
+        }
+
+        Effect Parameter
+        {
+            Name = Room Filter Frequency;
+            Minimum = 20.000000;
+            Maximum = 20000.000000;
+            Value = 5000.000000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Room Filter Main;
+            Minimum = -100.000000;
+            Maximum = 0.000000;
+            Value = -10.000000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Room Filter High Frequency;
+            Minimum = -100.000000;
+            Maximum = 0.000000;
+            Value = -1.000000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Reflections Gain;
+            Minimum = -100.000000;
+            Maximum = 20.000000;
+            Value = -26.020000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Reverb Gain;
+            Minimum = -100.000000;
+            Maximum = 20.000000;
+            Value = 2.000000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Decay Time;
+            Minimum = 0.100000;
+            Maximum = 30.000000;
+            Value = 1.490000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Density;
+            Minimum = 0.000000;
+            Maximum = 100.000000;
+            Value = 100.000000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Room Size;
+            Minimum = 1.000000;
+            Maximum = 100.000000;
+            Value = 100.000000;
+            Type = 0;
+        }
+
+        Effect Parameter
+        {
+            Name = Wet/Dry Mix;
+            Minimum = 0.000000;
+            Maximum = 100.000000;
+            Value = 100.000000;
+            Type = 0;
         }
     }
 
@@ -1622,8 +1940,14 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = ADPCM;
-    Bank Last Revised Low = 1126482844;
-    Bank Last Revised High = 30185928;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 2102810162;
+    Bank Last Revised High = 30189544;
 
     Wave
     {
@@ -5166,6 +5490,121 @@ Wave Bank
             Last Modified High = 30184835;
         }
     }
+
+    Wave
+    {
+        Name = SlowMotionTurret_2011_11_20_1;
+        File = Sfx\SlowMotionTurret_2011_11_20_1.wav;
+        Build Settings Last Modified Low = 1186847772;
+        Build Settings Last Modified High = 30189544;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 352800;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1605662507;
+            Last Modified High = 30189543;
+        }
+    }
+
+    Wave
+    {
+        Name = SlowMotionTurret_2011_11_20_2;
+        File = Sfx\SlowMotionTurret_2011_11_20_2.wav;
+        Build Settings Last Modified Low = 1186867773;
+        Build Settings Last Modified High = 30189544;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 352800;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2311092855;
+            Last Modified High = 30189543;
+        }
+    }
+
+    Wave
+    {
+        Name = SlowMotionTurret_2011_11_20_3;
+        File = Sfx\SlowMotionTurret_2011_11_20_3.wav;
+        Build Settings Last Modified Low = 1186877774;
+        Build Settings Last Modified High = 30189544;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 352800;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2910747153;
+            Last Modified High = 30189543;
+        }
+    }
+
+    Wave
+    {
+        Name = SlowMotionTurret_2011_11_20_4;
+        File = Sfx\SlowMotionTurret_2011_11_20_4.wav;
+        Build Settings Last Modified Low = 1186897775;
+        Build Settings Last Modified High = 30189544;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 352800;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3810568620;
+            Last Modified High = 30189543;
+        }
+    }
+
+    Wave
+    {
+        Name = SlowMotionTurret_2011_11_20_5;
+        File = Sfx\SlowMotionTurret_2011_11_20_5.wav;
+        Build Settings Last Modified Low = 1186907776;
+        Build Settings Last Modified High = 30189544;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 352800;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 462835503;
+            Last Modified High = 30189544;
+        }
+    }
 }
 
 Wave Bank
@@ -5818,6 +6257,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = ADPCM;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
     Bank Last Revised Low = 1068450742;
@@ -5932,7 +6375,7 @@ Sound Bank
         Name = BasicTurretFiring4;
         Volume = -1600;
         Pitch = -100;
-        Priority = 0;
+        Priority = 30;
 
         Category Entry
         {
@@ -5942,6 +6385,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6050,7 +6498,7 @@ Sound Bank
         Name = BasicTurretFiring3;
         Volume = -1500;
         Pitch = 0;
-        Priority = 0;
+        Priority = 40;
 
         Category Entry
         {
@@ -6060,6 +6508,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6118,7 +6571,7 @@ Sound Bank
         Name = BasicTurretFiring2;
         Volume = -1800;
         Pitch = 0;
-        Priority = 0;
+        Priority = 50;
 
         Category Entry
         {
@@ -6128,6 +6581,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6236,7 +6694,7 @@ Sound Bank
         Name = BasicTurretFiring1;
         Volume = -1600;
         Pitch = 200;
-        Priority = 0;
+        Priority = 60;
 
         Category Entry
         {
@@ -6246,6 +6704,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6302,7 +6765,7 @@ Sound Bank
     Sound
     {
         Name = NewWaveComing;
-        Volume = -1800;
+        Volume = -1600;
         Pitch = 0;
         Priority = 0;
 
@@ -6352,13 +6815,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -6367,7 +6830,7 @@ Sound Bank
     {
         Name = ShootingStar;
         Volume = -1670;
-        Pitch = 0;
+        Pitch = 300;
         Priority = 0;
 
         Category Entry
@@ -6428,7 +6891,7 @@ Sound Bank
         Name = MissileTurretLaunching;
         Volume = -1000;
         Pitch = 400;
-        Priority = 0;
+        Priority = 60;
 
         Category Entry
         {
@@ -6438,6 +6901,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6494,7 +6962,7 @@ Sound Bank
     Sound
     {
         Name = Ship1Firing;
-        Volume = -1850;
+        Volume = -2140;
         Pitch = 498;
         Priority = 0;
 
@@ -6506,6 +6974,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6640,7 +7113,7 @@ Sound Bank
     Sound
     {
         Name = NewWaveLaunching;
-        Volume = -1800;
+        Volume = -1600;
         Pitch = 0;
         Priority = 0;
 
@@ -6717,13 +7190,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -6733,16 +7206,21 @@ Sound Bank
         Name = CentaurDestroyed;
         Volume = -1600;
         Pitch = 0;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6801,7 +7279,7 @@ Sound Bank
         Name = LaserTurretFiring1;
         Volume = -2000;
         Pitch = 200;
-        Priority = 0;
+        Priority = 60;
 
         Category Entry
         {
@@ -6811,6 +7289,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6869,7 +7352,7 @@ Sound Bank
         Name = LaserTurretFiring2;
         Volume = -2000;
         Pitch = 0;
-        Priority = 0;
+        Priority = 50;
 
         Category Entry
         {
@@ -6879,6 +7362,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -6937,7 +7425,7 @@ Sound Bank
         Name = LaserTurretFiring3;
         Volume = -2200;
         Pitch = 0;
-        Priority = 0;
+        Priority = 40;
 
         Category Entry
         {
@@ -6947,6 +7435,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -7055,7 +7548,7 @@ Sound Bank
         Name = LaserTurretFiring4;
         Volume = -2100;
         Pitch = 0;
-        Priority = 0;
+        Priority = 30;
 
         Category Entry
         {
@@ -7065,6 +7558,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -7223,7 +7721,7 @@ Sound Bank
         Name = LaserTurretFiring5;
         Volume = -2250;
         Pitch = -318;
-        Priority = 0;
+        Priority = 20;
 
         Category Entry
         {
@@ -7233,6 +7731,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -7391,7 +7894,7 @@ Sound Bank
         Name = LaserTurretFiring6;
         Volume = -2000;
         Pitch = -139;
-        Priority = 0;
+        Priority = 10;
 
         Category Entry
         {
@@ -7401,6 +7904,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -7571,6 +8079,11 @@ Sound Bank
             RPC Name = Zoom;
         }
 
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
         Track
         {
             Volume = 0;
@@ -7727,16 +8240,21 @@ Sound Bank
         Name = VulcanoidDestroyed;
         Volume = -2000;
         Pitch = -906;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -7896,18 +8414,23 @@ Sound Bank
     Sound
     {
         Name = AsteroidDestroyed;
-        Volume = -910;
+        Volume = -950;
         Pitch = -400;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8014,18 +8537,23 @@ Sound Bank
     Sound
     {
         Name = CometDestroyed;
-        Volume = -1600;
+        Volume = -1500;
         Pitch = 0;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8132,18 +8660,23 @@ Sound Bank
     Sound
     {
         Name = TrojanDestroyed;
-        Volume = -1600;
+        Volume = -1560;
         Pitch = 200;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8247,18 +8780,23 @@ Sound Bank
     Sound
     {
         Name = MeteoroidDestroyed;
-        Volume = -1600;
+        Volume = -1500;
         Pitch = 0;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8315,18 +8853,23 @@ Sound Bank
     Sound
     {
         Name = DamacloidDestroyed;
-        Volume = -1800;
+        Volume = -1910;
         Pitch = -416;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8495,25 +9038,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::e9b04d04-faa0-4570-b3eb-8c316228d8d2;
+                RPC Curve Name = 1::aa376199-bdd8-4864-a7fa-1b1981c0dbec;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::69ba32ca-28a5-4ce2-aa76-d106a0c51625;
+                RPC Curve Name = 1::39ed982b-70b2-4215-a78d-c7844d96a079;
             }
         }
     }
@@ -8620,7 +9163,7 @@ Sound Bank
     Sound
     {
         Name = PlanetToProtectHit;
-        Volume = -1910;
+        Volume = -2320;
         Pitch = -400;
         Priority = 0;
 
@@ -8632,6 +9175,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8809,12 +9357,17 @@ Sound Bank
 
         Category Entry
         {
-            Name = Ennemies;
+            Name = Hits;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8896,12 +9449,17 @@ Sound Bank
 
         Category Entry
         {
-            Name = Ennemies;
+            Name = Hits;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -8967,12 +9525,17 @@ Sound Bank
 
         Category Entry
         {
-            Name = Ennemies;
+            Name = Hits;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9050,16 +9613,21 @@ Sound Bank
         Name = SwarmDestroyed;
         Volume = -1700;
         Pitch = 57;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9117,12 +9685,17 @@ Sound Bank
     {
         Name = Select;
         Volume = -2200;
-        Pitch = 302;
+        Pitch = 600;
         Priority = 0;
 
         Category Entry
         {
             Name = Default;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9180,6 +9753,11 @@ Sound Bank
             Name = Default;
         }
 
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
         Track
         {
             Volume = 0;
@@ -9221,13 +9799,18 @@ Sound Bank
     Sound
     {
         Name = Validate;
-        Volume = -1730;
-        Pitch = 0;
+        Volume = -2030;
+        Pitch = 400;
         Priority = 0;
 
         Category Entry
         {
             Name = Default;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9268,7 +9851,7 @@ Sound Bank
     Sound
     {
         Name = ScreenChange;
-        Volume = -2030;
+        Volume = -2200;
         Pitch = 302;
         Priority = 0;
 
@@ -9321,13 +9904,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -9335,18 +9918,23 @@ Sound Bank
     Sound
     {
         Name = PlutoidDestroyed;
-        Volume = -1380;
+        Volume = -1140;
         Pitch = 0;
-        Priority = 10;
+        Priority = 110;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Destruction;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9454,7 +10042,7 @@ Sound Bank
     Sound
     {
         Name = Ship1Moving;
-        Volume = 0;
+        Volume = -100;
         Pitch = 400;
         Priority = 0;
 
@@ -9476,6 +10064,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9518,13 +10111,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -9538,12 +10131,17 @@ Sound Bank
 
         Category Entry
         {
-            Name = Ennemies;
+            Name = Hits;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9602,7 +10200,7 @@ Sound Bank
         Name = BasicTurretFiring5;
         Volume = -1500;
         Pitch = -200;
-        Priority = 0;
+        Priority = 20;
 
         Category Entry
         {
@@ -9612,6 +10210,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9670,7 +10273,7 @@ Sound Bank
         Name = BasicTurretFiring6;
         Volume = -1600;
         Pitch = -300;
-        Priority = 0;
+        Priority = 10;
 
         Category Entry
         {
@@ -9680,6 +10283,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -9800,6 +10408,11 @@ Sound Bank
             RPC Name = Zoom;
         }
 
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
         Track
         {
             Volume = 0;
@@ -9910,6 +10523,11 @@ Sound Bank
             Name = Default;
         }
 
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
         Track
         {
             Volume = 0;
@@ -9955,6 +10573,11 @@ Sound Bank
         Category Entry
         {
             Name = Default;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -10048,13 +10671,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -10063,7 +10686,7 @@ Sound Bank
     {
         Name = GravitationalTurretUpgrade;
         Volume = -1200;
-        Pitch = 400;
+        Pitch = 450;
         Priority = 0;
 
         Category Entry
@@ -10115,13 +10738,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -10191,7 +10814,7 @@ Sound Bank
         Name = MissileTurretLaunching2;
         Volume = -1200;
         Pitch = 200;
-        Priority = 0;
+        Priority = 50;
 
         Category Entry
         {
@@ -10201,6 +10824,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -10259,7 +10887,7 @@ Sound Bank
         Name = MissileTurretLaunching3;
         Volume = -1200;
         Pitch = 0;
-        Priority = 0;
+        Priority = 40;
 
         Category Entry
         {
@@ -10269,6 +10897,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -10323,7 +10956,7 @@ Sound Bank
 
         Track
         {
-            Volume = 0;
+            Volume = -850;
             Use Filter = 0;
 
             Play Wave Event
@@ -10345,8 +10978,8 @@ Sound Bank
 
                 Pitch Variation
                 {
-                    Min = -100;
-                    Max = 100;
+                    Min = 300;
+                    Max = 500;
                     Operator = 0;
                     New Variation On Loop = 0;
                 }
@@ -10377,7 +11010,7 @@ Sound Bank
         Name = MissileTurretLaunching4;
         Volume = -1200;
         Pitch = 200;
-        Priority = 0;
+        Priority = 30;
 
         Category Entry
         {
@@ -10387,6 +11020,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -10495,7 +11133,7 @@ Sound Bank
         Name = MissileTurretLaunching5;
         Volume = -1200;
         Pitch = 200;
-        Priority = 0;
+        Priority = 20;
 
         Category Entry
         {
@@ -10505,6 +11143,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -10581,8 +11224,8 @@ Sound Bank
 
                 Pitch Variation
                 {
-                    Min = -100;
-                    Max = 100;
+                    Min = -300;
+                    Max = -100;
                     Operator = 0;
                     New Variation On Loop = 0;
                 }
@@ -10613,7 +11256,7 @@ Sound Bank
         Name = MissileTurretLaunching6;
         Volume = -1200;
         Pitch = 0;
-        Priority = 0;
+        Priority = 10;
 
         Category Entry
         {
@@ -10623,6 +11266,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -10793,6 +11441,11 @@ Sound Bank
             RPC Name = Zoom;
         }
 
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
         Track
         {
             Volume = 0;
@@ -10947,9 +11600,9 @@ Sound Bank
     Sound
     {
         Name = MultipleLasersTurretFiring1;
-        Volume = -1560;
+        Volume = -1320;
         Pitch = 0;
-        Priority = 0;
+        Priority = 60;
 
         Category Entry
         {
@@ -10961,10 +11614,18 @@ Sound Bank
             RPC Name = Zoom;
         }
 
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
         Track
         {
             Volume = 0;
-            Use Filter = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 3488.000000;
+            Filter Q Factor = 0.813367;
 
             Play Wave Event
             {
@@ -10991,79 +11652,12 @@ Sound Bank
                     New Variation On Loop = 0;
                 }
 
-                Variation
-                {
-                    Variation Type = 3;
-                    Variation Table Type = 0;
-                    New Variation on Loop = 0;
-                }
-
                 Wave Entry
                 {
                     Bank Name = Wave Bank;
                     Bank Index = 0;
                     Entry Name = MultipleLasersTurretFiring1_08;
                     Entry Index = 79;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = MultipleLasersFiring_2011_09_30_01;
-                    Entry Index = 126;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = MultipleLasersFiring_2011_09_30_02;
-                    Entry Index = 127;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = MultipleLasersFiring_2011_09_30_03;
-                    Entry Index = 128;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = MultipleLasersFiring_2011_09_30_04;
-                    Entry Index = 129;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = MultipleLasersFiring_2011_09_30_06;
-                    Entry Index = 131;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = MultipleLasersFiring_2011_09_30_07;
-                    Entry Index = 132;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -11074,13 +11668,18 @@ Sound Bank
     Sound
     {
         Name = TurretSold;
-        Volume = -2400;
+        Volume = -2850;
         Pitch = 0;
         Priority = 0;
 
         Category Entry
         {
             Name = Default;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -11124,7 +11723,7 @@ Sound Bank
     Sound
     {
         Name = TurretUpgraded;
-        Volume = -1400;
+        Volume = -1200;
         Pitch = -200;
         Priority = 0;
 
@@ -11171,7 +11770,7 @@ Sound Bank
     Sound
     {
         Name = Ship1TeleportIn;
-        Volume = -1500;
+        Volume = -1610;
         Pitch = 0;
         Priority = 0;
 
@@ -11223,7 +11822,7 @@ Sound Bank
     Sound
     {
         Name = Ship1TeleportOut;
-        Volume = -1200;
+        Volume = -1380;
         Pitch = 0;
         Priority = 0;
 
@@ -11275,8 +11874,8 @@ Sound Bank
     Sound
     {
         Name = TurretUpgrading;
-        Volume = -1500;
-        Pitch = 0;
+        Volume = -1200;
+        Pitch = 200;
         Priority = 0;
 
         Category Entry
@@ -11574,31 +12173,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
+                RPC Curve Name = 1::19e7b305-2941-4580-b186-c69970022389;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
+                RPC Curve Name = 1::4359cb70-3c47-4faa-8785-afcd9b0aca28;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
+                RPC Curve Name = 1::ee8c8e91-43bb-4626-9b09-98056782e28f;
             }
         }
 
@@ -11642,31 +12241,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
+                RPC Curve Name = 2::10988205-f63a-4429-b51c-6e8f407562ab;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
+                RPC Curve Name = 2::30233eec-f15a-44a6-a856-38fb83fa2c69;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
+                RPC Curve Name = 2::905cdfda-9a48-4141-861a-792ed7158f3f;
             }
         }
 
@@ -11710,13 +12309,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -11760,25 +12359,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
+                RPC Curve Name = 4::3314dbdf-05f7-4140-ad7d-7b83d7148c14;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
+                RPC Curve Name = 4::b7e1f7c3-9294-4571-bfd1-c54c5b224332;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
+                RPC Curve Name = 4::12f346fa-e875-446d-90f8-14589c3f95a9;
             }
         }
 
@@ -11822,25 +12421,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
+                RPC Curve Name = 5::a60d8ce6-b912-41d4-9f93-d980a797f200;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
+                RPC Curve Name = 5::9676e10d-5cef-4acb-8272-e66af6954630;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
+                RPC Curve Name = 5::f82cf92e-a31e-4b07-8893-a9b24923d79f;
             }
         }
 
@@ -11884,7 +12483,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
@@ -11955,31 +12554,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
+                RPC Curve Name = 1::19e7b305-2941-4580-b186-c69970022389;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
+                RPC Curve Name = 1::4359cb70-3c47-4faa-8785-afcd9b0aca28;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
+                RPC Curve Name = 1::ee8c8e91-43bb-4626-9b09-98056782e28f;
             }
         }
 
@@ -12022,31 +12621,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
+                RPC Curve Name = 2::10988205-f63a-4429-b51c-6e8f407562ab;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
+                RPC Curve Name = 2::30233eec-f15a-44a6-a856-38fb83fa2c69;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
+                RPC Curve Name = 2::905cdfda-9a48-4141-861a-792ed7158f3f;
             }
         }
 
@@ -12089,13 +12688,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -12139,25 +12738,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
+                RPC Curve Name = 4::3314dbdf-05f7-4140-ad7d-7b83d7148c14;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
+                RPC Curve Name = 4::b7e1f7c3-9294-4571-bfd1-c54c5b224332;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
+                RPC Curve Name = 4::12f346fa-e875-446d-90f8-14589c3f95a9;
             }
         }
 
@@ -12201,25 +12800,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
+                RPC Curve Name = 5::a60d8ce6-b912-41d4-9f93-d980a797f200;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
+                RPC Curve Name = 5::9676e10d-5cef-4acb-8272-e66af6954630;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
+                RPC Curve Name = 5::f82cf92e-a31e-4b07-8893-a9b24923d79f;
             }
         }
 
@@ -12253,7 +12852,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
@@ -12325,31 +12924,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
+                RPC Curve Name = 1::19e7b305-2941-4580-b186-c69970022389;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
+                RPC Curve Name = 1::4359cb70-3c47-4faa-8785-afcd9b0aca28;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
+                RPC Curve Name = 1::ee8c8e91-43bb-4626-9b09-98056782e28f;
             }
         }
 
@@ -12393,31 +12992,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
+                RPC Curve Name = 2::10988205-f63a-4429-b51c-6e8f407562ab;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
+                RPC Curve Name = 2::30233eec-f15a-44a6-a856-38fb83fa2c69;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
+                RPC Curve Name = 2::905cdfda-9a48-4141-861a-792ed7158f3f;
             }
         }
 
@@ -12451,13 +13050,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
     }
@@ -12520,13 +13119,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
 
@@ -12556,13 +13155,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
             }
         }
 
@@ -12574,13 +13173,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -12621,7 +13220,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
         }
 
@@ -12633,7 +13232,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
         }
 
@@ -12645,7 +13244,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
@@ -12653,7 +13252,7 @@ Sound Bank
     Sound
     {
         Name = PolonaiseOp44;
-        Volume = -1200;
+        Volume = -1320;
         Pitch = 0;
         Priority = 0;
 
@@ -12716,41 +13315,41 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
+                RPC Curve Name = 1::19e7b305-2941-4580-b186-c69970022389;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
+                RPC Curve Name = 1::4359cb70-3c47-4faa-8785-afcd9b0aca28;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
+                RPC Curve Name = 1::ee8c8e91-43bb-4626-9b09-98056782e28f;
             }
         }
 
         Track
         {
-            Volume = 0;
+            Volume = -320;
             Use Filter = 1;
             Filter Mode = 0;
             Filter Frequency = 20000.000000;
-            Filter Q Factor = 0.666700;
+            Filter Q Factor = 0.813367;
 
             Play Wave Event
             {
@@ -12783,31 +13382,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
+                RPC Curve Name = 2::10988205-f63a-4429-b51c-6e8f407562ab;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
+                RPC Curve Name = 2::30233eec-f15a-44a6-a856-38fb83fa2c69;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
+                RPC Curve Name = 2::905cdfda-9a48-4141-861a-792ed7158f3f;
             }
         }
 
@@ -12840,13 +13439,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -12890,31 +13489,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
+                RPC Curve Name = 4::3314dbdf-05f7-4140-ad7d-7b83d7148c14;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
+                RPC Curve Name = 4::b7e1f7c3-9294-4571-bfd1-c54c5b224332;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
+                RPC Curve Name = 4::12f346fa-e875-446d-90f8-14589c3f95a9;
             }
         }
 
         Track
         {
-            Volume = 0;
+            Volume = -100;
             Use Filter = 1;
             Filter Mode = 0;
             Filter Frequency = 20000.000000;
@@ -12952,25 +13551,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
+                RPC Curve Name = 5::a60d8ce6-b912-41d4-9f93-d980a797f200;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
+                RPC Curve Name = 5::9676e10d-5cef-4acb-8272-e66af6954630;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
+                RPC Curve Name = 5::f82cf92e-a31e-4b07-8893-a9b24923d79f;
             }
         }
 
@@ -13004,7 +13603,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
@@ -13075,31 +13674,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::eae1eb10-6550-420e-b63f-54fbfe27fea4;
+                RPC Curve Name = 1::19e7b305-2941-4580-b186-c69970022389;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::f1f9505f-1a08-4c06-a3d2-6783196490d9;
+                RPC Curve Name = 1::4359cb70-3c47-4faa-8785-afcd9b0aca28;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 1::27fdf244-ea9d-43c8-a1c6-75de840a280a;
+                RPC Curve Name = 1::ee8c8e91-43bb-4626-9b09-98056782e28f;
             }
         }
 
@@ -13142,31 +13741,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::d295b56f-cdb6-4331-80c7-849d864c6e6c;
+                RPC Curve Name = 2::10988205-f63a-4429-b51c-6e8f407562ab;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::6f39328c-63f6-4d5c-aafa-4b48854cf17a;
+                RPC Curve Name = 2::30233eec-f15a-44a6-a856-38fb83fa2c69;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 2::325f2fcc-7782-462f-a4a5-429dd1dc33a6;
+                RPC Curve Name = 2::905cdfda-9a48-4141-861a-792ed7158f3f;
             }
         }
 
@@ -13209,13 +13808,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -13259,25 +13858,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::71581efa-b8d4-4894-8f69-408a82556857;
+                RPC Curve Name = 4::3314dbdf-05f7-4140-ad7d-7b83d7148c14;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::5294fddb-4979-4469-ae88-41e87cb7c501;
+                RPC Curve Name = 4::b7e1f7c3-9294-4571-bfd1-c54c5b224332;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 4::94279601-873b-4ea4-a134-a76f66dc4e7e;
+                RPC Curve Name = 4::12f346fa-e875-446d-90f8-14589c3f95a9;
             }
         }
 
@@ -13321,25 +13920,25 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::e70431b8-98de-4fc9-96d0-a8d0c27f079a;
+                RPC Curve Name = 5::a60d8ce6-b912-41d4-9f93-d980a797f200;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::ca72b347-c0a3-4e09-990e-7e0a6b1bbb00;
+                RPC Curve Name = 5::9676e10d-5cef-4acb-8272-e66af6954630;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicInteractivity;
-                RPC Curve Name = 5::6f32615c-4d73-4fde-b691-c76728473f5c;
+                RPC Curve Name = 5::f82cf92e-a31e-4b07-8893-a9b24923d79f;
             }
         }
 
@@ -13373,7 +13972,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
@@ -13436,13 +14035,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
     }
@@ -13506,13 +14105,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
     }
@@ -13575,31 +14174,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
-            }
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
-            }
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
 
@@ -13611,13 +14192,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -13658,7 +14257,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
         }
 
@@ -13670,7 +14269,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
         }
 
@@ -13682,7 +14281,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
@@ -13745,31 +14344,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
-            }
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
-            }
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
 
@@ -13781,13 +14362,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -13828,7 +14427,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
         }
 
@@ -13840,7 +14439,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
         }
 
@@ -13852,7 +14451,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
@@ -13915,31 +14514,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
-            }
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::b8438069-17dd-4e4c-853d-28c346d95c75;
-            }
-
-            RPC Curve Entry
-            {
-                RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 2::0b8d7bf5-cc5b-4494-afc6-cc3a641500dd;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
 
@@ -13951,13 +14532,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::5fdf961c-78c8-476d-a2f1-d5f8e3406652;
+                RPC Curve Name = 2::19dfbbd8-2ae6-4dd2-bab0-03b889430fc5;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 3::329a6810-21e9-4c8d-b656-3567268cf2fd;
+                RPC Curve Name = 2::0407c13e-840d-427a-b2b1-83fb03d7b027;
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::abb3f8bf-68ce-4b26-bb49-f1f7528d982b;
+            }
+
+            RPC Curve Entry
+            {
+                RPC Name = MusicVolumeEnveloppe;
+                RPC Curve Name = 3::f3982a0b-f796-45a5-ac54-55109e752704;
             }
         }
 
@@ -13998,7 +14597,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 4::89ae34ac-5754-4f32-af18-bf03f0b76ebe;
+                RPC Curve Name = 4::ea82f442-a87e-409e-9899-ef20c86fbab9;
             }
         }
 
@@ -14010,7 +14609,7 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 5::c9a38683-5a57-4d29-bbe1-7d50e4c4c2dc;
+                RPC Curve Name = 5::ff865cca-7f8c-4ed7-8c90-2f97579645ee;
             }
         }
 
@@ -14022,26 +14621,31 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 6::dd1db76c-12f3-4d6c-ad2a-da0ee00e4a4e;
+                RPC Curve Name = 6::b5acedf8-903e-4633-9af6-ecee72bbfa70;
             }
         }
     }
 
     Sound
     {
-        Name = MissileExplosion;
+        Name = MissileExplosion1;
         Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
+        Pitch = 710;
+        Priority = 60;
 
         Category Entry
         {
-            Name = Ouch;
+            Name = Explosion;
         }
 
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -14050,7 +14654,7 @@ Sound Bank
             Use Filter = 1;
             Filter Mode = 0;
             Filter Frequency = 2592.000000;
-            Filter Q Factor = 2.133365;
+            Filter Q Factor = 0.666700;
 
             Play Wave Event
             {
@@ -14084,10 +14688,10 @@ Sound Bank
 
     Sound
     {
-        Name = SlowMotionTurret;
-        Volume = -1400;
+        Name = SlowMotionTurret2;
+        Volume = -1600;
         Pitch = 0;
-        Priority = 0;
+        Priority = 40;
 
         Category Entry
         {
@@ -14097,6 +14701,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -14119,6 +14728,22 @@ Sound Bank
                     Relative = 0;
                     Random Recurrence = 0;
                     Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 200;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
                 }
 
                 Wave Entry
@@ -14187,13 +14812,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
     }
@@ -14253,7 +14878,7 @@ Sound Bank
     Sound
     {
         Name = Ship4Moving;
-        Volume = -200;
+        Volume = -360;
         Pitch = 400;
         Priority = 0;
 
@@ -14317,13 +14942,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -14331,7 +14956,7 @@ Sound Bank
     Sound
     {
         Name = Ship2Moving;
-        Volume = -600;
+        Volume = -1440;
         Pitch = 1200;
         Priority = 0;
 
@@ -14395,13 +15020,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -14473,13 +15098,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::13696d79-0a65-4912-a7f9-2bb5d1dd0e59;
+                RPC Curve Name = 1::2a02ca71-ed77-4382-bbfb-5974c1d9eff1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppe;
-                RPC Curve Name = 1::adc6c5a2-b2a0-4e73-b356-e08270b21d22;
+                RPC Curve Name = 1::a38e7acc-98df-4fb0-b4a3-7135cf756440;
             }
         }
     }
@@ -14487,7 +15112,7 @@ Sound Bank
     Sound
     {
         Name = Ship2Firing;
-        Volume = 100;
+        Volume = 0;
         Pitch = 0;
         Priority = 0;
 
@@ -14499,6 +15124,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -14542,7 +15172,7 @@ Sound Bank
     Sound
     {
         Name = Ship3Firing;
-        Volume = -1850;
+        Volume = -2320;
         Pitch = 1200;
         Priority = 0;
 
@@ -14554,6 +15184,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -14597,7 +15232,7 @@ Sound Bank
     Sound
     {
         Name = Ship4Firing;
-        Volume = -1200;
+        Volume = -1730;
         Pitch = 351;
         Priority = 0;
 
@@ -14609,6 +15244,11 @@ Sound Bank
         RPC Entry
         {
             RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
         }
 
         Track
@@ -14652,7 +15292,7 @@ Sound Bank
     Sound
     {
         Name = Ship2TeleportIn;
-        Volume = -1670;
+        Volume = -1730;
         Pitch = 0;
         Priority = 0;
 
@@ -14704,7 +15344,7 @@ Sound Bank
     Sound
     {
         Name = Ship2TeleportOut;
-        Volume = -1200;
+        Volume = -1320;
         Pitch = 0;
         Priority = 0;
 
@@ -14756,7 +15396,7 @@ Sound Bank
     Sound
     {
         Name = Ship3TeleportIn;
-        Volume = -2000;
+        Volume = -2090;
         Pitch = 0;
         Priority = 0;
 
@@ -14808,7 +15448,7 @@ Sound Bank
     Sound
     {
         Name = Ship3TeleportOut;
-        Volume = -1440;
+        Volume = -1610;
         Pitch = 200;
         Priority = 0;
 
@@ -14860,7 +15500,7 @@ Sound Bank
     Sound
     {
         Name = Ship4TeleportIn;
-        Volume = -1910;
+        Volume = -1970;
         Pitch = -286;
         Priority = 0;
 
@@ -14912,7 +15552,7 @@ Sound Bank
     Sound
     {
         Name = Ship4TeleportOut;
-        Volume = -1440;
+        Volume = -1610;
         Pitch = 200;
         Priority = 0;
 
@@ -15070,6 +15710,11 @@ Sound Bank
             RPC Name = Zoom;
         }
 
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
         Track
         {
             Volume = 0;
@@ -15131,7 +15776,7 @@ Sound Bank
             Use Filter = 1;
             Filter Mode = 0;
             Filter Frequency = 2720.000000;
-            Filter Q Factor = 11.960062;
+            Filter Q Factor = 8.000066;
 
             Play Wave Event
             {
@@ -15220,13 +15865,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::e9b04d04-faa0-4570-b3eb-8c316228d8d2;
+                RPC Curve Name = 1::aa376199-bdd8-4864-a7fa-1b1981c0dbec;
             }
 
             RPC Curve Entry
             {
                 RPC Name = SfxVolumeEnveloppeSlow;
-                RPC Curve Name = 1::69ba32ca-28a5-4ce2-aa76-d106a0c51625;
+                RPC Curve Name = 1::39ed982b-70b2-4215-a78d-c7844d96a079;
             }
         }
     }
@@ -15375,6 +16020,1316 @@ Sound Bank
                     Bank Index = 0;
                     Entry Name = ShipBouncing;
                     Entry Index = 5;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MultipleLasersTurretFiring2;
+        Volume = -1560;
+        Pitch = 0;
+        Priority = 50;
+
+        Category Entry
+        {
+            Name = MultipleLasers;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_06;
+                    Entry Index = 131;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MultipleLasersTurretFiring3;
+        Volume = -1560;
+        Pitch = 0;
+        Priority = 40;
+
+        Category Entry
+        {
+            Name = MultipleLasers;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_04;
+                    Entry Index = 129;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MultipleLasersTurretFiring4;
+        Volume = -1560;
+        Pitch = 0;
+        Priority = 30;
+
+        Category Entry
+        {
+            Name = MultipleLasers;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 100;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_03;
+                    Entry Index = 128;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MultipleLasersTurretFiring5;
+        Volume = -1560;
+        Pitch = 0;
+        Priority = 20;
+
+        Category Entry
+        {
+            Name = MultipleLasers;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 100;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_02;
+                    Entry Index = 127;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MultipleLasersTurretFiring6;
+        Volume = -1610;
+        Pitch = 0;
+        Priority = 10;
+
+        Category Entry
+        {
+            Name = MultipleLasers;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 100;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_01;
+                    Entry Index = 126;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+
+        Track
+        {
+            Volume = -1560;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_07;
+                    Entry Index = 132;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MultipleLasersTurretFiring7;
+        Volume = -1610;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = MultipleLasers;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_01;
+                    Entry Index = 126;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+
+        Track
+        {
+            Volume = -910;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MultipleLasersFiring_2011_09_30_07;
+                    Entry Index = 132;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MissileExplosion2;
+        Volume = -1200;
+        Pitch = 531;
+        Priority = 50;
+
+        Category Entry
+        {
+            Name = Explosion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 2720.000000;
+            Filter Q Factor = 0.813367;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MissileExplosion3;
+        Volume = -1200;
+        Pitch = 433;
+        Priority = 40;
+
+        Category Entry
+        {
+            Name = Explosion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 2720.000000;
+            Filter Q Factor = 1.253399;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MissileExplosion4;
+        Volume = -1200;
+        Pitch = 367;
+        Priority = 30;
+
+        Category Entry
+        {
+            Name = Explosion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 2976.000000;
+            Filter Q Factor = 1.986740;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MissileExplosion5;
+        Volume = -1440;
+        Pitch = 302;
+        Priority = 20;
+
+        Category Entry
+        {
+            Name = Explosion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 3072.000000;
+            Filter Q Factor = 2.429998;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 3072.000000;
+            Filter Q Factor = 2.429998;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 50;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 29;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MissileExplosion6;
+        Volume = -1440;
+        Pitch = 155;
+        Priority = 10;
+
+        Category Entry
+        {
+            Name = Explosion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 3232.000000;
+            Filter Q Factor = 2.573393;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 3232.000000;
+            Filter Q Factor = 2.573393;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 59;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 50;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = MissileExplosion7;
+        Volume = -1440;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Explosion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 3104.000000;
+            Filter Q Factor = 3.013384;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 1;
+            Filter Mode = 0;
+            Filter Frequency = 3104.000000;
+            Filter Q Factor = 3.013384;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 79;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 50;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = MissileExplosion_2011_09_26;
+                    Entry Index = 123;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SlowMotionTurret1;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 50;
+
+        Category Entry
+        {
+            Name = SlowMotion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 200;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = SlowMotionTurret_2011_11_20_1;
+                    Entry Index = 154;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SlowMotionTurret3;
+        Volume = -910;
+        Pitch = 0;
+        Priority = 30;
+
+        Category Entry
+        {
+            Name = SlowMotion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 200;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = SlowMotionTurret_2011_11_20_2;
+                    Entry Index = 155;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SlowMotionTurret4;
+        Volume = -1100;
+        Pitch = 0;
+        Priority = 20;
+
+        Category Entry
+        {
+            Name = SlowMotion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 200;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = SlowMotionTurret_2011_11_20_3;
+                    Entry Index = 156;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SlowMotionTurret5;
+        Volume = -1500;
+        Pitch = 0;
+        Priority = 10;
+
+        Category Entry
+        {
+            Name = SlowMotion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 200;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = SlowMotionTurret_2011_11_20_4;
+                    Entry Index = 157;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = SlowMotionTurret6;
+        Volume = -1500;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = SlowMotion;
+        }
+
+        RPC Entry
+        {
+            RPC Name = Zoom;
+        }
+
+        Effect Entry
+        {
+            Effect Name = Microsoft Reverb;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Pitch Variation
+                {
+                    Min = -100;
+                    Max = 200;
+                    Operator = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Volume Variation
+                {
+                    Min = -200;
+                    Max = 200;
+                    Volume = 0;
+                    New Variation On Loop = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = SlowMotionTurret_2011_11_20_5;
+                    Entry Index = 158;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -16356,19 +18311,6 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
-        }
     }
 
     Cue
@@ -16389,19 +18331,6 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
-        }
     }
 
     Cue
@@ -16421,19 +18350,6 @@ Sound Bank
             Index = 33;
             Weight Min = 0;
             Weight Max = 255;
-        }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
         }
     }
 
@@ -16601,19 +18517,6 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
-        }
     }
 
     Cue
@@ -16674,19 +18577,6 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
-        }
     }
 
     Cue
@@ -16706,19 +18596,6 @@ Sound Bank
             Index = 33;
             Weight Min = 0;
             Weight Max = 255;
-        }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
         }
     }
 
@@ -16740,19 +18617,6 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
-        }
     }
 
     Cue
@@ -16773,19 +18637,6 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 2;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 1;
-            }
-        }
     }
 
     Cue
@@ -16805,19 +18656,6 @@ Sound Bank
             Index = 32;
             Weight Min = 0;
             Weight Max = 255;
-        }
-
-        Instance Limit
-        {
-            Max Instances = 4;
-            Behavior = 0;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 0;
-            }
         }
     }
 
@@ -16842,8 +18680,8 @@ Sound Bank
 
         Instance Limit
         {
-            Max Instances = 3;
-            Behavior = 2;
+            Max Instances = 4;
+            Behavior = 0;
 
             Crossfade
             {
@@ -17333,8 +19171,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MultipleLasersTurretFiring1;
-            Index = 58;
+            Name = MultipleLasersTurretFiring2;
+            Index = 98;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -17353,8 +19191,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MultipleLasersTurretFiring1;
-            Index = 58;
+            Name = MultipleLasersTurretFiring3;
+            Index = 99;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -17373,8 +19211,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MultipleLasersTurretFiring1;
-            Index = 58;
+            Name = MultipleLasersTurretFiring4;
+            Index = 100;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -17393,8 +19231,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MultipleLasersTurretFiring1;
-            Index = 58;
+            Name = MultipleLasersTurretFiring5;
+            Index = 101;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -17413,8 +19251,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MultipleLasersTurretFiring1;
-            Index = 58;
+            Name = MultipleLasersTurretFiring6;
+            Index = 102;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -17433,8 +19271,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MultipleLasersTurretFiring1;
-            Index = 58;
+            Name = MultipleLasersTurretFiring7;
+            Index = 103;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -17653,7 +19491,7 @@ Sound Bank
 
         Sound Entry
         {
-            Name = MissileExplosion;
+            Name = MissileExplosion1;
             Index = 77;
             Weight Min = 0;
             Weight Max = 255;
@@ -17686,8 +19524,16 @@ Sound Bank
 
         Sound Entry
         {
-            Name = SlowMotionTurret;
+            Name = SlowMotionTurret2;
             Index = 78;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+
+        Sound Entry
+        {
+            Name = SlowMotionTurret1;
+            Index = 110;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -17851,6 +19697,19 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
+
+        Instance Limit
+        {
+            Max Instances = 3;
+            Behavior = 2;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 1;
+            }
+        }
     }
 
     Cue
@@ -17871,6 +19730,19 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
+
+        Instance Limit
+        {
+            Max Instances = 3;
+            Behavior = 2;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 1;
+            }
+        }
     }
 
     Cue
@@ -17890,6 +19762,19 @@ Sound Bank
             Index = 86;
             Weight Min = 0;
             Weight Max = 255;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 3;
+            Behavior = 2;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 1;
+            }
         }
     }
 
@@ -18232,6 +20117,266 @@ Sound Bank
             Weight Max = 255;
         }
     }
+
+    Cue
+    {
+        Name = SlowMotionTurret1;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SlowMotionTurret1;
+            Index = 110;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SlowMotionTurret2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SlowMotionTurret2;
+            Index = 78;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SlowMotionTurret3;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SlowMotionTurret3;
+            Index = 111;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SlowMotionTurret4;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SlowMotionTurret4;
+            Index = 112;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SlowMotionTurret5;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SlowMotionTurret5;
+            Index = 113;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = SlowMotionTurret6;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = SlowMotionTurret6;
+            Index = 114;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MissileExplosion1;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = MissileExplosion1;
+            Index = 77;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MissileExplosion2;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = MissileExplosion2;
+            Index = 104;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MissileExplosion3;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = MissileExplosion3;
+            Index = 105;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MissileExplosion4;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = MissileExplosion4;
+            Index = 106;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MissileExplosion5;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = MissileExplosion5;
+            Index = 107;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MissileExplosion6;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = MissileExplosion6;
+            Index = 108;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = MissileExplosion7;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = MissileExplosion7;
+            Index = 109;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
 }
 
 Sound Bank
@@ -18344,13 +20489,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::dda7a851-a6a1-47fa-a2cd-e2a407e16f45;
+                RPC Curve Name = 1::e03a0380-3053-43dc-ba2a-c49b66ce17a6;
             }
 
             RPC Curve Entry
             {
                 RPC Name = MusicVolumeEnveloppe;
-                RPC Curve Name = 1::de4df257-fe37-4a26-ba88-34330afbc826;
+                RPC Curve Name = 1::89d89b92-9a3f-41e0-804f-e60b8f31c157;
             }
         }
     }
