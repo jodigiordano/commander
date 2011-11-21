@@ -1433,6 +1433,33 @@
       <Processor>SoundEffectProcessor</Processor>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="audio\sfx\SlowMotionTurret_2011_11_20_1.wav">
+      <Name>SlowMotionTurret_2011_11_20_1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\SlowMotionTurret_2011_11_20_2.wav">
+      <Name>SlowMotionTurret_2011_11_20_2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\SlowMotionTurret_2011_11_20_3.wav">
+      <Name>SlowMotionTurret_2011_11_20_3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\SlowMotionTurret_2011_11_20_4.wav">
+      <Name>SlowMotionTurret_2011_11_20_4</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="audio\sfx\SlowMotionTurret_2011_11_20_5.wav">
+      <Name>SlowMotionTurret_2011_11_20_5</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
