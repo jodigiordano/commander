@@ -240,8 +240,8 @@
         {
             List<CelestialBodyDescriptor> descriptor = new List<CelestialBodyDescriptor>();
 
-            foreach (var c in CelestialBodies)
-                descriptor.Add(c.GenerateDescriptor());
+            for (int i = 0; i < CelestialBodies.Count; i++)
+                descriptor.Add(CelestialBodies[i].GenerateDescriptor());
 
             return descriptor;
         }

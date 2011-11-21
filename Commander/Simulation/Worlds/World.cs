@@ -31,9 +31,7 @@
 
         public void Initialize()
         {
-            // set lives so the planet won't explode...!
-            Layout.Player.Lives = 1;
-            Layout.Player.Money = 100;
+            Descriptor.Initialize();
         }
 
 

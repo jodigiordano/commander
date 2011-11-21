@@ -616,13 +616,10 @@
             int levelIndex = 0;
             int warpIndex = 0;
 
-            Simulator.Data.Level.PlanetarySystem.Sort(delegate(CelestialBody cb1, CelestialBody cb2)
+            for (int i = 0; i < Simulator.Data.Level.PlanetarySystem.Count; i++)
             {
-                return cb1.PathPriority > cb2.PathPriority ? 1 : cb1.PathPriority < cb2.PathPriority ? -1 : 0;
-            });
+                var c = Simulator.Data.Level.PlanetarySystem[i];
 
-            foreach (var c in Simulator.Data.Level.PlanetarySystem)
-            {
                 if (c is AsteroidBelt)
                     continue;
 

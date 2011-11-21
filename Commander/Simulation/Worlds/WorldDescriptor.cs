@@ -25,6 +25,8 @@
 
         private XmlSerializer Serializer;
 
+        private int NextLevelId;
+
 
         public WorldDescriptor()
         {
@@ -39,6 +41,20 @@
             LastModification = Main.GetCurrentTimestamp();
 
             Serializer = new XmlSerializer(this.GetType());
+
+            NextLevelId = 0;
+        }
+
+
+        public void Initialize()
+        {
+            var highest = 0;
+
+            foreach (var l in Levels)
+                if (l > highest)
+                    highest = l;
+
+            NextLevelId = highest;
         }
 
 
@@ -54,13 +70,7 @@
 
         public int GetNextLevelId()
         {
-            var highest = 0;
-
-            foreach (var l in Levels)
-                if (l > highest)
-                    highest = l;
-
-            return highest + 1;
+            return ++NextLevelId;
         }
 
 

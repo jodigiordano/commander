@@ -191,8 +191,11 @@
         {
             PlanetarySystem = new List<CelestialBody>();
 
-            foreach (var descriptor in Descriptor.PlanetarySystem)
+            //todo: a more robust way for CBs order in XML
+            for (int i = 0; i < Descriptor.PlanetarySystem.Count; i++)
             {
+                var descriptor = Descriptor.PlanetarySystem[i];
+
                 var c = descriptor.GenerateSimulatorObject(NextCelestialBodyVisualPriority -= 0.001);
 
                 if (Simulator.EditingMode)

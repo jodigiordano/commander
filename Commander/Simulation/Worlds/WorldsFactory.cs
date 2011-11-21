@@ -408,7 +408,7 @@
 
         private World LoadWorldFromStream(List<KeyValuePair<string, byte[]>> bytes)
         {
-            World w = new World();
+            var w = new World();
 
             foreach (var b in bytes)
             {
@@ -446,11 +446,15 @@
 
         public World GetEmptyWorld(int id, string author)
         {
-            return new World()
+            var w = new World()
             {
                 Descriptor = GetEmptyWorldDescriptor(id, author),
                 Layout = GetEmptyLevelDescriptor(id)
             };
+
+            w.Initialize();
+
+            return w;
         }
 
 
