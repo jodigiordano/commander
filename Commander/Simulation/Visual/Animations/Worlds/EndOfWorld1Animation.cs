@@ -56,7 +56,7 @@
 
             Simulator.SpawnEnemies = false;
 
-            TmpEndOfAlpha = new Text("End of demo!", "Pixelite", new Vector3(0, 200, 0))
+            TmpEndOfAlpha = new Text("End of alpha (for now)!", "Pixelite", new Vector3(0, 200, 0))
             {
                 SizeX = 4,
                 Alpha = 0,

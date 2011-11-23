@@ -12,7 +12,7 @@
         private Image Background;
 
         private static string Message =
-            "This is the end of the demo, Commander!\n\n\n\n" +
+            "This is the end of the alpha, Commander!\n\n\n\n" +
 
             "I hope you enjoyed it. The final release will\n\n" +
             "include more worlds, turrets, enemies, power-ups,\n\n" +
