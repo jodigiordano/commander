@@ -156,11 +156,14 @@
         {
             Vector3 newPosition = new Vector3();
 
+            if (Simulator.PanelsController.IsPanelVisible)
+            {
+                var panel = Simulator.PanelsController.GetOpenedPanel();
+                newPosition += panel.Position + panel.Dimension / 2;
+            }
+            //else
             foreach (var p in Players)
                 newPosition += p.Position;
-
-            if (Simulator.PanelsController.IsPanelVisible)
-                newPosition += Simulator.PanelsController.GetOpenedPanel().Position;
 
             Vector3.Divide(ref newPosition, Players.Count + (Simulator.PanelsController.IsPanelVisible ? 1 : 0), out newPosition);
 
