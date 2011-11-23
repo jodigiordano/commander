@@ -673,7 +673,7 @@ namespace EphemereGames.Commander.Simulation
             else if (key == player.KeyboardConfiguration.Cancel)
                 SimPlayersController.DoCancelAction(player);
 
-            if (MultiverseMode)
+            if (MultiverseMode || WorldMode)
                 return;
 
             if (key == player.KeyboardConfiguration.Back && State == GameState.Running)
@@ -965,7 +965,7 @@ namespace EphemereGames.Commander.Simulation
             else if (button == player.GamepadConfiguration.AdvancedView)
                 SimPlayersController.DoAdvancedViewAction(player, true);
 
-            if (MultiverseMode)
+            if (MultiverseMode || WorldMode)
                 return;
 
             if (button == player.GamepadConfiguration.Back && State == GameState.Running)
