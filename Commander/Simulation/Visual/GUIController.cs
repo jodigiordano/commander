@@ -441,15 +441,13 @@
 
         public void Update()
         {
-            // Game bar panel
-            GameBarPanel.TimeNextWave = Math.Max(0, GameBarPanel.TimeNextWave - Preferences.TargetElapsedTimeMs);
+            AlienNextWaveAnimation.TimeNextWave = Math.Max(0, AlienNextWaveAnimation.TimeNextWave - Preferences.TargetElapsedTimeMs);
+            GameBarPanel.TimeNextWave = AlienNextWaveAnimation.TimeNextWave;
 
             if (PowerUpsToBuyCount == 0)
                 MenuPowerUps.PowerUpToBuy = PowerUpType.None;
 
             //ShowGameBarHBMessage(); tmp: for now.
-
-            AlienNextWaveAnimation.TimeNextWave = Math.Max(0, AlienNextWaveAnimation.TimeNextWave - Preferences.TargetElapsedTimeMs);
 
             if (Simulator.State != GameState.Paused)
             {

@@ -116,7 +116,7 @@
 
         public override void Update()
         {
-            // sync enemies toLocal release
+            // sync enemies to release
             int enemiesToReleaseCount = 0;
 
             foreach (var w in Simulator.Data.ActiveWaves)
@@ -129,6 +129,12 @@
 
             // sync remaining time for next wave
             ActiveWaves = Simulator.Data.ActiveWaves.Count;
+
+            if (RemainingWaves == 0 && Choices[0] == CallTheNextWave)
+            {
+                RemoveChoice(CallTheNextWave);
+                AddChoice(RemainingEnemiesChoice);
+            }
         }
     }
 }
