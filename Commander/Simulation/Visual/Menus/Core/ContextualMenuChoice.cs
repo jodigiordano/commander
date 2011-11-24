@@ -1,5 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
+    using System.Collections.Generic;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
 
@@ -9,6 +10,7 @@
         public Scene Scene;
         public string Name { get; private set; }
         public NoneHandler DoClick;
+        public List<KeyValuePair<string, PanelWidget>> HelpBarMessage;
 
         public event NoneHandler DataChanged;
         public event NoneHandler AvailabilityChanged;
@@ -21,6 +23,7 @@
             active = true;
             Name = name;
             DoClick = null;
+            HelpBarMessage = new List<KeyValuePair<string, PanelWidget>>();
         }
 
 

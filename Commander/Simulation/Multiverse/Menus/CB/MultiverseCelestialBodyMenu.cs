@@ -10,20 +10,30 @@
         {
             var choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Move", "Move", 2, DoMove),
-                new EditorTextContextualMenuChoice("Rotate", "Rotate", 2, DoRotate),
-                new EditorTextContextualMenuChoice("Trajectory", "Trajectory", 2, DoTrajectory),
-                new EditorTextContextualMenuChoice("Remove", "Remove", 2, DoRemove),
+                new EditorTextContextualMenuChoice("Move", "Move", 2, DoMove)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseMovePlanet) },
+                new EditorTextContextualMenuChoice("Rotate", "Rotate", 2, DoRotate)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseRotatePlanet) },
+                new EditorTextContextualMenuChoice("Trajectory", "Trajectory", 2, DoTrajectory)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiversePlanetTrajectory) },
+                new EditorTextContextualMenuChoice("Remove", "Remove", 2, DoRemove)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseRemovePlanet) },
                 new EditorToggleContextualMenuChoice("Speed",
                     new List<string>() { "Speed: 0", "Speed: 1", "Speed: 2", "Speed: 3", "Speed: 4", "Speed: 5", "Speed: 6", "Speed: 7", "Speed: 8", "Speed: 9", "Speed: 10" },
-                    2, DoSpeed),
-                new EditorTextContextualMenuChoice("PushFirst", "Push first on path", 2, DoPushFirst),
-                new EditorTextContextualMenuChoice("PushLast", "Push last on path", 2, DoPushLast),
-                new EditorTextContextualMenuChoice("RemoveFromPath", "Remove from path", 2, DoRemoveFromPath),
+                    2, DoSpeed)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseTogglePlanetSpeed) },
+                new EditorTextContextualMenuChoice("PushFirst", "Push first on path", 2, DoPushFirst)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiversePushFirstOnPath) },
+                new EditorTextContextualMenuChoice("PushLast", "Push last on path", 2, DoPushLast)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiversePushLastOnPath) },
+                new EditorTextContextualMenuChoice("RemoveFromPath", "Remove from path", 2, DoRemoveFromPath)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseRemoveFromPath) },
                 new EditorToggleContextualMenuChoice("Size",
                     new List<string>() { "Size: small", "Size: normal", "Size: big" },
-                    2, DoSize),
+                    2, DoSize)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseTogglePlanetSize) },
                 new EditorTextContextualMenuChoice("Attributes", "Attributes", 2, DoAttributes)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseOpenAttributes) }
             };
 
             foreach (var c in choices)

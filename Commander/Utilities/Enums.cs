@@ -221,7 +221,39 @@ namespace EphemereGames.Commander.Simulation
         StartNewCampaign = 17,
         GameBar = 18,
         WorldWarp = 19,
-        QuickToggle = 20
+        QuickToggle = 20,
+
+        MultiverseMainMenu = 21,
+        MultiverseJumpToWorld = 22,
+        MultiverseBuildMenu = 23,
+        MultiverseAddLevel = 24,
+        MultiverseAddWarp = 25,
+        MultiverseAddPlanet = 26,
+        MultiverseBackgrounds = 27,
+        MultiverseWaves = 28,
+        MultiverseChangeName = 29,
+        MultiverseSave = 30,
+
+        MultiverseMovePlanet = 31,
+        MultiverseRotatePlanet = 32,
+        MultiversePlanetTrajectory = 33,
+        MultiverseRemovePlanet = 34,
+        MultiverseTogglePlanetSpeed = 35,
+        MultiversePushFirstOnPath = 36,
+        MultiversePushLastOnPath = 37,
+        MultiverseRemoveFromPath = 38,
+        MultiverseTogglePlanetSize = 39,
+        MultiverseOpenAttributes = 40,
+        MultiverseHighscores = 41,
+        MultiversePlaytestLevel = 42,
+        MultiverseEditLevel = 43,
+        MultiverseAssets = 44,
+        MultiverseEditWarp = 45,
+        MultiverseAddPinkHole = 46,
+        MultiverseTurrets = 47,
+        MultiversePlayer = 48,
+        MultiversePlayLevel = 49,
+        AltAccept = 50
     };
 }
 

@@ -5,8 +5,11 @@
         public MultiverseWarpCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
-            AddChoiceFirst(new EditorTextContextualMenuChoice("editWarp", "edit warp", 2, DoEditWarp));
-            AddChoiceFirst(new EditorTextContextualMenuChoice("jumptoWarp", "jump to warp", 2, DoJumpToWarp));
+            AddChoiceFirst(new EditorTextContextualMenuChoice("editWarp", "edit warp", 2, DoEditWarp)
+            { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseEditWarp) });
+            
+            AddChoiceFirst(new EditorTextContextualMenuChoice("jumptoWarp", "jump to warp", 2, DoJumpToWarp)
+            { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseJumpToWorld) });
 
             
         }

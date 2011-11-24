@@ -334,6 +334,41 @@
                 new KeyValuePair<HelpBarMessageType, string>(HelpBarMessageType.Cancel, "Go back to galaxy")
             }));
 
+            dic.Add(HelpBarMessage.MultiverseMainMenu, HBMessageConstructor.CreateMessage(inputType, config, HelpBarMessageType.Select, "open main menu"));
+            dic.Add(HelpBarMessage.MultiverseBuildMenu, HBMessageConstructor.CreateMessage(inputType, config, HelpBarMessageType.Select, "open build menu"));
+
+            dic.Add(HelpBarMessage.MultiverseJumpToWorld, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "jump to a specific world by id", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseAddLevel, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "add a level", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseAddWarp, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "add a warp to another world", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseAddPlanet, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "add a planet", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseBackgrounds, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "modify the background", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseWaves, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "modify the waves of enemies", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseChangeName, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "modify the name of your world", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseSave, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "save the world to the server", "close menu"));
+
+            dic.Add(HelpBarMessage.MultiverseMovePlanet, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "move the planet around", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseRotatePlanet, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "rotate the planet", "close menu"));
+            dic.Add(HelpBarMessage.MultiversePlanetTrajectory, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "modify the planet trajectory", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseRemovePlanet, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "remove the planet", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseTogglePlanetSpeed, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "toggle the planet speed", "close menu"));
+            dic.Add(HelpBarMessage.MultiversePushFirstOnPath, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "add the planet to the start of the path", "close menu"));
+            dic.Add(HelpBarMessage.MultiversePushLastOnPath, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "add the planet to the end of the path", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseRemoveFromPath, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "remove the planet from the path", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseTogglePlanetSize, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "toggle the planet size", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseOpenAttributes, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "open the planet's attributes menu", "close menu"));
+
+            dic.Add(HelpBarMessage.MultiverseHighscores, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "open the highscores menu", "close menu"));
+            dic.Add(HelpBarMessage.MultiversePlaytestLevel, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "playtest the level", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseEditLevel, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "edit the level", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseAssets, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "open the assets menu", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseEditWarp, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "edit where this warp goes to", "close menu"));
+
+            dic.Add(HelpBarMessage.MultiverseAddPinkHole, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "add a pinkhole", "close menu"));
+            dic.Add(HelpBarMessage.MultiverseTurrets, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "modify available turrets in this level", "close menu"));
+            dic.Add(HelpBarMessage.MultiversePlayer, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "modify the player's attributes", "close menu"));
+            dic.Add(HelpBarMessage.MultiversePlayLevel, HBMessageConstructor.CreateSelectCancelMessage(inputType, config, "play this level", "close menu"));
+            dic.Add(HelpBarMessage.AltAccept, HBMessageConstructor.CreateMessage(inputType, config, HelpBarMessageType.Cancel, "accept"));
+            
             return dic;
         }
 

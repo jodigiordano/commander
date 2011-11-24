@@ -5,11 +5,17 @@
         public MultiverseLevelCBMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
-            AddChoiceFirst(new EditorTextContextualMenuChoice("Highscores", "Highscores", 2, DoHighscores));
-            AddChoiceFirst(new EditorTextContextualMenuChoice("playtest", "playtest level", 2, DoPlaytestLevel));
-            AddChoiceFirst(new EditorTextContextualMenuChoice("edit", "edit level", 2, DoEditLevel));
-
-            AddChoice(new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 2, DoCelestialBodyAssets));
+            AddChoiceFirst(new EditorTextContextualMenuChoice("Highscores", "Highscores", 2, DoHighscores)
+            { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseHighscores) });
+            
+            AddChoiceFirst(new EditorTextContextualMenuChoice("playtest", "playtest level", 2, DoPlaytestLevel)
+            { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiversePlaytestLevel) });
+            
+            AddChoiceFirst(new EditorTextContextualMenuChoice("edit", "edit level", 2, DoEditLevel)
+            { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseEditLevel) });
+            
+            AddChoice(new EditorTextContextualMenuChoice("CelestialBodyAssets", "Asset", 2, DoCelestialBodyAssets)
+            { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseAssets) });
         }
 
 

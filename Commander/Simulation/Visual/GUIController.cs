@@ -561,6 +561,30 @@
             var selection = p.ActualSelection;
             var player = p.VisualPlayer;
 
+
+            if (Simulator.MultiverseMode)
+            {
+                if (!Simulator.GameMode && !Simulator.EditingMode)
+                {
+                    if (p.ActualSelection.CelestialBody == null)
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.MultiverseMainMenu);
+                    else
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.Select);
+                }
+
+                else if (Simulator.EditingMode)
+                {
+                    if (p.ActualSelection.EditingState != EditorEditingState.None)
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.AltAccept);
+                    else if (p.ActualSelection.CelestialBody == null)
+                        HelpBar.ShowMessage(p.InnerPlayer, HelpBarMessage.MultiverseBuildMenu);
+                    else
+                        HelpBar.HideCurrentMessage();
+                }
+
+                return;
+            }
+
             if (Simulator.WorldMode)
             {
                 // CreatedWorld Menu

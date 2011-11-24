@@ -8,9 +8,14 @@
         public MultiverseLevelPausedMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
-            AddChoice(new TextContextualMenuChoice("resume", new Text("resume game", @"Pixelite") { SizeX = 2 }) { DoClick = DoResume });
-            AddChoice(new TextContextualMenuChoice("new", new Text("new game", @"Pixelite") { SizeX = 2 }) { DoClick = DoNewGame });
-            AddChoice(new EditorTextContextualMenuChoice("Highscores", "Highscores", 2, DoHighscores));
+            AddChoice(new TextContextualMenuChoice("resume", new Text("resume game", @"Pixelite") { SizeX = 2 })
+            { DoClick = DoResume, HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.WorldToggleResume) });
+
+            AddChoice(new TextContextualMenuChoice("new", new Text("new game", @"Pixelite") { SizeX = 2 })
+            { DoClick = DoNewGame, HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.WorldToggleNewGame) });
+            
+            AddChoice(new EditorTextContextualMenuChoice("Highscores", "Highscores", 2, DoHighscores)
+            { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseHighscores) });
         }
 
 

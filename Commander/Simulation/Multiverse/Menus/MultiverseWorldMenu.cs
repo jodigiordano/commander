@@ -5,7 +5,8 @@
         public MultiverseWorldMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
-            AddChoice(new EditorTextContextualMenuChoice("JumpToWorld", "jump to world", 2, DoJumpToWorld));
+            AddChoice(new EditorTextContextualMenuChoice("JumpToWorld", "jump to world", 2, DoJumpToWorld) {
+                HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseJumpToWorld) });
 
             Visible = false;
         }
@@ -20,7 +21,6 @@
                     Simulator.MultiverseMode &&
                     !Simulator.GameMode &&
                     !Simulator.EditingMode &&
-                    Main.PlayersController.MultiverseData.IsLoggedIn &&
                     Owner.ActualSelection.CelestialBody == null;
             }
 
@@ -30,8 +30,17 @@
 
         private void DoJumpToWorld()
         {
-            ((JumpToWorldPanel) Simulator.Data.Panels["JumpToWorld"]).From = Simulator.Scene.Name;
-            Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "JumpToWorld"));
+            if (Main.PlayersController.MultiverseData.IsLoggedIn)
+            {
+                ((JumpToWorldPanel) Simulator.Data.Panels["JumpToWorld"]).From = Simulator.Scene.Name;
+                Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "JumpToWorld"));
+            }
+
+            else
+            {
+                Simulator.MultiverseController.ExecuteCommand(new EditorPanelShowCommand(Owner, "Login"));
+            }
+
             Visible = false;
         }
     }

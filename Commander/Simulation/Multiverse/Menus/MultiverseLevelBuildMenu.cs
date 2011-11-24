@@ -10,13 +10,26 @@
         {
             var choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("AddPlanet", "Add planet", 2, DoAddPlanet),
-                new EditorTextContextualMenuChoice("AddPinkHole", "Add pink hole", 2, DoAddPinkHole),
-                new EditorTextContextualMenuChoice("Background", "Background", 2, DoBackground),
-                new EditorTextContextualMenuChoice("Turrets", "Turrets", 2, DoTurrets),
-                new EditorTextContextualMenuChoice("Player", "Player", 2, DoPlayer),
-                new EditorTextContextualMenuChoice("Waves", "Waves", 2, DoWaves),
+                new EditorTextContextualMenuChoice("AddPlanet", "Add planet", 2, DoAddPlanet)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseAddPlanet) },
+                
+                new EditorTextContextualMenuChoice("AddPinkHole", "Add pink hole", 2, DoAddPinkHole)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseAddPinkHole) },
+                
+                new EditorTextContextualMenuChoice("Background", "Background", 2, DoBackground)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseBackgrounds) },
+                
+                new EditorTextContextualMenuChoice("Turrets", "Turrets", 2, DoTurrets)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseTurrets) },
+                
+                new EditorTextContextualMenuChoice("Player", "Player", 2, DoPlayer)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiversePlayer) },
+                
+                new EditorTextContextualMenuChoice("Waves", "Waves", 2, DoWaves)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseWaves) },
+
                 new EditorTextContextualMenuChoice("Playtest", "Playtest", 2, DoPlaytest)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiversePlaytestLevel) }
             };
 
             foreach (var c in choices)

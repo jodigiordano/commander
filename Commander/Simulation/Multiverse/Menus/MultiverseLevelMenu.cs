@@ -10,8 +10,12 @@
         {
             var choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("Play", "Play!", 2, DoPlay),
-                new EditorTextContextualMenuChoice("Highscores", "Highscores", 2, DoHighscores),
+                new EditorTextContextualMenuChoice("Play", "Play!", 2, DoPlay)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiversePlayLevel) },
+
+                new EditorTextContextualMenuChoice("Highscores", "Highscores", 2, DoHighscores)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseHighscores) },
+
             };
 
             foreach (var c in choices)

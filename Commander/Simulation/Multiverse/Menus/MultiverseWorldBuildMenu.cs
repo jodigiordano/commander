@@ -10,14 +10,29 @@
         {
             var choices = new List<ContextualMenuChoice>()
             {
-                new EditorTextContextualMenuChoice("AddPlanet", "Add level", 2, DoAddLevel),
-                new EditorTextContextualMenuChoice("AddPinkHole", "Add warp", 2, DoAddWarp),
-                new EditorTextContextualMenuChoice("AddPlanet", "Add planet", 2, DoAddPlanet),
-                new EditorTextContextualMenuChoice("Background", "Background", 2, DoBackground),
-                new EditorTextContextualMenuChoice("Waves", "Waves", 2, DoWaves),
-                new EditorTextContextualMenuChoice("ChangeName", "change name", 2, DoChangeName),
-                new EditorTextContextualMenuChoice("Save", "save", 2, DoSave),
+                new EditorTextContextualMenuChoice("AddPlanet", "Add level", 2, DoAddLevel)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseAddLevel) },
+                
+                new EditorTextContextualMenuChoice("AddPinkHole", "Add warp", 2, DoAddWarp)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseAddWarp) },
+                
+                new EditorTextContextualMenuChoice("AddPlanet", "Add planet", 2, DoAddPlanet)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseAddPlanet) },
+                
+                new EditorTextContextualMenuChoice("Background", "Background", 2, DoBackground)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseBackgrounds) },
+                
+                new EditorTextContextualMenuChoice("Waves", "Waves", 2, DoWaves)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseWaves) },
+                
+                new EditorTextContextualMenuChoice("ChangeName", "change name", 2, DoChangeName)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseChangeName) },
+                
+                new EditorTextContextualMenuChoice("Save", "save", 2, DoSave)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseSave) },
+                
                 new EditorTextContextualMenuChoice("JumpToWorld", "jump to world", 2, DoJumpToWorld)
+                { HelpBarMessage = Simulator.HelpBar.GetPredefinedMessage(Owner.InnerPlayer, HelpBarMessage.MultiverseJumpToWorld) }
             };
 
             foreach (var c in choices)

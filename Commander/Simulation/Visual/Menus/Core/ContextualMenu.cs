@@ -40,6 +40,9 @@
 
         private bool visible;
 
+        public bool ScrollMode;
+        public int ScrollMaxVisibleCount;
+
 
         public ContextualMenu(Simulator simulator, double visualPriority, Color color, int distanceBetweenTwoChoices)
             : this(simulator, visualPriority, color, new List<ContextualMenuChoice>(), distanceBetweenTwoChoices)
@@ -99,6 +102,9 @@
             };
 
             PossibleLayouts = new List<ContextualMenuLayout>();
+
+            ScrollMode = false;
+            ScrollMaxVisibleCount = 0;
         }
 
 
@@ -117,6 +123,8 @@
                 ((ToggleContextualMenuChoice) choice).Next();
         }
 
+
+        #region Choices
 
         public void AddChoiceFirst(ContextualMenuChoice choice)
         {
@@ -173,12 +181,6 @@
         }
 
 
-        public virtual List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage()
-        {
-            return new List<KeyValuePair<string, PanelWidget>>();
-        }
-
-
         public ContextualMenuChoice GetChoiceByName(string name)
         {
             foreach (var c in Choices)
@@ -201,6 +203,35 @@
                 return null;
 
             return Choices[SelectedIndex];
+        }
+
+
+        public virtual void NextChoice()
+        {
+            if (Choices.Count == 0)
+                return;
+
+            SelectedIndex = (SelectedIndex + 1) % Choices.Count;
+        }
+
+
+        public virtual void PreviousChoice()
+        {
+            if (Choices.Count == 0)
+                return;
+
+            SelectedIndex = SelectedIndex - 1;
+
+            if (SelectedIndex == -1)
+                SelectedIndex = Choices.Count - 1;
+        }
+
+        #endregion
+
+
+        public virtual List<KeyValuePair<string, PanelWidget>> GetHelpBarMessage()
+        {
+            return new List<KeyValuePair<string, PanelWidget>>();
         }
 
 
@@ -237,85 +268,6 @@
         }
 
 
-        public virtual void NextChoice()
-        {
-            if (Choices.Count == 0)
-                return;
-
-            SelectedIndex = (SelectedIndex + 1) % Choices.Count;
-        }
-
-
-        public virtual void PreviousChoice()
-        {
-            if (Choices.Count == 0)
-                return;
-
-            SelectedIndex = SelectedIndex - 1;
-
-            if (SelectedIndex == -1)
-                SelectedIndex = Choices.Count - 1;
-        }
-
-
-        public virtual void Draw()
-        {
-            if (!Visible)
-                return;
-
-            if (ChoiceDataChanged || ChoiceAvailabilityChanged)
-                ComputeSize();
-
-            ActualPosition = Position;
-
-            DrawBubble();
-            DrawTitle();
-            DrawChoices();
-
-            ChoiceDataChanged = false;
-            ChoiceAvailabilityChanged = false;
-        }
-
-
-        public virtual void Fade(int from, int to, double length, Core.IntegerHandler callback)
-        {
-            Bubble.Fade(from, to, length, callback);
-
-            var effect = VisualEffects.Fade(from, to, 0, length);
-
-            foreach (var c in Choices)
-                c.Fade(effect);
-
-            if (Title != null)
-            {
-                Simulator.Scene.VisualEffects.Add(Title, effect);
-                Simulator.Scene.VisualEffects.Add(TitleSeparator, effect);
-            }
-
-            effect = VisualEffects.Fade(Math.Min(from, 230), Math.Min(to, 230), 0, length);
-
-            Simulator.Scene.VisualEffects.Add(WidgetSelection, effect);
-        }
-
-
-        public List<ContextualMenuLayout> GetPossibleLayouts()
-        {
-            PossibleLayouts.Clear();
-
-            AddPossibleLayout1(0);
-            AddPossibleLayout2(1);
-            AddPossibleLayout3(2);
-            AddPossibleLayout4(3);
-
-            //Put the last used layout as the first choice
-            ContextualMenuLayout toMove = PossibleLayouts[0];
-            PossibleLayouts[0] = PossibleLayouts[Layout];
-            PossibleLayouts[Layout] = toMove;
-
-            return PossibleLayouts;
-        }
-
-
         public virtual void Initialize()
         {
 
@@ -334,15 +286,29 @@
         }
 
 
-        //public virtual void UpdateSelection()
-        //{
-        
-        //}
-
-
         public virtual void Update()
         {
 
+        }
+
+
+        #region Menus Collisions
+
+        public List<ContextualMenuLayout> GetPossibleLayouts()
+        {
+            PossibleLayouts.Clear();
+
+            AddPossibleLayout1(0);
+            AddPossibleLayout2(1);
+            AddPossibleLayout3(2);
+            AddPossibleLayout4(3);
+
+            //Put the last used layout as the first choice
+            ContextualMenuLayout toMove = PossibleLayouts[0];
+            PossibleLayouts[0] = PossibleLayouts[Layout];
+            PossibleLayouts[Layout] = toMove;
+
+            return PossibleLayouts;
         }
 
 
@@ -387,6 +353,50 @@
             Layouts[index].Rectangle.Height = (int) Size.Y + 20;
 
             PossibleLayouts.Add(Simulator.Data.Battlefield.Inner.Includes(Layouts[index].Rectangle) ? Layouts[index] : null);
+        }
+
+        #endregion
+
+
+        #region Drawing
+
+        public virtual void Draw()
+        {
+            if (!Visible)
+                return;
+
+            if (ChoiceDataChanged || ChoiceAvailabilityChanged)
+                ComputeSize();
+
+            ActualPosition = Position;
+
+            DrawBubble();
+            DrawTitle();
+            DrawChoices();
+
+            ChoiceDataChanged = false;
+            ChoiceAvailabilityChanged = false;
+        }
+
+
+        public virtual void Fade(int from, int to, double length, Core.IntegerHandler callback)
+        {
+            Bubble.Fade(from, to, length, callback);
+
+            var effect = VisualEffects.Fade(from, to, 0, length);
+
+            foreach (var c in Choices)
+                c.Fade(effect);
+
+            if (Title != null)
+            {
+                Simulator.Scene.VisualEffects.Add(Title, effect);
+                Simulator.Scene.VisualEffects.Add(TitleSeparator, effect);
+            }
+
+            effect = VisualEffects.Fade(Math.Min(from, 230), Math.Min(to, 230), 0, length);
+
+            Simulator.Scene.VisualEffects.Add(WidgetSelection, effect);
         }
 
 
@@ -457,6 +467,8 @@
 
             Bubble.Draw();
         }
+
+        #endregion
 
 
         private void ComputeSize()
