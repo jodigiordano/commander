@@ -1,5 +1,5 @@
 #define MyAppName "Commander"
-#define MyAppVersion "0.1.1"
+#define MyAppVersion "0.1.2"
 #define MyAppPublisher "Ephemere Games"
 #define MyAppURL "http://www.playcommander.com"
 #define MyAppExeName "Commander.exe"
