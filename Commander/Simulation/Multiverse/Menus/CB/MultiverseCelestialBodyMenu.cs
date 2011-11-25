@@ -8,6 +8,9 @@
         public MultiverseCelestialBodyMenu(Simulator simulator, double visualPriority, SimPlayer owner)
             : base(simulator, visualPriority, owner)
         {
+            ScrollMode = true;
+            ScrollMaxVisibleCount = 8;
+
             var choices = new List<ContextualMenuChoice>()
             {
                 new EditorTextContextualMenuChoice("Move", "Move", 2, DoMove)

@@ -42,6 +42,8 @@
 
         public bool ScrollMode;
         public int ScrollMaxVisibleCount;
+        private TextContextualMenuChoice ScrollUp;
+        private TextContextualMenuChoice ScrollDown;
 
 
         public ContextualMenu(Simulator simulator, double visualPriority, Color color, int distanceBetweenTwoChoices)
@@ -105,6 +107,9 @@
 
             ScrollMode = false;
             ScrollMaxVisibleCount = 0;
+
+            ScrollUp = new TextContextualMenuChoice("scrollUp", new Text("(more)", "Pixelite") { SizeX = 2, Color = Colors.Default.NeutralGray }) { Scene = simulator.Scene, VisualPriority = VisualPriority };
+            ScrollDown = new TextContextualMenuChoice("scrollUp", new Text("(more)", "Pixelite") { SizeX = 2, Color = Colors.Default.NeutralGray }) { Scene = simulator.Scene, VisualPriority = VisualPriority };
         }
 
 
@@ -405,22 +410,63 @@
             if (Choices.Count == 0)
                 return;
 
-            int slotCounter = 0;
-
             float distanceY = Choices[0].Size.Y + DistanceBetweenTwoChoices;
             float startingAt = (Title != null) ? Title.AbsoluteSize.Y + 10 : 0;
 
-            foreach (var choice in Choices)
+            var start = 0;
+            var end = Choices.Count - 1;
+            var showUp = false;
+            var showDown = false;
+
+            if (ScrollMode)
             {
+                showUp = SelectedIndex >= ScrollMaxVisibleCount - 1;
+                showDown = SelectedIndex <= (Choices.Count - 3);
+
+                start = Math.Max(0, SelectedIndex - (ScrollMaxVisibleCount - 2));
+                end = Math.Min(Choices.Count - 1, start + (ScrollMaxVisibleCount - 1));
+
+                if (showUp && showDown)
+                {
+                    start++;
+                    end--;
+                }
+
+                else if (showUp)
+                    start++;
+                else if (showDown)
+                    end--;
+            }
+
+            var choiceCounter = start;
+            var positionCounter = 0;
+
+            if (showUp)
+            {
+                ScrollUp.Position = ActualPosition + new Vector3(0, startingAt, 0);
+                ScrollUp.Draw();
+                positionCounter++;
+            }
+
+            if (showDown)
+            {
+                ScrollDown.Position = ActualPosition + new Vector3(0, startingAt + (ScrollMaxVisibleCount - 1) * distanceY, 0);
+                ScrollDown.Draw();
+            }
+
+            for (int i = start; i <= end; i++)
+            {
+                var choice = Choices[i];
+
                 var position = ActualPosition;
                 Vector3.Add(ref position, ref Margin, out position);
-                position.Y += startingAt + slotCounter * distanceY;
+                position.Y += startingAt + positionCounter * distanceY;
 
-                choice.Position = position; // +new Vector3(0, (distanceY - Margin.Y * 2 - choice.Size.Y) / 2, 0);
+                choice.Position = position;
 
                 choice.Draw();
 
-                if (slotCounter == SelectedIndex)
+                if (choiceCounter == SelectedIndex)
                 {
                     position.X -= Margin.X;
 
@@ -428,7 +474,8 @@
                     Simulator.Scene.Add(WidgetSelection);
                 }
 
-                slotCounter++;
+                choiceCounter++;
+                positionCounter++;
             }
         }
 
@@ -492,9 +539,14 @@
 
             width += Margin.X * 2;
 
+            var count = ScrollMode ? Math.Min(Choices.Count, ScrollMaxVisibleCount) : Choices.Count;
+
             Size = new Vector3(
                 width,
-                (Choices.Count * height) + ((Choices.Count - 1) * DistanceBetweenTwoChoices) + (Title != null ? height + 10 : 0) + (Margin.Y * 4),
+                    (count * height) +
+                    ((count - 1) * DistanceBetweenTwoChoices) +
+                    (Title != null ? height + 10 : 0) +
+                    (Margin.Y * 4),
                 0);
 
             WidgetSelection.Size = new Vector2(width, height + Margin.Y * 2);
