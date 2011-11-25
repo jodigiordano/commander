@@ -1,0 +1,17 @@
+open ftp.ephemeregames.com
+epheme5
+C0mmand3rJ0d1
+cd /public_html/commander/website/
+binary
+mput website/*.php
+cd /public_html/commander/website/scripts
+binary
+mput website/scripts/*.php
+cd /public_html/commander/website/images
+binary
+mput website/images/*.png
+cd /public_html/commander/website/images/screenshots
+binary
+mput website/images/screenshots/*.jpg
+disconnect
+bye

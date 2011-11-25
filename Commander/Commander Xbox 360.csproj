@@ -496,10 +496,6 @@
       <Project>{0D8EF78B-1ACA-4E0F-9AA2-2AF2E6BC4526}</Project>
       <Name>Big Assets Xbox 360</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Core Xbox 360.csproj">
-      <Project>{D78912B8-54DD-45D6-9906-D61A6D7EC610}</Project>
-      <Name>Core Xbox 360</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework">

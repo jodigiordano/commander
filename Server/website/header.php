@@ -183,6 +183,7 @@ A:hover { color: #FFCC00; }
     position: relative;
     top: 100px;
     right: 10px;
+    padding-left: 20px;
 }
 
 #ephemere
@@ -194,6 +195,8 @@ A:hover { color: #FFCC00; }
 #ephemereImage
 {
     border: none;
+    width: 25%;
+    height: 25%;
 }
 </style>
 
@@ -215,8 +218,8 @@ A:hover { color: #FFCC00; }
 <body>
 
 <div id="title">
-    <img alt="" src="images/commander.png" />
+    <a href="index.php"><img alt="" src="images/commander.png" /></a>
 </div>
 <div class="transparentBox">
-    <a href="#About"><b>About</b></a> | <a href="http://community.ephemeregames.com"><b>Forums</b></a> | Multiverse and leaderboards (coming soon!) | <a href="http://www.desura.com/games/commander"><b>Buy it!</b></a>
+    <a href="index.php#About"><b>About</b></a> | <a href="http://community.ephemeregames.com"><b>Forums</b></a> | Multiverse and leaderboards (coming soon!) | <a href="http://www.desura.com/games/commander"><b>Buy it!</b></a>
 </div> 

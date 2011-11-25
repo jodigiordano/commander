@@ -3,7 +3,7 @@ epheme5
 C0mmand3rJ0d1
 cd /public_html/commander/multiverse/scripts/
 binary
-mput scripts/*.php
-mput scripts_remote/*.php
+mput multiverse/scripts/*.php
+mput multiverse/scripts_remote/*.php
 disconnect
 bye

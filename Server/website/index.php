@@ -32,8 +32,8 @@ Commander is the most awesome <b>real-time strategy / tower defense</b> on plane
 </div>    
 
 <div id="video">
-    <iframe id="youtube" width="560" height="345" src="http://www.youtube.com/embed/2vhf4yku3wI?rel=0&amp;hd=1" frameborder="1" allowfullscreen></iframe>
-    <iframe id="youtube2" width="560" height="345" src="http://www.youtube.com/embed/mp9RLIpOqng?rel=0&amp;hd=1" frameborder="1" allowfullscreen></iframe>
+    <iframe id="youtube" width="560" height="345" src="http://www.youtube.com/embed/Mg5_-KN0o84?rel=0&amp;hd=1" frameborder="1" allowfullscreen></iframe>
+    <iframe id="youtube2" width="560" height="345" src="http://www.youtube.com/embed/2vhf4yku3wI?rel=0&amp;hd=1" frameborder="1" allowfullscreen></iframe>
 </div>
 <br /><br /><br /><br />
 <div>
