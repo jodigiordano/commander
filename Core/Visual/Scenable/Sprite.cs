@@ -9,7 +9,7 @@ namespace EphemereGames.Core.Visual
 
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.SimplePersistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;

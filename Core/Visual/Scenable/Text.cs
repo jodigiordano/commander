@@ -33,7 +33,7 @@
         {
             FontName = fontName;
             Data = data;
-            Font = Core.Persistence.Persistence.GetAsset<SpriteFont>(fontName);
+            Font = Core.SimplePersistence.Persistence.GetAsset<SpriteFont>(fontName);
             Color = color;
             Position = position;
             Size = new Vector2(1);

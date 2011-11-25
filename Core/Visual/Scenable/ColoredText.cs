@@ -38,7 +38,7 @@
             relativeDataSizes = new List<Vector2>();
 
             Data = data;
-            Font = Core.Persistence.Persistence.GetAsset<SpriteFont>(fontName);
+            Font = Core.SimplePersistence.Persistence.GetAsset<SpriteFont>(fontName);
             Colors = colors;
             Position = position;
             Size = new Vector2(1);

@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.SimplePersistence;
     using EphemereGames.Core.Visual;
     using Microsoft.Xna.Framework;
     using ProjectMercury.Emitters;

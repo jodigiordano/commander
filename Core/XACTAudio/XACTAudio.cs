@@ -2,7 +2,7 @@
 
 namespace EphemereGames.Core.XACTAudio
 {
-    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.SimplePersistence;
 
 
     public static class XACTAudio

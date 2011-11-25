@@ -1,6 +1,6 @@
 ﻿namespace EphemereGames.Commander.Simulation
 {
-    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.SimplePersistence;
     using EphemereGames.Core.Visual;
 
 

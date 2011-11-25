@@ -1,7 +1,7 @@
 ﻿namespace EphemereGames.Core.Visual
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.SimplePersistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -51,7 +51,7 @@
             if (ContentLoaded)
                 return;
 
-            ParticleEffect model = EphemereGames.Core.Persistence.Persistence.GetAsset<Particle>(Name).Model;
+            ParticleEffect model = EphemereGames.Core.SimplePersistence.Persistence.GetAsset<Particle>(Name).Model;
 
             Model = model.DeepCopy();
 

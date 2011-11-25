@@ -3,7 +3,7 @@
 namespace EphemereGames.Core.XACTAudio
 {
     using System.Collections.Generic;
-    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.SimplePersistence;
     using Microsoft.Xna.Framework.Content;
     
 

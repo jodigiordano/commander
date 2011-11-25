@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.SimplePersistence;
     using EphemereGames.Core.Visual;
     using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;

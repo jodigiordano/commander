@@ -31,8 +31,8 @@
 
             Primitives.Initialize(Preferences.Content.Load<Texture2D>("pixelBlanc"));
 
-            EphemereGames.Core.Persistence.Persistence.AddAssetType(new Particle());
-            EphemereGames.Core.Persistence.Persistence.AddAssetType(new Sprite());
+            EphemereGames.Core.SimplePersistence.Persistence.AddAssetType(new Particle());
+            EphemereGames.Core.SimplePersistence.Persistence.AddAssetType(new Sprite());
         }
 
 

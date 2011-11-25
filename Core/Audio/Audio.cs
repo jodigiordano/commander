@@ -1,6 +1,6 @@
 ﻿namespace EphemereGames.Core.Audio
 {
-    using EphemereGames.Core.Persistence;
+    using EphemereGames.Core.SimplePersistence;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
     

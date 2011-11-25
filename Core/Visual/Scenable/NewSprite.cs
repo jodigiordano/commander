@@ -44,7 +44,7 @@
 
         public NewSprite(string sheetName, List<int> sequence, float frequency, bool cyclic)
         {
-            Spritesheet = Persistence.Persistence.GetAsset<SpriteSheet>(sheetName);
+            Spritesheet = SimplePersistence.Persistence.GetAsset<SpriteSheet>(sheetName);
             Sequence = sequence;
             Frequency = frequency;
             Cyclic = cyclic;

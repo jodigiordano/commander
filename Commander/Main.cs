@@ -5,8 +5,8 @@ namespace EphemereGames.Commander
     using System.Reflection;
     using EphemereGames.Commander.Simulation;
     using EphemereGames.Core.Input;
-    using EphemereGames.Core.Persistence;
     using EphemereGames.Core.Physics;
+    using EphemereGames.Core.SimplePersistence;
     using EphemereGames.Core.Visual;
     using EphemereGames.Core.XACTAudio;
     using Microsoft.Xna.Framework;
@@ -120,8 +120,7 @@ namespace EphemereGames.Commander
         {
             base.Initialize();
 
-            Persistence.Initialize("Content", "packages.xml", Services);
-            Core.SimplePersistence.Persistence.Initialize();
+            Core.SimplePersistence.Persistence.Initialize("Content", "packages.xml", Services);
             Physics.Initialize();
 
             MusicController.Initialize();
@@ -226,8 +225,6 @@ namespace EphemereGames.Commander
 
                     break;
             }
-
-            Persistence.Update(gameTime);
         }
 
 

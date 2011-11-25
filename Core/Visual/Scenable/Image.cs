@@ -140,7 +140,7 @@
 
         private void LoadTexture(string spriteSheetName)
         {
-            Texture2D result = Persistence.Persistence.GetAsset<Texture2D>(TextureName);
+            Texture2D result = SimplePersistence.Persistence.GetAsset<Texture2D>(TextureName);
 
             if (result != null)
             {
@@ -152,7 +152,7 @@
             }
 
             SpriteSheet spritesheet =
-                Persistence.Persistence.GetAsset<SpriteSheet>(spriteSheetName);
+                SimplePersistence.Persistence.GetAsset<SpriteSheet>(spriteSheetName);
 
             Texture = spritesheet.Texture;
             VisiblePart = spritesheet.SourceRectangle(TextureName);
